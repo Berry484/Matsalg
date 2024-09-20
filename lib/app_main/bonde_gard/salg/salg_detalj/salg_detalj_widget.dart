@@ -53,27 +53,24 @@ class _SalgDetaljWidgetState extends State<SalgDetaljWidget> {
             hoverColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () async {
-              context.pop();
+              context.safePop();
             },
             child: Icon(
-              Icons.arrow_back,
+              Icons.arrow_back_ios,
               color: FlutterFlowTheme.of(context).alternate,
               size: 28.0,
             ),
           ),
-          title: Align(
-            alignment: const AlignmentDirectional(-1.0, 0.0),
-            child: Text(
-              'Mine salg',
-              textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Montserrat',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 20.0,
-                    letterSpacing: 0.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
+          title: Text(
+            'Mine salg',
+            textAlign: TextAlign.center,
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Montserrat',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 20.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
           actions: const [],
           centerTitle: true,

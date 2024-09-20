@@ -3,27 +3,25 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'bruker_profil_informasjon_model.dart';
-export 'bruker_profil_informasjon_model.dart';
+import 'bruker_onboarding_model.dart';
+export 'bruker_onboarding_model.dart';
 
-class BrukerProfilInformasjonWidget extends StatefulWidget {
-  const BrukerProfilInformasjonWidget({super.key});
+class BrukerOnboardingWidget extends StatefulWidget {
+  const BrukerOnboardingWidget({super.key});
 
   @override
-  State<BrukerProfilInformasjonWidget> createState() =>
-      _BrukerProfilInformasjonWidgetState();
+  State<BrukerOnboardingWidget> createState() => _BrukerOnboardingWidgetState();
 }
 
-class _BrukerProfilInformasjonWidgetState
-    extends State<BrukerProfilInformasjonWidget> {
-  late BrukerProfilInformasjonModel _model;
+class _BrukerOnboardingWidgetState extends State<BrukerOnboardingWidget> {
+  late BrukerOnboardingModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BrukerProfilInformasjonModel());
+    _model = createModel(context, () => BrukerOnboardingModel());
   }
 
   @override

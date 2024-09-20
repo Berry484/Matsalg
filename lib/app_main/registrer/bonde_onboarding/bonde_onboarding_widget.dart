@@ -3,27 +3,25 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'bonde_profil_informasjon_model.dart';
-export 'bonde_profil_informasjon_model.dart';
+import 'bonde_onboarding_model.dart';
+export 'bonde_onboarding_model.dart';
 
-class BondeProfilInformasjonWidget extends StatefulWidget {
-  const BondeProfilInformasjonWidget({super.key});
+class BondeOnboardingWidget extends StatefulWidget {
+  const BondeOnboardingWidget({super.key});
 
   @override
-  State<BondeProfilInformasjonWidget> createState() =>
-      _BondeProfilInformasjonWidgetState();
+  State<BondeOnboardingWidget> createState() => _BondeOnboardingWidgetState();
 }
 
-class _BondeProfilInformasjonWidgetState
-    extends State<BondeProfilInformasjonWidget> {
-  late BondeProfilInformasjonModel _model;
+class _BondeOnboardingWidgetState extends State<BondeOnboardingWidget> {
+  late BondeOnboardingModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BondeProfilInformasjonModel());
+    _model = createModel(context, () => BondeOnboardingModel());
   }
 
   @override

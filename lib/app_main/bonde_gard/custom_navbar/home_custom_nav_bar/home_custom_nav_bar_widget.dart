@@ -151,10 +151,10 @@ class _HomeCustomNavBarWidgetState extends State<HomeCustomNavBarWidget> {
                     borderRadius: 30.0,
                     borderWidth: 1.0,
                     buttonSize: 50.0,
-                    icon: const Icon(
-                      Icons.person,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.cog,
                       color: Color(0xFF9299A1),
-                      size: 28.0,
+                      size: 24.0,
                     ),
                     onPressed: () async {
                       context.pushNamed(

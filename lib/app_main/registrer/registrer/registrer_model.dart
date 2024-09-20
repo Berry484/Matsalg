@@ -12,11 +12,11 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
   int get tabBarCurrentIndex =>
       tabBarController != null ? tabBarController!.index : 0;
 
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode;
-  TextEditingController? emailAddressTextController;
-  String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
-  String? _emailAddressTextControllerValidator(
+  // State field(s) for EmailLogin widget.
+  FocusNode? emailLoginFocusNode;
+  TextEditingController? emailLoginTextController;
+  String? Function(BuildContext, String?)? emailLoginTextControllerValidator;
+  String? _emailLoginTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Felt må fylles ut';
@@ -25,24 +25,12 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
     return null;
   }
 
-  // State field(s) for password widget.
-  FocusNode? passwordFocusNode;
-  TextEditingController? passwordTextController;
-  late bool passwordVisibility;
-  String? Function(BuildContext, String?)? passwordTextControllerValidator;
-  String? _passwordTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
-    }
-
-    return null;
-  }
-
-  // State field(s) for Brukernavn widget.
-  FocusNode? brukernavnFocusNode;
-  TextEditingController? brukernavnTextController;
-  String? Function(BuildContext, String?)? brukernavnTextControllerValidator;
-  String? _brukernavnTextControllerValidator(
+  // State field(s) for PassordLogin widget.
+  FocusNode? passordLoginFocusNode;
+  TextEditingController? passordLoginTextController;
+  late bool passordLoginVisibility;
+  String? Function(BuildContext, String?)? passordLoginTextControllerValidator;
+  String? _passordLoginTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Felt må fylles ut';
@@ -51,17 +39,36 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
     return null;
   }
 
-  // State field(s) for Navn widget.
-  FocusNode? navnFocusNode;
-  TextEditingController? navnTextController;
-  String? Function(BuildContext, String?)? navnTextControllerValidator;
-  // State field(s) for password-Create widget.
-  FocusNode? passwordCreateFocusNode;
-  TextEditingController? passwordCreateTextController;
-  late bool passwordCreateVisibility;
-  String? Function(BuildContext, String?)?
-      passwordCreateTextControllerValidator;
-  String? _passwordCreateTextControllerValidator(
+  // State field(s) for EpostLag widget.
+  FocusNode? epostLagFocusNode;
+  TextEditingController? epostLagTextController;
+  String? Function(BuildContext, String?)? epostLagTextControllerValidator;
+  String? _epostLagTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Felt må fylles ut';
+    }
+
+    return null;
+  }
+
+  // State field(s) for NavnLag widget.
+  FocusNode? navnLagFocusNode;
+  TextEditingController? navnLagTextController;
+  String? Function(BuildContext, String?)? navnLagTextControllerValidator;
+  String? _navnLagTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Felt må fylles ut';
+    }
+
+    return null;
+  }
+
+  // State field(s) for PassordLag widget.
+  FocusNode? passordLagFocusNode;
+  TextEditingController? passordLagTextController;
+  late bool passordLagVisibility;
+  String? Function(BuildContext, String?)? passordLagTextControllerValidator;
+  String? _passordLagTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Felt må fylles ut';
@@ -72,31 +79,31 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
 
   @override
   void initState(BuildContext context) {
-    emailAddressTextControllerValidator = _emailAddressTextControllerValidator;
-    passwordVisibility = false;
-    passwordTextControllerValidator = _passwordTextControllerValidator;
-    brukernavnTextControllerValidator = _brukernavnTextControllerValidator;
-    passwordCreateVisibility = false;
-    passwordCreateTextControllerValidator =
-        _passwordCreateTextControllerValidator;
+    emailLoginTextControllerValidator = _emailLoginTextControllerValidator;
+    passordLoginVisibility = false;
+    passordLoginTextControllerValidator = _passordLoginTextControllerValidator;
+    epostLagTextControllerValidator = _epostLagTextControllerValidator;
+    navnLagTextControllerValidator = _navnLagTextControllerValidator;
+    passordLagVisibility = false;
+    passordLagTextControllerValidator = _passordLagTextControllerValidator;
   }
 
   @override
   void dispose() {
     tabBarController?.dispose();
-    emailAddressFocusNode?.dispose();
-    emailAddressTextController?.dispose();
+    emailLoginFocusNode?.dispose();
+    emailLoginTextController?.dispose();
 
-    passwordFocusNode?.dispose();
-    passwordTextController?.dispose();
+    passordLoginFocusNode?.dispose();
+    passordLoginTextController?.dispose();
 
-    brukernavnFocusNode?.dispose();
-    brukernavnTextController?.dispose();
+    epostLagFocusNode?.dispose();
+    epostLagTextController?.dispose();
 
-    navnFocusNode?.dispose();
-    navnTextController?.dispose();
+    navnLagFocusNode?.dispose();
+    navnLagTextController?.dispose();
 
-    passwordCreateFocusNode?.dispose();
-    passwordCreateTextController?.dispose();
+    passordLagFocusNode?.dispose();
+    passordLagTextController?.dispose();
   }
 }

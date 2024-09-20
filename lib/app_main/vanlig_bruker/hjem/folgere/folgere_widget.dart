@@ -55,10 +55,10 @@ class _FolgereWidgetState extends State<FolgereWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.pop();
+                context.safePop();
               },
               child: Icon(
-                Icons.arrow_back,
+                Icons.arrow_back_ios_rounded,
                 color: FlutterFlowTheme.of(context).alternate,
                 size: 28.0,
               ),

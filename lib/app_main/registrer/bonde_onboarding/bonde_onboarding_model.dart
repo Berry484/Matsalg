@@ -1,9 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'profile_custom_nav_bar_widget.dart' show ProfileCustomNavBarWidget;
+import 'bonde_onboarding_widget.dart' show BondeOnboardingWidget;
 import 'package:flutter/material.dart';
 
-class ProfileCustomNavBarModel
-    extends FlutterFlowModel<ProfileCustomNavBarWidget> {
+class BondeOnboardingModel extends FlutterFlowModel<BondeOnboardingWidget> {
   @override
   void initState(BuildContext context) {}
 

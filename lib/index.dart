@@ -35,10 +35,10 @@ export '/app_main/registrer/bondegard_lag_profil/bondegard_lag_profil_widget.dar
     show BondegardLagProfilWidget;
 export '/app_main/bonde_gard/hjem/leg_ut_mat2/leg_ut_mat2_widget.dart'
     show LegUtMat2Widget;
-export '/app_main/registrer/bonde_profil_informasjon/bonde_profil_informasjon_widget.dart'
-    show BondeProfilInformasjonWidget;
-export '/app_main/registrer/bruker_profil_informasjon/bruker_profil_informasjon_widget.dart'
-    show BrukerProfilInformasjonWidget;
+export '/app_main/registrer/bonde_onboarding/bonde_onboarding_widget.dart'
+    show BondeOnboardingWidget;
+export '/app_main/registrer/bruker_onboarding/bruker_onboarding_widget.dart'
+    show BrukerOnboardingWidget;
 export '/app_main/vanlig_bruker/hjem/bonde_gard_page/bonde_gard_page_widget.dart'
     show BondeGardPageWidget;
 export '/app_main/bonde_gard/hjem/hjem2/hjem2_widget.dart' show Hjem2Widget;
@@ -51,8 +51,6 @@ export '/app_main/bonde_gard/hjem/rediger_matvare2/rediger_matvare2_widget.dart'
     show RedigerMatvare2Widget;
 export '/app_main/bonde_gard/profil/profil2/profil2_widget.dart'
     show Profil2Widget;
-export '/app_main/bonde_gard/profil/salgs_historikk2/salgs_historikk2_widget.dart'
-    show SalgsHistorikk2Widget;
 export '/app_main/bonde_gard/profil/rediger_profil2/rediger_profil2_widget.dart'
     show RedigerProfil2Widget;
 export '/app_main/vanlig_bruker/kjop/bekreftet_hentet/bekreftet_hentet_widget.dart'
@@ -67,5 +65,7 @@ export '/app_main/vanlig_bruker/hjem/folgere/folgere_widget.dart'
     show FolgereWidget;
 export '/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart'
     show BrukerRatingWidget;
-export '/app_main/vanlig_bruker/hjem/bonde_gard_page_copy/bonde_gard_page_copy_widget.dart'
-    show BondeGardPageCopyWidget;
+export '/app_main/bonde_gard/profil/salgs_historikk2/salgs_historikk2_widget.dart'
+    show SalgsHistorikk2Widget;
+export '/app_main/registrer/bekreft_o_t_p/bekreft_o_t_p_widget.dart'
+    show BekreftOTPWidget;

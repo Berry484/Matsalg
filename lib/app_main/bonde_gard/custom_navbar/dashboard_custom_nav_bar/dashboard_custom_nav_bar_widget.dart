@@ -3,19 +3,20 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'profile_custom_nav_bar_model.dart';
-export 'profile_custom_nav_bar_model.dart';
+import 'dashboard_custom_nav_bar_model.dart';
+export 'dashboard_custom_nav_bar_model.dart';
 
-class ProfileCustomNavBarWidget extends StatefulWidget {
-  const ProfileCustomNavBarWidget({super.key});
+class DashboardCustomNavBarWidget extends StatefulWidget {
+  const DashboardCustomNavBarWidget({super.key});
 
   @override
-  State<ProfileCustomNavBarWidget> createState() =>
-      _ProfileCustomNavBarWidgetState();
+  State<DashboardCustomNavBarWidget> createState() =>
+      _DashboardCustomNavBarWidgetState();
 }
 
-class _ProfileCustomNavBarWidgetState extends State<ProfileCustomNavBarWidget> {
-  late ProfileCustomNavBarModel _model;
+class _DashboardCustomNavBarWidgetState
+    extends State<DashboardCustomNavBarWidget> {
+  late DashboardCustomNavBarModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -26,7 +27,7 @@ class _ProfileCustomNavBarWidgetState extends State<ProfileCustomNavBarWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ProfileCustomNavBarModel());
+    _model = createModel(context, () => DashboardCustomNavBarModel());
   }
 
   @override
@@ -161,10 +162,10 @@ class _ProfileCustomNavBarWidgetState extends State<ProfileCustomNavBarWidget> {
                     borderRadius: 30.0,
                     borderWidth: 1.0,
                     buttonSize: 50.0,
-                    icon: Icon(
-                      Icons.person,
+                    icon: FaIcon(
+                      FontAwesomeIcons.cog,
                       color: FlutterFlowTheme.of(context).alternate,
-                      size: 30.0,
+                      size: 24.0,
                     ),
                     onPressed: () {
                       print('IconButton pressed ...');

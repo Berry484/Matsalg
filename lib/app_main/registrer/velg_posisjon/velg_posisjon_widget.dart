@@ -8,7 +8,12 @@ import 'velg_posisjon_model.dart';
 export 'velg_posisjon_model.dart';
 
 class VelgPosisjonWidget extends StatefulWidget {
-  const VelgPosisjonWidget({super.key});
+  const VelgPosisjonWidget({
+    super.key,
+    bool? bonde,
+  }) : bonde = bonde ?? true;
+
+  final bool bonde;
 
   @override
   State<VelgPosisjonWidget> createState() => _VelgPosisjonWidgetState();
@@ -40,34 +45,21 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: true,
-            leading: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.pop();
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: FlutterFlowTheme.of(context).alternate,
-                size: 28.0,
-              ),
-            ),
             title: Text(
               'Velg en posisjon',
+              textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Open Sans',
+                    fontFamily: 'Montserrat',
                     color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 18.0,
+                    fontSize: 20.0,
                     letterSpacing: 0.0,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
             ),
             actions: const [],
@@ -101,7 +93,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                     alignment: const AlignmentDirectional(0.0, 1.0),
                     child: Material(
                       color: Colors.transparent,
-                      elevation: 3.0,
+                      elevation: 5.0,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(0.0),
@@ -163,16 +155,11 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: () async {
-                                  context.goNamed(
-                                    'BondeProfilInformasjon',
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: const TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType: PageTransitionType.fade,
-                                        duration: Duration(milliseconds: 0),
-                                      ),
-                                    },
-                                  );
+                                  if (widget.bonde == true) {
+                                    context.goNamed('BondeOnboarding');
+                                  } else {
+                                    context.goNamed('BrukerOnboarding');
+                                  }
                                 },
                                 text: 'Velg denne posisjonen',
                                 options: FFButtonOptions(

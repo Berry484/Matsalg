@@ -53,10 +53,10 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.pop();
+                context.safePop();
               },
               child: Icon(
-                Icons.arrow_back,
+                Icons.arrow_back_ios,
                 color: FlutterFlowTheme.of(context).alternate,
                 size: 28.0,
               ),

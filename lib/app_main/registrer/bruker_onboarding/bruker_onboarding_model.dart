@@ -1,9 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'bonde_profil_informasjon_widget.dart' show BondeProfilInformasjonWidget;
+import 'bruker_onboarding_widget.dart' show BrukerOnboardingWidget;
 import 'package:flutter/material.dart';
 
-class BondeProfilInformasjonModel
-    extends FlutterFlowModel<BondeProfilInformasjonWidget> {
+class BrukerOnboardingModel extends FlutterFlowModel<BrukerOnboardingWidget> {
   @override
   void initState(BuildContext context) {}
 

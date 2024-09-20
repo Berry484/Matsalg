@@ -6,50 +6,36 @@ class BekreftTLFModel extends FlutterFlowModel<BekreftTLFWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // State field(s) for emailAddress-Create widget.
-  FocusNode? emailAddressCreateFocusNode;
-  TextEditingController? emailAddressCreateTextController;
+  // State field(s) for PhoneNumberField widget.
+  FocusNode? phoneNumberFieldFocusNode;
+  TextEditingController? phoneNumberFieldTextController;
   String? Function(BuildContext, String?)?
-      emailAddressCreateTextControllerValidator;
-  String? _emailAddressCreateTextControllerValidator(
+      phoneNumberFieldTextControllerValidator;
+  String? _phoneNumberFieldTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Field is required';
+      return 'Felt må fylles ut';
+    }
+
+    if (val.length < 8) {
+      return 'Krever minst 8 sifre';
+    }
+    if (val.length > 8) {
+      return 'Maks 8 sifte';
     }
 
     return null;
   }
-
-  // State field(s) for Telefonnummer widget.
-  FocusNode? telefonnummerFocusNode;
-  TextEditingController? telefonnummerTextController;
-  String? Function(BuildContext, String?)? telefonnummerTextControllerValidator;
-  String? _telefonnummerTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Field is required';
-    }
-
-    return null;
-  }
-
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue;
 
   @override
   void initState(BuildContext context) {
-    emailAddressCreateTextControllerValidator =
-        _emailAddressCreateTextControllerValidator;
-    telefonnummerTextControllerValidator =
-        _telefonnummerTextControllerValidator;
+    phoneNumberFieldTextControllerValidator =
+        _phoneNumberFieldTextControllerValidator;
   }
 
   @override
   void dispose() {
-    emailAddressCreateFocusNode?.dispose();
-    emailAddressCreateTextController?.dispose();
-
-    telefonnummerFocusNode?.dispose();
-    telefonnummerTextController?.dispose();
+    phoneNumberFieldFocusNode?.dispose();
+    phoneNumberFieldTextController?.dispose();
   }
 }

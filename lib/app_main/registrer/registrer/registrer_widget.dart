@@ -34,20 +34,20 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
       length: 2,
       initialIndex: 0,
     )..addListener(() => safeSetState(() {}));
-    _model.emailAddressTextController ??= TextEditingController();
-    _model.emailAddressFocusNode ??= FocusNode();
+    _model.emailLoginTextController ??= TextEditingController();
+    _model.emailLoginFocusNode ??= FocusNode();
 
-    _model.passwordTextController ??= TextEditingController();
-    _model.passwordFocusNode ??= FocusNode();
+    _model.passordLoginTextController ??= TextEditingController();
+    _model.passordLoginFocusNode ??= FocusNode();
 
-    _model.brukernavnTextController ??= TextEditingController();
-    _model.brukernavnFocusNode ??= FocusNode();
+    _model.epostLagTextController ??= TextEditingController();
+    _model.epostLagFocusNode ??= FocusNode();
 
-    _model.navnTextController ??= TextEditingController();
-    _model.navnFocusNode ??= FocusNode();
+    _model.navnLagTextController ??= TextEditingController();
+    _model.navnLagFocusNode ??= FocusNode();
 
-    _model.passwordCreateTextController ??= TextEditingController();
-    _model.passwordCreateFocusNode ??= FocusNode();
+    _model.passordLagTextController ??= TextEditingController();
+    _model.passordLagFocusNode ??= FocusNode();
   }
 
   @override
@@ -138,9 +138,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                     20.0, 20.0, 20.0, 0.0),
                                             child: TextFormField(
                                               controller: _model
-                                                  .emailAddressTextController,
+                                                  .emailLoginTextController,
                                               focusNode:
-                                                  _model.emailAddressFocusNode,
+                                                  _model.emailLoginFocusNode,
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 labelText: 'Email ',
@@ -234,7 +234,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                               keyboardType:
                                                   TextInputType.emailAddress,
                                               validator: _model
-                                                  .emailAddressTextControllerValidator
+                                                  .emailLoginTextControllerValidator
                                                   .asValidator(context),
                                             ),
                                           ),
@@ -243,12 +243,12 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     20.0, 12.0, 20.0, 0.0),
                                             child: TextFormField(
-                                              controller:
-                                                  _model.passwordTextController,
+                                              controller: _model
+                                                  .passordLoginTextController,
                                               focusNode:
-                                                  _model.passwordFocusNode,
-                                              obscureText:
-                                                  !_model.passwordVisibility,
+                                                  _model.passordLoginFocusNode,
+                                              obscureText: !_model
+                                                  .passordLoginVisibility,
                                               decoration: InputDecoration(
                                                 labelText: 'Passord',
                                                 labelStyle:
@@ -330,14 +330,14 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                 suffixIcon: InkWell(
                                                   onTap: () => safeSetState(
                                                     () => _model
-                                                            .passwordVisibility =
+                                                            .passordLoginVisibility =
                                                         !_model
-                                                            .passwordVisibility,
+                                                            .passordLoginVisibility,
                                                   ),
                                                   focusNode: FocusNode(
                                                       skipTraversal: true),
                                                   child: Icon(
-                                                    _model.passwordVisibility
+                                                    _model.passordLoginVisibility
                                                         ? Icons
                                                             .visibility_outlined
                                                         : Icons
@@ -361,7 +361,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         letterSpacing: 0.0,
                                                       ),
                                               validator: _model
-                                                  .passwordTextControllerValidator
+                                                  .passordLoginTextControllerValidator
                                                   .asValidator(context),
                                             ),
                                           ),
@@ -453,12 +453,12 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           20.0, 0.0),
                                                   child: TextFormField(
                                                     controller: _model
-                                                        .brukernavnTextController,
+                                                        .epostLagTextController,
                                                     focusNode: _model
-                                                        .brukernavnFocusNode,
+                                                        .epostLagFocusNode,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
-                                                      labelText: 'Brukernavn',
+                                                      labelText: 'Epost',
                                                       labelStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -471,7 +471,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                     0.0,
                                                               ),
                                                       hintText:
-                                                          'Skriv inn brukernavn...',
+                                                          'Skriv inn epost...',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -557,7 +557,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                     maxLines: null,
                                                     validator: _model
-                                                        .brukernavnTextControllerValidator
+                                                        .epostLagTextControllerValidator
                                                         .asValidator(context),
                                                   ),
                                                 ),
@@ -567,9 +567,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           20.0, 0.0),
                                                   child: TextFormField(
                                                     controller: _model
-                                                        .navnTextController,
+                                                        .navnLagTextController,
                                                     focusNode:
-                                                        _model.navnFocusNode,
+                                                        _model.navnLagFocusNode,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       labelText: 'Fullt navn',
@@ -671,7 +671,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                     maxLines: null,
                                                     validator: _model
-                                                        .navnTextControllerValidator
+                                                        .navnLagTextControllerValidator
                                                         .asValidator(context),
                                                   ),
                                                 ),
@@ -681,11 +681,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           20.0, 0.0),
                                                   child: TextFormField(
                                                     controller: _model
-                                                        .passwordCreateTextController,
+                                                        .passordLagTextController,
                                                     focusNode: _model
-                                                        .passwordCreateFocusNode,
+                                                        .passordLagFocusNode,
                                                     obscureText: !_model
-                                                        .passwordCreateVisibility,
+                                                        .passordLagVisibility,
                                                     decoration: InputDecoration(
                                                       labelText: 'Passord',
                                                       labelStyle:
@@ -775,15 +775,15 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         onTap: () =>
                                                             safeSetState(
                                                           () => _model
-                                                                  .passwordCreateVisibility =
+                                                                  .passordLagVisibility =
                                                               !_model
-                                                                  .passwordCreateVisibility,
+                                                                  .passordLagVisibility,
                                                         ),
                                                         focusNode: FocusNode(
                                                             skipTraversal:
                                                                 true),
                                                         child: Icon(
-                                                          _model.passwordCreateVisibility
+                                                          _model.passordLagVisibility
                                                               ? Icons
                                                                   .visibility_outlined
                                                               : Icons
@@ -808,7 +808,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           letterSpacing: 0.0,
                                                         ),
                                                     validator: _model
-                                                        .passwordCreateTextControllerValidator
+                                                        .passordLagTextControllerValidator
                                                         .asValidator(context),
                                                   ),
                                                 ),
@@ -835,26 +835,10 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         context.pushNamed(
                                                           'BekreftTLF',
                                                           queryParameters: {
-                                                            'brukernavn':
+                                                            'bonde':
                                                                 serializeParam(
-                                                              _model
-                                                                  .brukernavnTextController
-                                                                  .text,
-                                                              ParamType.String,
-                                                            ),
-                                                            'fulltnavn':
-                                                                serializeParam(
-                                                              _model
-                                                                  .navnTextController
-                                                                  .text,
-                                                              ParamType.String,
-                                                            ),
-                                                            'password':
-                                                                serializeParam(
-                                                              _model
-                                                                  .passwordCreateTextController
-                                                                  .text,
-                                                              ParamType.String,
+                                                              false,
+                                                              ParamType.bool,
                                                             ),
                                                           }.withoutNulls,
                                                         );

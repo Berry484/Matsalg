@@ -1,13 +1,13 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'bekreft_t_l_f_model.dart';
-export 'bekreft_t_l_f_model.dart';
+import 'bekreft_o_t_p_model.dart';
+export 'bekreft_o_t_p_model.dart';
 
-class BekreftTLFWidget extends StatefulWidget {
-  const BekreftTLFWidget({
+class BekreftOTPWidget extends StatefulWidget {
+  const BekreftOTPWidget({
     super.key,
     this.bonde,
   });
@@ -15,21 +15,18 @@ class BekreftTLFWidget extends StatefulWidget {
   final bool? bonde;
 
   @override
-  State<BekreftTLFWidget> createState() => _BekreftTLFWidgetState();
+  State<BekreftOTPWidget> createState() => _BekreftOTPWidgetState();
 }
 
-class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
-  late BekreftTLFModel _model;
+class _BekreftOTPWidgetState extends State<BekreftOTPWidget> {
+  late BekreftOTPModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BekreftTLFModel());
-
-    _model.phoneNumberFieldTextController ??= TextEditingController();
-    _model.phoneNumberFieldFocusNode ??= FocusNode();
+    _model = createModel(context, () => BekreftOTPModel());
   }
 
   @override
@@ -96,12 +93,12 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 0.0),
                           child: Text(
-                            'Skriv telefonnummeret ditt',
+                            'Skriv inn koden vi sendte',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  fontSize: 25.0,
+                                  fontSize: 26.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -111,7 +108,7 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 10.0, 0.0, 30.0),
                           child: Text(
-                            'Vi sender en kode til telefonnummeret ditt',
+                            'Vi sendte deg en 4 sifferet kode',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -125,103 +122,48 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                         Form(
                           key: _model.formKey,
                           autovalidateMode: AutovalidateMode.disabled,
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 0.0),
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 0.9,
-                              height: 55.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(20.0),
-                                  bottomRight: Radius.circular(20.0),
-                                  topLeft: Radius.circular(20.0),
-                                  topRight: Radius.circular(20.0),
-                                ),
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).accent1,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        15.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      '+47',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                          ),
+                          child: PinCodeTextField(
+                            autoDisposeControllers: false,
+                            appContext: context,
+                            length: 4,
+                            textStyle:
+                                FlutterFlowTheme.of(context).bodyLarge.override(
+                                      fontFamily: 'Open Sans',
+                                      letterSpacing: 0.0,
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          4.0, 0.0, 8.0, 0.0),
-                                      child: TextFormField(
-                                        controller: _model
-                                            .phoneNumberFieldTextController,
-                                        focusNode:
-                                            _model.phoneNumberFieldFocusNode,
-                                        autofocus: true,
-                                        textInputAction: TextInputAction.done,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Open Sans',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Open Sans',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          enabledBorder: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                          errorBorder: InputBorder.none,
-                                          focusedErrorBorder: InputBorder.none,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.0,
-                                            ),
-                                        maxLength: 8,
-                                        maxLengthEnforcement:
-                                            MaxLengthEnforcement.enforced,
-                                        buildCounter: (context,
-                                                {required currentLength,
-                                                required isFocused,
-                                                maxLength}) =>
-                                            null,
-                                        keyboardType: TextInputType.phone,
-                                        validator: _model
-                                            .phoneNumberFieldTextControllerValidator
-                                            .asValidator(context),
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                              RegExp('[0-9]'))
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            enableActiveFill: false,
+                            autoFocus: true,
+                            enablePinAutofill: false,
+                            errorTextSpace: 16.0,
+                            showCursor: true,
+                            cursorColor:
+                                FlutterFlowTheme.of(context).primaryText,
+                            obscureText: false,
+                            keyboardType: TextInputType.number,
+                            pinTheme: PinTheme(
+                              fieldHeight: 60.0,
+                              fieldWidth: 45.0,
+                              borderWidth: 2.0,
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0),
+                                topLeft: Radius.circular(10.0),
+                                topRight: Radius.circular(10.0),
                               ),
+                              shape: PinCodeFieldShape.box,
+                              activeColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              inactiveColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              selectedColor:
+                                  FlutterFlowTheme.of(context).alternate,
                             ),
+                            controller: _model.pinCodeController,
+                            onChanged: (_) {},
+                            autovalidateMode: AutovalidateMode.disabled,
+                            validator: _model.pinCodeControllerValidator
+                                .asValidator(context),
                           ),
                         ),
                         Align(
@@ -236,8 +178,8 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                   return;
                                 }
 
-                                context.pushNamed(
-                                  'BekreftOTP',
+                                context.goNamed(
+                                  'VelgPosisjon',
                                   queryParameters: {
                                     'bonde': serializeParam(
                                       widget.bonde,
@@ -246,7 +188,7 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                   }.withoutNulls,
                                 );
                               },
-                              text: 'Send kode',
+                              text: 'Bekreft',
                               options: FFButtonOptions(
                                 width: 230.0,
                                 height: 50.0,

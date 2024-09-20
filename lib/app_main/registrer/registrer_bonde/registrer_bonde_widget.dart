@@ -59,9 +59,6 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
 
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
-
-    _model.telefonnummerTextController ??= TextEditingController();
-    _model.telefonnummerFocusNode ??= FocusNode();
   }
 
   @override
@@ -82,25 +79,21 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
           backgroundColor: FlutterFlowTheme.of(context).secondary,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).secondary,
+            iconTheme:
+                IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: true,
-            leading: Align(
-              alignment: const AlignmentDirectional(-1.0, 1.0),
-              child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    context.pop();
-                  },
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: FlutterFlowTheme.of(context).alternate,
-                    size: 33.0,
-                  ),
-                ),
+            leading: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                context.safePop();
+              },
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: FlutterFlowTheme.of(context).alternate,
+                size: 28.0,
               ),
             ),
             actions: const [],
@@ -1816,96 +1809,6 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
                                     .asValidator(context),
                               ),
                             ),
-                            Stack(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
-                              children: [
-                                Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.33),
-                                  child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        20.0, 20.0, 20.0, 40.0),
-                                    child: TextFormField(
-                                      controller:
-                                          _model.telefonnummerTextController,
-                                      focusNode: _model.telefonnummerFocusNode,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        labelText: 'Telefonnummer',
-                                        labelStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 15.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                        alignLabelWithHint: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .error,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .error,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        filled: true,
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        contentPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                20.0, 24.0, 20.0, 24.0),
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 15.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                      maxLines: null,
-                                      maxLength: 8,
-                                      keyboardType: TextInputType.number,
-                                      validator: _model
-                                          .telefonnummerTextControllerValidator
-                                          .asValidator(context),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                             const Divider(
                               thickness: 1.0,
                               indent: 30.0,
@@ -1991,7 +1894,13 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
                                     }
 
                                     context.pushNamed(
-                                      'VelgPosisjon',
+                                      'BekreftTLF',
+                                      queryParameters: {
+                                        'bonde': serializeParam(
+                                          true,
+                                          ParamType.bool,
+                                        ),
+                                      }.withoutNulls,
                                       extra: <String, dynamic>{
                                         kTransitionInfoKey: const TransitionInfo(
                                           hasTransition: true,

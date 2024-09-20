@@ -63,19 +63,6 @@ class RegistrerBondeModel extends FlutterFlowModel<RegistrerBondeWidget> {
   FocusNode? emailAddressFocusNode;
   TextEditingController? emailAddressTextController;
   String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
-  // State field(s) for Telefonnummer widget.
-  FocusNode? telefonnummerFocusNode;
-  TextEditingController? telefonnummerTextController;
-  String? Function(BuildContext, String?)? telefonnummerTextControllerValidator;
-  String? _telefonnummerTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Field is required';
-    }
-
-    return null;
-  }
-
   // State field(s) for Checkbox widget.
   bool? checkboxValue;
 
@@ -84,8 +71,6 @@ class RegistrerBondeModel extends FlutterFlowModel<RegistrerBondeWidget> {
     bondeGardNavnTextControllerValidator =
         _bondeGardNavnTextControllerValidator;
     passordVisibility = false;
-    telefonnummerTextControllerValidator =
-        _telefonnummerTextControllerValidator;
   }
 
   @override
@@ -120,8 +105,5 @@ class RegistrerBondeModel extends FlutterFlowModel<RegistrerBondeWidget> {
 
     emailAddressFocusNode?.dispose();
     emailAddressTextController?.dispose();
-
-    telefonnummerFocusNode?.dispose();
-    telefonnummerTextController?.dispose();
   }
 }

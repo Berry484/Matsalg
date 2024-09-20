@@ -77,27 +77,24 @@ class _RedigerMatvareWidgetState extends State<RedigerMatvareWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.pop();
+                context.safePop();
               },
               child: Icon(
-                Icons.arrow_back,
-                color: FlutterFlowTheme.of(context).primaryText,
+                Icons.arrow_back_ios,
+                color: FlutterFlowTheme.of(context).alternate,
                 size: 28.0,
               ),
             ),
-            title: Align(
-              alignment: const AlignmentDirectional(-1.0, 0.0),
-              child: Text(
-                'Rediger matvare',
-                textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Montserrat',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 20.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
+            title: Text(
+              'Rediger matvare',
+              textAlign: TextAlign.center,
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Montserrat',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 20.0,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
             actions: const [],
             centerTitle: true,

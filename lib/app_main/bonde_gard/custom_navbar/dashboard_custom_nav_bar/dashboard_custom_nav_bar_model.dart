@@ -1,8 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'bonde_gard_page_copy_widget.dart' show BondeGardPageCopyWidget;
+import 'dashboard_custom_nav_bar_widget.dart' show DashboardCustomNavBarWidget;
 import 'package:flutter/material.dart';
 
-class BondeGardPageCopyModel extends FlutterFlowModel<BondeGardPageCopyWidget> {
+class DashboardCustomNavBarModel
+    extends FlutterFlowModel<DashboardCustomNavBarWidget> {
   @override
   void initState(BuildContext context) {}
 

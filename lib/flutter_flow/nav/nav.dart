@@ -180,17 +180,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'BekreftTLF',
           path: '/bekreftTLF',
           builder: (context, params) => BekreftTLFWidget(
-            brukernavn: params.getParam(
-              'brukernavn',
-              ParamType.String,
-            ),
-            fulltnavn: params.getParam(
-              'fulltnavn',
-              ParamType.String,
-            ),
-            password: params.getParam(
-              'password',
-              ParamType.String,
+            bonde: params.getParam(
+              'bonde',
+              ParamType.bool,
             ),
           ),
         ),
@@ -210,14 +202,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const LegUtMat2Widget(),
         ),
         FFRoute(
-          name: 'BondeProfilInformasjon',
-          path: '/bondeProfilInformasjon',
-          builder: (context, params) => const BondeProfilInformasjonWidget(),
+          name: 'BondeOnboarding',
+          path: '/bondeOnboarding',
+          builder: (context, params) => const BondeOnboardingWidget(),
         ),
         FFRoute(
-          name: 'BrukerProfilInformasjon',
-          path: '/brukerProfilInformasjon',
-          builder: (context, params) => const BrukerProfilInformasjonWidget(),
+          name: 'BrukerOnboarding',
+          path: '/brukerOnboarding',
+          builder: (context, params) => const BrukerOnboardingWidget(),
         ),
         FFRoute(
           name: 'BondeGardPage',
@@ -265,11 +257,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const Profil2Widget(),
         ),
         FFRoute(
-          name: 'SalgsHistorikk2',
-          path: '/salgsHistorikk2',
-          builder: (context, params) => const SalgsHistorikk2Widget(),
-        ),
-        FFRoute(
           name: 'RedigerProfil2',
           path: '/redigerProfil2',
           builder: (context, params) => const RedigerProfil2Widget(),
@@ -287,7 +274,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'VelgPosisjon',
           path: '/velgPosisjon',
-          builder: (context, params) => const VelgPosisjonWidget(),
+          builder: (context, params) => VelgPosisjonWidget(
+            bonde: params.getParam(
+              'bonde',
+              ParamType.bool,
+            ),
+          ),
         ),
         FFRoute(
           name: 'BrukerPage',
@@ -310,9 +302,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const BrukerRatingWidget(),
         ),
         FFRoute(
-          name: 'BondeGardPageCopy',
-          path: '/bondeGardPageCopy',
-          builder: (context, params) => const BondeGardPageCopyWidget(),
+          name: 'SalgsHistorikk2',
+          path: '/salgsHistorikk2',
+          builder: (context, params) => const SalgsHistorikk2Widget(),
+        ),
+        FFRoute(
+          name: 'BekreftOTP',
+          path: '/bekreftOTP',
+          builder: (context, params) => BekreftOTPWidget(
+            bonde: params.getParam(
+              'bonde',
+              ParamType.bool,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -6,14 +6,11 @@ import 'package:flutter/material.dart';
 class Hjem2Model extends FlutterFlowModel<Hjem2Widget> {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for PageView widget.
-  PageController? pageViewController;
+  // State field(s) for TabBar widget.
+  TabController? tabBarController;
+  int get tabBarCurrentIndex =>
+      tabBarController != null ? tabBarController!.index : 0;
 
-  int get pageViewCurrentIndex => pageViewController != null &&
-          pageViewController!.hasClients &&
-          pageViewController!.page != null
-      ? pageViewController!.page!.round()
-      : 0;
   // Model for HomeCustomNavBar component.
   late HomeCustomNavBarModel homeCustomNavBarModel;
 
@@ -24,6 +21,7 @@ class Hjem2Model extends FlutterFlowModel<Hjem2Widget> {
 
   @override
   void dispose() {
+    tabBarController?.dispose();
     homeCustomNavBarModel.dispose();
   }
 }
