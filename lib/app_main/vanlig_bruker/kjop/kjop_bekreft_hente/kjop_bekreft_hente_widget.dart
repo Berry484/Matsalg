@@ -72,7 +72,8 @@ class _KjopBekreftHenteWidgetState extends State<KjopBekreftHenteWidget> {
                       ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
                   child: Text(
                     'Hvis du trykker bekreft, bekrefter du at du har hentet matvaren.',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -84,7 +85,8 @@ class _KjopBekreftHenteWidgetState extends State<KjopBekreftHenteWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       context.goNamed(
@@ -106,10 +108,10 @@ class _KjopBekreftHenteWidgetState extends State<KjopBekreftHenteWidget> {
                     options: FFButtonOptions(
                       width: 200.0,
                       height: 60.0,
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 0.0, 0.0),
+                      iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).alternate,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -129,7 +131,8 @@ class _KjopBekreftHenteWidgetState extends State<KjopBekreftHenteWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       context.safePop();
@@ -142,10 +145,10 @@ class _KjopBekreftHenteWidgetState extends State<KjopBekreftHenteWidget> {
                     options: FFButtonOptions(
                       width: 200.0,
                       height: 60.0,
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 0.0, 0.0),
+                      iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 0.0, 0.0),
                       color: const Color(0xFFE52E4C),
                       textStyle:
                           FlutterFlowTheme.of(context).bodyLarge.override(
