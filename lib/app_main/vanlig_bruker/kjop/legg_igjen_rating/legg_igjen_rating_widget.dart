@@ -51,8 +51,8 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                 Align(
                   alignment: const AlignmentDirectional(0.0, -1.0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20.0, 100.0, 20.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        20.0, 100.0, 20.0, 0.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
@@ -68,8 +68,8 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                 Align(
                   alignment: const AlignmentDirectional(0.0, -1.0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 20.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 50.0, 0.0, 20.0),
                     child: Text(
                       'Legg igjen en tilbakemelding',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -97,12 +97,13 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                   glowColor: FlutterFlowTheme.of(context).alternate,
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 70.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 70.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       context.goNamed('Hjem');
                     },
-                    text: 'Ferdig',
+                    text: 'Send',
                     icon: const FaIcon(
                       FontAwesomeIcons.check,
                       size: 15.0,
@@ -110,10 +111,10 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                     options: FFButtonOptions(
                       width: 200.0,
                       height: 40.0,
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          16.0, 0.0, 16.0, 0.0),
+                      iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).alternate,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -129,7 +130,8 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       context.goNamed('Hjem');
@@ -138,10 +140,10 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                     options: FFButtonOptions(
                       width: 200.0,
                       height: 40.0,
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          16.0, 0.0, 16.0, 0.0),
+                      iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(

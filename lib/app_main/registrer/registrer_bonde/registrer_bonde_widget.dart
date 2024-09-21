@@ -918,7 +918,7 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          8.0),
+                                                                          24.0),
                                                             ),
                                                           ),
                                                         ),
@@ -1527,12 +1527,12 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
                                                                             context)
                                                                         .alternate,
                                                                     fontSize:
-                                                                        15.0,
+                                                                        17.0,
                                                                     letterSpacing:
                                                                         0.0,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w600,
+                                                                            .bold,
                                                                   ),
                                                           elevation: 3.0,
                                                           borderSide:
@@ -1544,7 +1544,7 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
-                                                                      12.0),
+                                                                      24.0),
                                                         ),
                                                       ),
                                                     ),
@@ -1747,6 +1747,7 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
                                       color: Colors.transparent,
                                       width: 1.0,
                                     ),
+                                    borderRadius: BorderRadius.circular(24.0),
                                   ),
                                 ),
                               ),

@@ -49,8 +49,8 @@ class _BekreftetHentetWidgetState extends State<BekreftetHentetWidget>
             curve: Curves.easeInOut,
             delay: 90.0.ms,
             duration: 600.0.ms,
-            begin: const Offset(0.0, 1000.0),
-            end: const Offset(0.0, 0.0),
+            begin: Offset(0.0, 1000.0),
+            end: Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -76,7 +76,7 @@ class _BekreftetHentetWidgetState extends State<BekreftetHentetWidget>
           body: SafeArea(
             top: true,
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 150.0),
+              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 150),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -86,18 +86,18 @@ class _BekreftetHentetWidgetState extends State<BekreftetHentetWidget>
                     child: Stack(
                       children: [
                         Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          alignment: AlignmentDirectional(0, 0),
                           child: Lottie.asset(
                             'assets/lottie_animations/Animation_-_1706448459770.json',
-                            width: 286.0,
-                            height: 267.0,
+                            width: 286,
+                            height: 267,
                             fit: BoxFit.cover,
                             repeat: false,
                             animate: true,
                           ),
                         ),
                         Align(
-                          alignment: const AlignmentDirectional(-0.06, 0.47),
+                          alignment: AlignmentDirectional(-0.06, 0.47),
                           child: Text(
                             'Bekreftet!',
                             textAlign: TextAlign.center,
@@ -105,7 +105,7 @@ class _BekreftetHentetWidgetState extends State<BekreftetHentetWidget>
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  fontSize: 22.0,
+                                  fontSize: 22,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -116,38 +116,36 @@ class _BekreftetHentetWidgetState extends State<BekreftetHentetWidget>
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         context.goNamed('LeggIgjenRating');
                       },
                       text: 'Ferdig',
-                      icon: const FaIcon(
+                      icon: FaIcon(
                         FontAwesomeIcons.check,
-                        size: 15.0,
+                        size: 15,
                       ),
                       options: FFButtonOptions(
-                        width: 270.0,
-                        height: 50.0,
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        width: 270,
+                        height: 50,
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         color: FlutterFlowTheme.of(context).alternate,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Open Sans',
                                   color: FlutterFlowTheme.of(context).primary,
-                                  fontSize: 22.0,
+                                  fontSize: 22,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
-                        elevation: 3.0,
-                        borderSide: const BorderSide(
+                        elevation: 3,
+                        borderSide: BorderSide(
                           color: Colors.transparent,
-                          width: 1.0,
+                          width: 1,
                         ),
+                        borderRadius: BorderRadius.circular(24),
                       ),
                     ).animateOnPageLoad(
                         animationsMap['buttonOnPageLoadAnimation']!),
