@@ -2,7 +2,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'rediger_matvare_widget.dart' show RedigerMatvareWidget;
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class RedigerMatvareModel extends FlutterFlowModel<RedigerMatvareWidget> {
   ///  Local state fields for this page.
@@ -75,24 +74,6 @@ class RedigerMatvareModel extends FlutterFlowModel<RedigerMatvareWidget> {
     return null;
   }
 
-  // State field(s) for GateNavn widget.
-  FocusNode? gateNavnFocusNode;
-  TextEditingController? gateNavnTextController;
-  String? Function(BuildContext, String?)? gateNavnTextControllerValidator;
-  // State field(s) for GateNummer widget.
-  FocusNode? gateNummerFocusNode;
-  TextEditingController? gateNummerTextController;
-  String? Function(BuildContext, String?)? gateNummerTextControllerValidator;
-  // State field(s) for PostNummer widget.
-  FocusNode? postNummerFocusNode;
-  TextEditingController? postNummerTextController;
-  final postNummerMask = MaskTextInputFormatter(mask: '####');
-  String? Function(BuildContext, String?)? postNummerTextControllerValidator;
-  // State field(s) for By widget.
-  FocusNode? byFocusNode;
-  TextEditingController? byTextController;
-  String? Function(BuildContext, String?)? byTextControllerValidator;
-
   @override
   void initState(BuildContext context) {
     produktNavnTextControllerValidator = _produktNavnTextControllerValidator;
@@ -111,17 +92,5 @@ class RedigerMatvareModel extends FlutterFlowModel<RedigerMatvareWidget> {
 
     produktPrisFocusNode?.dispose();
     produktPrisTextController?.dispose();
-
-    gateNavnFocusNode?.dispose();
-    gateNavnTextController?.dispose();
-
-    gateNummerFocusNode?.dispose();
-    gateNummerTextController?.dispose();
-
-    postNummerFocusNode?.dispose();
-    postNummerTextController?.dispose();
-
-    byFocusNode?.dispose();
-    byTextController?.dispose();
   }
 }

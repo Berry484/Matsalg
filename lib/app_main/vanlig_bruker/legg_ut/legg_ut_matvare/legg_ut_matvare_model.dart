@@ -2,7 +2,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'legg_ut_matvare_widget.dart' show LeggUtMatvareWidget;
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
   ///  Local state fields for this page.
@@ -76,23 +75,6 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
   FocusNode? produktPrisKgFocusNode;
   TextEditingController? produktPrisKgTextController;
   String? Function(BuildContext, String?)? produktPrisKgTextControllerValidator;
-  // State field(s) for GateNavn widget.
-  FocusNode? gateNavnFocusNode;
-  TextEditingController? gateNavnTextController;
-  String? Function(BuildContext, String?)? gateNavnTextControllerValidator;
-  // State field(s) for GateNummer widget.
-  FocusNode? gateNummerFocusNode;
-  TextEditingController? gateNummerTextController;
-  String? Function(BuildContext, String?)? gateNummerTextControllerValidator;
-  // State field(s) for PostNummer widget.
-  FocusNode? postNummerFocusNode;
-  TextEditingController? postNummerTextController;
-  final postNummerMask = MaskTextInputFormatter(mask: '####');
-  String? Function(BuildContext, String?)? postNummerTextControllerValidator;
-  // State field(s) for By widget.
-  FocusNode? byFocusNode;
-  TextEditingController? byTextController;
-  String? Function(BuildContext, String?)? byTextControllerValidator;
 
   @override
   void initState(BuildContext context) {
@@ -115,17 +97,5 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
 
     produktPrisKgFocusNode?.dispose();
     produktPrisKgTextController?.dispose();
-
-    gateNavnFocusNode?.dispose();
-    gateNavnTextController?.dispose();
-
-    gateNummerFocusNode?.dispose();
-    gateNummerTextController?.dispose();
-
-    postNummerFocusNode?.dispose();
-    postNummerTextController?.dispose();
-
-    byFocusNode?.dispose();
-    byTextController?.dispose();
   }
 }
