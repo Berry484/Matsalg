@@ -67,8 +67,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                 Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 17.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 10.0, 0.0, 17.0),
                     child: SafeArea(
                       child: Container(
                         width: valueOrDefault<double>(
@@ -228,12 +228,11 @@ class _HjemWidgetState extends State<HjemWidget> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Align(
-                                        alignment:
-                                            const AlignmentDirectional(-1.0, 0.0),
+                                        alignment: const AlignmentDirectional(
+                                            -1.0, 0.0),
                                         child: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 10.0, 0.0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10.0, 0.0, 10.0, 0.0),
                                           child: FlutterFlowDropDown<String>(
                                             controller: _model
                                                     .dropDownValueController ??=
@@ -285,12 +284,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                 FlutterFlowTheme.of(context)
                                                     .primary,
                                             elevation: 4.0,
-                                            borderColor: const Color(0x6357636C),
+                                            borderColor:
+                                                const Color(0x6357636C),
                                             borderWidth: 1.0,
                                             borderRadius: 8.0,
-                                            margin:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    5.0, 4.0, 5.0, 4.0),
+                                            margin: const EdgeInsetsDirectional
+                                                .fromSTEB(5.0, 4.0, 5.0, 4.0),
                                             hidesUnderline: true,
                                             isOverButton: false,
                                             isSearchable: false,
@@ -299,8 +298,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                         ),
                                       ),
                                       Align(
-                                        alignment:
-                                            const AlignmentDirectional(-1.0, 0.0),
+                                        alignment: const AlignmentDirectional(
+                                            -1.0, 0.0),
                                         child: FlutterFlowIconButton(
                                           borderColor: const Color(0x6357636C),
                                           borderRadius: 8.0,
@@ -332,7 +331,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      0.0, 100.0, 0.0, 0.0),
                   child: SingleChildScrollView(
                     primary: false,
                     child: Column(
@@ -353,8 +353,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(-0.76, -0.61),
+                                      alignment: const AlignmentDirectional(
+                                          -0.76, -0.61),
                                       child: Container(
                                         width:
                                             MediaQuery.sizeOf(context).width *
@@ -374,8 +374,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(7.0, 0.0, 0.0, 0.0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      7.0, 0.0, 0.0, 0.0),
                                               child: Text(
                                                 'Bondegårder i nærheten',
                                                 textAlign: TextAlign.start,
@@ -400,16 +402,18 @@ class _HjemWidgetState extends State<HjemWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          7.0, 0.0, 0.0, 55.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              7.0, 0.0, 0.0, 55.0),
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       0.0, 0.0, 40.0, 5.0),
                                               child: InkWell(
                                                 splashColor: Colors.transparent,
@@ -459,10 +463,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                             padding:
                                                                 const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        12.0),
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    12.0),
                                                             child: ClipRRect(
                                                               borderRadius:
                                                                   const BorderRadius
@@ -501,10 +505,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                             padding:
                                                                 const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                    10.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
                                                             child: AutoSizeText(
                                                               'Faugsted Gård',
                                                               textAlign:
@@ -532,10 +536,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           padding:
                                                               const EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                      0.0,
-                                                                      10.0,
-                                                                      0.0,
-                                                                      0.0),
+                                                                  0.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0),
                                                           child: Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
@@ -628,10 +632,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   Padding(
                                                                     padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            5.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
                                                                     child: Text(
                                                                       'Km',
                                                                       textAlign:
@@ -714,8 +718,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                       ),
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(-0.76, -0.61),
+                                      alignment: const AlignmentDirectional(
+                                          -0.76, -0.61),
                                       child: Container(
                                         width:
                                             MediaQuery.sizeOf(context).width *
@@ -737,8 +741,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               CrossAxisAlignment.end,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(7.0, 0.0, 0.0, 0.0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      7.0, 0.0, 0.0, 0.0),
                                               child: Text(
                                                 'Lokale matvarer',
                                                 textAlign: TextAlign.start,
@@ -791,7 +797,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                               scrollDirection: Axis.vertical,
                               children: [
                                 Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment:
+                                      const AlignmentDirectional(0.0, 0.0),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
                                     focusColor: Colors.transparent,
@@ -824,11 +831,13 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Align(
-                                              alignment: const AlignmentDirectional(
-                                                  0.0, 0.0),
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0.0, 0.0),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         0.0, 0.0, 0.0, 12.0),
                                                 child: ClipRRect(
                                                   borderRadius:
@@ -852,8 +861,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      5.0, 0.0, 5.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
@@ -864,11 +875,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  7.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              .fromSTEB(7.0,
+                                                              0.0, 0.0, 0.0),
                                                       child: AutoSizeText(
                                                         'Kantareller',
                                                         textAlign:
@@ -894,8 +902,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 4.0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      0.0, 0.0, 0.0, 4.0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
@@ -911,11 +921,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5.0,
-                                                                    5.0,
-                                                                    5.0,
-                                                                    0.0),
+                                                                .fromSTEB(5.0,
+                                                                5.0, 5.0, 0.0),
                                                         child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -930,10 +937,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                      0.0,
+                                                                      5.0,
+                                                                      0.0,
+                                                                      0.0),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -942,10 +949,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   Padding(
                                                                     padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                        7.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
                                                                     child: Text(
                                                                       '300 Kr',
                                                                       textAlign:
@@ -1026,8 +1033,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: const EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           5.0,
                                                                           0.0,
                                                                           5.0,

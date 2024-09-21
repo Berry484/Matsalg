@@ -64,12 +64,12 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
               child: Icon(
                 Icons.arrow_back_ios,
                 color: FlutterFlowTheme.of(context).alternate,
-                size: 28.0,
+                size: 28,
               ),
             ),
-            actions: const [],
+            actions: [],
             centerTitle: true,
-            elevation: 0.0,
+            elevation: 0,
           ),
           body: SafeArea(
             top: true,
@@ -78,45 +78,43 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
               children: [
                 Expanded(
                   child: Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    alignment: AlignmentDirectional(0, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                           child: Image.asset(
                             'assets/images/Mobile_login-bro.png',
-                            width: 237.0,
-                            height: 240.0,
+                            width: 237,
+                            height: 240,
                             fit: BoxFit.cover,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                           child: Text(
                             'Skriv telefonnummeret ditt',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  fontSize: 25.0,
+                                  fontSize: 25,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 10.0, 0.0, 30.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 30),
                           child: Text(
                             'Vi sender en kode til telefonnummeret ditt',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  fontSize: 14.0,
+                                  fontSize: 14,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -126,19 +124,19 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                           key: _model.formKey,
                           autovalidateMode: AutovalidateMode.disabled,
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 0.0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: Container(
                               width: MediaQuery.sizeOf(context).width * 0.9,
-                              height: 55.0,
+                              height: 55,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(20.0),
-                                  bottomRight: Radius.circular(20.0),
-                                  topLeft: Radius.circular(20.0),
-                                  topRight: Radius.circular(20.0),
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20),
+                                  bottomRight: Radius.circular(20),
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
                                 ),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).accent1,
@@ -148,29 +146,29 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        15.0, 0.0, 0.0, 0.0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        15, 0, 0, 0),
                                     child: Text(
                                       '+47',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Open Sans',
-                                            fontSize: 16.0,
+                                            fontSize: 16,
                                             letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          4.0, 0.0, 8.0, 0.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          4, 0, 8, 0),
                                       child: TextFormField(
                                         controller: _model
                                             .phoneNumberFieldTextController,
                                         focusNode:
                                             _model.phoneNumberFieldFocusNode,
-                                        autofocus: true,
+                                        autofocus: false,
                                         textInputAction: TextInputAction.done,
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -197,7 +195,7 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Open Sans',
-                                              fontSize: 16.0,
+                                              fontSize: 16,
                                               letterSpacing: 0.0,
                                             ),
                                         maxLength: 8,
@@ -225,10 +223,10 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                           ),
                         ),
                         Align(
-                          alignment: const AlignmentDirectional(0.0, -1.0),
+                          alignment: AlignmentDirectional(0, -1),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 24.0, 0.0, 0.0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                             child: FFButtonWidget(
                               onPressed: () async {
                                 if (_model.formKey.currentState == null ||
@@ -240,7 +238,7 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                   'BekreftOTP',
                                   queryParameters: {
                                     'bonde': serializeParam(
-                                      widget.bonde,
+                                      widget!.bonde,
                                       ParamType.bool,
                                     ),
                                   }.withoutNulls,
@@ -248,11 +246,11 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                               },
                               text: 'Send kode',
                               options: FFButtonOptions(
-                                width: 230.0,
-                                height: 50.0,
-                                padding: const EdgeInsets.all(10.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
+                                width: 230,
+                                height: 50,
+                                padding: EdgeInsets.all(10),
+                                iconPadding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                 color: FlutterFlowTheme.of(context).alternate,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
@@ -260,16 +258,16 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                       fontFamily: 'Open Sans',
                                       color:
                                           FlutterFlowTheme.of(context).primary,
-                                      fontSize: 17.0,
+                                      fontSize: 17,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
+                                elevation: 3,
+                                borderSide: BorderSide(
                                   color: Colors.transparent,
-                                  width: 1.0,
+                                  width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(24.0),
+                                borderRadius: BorderRadius.circular(24),
                               ),
                             ),
                           ),

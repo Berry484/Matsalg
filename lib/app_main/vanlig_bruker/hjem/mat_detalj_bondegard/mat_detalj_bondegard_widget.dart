@@ -1,11 +1,14 @@
 import '/app_main/vanlig_bruker/hjem/betal_popup/betal_popup_widget.dart';
 import '/app_main/vanlig_bruker/kart/kart_pop_up_bondegard/kart_pop_up_bondegard_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'mat_detalj_bondegard_model.dart';
 export 'mat_detalj_bondegard_model.dart';
 
@@ -37,6 +40,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
@@ -60,12 +65,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
               child: Icon(
                 Icons.arrow_back_ios,
                 color: FlutterFlowTheme.of(context).alternate,
-                size: 28.0,
+                size: 28,
               ),
             ),
-            actions: const [],
+            actions: [],
             centerTitle: true,
-            elevation: 0.0,
+            elevation: 0,
           ),
           body: SafeArea(
             top: true,
@@ -84,8 +89,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 5.0, 0.0, 0.0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -104,13 +109,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       children: [
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 0.0, 15.0),
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 0, 15),
                                           child: Container(
-                                            width: 44.0,
-                                            height: 44.0,
+                                            width: 44,
+                                            height: 44,
                                             clipBehavior: Clip.antiAlias,
-                                            decoration: const BoxDecoration(
+                                            decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
                                             child: Image.network(
@@ -121,15 +126,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         ),
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  5.0, 0.0, 0.0, 13.0),
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 0, 13),
                                           child: Text(
                                             'Geir larsen',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Open Sans',
-                                                  fontSize: 15.0,
+                                                  fontSize: 15,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -138,13 +143,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 8.0, 0.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 8, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
-                                        size: 24.0,
+                                        size: 24,
                                       ),
                                     ),
                                   ],
@@ -157,20 +162,19 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
-                                  child: SizedBox(
+                                  child: Container(
                                     width: double.infinity,
-                                    height: 380.0,
+                                    height: 380,
                                     child: Stack(
                                       children: [
-                                        SizedBox(
+                                        Container(
                                           width: double.infinity,
-                                          height: 380.0,
+                                          height: 380,
                                           child: Stack(
                                             children: [
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        10.0, 0.0, 10.0, 40.0),
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(10, 0, 10, 40),
                                                 child: PageView(
                                                   controller: _model
                                                           .pageViewController ??=
@@ -179,125 +183,125 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   scrollDirection:
                                                       Axis.horizontal,
                                                   children: [
-                                                    SizedBox(
+                                                    Container(
                                                       width: double.infinity,
-                                                      height: 380.0,
+                                                      height: 380,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8.0),
+                                                                        8),
                                                             child:
                                                                 Image.network(
                                                               'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380.0,
+                                                              height: 380,
                                                               fit: BoxFit.cover,
                                                               alignment:
-                                                                  const Alignment(
-                                                                      0.0, 0.0),
+                                                                  Alignment(
+                                                                      0, 0),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    Container(
                                                       width: double.infinity,
-                                                      height: 380.0,
+                                                      height: 380,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8.0),
+                                                                        8),
                                                             child:
                                                                 Image.network(
                                                               '',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380.0,
+                                                              height: 380,
                                                               fit: BoxFit.fill,
                                                               alignment:
-                                                                  const Alignment(
-                                                                      0.0, 0.0),
+                                                                  Alignment(
+                                                                      0, 0),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    Container(
                                                       width: double.infinity,
-                                                      height: 380.0,
+                                                      height: 380,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8.0),
+                                                                        8),
                                                             child:
                                                                 Image.network(
                                                               '',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380.0,
+                                                              height: 380,
                                                               fit: BoxFit.fill,
                                                               alignment:
-                                                                  const Alignment(
-                                                                      0.0, 0.0),
+                                                                  Alignment(
+                                                                      0, 0),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 380.0,
+                                                    Container(
+                                                      height: 380,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8.0),
+                                                                        8),
                                                             child:
                                                                 Image.network(
                                                               '',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380.0,
+                                                              height: 380,
                                                               fit: BoxFit.fill,
                                                               alignment:
-                                                                  const Alignment(
-                                                                      0.0, 0.0),
+                                                                  Alignment(
+                                                                      0, 0),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    Container(
                                                       width: double.infinity,
-                                                      height: 380.0,
+                                                      height: 380,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8.0),
+                                                                        8),
                                                             child:
                                                                 Image.network(
                                                               '',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380.0,
+                                                              height: 380,
                                                               fit: BoxFit.fill,
                                                               alignment:
-                                                                  const Alignment(
-                                                                      0.0, 0.0),
+                                                                  Alignment(
+                                                                      0, 0),
                                                             ),
                                                           ),
                                                         ],
@@ -307,12 +311,11 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 ),
                                               ),
                                               Align(
-                                                alignment: const AlignmentDirectional(
-                                                    0.0, 1.0),
+                                                alignment:
+                                                    AlignmentDirectional(0, 1),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          16.0, 0.0, 0.0, 16.0),
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(16, 0, 0, 16),
                                                   child: smooth_page_indicator
                                                       .SmoothPageIndicator(
                                                     controller: _model
@@ -327,7 +330,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           .pageViewController!
                                                           .animateToPage(
                                                         i,
-                                                        duration: const Duration(
+                                                        duration: Duration(
                                                             milliseconds: 500),
                                                         curve: Curves.ease,
                                                       );
@@ -335,13 +338,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     },
                                                     effect: smooth_page_indicator
                                                         .ExpandingDotsEffect(
-                                                      expansionFactor: 3.0,
-                                                      spacing: 8.0,
-                                                      radius: 16.0,
-                                                      dotWidth: 10.0,
-                                                      dotHeight: 8.0,
+                                                      expansionFactor: 3,
+                                                      spacing: 8,
+                                                      radius: 16,
+                                                      dotWidth: 10,
+                                                      dotHeight: 8,
                                                       dotColor:
-                                                          const Color(0xCC616161),
+                                                          Color(0xCC616161),
                                                       activeDotColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -364,22 +367,213 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              5.0, 0.0, 0.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    10, 5, 10, 30),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        ToggleIcon(
+                                          onPressed: () async {
+                                            safeSetState(() => FFAppState()
+                                                .likt = !FFAppState().likt);
+                                          },
+                                          value: FFAppState().likt,
+                                          onIcon: FaIcon(
+                                            FontAwesomeIcons.solidHeart,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 30,
+                                          ),
+                                          offIcon: FaIcon(
+                                            FontAwesomeIcons.heart,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 30,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 0, 0),
+                                          child: FaIcon(
+                                            FontAwesomeIcons.comment,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 30,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  15, 0, 0, 0),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                enableDrag: false,
+                                                context: context,
+                                                builder: (context) {
+                                                  return GestureDetector(
+                                                    onTap: () =>
+                                                        FocusScope.of(context)
+                                                            .unfocus(),
+                                                    child: Padding(
+                                                      padding: MediaQuery
+                                                          .viewInsetsOf(
+                                                              context),
+                                                      child:
+                                                          KartPopUpBondegardWidget(),
+                                                    ),
+                                                  );
+                                                },
+                                              ).then((value) =>
+                                                  safeSetState(() {}));
+                                            },
+                                            child: FaIcon(
+                                              FontAwesomeIcons.mapMarkerAlt,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 31,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              isDismissible: false,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return GestureDetector(
+                                                  onTap: () =>
+                                                      FocusScope.of(context)
+                                                          .unfocus(),
+                                                  child: Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: BetalPopupWidget(),
+                                                  ),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          },
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            elevation: 4,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(24),
+                                            ),
+                                            child: SafeArea(
+                                              child: Container(
+                                                width: 120,
+                                                height: 40,
+                                                constraints: BoxConstraints(
+                                                  maxWidth: 174,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      Color(0xFF10835F),
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate
+                                                    ],
+                                                    stops: [0, 1],
+                                                    begin: AlignmentDirectional(
+                                                        0.64, -1),
+                                                    end: AlignmentDirectional(
+                                                        -0.64, 1),
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(10, 0, 10, 0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Reserver',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Open Sans',
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 17,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 8.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 8),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -399,7 +593,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-                                                          fontSize: 19.0,
+                                                          fontSize: 19,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -409,8 +603,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                           ),
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 5.0, 0.0),
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 5, 0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -430,16 +624,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .alternate,
-                                                        fontSize: 22.0,
+                                                        fontSize: 22,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 10.0, 0.0),
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 10, 0),
                                                   child: Text(
                                                     '/stk',
                                                     textAlign: TextAlign.center,
@@ -452,7 +645,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryText,
-                                                          fontSize: 22.0,
+                                                          fontSize: 22,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -466,8 +659,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 15, 0, 0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -477,15 +670,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
-                                              fontSize: 14.0,
+                                              fontSize: 14,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 5.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 10, 0, 5),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -505,16 +698,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-                                                          fontSize: 14.0,
+                                                          fontSize: 14,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        5.0, 0.0, 0.0, 0.0),
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(5, 0, 0, 0),
                                                 child: Text(
                                                   '3',
                                                   textAlign: TextAlign.start,
@@ -523,7 +715,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       .titleMedium
                                                       .override(
                                                         fontFamily: 'Open Sans',
-                                                        fontSize: 14.0,
+                                                        fontSize: 14,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -533,9 +725,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             ],
                                           ),
                                           SizedBox(
-                                            height: 14.0,
+                                            height: 14,
                                             child: VerticalDivider(
-                                              thickness: 1.0,
+                                              thickness: 1,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .alternate,
@@ -553,16 +745,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-                                                          fontSize: 14.0,
+                                                          fontSize: 14,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        5.0, 0.0, 0.0, 0.0),
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(5, 0, 0, 0),
                                                 child: Text(
                                                   'Km',
                                                   textAlign: TextAlign.start,
@@ -571,7 +762,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       .titleMedium
                                                       .override(
                                                         fontFamily: 'Open Sans',
-                                                        fontSize: 14.0,
+                                                        fontSize: 14,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -583,7 +774,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
-                                                size: 19.0,
+                                                size: 19,
                                               ),
                                             ],
                                           ),
@@ -591,8 +782,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 15, 0, 0),
                                       child: Text(
                                         'Antall',
                                         style: FlutterFlowTheme.of(context)
@@ -602,39 +793,37 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
-                                              fontSize: 14.0,
+                                              fontSize: 14,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
                                     ),
+                                    Text(
+                                      '20 Stk',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 14,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
                                     Container(
-                                      width: 332.0,
-                                      height: 235.0,
-                                      decoration: const BoxDecoration(),
-                                      alignment:
-                                          const AlignmentDirectional(-1.0, 0.0),
+                                      width: 332,
+                                      decoration: BoxDecoration(),
+                                      alignment: AlignmentDirectional(-1, -1),
                                       child: Column(
-                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            '20 Stk',
-                                            textAlign: TextAlign.start,
-                                            style: FlutterFlowTheme.of(context)
-                                                .titleMedium
-                                                .override(
-                                                  fontFamily: 'Open Sans',
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 15.0, 0.0, 0.0),
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 15, 0, 0),
                                             child: Text(
                                               'Beskrivelse',
                                               style: FlutterFlowTheme.of(
@@ -645,7 +834,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
-                                                    fontSize: 14.0,
+                                                    fontSize: 14,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
@@ -653,8 +842,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                           ),
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 0.0, 0.0),
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 10, 0, 0),
                                             child: Text(
                                               'En fin beskrivelse',
                                               textAlign: TextAlign.start,
@@ -663,12 +852,40 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       .titleSmall
                                                       .override(
                                                         fontFamily: 'Open Sans',
-                                                        fontSize: 14.0,
+                                                        fontSize: 14,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
                                             ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 50, 0, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            'Du vil kanskje også like',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Open Sans',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                  fontSize: 17,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                           ),
                                         ],
                                       ),
@@ -679,237 +896,305 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                             ],
                           ),
                         ),
-                      ].addToEnd(const SizedBox(height: 150.0)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width,
-                    height: 78.0,
-                    decoration: const BoxDecoration(),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 5.0, 10.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  FFButtonWidget(
-                                    onPressed: () async {
-                                      await showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        enableDrag: false,
-                                        context: context,
-                                        builder: (context) {
-                                          return GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .unfocus(),
-                                            child: Padding(
-                                              padding: MediaQuery.viewInsetsOf(
-                                                  context),
-                                              child: const KartPopUpBondegardWidget(),
-                                            ),
-                                          );
-                                        },
-                                      ).then((value) => safeSetState(() {}));
-                                    },
-                                    text: '',
-                                    icon: Icon(
-                                      Icons.place,
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      size: 30.0,
-                                    ),
-                                    options: FFButtonOptions(
-                                      width: 100.0,
-                                      height: 45.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              9.0, 0.0, 0.0, 0.0),
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            fontSize: 17.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                      elevation: 4.0,
-                                      borderSide: const BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(100.0),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        5.0, 0.0, 0.0, 0.0),
-                                    child: FFButtonWidget(
-                                      onPressed: () {
-                                        print('Button pressed ...');
-                                      },
-                                      text: '',
-                                      icon: Icon(
-                                        Icons.chat,
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        size: 29.0,
-                                      ),
-                                      options: FFButtonOptions(
-                                        width: 95.0,
-                                        height: 45.0,
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 0.0),
-                                        iconPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                7.0, 0.0, 0.0, 0.0),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              fontSize: 17.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                        elevation: 4.0,
-                                        borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                          child: RefreshIndicator(
+                            onRefresh: () async {},
+                            child: GridView(
+                              padding: EdgeInsets.fromLTRB(
+                                0,
+                                1,
+                                0,
+                                63,
                               ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 5.0, 0.0, 5.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor: Colors.transparent,
-                                          isDismissible: false,
-                                          enableDrag: false,
-                                          context: context,
-                                          builder: (context) {
-                                            return GestureDetector(
-                                              onTap: () =>
-                                                  FocusScope.of(context)
-                                                      .unfocus(),
-                                              child: Padding(
-                                                padding:
-                                                    MediaQuery.viewInsetsOf(
-                                                        context),
-                                                child: const BetalPopupWidget(),
-                                              ),
-                                            );
-                                          },
-                                        ).then((value) => safeSetState(() {}));
-                                      },
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        elevation: 4.0,
-                                        shape: RoundedRectangleBorder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                childAspectRatio: 0.69,
+                              ),
+                              primary: false,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed('MatDetalj');
+                                    },
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      elevation: 0.3,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                      child: Container(
+                                        width: 225,
+                                        height: 235,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
                                           borderRadius:
-                                              BorderRadius.circular(24.0),
+                                              BorderRadius.circular(16),
                                         ),
-                                        child: SafeArea(
-                                          child: Container(
-                                            height: 50.0,
-                                            constraints: const BoxConstraints(
-                                              maxWidth: 174.0,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  const Color(0xFF10835F),
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate
-                                                ],
-                                                stops: const [0.0, 1.0],
-                                                begin: const AlignmentDirectional(
-                                                    0.64, -1.0),
-                                                end: const AlignmentDirectional(
-                                                    -0.64, 1.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Align(
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 0, 0, 12),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(0),
+                                                    bottomRight:
+                                                        Radius.circular(0),
+                                                    topLeft:
+                                                        Radius.circular(16),
+                                                    topRight:
+                                                        Radius.circular(16),
+                                                  ),
+                                                  child: Image.network(
+                                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                                    width: double.infinity,
+                                                    height: 151,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(24.0),
                                             ),
-                                            child: Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      10.0, 0.0, 10.0, 0.0),
-                                              child: Row(
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(5, 0, 5, 0),
+                                              child: Column(
                                                 mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
                                                 children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      'Reserver',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Open Sans',
-                                                            color: Colors.white,
-                                                            fontSize: 18.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            -1, 0),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  7, 0, 0, 0),
+                                                      child: AutoSizeText(
+                                                        'Kantareller',
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        minFontSize: 11,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyLarge
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  fontSize: 16,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                          ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 4),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Flexible(
+                                                    child: Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              0, 0),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    5, 5, 5, 0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          5,
+                                                                          0,
+                                                                          0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            7,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Text(
+                                                                      '300 Kr',
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .end,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .titleLarge
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Open Sans',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).alternate,
+                                                                            fontSize:
+                                                                                16,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    '/Stk',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .end,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .titleLarge
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Open Sans',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryText,
+                                                                          fontSize:
+                                                                              16,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Icon(
+                                                                  Icons.place,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                  size: 17,
+                                                                ),
+                                                                Text(
+                                                                  '3',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .start,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Open Sans',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                        fontSize:
+                                                                            14,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          5,
+                                                                          0,
+                                                                          5,
+                                                                          0),
+                                                                  child: Text(
+                                                                    'Km',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .start,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Open Sans',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontSize:
+                                                                              14,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ],
+                      ].addToEnd(SizedBox(height: 150)),
                     ),
                   ),
                 ),
