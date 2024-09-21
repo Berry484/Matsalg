@@ -7,12 +7,7 @@ import 'registrer_model.dart';
 export 'registrer_model.dart';
 
 class RegistrerWidget extends StatefulWidget {
-  const RegistrerWidget({
-    super.key,
-    this.profilepic,
-  });
-
-  final String? profilepic;
+  const RegistrerWidget({super.key});
 
   @override
   State<RegistrerWidget> createState() => _RegistrerWidgetState();
@@ -143,7 +138,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                   _model.emailLoginFocusNode,
                                               obscureText: false,
                                               decoration: InputDecoration(
-                                                labelText: 'Email ',
+                                                labelText: 'E-post',
                                                 labelStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .bodySmall
@@ -154,7 +149,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           letterSpacing: 0.0,
                                                         ),
                                                 alignLabelWithHint: false,
-                                                hintText: 'Skriv inn email...',
+                                                hintText: 'Skriv inn e-post...',
                                                 hintStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .bodySmall
@@ -458,7 +453,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .epostLagFocusNode,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
-                                                      labelText: 'Epost',
+                                                      labelText: 'E-post',
                                                       labelStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -471,7 +466,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                     0.0,
                                                               ),
                                                       hintText:
-                                                          'Skriv inn epost...',
+                                                          'Skriv inn e-post...',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)

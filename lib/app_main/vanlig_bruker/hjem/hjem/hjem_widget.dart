@@ -84,6 +84,67 @@ class _HjemWidgetState extends State<HjemWidget> {
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
+                              Align(
+                                alignment: const AlignmentDirectional(-1.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 0.0, 10.0, 15.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed(
+                                        'VelgPosisjon',
+                                        queryParameters: {
+                                          'bonde': serializeParam(
+                                            false,
+                                            ParamType.bool,
+                                          ),
+                                          'endrepos': serializeParam(
+                                            true,
+                                            ParamType.bool,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.location_on,
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          size: 24.0,
+                                        ),
+                                        Text(
+                                          'Halden',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                fontSize: 17.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                        Icon(
+                                          Icons.keyboard_arrow_down,
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          size: 24.0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     10.0, 0.0, 10.0, 0.0),
@@ -284,7 +345,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 110.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 133.0, 0.0, 0.0),
                   child: SingleChildScrollView(
                     primary: false,
                     child: Column(
@@ -681,42 +742,36 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                 .secondary,
                                           ),
                                         ),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 5.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        7.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'Lokale matvarer',
-                                                  textAlign: TextAlign.start,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Open Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        fontSize: 17.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(7.0, 0.0, 0.0, 0.0),
+                                              child: Text(
+                                                'Lokale matvarer',
+                                                textAlign: TextAlign.start,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Open Sans',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      fontSize: 17.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),

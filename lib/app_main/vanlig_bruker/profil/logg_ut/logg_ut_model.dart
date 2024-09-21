@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'slett_egen_matvare_widget.dart' show SlettEgenMatvareWidget;
+import 'logg_ut_widget.dart' show LoggUtWidget;
 import 'package:flutter/material.dart';
 
-class SlettEgenMatvareModel extends FlutterFlowModel<SlettEgenMatvareWidget> {
+class LoggUtModel extends FlutterFlowModel<LoggUtWidget> {
   @override
   void initState(BuildContext context) {}
 

@@ -57,19 +57,16 @@ class _SolgteMatvarerWidgetState extends State<SolgteMatvarerWidget> {
                 size: 28.0,
               ),
             ),
-            title: Align(
-              alignment: const AlignmentDirectional(-1.0, 0.0),
-              child: Text(
-                'Salgshistorikk',
-                textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Montserrat',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 20.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
+            title: Text(
+              'Salgshistorikk',
+              textAlign: TextAlign.center,
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Montserrat',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 20.0,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
             actions: const [],
             centerTitle: true,

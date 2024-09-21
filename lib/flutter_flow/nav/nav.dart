@@ -85,12 +85,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'registrer',
           path: '/registrer',
-          builder: (context, params) => RegistrerWidget(
-            profilepic: params.getParam(
-              'profilepic',
-              ParamType.String,
-            ),
-          ),
+          builder: (context, params) => const RegistrerWidget(),
         ),
         FFRoute(
           name: 'MineKjop',
@@ -192,19 +187,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const RegistrerBondeWidget(),
         ),
         FFRoute(
-          name: 'BondegardLagProfil',
-          path: '/bondegardLagProfil',
-          builder: (context, params) => const BondegardLagProfilWidget(),
-        ),
-        FFRoute(
           name: 'LegUtMat2',
           path: '/legUtMat2',
           builder: (context, params) => const LegUtMat2Widget(),
-        ),
-        FFRoute(
-          name: 'BondeOnboarding',
-          path: '/bondeOnboarding',
-          builder: (context, params) => const BondeOnboardingWidget(),
         ),
         FFRoute(
           name: 'BrukerOnboarding',
@@ -257,11 +242,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const Profil2Widget(),
         ),
         FFRoute(
-          name: 'RedigerProfil2',
-          path: '/redigerProfil2',
-          builder: (context, params) => const RedigerProfil2Widget(),
-        ),
-        FFRoute(
           name: 'BekreftetHentet',
           path: '/MatvareHentet',
           builder: (context, params) => const BekreftetHentetWidget(),
@@ -277,6 +257,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => VelgPosisjonWidget(
             bonde: params.getParam(
               'bonde',
+              ParamType.bool,
+            ),
+            endrepos: params.getParam(
+              'endrepos',
               ParamType.bool,
             ),
           ),
@@ -315,6 +299,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.bool,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'OpprettProfil',
+          path: '/opprettProfil',
+          builder: (context, params) => OpprettProfilWidget(
+            bonde: params.getParam(
+              'bonde',
+              ParamType.bool,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'BondeOnboarding',
+          path: '/bondeOnboarding',
+          builder: (context, params) => const BondeOnboardingWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

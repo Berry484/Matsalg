@@ -9,31 +9,31 @@ class ProfilRedigerModel extends FlutterFlowModel<ProfilRedigerWidget> {
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)? textController3Validator;
+  // State field(s) for TlfNummer widget.
+  FocusNode? tlfNummerFocusNode;
+  TextEditingController? tlfNummerTextController;
+  String? Function(BuildContext, String?)? tlfNummerTextControllerValidator;
+  // State field(s) for Navn widget.
+  FocusNode? navnFocusNode;
+  TextEditingController? navnTextController;
+  String? Function(BuildContext, String?)? navnTextControllerValidator;
+  // State field(s) for Email widget.
+  FocusNode? emailFocusNode;
+  TextEditingController? emailTextController;
+  String? Function(BuildContext, String?)? emailTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    textFieldFocusNode1?.dispose();
-    textController1?.dispose();
+    tlfNummerFocusNode?.dispose();
+    tlfNummerTextController?.dispose();
 
-    textFieldFocusNode2?.dispose();
-    textController2?.dispose();
+    navnFocusNode?.dispose();
+    navnTextController?.dispose();
 
-    textFieldFocusNode3?.dispose();
-    textController3?.dispose();
+    emailFocusNode?.dispose();
+    emailTextController?.dispose();
   }
 }

@@ -78,56 +78,65 @@ class _MinMatDetalj2WidgetState extends State<MinMatDetalj2Widget> {
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 0.0, 0.0, 15.0),
-                                  child: Container(
-                                    width: 44.0,
-                                    height: 44.0,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Image.network(
-                                      'https://picsum.photos/seed/590/600',
-                                      fit: BoxFit.cover,
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            context.pop();
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 0.0, 0.0, 15.0),
+                                    child: Container(
+                                      width: 44.0,
+                                      height: 44.0,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.network(
+                                        'https://picsum.photos/seed/590/600',
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5.0, 0.0, 0.0, 13.0),
-                                  child: Text(
-                                    'Geir larsen',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontSize: 15.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        5.0, 0.0, 0.0, 13.0),
+                                    child: Text(
+                                      'Geir larsen',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 15.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 8.0, 0.0),
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                color: FlutterFlowTheme.of(context).alternate,
-                                size: 24.0,
+                                ],
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 8.0, 0.0),
+                                child: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 24.0,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Row(

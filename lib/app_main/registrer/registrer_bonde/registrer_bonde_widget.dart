@@ -339,7 +339,7 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 20.0, 0.0, 0.0),
                                 child: Container(
-                                  height: 415.0,
+                                  height: 456.0,
                                   decoration: BoxDecoration(
                                     color: Colors.transparent,
                                     border: Border.all(
@@ -363,7 +363,7 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
                                                     .fromSTEB(
                                                         20.0, 0.0, 20.0, 0.0),
                                                 child: Container(
-                                                  height: 330.0,
+                                                  height: 350.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -379,7 +379,7 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 30.0,
+                                                            .fromSTEB(0.0, 15.0,
                                                                 0.0, 0.0),
                                                     child: Column(
                                                       mainAxisSize:
@@ -1745,7 +1745,7 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget>
                                 focusNode: _model.emailAddressFocusNode,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Email',
+                                  labelText: 'Epost',
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(

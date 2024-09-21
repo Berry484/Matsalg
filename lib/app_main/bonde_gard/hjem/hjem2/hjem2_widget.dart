@@ -577,6 +577,7 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                             const NeverScrollableScrollPhysics(),
                                         children: [
                                           SingleChildScrollView(
+                                            primary: false,
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -835,12 +836,12 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                               .transparent,
                                                           onTap: () async {
                                                             context.pushNamed(
-                                                                'MatDetaljBondegard');
+                                                                'MinMatDetalj2');
                                                           },
                                                           child: Material(
                                                             color: Colors
                                                                 .transparent,
-                                                            elevation: 0.3,
+                                                            elevation: 0.69,
                                                             shape:
                                                                 RoundedRectangleBorder(
                                                               borderRadius:

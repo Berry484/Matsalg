@@ -6,6 +6,7 @@ import '/flutter_flow/upload_data.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'profil_rediger_model.dart';
 export 'profil_rediger_model.dart';
 
@@ -26,20 +27,14 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
     super.initState();
     _model = createModel(context, () => ProfilRedigerModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.tlfNummerTextController ??= TextEditingController();
+    _model.tlfNummerFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.navnTextController ??= TextEditingController();
+    _model.navnFocusNode ??= FocusNode();
 
-    _model.textController3 ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {
-          _model.textController1?.text = '12345678';
-          _model.textController2?.text = 'Geir Vetke';
-          _model.textController3?.text = 'kontakt@matsalg.no';
-        }));
+    _model.emailTextController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
   }
 
   @override
@@ -200,8 +195,8 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                         alignment:
                                             const AlignmentDirectional(0.0, -0.5),
                                         child: Container(
-                                          width: 130.0,
-                                          height: 130.0,
+                                          width: 100.0,
+                                          height: 100.0,
                                           clipBehavior: Clip.antiAlias,
                                           decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
@@ -237,97 +232,104 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                   ),
                   Padding(
                     padding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width * 0.9,
+                      height: 45.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primary,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(20.0),
+                          bottomRight: Radius.circular(20.0),
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0),
+                        ),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                15.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              '+47',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4.0, 0.0, 8.0, 0.0),
+                              child: TextFormField(
+                                controller: _model.tlfNummerTextController,
+                                focusNode: _model.tlfNummerFocusNode,
+                                autofocus: true,
+                                textInputAction: TextInputAction.done,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  hintStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  focusedErrorBorder: InputBorder.none,
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                                maxLength: 8,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
+                                buildCounter: (context,
+                                        {required currentLength,
+                                        required isFocused,
+                                        maxLength}) =>
+                                    null,
+                                keyboardType: TextInputType.phone,
+                                validator: _model
+                                    .tlfNummerTextControllerValidator
+                                    .asValidator(context),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[0-9]'))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
                         const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: TextFormField(
-                                  controller: _model.textController1,
-                                  focusNode: _model.textFieldFocusNode1,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Telefonnummer',
-                                    labelStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    filled: true,
-                                    fillColor:
-                                        FlutterFlowTheme.of(context).primary,
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 16.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  maxLength: 8,
-                                  maxLengthEnforcement:
-                                      MaxLengthEnforcement.enforced,
-                                  buildCounter: (context,
-                                          {required currentLength,
-                                          required isFocused,
-                                          maxLength}) =>
-                                      null,
-                                  validator: _model.textController1Validator
-                                      .asValidator(context),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -338,11 +340,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                 child: SizedBox(
                                   width: 0.0,
                                   child: TextFormField(
-                                    controller: _model.textController2,
-                                    focusNode: _model.textFieldFocusNode2,
+                                    controller: _model.navnTextController,
+                                    focusNode: _model.navnFocusNode,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Mitt navn',
+                                      labelText: 'Fullt navn',
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
@@ -358,38 +360,38 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 2.0,
+                                              .secondaryText,
+                                          width: 1.0,
                                         ),
                                         borderRadius:
-                                            BorderRadius.circular(8.0),
+                                            BorderRadius.circular(20.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
-                                          width: 2.0,
+                                          width: 1.0,
                                         ),
                                         borderRadius:
-                                            BorderRadius.circular(8.0),
+                                            BorderRadius.circular(20.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
-                                          width: 2.0,
+                                          width: 1.0,
                                         ),
                                         borderRadius:
-                                            BorderRadius.circular(8.0),
+                                            BorderRadius.circular(20.0),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
-                                          width: 2.0,
+                                          width: 1.0,
                                         ),
                                         borderRadius:
-                                            BorderRadius.circular(8.0),
+                                            BorderRadius.circular(20.0),
                                       ),
                                       filled: true,
                                       fillColor:
@@ -404,7 +406,8 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           fontSize: 16.0,
                                           letterSpacing: 0.0,
                                         ),
-                                    validator: _model.textController2Validator
+                                    validator: _model
+                                        .navnTextControllerValidator
                                         .asValidator(context),
                                   ),
                                 ),
@@ -420,11 +423,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 16.0, 0.0, 0.0),
                                 child: TextFormField(
-                                  controller: _model.textController3,
-                                  focusNode: _model.textFieldFocusNode3,
+                                  controller: _model.emailTextController,
+                                  focusNode: _model.emailFocusNode,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'Email',
+                                    labelText: 'E-post',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -440,34 +443,34 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        width: 2.0,
+                                            .secondaryText,
+                                        width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
-                                        width: 2.0,
+                                        width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
                                             FlutterFlowTheme.of(context).error,
-                                        width: 2.0,
+                                        width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
                                             FlutterFlowTheme.of(context).error,
-                                        width: 2.0,
+                                        width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     filled: true,
                                     fillColor:
@@ -482,7 +485,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                         fontSize: 16.0,
                                         letterSpacing: 0.0,
                                       ),
-                                  validator: _model.textController3Validator
+                                  validator: _model.emailTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -500,13 +503,13 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                         context.pushNamed('Profil');
                       },
                       text: 'Lagre endringer',
-                      icon: const Icon(
-                        Icons.check,
-                        size: 15.0,
+                      icon: const FaIcon(
+                        FontAwesomeIcons.check,
+                        size: 20.0,
                       ),
                       options: FFButtonOptions(
-                        width: 270.0,
-                        height: 50.0,
+                        width: 200.0,
+                        height: 40.0,
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         iconPadding:
@@ -525,42 +528,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                      child: FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
-                        },
-                        text: 'Logg ut',
-                        icon: const Icon(
-                          Icons.sensor_door_rounded,
-                          size: 15.0,
-                        ),
-                        options: FFButtonOptions(
-                          width: 150.0,
-                          height: 44.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                          elevation: 3.0,
-                          borderRadius: BorderRadius.circular(38.0),
-                        ),
+                        borderRadius: BorderRadius.circular(24.0),
                       ),
                     ),
                   ),
@@ -589,11 +557,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                         text: 'Slett bruker',
                         icon: const Icon(
                           Icons.delete_sharp,
-                          size: 15.0,
+                          size: 20.0,
                         ),
                         options: FFButtonOptions(
-                          width: 150.0,
-                          height: 44.0,
+                          width: 200.0,
+                          height: 40.0,
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: const EdgeInsetsDirectional.fromSTEB(

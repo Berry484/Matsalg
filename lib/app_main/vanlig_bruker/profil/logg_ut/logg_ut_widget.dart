@@ -2,18 +2,18 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'slett_egen_matvare_model.dart';
-export 'slett_egen_matvare_model.dart';
+import 'logg_ut_model.dart';
+export 'logg_ut_model.dart';
 
-class SlettEgenMatvareWidget extends StatefulWidget {
-  const SlettEgenMatvareWidget({super.key});
+class LoggUtWidget extends StatefulWidget {
+  const LoggUtWidget({super.key});
 
   @override
-  State<SlettEgenMatvareWidget> createState() => _SlettEgenMatvareWidgetState();
+  State<LoggUtWidget> createState() => _LoggUtWidgetState();
 }
 
-class _SlettEgenMatvareWidgetState extends State<SlettEgenMatvareWidget> {
-  late SlettEgenMatvareModel _model;
+class _LoggUtWidgetState extends State<LoggUtWidget> {
+  late LoggUtModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -24,7 +24,7 @@ class _SlettEgenMatvareWidgetState extends State<SlettEgenMatvareWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => SlettEgenMatvareModel());
+    _model = createModel(context, () => LoggUtModel());
   }
 
   @override
@@ -38,7 +38,7 @@ class _SlettEgenMatvareWidgetState extends State<SlettEgenMatvareWidget> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        width: double.infinity,
+        width: MediaQuery.sizeOf(context).width,
         height: 270.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primary,
@@ -52,42 +52,19 @@ class _SlettEgenMatvareWidgetState extends State<SlettEgenMatvareWidget> {
               ),
             )
           ],
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(0.0),
-            bottomRight: Radius.circular(0.0),
-            topLeft: Radius.circular(16.0),
-            topRight: Radius.circular(16.0),
-          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text(
-                'Er du sikker?',
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Open Sans',
-                      fontSize: 25.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              Text(
-                ' Når du sletter en matvare blir den borte for alltid',
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Open Sans',
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    context.pushNamed('Profil');
+                    context.goNamed('registrer');
                   },
-                  text: 'Slett matvare',
+                  text: 'Logg ut',
                   options: FFButtonOptions(
                     width: 200.0,
                     height: 60.0,
