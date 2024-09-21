@@ -32,7 +32,7 @@ class _HjemWidgetState extends State<HjemWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       currentUserLocationValue =
-          await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
+          await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
       FFAppState().brukersted = currentUserLocationValue;
       safeSetState(() {});
     });
@@ -65,10 +65,9 @@ class _HjemWidgetState extends State<HjemWidget> {
             child: Stack(
               children: [
                 Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0, 0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 17.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 17),
                     child: SafeArea(
                       child: Container(
                         width: valueOrDefault<double>(
@@ -82,10 +81,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              alignment: AlignmentDirectional(-1, 0),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 10.0, 15.0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 10, 15),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
@@ -114,7 +113,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                         Icons.location_on,
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
-                                        size: 24.0,
+                                        size: 24,
                                       ),
                                       Text(
                                         'Halden',
@@ -125,7 +124,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .alternate,
-                                              fontSize: 17.0,
+                                              fontSize: 17,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -134,7 +133,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                         Icons.keyboard_arrow_down,
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
-                                        size: 24.0,
+                                        size: 24,
                                       ),
                                     ],
                                   ),
@@ -142,8 +141,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 0.0, 10.0, 0.0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -163,48 +162,48 @@ class _HjemWidgetState extends State<HjemWidget> {
                                             .labelMedium
                                             .override(
                                               fontFamily: 'Open Sans',
-                                              color: const Color(0x8F101213),
-                                              fontSize: 12.0,
+                                              color: Color(0x8F101213),
+                                              fontSize: 12,
                                               letterSpacing: 0.0,
                                             ),
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
+                                          borderSide: BorderSide(
                                             color: Color(0x6357636C),
-                                            width: 1.0,
+                                            width: 1,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(13.0),
+                                              BorderRadius.circular(13),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
+                                          borderSide: BorderSide(
                                             color: Color(0x00000000),
-                                            width: 1.0,
+                                            width: 1,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(13.0),
+                                              BorderRadius.circular(13),
                                         ),
                                         errorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: FlutterFlowTheme.of(context)
                                                 .error,
-                                            width: 1.0,
+                                            width: 1,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(13.0),
+                                              BorderRadius.circular(13),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: FlutterFlowTheme.of(context)
                                                 .error,
-                                            width: 1.0,
+                                            width: 1,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(13.0),
+                                              BorderRadius.circular(13),
                                         ),
                                         filled: true,
                                         fillColor: FlutterFlowTheme.of(context)
                                             .primary,
-                                        prefixIcon: const Icon(
+                                        prefixIcon: Icon(
                                           Icons.search_outlined,
                                         ),
                                       ),
@@ -214,7 +213,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                             fontFamily: 'Open Sans',
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
-                                            fontSize: 12.0,
+                                            fontSize: 12,
                                             letterSpacing: 0.0,
                                           ),
                                       textAlign: TextAlign.start,
@@ -228,18 +227,17 @@ class _HjemWidgetState extends State<HjemWidget> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Align(
-                                        alignment:
-                                            const AlignmentDirectional(-1.0, 0.0),
+                                        alignment: AlignmentDirectional(-1, 0),
                                         child: Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 10.0, 0.0),
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 10, 0),
                                           child: FlutterFlowDropDown<String>(
                                             controller: _model
                                                     .dropDownValueController ??=
                                                 FormFieldController<String>(
                                                     null),
-                                            options: const [
+                                            options: [
                                               'Pris - lav høy',
                                               'Avstand'
                                             ],
@@ -259,8 +257,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                     ?.reset();
                                               });
                                             },
-                                            width: 70.0,
-                                            height: 35.0,
+                                            width: 70,
+                                            height: 35,
                                             textStyle: FlutterFlowTheme.of(
                                                     context)
                                                 .bodyMedium
@@ -269,7 +267,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .alternate,
-                                                  fontSize: 13.0,
+                                                  fontSize: 13,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -279,18 +277,18 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .alternate,
-                                              size: 17.0,
+                                              size: 17,
                                             ),
                                             fillColor:
                                                 FlutterFlowTheme.of(context)
                                                     .primary,
-                                            elevation: 4.0,
-                                            borderColor: const Color(0x6357636C),
-                                            borderWidth: 1.0,
-                                            borderRadius: 8.0,
+                                            elevation: 4,
+                                            borderColor: Color(0x6357636C),
+                                            borderWidth: 1,
+                                            borderRadius: 8,
                                             margin:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    5.0, 4.0, 5.0, 4.0),
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    5, 4, 5, 4),
                                             hidesUnderline: true,
                                             isOverButton: false,
                                             isSearchable: false,
@@ -299,13 +297,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                         ),
                                       ),
                                       Align(
-                                        alignment:
-                                            const AlignmentDirectional(-1.0, 0.0),
+                                        alignment: AlignmentDirectional(-1, 0),
                                         child: FlutterFlowIconButton(
-                                          borderColor: const Color(0x6357636C),
-                                          borderRadius: 8.0,
-                                          borderWidth: 1.0,
-                                          buttonSize: 35.0,
+                                          borderColor: Color(0x6357636C),
+                                          borderRadius: 8,
+                                          borderWidth: 1,
+                                          buttonSize: 35,
                                           fillColor:
                                               FlutterFlowTheme.of(context)
                                                   .primary,
@@ -313,7 +310,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                             FontAwesomeIcons.slidersH,
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
-                                            size: 20.0,
+                                            size: 20,
                                           ),
                                           onPressed: () {
                                             print('IconButton pressed ...');
@@ -332,7 +329,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 95.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 95, 0, 0),
                   child: SingleChildScrollView(
                     primary: false,
                     child: Column(
@@ -345,21 +342,19 @@ class _HjemWidgetState extends State<HjemWidget> {
                           scrollDirection: Axis.vertical,
                           children: [
                             Align(
-                              alignment: const AlignmentDirectional(0.0, -1.0),
+                              alignment: AlignmentDirectional(0, -1),
                               child: SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Align(
                                       alignment:
-                                          const AlignmentDirectional(-0.76, -0.61),
+                                          AlignmentDirectional(-0.76, -0.61),
                                       child: Container(
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                1.0,
-                                        height: 50.0,
+                                        width: MediaQuery.sizeOf(context).width,
+                                        height: 50,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
@@ -374,8 +369,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(7.0, 0.0, 0.0, 0.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(7, 0, 0, 0),
                                               child: Text(
                                                 'Bondegårder i nærheten',
                                                 textAlign: TextAlign.start,
@@ -388,7 +383,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .alternate,
-                                                      fontSize: 17.0,
+                                                      fontSize: 17,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -400,17 +395,16 @@ class _HjemWidgetState extends State<HjemWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          7.0, 0.0, 0.0, 55.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          7, 0, 0, 55),
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 0.0, 40.0, 5.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 40, 5),
                                               child: InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -427,11 +421,11 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            16.0),
+                                                            16),
                                                   ),
                                                   child: Container(
-                                                    width: 288.0,
-                                                    height: 230.0,
+                                                    width: 288,
+                                                    height: 230,
                                                     decoration: BoxDecoration(
                                                       color:
                                                           FlutterFlowTheme.of(
@@ -439,7 +433,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                               .primary,
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              16.0),
+                                                              16),
                                                     ),
                                                     child: Column(
                                                       mainAxisSize:
@@ -453,39 +447,40 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       children: [
                                                         Align(
                                                           alignment:
-                                                              const AlignmentDirectional(
-                                                                  0.0, 0.0),
+                                                              AlignmentDirectional(
+                                                                  0, 0),
                                                           child: Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        12.0),
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        12),
                                                             child: ClipRRect(
                                                               borderRadius:
-                                                                  const BorderRadius
+                                                                  BorderRadius
                                                                       .only(
                                                                 bottomLeft: Radius
                                                                     .circular(
-                                                                        0.0),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        0.0),
+                                                                        0),
+                                                                bottomRight:
+                                                                    Radius
+                                                                        .circular(
+                                                                            0),
                                                                 topLeft: Radius
                                                                     .circular(
-                                                                        16.0),
+                                                                        16),
                                                                 topRight: Radius
                                                                     .circular(
-                                                                        16.0),
+                                                                        16),
                                                               ),
                                                               child:
                                                                   Image.network(
                                                                 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/y9tyzwvch3sv/Farm.jpg',
                                                                 width: double
                                                                     .infinity,
-                                                                height: 149.0,
+                                                                height: 149,
                                                                 fit: BoxFit
                                                                     .cover,
                                                                 cacheWidth: 210,
@@ -495,22 +490,22 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                         ),
                                                         Align(
                                                           alignment:
-                                                              const AlignmentDirectional(
-                                                                  -1.0, 0.0),
+                                                              AlignmentDirectional(
+                                                                  -1, 0),
                                                           child: Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        10.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                        10,
+                                                                        0,
+                                                                        0,
+                                                                        0),
                                                             child: AutoSizeText(
                                                               'Faugsted Gård',
                                                               textAlign:
                                                                   TextAlign
                                                                       .start,
-                                                              minFontSize: 11.0,
+                                                              minFontSize: 11,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyLarge
@@ -518,7 +513,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                     fontFamily:
                                                                         'Open Sans',
                                                                     fontSize:
-                                                                        16.0,
+                                                                        16,
                                                                     letterSpacing:
                                                                         0.0,
                                                                     fontWeight:
@@ -530,12 +525,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      10.0,
-                                                                      0.0,
-                                                                      0.0),
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      10, 0, 0),
                                                           child: Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
@@ -546,21 +538,20 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                     MainAxisSize
                                                                         .max,
                                                                 children: [
-                                                                  const Padding(
+                                                                  Padding(
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            10.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            2.0),
+                                                                            10,
+                                                                            0,
+                                                                            0,
+                                                                            2),
                                                                     child:
                                                                         FaIcon(
                                                                       FontAwesomeIcons
                                                                           .solidStar,
                                                                       color: Color(
                                                                           0x94FFCD3C),
-                                                                      size:
-                                                                          17.0,
+                                                                      size: 17,
                                                                     ),
                                                                   ),
                                                                   Text(
@@ -572,20 +563,19 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           fontFamily:
                                                                               'Open Sans',
                                                                           fontSize:
-                                                                              14.0,
+                                                                              14,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
                                                                               FontWeight.w500,
                                                                         ),
                                                                   ),
-                                                                  const SizedBox(
-                                                                    height:
-                                                                        20.0,
+                                                                  SizedBox(
+                                                                    height: 20,
                                                                     child:
                                                                         VerticalDivider(
                                                                       thickness:
-                                                                          1.0,
+                                                                          1,
                                                                       color: Color(
                                                                           0x6B616161),
                                                                     ),
@@ -602,7 +592,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .alternate,
-                                                                    size: 17.0,
+                                                                    size: 17,
                                                                   ),
                                                                   Text(
                                                                     '3',
@@ -618,7 +608,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
-                                                                              14.0,
+                                                                              14,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
@@ -626,12 +616,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                         ),
                                                                   ),
                                                                   Padding(
-                                                                    padding: const EdgeInsetsDirectional
+                                                                    padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            5.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                            5,
+                                                                            0,
+                                                                            0,
+                                                                            0),
                                                                     child: Text(
                                                                       'Km',
                                                                       textAlign:
@@ -646,7 +636,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).primaryText,
                                                                             fontSize:
-                                                                                14.0,
+                                                                                14,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -654,13 +644,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           ),
                                                                     ),
                                                                   ),
-                                                                  const SizedBox(
-                                                                    height:
-                                                                        20.0,
+                                                                  SizedBox(
+                                                                    height: 20,
                                                                     child:
                                                                         VerticalDivider(
                                                                       thickness:
-                                                                          1.0,
+                                                                          1,
                                                                       color: Color(
                                                                           0x6B616161),
                                                                     ),
@@ -678,7 +667,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .primaryText,
-                                                                    size: 14.0,
+                                                                    size: 14,
                                                                   ),
                                                                   Text(
                                                                     ' 12:00 - 17:00',
@@ -691,7 +680,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
-                                                                              14.0,
+                                                                              14,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
@@ -715,12 +704,10 @@ class _HjemWidgetState extends State<HjemWidget> {
                                     ),
                                     Align(
                                       alignment:
-                                          const AlignmentDirectional(-0.76, -0.61),
+                                          AlignmentDirectional(-0.76, -0.61),
                                       child: Container(
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                1.0,
-                                        height: 50.0,
+                                        width: MediaQuery.sizeOf(context).width,
+                                        height: 50,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
@@ -737,8 +724,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               CrossAxisAlignment.end,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(7.0, 0.0, 0.0, 0.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(7, 0, 0, 0),
                                               child: Text(
                                                 'Lokale matvarer',
                                                 textAlign: TextAlign.start,
@@ -751,7 +738,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .alternate,
-                                                      fontSize: 17.0,
+                                                      fontSize: 17,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -769,21 +756,20 @@ class _HjemWidgetState extends State<HjemWidget> {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              5.0, 0.0, 5.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                           child: RefreshIndicator(
                             onRefresh: () async {},
                             child: GridView(
-                              padding: const EdgeInsets.fromLTRB(
+                              padding: EdgeInsets.fromLTRB(
                                 0,
-                                1.0,
+                                1,
                                 0,
-                                63.0,
+                                63,
                               ),
                               gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                  SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                crossAxisSpacing: 10.0,
+                                crossAxisSpacing: 10,
                                 childAspectRatio: 0.69,
                               ),
                               primary: false,
@@ -791,7 +777,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                               scrollDirection: Axis.vertical,
                               children: [
                                 Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0, 0),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
                                     focusColor: Colors.transparent,
@@ -804,17 +790,16 @@ class _HjemWidgetState extends State<HjemWidget> {
                                       color: Colors.transparent,
                                       elevation: 0.3,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(16.0),
+                                        borderRadius: BorderRadius.circular(16),
                                       ),
                                       child: Container(
-                                        width: 225.0,
-                                        height: 235.0,
+                                        width: 225,
+                                        height: 235,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           borderRadius:
-                                              BorderRadius.circular(16.0),
+                                              BorderRadius.circular(16),
                                         ),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
@@ -824,69 +809,66 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Align(
-                                              alignment: const AlignmentDirectional(
-                                                  0.0, 0.0),
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 12.0),
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 0, 0, 12),
                                                 child: ClipRRect(
                                                   borderRadius:
-                                                      const BorderRadius.only(
+                                                      BorderRadius.only(
                                                     bottomLeft:
-                                                        Radius.circular(0.0),
+                                                        Radius.circular(0),
                                                     bottomRight:
-                                                        Radius.circular(0.0),
+                                                        Radius.circular(0),
                                                     topLeft:
-                                                        Radius.circular(16.0),
+                                                        Radius.circular(16),
                                                     topRight:
-                                                        Radius.circular(16.0),
+                                                        Radius.circular(16),
                                                   ),
                                                   child: Image.network(
                                                     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
                                                     width: double.infinity,
-                                                    height: 151.0,
+                                                    height: 151,
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(5, 0, 5, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Align(
                                                     alignment:
-                                                        const AlignmentDirectional(
-                                                            -1.0, 0.0),
+                                                        AlignmentDirectional(
+                                                            -1, 0),
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
+                                                          EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  7.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                                  7, 0, 0, 0),
                                                       child: AutoSizeText(
                                                         'Kantareller',
                                                         textAlign:
                                                             TextAlign.start,
-                                                        minFontSize: 11.0,
-                                                        style: FlutterFlowTheme
-                                                                .of(context)
-                                                            .bodyLarge
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Open Sans',
-                                                              fontSize: 16.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
+                                                        minFontSize: 11,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyLarge
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  fontSize: 16,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
                                                       ),
                                                     ),
                                                   ),
@@ -894,8 +876,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 4.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 4),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
@@ -906,16 +888,13 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                   Flexible(
                                                     child: Align(
                                                       alignment:
-                                                          const AlignmentDirectional(
-                                                              0.0, 0.0),
+                                                          AlignmentDirectional(
+                                                              0, 0),
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
+                                                            EdgeInsetsDirectional
                                                                 .fromSTEB(
-                                                                    5.0,
-                                                                    5.0,
-                                                                    5.0,
-                                                                    0.0),
+                                                                    5, 5, 5, 0),
                                                         child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -928,24 +907,24 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           children: [
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                          0,
+                                                                          5,
+                                                                          0,
+                                                                          0),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
                                                                         .max,
                                                                 children: [
                                                                   Padding(
-                                                                    padding: const EdgeInsetsDirectional
+                                                                    padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                            7,
+                                                                            0,
+                                                                            0,
+                                                                            0),
                                                                     child: Text(
                                                                       '300 Kr',
                                                                       textAlign:
@@ -960,7 +939,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             fontSize:
-                                                                                16.0,
+                                                                                16,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -982,7 +961,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).secondaryText,
                                                                           fontSize:
-                                                                              16.0,
+                                                                              16,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
@@ -1002,7 +981,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .alternate,
-                                                                  size: 17.0,
+                                                                  size: 17,
                                                                 ),
                                                                 Text(
                                                                   '3',
@@ -1018,7 +997,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .primaryText,
                                                                         fontSize:
-                                                                            14.0,
+                                                                            14,
                                                                         letterSpacing:
                                                                             0.0,
                                                                         fontWeight:
@@ -1026,12 +1005,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: const EdgeInsetsDirectional
+                                                                  padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          5.0,
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0),
+                                                                          5,
+                                                                          0,
+                                                                          5,
+                                                                          0),
                                                                   child: Text(
                                                                     'Km',
                                                                     textAlign:
@@ -1046,7 +1025,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
-                                                                              14.0,
+                                                                              14,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
