@@ -20,11 +20,6 @@ class RegistrerBondeModel extends FlutterFlowModel<RegistrerBondeWidget> {
     return null;
   }
 
-  // State field(s) for Passord widget.
-  FocusNode? passordFocusNode;
-  TextEditingController? passordTextController;
-  late bool passordVisibility;
-  String? Function(BuildContext, String?)? passordTextControllerValidator;
   // State field(s) for TabBar widget.
   TabController? tabBarController;
   int get tabBarCurrentIndex =>
@@ -59,10 +54,6 @@ class RegistrerBondeModel extends FlutterFlowModel<RegistrerBondeWidget> {
   FocusNode? bruksNummerFocusNode;
   TextEditingController? bruksNummerTextController;
   String? Function(BuildContext, String?)? bruksNummerTextControllerValidator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode;
-  TextEditingController? emailAddressTextController;
-  String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
   // State field(s) for Checkbox widget.
   bool? checkboxValue;
 
@@ -70,16 +61,12 @@ class RegistrerBondeModel extends FlutterFlowModel<RegistrerBondeWidget> {
   void initState(BuildContext context) {
     bondeGardNavnTextControllerValidator =
         _bondeGardNavnTextControllerValidator;
-    passordVisibility = false;
   }
 
   @override
   void dispose() {
     bondeGardNavnFocusNode?.dispose();
     bondeGardNavnTextController?.dispose();
-
-    passordFocusNode?.dispose();
-    passordTextController?.dispose();
 
     tabBarController?.dispose();
     gateNavnFocusNode?.dispose();
@@ -102,8 +89,5 @@ class RegistrerBondeModel extends FlutterFlowModel<RegistrerBondeWidget> {
 
     bruksNummerFocusNode?.dispose();
     bruksNummerTextController?.dispose();
-
-    emailAddressFocusNode?.dispose();
-    emailAddressTextController?.dispose();
   }
 }

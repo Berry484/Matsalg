@@ -451,6 +451,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .epostLagTextController,
                                                     focusNode: _model
                                                         .epostLagFocusNode,
+                                                    textInputAction:
+                                                        TextInputAction.done,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       labelText: 'E-post',
@@ -565,6 +567,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .navnLagTextController,
                                                     focusNode:
                                                         _model.navnLagFocusNode,
+                                                    textInputAction:
+                                                        TextInputAction.done,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       labelText: 'Fullt navn',
@@ -679,6 +683,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .passordLagTextController,
                                                     focusNode: _model
                                                         .passordLagFocusNode,
+                                                    textInputAction:
+                                                        TextInputAction.done,
                                                     obscureText: !_model
                                                         .passordLagVisibility,
                                                     decoration: InputDecoration(
@@ -904,6 +910,15 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
+                                                        if (_model.formKey2
+                                                                    .currentState ==
+                                                                null ||
+                                                            !_model.formKey2
+                                                                .currentState!
+                                                                .validate()) {
+                                                          return;
+                                                        }
+
                                                         context.pushNamed(
                                                             'RegistrerBonde');
                                                       },

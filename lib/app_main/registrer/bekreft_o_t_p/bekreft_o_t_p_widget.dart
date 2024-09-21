@@ -177,16 +177,31 @@ class _BekreftOTPWidgetState extends State<BekreftOTPWidget> {
                                     !_model.formKey.currentState!.validate()) {
                                   return;
                                 }
-
-                                context.goNamed(
-                                  'VelgPosisjon',
-                                  queryParameters: {
-                                    'bonde': serializeParam(
-                                      widget.bonde,
-                                      ParamType.bool,
-                                    ),
-                                  }.withoutNulls,
-                                );
+                                if (widget.bonde == true) {
+                                  context.pushNamed(
+                                    'OpprettProfil',
+                                    queryParameters: {
+                                      'bonde': serializeParam(
+                                        true,
+                                        ParamType.bool,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                } else {
+                                  context.pushNamed(
+                                    'VelgPosisjon',
+                                    queryParameters: {
+                                      'bonde': serializeParam(
+                                        false,
+                                        ParamType.bool,
+                                      ),
+                                      'endrepos': serializeParam(
+                                        false,
+                                        ParamType.bool,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                }
                               },
                               text: 'Bekreft',
                               options: FFButtonOptions(
