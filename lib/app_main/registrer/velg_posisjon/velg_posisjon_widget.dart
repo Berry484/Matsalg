@@ -88,47 +88,56 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
             centerTitle: true,
             elevation: 0,
           ),
-          body: SafeArea(
-            top: true,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: Align(
+          body: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: AlignmentDirectional(0, 1),
+                  child: Stack(
                     alignment: AlignmentDirectional(0, 1),
-                    child: Stack(
-                      alignment: AlignmentDirectional(0, 1),
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional(0, -1.2),
-                          child: Container(
-                            width: 500,
-                            height: MediaQuery.sizeOf(context).height,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                            ),
-                            child: Align(
-                              alignment: AlignmentDirectional(0, 1),
-                              child: Container(
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0, -1.2),
+                        child: Container(
+                          width: 500,
+                          height: MediaQuery.sizeOf(context).height,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                          child: Align(
+                            alignment: AlignmentDirectional(0, 1),
+                            child: Container(
+                              width: 500,
+                              height: double.infinity,
+                              child: custom_widgets.Chooselocation(
                                 width: 500,
                                 height: double.infinity,
-                                child: custom_widgets.Chooselocation(
-                                  width: 500,
-                                  height: double.infinity,
-                                  center: functions.doubletillatlon(
-                                      59.913868, 10.752245)!,
-                                  matsted: functions.doubletillatlon(
-                                      59.913868, 10.752245)!,
-                                ),
+                                center: functions.doubletillatlon(
+                                    59.913868, 10.752245)!,
+                                matsted: functions.doubletillatlon(
+                                    59.913868, 10.752245)!,
                               ),
                             ),
                           ),
                         ),
-                        Material(
-                          color: Colors.transparent,
-                          elevation: 10,
-                          shape: RoundedRectangleBorder(
+                      ),
+                      Material(
+                        color: Colors.transparent,
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(0),
+                            bottomRight: Radius.circular(0),
+                            topLeft: Radius.circular(40),
+                            topRight: Radius.circular(40),
+                          ),
+                        ),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context).primary,
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(0),
                               bottomRight: Radius.circular(0),
@@ -136,62 +145,51 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                               topRight: Radius.circular(40),
                             ),
                           ),
-                          child: Container(
-                            width: MediaQuery.sizeOf(context).width,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).primary,
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(0),
-                                bottomRight: Radius.circular(0),
-                                topLeft: Radius.circular(40),
-                                topRight: Radius.circular(40),
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 30, 0, 15),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      await requestPermission(
-                                          locationPermission);
-                                      if (currentUserLocationValue != null) {
-                                        context.pushNamed('Hjem');
-                                      }
-                                    },
-                                    text: 'Bruk min nåværende posisjon',
-                                    icon: Icon(
-                                      Icons.location_pin,
-                                      size: 22,
-                                    ),
-                                    options: FFButtonOptions(
-                                      width: 290,
-                                      height: 40,
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16, 0, 16, 0),
-                                      iconPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 0, 0),
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            fontSize: 15,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                      elevation: 3,
-                                      borderRadius: BorderRadius.circular(24),
-                                    ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0, 30, 0, 15),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    await requestPermission(locationPermission);
+                                    if (currentUserLocationValue != null) {
+                                      context.pushNamed('Hjem');
+                                    }
+                                  },
+                                  text: 'Bruk min nåværende posisjon',
+                                  icon: Icon(
+                                    Icons.location_pin,
+                                    size: 22,
+                                  ),
+                                  options: FFButtonOptions(
+                                    width: 290,
+                                    height: 40,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16, 0, 16, 0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 0),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          fontSize: 15,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                    elevation: 3,
+                                    borderRadius: BorderRadius.circular(24),
                                   ),
                                 ),
-                                FFButtonWidget(
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
+                                child: FFButtonWidget(
                                   onPressed: () async {
                                     if (widget!.endrepos == false) {
                                       context.pushNamed(
@@ -230,16 +228,16 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                     borderRadius: BorderRadius.circular(24),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
