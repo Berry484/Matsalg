@@ -238,7 +238,7 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                   'BekreftOTP',
                                   queryParameters: {
                                     'bonde': serializeParam(
-                                      widget!.bonde,
+                                      widget.bonde,
                                       ParamType.bool,
                                     ),
                                   }.withoutNulls,
