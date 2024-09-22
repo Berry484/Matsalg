@@ -4,19 +4,19 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'chat_main_model.dart';
-export 'chat_main_model.dart';
+import 'bonde_chat_copy_model.dart';
+export 'bonde_chat_copy_model.dart';
 
-class ChatMainWidget extends StatefulWidget {
-  const ChatMainWidget({super.key});
+class BondeChatCopyWidget extends StatefulWidget {
+  const BondeChatCopyWidget({super.key});
 
   @override
-  State<ChatMainWidget> createState() => _ChatMainWidgetState();
+  State<BondeChatCopyWidget> createState() => _BondeChatCopyWidgetState();
 }
 
-class _ChatMainWidgetState extends State<ChatMainWidget>
+class _BondeChatCopyWidgetState extends State<BondeChatCopyWidget>
     with TickerProviderStateMixin {
-  late ChatMainModel _model;
+  late BondeChatCopyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -25,7 +25,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ChatMainModel());
+    _model = createModel(context, () => BondeChatCopyModel());
 
     animationsMap.addAll({
       'listViewOnPageLoadAnimation': AnimationInfo(

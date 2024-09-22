@@ -1,8 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'kjop_detalj_widget.dart' show KjopDetaljWidget;
+import 'kjop_detalj_godkjent_widget.dart' show KjopDetaljGodkjentWidget;
 import 'package:flutter/material.dart';
 
-class KjopDetaljModel extends FlutterFlowModel<KjopDetaljWidget> {
+class KjopDetaljGodkjentModel
+    extends FlutterFlowModel<KjopDetaljGodkjentWidget> {
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for PageView widget.

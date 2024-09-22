@@ -1,4 +1,4 @@
-import '/app_main/vanlig_bruker/hjem/betal_popup/betal_popup_widget.dart';
+import '/app_main/vanlig_bruker/hjem/info/info_widget.dart';
 import '/app_main/vanlig_bruker/kart/kart_pop_up_bondegard/kart_pop_up_bondegard_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
@@ -489,7 +489,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       padding: MediaQuery
                                                           .viewInsetsOf(
                                                               context),
-                                                      child: const BetalPopupWidget(),
+                                                      child: const InfoWidget(),
                                                     ),
                                                   );
                                                 },

@@ -124,14 +124,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const LeggUtMatvareWidget(),
         ),
         FFRoute(
-          name: 'KjopDetalj',
-          path: '/kjopDetalj',
-          builder: (context, params) => KjopDetaljWidget(
-            ordredetalj: params.getParam(
-              'ordredetalj',
-              ParamType.JSON,
-            ),
-          ),
+          name: 'KjopDetaljGodkjent',
+          path: '/kjopDetaljGodkjent',
+          builder: (context, params) => const KjopDetaljGodkjentWidget(),
         ),
         FFRoute(
           name: 'GodkjentLagtUt',
@@ -319,6 +314,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Se',
           path: '/se',
           builder: (context, params) => const SeWidget(),
+        ),
+        FFRoute(
+          name: 'BondeChat',
+          path: '/bondeChat',
+          builder: (context, params) => const BondeChatWidget(),
+        ),
+        FFRoute(
+          name: 'BondeChatCopy',
+          path: '/bondeChatCopy',
+          builder: (context, params) => const BondeChatCopyWidget(),
+        ),
+        FFRoute(
+          name: 'KjopDetaljVentende',
+          path: '/kjopDetaljVentende',
+          builder: (context, params) => const KjopDetaljVentendeWidget(),
+        ),
+        FFRoute(
+          name: 'Betaling',
+          path: '/betaling',
+          builder: (context, params) => const BetalingWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

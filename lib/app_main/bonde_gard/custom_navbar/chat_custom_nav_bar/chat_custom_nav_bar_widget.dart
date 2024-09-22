@@ -134,7 +134,16 @@ class _ChatCustomNavBarWidgetState extends State<ChatCustomNavBarWidget> {
                       size: 24.0,
                     ),
                     onPressed: () async {
-                      context.pushNamed('Se');
+                      context.pushNamed(
+                        'Se',
+                        extra: <String, dynamic>{
+                          kTransitionInfoKey: const TransitionInfo(
+                            hasTransition: true,
+                            transitionType: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 0),
+                          ),
+                        },
+                      );
                     },
                   ),
                   FlutterFlowIconButton(

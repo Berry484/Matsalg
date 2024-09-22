@@ -50,7 +50,7 @@ class _BetalPopupWidgetState extends State<BetalPopupWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: 500.0,
-      height: 607.0,
+      height: 665.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
         boxShadow: const [
@@ -117,7 +117,7 @@ class _BetalPopupWidgetState extends State<BetalPopupWidget> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
                     child: Text(
-                      'Gi et bud',
+                      'Kjøpsforespørsel',
                       textAlign: TextAlign.start,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Open Sans',
@@ -132,7 +132,7 @@ class _BetalPopupWidgetState extends State<BetalPopupWidget> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(12.0, 10.0, 0.0, 0.0),
                     child: Text(
-                      'Når du gir et bud har selgeren 3 dager på å godkjenne budet før det automatisk avslås.',
+                      'Når du sender en kjøpsforespørsel, må du gjennomføre kjøpet hvis selgeren godtar forespørselen.\nSelgeren har 3 dager på å godta, ellers blir pengene tilbakeført til deg.',
                       textAlign: TextAlign.start,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Open Sans',

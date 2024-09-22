@@ -72,34 +72,40 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                 children: [
                   Align(
                     alignment: const AlignmentDirectional(1.0, -1.4),
-                    child: Container(
-                      width: 366.0,
-                      height: 366.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        shape: BoxShape.circle,
+                    child: SafeArea(
+                      child: Container(
+                        width: 366.0,
+                        height: 366.0,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          shape: BoxShape.circle,
+                        ),
                       ),
                     ),
                   ),
                   Align(
                     alignment: const AlignmentDirectional(-2.0, -1.5),
-                    child: Container(
-                      width: 350.0,
-                      height: 350.0,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF3865A7),
-                        shape: BoxShape.circle,
+                    child: SafeArea(
+                      child: Container(
+                        width: 350.0,
+                        height: 350.0,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF3865A7),
+                          shape: BoxShape.circle,
+                        ),
                       ),
                     ),
                   ),
                   Align(
                     alignment: const AlignmentDirectional(2.5, -1.2),
-                    child: Container(
-                      width: 300.0,
-                      height: 300.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        shape: BoxShape.circle,
+                    child: SafeArea(
+                      child: Container(
+                        width: 300.0,
+                        height: 300.0,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          shape: BoxShape.circle,
+                        ),
                       ),
                     ),
                   ),

@@ -154,7 +154,16 @@ class _DashboardCustomNavBarWidgetState
                       size: 24.0,
                     ),
                     onPressed: () async {
-                      context.pushNamed('Se');
+                      context.pushNamed(
+                        'Se',
+                        extra: <String, dynamic>{
+                          kTransitionInfoKey: const TransitionInfo(
+                            hasTransition: true,
+                            transitionType: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 0),
+                          ),
+                        },
+                      );
                     },
                   ),
                   FlutterFlowIconButton(
@@ -167,8 +176,17 @@ class _DashboardCustomNavBarWidgetState
                       color: Color(0xFF9299A1),
                       size: 24.0,
                     ),
-                    onPressed: () {
-                      print('IconButton pressed ...');
+                    onPressed: () async {
+                      context.pushNamed(
+                        'BondeChat',
+                        extra: <String, dynamic>{
+                          kTransitionInfoKey: const TransitionInfo(
+                            hasTransition: true,
+                            transitionType: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 0),
+                          ),
+                        },
+                      );
                     },
                   ),
                   FlutterFlowIconButton(

@@ -97,7 +97,7 @@ class _BondeOnboardingWidgetState extends State<BondeOnboardingWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'legg ut matvarer',
+                                                  'Legg ut matvarer for salg',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -126,7 +126,7 @@ class _BondeOnboardingWidgetState extends State<BondeOnboardingWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'Legg ut matvarer som kantareller, \nfisk eller jordbær.',
+                                                  'Fyll ut annonser med detaljer og bilder \nfor å tiltrekke kjøpere.',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -136,7 +136,7 @@ class _BondeOnboardingWidgetState extends State<BondeOnboardingWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primaryText,
-                                                        fontSize: 18.0,
+                                                        fontSize: 15.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -182,7 +182,7 @@ class _BondeOnboardingWidgetState extends State<BondeOnboardingWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'legg ut matvarer',
+                                                  'Motta kjøpsforespørsler',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -196,6 +196,35 @@ class _BondeOnboardingWidgetState extends State<BondeOnboardingWidget> {
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.bold,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 5.0, 0.0, 0.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Godta eller avslå kjøpsforespørsler\nfra interesserte kjøpere.\n\n',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        fontSize: 15.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
                                                       ),
                                                 ),
                                               ],
@@ -238,7 +267,7 @@ class _BondeOnboardingWidgetState extends State<BondeOnboardingWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'legg ut matvarer',
+                                                  'Avtal overlevering',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -267,7 +296,8 @@ class _BondeOnboardingWidgetState extends State<BondeOnboardingWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'Legg ut matvarer som kantareller, \nfisk eller jordbær.',
+                                                  'Bruk chatten til å avtale overlevering \nav matvaren med kjøperen.\n',
+                                                  textAlign: TextAlign.start,
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -277,7 +307,7 @@ class _BondeOnboardingWidgetState extends State<BondeOnboardingWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primaryText,
-                                                        fontSize: 18.0,
+                                                        fontSize: 15.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,

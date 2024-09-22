@@ -54,6 +54,7 @@ class _MerkSolgtWidgetState extends State<MerkSolgtWidget> {
                 ),
               )
             ],
+            borderRadius: BorderRadius.circular(13.0),
           ),
           child: Padding(
             padding: const EdgeInsets.all(20.0),

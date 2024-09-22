@@ -351,7 +351,7 @@ class _MinMatDetalj2WidgetState extends State<MinMatDetalj2Widget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Epler',
+                                          'Kantarell',
                                           textAlign: TextAlign.start,
                                           style: FlutterFlowTheme.of(context)
                                               .headlineMedium
@@ -394,7 +394,7 @@ class _MinMatDetalj2WidgetState extends State<MinMatDetalj2Widget> {
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 10.0, 0.0),
                                             child: Text(
-                                              '/Stk',
+                                              '/stk',
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -526,13 +526,41 @@ class _MinMatDetalj2WidgetState extends State<MinMatDetalj2Widget> {
                                   ],
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 15.0, 0.0, 0.0),
+                                child: Text(
+                                  'Antall',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodySmall
+                                      .override(
+                                        fontFamily: 'Montserrat',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                              ),
+                              Text(
+                                '20 Stk',
+                                textAlign: TextAlign.start,
+                                style: FlutterFlowTheme.of(context)
+                                    .titleMedium
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
                               Container(
                                 width: 332.0,
-                                height: 235.0,
                                 decoration: const BoxDecoration(),
-                                alignment: const AlignmentDirectional(-1.0, 0.0),
+                                alignment: const AlignmentDirectional(-1.0, -1.0),
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(

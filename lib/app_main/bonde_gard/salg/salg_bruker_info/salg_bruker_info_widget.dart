@@ -473,8 +473,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        Navigator.pop(context);
                       },
                       text: 'Godkjenn',
                       icon: FaIcon(

@@ -13,8 +13,8 @@ export '/app_main/vanlig_bruker/profil/profil_rediger/profil_rediger_widget.dart
     show ProfilRedigerWidget;
 export '/app_main/vanlig_bruker/legg_ut/legg_ut_matvare/legg_ut_matvare_widget.dart'
     show LeggUtMatvareWidget;
-export '/app_main/vanlig_bruker/kjop/kjop_detalj/kjop_detalj_widget.dart'
-    show KjopDetaljWidget;
+export '/app_main/vanlig_bruker/kjop/kjop_detalj_godkjent/kjop_detalj_godkjent_widget.dart'
+    show KjopDetaljGodkjentWidget;
 export '/app_main/vanlig_bruker/legg_ut/godkjent_lagt_ut/godkjent_lagt_ut_widget.dart'
     show GodkjentLagtUtWidget;
 export '/app_main/chat/chat_main/chat_main_widget.dart' show ChatMainWidget;
@@ -68,3 +68,11 @@ export '/app_main/registrer/opprett_profil/opprett_profil_widget.dart'
 export '/app_main/registrer/bonde_onboarding/bonde_onboarding_widget.dart'
     show BondeOnboardingWidget;
 export '/app_main/bonde_gard/se/se/se_widget.dart' show SeWidget;
+export '/app_main/bonde_gard/chat/bonde_chat/bonde_chat_widget.dart'
+    show BondeChatWidget;
+export '/app_main/bonde_gard/chat/bonde_chat_copy/bonde_chat_copy_widget.dart'
+    show BondeChatCopyWidget;
+export '/app_main/vanlig_bruker/kjop/kjop_detalj_ventende/kjop_detalj_ventende_widget.dart'
+    show KjopDetaljVentendeWidget;
+export '/app_main/vanlig_bruker/hjem/betaling/betaling_widget.dart'
+    show BetalingWidget;

@@ -97,7 +97,7 @@ class _BrukerOnboardingWidgetState extends State<BrukerOnboardingWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'legg ut matvarer',
+                                                  'Finn lokale matvarer',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -126,7 +126,7 @@ class _BrukerOnboardingWidgetState extends State<BrukerOnboardingWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'Legg ut matvarer som kantareller, \nfisk eller jordbær.',
+                                                  'Selg eller kjøp mat fra gårder og private\nprodusenter i ditt nærområde.',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -136,7 +136,7 @@ class _BrukerOnboardingWidgetState extends State<BrukerOnboardingWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primaryText,
-                                                        fontSize: 18.0,
+                                                        fontSize: 15.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -182,7 +182,7 @@ class _BrukerOnboardingWidgetState extends State<BrukerOnboardingWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'legg ut matvarer',
+                                                  'Send kjøpsforespørsler',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -196,6 +196,36 @@ class _BrukerOnboardingWidgetState extends State<BrukerOnboardingWidget> {
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.bold,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 5.0, 0.0, 0.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Kontakt selgere, eller send en kjøpsforespørsel \ntil gårder som tilbyr betaling gjennom appen.',
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        fontSize: 15.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
                                                       ),
                                                 ),
                                               ],
@@ -238,7 +268,7 @@ class _BrukerOnboardingWidgetState extends State<BrukerOnboardingWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'legg ut matvarer',
+                                                  'Avtal overlevering',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -267,7 +297,7 @@ class _BrukerOnboardingWidgetState extends State<BrukerOnboardingWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'Legg ut matvarer som kantareller, \nfisk eller jordbær.',
+                                                  'Bruk chatten til å avtale overlevering \nav matvaren med selgeren.',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -277,7 +307,7 @@ class _BrukerOnboardingWidgetState extends State<BrukerOnboardingWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primaryText,
-                                                        fontSize: 18.0,
+                                                        fontSize: 15.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
