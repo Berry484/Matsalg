@@ -102,10 +102,10 @@ class _DashboardCustomNavBarWidgetState
                     borderRadius: 30.0,
                     borderWidth: 1.0,
                     buttonSize: 50.0,
-                    icon: const Icon(
-                      Icons.home,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.home,
                       color: Color(0xFF9299A1),
-                      size: 29.0,
+                      size: 24.0,
                     ),
                     onPressed: () async {
                       context.pushNamed(
@@ -126,7 +126,7 @@ class _DashboardCustomNavBarWidgetState
                     borderWidth: 1.0,
                     buttonSize: 50.0,
                     icon: const FaIcon(
-                      FontAwesomeIcons.solidListAlt,
+                      FontAwesomeIcons.exchangeAlt,
                       color: Color(0xFF9299A1),
                       size: 24.0,
                     ),
@@ -141,6 +141,20 @@ class _DashboardCustomNavBarWidgetState
                           ),
                         },
                       );
+                    },
+                  ),
+                  FlutterFlowIconButton(
+                    borderColor: Colors.transparent,
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 50.0,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.search,
+                      color: Color(0xFF9299A1),
+                      size: 24.0,
+                    ),
+                    onPressed: () async {
+                      context.pushNamed('Se');
                     },
                   ),
                   FlutterFlowIconButton(
@@ -167,8 +181,17 @@ class _DashboardCustomNavBarWidgetState
                       color: FlutterFlowTheme.of(context).alternate,
                       size: 24.0,
                     ),
-                    onPressed: () {
-                      print('IconButton pressed ...');
+                    onPressed: () async {
+                      context.pushNamed(
+                        'Profil2',
+                        extra: <String, dynamic>{
+                          kTransitionInfoKey: const TransitionInfo(
+                            hasTransition: true,
+                            transitionType: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 0),
+                          ),
+                        },
+                      );
                     },
                   ),
                 ],

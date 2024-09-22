@@ -64,12 +64,12 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
               child: Icon(
                 Icons.arrow_back_ios,
                 color: FlutterFlowTheme.of(context).alternate,
-                size: 28,
+                size: 28.0,
               ),
             ),
-            actions: [],
+            actions: const [],
             centerTitle: true,
-            elevation: 0,
+            elevation: 0.0,
           ),
           body: SafeArea(
             top: true,
@@ -78,43 +78,45 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
               children: [
                 Expanded(
                   child: Align(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.0),
                           child: Image.asset(
                             'assets/images/Mobile_login-bro.png',
-                            width: 237,
-                            height: 240,
+                            width: 237.0,
+                            height: 240.0,
                             fit: BoxFit.cover,
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 20.0, 0.0, 0.0),
                           child: Text(
                             'Skriv telefonnummeret ditt',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  fontSize: 25,
+                                  fontSize: 25.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 30),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 10.0, 0.0, 30.0),
                           child: Text(
                             'Vi sender en kode til telefonnummeret ditt',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  fontSize: 14,
+                                  fontSize: 14.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -124,19 +126,19 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                           key: _model.formKey,
                           autovalidateMode: AutovalidateMode.disabled,
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 20.0, 0.0, 0.0),
                             child: Container(
                               width: MediaQuery.sizeOf(context).width * 0.9,
-                              height: 55,
+                              height: 55.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(20.0),
+                                  topLeft: Radius.circular(20.0),
+                                  topRight: Radius.circular(20.0),
                                 ),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).accent1,
@@ -146,23 +148,23 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        15, 0, 0, 0),
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        15.0, 0.0, 0.0, 0.0),
                                     child: Text(
                                       '+47',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Open Sans',
-                                            fontSize: 16,
+                                            fontSize: 16.0,
                                             letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
                                   Expanded(
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          4, 0, 8, 0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          4.0, 0.0, 8.0, 0.0),
                                       child: TextFormField(
                                         controller: _model
                                             .phoneNumberFieldTextController,
@@ -195,7 +197,7 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Open Sans',
-                                              fontSize: 16,
+                                              fontSize: 16.0,
                                               letterSpacing: 0.0,
                                             ),
                                         maxLength: 8,
@@ -223,10 +225,10 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(0, -1),
+                          alignment: const AlignmentDirectional(0.0, -1.0),
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 24.0, 0.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () async {
                                 if (_model.formKey.currentState == null ||
@@ -246,11 +248,11 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                               },
                               text: 'Send kode',
                               options: FFButtonOptions(
-                                width: 230,
-                                height: 50,
-                                padding: EdgeInsets.all(10),
-                                iconPadding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                width: 230.0,
+                                height: 50.0,
+                                padding: const EdgeInsets.all(10.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context).alternate,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
@@ -258,16 +260,16 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                       fontFamily: 'Open Sans',
                                       color:
                                           FlutterFlowTheme.of(context).primary,
-                                      fontSize: 17,
+                                      fontSize: 17.0,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                elevation: 3,
-                                borderSide: BorderSide(
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
-                                  width: 1,
+                                  width: 1.0,
                                 ),
-                                borderRadius: BorderRadius.circular(24),
+                                borderRadius: BorderRadius.circular(24.0),
                               ),
                             ),
                           ),

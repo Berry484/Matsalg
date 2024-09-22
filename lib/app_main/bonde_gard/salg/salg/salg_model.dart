@@ -6,6 +6,11 @@ import 'package:flutter/material.dart';
 class SalgModel extends FlutterFlowModel<SalgWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // State field(s) for TabBar widget.
+  TabController? tabBarController;
+  int get tabBarCurrentIndex =>
+      tabBarController != null ? tabBarController!.index : 0;
+
   // Model for OrdreCustomNavBar component.
   late OrdreCustomNavBarModel ordreCustomNavBarModel;
 
@@ -17,6 +22,7 @@ class SalgModel extends FlutterFlowModel<SalgWidget> {
 
   @override
   void dispose() {
+    tabBarController?.dispose();
     ordreCustomNavBarModel.dispose();
   }
 }

@@ -1,9 +1,10 @@
-import '/flutter_flow/flutter_flow_credit_card_form.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'betal_popup_model.dart';
 export 'betal_popup_model.dart';
 
@@ -27,6 +28,15 @@ class _BetalPopupWidgetState extends State<BetalPopupWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => BetalPopupModel());
+
+    _model.textController1 ??= TextEditingController();
+    _model.textFieldFocusNode1 ??= FocusNode();
+
+    _model.textController2 ??= TextEditingController();
+    _model.textFieldFocusNode2 ??= FocusNode();
+
+    _model.textController3 ??= TextEditingController();
+    _model.textFieldFocusNode3 ??= FocusNode();
   }
 
   @override
@@ -79,31 +89,14 @@ class _BetalPopupWidgetState extends State<BetalPopupWidget> {
                       borderRadius: 30.0,
                       borderWidth: 1.0,
                       buttonSize: 44.0,
-                      icon: Icon(
-                        Icons.close_sharp,
+                      icon: FaIcon(
+                        FontAwesomeIcons.times,
                         color: FlutterFlowTheme.of(context).alternate,
                         size: 24.0,
                       ),
                       onPressed: () async {
-                        context.safePop();
+                        Navigator.pop(context);
                       },
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Betal',
-                          style: FlutterFlowTheme.of(context)
-                              .headlineSmall
-                              .override(
-                                fontFamily: 'Open Sans',
-                                letterSpacing: 0.0,
-                              ),
-                        ),
-                      ],
                     ),
                   ),
                 ],
@@ -115,46 +108,328 @@ class _BetalPopupWidgetState extends State<BetalPopupWidget> {
               color: FlutterFlowTheme.of(context).primaryBackground,
             ),
             Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+                    child: Text(
+                      'Gi et bud',
+                      textAlign: TextAlign.start,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Open Sans',
+                            color: FlutterFlowTheme.of(context).alternate,
+                            fontSize: 22.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(12.0, 10.0, 0.0, 0.0),
+                    child: Text(
+                      'Når du gir et bud har selgeren 3 dager på å godkjenne budet før det automatisk avslås.',
+                      textAlign: TextAlign.start,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Open Sans',
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                    child: FlutterFlowCreditCardForm(
-                      formKey: _model.creditCardFormKey,
-                      creditCardModel: _model.creditCardInfo,
-                      obscureNumber: true,
-                      obscureCvv: true,
-                      spacing: 10.0,
-                      textStyle:
-                          FlutterFlowTheme.of(context).bodyMedium.override(
-                                fontFamily: 'Open Sans',
-                                letterSpacing: 0.0,
+                  Form(
+                    key: _model.formKey,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10.0, 0.0, 10.0, 0.0),
+                            child: TextFormField(
+                              controller: _model.textController1,
+                              focusNode: _model.textFieldFocusNode1,
+                              autofocus: false,
+                              textInputAction: TextInputAction.next,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                labelText: 'Kortnummer',
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                                hintText: '••••••••••••••••',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      fontSize: 17.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).accent1,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                filled: true,
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
                               ),
-                      inputDecoration: InputDecoration(
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x65101213),
-                            width: 1.0,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    letterSpacing: 0.0,
+                                  ),
+                              keyboardType: TextInputType.number,
+                              cursorColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              validator: _model.textController1Validator
+                                  .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('[0-9]'))
+                              ],
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x65101213),
-                            width: 1.0,
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 15.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 0.0, 10.0, 0.0),
+                                    child: TextFormField(
+                                      controller: _model.textController2,
+                                      focusNode: _model.textFieldFocusNode2,
+                                      autofocus: false,
+                                      textInputAction: TextInputAction.next,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        labelText: 'Utløpsdato',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        hintText: '12/32',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              fontSize: 15.0,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .accent1,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      keyboardType: TextInputType.number,
+                                      cursorColor: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      validator: _model.textController2Validator
+                                          .asValidator(context),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[0-9]'))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 0.0, 10.0, 0.0),
+                                    child: TextFormField(
+                                      controller: _model.textController3,
+                                      focusNode: _model.textFieldFocusNode3,
+                                      autofocus: false,
+                                      textInputAction: TextInputAction.next,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        labelText: 'CVV',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        hintText: '•••',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              fontSize: 15.0,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .accent1,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      keyboardType: TextInputType.number,
+                                      cursorColor: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      validator: _model.textController3Validator
+                                          .asValidator(context),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[0-9]'))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
+                        ],
                       ),
                     ),
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 4.0, 12.0, 16.0),
+                        const EdgeInsetsDirectional.fromSTEB(12.0, 40.0, 12.0, 16.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -258,6 +533,7 @@ class _BetalPopupWidgetState extends State<BetalPopupWidget> {
                       'eller en av betalingsvalgene under',
                       style: FlutterFlowTheme.of(context).labelMedium.override(
                             fontFamily: 'Open Sans',
+                            fontSize: 13.0,
                             letterSpacing: 0.0,
                           ),
                     ),

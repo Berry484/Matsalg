@@ -314,6 +314,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'BondeOnboarding',
           path: '/bondeOnboarding',
           builder: (context, params) => const BondeOnboardingWidget(),
+        ),
+        FFRoute(
+          name: 'Se',
+          path: '/se',
+          builder: (context, params) => const SeWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

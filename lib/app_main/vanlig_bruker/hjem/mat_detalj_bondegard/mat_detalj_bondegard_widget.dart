@@ -65,12 +65,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
               child: Icon(
                 Icons.arrow_back_ios,
                 color: FlutterFlowTheme.of(context).alternate,
-                size: 28,
+                size: 28.0,
               ),
             ),
-            actions: [],
+            actions: const [],
             centerTitle: true,
-            elevation: 0,
+            elevation: 0.0,
           ),
           body: SafeArea(
             top: true,
@@ -89,8 +89,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 5.0, 0.0, 0.0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -109,13 +109,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       children: [
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 15),
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 0.0, 0.0, 15.0),
                                           child: Container(
-                                            width: 44,
-                                            height: 44,
+                                            width: 44.0,
+                                            height: 44.0,
                                             clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
                                             child: Image.network(
@@ -126,15 +126,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         ),
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  5, 0, 0, 13),
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  5.0, 0.0, 0.0, 13.0),
                                           child: Text(
                                             'Geir larsen',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Open Sans',
-                                                  fontSize: 15,
+                                                  fontSize: 15.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -143,13 +143,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 8, 0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 8.0, 0.0),
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
-                                        size: 24,
+                                        size: 24.0,
                                       ),
                                     ),
                                   ],
@@ -162,19 +162,20 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
-                                  child: Container(
+                                  child: SizedBox(
                                     width: double.infinity,
-                                    height: 380,
+                                    height: 380.0,
                                     child: Stack(
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: double.infinity,
-                                          height: 380,
+                                          height: 380.0,
                                           child: Stack(
                                             children: [
                                               Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(10, 0, 10, 40),
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 0.0, 10.0, 40.0),
                                                 child: PageView(
                                                   controller: _model
                                                           .pageViewController ??=
@@ -183,125 +184,125 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   scrollDirection:
                                                       Axis.horizontal,
                                                   children: [
-                                                    Container(
+                                                    SizedBox(
                                                       width: double.infinity,
-                                                      height: 380,
+                                                      height: 380.0,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8),
+                                                                        8.0),
                                                             child:
                                                                 Image.network(
                                                               'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380,
+                                                              height: 380.0,
                                                               fit: BoxFit.cover,
                                                               alignment:
-                                                                  Alignment(
-                                                                      0, 0),
+                                                                  const Alignment(
+                                                                      0.0, 0.0),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
-                                                    Container(
+                                                    SizedBox(
                                                       width: double.infinity,
-                                                      height: 380,
+                                                      height: 380.0,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8),
+                                                                        8.0),
                                                             child:
                                                                 Image.network(
                                                               '',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380,
+                                                              height: 380.0,
                                                               fit: BoxFit.fill,
                                                               alignment:
-                                                                  Alignment(
-                                                                      0, 0),
+                                                                  const Alignment(
+                                                                      0.0, 0.0),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
-                                                    Container(
+                                                    SizedBox(
                                                       width: double.infinity,
-                                                      height: 380,
+                                                      height: 380.0,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8),
+                                                                        8.0),
                                                             child:
                                                                 Image.network(
                                                               '',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380,
+                                                              height: 380.0,
                                                               fit: BoxFit.fill,
                                                               alignment:
-                                                                  Alignment(
-                                                                      0, 0),
+                                                                  const Alignment(
+                                                                      0.0, 0.0),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
-                                                    Container(
-                                                      height: 380,
+                                                    SizedBox(
+                                                      height: 380.0,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8),
+                                                                        8.0),
                                                             child:
                                                                 Image.network(
                                                               '',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380,
+                                                              height: 380.0,
                                                               fit: BoxFit.fill,
                                                               alignment:
-                                                                  Alignment(
-                                                                      0, 0),
+                                                                  const Alignment(
+                                                                      0.0, 0.0),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
-                                                    Container(
+                                                    SizedBox(
                                                       width: double.infinity,
-                                                      height: 380,
+                                                      height: 380.0,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8),
+                                                                        8.0),
                                                             child:
                                                                 Image.network(
                                                               '',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380,
+                                                              height: 380.0,
                                                               fit: BoxFit.fill,
                                                               alignment:
-                                                                  Alignment(
-                                                                      0, 0),
+                                                                  const Alignment(
+                                                                      0.0, 0.0),
                                                             ),
                                                           ),
                                                         ],
@@ -311,11 +312,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 ),
                                               ),
                                               Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 1),
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 1.0),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(16, 0, 0, 16),
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          16.0, 0.0, 0.0, 16.0),
                                                   child: smooth_page_indicator
                                                       .SmoothPageIndicator(
                                                     controller: _model
@@ -330,7 +332,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           .pageViewController!
                                                           .animateToPage(
                                                         i,
-                                                        duration: Duration(
+                                                        duration: const Duration(
                                                             milliseconds: 500),
                                                         curve: Curves.ease,
                                                       );
@@ -338,13 +340,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     },
                                                     effect: smooth_page_indicator
                                                         .ExpandingDotsEffect(
-                                                      expansionFactor: 3,
-                                                      spacing: 8,
-                                                      radius: 16,
-                                                      dotWidth: 10,
-                                                      dotHeight: 8,
+                                                      expansionFactor: 3.0,
+                                                      spacing: 8.0,
+                                                      radius: 16.0,
+                                                      dotWidth: 10.0,
+                                                      dotHeight: 8.0,
                                                       dotColor:
-                                                          Color(0xCC616161),
+                                                          const Color(0xCC616161),
                                                       activeDotColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -367,14 +369,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              5.0, 0.0, 0.0, 0.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 5, 10, 30),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10.0, 5.0, 10.0, 30.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -383,40 +386,43 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        ToggleIcon(
-                                          onPressed: () async {
-                                            safeSetState(() => FFAppState()
-                                                .likt = !FFAppState().likt);
-                                          },
-                                          value: FFAppState().likt,
-                                          onIcon: FaIcon(
-                                            FontAwesomeIcons.solidHeart,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: 30,
+                                        if (FFAppState().bonde == false)
+                                          ToggleIcon(
+                                            onPressed: () async {
+                                              safeSetState(() => FFAppState()
+                                                  .likt = !FFAppState().likt);
+                                            },
+                                            value: FFAppState().likt,
+                                            onIcon: FaIcon(
+                                              FontAwesomeIcons.solidHeart,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 30.0,
+                                            ),
+                                            offIcon: FaIcon(
+                                              FontAwesomeIcons.heart,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 30.0,
+                                            ),
                                           ),
-                                          offIcon: FaIcon(
-                                            FontAwesomeIcons.heart,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: 30,
-                                          ),
-                                        ),
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 0),
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 0.0, 0.0, 0.0),
                                           child: FaIcon(
                                             FontAwesomeIcons.comment,
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
-                                            size: 30,
+                                            size: 30.0,
                                           ),
                                         ),
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  15, 0, 0, 0),
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  15.0, 0.0, 0.0, 0.0),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -439,7 +445,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           .viewInsetsOf(
                                                               context),
                                                       child:
-                                                          KartPopUpBondegardWidget(),
+                                                          const KartPopUpBondegardWidget(),
                                                     ),
                                                   );
                                                 },
@@ -451,7 +457,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .alternate,
-                                              size: 31,
+                                              size: 31.0,
                                             ),
                                           ),
                                         ),
@@ -460,120 +466,126 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            await showModalBottomSheet(
-                                              isScrollControlled: true,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              isDismissible: false,
-                                              enableDrag: false,
-                                              context: context,
-                                              builder: (context) {
-                                                return GestureDetector(
-                                                  onTap: () =>
-                                                      FocusScope.of(context)
-                                                          .unfocus(),
+                                        if (FFAppState().bonde == false)
+                                          InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                isDismissible: false,
+                                                enableDrag: false,
+                                                context: context,
+                                                builder: (context) {
+                                                  return GestureDetector(
+                                                    onTap: () =>
+                                                        FocusScope.of(context)
+                                                            .unfocus(),
+                                                    child: Padding(
+                                                      padding: MediaQuery
+                                                          .viewInsetsOf(
+                                                              context),
+                                                      child: const BetalPopupWidget(),
+                                                    ),
+                                                  );
+                                                },
+                                              ).then((value) =>
+                                                  safeSetState(() {}));
+                                            },
+                                            child: Material(
+                                              color: Colors.transparent,
+                                              elevation: 4.0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(24.0),
+                                              ),
+                                              child: SafeArea(
+                                                child: Container(
+                                                  width: 120.0,
+                                                  height: 40.0,
+                                                  constraints: const BoxConstraints(
+                                                    maxWidth: 174.0,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        const Color(0xFF10835F),
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .alternate
+                                                      ],
+                                                      stops: const [0.0, 1.0],
+                                                      begin:
+                                                          const AlignmentDirectional(
+                                                              0.64, -1.0),
+                                                      end: const AlignmentDirectional(
+                                                          -0.64, 1.0),
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            24.0),
+                                                  ),
                                                   child: Padding(
                                                     padding:
-                                                        MediaQuery.viewInsetsOf(
-                                                            context),
-                                                    child: BetalPopupWidget(),
-                                                  ),
-                                                );
-                                              },
-                                            ).then(
-                                                (value) => safeSetState(() {}));
-                                          },
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            elevation: 4,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(24),
-                                            ),
-                                            child: SafeArea(
-                                              child: Container(
-                                                width: 120,
-                                                height: 40,
-                                                constraints: BoxConstraints(
-                                                  maxWidth: 174,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    colors: [
-                                                      Color(0xFF10835F),
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .alternate
-                                                    ],
-                                                    stops: [0, 1],
-                                                    begin: AlignmentDirectional(
-                                                        0.64, -1),
-                                                    end: AlignmentDirectional(
-                                                        -0.64, 1),
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(10, 0, 10, 0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Expanded(
-                                                        child: Text(
-                                                          'Reserver',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 17,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(10.0, 0.0,
+                                                                10.0, 0.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            'Reserver',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      17.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10.0, 0.0, 0.0, 0.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 8),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 8.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -593,7 +605,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-                                                          fontSize: 19,
+                                                          fontSize: 19.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -603,8 +615,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                           ),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 5, 0),
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 5.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -624,15 +636,16 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .alternate,
-                                                        fontSize: 22,
+                                                        fontSize: 22.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 10, 0),
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 10.0, 0.0),
                                                   child: Text(
                                                     '/stk',
                                                     textAlign: TextAlign.center,
@@ -645,7 +658,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryText,
-                                                          fontSize: 22,
+                                                          fontSize: 22.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -659,8 +672,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 15, 0, 0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 15.0, 0.0, 0.0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -670,15 +683,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
-                                              fontSize: 14,
+                                              fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 10, 0, 5),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 10.0, 0.0, 5.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -698,15 +711,16 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-                                                          fontSize: 14,
+                                                          fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(5, 0, 0, 0),
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        5.0, 0.0, 0.0, 0.0),
                                                 child: Text(
                                                   '3',
                                                   textAlign: TextAlign.start,
@@ -715,7 +729,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       .titleMedium
                                                       .override(
                                                         fontFamily: 'Open Sans',
-                                                        fontSize: 14,
+                                                        fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -725,9 +739,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             ],
                                           ),
                                           SizedBox(
-                                            height: 14,
+                                            height: 14.0,
                                             child: VerticalDivider(
-                                              thickness: 1,
+                                              thickness: 1.0,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .alternate,
@@ -745,15 +759,16 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-                                                          fontSize: 14,
+                                                          fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(5, 0, 0, 0),
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        5.0, 0.0, 0.0, 0.0),
                                                 child: Text(
                                                   'Km',
                                                   textAlign: TextAlign.start,
@@ -762,7 +777,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       .titleMedium
                                                       .override(
                                                         fontFamily: 'Open Sans',
-                                                        fontSize: 14,
+                                                        fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -774,7 +789,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
-                                                size: 19,
+                                                size: 19.0,
                                               ),
                                             ],
                                           ),
@@ -782,8 +797,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 15, 0, 0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 15.0, 0.0, 0.0),
                                       child: Text(
                                         'Antall',
                                         style: FlutterFlowTheme.of(context)
@@ -793,7 +808,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
-                                              fontSize: 14,
+                                              fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -806,15 +821,16 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                           .titleMedium
                                           .override(
                                             fontFamily: 'Open Sans',
-                                            fontSize: 14,
+                                            fontSize: 14.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
                                     Container(
-                                      width: 332,
-                                      decoration: BoxDecoration(),
-                                      alignment: AlignmentDirectional(-1, -1),
+                                      width: 332.0,
+                                      decoration: const BoxDecoration(),
+                                      alignment:
+                                          const AlignmentDirectional(-1.0, -1.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
@@ -822,8 +838,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         children: [
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 15, 0, 0),
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 15.0, 0.0, 0.0),
                                             child: Text(
                                               'Beskrivelse',
                                               style: FlutterFlowTheme.of(
@@ -834,7 +850,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
-                                                    fontSize: 14,
+                                                    fontSize: 14.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
@@ -842,8 +858,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                           ),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 10, 0, 0),
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 10.0, 0.0, 0.0),
                                             child: Text(
                                               'En fin beskrivelse',
                                               textAlign: TextAlign.start,
@@ -852,7 +868,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       .titleSmall
                                                       .override(
                                                         fontFamily: 'Open Sans',
-                                                        fontSize: 14,
+                                                        fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -863,8 +879,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 50, 0, 0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 50.0, 0.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -882,7 +898,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .alternate,
-                                                  fontSize: 17,
+                                                  fontSize: 17.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -897,20 +913,21 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 10.0, 0.0),
                           child: RefreshIndicator(
                             onRefresh: () async {},
                             child: GridView(
-                              padding: EdgeInsets.fromLTRB(
+                              padding: const EdgeInsets.fromLTRB(
                                 0,
-                                1,
+                                1.0,
                                 0,
-                                63,
+                                63.0,
                               ),
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                crossAxisSpacing: 10,
+                                crossAxisSpacing: 10.0,
                                 childAspectRatio: 0.69,
                               ),
                               primary: false,
@@ -918,7 +935,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                               scrollDirection: Axis.vertical,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(0, 0),
+                                  alignment: const AlignmentDirectional(0.0, 0.0),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
                                     focusColor: Colors.transparent,
@@ -931,16 +948,17 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       color: Colors.transparent,
                                       elevation: 0.3,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(16),
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
                                       ),
                                       child: Container(
-                                        width: 225,
-                                        height: 235,
+                                        width: 225.0,
+                                        height: 235.0,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           borderRadius:
-                                              BorderRadius.circular(16),
+                                              BorderRadius.circular(16.0),
                                         ),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
@@ -950,66 +968,69 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Align(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
+                                              alignment: const AlignmentDirectional(
+                                                  0.0, 0.0),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 12),
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 12.0),
                                                 child: ClipRRect(
                                                   borderRadius:
-                                                      BorderRadius.only(
+                                                      const BorderRadius.only(
                                                     bottomLeft:
-                                                        Radius.circular(0),
+                                                        Radius.circular(0.0),
                                                     bottomRight:
-                                                        Radius.circular(0),
+                                                        Radius.circular(0.0),
                                                     topLeft:
-                                                        Radius.circular(16),
+                                                        Radius.circular(16.0),
                                                     topRight:
-                                                        Radius.circular(16),
+                                                        Radius.circular(16.0),
                                                   ),
                                                   child: Image.network(
                                                     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
                                                     width: double.infinity,
-                                                    height: 151,
+                                                    height: 151.0,
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(5, 0, 5, 0),
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(5.0, 0.0, 5.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Align(
                                                     alignment:
-                                                        AlignmentDirectional(
-                                                            -1, 0),
+                                                        const AlignmentDirectional(
+                                                            -1.0, 0.0),
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  7, 0, 0, 0),
+                                                                  7.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
                                                       child: AutoSizeText(
                                                         'Kantareller',
                                                         textAlign:
                                                             TextAlign.start,
-                                                        minFontSize: 11,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  fontSize: 16,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
+                                                        minFontSize: 11.0,
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyLarge
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Open Sans',
+                                                              fontSize: 16.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
                                                       ),
                                                     ),
                                                   ),
@@ -1017,8 +1038,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 0, 4),
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 4.0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
@@ -1029,13 +1050,16 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   Flexible(
                                                     child: Align(
                                                       alignment:
-                                                          AlignmentDirectional(
-                                                              0, 0),
+                                                          const AlignmentDirectional(
+                                                              0.0, 0.0),
                                                       child: Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
+                                                            const EdgeInsetsDirectional
                                                                 .fromSTEB(
-                                                                    5, 5, 5, 0),
+                                                                    5.0,
+                                                                    5.0,
+                                                                    5.0,
+                                                                    0.0),
                                                         child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -1048,24 +1072,24 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           children: [
                                                             Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
+                                                                  const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0,
-                                                                          5,
-                                                                          0,
-                                                                          0),
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
                                                                         .max,
                                                                 children: [
                                                                   Padding(
-                                                                    padding: EdgeInsetsDirectional
+                                                                    padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            7,
-                                                                            0,
-                                                                            0,
-                                                                            0),
+                                                                            7.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
                                                                     child: Text(
                                                                       '300 Kr',
                                                                       textAlign:
@@ -1080,7 +1104,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             fontSize:
-                                                                                16,
+                                                                                16.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -1102,7 +1126,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).secondaryText,
                                                                           fontSize:
-                                                                              16,
+                                                                              16.0,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
@@ -1122,7 +1146,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .alternate,
-                                                                  size: 17,
+                                                                  size: 17.0,
                                                                 ),
                                                                 Text(
                                                                   '3',
@@ -1138,7 +1162,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .primaryText,
                                                                         fontSize:
-                                                                            14,
+                                                                            14.0,
                                                                         letterSpacing:
                                                                             0.0,
                                                                         fontWeight:
@@ -1146,12 +1170,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
+                                                                  padding: const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          5,
-                                                                          0,
-                                                                          5,
-                                                                          0),
+                                                                          5.0,
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0),
                                                                   child: Text(
                                                                     'Km',
                                                                     textAlign:
@@ -1166,7 +1190,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
-                                                                              14,
+                                                                              14.0,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
@@ -1194,7 +1218,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                             ),
                           ),
                         ),
-                      ].addToEnd(SizedBox(height: 150)),
+                      ].addToEnd(const SizedBox(height: 150.0)),
                     ),
                   ),
                 ),

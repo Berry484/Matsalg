@@ -100,10 +100,10 @@ class _HomeCustomNavBarWidgetState extends State<HomeCustomNavBarWidget> {
                     borderRadius: 30.0,
                     borderWidth: 1.0,
                     buttonSize: 50.0,
-                    icon: Icon(
-                      Icons.home,
+                    icon: FaIcon(
+                      FontAwesomeIcons.home,
                       color: FlutterFlowTheme.of(context).alternate,
-                      size: 29.0,
+                      size: 24.0,
                     ),
                     onPressed: () {
                       print('IconButton pressed ...');
@@ -115,7 +115,7 @@ class _HomeCustomNavBarWidgetState extends State<HomeCustomNavBarWidget> {
                     borderWidth: 1.0,
                     buttonSize: 50.0,
                     icon: const FaIcon(
-                      FontAwesomeIcons.solidListAlt,
+                      FontAwesomeIcons.exchangeAlt,
                       color: Color(0xFF9299A1),
                       size: 24.0,
                     ),
@@ -130,6 +130,20 @@ class _HomeCustomNavBarWidgetState extends State<HomeCustomNavBarWidget> {
                           ),
                         },
                       );
+                    },
+                  ),
+                  FlutterFlowIconButton(
+                    borderColor: Colors.transparent,
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 50.0,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.search,
+                      color: Color(0xFF9299A1),
+                      size: 24.0,
+                    ),
+                    onPressed: () async {
+                      context.pushNamed('Se');
                     },
                   ),
                   FlutterFlowIconButton(

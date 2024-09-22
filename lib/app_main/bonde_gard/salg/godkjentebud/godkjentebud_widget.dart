@@ -4,18 +4,18 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'salg_info2_model.dart';
-export 'salg_info2_model.dart';
+import 'godkjentebud_model.dart';
+export 'godkjentebud_model.dart';
 
-class SalgInfo2Widget extends StatefulWidget {
-  const SalgInfo2Widget({super.key});
+class GodkjentebudWidget extends StatefulWidget {
+  const GodkjentebudWidget({super.key});
 
   @override
-  State<SalgInfo2Widget> createState() => _SalgInfo2WidgetState();
+  State<GodkjentebudWidget> createState() => _GodkjentebudWidgetState();
 }
 
-class _SalgInfo2WidgetState extends State<SalgInfo2Widget> {
-  late SalgInfo2Model _model;
+class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
+  late GodkjentebudModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -26,7 +26,7 @@ class _SalgInfo2WidgetState extends State<SalgInfo2Widget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => SalgInfo2Model());
+    _model = createModel(context, () => GodkjentebudModel());
   }
 
   @override

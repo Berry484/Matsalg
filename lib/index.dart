@@ -67,3 +67,4 @@ export '/app_main/registrer/opprett_profil/opprett_profil_widget.dart'
     show OpprettProfilWidget;
 export '/app_main/registrer/bonde_onboarding/bonde_onboarding_widget.dart'
     show BondeOnboardingWidget;
+export '/app_main/bonde_gard/se/se/se_widget.dart' show SeWidget;

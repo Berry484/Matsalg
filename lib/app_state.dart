@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
@@ -14,12 +15,19 @@ class FFAppState extends ChangeNotifier {
     _instance = FFAppState._internal();
   }
 
-  Future initializePersistedState() async {}
+  Future initializePersistedState() async {
+    prefs = await SharedPreferences.getInstance();
+    _safeInit(() {
+      _bonde = prefs.getBool('ff_bonde') ?? _bonde;
+    });
+  }
 
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
   }
+
+  late SharedPreferences prefs;
 
   LatLng? _brukersted = const LatLng(40.7127753, -74.0059728);
   LatLng? get brukersted => _brukersted;
@@ -32,4 +40,23 @@ class FFAppState extends ChangeNotifier {
   set likt(bool value) {
     _likt = value;
   }
+
+  bool _bonde = false;
+  bool get bonde => _bonde;
+  set bonde(bool value) {
+    _bonde = value;
+    prefs.setBool('ff_bonde', value);
+  }
+}
+
+void _safeInit(Function() initializeField) {
+  try {
+    initializeField();
+  } catch (_) {}
+}
+
+Future _safeInitAsync(Function() initializeField) async {
+  try {
+    await initializeField();
+  } catch (_) {}
 }

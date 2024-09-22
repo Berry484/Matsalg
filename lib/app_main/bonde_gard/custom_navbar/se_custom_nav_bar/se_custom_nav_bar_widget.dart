@@ -3,18 +3,18 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'chat_custom_nav_bar_model.dart';
-export 'chat_custom_nav_bar_model.dart';
+import 'se_custom_nav_bar_model.dart';
+export 'se_custom_nav_bar_model.dart';
 
-class ChatCustomNavBarWidget extends StatefulWidget {
-  const ChatCustomNavBarWidget({super.key});
+class SeCustomNavBarWidget extends StatefulWidget {
+  const SeCustomNavBarWidget({super.key});
 
   @override
-  State<ChatCustomNavBarWidget> createState() => _ChatCustomNavBarWidgetState();
+  State<SeCustomNavBarWidget> createState() => _SeCustomNavBarWidgetState();
 }
 
-class _ChatCustomNavBarWidgetState extends State<ChatCustomNavBarWidget> {
-  late ChatCustomNavBarModel _model;
+class _SeCustomNavBarWidgetState extends State<SeCustomNavBarWidget> {
+  late SeCustomNavBarModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -25,7 +25,7 @@ class _ChatCustomNavBarWidgetState extends State<ChatCustomNavBarWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ChatCustomNavBarModel());
+    _model = createModel(context, () => SeCustomNavBarModel());
   }
 
   @override
@@ -105,8 +105,17 @@ class _ChatCustomNavBarWidgetState extends State<ChatCustomNavBarWidget> {
                       color: Color(0xFF9299A1),
                       size: 24.0,
                     ),
-                    onPressed: () {
-                      print('IconButton pressed ...');
+                    onPressed: () async {
+                      context.goNamed(
+                        'Hjem2',
+                        extra: <String, dynamic>{
+                          kTransitionInfoKey: const TransitionInfo(
+                            hasTransition: true,
+                            transitionType: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 0),
+                          ),
+                        },
+                      );
                     },
                   ),
                   FlutterFlowIconButton(
@@ -119,6 +128,29 @@ class _ChatCustomNavBarWidgetState extends State<ChatCustomNavBarWidget> {
                       color: Color(0xFF9299A1),
                       size: 24.0,
                     ),
+                    onPressed: () async {
+                      context.goNamed(
+                        'Salg',
+                        extra: <String, dynamic>{
+                          kTransitionInfoKey: const TransitionInfo(
+                            hasTransition: true,
+                            transitionType: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 0),
+                          ),
+                        },
+                      );
+                    },
+                  ),
+                  FlutterFlowIconButton(
+                    borderColor: Colors.transparent,
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 50.0,
+                    icon: FaIcon(
+                      FontAwesomeIcons.search,
+                      color: FlutterFlowTheme.of(context).alternate,
+                      size: 24.0,
+                    ),
                     onPressed: () {
                       print('IconButton pressed ...');
                     },
@@ -129,22 +161,8 @@ class _ChatCustomNavBarWidgetState extends State<ChatCustomNavBarWidget> {
                     borderWidth: 1.0,
                     buttonSize: 50.0,
                     icon: const FaIcon(
-                      FontAwesomeIcons.search,
-                      color: Color(0xFF9299A1),
-                      size: 24.0,
-                    ),
-                    onPressed: () async {
-                      context.pushNamed('Se');
-                    },
-                  ),
-                  FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30.0,
-                    borderWidth: 1.0,
-                    buttonSize: 50.0,
-                    icon: FaIcon(
                       FontAwesomeIcons.solidComments,
-                      color: FlutterFlowTheme.of(context).alternate,
+                      color: Color(0xFF9299A1),
                       size: 24.0,
                     ),
                     onPressed: () {

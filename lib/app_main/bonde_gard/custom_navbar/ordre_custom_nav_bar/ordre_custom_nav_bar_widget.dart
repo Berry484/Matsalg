@@ -101,10 +101,10 @@ class _OrdreCustomNavBarWidgetState extends State<OrdreCustomNavBarWidget> {
                     borderRadius: 30.0,
                     borderWidth: 1.0,
                     buttonSize: 50.0,
-                    icon: const Icon(
-                      Icons.home,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.home,
                       color: Color(0xFF9299A1),
-                      size: 29.0,
+                      size: 24.0,
                     ),
                     onPressed: () async {
                       context.goNamed(
@@ -125,12 +125,26 @@ class _OrdreCustomNavBarWidgetState extends State<OrdreCustomNavBarWidget> {
                     borderWidth: 1.0,
                     buttonSize: 50.0,
                     icon: FaIcon(
-                      FontAwesomeIcons.solidListAlt,
+                      FontAwesomeIcons.exchangeAlt,
                       color: FlutterFlowTheme.of(context).alternate,
                       size: 24.0,
                     ),
                     onPressed: () {
                       print('IconButton pressed ...');
+                    },
+                  ),
+                  FlutterFlowIconButton(
+                    borderColor: Colors.transparent,
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 50.0,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.search,
+                      color: Color(0xFF9299A1),
+                      size: 24.0,
+                    ),
+                    onPressed: () async {
+                      context.pushNamed('Se');
                     },
                   ),
                   FlutterFlowIconButton(

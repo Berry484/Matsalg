@@ -53,7 +53,7 @@ class _SalgDetaljWidgetState extends State<SalgDetaljWidget> {
             hoverColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () async {
-              context.safePop();
+              context.pop();
             },
             child: Icon(
               Icons.arrow_back_ios,
@@ -112,8 +112,6 @@ class _SalgDetaljWidgetState extends State<SalgDetaljWidget> {
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
-                                    isDismissible: false,
-                                    enableDrag: false,
                                     useSafeArea: true,
                                     context: context,
                                     builder: (context) {

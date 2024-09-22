@@ -5,7 +5,9 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'hjem2_model.dart';
 export 'hjem2_model.dart';
 
@@ -27,6 +29,12 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
     super.initState();
     _model = createModel(context, () => Hjem2Model());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      FFAppState().bonde = true;
+      safeSetState(() {});
+    });
+
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -43,6 +51,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondary,
@@ -60,7 +70,7 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                   Flexible(
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 30.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -457,8 +467,7 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 24.0, 4.0, 40.0, 0.0),
                             child: Container(
-                              constraints: BoxConstraints(
-                                maxWidth: MediaQuery.sizeOf(context).width,
+                              constraints: const BoxConstraints(
                                 maxHeight: 90.0,
                               ),
                               decoration: BoxDecoration(
@@ -1083,7 +1092,7 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                       ),
                     ),
                   ),
-                ].addToEnd(const SizedBox(height: 100.0)),
+                ],
               ),
             ),
             wrapWithModel(

@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'salgs_historikk2_widget.dart' show SalgsHistorikk2Widget;
+import 'se_custom_nav_bar_widget.dart' show SeCustomNavBarWidget;
 import 'package:flutter/material.dart';
 
-class SalgsHistorikk2Model extends FlutterFlowModel<SalgsHistorikk2Widget> {
+class SeCustomNavBarModel extends FlutterFlowModel<SeCustomNavBarWidget> {
   @override
   void initState(BuildContext context) {}
 
