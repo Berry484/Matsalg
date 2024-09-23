@@ -58,7 +58,6 @@ class _BrukerOnboardingWidgetState extends State<BrukerOnboardingWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 50.0),
                               child: PageView(
-                                physics: const NeverScrollableScrollPhysics(),
                                 controller: _model.pageViewController ??=
                                     PageController(initialPage: 0),
                                 onPageChanged: (_) => safeSetState(() {}),

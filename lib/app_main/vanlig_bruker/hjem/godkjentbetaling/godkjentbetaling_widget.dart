@@ -120,7 +120,7 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
                         const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        context.pushNamed('MineKjop');
+                        context.goNamed('MineKjop');
                       },
                       text: 'Ferdig',
                       icon: const FaIcon(

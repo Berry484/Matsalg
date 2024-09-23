@@ -477,8 +477,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 isScrollControlled: true,
                                                 backgroundColor:
                                                     Colors.transparent,
-                                                isDismissible: false,
-                                                enableDrag: false,
                                                 context: context,
                                                 builder: (context) {
                                                   return GestureDetector(

@@ -67,22 +67,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                 size: 28.0,
               ),
             ),
-            title: Align(
-              alignment: const AlignmentDirectional(-1.0, 0.0),
-              child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
-                child: Text(
-                  'Opprett profilen din',
-                  style: FlutterFlowTheme.of(context).headlineMedium.override(
-                        fontFamily: 'Open Sans',
-                        color: const Color(0xFF14181B),
-                        fontSize: 22.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                ),
-              ),
-            ),
             actions: const [],
             centerTitle: true,
             elevation: 0.0,
@@ -98,6 +82,25 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      Align(
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              30.0, 40.0, 0.0, 0.0),
+                          child: Text(
+                            'Legg til profilbilde',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  fontSize: 19.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                      ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -114,6 +117,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                 maxWidth: 1000.00,
                                 maxHeight: 1000.00,
                                 allowPhoto: true,
+                                pickerFontFamily: 'Open Sans',
                               );
                               if (selectedMedia != null &&
                                   selectedMedia.every((m) => validateFileFormat(
@@ -153,61 +157,32 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      2.0, 24.0, 2.0, 10.0),
+                                      2.0, 24.0, 2.0, 0.0),
                                   child: Container(
-                                    width: 100.0,
-                                    height: 100.0,
+                                    width: 120.0,
+                                    height: 120.0,
                                     clipBehavior: Clip.antiAlias,
                                     decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
                                     ),
                                     child: Image.asset(
-                                      'assets/images/istockphoto-1409329028-612x612.jpg',
-                                      fit: BoxFit.cover,
+                                      'assets/images/add-profile-picture-icon-upload-photo-of-social-media-user-vector-removebg-preview.png',
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                 ),
-                                Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.05),
-                                  child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 24.0),
-                                    child: FFButtonWidget(
-                                      onPressed: () {
-                                        print('Button pressed ...');
-                                      },
-                                      text: 'Last opp bilde',
-                                      options: FFButtonOptions(
-                                        width: 125.0,
-                                        height: 35.0,
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 0.0),
-                                        iconPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                0.0, 0.0, 0.0, 0.0),
+                                Text(
+                                  'Last opp bilde',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Open Sans',
                                         color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              fontSize: 15.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                        elevation: 3.0,
-                                        borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
+                                            .alternate,
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                    ),
-                                  ),
                                 ),
                               ],
                             ),
@@ -216,7 +191,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 12.0, 20.0, 12.0),
+                            20.0, 30.0, 20.0, 12.0),
                         child: TextFormField(
                           controller: _model.bioTextController,
                           focusNode: _model.bioFocusNode,

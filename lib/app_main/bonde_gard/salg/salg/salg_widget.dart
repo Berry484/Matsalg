@@ -340,7 +340,7 @@ class _SalgWidgetState extends State<SalgWidget> with TickerProviderStateMixin {
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             fontSize:
-                                                                                18.0,
+                                                                                19.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -369,7 +369,7 @@ class _SalgWidgetState extends State<SalgWidget> with TickerProviderStateMixin {
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             fontSize:
-                                                                                18.0,
+                                                                                19.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:

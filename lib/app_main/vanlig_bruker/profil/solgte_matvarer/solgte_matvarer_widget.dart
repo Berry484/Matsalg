@@ -58,7 +58,7 @@ class _SolgteMatvarerWidgetState extends State<SolgteMatvarerWidget> {
               ),
             ),
             title: Text(
-              'Salgshistorikk',
+              'Matvare historikk',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Montserrat',
@@ -152,19 +152,9 @@ class _SolgteMatvarerWidgetState extends State<SolgteMatvarerWidget> {
                                 ),
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    const Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 4.0, 0.0, 0.0),
-                                      child: Icon(
-                                        Icons.open_in_full,
-                                        color: Color(0xFF57636C),
-                                        size: 24.0,
-                                      ),
-                                    ),
                                     Align(
                                       alignment: const AlignmentDirectional(0.0, 1.0),
                                       child: Row(
@@ -189,7 +179,7 @@ class _SolgteMatvarerWidgetState extends State<SolgteMatvarerWidget> {
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .alternate,
-                                                    fontSize: 16.0,
+                                                    fontSize: 19.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.bold,
                                                   ),
@@ -210,7 +200,7 @@ class _SolgteMatvarerWidgetState extends State<SolgteMatvarerWidget> {
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .alternate,
-                                                    fontSize: 16.0,
+                                                    fontSize: 19.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.bold,
                                                   ),

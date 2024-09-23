@@ -280,7 +280,7 @@ class _SalgDetaljWidgetState extends State<SalgDetaljWidget> {
                                                                           context)
                                                                       .alternate,
                                                                   fontSize:
-                                                                      18.0,
+                                                                      19.0,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -311,7 +311,7 @@ class _SalgDetaljWidgetState extends State<SalgDetaljWidget> {
                                                                           context)
                                                                       .alternate,
                                                                   fontSize:
-                                                                      18.0,
+                                                                      19.0,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:

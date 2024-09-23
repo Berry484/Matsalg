@@ -216,16 +216,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                   onPressed: () async {
                     Navigator.pop(context);
 
-                    context.pushNamed(
-                      'Betaling',
-                      extra: <String, dynamic>{
-                        kTransitionInfoKey: const TransitionInfo(
-                          hasTransition: true,
-                          transitionType: PageTransitionType.fade,
-                          duration: Duration(milliseconds: 0),
-                        ),
-                      },
-                    );
+                    context.pushNamed('Betaling');
                   },
                   text: 'Skjønner',
                   options: FFButtonOptions(

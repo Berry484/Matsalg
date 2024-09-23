@@ -1,7 +1,6 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import 'registrer_bonde_widget.dart' show RegistrerBondeWidget;
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class RegistrerBondeModel extends FlutterFlowModel<RegistrerBondeWidget> {
   ///  State fields for stateful widgets in this page.
@@ -14,46 +13,50 @@ class RegistrerBondeModel extends FlutterFlowModel<RegistrerBondeWidget> {
   String? _bondeGardNavnTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Field is required';
+      return 'Felt må fylles ut.';
     }
 
     return null;
   }
 
-  // State field(s) for TabBar widget.
-  TabController? tabBarController;
-  int get tabBarCurrentIndex =>
-      tabBarController != null ? tabBarController!.index : 0;
-
-  // State field(s) for GateNavn widget.
-  FocusNode? gateNavnFocusNode;
-  TextEditingController? gateNavnTextController;
-  String? Function(BuildContext, String?)? gateNavnTextControllerValidator;
-  // State field(s) for GateNummer widget.
-  FocusNode? gateNummerFocusNode;
-  TextEditingController? gateNummerTextController;
-  String? Function(BuildContext, String?)? gateNummerTextControllerValidator;
-  // State field(s) for PostNummer widget.
-  FocusNode? postNummerFocusNode;
-  TextEditingController? postNummerTextController;
-  final postNummerMask = MaskTextInputFormatter(mask: '####');
-  String? Function(BuildContext, String?)? postNummerTextControllerValidator;
-  // State field(s) for By widget.
-  FocusNode? byFocusNode;
-  TextEditingController? byTextController;
-  String? Function(BuildContext, String?)? byTextControllerValidator;
   // State field(s) for Kommune widget.
   FocusNode? kommuneFocusNode;
   TextEditingController? kommuneTextController;
   String? Function(BuildContext, String?)? kommuneTextControllerValidator;
+  String? _kommuneTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Felt må fylles ut.';
+    }
+
+    return null;
+  }
+
   // State field(s) for GardsNumme widget.
   FocusNode? gardsNummeFocusNode;
   TextEditingController? gardsNummeTextController;
   String? Function(BuildContext, String?)? gardsNummeTextControllerValidator;
+  String? _gardsNummeTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Felt må fylles ut.';
+    }
+
+    return null;
+  }
+
   // State field(s) for BruksNummer widget.
   FocusNode? bruksNummerFocusNode;
   TextEditingController? bruksNummerTextController;
   String? Function(BuildContext, String?)? bruksNummerTextControllerValidator;
+  String? _bruksNummerTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Felt må fylles ut.';
+    }
+
+    return null;
+  }
+
   // State field(s) for Checkbox widget.
   bool? checkboxValue;
 
@@ -61,25 +64,15 @@ class RegistrerBondeModel extends FlutterFlowModel<RegistrerBondeWidget> {
   void initState(BuildContext context) {
     bondeGardNavnTextControllerValidator =
         _bondeGardNavnTextControllerValidator;
+    kommuneTextControllerValidator = _kommuneTextControllerValidator;
+    gardsNummeTextControllerValidator = _gardsNummeTextControllerValidator;
+    bruksNummerTextControllerValidator = _bruksNummerTextControllerValidator;
   }
 
   @override
   void dispose() {
     bondeGardNavnFocusNode?.dispose();
     bondeGardNavnTextController?.dispose();
-
-    tabBarController?.dispose();
-    gateNavnFocusNode?.dispose();
-    gateNavnTextController?.dispose();
-
-    gateNummerFocusNode?.dispose();
-    gateNummerTextController?.dispose();
-
-    postNummerFocusNode?.dispose();
-    postNummerTextController?.dispose();
-
-    byFocusNode?.dispose();
-    byTextController?.dispose();
 
     kommuneFocusNode?.dispose();
     kommuneTextController?.dispose();

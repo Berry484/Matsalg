@@ -270,7 +270,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .alternate,
-                                                  fontSize: 13.0,
+                                                  fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -291,7 +291,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                             borderRadius: 8.0,
                                             margin:
                                                 const EdgeInsetsDirectional.fromSTEB(
-                                                    5.0, 4.0, 5.0, 4.0),
+                                                    7.0, 4.0, 5.0, 4.0),
                                             hidesUnderline: true,
                                             isOverButton: false,
                                             isSearchable: false,
@@ -388,8 +388,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .alternate,
-                                                      fontSize: 17.0,
+                                                              .primaryText,
+                                                      fontSize: 18.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -411,7 +411,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                             Padding(
                                               padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      0.0, 0.0, 40.0, 5.0),
+                                                      0.0, 0.0, 40.0, 0.0),
                                               child: InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -707,8 +707,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .alternate,
-                                                      fontSize: 17.0,
+                                                              .primaryText,
+                                                      fontSize: 18.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -733,7 +733,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                             child: GridView(
                               padding: const EdgeInsets.fromLTRB(
                                 0,
-                                1.0,
+                                0,
                                 0,
                                 63.0,
                               ),

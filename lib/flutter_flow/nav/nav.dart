@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
+import '/backend/schema/structs/index.dart';
+
 import '/auth/custom_auth/custom_auth_user_provider.dart';
 
 import '/index.dart';
@@ -92,7 +94,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/mineKjop',
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'MineKjop')
-              : const MineKjopWidget(),
+              : MineKjopWidget(
+                  kjopt: params.getParam(
+                    'kjopt',
+                    ParamType.bool,
+                  ),
+                ),
         ),
         FFRoute(
           name: 'MatDetalj',
@@ -452,6 +459,7 @@ class FFParameters {
     String paramName,
     ParamType type, {
     bool isList = false,
+    StructBuilder<T>? structBuilder,
   }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -469,6 +477,7 @@ class FFParameters {
       param,
       type,
       isList,
+      structBuilder: structBuilder,
     );
   }
 }

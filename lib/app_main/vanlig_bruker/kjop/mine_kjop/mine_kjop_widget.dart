@@ -6,7 +6,12 @@ import 'mine_kjop_model.dart';
 export 'mine_kjop_model.dart';
 
 class MineKjopWidget extends StatefulWidget {
-  const MineKjopWidget({super.key});
+  const MineKjopWidget({
+    super.key,
+    bool? kjopt,
+  }) : kjopt = kjopt ?? false;
+
+  final bool kjopt;
 
   @override
   State<MineKjopWidget> createState() => _MineKjopWidgetState();
@@ -313,7 +318,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             fontSize:
-                                                                                16.0,
+                                                                                19.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -342,7 +347,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             fontSize:
-                                                                                16.0,
+                                                                                19.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -560,7 +565,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             fontSize:
-                                                                                16.0,
+                                                                                19.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -589,7 +594,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             fontSize:
-                                                                                16.0,
+                                                                                19.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:

@@ -1,4 +1,4 @@
-import '/app_main/vanlig_bruker/kart/kart_pop_up_bondegard/kart_pop_up_bondegard_widget.dart';
+import '/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
 import '/app_main/vanlig_bruker/profil/merk_solgt/merk_solgt_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -696,7 +696,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
-                                              child: const KartPopUpBondegardWidget(),
+                                              child: const KartPopUpWidget(),
                                             ),
                                           );
                                         },

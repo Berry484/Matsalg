@@ -9,10 +9,20 @@ class BekreftOTPModel extends FlutterFlowModel<BekreftOTPWidget> {
   // State field(s) for PinCode widget.
   TextEditingController? pinCodeController;
   String? Function(BuildContext, String?)? pinCodeControllerValidator;
+  String? _pinCodeControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Krever 4 siffere';
+    }
+    if (val.length < 4) {
+      return 'Requires 4 characters.';
+    }
+    return null;
+  }
 
   @override
   void initState(BuildContext context) {
     pinCodeController = TextEditingController();
+    pinCodeControllerValidator = _pinCodeControllerValidator;
   }
 
   @override
