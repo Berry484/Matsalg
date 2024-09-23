@@ -64,11 +64,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
           body: SafeArea(
             top: true,
             child: Padding(
-<<<<<<< HEAD
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 200.0, 0.0, 0.0),
-=======
-              padding: EdgeInsetsDirectional.fromSTEB(0, 200, 0, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 200.0, 0.0, 0.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -77,38 +74,22 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                     child: Column(
                       children: [
                         Align(
-<<<<<<< HEAD
                           alignment: const Alignment(0.0, 0),
                           child: TabBar(
                             isScrollable: true,
                             labelColor: FlutterFlowTheme.of(context).black600,
                             labelPadding: const EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 24.0, 0.0),
-=======
-                          alignment: Alignment(0, 0),
-                          child: TabBar(
-                            isScrollable: true,
-                            labelColor: FlutterFlowTheme.of(context).black600,
-                            labelPadding:
-                                EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                             labelStyle: FlutterFlowTheme.of(context)
                                 .titleMedium
                                 .override(
                                   fontFamily: 'Open Sans',
                                   letterSpacing: 0.0,
                                 ),
-<<<<<<< HEAD
                             unselectedLabelStyle: const TextStyle(),
                             indicatorColor:
                                 FlutterFlowTheme.of(context).alternate,
                             tabs: const [
-=======
-                            unselectedLabelStyle: TextStyle(),
-                            indicatorColor:
-                                FlutterFlowTheme.of(context).alternate,
-                            tabs: [
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                               Tab(
                                 text: 'Logg Inn',
                               ),
@@ -127,11 +108,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                             controller: _model.tabBarController,
                             children: [
                               Padding(
-<<<<<<< HEAD
                                 padding: const EdgeInsets.all(24.0),
-=======
-                                padding: EdgeInsets.all(24),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -143,14 +120,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Padding(
-                                            padding:
-<<<<<<< HEAD
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 20.0, 20.0, 0.0),
-=======
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20, 20, 20, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                20.0, 20.0, 20.0, 0.0),
                                             child: TextFormField(
                                               controller: _model
                                                   .emailLoginTextController,
@@ -165,11 +137,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-<<<<<<< HEAD
                                                           fontSize: 14.0,
-=======
-                                                          fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                           letterSpacing: 0.0,
                                                         ),
                                                 alignLabelWithHint: false,
@@ -180,11 +148,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-<<<<<<< HEAD
                                                           fontSize: 14.0,
-=======
-                                                          fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                           letterSpacing: 0.0,
                                                         ),
                                                 enabledBorder:
@@ -196,30 +160,18 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
-<<<<<<< HEAD
                                                       BorderRadius.circular(
                                                           10.0),
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
-=======
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
-<<<<<<< HEAD
                                                       BorderRadius.circular(
                                                           10.0),
-=======
-                                                      BorderRadius.circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                 ),
                                                 errorBorder: OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -229,12 +181,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
-<<<<<<< HEAD
                                                       BorderRadius.circular(
                                                           10.0),
-=======
-                                                      BorderRadius.circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                 ),
                                                 focusedErrorBorder:
                                                     OutlineInputBorder(
@@ -245,27 +193,17 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
-<<<<<<< HEAD
                                                       BorderRadius.circular(
                                                           10.0),
-=======
-                                                      BorderRadius.circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                 ),
                                                 filled: true,
                                                 fillColor:
                                                     FlutterFlowTheme.of(context)
                                                         .primary,
                                                 contentPadding:
-<<<<<<< HEAD
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(20.0, 24.0,
-                                                            20.0, 24.0),
-=======
-                                                    EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                            20, 24, 20, 24),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                        20.0, 24.0, 20.0, 24.0),
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -276,11 +214,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primaryText,
-<<<<<<< HEAD
                                                         fontSize: 14.0,
-=======
-                                                        fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                         letterSpacing: 0.0,
                                                       ),
                                               maxLines: null,
@@ -292,14 +226,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-<<<<<<< HEAD
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 12.0, 20.0, 0.0),
-=======
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20, 12, 20, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                20.0, 12.0, 20.0, 0.0),
                                             child: TextFormField(
                                               controller: _model
                                                   .passordLoginTextController,
@@ -315,11 +244,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-<<<<<<< HEAD
                                                           fontSize: 14.0,
-=======
-                                                          fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                           letterSpacing: 0.0,
                                                         ),
                                                 hintText:
@@ -333,11 +258,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primaryText,
-<<<<<<< HEAD
                                                       fontSize: 14.0,
-=======
-                                                      fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       letterSpacing: 0.0,
                                                     ),
                                                 enabledBorder:
@@ -349,30 +270,18 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
-<<<<<<< HEAD
                                                       BorderRadius.circular(
                                                           10.0),
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
-=======
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
-<<<<<<< HEAD
                                                       BorderRadius.circular(
                                                           10.0),
-=======
-                                                      BorderRadius.circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                 ),
                                                 errorBorder: OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -382,12 +291,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
-<<<<<<< HEAD
                                                       BorderRadius.circular(
                                                           10.0),
-=======
-                                                      BorderRadius.circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                 ),
                                                 focusedErrorBorder:
                                                     OutlineInputBorder(
@@ -398,27 +303,17 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
-<<<<<<< HEAD
                                                       BorderRadius.circular(
                                                           10.0),
-=======
-                                                      BorderRadius.circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                 ),
                                                 filled: true,
                                                 fillColor:
                                                     FlutterFlowTheme.of(context)
                                                         .primary,
                                                 contentPadding:
-<<<<<<< HEAD
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(20.0, 24.0,
-                                                            20.0, 24.0),
-=======
-                                                    EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                            20, 24, 20, 24),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                        20.0, 24.0, 20.0, 24.0),
                                                 suffixIcon: InkWell(
                                                   onTap: () => safeSetState(
                                                     () => _model
@@ -437,11 +332,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
-<<<<<<< HEAD
                                                     size: 20.0,
-=======
-                                                    size: 20,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                   ),
                                                 ),
                                               ),
@@ -462,14 +353,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-<<<<<<< HEAD
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 24.0, 0.0, 0.0),
-=======
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 24, 0, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 24.0, 0.0, 0.0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
                                                 if (_model.formKey1
@@ -484,7 +369,6 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                 context.goNamed('Hjem');
                                               },
                                               text: 'Logg inn',
-<<<<<<< HEAD
                                               icon: const Icon(
                                                 Icons.login,
                                                 size: 20.0,
@@ -492,27 +376,14 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                               options: FFButtonOptions(
                                                 width: 230.0,
                                                 height: 50.0,
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         0.0, 0.0, 0.0, 0.0),
                                                 iconPadding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
-=======
-                                              icon: Icon(
-                                                Icons.login,
-                                                size: 20,
-                                              ),
-                                              options: FFButtonOptions(
-                                                width: 230,
-                                                height: 50,
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 0),
-                                                iconPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(0, 0, 0, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                        0.0, 0.0, 0.0, 0.0),
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
@@ -525,16 +396,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primary,
-<<<<<<< HEAD
                                                       fontSize: 16.0,
-=======
-                                                      fontSize: 16,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                     ),
-<<<<<<< HEAD
                                                 elevation: 3.0,
                                                 borderSide: const BorderSide(
                                                   color: Colors.transparent,
@@ -542,15 +408,6 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
-=======
-                                                elevation: 3,
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(24),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                               ),
                                             ),
                                           ),
@@ -561,13 +418,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                 ),
                               ),
                               Padding(
-<<<<<<< HEAD
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     24.0, 24.0, 24.0, 24.0),
-=======
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24, 24, 24, 24),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                 child: SingleChildScrollView(
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -583,14 +435,10 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 Padding(
-<<<<<<< HEAD
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(20.0, 20.0,
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(20.0, 20.0,
                                                           20.0, 0.0),
-=======
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(20, 20, 20, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                   child: TextFormField(
                                                     controller: _model
                                                         .epostLagTextController,
@@ -608,11 +456,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Open Sans',
-<<<<<<< HEAD
                                                                 fontSize: 14.0,
-=======
-                                                                fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
@@ -625,11 +469,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Open Sans',
-<<<<<<< HEAD
                                                                 fontSize: 14.0,
-=======
-                                                                fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
@@ -643,30 +483,19 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
                                                       ),
                                                       focusedBorder:
                                                           OutlineInputBorder(
-                                                        borderSide: const BorderSide(
-=======
-                                                                .circular(10),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                        borderSide:
+                                                            const BorderSide(
                                                           color:
                                                               Color(0x00000000),
                                                           width: 1.0,
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
-=======
-                                                                .circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                       errorBorder:
                                                           OutlineInputBorder(
@@ -678,11 +507,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
-=======
-                                                                .circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                       focusedErrorBorder:
                                                           OutlineInputBorder(
@@ -694,11 +519,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
-=======
-                                                                .circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                       filled: true,
                                                       fillColor:
@@ -706,18 +527,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                   context)
                                                               .primary,
                                                       contentPadding:
-<<<<<<< HEAD
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  20.0,
-                                                                  24.0,
-                                                                  20.0,
-                                                                  24.0),
-=======
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(20, 24,
-                                                                  20, 24),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                              .fromSTEB(20.0,
+                                                              24.0, 20.0, 24.0),
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -728,11 +540,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-<<<<<<< HEAD
                                                           fontSize: 15.0,
-=======
-                                                          fontSize: 15,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                           letterSpacing: 0.0,
                                                         ),
                                                     maxLines: null,
@@ -742,14 +550,10 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                   ),
                                                 ),
                                                 Padding(
-<<<<<<< HEAD
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(20.0, 20.0,
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(20.0, 20.0,
                                                           20.0, 0.0),
-=======
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(20, 20, 20, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                   child: TextFormField(
                                                     controller: _model
                                                         .navnLagTextController,
@@ -767,11 +571,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Open Sans',
-<<<<<<< HEAD
                                                                 fontSize: 14.0,
-=======
-                                                                fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
@@ -784,11 +584,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Open Sans',
-<<<<<<< HEAD
                                                                 fontSize: 14.0,
-=======
-                                                                fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
@@ -802,30 +598,19 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
                                                       ),
                                                       focusedBorder:
                                                           OutlineInputBorder(
-                                                        borderSide: const BorderSide(
-=======
-                                                                .circular(10),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                        borderSide:
+                                                            const BorderSide(
                                                           color:
                                                               Color(0x00000000),
                                                           width: 1.0,
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
-=======
-                                                                .circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                       errorBorder:
                                                           OutlineInputBorder(
@@ -837,11 +622,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
-=======
-                                                                .circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                       focusedErrorBorder:
                                                           OutlineInputBorder(
@@ -853,11 +634,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
-=======
-                                                                .circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                       filled: true,
                                                       fillColor:
@@ -865,18 +642,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                   context)
                                                               .primary,
                                                       contentPadding:
-<<<<<<< HEAD
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  20.0,
-                                                                  24.0,
-                                                                  20.0,
-                                                                  24.0),
-=======
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(20, 24,
-                                                                  20, 24),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                              .fromSTEB(20.0,
+                                                              24.0, 20.0, 24.0),
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -887,11 +655,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-<<<<<<< HEAD
                                                           fontSize: 15.0,
-=======
-                                                          fontSize: 15,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                           letterSpacing: 0.0,
                                                         ),
                                                     maxLines: null,
@@ -901,14 +665,10 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                   ),
                                                 ),
                                                 Padding(
-<<<<<<< HEAD
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(20.0, 12.0,
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(20.0, 12.0,
                                                           20.0, 0.0),
-=======
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(20, 12, 20, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                   child: TextFormField(
                                                     controller: _model
                                                         .passordLagTextController,
@@ -927,11 +687,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Open Sans',
-<<<<<<< HEAD
                                                                 fontSize: 14.0,
-=======
-                                                                fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
@@ -944,11 +700,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Open Sans',
-<<<<<<< HEAD
                                                                 fontSize: 14.0,
-=======
-                                                                fontSize: 14,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
@@ -962,30 +714,19 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
                                                       ),
                                                       focusedBorder:
                                                           OutlineInputBorder(
-                                                        borderSide: const BorderSide(
-=======
-                                                                .circular(10),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                        borderSide:
+                                                            const BorderSide(
                                                           color:
                                                               Color(0x00000000),
                                                           width: 1.0,
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
-=======
-                                                                .circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                       errorBorder:
                                                           OutlineInputBorder(
@@ -997,11 +738,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
-=======
-                                                                .circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                       focusedErrorBorder:
                                                           OutlineInputBorder(
@@ -1013,11 +750,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-<<<<<<< HEAD
                                                                 .circular(10.0),
-=======
-                                                                .circular(10),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                       filled: true,
                                                       fillColor:
@@ -1025,18 +758,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                   context)
                                                               .primary,
                                                       contentPadding:
-<<<<<<< HEAD
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  20.0,
-                                                                  24.0,
-                                                                  20.0,
-                                                                  24.0),
-=======
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(20, 24,
-                                                                  20, 24),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                              .fromSTEB(20.0,
+                                                              24.0, 20.0, 24.0),
                                                       suffixIcon: InkWell(
                                                         onTap: () =>
                                                             safeSetState(
@@ -1057,11 +781,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryText,
-<<<<<<< HEAD
                                                           size: 20.0,
-=======
-                                                          size: 20,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                         ),
                                                       ),
                                                     ),
@@ -1074,11 +794,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-<<<<<<< HEAD
                                                           fontSize: 15.0,
-=======
-                                                          fontSize: 15,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                           letterSpacing: 0.0,
                                                         ),
                                                     validator: _model
@@ -1088,23 +804,13 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                 ),
                                                 Align(
                                                   alignment:
-<<<<<<< HEAD
                                                       const AlignmentDirectional(
                                                           0.0, -1.0),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 24.0,
-                                                                0.0, 0.0),
-=======
-                                                      AlignmentDirectional(
-                                                          0, -1),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 24, 0, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                            0.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         if (_model.formKey2
@@ -1128,7 +834,6 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         );
                                                       },
                                                       text: 'Fortsett',
-<<<<<<< HEAD
                                                       icon: const FaIcon(
                                                         FontAwesomeIcons.check,
                                                         size: 15.0,
@@ -1136,30 +841,13 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                       options: FFButtonOptions(
                                                         width: 230.0,
                                                         height: 50.0,
-                                                        padding: const EdgeInsets.all(
-                                                            10.0),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(10.0),
                                                         iconPadding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-=======
-                                                      icon: FaIcon(
-                                                        FontAwesomeIcons.check,
-                                                        size: 15,
-                                                      ),
-                                                      options: FFButtonOptions(
-                                                        width: 230,
-                                                        height: 50,
-                                                        padding:
-                                                            EdgeInsets.all(10),
-                                                        iconPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 0, 0, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                                .fromSTEB(0.0,
+                                                                0.0, 0.0, 0.0),
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1174,21 +862,17 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primary,
-<<<<<<< HEAD
                                                                   fontSize:
                                                                       16.0,
-=======
-                                                                  fontSize: 16,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
                                                                 ),
-<<<<<<< HEAD
                                                         elevation: 3.0,
-                                                        borderSide: const BorderSide(
+                                                        borderSide:
+                                                            const BorderSide(
                                                           color: Colors
                                                               .transparent,
                                                           width: 1.0,
@@ -1196,43 +880,19 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(24.0),
-=======
-                                                        elevation: 3,
-                                                        borderSide: BorderSide(
-                                                          color: Colors
-                                                              .transparent,
-                                                          width: 1,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(24),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                                 Align(
                                                   alignment:
-<<<<<<< HEAD
                                                       const AlignmentDirectional(
                                                           0.0, -1.0),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                20.0,
-                                                                24.0,
-                                                                20.0,
-                                                                0.0),
-=======
-                                                      AlignmentDirectional(
-                                                          0, -1),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                20, 24, 20, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                            .fromSTEB(20.0,
+                                                            24.0, 20.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         if (_model.formKey2
@@ -1249,35 +909,16 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                       },
                                                       text:
                                                           'Registrer din bondegård',
-<<<<<<< HEAD
                                                       options: FFButtonOptions(
                                                         width: double.infinity,
                                                         height: 50.0,
-                                                        padding: const EdgeInsets.all(
-                                                            10.0),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(10.0),
                                                         iconPadding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-=======
-                                                      icon: Icon(
-                                                        Icons
-                                                            .agriculture_outlined,
-                                                        size: 24,
-                                                      ),
-                                                      options: FFButtonOptions(
-                                                        width: double.infinity,
-                                                        height: 50,
-                                                        padding:
-                                                            EdgeInsets.all(10),
-                                                        iconPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 0, 0, 0),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
+                                                                .fromSTEB(0.0,
+                                                                0.0, 0.0, 0.0),
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1292,21 +933,17 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .alternate,
-<<<<<<< HEAD
                                                                   fontSize:
                                                                       18.0,
-=======
-                                                                  fontSize: 17,
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
                                                                 ),
-<<<<<<< HEAD
                                                         elevation: 3.0,
-                                                        borderSide: const BorderSide(
+                                                        borderSide:
+                                                            const BorderSide(
                                                           color: Colors
                                                               .transparent,
                                                           width: 1.0,
@@ -1314,17 +951,6 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(24.0),
-=======
-                                                        elevation: 3,
-                                                        borderSide: BorderSide(
-                                                          color: Colors
-                                                              .transparent,
-                                                          width: 1,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(24),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                                       ),
                                                     ),
                                                   ),
@@ -1334,11 +960,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                           ],
                                         ),
                                       ),
-<<<<<<< HEAD
                                     ].addToEnd(const SizedBox(height: 150.0)),
-=======
-                                    ].addToEnd(SizedBox(height: 150)),
->>>>>>> 021215c13c82bcb1e16545d0790d9cd06127f431
                                   ),
                                 ),
                               ),
