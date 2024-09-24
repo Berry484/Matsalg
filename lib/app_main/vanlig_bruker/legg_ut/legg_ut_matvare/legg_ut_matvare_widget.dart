@@ -142,7 +142,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                         children: [
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(0.0, 0.0),
+                                                const AlignmentDirectional(
+                                                    0.0, 0.0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -151,8 +152,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 80.0, 0.0, 2.0),
                                                   child: Text(
                                                     'Legg til bilde av matvaren',
@@ -174,8 +176,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 0.0, 15.0),
                                                   child: Text(
                                                     'Last opp minst 3 bilder',
@@ -209,13 +212,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 if ((_model.uploadedLocalFile1
-                                                            .bytes?.isEmpty ??
-                                                        true))
+                                                        .bytes?.isEmpty ??
+                                                    true))
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(20.0, 0.0,
-                                                                10.0, 20.0),
+                                                            10.0, 20.0),
                                                     child:
                                                         FlutterFlowIconButton(
                                                       borderColor:
@@ -299,8 +302,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     ),
                                                   ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Stack(
                                                     alignment:
@@ -308,10 +312,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             1.0, -1.0),
                                                     children: [
                                                       if ((_model
-                                                                  .uploadedLocalFile1
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))
+                                                              .uploadedLocalFile1
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false))
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
@@ -334,10 +338,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           ),
                                                         ),
                                                       if ((_model
-                                                                  .uploadedLocalFile1
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))
+                                                              .uploadedLocalFile1
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false))
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
@@ -346,8 +350,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               FlutterFlowIconButton(
                                                             borderRadius: 100.0,
                                                             buttonSize: 29.0,
-                                                            fillColor: const Color(
-                                                                0xB3262C2D),
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xB3262C2D),
                                                             icon: FaIcon(
                                                               FontAwesomeIcons
                                                                   .times,
@@ -373,8 +378,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Stack(
                                                     alignment:
@@ -382,10 +388,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             1.0, -1.0),
                                                     children: [
                                                       if ((_model
-                                                                  .uploadedLocalFile2
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))
+                                                              .uploadedLocalFile2
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false))
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
@@ -408,10 +414,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           ),
                                                         ),
                                                       if ((_model
-                                                                  .uploadedLocalFile2
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))
+                                                              .uploadedLocalFile2
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false))
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
@@ -422,8 +428,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 .transparent,
                                                             borderRadius: 100.0,
                                                             buttonSize: 29.0,
-                                                            fillColor: const Color(
-                                                                0xB3262C2D),
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xB3262C2D),
                                                             icon: FaIcon(
                                                               FontAwesomeIcons
                                                                   .times,
@@ -449,13 +456,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 if ((_model.uploadedLocalFile2
-                                                            .bytes?.isEmpty ??
-                                                        true))
+                                                        .bytes?.isEmpty ??
+                                                    true))
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
-                                                                10.0, 20.0),
+                                                            10.0, 20.0),
                                                     child:
                                                         FlutterFlowIconButton(
                                                       borderColor:
@@ -539,8 +546,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     ),
                                                   ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Stack(
                                                     alignment:
@@ -548,10 +556,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             1.0, -1.0),
                                                     children: [
                                                       if ((_model
-                                                                  .uploadedLocalFile3
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))
+                                                              .uploadedLocalFile3
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false))
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
@@ -574,10 +582,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           ),
                                                         ),
                                                       if ((_model
-                                                                  .uploadedLocalFile3
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))
+                                                              .uploadedLocalFile3
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false))
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
@@ -588,8 +596,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 .transparent,
                                                             borderRadius: 100.0,
                                                             buttonSize: 29.0,
-                                                            fillColor: const Color(
-                                                                0xB3262C2D),
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xB3262C2D),
                                                             icon: FaIcon(
                                                               FontAwesomeIcons
                                                                   .times,
@@ -615,13 +624,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 if ((_model.uploadedLocalFile3
-                                                            .bytes?.isEmpty ??
-                                                        true))
+                                                        .bytes?.isEmpty ??
+                                                    true))
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
-                                                                10.0, 20.0),
+                                                            10.0, 20.0),
                                                     child:
                                                         FlutterFlowIconButton(
                                                       borderColor:
@@ -705,8 +714,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     ),
                                                   ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Stack(
                                                     alignment:
@@ -714,10 +724,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             1.0, -1.0),
                                                     children: [
                                                       if ((_model
-                                                                  .uploadedLocalFile4
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))
+                                                              .uploadedLocalFile4
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false))
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
@@ -740,10 +750,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           ),
                                                         ),
                                                       if ((_model
-                                                                  .uploadedLocalFile4
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))
+                                                              .uploadedLocalFile4
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false))
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
@@ -754,8 +764,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 .transparent,
                                                             borderRadius: 100.0,
                                                             buttonSize: 29.0,
-                                                            fillColor: const Color(
-                                                                0xB3262C2D),
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xB3262C2D),
                                                             icon: FaIcon(
                                                               FontAwesomeIcons
                                                                   .times,
@@ -781,13 +792,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 if ((_model.uploadedLocalFile4
-                                                            .bytes?.isEmpty ??
-                                                        true))
+                                                        .bytes?.isEmpty ??
+                                                    true))
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
-                                                                10.0, 20.0),
+                                                            10.0, 20.0),
                                                     child:
                                                         FlutterFlowIconButton(
                                                       borderColor:
@@ -871,8 +882,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     ),
                                                   ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Stack(
                                                     alignment:
@@ -880,10 +892,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             1.0, -1.0),
                                                     children: [
                                                       if ((_model
-                                                                  .uploadedLocalFile5
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))
+                                                              .uploadedLocalFile5
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false))
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
@@ -906,10 +918,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           ),
                                                         ),
                                                       if ((_model
-                                                                  .uploadedLocalFile5
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))
+                                                              .uploadedLocalFile5
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false))
                                                         Align(
                                                           alignment:
                                                               const AlignmentDirectional(
@@ -920,8 +932,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 .transparent,
                                                             borderRadius: 100.0,
                                                             buttonSize: 29.0,
-                                                            fillColor: const Color(
-                                                                0xB3262C2D),
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xB3262C2D),
                                                             icon: FaIcon(
                                                               FontAwesomeIcons
                                                                   .times,
@@ -947,13 +960,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 if ((_model.uploadedLocalFile5
-                                                            .bytes?.isEmpty ??
-                                                        true))
+                                                        .bytes?.isEmpty ??
+                                                    true))
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
-                                                                20.0, 20.0),
+                                                            20.0, 20.0),
                                                     child:
                                                         FlutterFlowIconButton(
                                                       borderColor:
@@ -1047,10 +1060,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           ),
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(-1.0, 0.0),
+                                                const AlignmentDirectional(
+                                                    -1.0, 0.0),
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       20.0, 50.0, 0.0, 10.0),
                                               child: Text(
                                                 'Hva skal du selge?',
@@ -1072,9 +1087,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 0.0, 20.0, 20.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                20.0, 0.0, 20.0, 20.0),
                                             child: TextFormField(
                                               controller: _model
                                                   .produktNavnTextController,
@@ -1152,8 +1167,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         .primary,
                                                 contentPadding:
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(20.0, 24.0,
-                                                            0.0, 24.0),
+                                                        .fromSTEB(
+                                                        20.0, 24.0, 0.0, 24.0),
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -1180,10 +1195,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           ),
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(-1.0, 0.0),
+                                                const AlignmentDirectional(
+                                                    -1.0, 0.0),
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       20.0, 50.0, 0.0, 10.0),
                                               child: Text(
                                                 'Velg Kategori',
@@ -1206,10 +1223,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           ),
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(-1.0, 0.0),
+                                                const AlignmentDirectional(
+                                                    -1.0, 0.0),
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       20.0, 0.0, 20.0, 40.0),
                                               child:
                                                   FlutterFlowDropDown<String>(
@@ -1280,8 +1299,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         .secondary,
                                                 borderWidth: 1.0,
                                                 borderRadius: 8.0,
-                                                margin: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                margin:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         12.0, 0.0, 12.0, 0.0),
                                                 hidesUnderline: true,
                                                 isOverButton: false,
@@ -1301,10 +1321,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           ),
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(-1.0, 0.0),
+                                                const AlignmentDirectional(
+                                                    -1.0, 0.0),
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       20.0, 50.0, 0.0, 5.0),
                                               child: Text(
                                                 'Beskriv matvaren',
@@ -1327,10 +1349,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           ),
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(-1.0, 0.0),
+                                                const AlignmentDirectional(
+                                                    -1.0, 0.0),
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       20.0, 0.0, 0.0, 10.0),
                                               child: Text(
                                                 'Fortell litt om matvaren, hvor fersk er den, er maten fryst ned og mengde osv.',
@@ -1352,9 +1376,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 0.0, 20.0, 40.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                20.0, 0.0, 20.0, 40.0),
                                             child: TextFormField(
                                               controller: _model
                                                   .produktBeskrivelseTextController,
@@ -1432,8 +1456,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         .primary,
                                                 contentPadding:
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(20.0, 24.0,
-                                                            0.0, 24.0),
+                                                        .fromSTEB(
+                                                        20.0, 24.0, 0.0, 24.0),
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -1460,10 +1484,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           ),
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(-1.0, 0.0),
+                                                const AlignmentDirectional(
+                                                    -1.0, 0.0),
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       20.0, 30.0, 0.0, 10.0),
                                               child: Text(
                                                 'Pris',
@@ -1486,7 +1512,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           ),
                                           Container(
                                             width: double.infinity,
-                                            height: 295.0,
+                                            height: 300.0,
                                             decoration: BoxDecoration(
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -1495,7 +1521,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                             child: Column(
                                               children: [
                                                 Align(
-                                                  alignment: const Alignment(0.0, 0),
+                                                  alignment:
+                                                      const Alignment(0.0, 0),
                                                   child: TabBar(
                                                     labelColor:
                                                         FlutterFlowTheme.of(
@@ -1531,7 +1558,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 context)
                                                             .alternate,
                                                     padding:
-                                                        const EdgeInsets.all(8.0),
+                                                        const EdgeInsets.all(
+                                                            8.0),
                                                     tabs: const [
                                                       Tab(
                                                         text: 'Pris pr stk',
@@ -1584,10 +1612,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          20.0,
-                                                                          30.0,
-                                                                          0.0,
-                                                                          5.0),
+                                                                      20.0,
+                                                                      30.0,
+                                                                      0.0,
+                                                                      5.0),
                                                               child: Text(
                                                                 'Skriv prisen pr stk, for eks \"9Kr pr stk\"',
                                                                 style: FlutterFlowTheme.of(
@@ -1614,10 +1642,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             padding:
                                                                 const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        20.0),
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    20.0),
                                                             child: Stack(
                                                               alignment:
                                                                   const AlignmentDirectional(
@@ -1625,8 +1653,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                       -0.3),
                                                               children: [
                                                                 Padding(
-                                                                  padding: const EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           20.0,
                                                                           0.0,
                                                                           20.0,
@@ -1735,7 +1764,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                       fillColor:
                                                                           FlutterFlowTheme.of(context)
                                                                               .primary,
-                                                                      contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                                                                      contentPadding: const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           20.0,
                                                                           24.0,
                                                                           0.0,
@@ -1811,10 +1841,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             padding:
                                                                 const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        40.0),
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    40.0),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -1901,10 +1931,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            20.0),
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        20.0),
                                                                 child: Stack(
                                                                   alignment:
                                                                       const AlignmentDirectional(
@@ -1912,7 +1942,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           -0.3),
                                                                   children: [
                                                                     Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                      padding: const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           20.0,
                                                                           30.0,
                                                                           20.0,
@@ -2000,7 +2031,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               true,
                                                                           fillColor:
                                                                               FlutterFlowTheme.of(context).primary,
-                                                                          contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          contentPadding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               20.0,
                                                                               24.0,
                                                                               0.0,
@@ -2042,7 +2074,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               -0.19),
                                                                       child:
                                                                           Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0.0,
                                                                             40.0,
                                                                             0.0,
@@ -2069,10 +2102,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            40.0),
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        40.0),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -2152,11 +2185,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                20.0,
-                                                                30.0,
-                                                                0.0,
-                                                                10.0),
+                                                            .fromSTEB(20.0,
+                                                            30.0, 0.0, 10.0),
                                                     child: Text(
                                                       'Velg antall',
                                                       style: FlutterFlowTheme
@@ -2184,7 +2214,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(20.0, 0.0,
-                                                                0.0, 0.0),
+                                                            0.0, 0.0),
                                                     child: Text(
                                                       'hvor mye selger du av matvaren?',
                                                       style: FlutterFlowTheme
@@ -2205,8 +2235,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 50.0, 0.0, 20.0),
                                                   child: Stack(
                                                     alignment:
@@ -2221,10 +2252,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           padding:
                                                               const EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                      20.0,
-                                                                      0.0,
-                                                                      20.0,
-                                                                      20.0),
+                                                                  20.0,
+                                                                  0.0,
+                                                                  20.0,
+                                                                  20.0),
                                                           child: TextFormField(
                                                             controller: _model
                                                                 .antallStkTextController,
@@ -2342,10 +2373,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               contentPadding:
                                                                   const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          20.0,
-                                                                          24.0,
-                                                                          0.0,
-                                                                          24.0),
+                                                                      20.0,
+                                                                      24.0,
+                                                                      0.0,
+                                                                      24.0),
                                                             ),
                                                             style: FlutterFlowTheme
                                                                     .of(context)
@@ -2451,12 +2482,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Align(
-                                                alignment: const AlignmentDirectional(
-                                                    -1.0, 0.0),
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        -1.0, 0.0),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(20.0, 50.0, 0.0,
-                                                          10.0),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(20.0, 50.0,
+                                                          0.0, 10.0),
                                                   child: Text(
                                                     'Velg din posisjon',
                                                     style: FlutterFlowTheme.of(
@@ -2477,11 +2510,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 ),
                                               ),
                                               Align(
-                                                alignment: const AlignmentDirectional(
-                                                    -1.0, 0.0),
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        -1.0, 0.0),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           20.0, 0.0, 0.0, 10.0),
                                                   child: Text(
                                                     'Andre vil ikke kunne se din nøyaktige posisjon.',
@@ -2503,11 +2538,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 ),
                                               ),
                                               Align(
-                                                alignment: const AlignmentDirectional(
-                                                    0.0, 0.05),
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        0.0, 0.05),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 24.0, 0.0, 80.0),
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
@@ -2543,18 +2580,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       height: 40.0,
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              .fromSTEB(0.0,
+                                                              0.0, 0.0, 0.0),
                                                       iconPadding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              .fromSTEB(0.0,
+                                                              0.0, 0.0, 0.0),
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -2577,7 +2608,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                         .bold,
                                                               ),
                                                       elevation: 3.0,
-                                                      borderSide: const BorderSide(
+                                                      borderSide:
+                                                          const BorderSide(
                                                         color:
                                                             Colors.transparent,
                                                         width: 1.0,
@@ -2603,8 +2635,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 tablet: false,
                                               ))
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       0.0, 20.0, 0.0, 20.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
@@ -2616,11 +2649,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  20.0,
-                                                                  50.0,
-                                                                  0.0,
-                                                                  10.0),
+                                                              .fromSTEB(20.0,
+                                                              50.0, 0.0, 10.0),
                                                       child: Text(
                                                         'Ta betalt igjennom appen?',
                                                         style:
@@ -2651,11 +2681,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  20.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  10.0),
+                                                              .fromSTEB(20.0,
+                                                              0.0, 0.0, 10.0),
                                                       child: Text(
                                                         'Ta betalt i appen for å hjelpe å holde matsalg.no oppe.\nPengene vi tjener går til å dekke serverkostnader',
                                                         style:
@@ -2686,11 +2713,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    20.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                .fromSTEB(20.0,
+                                                                0.0, 0.0, 0.0),
                                                         child: Text(
                                                           'Jeg ønsker å ta betalt igjennom appen',
                                                           style: FlutterFlowTheme
@@ -2770,11 +2794,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                             ),
                                           if (widget.rediger == false)
                                             Align(
-                                              alignment: const AlignmentDirectional(
-                                                  0.0, 0.05),
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0.0, 0.05),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         0.0, 24.0, 0.0, 0.0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
@@ -2787,9 +2813,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       return;
                                                     }
                                                     if ((_model.uploadedLocalFile1
-                                                                    .bytes ??
-                                                                [])
-                                                            .isEmpty) {
+                                                                .bytes ??
+                                                            [])
+                                                        .isEmpty) {
                                                       await showDialog(
                                                         context: context,
                                                         builder:
@@ -2805,7 +2831,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
                                                                 child:
-                                                                    const Text('Ok'),
+                                                                    const Text(
+                                                                        'Ok'),
                                                               ),
                                                             ],
                                                           );
@@ -2814,9 +2841,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       return;
                                                     }
                                                     if ((_model.uploadedLocalFile2
-                                                                    .bytes ??
-                                                                [])
-                                                            .isEmpty) {
+                                                                .bytes ??
+                                                            [])
+                                                        .isEmpty) {
                                                       await showDialog(
                                                         context: context,
                                                         builder:
@@ -2832,7 +2859,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
                                                                 child:
-                                                                    const Text('Ok'),
+                                                                    const Text(
+                                                                        'Ok'),
                                                               ),
                                                             ],
                                                           );
@@ -2841,9 +2869,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       return;
                                                     }
                                                     if ((_model.uploadedLocalFile3
-                                                                    .bytes ??
-                                                                [])
-                                                            .isEmpty) {
+                                                                .bytes ??
+                                                            [])
+                                                        .isEmpty) {
                                                       await showDialog(
                                                         context: context,
                                                         builder:
@@ -2859,7 +2887,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
                                                                 child:
-                                                                    const Text('Ok'),
+                                                                    const Text(
+                                                                        'Ok'),
                                                               ),
                                                             ],
                                                           );
@@ -2884,7 +2913,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
                                                                 child:
-                                                                    const Text('Ok'),
+                                                                    const Text(
+                                                                        'Ok'),
                                                               ),
                                                             ],
                                                           );
@@ -2916,12 +2946,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     height: 50.0,
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 0.0),
+                                                            .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
                                                     iconPadding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 0.0),
+                                                            .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .alternate,
@@ -2940,7 +2970,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               FontWeight.bold,
                                                         ),
                                                     elevation: 3.0,
-                                                    borderSide: const BorderSide(
+                                                    borderSide:
+                                                        const BorderSide(
                                                       color: Colors.transparent,
                                                       width: 1.0,
                                                     ),
@@ -2963,7 +2994,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 24.0,
-                                                                0.0, 0.0),
+                                                            0.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         context
@@ -2981,18 +3012,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         height: 45.0,
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                .fromSTEB(0.0,
+                                                                0.0, 0.0, 0.0),
                                                         iconPadding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                .fromSTEB(0.0,
+                                                                0.0, 0.0, 0.0),
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -3016,7 +3041,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           .bold,
                                                                 ),
                                                         elevation: 3.0,
-                                                        borderSide: const BorderSide(
+                                                        borderSide:
+                                                            const BorderSide(
                                                           color: Colors
                                                               .transparent,
                                                           width: 1.0,
@@ -3036,7 +3062,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 24.0,
-                                                                0.0, 0.0),
+                                                            0.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         context
@@ -3048,18 +3074,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         height: 45.0,
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                .fromSTEB(0.0,
+                                                                0.0, 0.0, 0.0),
                                                         iconPadding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                .fromSTEB(0.0,
+                                                                0.0, 0.0, 0.0),
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -3083,7 +3103,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           .bold,
                                                                 ),
                                                         elevation: 3.0,
-                                                        borderSide: const BorderSide(
+                                                        borderSide:
+                                                            const BorderSide(
                                                           color: Colors
                                                               .transparent,
                                                           width: 1.0,
@@ -3097,7 +3118,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 ),
                                               ],
                                             ),
-                                        ].addToEnd(const SizedBox(height: 200.0)),
+                                        ].addToEnd(
+                                            const SizedBox(height: 200.0)),
                                       ),
                                     ),
                                   ),

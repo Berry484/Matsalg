@@ -108,9 +108,8 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 0.0, 15.0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10.0, 0.0, 0.0, 15.0),
                                           child: Container(
                                             width: 44.0,
                                             height: 44.0,
@@ -125,9 +124,8 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  5.0, 0.0, 0.0, 13.0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(5.0, 0.0, 0.0, 13.0),
                                           child: Text(
                                             'Haugesund gård',
                                             style: FlutterFlowTheme.of(context)
@@ -143,8 +141,9 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 8.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 8.0, 0.0),
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
@@ -173,8 +172,9 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                           child: Stack(
                                             children: [
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         10.0, 0.0, 10.0, 40.0),
                                                 child: PageView(
                                                   controller: _model
@@ -312,11 +312,13 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                 ),
                                               ),
                                               Align(
-                                                alignment: const AlignmentDirectional(
-                                                    0.0, 1.0),
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        0.0, 1.0),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           16.0, 0.0, 0.0, 16.0),
                                                   child: smooth_page_indicator
                                                       .SmoothPageIndicator(
@@ -332,8 +334,10 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                           .pageViewController!
                                                           .animateToPage(
                                                         i,
-                                                        duration: const Duration(
-                                                            milliseconds: 500),
+                                                        duration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    500),
                                                         curve: Curves.ease,
                                                       );
                                                       safeSetState(() {});
@@ -345,8 +349,8 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                       radius: 16.0,
                                                       dotWidth: 10.0,
                                                       dotHeight: 8.0,
-                                                      dotColor:
-                                                          const Color(0xCC616161),
+                                                      dotColor: const Color(
+                                                          0xCC616161),
                                                       activeDotColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -383,8 +387,9 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 8.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 8.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -413,9 +418,8 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                             ],
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 5.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 0.0, 5.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -442,8 +446,9 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                       ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Text(
                                                     '/kg',
@@ -465,8 +470,9 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Text(
                                                     '/stk',
@@ -494,8 +500,9 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 15.0, 0.0, 0.0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -512,8 +519,9 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 5.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 10.0, 0.0, 5.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -525,7 +533,7 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Text(
-                                                '1782',
+                                                'Andeby 15',
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -539,39 +547,38 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                               FontWeight.w600,
                                                         ),
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        5.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'Halden',
-                                                  textAlign: TextAlign.start,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily: 'Open Sans',
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
                                             ],
-                                          ),
-                                          SizedBox(
-                                            height: 14.0,
-                                            child: VerticalDivider(
-                                              thickness: 1.0,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                            ),
                                           ),
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
+                                              const Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 0.0, 0.0, 0.0),
+                                              ),
+                                              Text(
+                                                '(',
+                                                textAlign: TextAlign.start,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                              // Icon(
+                                              //   Icons.place,
+                                              //   color:
+                                              //       FlutterFlowTheme.of(context)
+                                              //           .alternate,
+                                              //   size: 19.0,
+                                              // ),
                                               Text(
                                                 '3',
                                                 textAlign: TextAlign.start,
@@ -587,8 +594,28 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                               FontWeight.w600,
                                                         ),
                                               ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        4.0, 0.0, 0.0, 0.0),
+                                                child: Text(
+                                                  'Km',
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleMedium
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                              ),
                                               Text(
-                                                'Km',
+                                                ')',
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -602,21 +629,15 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                               FontWeight.w600,
                                                         ),
                                               ),
-                                              Icon(
-                                                Icons.place,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                size: 19.0,
-                                              ),
                                             ],
                                           ),
                                         ],
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 15.0, 0.0, 0.0),
                                       child: Text(
                                         'Kjøpte',
                                         style: FlutterFlowTheme.of(context)
@@ -633,8 +654,9 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 5.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 10.0, 0.0, 5.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -736,9 +758,8 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 15.0, 0.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 15.0, 0.0, 0.0),
                                             child: Text(
                                               'Beskrivelse',
                                               style: FlutterFlowTheme.of(
@@ -756,9 +777,8 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 0.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 10.0, 0.0, 0.0),
                                             child: Text(
                                               'En lang fin beskrivelse av varen',
                                               textAlign: TextAlign.start,
@@ -818,10 +838,12 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                   options: FFButtonOptions(
                                     width: 90.0,
                                     height: 45.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                        7.0, 0.0, 0.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                    iconPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            7.0, 0.0, 0.0, 0.0),
                                     color: FlutterFlowTheme.of(context).primary,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
@@ -858,7 +880,8 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
-                                              child: const KartPopUpBondegardWidget(),
+                                              child:
+                                                  const KartPopUpBondegardWidget(),
                                             ),
                                           );
                                         },
@@ -874,8 +897,9 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                     options: FFButtonOptions(
                                       width: 90.0,
                                       height: 45.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               9.0, 0.0, 0.0, 0.0),
@@ -928,7 +952,8 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                               backgroundColor:
                                                   Colors.transparent,
                                               alignment:
-                                                  const AlignmentDirectional(0.0, 0.0)
+                                                  const AlignmentDirectional(
+                                                          0.0, 0.0)
                                                       .resolve(
                                                           Directionality.of(
                                                               context)),
@@ -936,7 +961,8 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                 onTap: () =>
                                                     FocusScope.of(dialogContext)
                                                         .unfocus(),
-                                                child: const KjopBekreftHenteWidget(),
+                                                child:
+                                                    const KjopBekreftHenteWidget(),
                                               ),
                                             );
                                           },
@@ -969,9 +995,8 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                 BorderRadius.circular(24.0),
                                           ),
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    10.0, 0.0, 10.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(10.0, 0.0, 10.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:

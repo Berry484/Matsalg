@@ -111,9 +111,8 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 0.0, 15.0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10.0, 0.0, 0.0, 15.0),
                                           child: Container(
                                             width: 44.0,
                                             height: 44.0,
@@ -128,9 +127,8 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  5.0, 0.0, 0.0, 13.0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(5.0, 0.0, 0.0, 13.0),
                                           child: Text(
                                             'ThorildNavn',
                                             style: FlutterFlowTheme.of(context)
@@ -146,8 +144,9 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 8.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 8.0, 0.0),
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
@@ -176,8 +175,9 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                           child: Stack(
                                             children: [
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         10.0, 0.0, 10.0, 40.0),
                                                 child: PageView(
                                                   controller: _model
@@ -315,11 +315,13 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                 ),
                                               ),
                                               Align(
-                                                alignment: const AlignmentDirectional(
-                                                    0.0, 1.0),
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        0.0, 1.0),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           16.0, 0.0, 0.0, 16.0),
                                                   child: smooth_page_indicator
                                                       .SmoothPageIndicator(
@@ -335,8 +337,10 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                           .pageViewController!
                                                           .animateToPage(
                                                         i,
-                                                        duration: const Duration(
-                                                            milliseconds: 500),
+                                                        duration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    500),
                                                         curve: Curves.ease,
                                                       );
                                                       safeSetState(() {});
@@ -348,8 +352,8 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                       radius: 16.0,
                                                       dotWidth: 10.0,
                                                       dotHeight: 8.0,
-                                                      dotColor:
-                                                          const Color(0xCC616161),
+                                                      dotColor: const Color(
+                                                          0xCC616161),
                                                       activeDotColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -412,9 +416,8 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                             ),
                                           ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 0.0, 0.0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10.0, 0.0, 0.0, 0.0),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -436,7 +439,8 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                       padding: MediaQuery
                                                           .viewInsetsOf(
                                                               context),
-                                                      child: const KartPopUpWidget(),
+                                                      child:
+                                                          const KartPopUpWidget(),
                                                     ),
                                                   );
                                                 },
@@ -479,17 +483,20 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                         .alternate
                                                   ],
                                                   stops: const [0.0, 1.0],
-                                                  begin: const AlignmentDirectional(
-                                                      0.64, -1.0),
-                                                  end: const AlignmentDirectional(
-                                                      -0.64, 1.0),
+                                                  begin:
+                                                      const AlignmentDirectional(
+                                                          0.64, -1.0),
+                                                  end:
+                                                      const AlignmentDirectional(
+                                                          -0.64, 1.0),
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         10.0, 0.0, 10.0, 0.0),
                                                 child: Row(
                                                   mainAxisSize:
@@ -538,8 +545,9 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 8.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 8.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -568,9 +576,8 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                             ],
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 5.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 0.0, 5.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -597,8 +604,9 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                       ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Text(
                                                     '/kg',
@@ -620,8 +628,9 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Text(
                                                     '/stk',
@@ -649,8 +658,9 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 15.0, 0.0, 0.0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -667,8 +677,9 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 5.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 10.0, 0.0, 5.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -695,11 +706,12 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                         ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         5.0, 0.0, 0.0, 0.0),
                                                 child: Text(
-                                                  '35',
+                                                  '15',
                                                   textAlign: TextAlign.start,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -715,18 +727,36 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                               ),
                                             ],
                                           ),
-                                          SizedBox(
-                                            height: 14.0,
-                                            child: VerticalDivider(
-                                              thickness: 1.0,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                            ),
-                                          ),
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
+                                              const Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 0.0, 0.0, 0.0),
+                                              ),
+                                              Text(
+                                                '(',
+                                                textAlign: TextAlign.start,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                              // Icon(
+                                              //   Icons.place,
+                                              //   color:
+                                              //       FlutterFlowTheme.of(context)
+                                              //           .alternate,
+                                              //   size: 19.0,
+                                              // ),
                                               Text(
                                                 '3',
                                                 textAlign: TextAlign.start,
@@ -743,8 +773,9 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                         ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         4.0, 0.0, 0.0, 0.0),
                                                 child: Text(
                                                   'Km',
@@ -761,12 +792,20 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                       ),
                                                 ),
                                               ),
-                                              Icon(
-                                                Icons.place,
-                                                color:
+                                              Text(
+                                                ')',
+                                                textAlign: TextAlign.start,
+                                                style:
                                                     FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                size: 19.0,
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
                                               ),
                                             ],
                                           ),
@@ -776,17 +815,16 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                     Container(
                                       width: 332.0,
                                       decoration: const BoxDecoration(),
-                                      alignment:
-                                          const AlignmentDirectional(-1.0, -1.0),
+                                      alignment: const AlignmentDirectional(
+                                          -1.0, -1.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 15.0, 0.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 15.0, 0.0, 0.0),
                                             child: Text(
                                               'Beskrivelse',
                                               style: FlutterFlowTheme.of(
@@ -804,9 +842,8 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 0.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 10.0, 0.0, 0.0),
                                             child: Text(
                                               'En lang fin beskrivelse',
                                               textAlign: TextAlign.start,
@@ -826,8 +863,9 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 50.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 50.0, 0.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -882,7 +920,8 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                               scrollDirection: Axis.vertical,
                               children: [
                                 Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment:
+                                      const AlignmentDirectional(0.0, 0.0),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
                                     focusColor: Colors.transparent,
@@ -915,11 +954,13 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Align(
-                                              alignment: const AlignmentDirectional(
-                                                  0.0, 0.0),
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0.0, 0.0),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         0.0, 0.0, 0.0, 12.0),
                                                 child: ClipRRect(
                                                   borderRadius:
@@ -943,8 +984,10 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      5.0, 0.0, 5.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
@@ -955,11 +998,8 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  7.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              .fromSTEB(7.0,
+                                                              0.0, 0.0, 0.0),
                                                       child: AutoSizeText(
                                                         'Kantareller',
                                                         textAlign:
@@ -985,8 +1025,10 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 4.0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      0.0, 0.0, 0.0, 4.0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
@@ -1002,11 +1044,8 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5.0,
-                                                                    5.0,
-                                                                    5.0,
-                                                                    0.0),
+                                                                .fromSTEB(5.0,
+                                                                5.0, 5.0, 0.0),
                                                         child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -1021,10 +1060,10 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                      0.0,
+                                                                      5.0,
+                                                                      0.0,
+                                                                      0.0),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -1033,10 +1072,10 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                                   Padding(
                                                                     padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                        7.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
                                                                     child: Text(
                                                                       '300 Kr',
                                                                       textAlign:
@@ -1117,8 +1156,9 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                                                       ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: const EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           5.0,
                                                                           0.0,
                                                                           5.0,

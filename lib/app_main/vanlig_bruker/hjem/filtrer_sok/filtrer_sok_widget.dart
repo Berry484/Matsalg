@@ -63,7 +63,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
               alignment: const AlignmentDirectional(-1.0, -1.0),
               child: Padding(
                 padding:
-                    const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 0.0, 0.0),
+                    const EdgeInsetsDirectional.fromSTEB(15.0, 12.0, 0.0, 0.0),
                 child: Text(
                   'Filtrer',
                   textAlign: TextAlign.start,
@@ -98,7 +98,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                     'Kjøtt',
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Open Sans',
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -137,7 +137,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                     'Grønnt',
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Open Sans',
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -176,7 +176,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                     'Meieri',
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Open Sans',
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -215,7 +215,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                     'Bakverk',
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Open Sans',
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),

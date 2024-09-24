@@ -100,8 +100,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 0.0, 0.0, 15.0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(10.0, 0.0, 0.0, 15.0),
                                         child: Container(
                                           width: 44.0,
                                           height: 44.0,
@@ -116,8 +116,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            5.0, 0.0, 0.0, 13.0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5.0, 0.0, 0.0, 13.0),
                                         child: Text(
                                           'Geir Larsen',
                                           style: FlutterFlowTheme.of(context)
@@ -133,8 +133,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                     ],
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 8.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 8.0, 0.0),
                                     child: Icon(
                                       Icons.arrow_forward_ios,
                                       color: FlutterFlowTheme.of(context)
@@ -162,8 +163,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                           child: Stack(
                                             children: [
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         10.0, 0.0, 10.0, 40.0),
                                                 child: PageView(
                                                   controller: _model
@@ -301,11 +303,13 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                 ),
                                               ),
                                               Align(
-                                                alignment: const AlignmentDirectional(
-                                                    0.0, 1.0),
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        0.0, 1.0),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           16.0, 0.0, 0.0, 16.0),
                                                   child: smooth_page_indicator
                                                       .SmoothPageIndicator(
@@ -321,8 +325,10 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                           .pageViewController!
                                                           .animateToPage(
                                                         i,
-                                                        duration: const Duration(
-                                                            milliseconds: 500),
+                                                        duration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    500),
                                                         curve: Curves.ease,
                                                       );
                                                       safeSetState(() {});
@@ -334,8 +340,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       radius: 16.0,
                                                       dotWidth: 10.0,
                                                       dotHeight: 8.0,
-                                                      dotColor:
-                                                          const Color(0xCC616161),
+                                                      dotColor: const Color(
+                                                          0xCC616161),
                                                       activeDotColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -372,8 +378,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 8.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 8.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -402,9 +409,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             ],
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 5.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 0.0, 5.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -413,8 +419,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           0.0, 0.0, 5.0, 0.0),
                                                   child: Row(
                                                     mainAxisSize:
@@ -451,11 +458,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    10.0,
-                                                                    0.0),
+                                                                .fromSTEB(0.0,
+                                                                0.0, 10.0, 0.0),
                                                         child: Text(
                                                           '/kg',
                                                           textAlign:
@@ -481,11 +485,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    10.0,
-                                                                    0.0),
+                                                                .fromSTEB(0.0,
+                                                                0.0, 10.0, 0.0),
                                                         child: Text(
                                                           '/stk',
                                                           textAlign:
@@ -518,8 +519,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 15.0, 0.0, 0.0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -536,8 +538,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 5.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 10.0, 0.0, 5.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -564,8 +567,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                         ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         5.0, 0.0, 0.0, 0.0),
                                                 child: Text(
                                                   '3',
@@ -584,18 +588,36 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                               ),
                                             ],
                                           ),
-                                          SizedBox(
-                                            height: 14.0,
-                                            child: VerticalDivider(
-                                              thickness: 1.0,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                            ),
-                                          ),
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
+                                              const Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 0.0, 0.0, 0.0),
+                                              ),
+                                              Text(
+                                                '(',
+                                                textAlign: TextAlign.start,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                              // Icon(
+                                              //   Icons.place,
+                                              //   color:
+                                              //       FlutterFlowTheme.of(context)
+                                              //           .alternate,
+                                              //   size: 19.0,
+                                              // ),
                                               Text(
                                                 '3',
                                                 textAlign: TextAlign.start,
@@ -612,9 +634,10 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                         ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        5.0, 0.0, 0.0, 0.0),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        4.0, 0.0, 0.0, 0.0),
                                                 child: Text(
                                                   'Km',
                                                   textAlign: TextAlign.start,
@@ -630,12 +653,20 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       ),
                                                 ),
                                               ),
-                                              Icon(
-                                                Icons.place,
-                                                color:
+                                              Text(
+                                                ')',
+                                                textAlign: TextAlign.start,
+                                                style:
                                                     FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                size: 19.0,
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
                                               ),
                                             ],
                                           ),
@@ -654,9 +685,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 15.0, 0.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 15.0, 0.0, 0.0),
                                             child: Text(
                                               'Beskrivelse',
                                               style: FlutterFlowTheme.of(
@@ -674,9 +704,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 0.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 10.0, 0.0, 0.0),
                                             child: Text(
                                               'En lang fin beskrivelse',
                                               textAlign: TextAlign.start,
@@ -706,7 +735,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
                   child: Container(
                     width: MediaQuery.sizeOf(context).width,
                     height: 78.0,
@@ -746,8 +776,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                     options: FFButtonOptions(
                                       width: 90.0,
                                       height: 45.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               7.0, 0.0, 0.0, 0.0),
@@ -801,8 +832,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                     options: FFButtonOptions(
                                       width: 90.0,
                                       height: 45.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               9.0, 0.0, 0.0, 0.0),
@@ -852,15 +884,18 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                 insetPadding: EdgeInsets.zero,
                                                 backgroundColor:
                                                     Colors.transparent,
-                                                alignment: const AlignmentDirectional(
-                                                        0.0, 0.0)
-                                                    .resolve(Directionality.of(
-                                                        context)),
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                            0.0, 0.0)
+                                                        .resolve(
+                                                            Directionality.of(
+                                                                context)),
                                                 child: GestureDetector(
                                                   onTap: () => FocusScope.of(
                                                           dialogContext)
                                                       .unfocus(),
-                                                  child: const MerkSolgtWidget(),
+                                                  child:
+                                                      const MerkSolgtWidget(),
                                                 ),
                                               );
                                             },
@@ -884,8 +919,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       .alternate
                                                 ],
                                                 stops: const [0.0, 1.0],
-                                                begin: const AlignmentDirectional(
-                                                    0.64, -1.0),
+                                                begin:
+                                                    const AlignmentDirectional(
+                                                        0.64, -1.0),
                                                 end: const AlignmentDirectional(
                                                     -0.64, 1.0),
                                               ),
@@ -893,8 +929,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                   BorderRadius.circular(24.0),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       10.0, 0.0, 10.0, 0.0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
