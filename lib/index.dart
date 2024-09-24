@@ -21,8 +21,6 @@ export '/app_main/chat/chat_main/chat_main_widget.dart' show ChatMainWidget;
 export '/app_main/vanlig_bruker/hjem/hjem/hjem_widget.dart' show HjemWidget;
 export '/app_main/vanlig_bruker/profil/min_matvare_detalj/min_matvare_detalj_widget.dart'
     show MinMatvareDetaljWidget;
-export '/app_main/vanlig_bruker/profil/rediger_matvare/rediger_matvare_widget.dart'
-    show RedigerMatvareWidget;
 export '/app_main/vanlig_bruker/hjem/mat_detalj_bondegard/mat_detalj_bondegard_widget.dart'
     show MatDetaljBondegardWidget;
 export '/app_main/vanlig_bruker/profil/solgte_matvarer/solgte_matvarer_widget.dart'
@@ -31,8 +29,6 @@ export '/app_main/registrer/bekreft_t_l_f/bekreft_t_l_f_widget.dart'
     show BekreftTLFWidget;
 export '/app_main/registrer/registrer_bonde/registrer_bonde_widget.dart'
     show RegistrerBondeWidget;
-export '/app_main/bonde_gard/hjem/leg_ut_mat2/leg_ut_mat2_widget.dart'
-    show LegUtMat2Widget;
 export '/app_main/registrer/bruker_onboarding/bruker_onboarding_widget.dart'
     show BrukerOnboardingWidget;
 export '/app_main/vanlig_bruker/hjem/bonde_gard_page/bonde_gard_page_widget.dart'
@@ -43,8 +39,6 @@ export '/app_main/bonde_gard/hjem/min_mat_detalj2/min_mat_detalj2_widget.dart'
 export '/app_main/bonde_gard/salg/salg/salg_widget.dart' show SalgWidget;
 export '/app_main/bonde_gard/salg/salg_detalj/salg_detalj_widget.dart'
     show SalgDetaljWidget;
-export '/app_main/bonde_gard/hjem/rediger_matvare2/rediger_matvare2_widget.dart'
-    show RedigerMatvare2Widget;
 export '/app_main/bonde_gard/profil/profil2/profil2_widget.dart'
     show Profil2Widget;
 export '/app_main/vanlig_bruker/kjop/bekreftet_hentet/bekreftet_hentet_widget.dart'
@@ -74,5 +68,5 @@ export '/app_main/vanlig_bruker/kjop/kjop_detalj_ventende/kjop_detalj_ventende_w
     show KjopDetaljVentendeWidget;
 export '/app_main/vanlig_bruker/hjem/betaling/betaling_widget.dart'
     show BetalingWidget;
-export '/app_main/vanlig_bruker/profil/profil_copy2_copy/profil_copy2_copy_widget.dart'
-    show ProfilCopy2CopyWidget;
+export '/app_main/vanlig_bruker/profil/innstillinger/innstillinger_widget.dart'
+    show InnstillingerWidget;

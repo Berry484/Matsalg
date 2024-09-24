@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'chat_custom_nav_bar_model.dart';
 export 'chat_custom_nav_bar_model.dart';
 
@@ -37,6 +38,8 @@ class _ChatCustomNavBarWidgetState extends State<ChatCustomNavBarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return SafeArea(
       child: Container(
         width: double.infinity,
@@ -204,6 +207,18 @@ class _ChatCustomNavBarWidgetState extends State<ChatCustomNavBarWidget> {
                 ],
               ),
             ),
+            if (FFAppState().kjopAlert == true)
+              Align(
+                alignment: const AlignmentDirectional(-0.3, -0.18),
+                child: Container(
+                  width: 10.0,
+                  height: 10.0,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).error,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
           ],
         ),
       ),

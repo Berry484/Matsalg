@@ -99,7 +99,7 @@ class _GodkjentLagtUtWidgetState extends State<GodkjentLagtUtWidget>
                         Align(
                           alignment: const AlignmentDirectional(-0.06, 0.47),
                           child: Text(
-                            'Produkt Lagt Ut',
+                            'Matvare Lagt Ut',
                             textAlign: TextAlign.center,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -109,7 +109,7 @@ class _GodkjentLagtUtWidgetState extends State<GodkjentLagtUtWidget>
                                       FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 22.0,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.bold,
                                 ),
                           ).animateOnPageLoad(
                               animationsMap['textOnPageLoadAnimation']!),
@@ -122,7 +122,7 @@ class _GodkjentLagtUtWidgetState extends State<GodkjentLagtUtWidget>
                         const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        context.pushNamed('Hjem');
+                        context.goNamed('Profil');
                       },
                       text: 'Ferdig',
                       icon: const FaIcon(
@@ -141,7 +141,7 @@ class _GodkjentLagtUtWidgetState extends State<GodkjentLagtUtWidget>
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Open Sans',
                                   color: FlutterFlowTheme.of(context).alternate,
-                                  fontSize: 23.0,
+                                  fontSize: 24.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),

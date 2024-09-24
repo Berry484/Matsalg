@@ -654,7 +654,15 @@ class _MinMatDetalj2WidgetState extends State<MinMatDetalj2Widget> {
                       children: [
                         FFButtonWidget(
                           onPressed: () async {
-                            context.pushNamed('RedigerMatvare2');
+                            context.pushNamed(
+                              'LeggUtMatvare',
+                              queryParameters: {
+                                'rediger': serializeParam(
+                                  true,
+                                  ParamType.bool,
+                                ),
+                              }.withoutNulls,
+                            );
                           },
                           text: 'Rediger',
                           icon: FaIcon(

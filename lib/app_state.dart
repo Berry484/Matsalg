@@ -67,6 +67,12 @@ class FFAppState extends ChangeNotifier {
     _chatAlert = value;
     prefs.setBool('ff_chatAlert', value);
   }
+
+  bool _rebuild = false;
+  bool get rebuild => _rebuild;
+  set rebuild(bool value) {
+    _rebuild = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

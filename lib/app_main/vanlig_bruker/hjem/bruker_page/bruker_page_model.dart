@@ -3,6 +3,10 @@ import 'bruker_page_widget.dart' show BrukerPageWidget;
 import 'package:flutter/material.dart';
 
 class BrukerPageModel extends FlutterFlowModel<BrukerPageWidget> {
+  ///  Local state fields for this page.
+
+  bool folger = false;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for TabBar widget.

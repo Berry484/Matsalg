@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'logg_ut_widget.dart' show LoggUtWidget;
+import 'innstillinger_widget.dart' show InnstillingerWidget;
 import 'package:flutter/material.dart';
 
-class LoggUtModel extends FlutterFlowModel<LoggUtWidget> {
+class InnstillingerModel extends FlutterFlowModel<InnstillingerWidget> {
   @override
   void initState(BuildContext context) {}
 

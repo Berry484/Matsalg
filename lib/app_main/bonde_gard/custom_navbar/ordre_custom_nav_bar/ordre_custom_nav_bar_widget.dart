@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'ordre_custom_nav_bar_model.dart';
 export 'ordre_custom_nav_bar_model.dart';
 
@@ -38,6 +39,8 @@ class _OrdreCustomNavBarWidgetState extends State<OrdreCustomNavBarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return SafeArea(
       child: Container(
         width: double.infinity,
@@ -107,7 +110,7 @@ class _OrdreCustomNavBarWidgetState extends State<OrdreCustomNavBarWidget> {
                       size: 24.0,
                     ),
                     onPressed: () async {
-                      context.goNamed(
+                      context.pushNamed(
                         'Hjem2',
                         extra: <String, dynamic>{
                           kTransitionInfoKey: const TransitionInfo(
@@ -205,6 +208,18 @@ class _OrdreCustomNavBarWidgetState extends State<OrdreCustomNavBarWidget> {
                 ],
               ),
             ),
+            if (FFAppState().chatAlert == true)
+              Align(
+                alignment: const AlignmentDirectional(0.45, -0.15),
+                child: Container(
+                  width: 10.0,
+                  height: 10.0,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).error,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
           ],
         ),
       ),

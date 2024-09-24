@@ -76,6 +76,12 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
   FocusNode? produktPrisKgFocusNode;
   TextEditingController? produktPrisKgTextController;
   String? Function(BuildContext, String?)? produktPrisKgTextControllerValidator;
+  // State field(s) for AntallStk widget.
+  FocusNode? antallStkFocusNode;
+  TextEditingController? antallStkTextController;
+  String? Function(BuildContext, String?)? antallStkTextControllerValidator;
+  // State field(s) for Checkbox widget.
+  bool? checkboxValue;
   // Model for LeggUtNavBar component.
   late LeggUtNavBarModel leggUtNavBarModel;
 
@@ -101,6 +107,9 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
 
     produktPrisKgFocusNode?.dispose();
     produktPrisKgTextController?.dispose();
+
+    antallStkFocusNode?.dispose();
+    antallStkTextController?.dispose();
 
     leggUtNavBarModel.dispose();
   }

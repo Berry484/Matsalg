@@ -124,7 +124,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'LeggUtMatvare',
           path: '/leggUtMatvare',
-          builder: (context, params) => const LeggUtMatvareWidget(),
+          builder: (context, params) => LeggUtMatvareWidget(
+            rediger: params.getParam(
+              'rediger',
+              ParamType.bool,
+            ),
+            matinfo: params.getParam(
+              'matinfo',
+              ParamType.JSON,
+            ),
+          ),
         ),
         FFRoute(
           name: 'KjopDetaljGodkjent',
@@ -160,11 +169,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.JSON,
             ),
           ),
-        ),
-        FFRoute(
-          name: 'RedigerMatvare',
-          path: '/redigerMatvare',
-          builder: (context, params) => const RedigerMatvareWidget(),
         ),
         FFRoute(
           name: 'MatDetaljBondegard',
@@ -222,11 +226,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'LegUtMat2',
-          path: '/legUtMat2',
-          builder: (context, params) => const LegUtMat2Widget(),
-        ),
-        FFRoute(
           name: 'BrukerOnboarding',
           path: '/brukerOnboarding',
           builder: (context, params) => const BrukerOnboardingWidget(),
@@ -260,16 +259,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'SalgDetalj',
           path: '/salgDetalj',
           builder: (context, params) => SalgDetaljWidget(
-            matvare: params.getParam(
-              'matvare',
-              ParamType.JSON,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: 'RedigerMatvare2',
-          path: '/redigerMatvare2',
-          builder: (context, params) => RedigerMatvare2Widget(
             matvare: params.getParam(
               'matvare',
               ParamType.JSON,
@@ -422,9 +411,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'ProfilCopy2Copy',
-          path: '/profilCopy2Copy',
-          builder: (context, params) => const ProfilCopy2CopyWidget(),
+          name: 'innstillinger',
+          path: '/innstillinger',
+          builder: (context, params) => const InnstillingerWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

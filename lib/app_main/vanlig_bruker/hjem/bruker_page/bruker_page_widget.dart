@@ -368,39 +368,73 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        FFButtonWidget(
-                                          onPressed: () async {
-                                            FFAppState().kjopAlert = true;
-                                            FFAppState().chatAlert = true;
-                                            safeSetState(() {});
-                                          },
-                                          text: 'Følg',
-                                          options: FFButtonOptions(
-                                            width: 95.0,
-                                            height: 30.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color: Colors.white,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                            elevation: 3.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                        if (_model.folger == true)
+                                          FFButtonWidget(
+                                            onPressed: () async {
+                                              _model.folger = false;
+                                              safeSetState(() {});
+                                            },
+                                            text: 'Følger',
+                                            options: FFButtonOptions(
+                                              width: 95.0,
+                                              height: 30.0,
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 16.0, 0.0),
+                                              iconPadding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              textStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleSmall
+                                                  .override(
+                                                    fontFamily: 'Open Sans',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                              elevation: 3.0,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
                                           ),
-                                        ),
+                                        if (_model.folger == false)
+                                          FFButtonWidget(
+                                            onPressed: () async {
+                                              _model.folger = true;
+                                              safeSetState(() {});
+                                            },
+                                            text: 'Følg',
+                                            options: FFButtonOptions(
+                                              width: 95.0,
+                                              height: 30.0,
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 16.0, 0.0),
+                                              iconPadding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                              elevation: 3.0,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          ),
                                         Padding(
                                           padding:
                                               const EdgeInsetsDirectional.fromSTEB(

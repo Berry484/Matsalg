@@ -923,7 +923,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   fontFamily: 'Open Sans',
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .alternate,
+                                                      .primaryText,
                                                   fontSize: 17.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,

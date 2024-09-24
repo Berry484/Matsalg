@@ -71,7 +71,7 @@ class _MerkSolgtWidgetState extends State<MerkSolgtWidget> {
                       ),
                 ),
                 Text(
-                  'Dette vil fjerne matvare annonsen og markere den som solgt',
+                  'Dette vil gjøre matvaren usynlig. Du kan gjøre matvaren synlig igjen hvis du ombestemmer deg',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Open Sans',
                         letterSpacing: 0.0,

@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'dashboard_custom_nav_bar_model.dart';
 export 'dashboard_custom_nav_bar_model.dart';
 
@@ -39,6 +40,8 @@ class _DashboardCustomNavBarWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return SafeArea(
       child: Container(
         width: double.infinity,
@@ -199,22 +202,37 @@ class _DashboardCustomNavBarWidgetState
                       color: FlutterFlowTheme.of(context).alternate,
                       size: 24.0,
                     ),
-                    onPressed: () async {
-                      context.pushNamed(
-                        'Profil2',
-                        extra: <String, dynamic>{
-                          kTransitionInfoKey: const TransitionInfo(
-                            hasTransition: true,
-                            transitionType: PageTransitionType.fade,
-                            duration: Duration(milliseconds: 0),
-                          ),
-                        },
-                      );
+                    onPressed: () {
+                      print('IconButton pressed ...');
                     },
                   ),
                 ],
               ),
             ),
+            if (FFAppState().kjopAlert == true)
+              Align(
+                alignment: const AlignmentDirectional(-0.3, -0.18),
+                child: Container(
+                  width: 10.0,
+                  height: 10.0,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).error,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            if (FFAppState().chatAlert == true)
+              Align(
+                alignment: const AlignmentDirectional(0.45, -0.15),
+                child: Container(
+                  width: 10.0,
+                  height: 10.0,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).error,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
           ],
         ),
       ),
