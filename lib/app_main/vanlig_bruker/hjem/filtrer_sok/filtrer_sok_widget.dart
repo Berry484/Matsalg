@@ -40,7 +40,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
       padding: const EdgeInsets.all(16.0),
       child: Container(
         width: 260.0,
-        height: 329.0,
+        height: 330.0,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: const [
