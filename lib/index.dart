@@ -70,9 +70,9 @@ export '/app_main/registrer/bonde_onboarding/bonde_onboarding_widget.dart'
 export '/app_main/bonde_gard/se/se/se_widget.dart' show SeWidget;
 export '/app_main/bonde_gard/chat/bonde_chat/bonde_chat_widget.dart'
     show BondeChatWidget;
-export '/app_main/bonde_gard/chat/bonde_chat_copy/bonde_chat_copy_widget.dart'
-    show BondeChatCopyWidget;
 export '/app_main/vanlig_bruker/kjop/kjop_detalj_ventende/kjop_detalj_ventende_widget.dart'
     show KjopDetaljVentendeWidget;
 export '/app_main/vanlig_bruker/hjem/betaling/betaling_widget.dart'
     show BetalingWidget;
+export '/app_main/vanlig_bruker/profil/profil_copy2_copy/profil_copy2_copy_widget.dart'
+    show ProfilCopy2CopyWidget;

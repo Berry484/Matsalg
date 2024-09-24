@@ -10,9 +10,15 @@ class BekreftTLFWidget extends StatefulWidget {
   const BekreftTLFWidget({
     super.key,
     this.bonde,
+    required this.email,
+    required this.fullname,
+    required this.password,
   });
 
   final bool? bonde;
+  final String? email;
+  final String? fullname;
+  final String? password;
 
   @override
   State<BekreftTLFWidget> createState() => _BekreftTLFWidgetState();
@@ -242,6 +248,18 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                     'bonde': serializeParam(
                                       widget.bonde,
                                       ParamType.bool,
+                                    ),
+                                    'email': serializeParam(
+                                      widget.email,
+                                      ParamType.String,
+                                    ),
+                                    'username': serializeParam(
+                                      widget.fullname,
+                                      ParamType.String,
+                                    ),
+                                    'password': serializeParam(
+                                      widget.password,
+                                      ParamType.String,
                                     ),
                                   }.withoutNulls,
                                 );

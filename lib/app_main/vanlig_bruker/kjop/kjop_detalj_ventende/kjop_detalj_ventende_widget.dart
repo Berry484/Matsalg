@@ -11,7 +11,12 @@ import 'kjop_detalj_ventende_model.dart';
 export 'kjop_detalj_ventende_model.dart';
 
 class KjopDetaljVentendeWidget extends StatefulWidget {
-  const KjopDetaljVentendeWidget({super.key});
+  const KjopDetaljVentendeWidget({
+    super.key,
+    this.matinfo,
+  });
+
+  final dynamic matinfo;
 
   @override
   State<KjopDetaljVentendeWidget> createState() =>
@@ -591,6 +596,29 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 10.0, 0.0),
+                                                  child: Text(
+                                                    '/kg',
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 23.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                  ),
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsetsDirectional

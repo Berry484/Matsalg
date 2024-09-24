@@ -10,10 +10,10 @@ export 'rediger_antall2_model.dart';
 class RedigerAntall2Widget extends StatefulWidget {
   const RedigerAntall2Widget({
     super.key,
-    this.antall,
+    this.info,
   });
 
-  final double? antall;
+  final dynamic info;
 
   @override
   State<RedigerAntall2Widget> createState() => _RedigerAntall2WidgetState();
@@ -179,6 +179,27 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                           ),
                           Stack(
                             children: [
+                              Align(
+                                alignment: const AlignmentDirectional(0.7, 0.86),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 12.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Kg',
+                                    textAlign: TextAlign.end,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          fontSize: 20.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                              ),
                               Align(
                                 alignment: const AlignmentDirectional(0.7, 0.86),
                                 child: Padding(

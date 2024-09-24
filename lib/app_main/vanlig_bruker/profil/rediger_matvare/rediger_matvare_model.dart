@@ -61,25 +61,26 @@ class RedigerMatvareModel extends FlutterFlowModel<RedigerMatvareWidget> {
     return null;
   }
 
-  // State field(s) for ProduktPris widget.
-  FocusNode? produktPrisFocusNode;
-  TextEditingController? produktPrisTextController;
-  String? Function(BuildContext, String?)? produktPrisTextControllerValidator;
-  String? _produktPrisTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
-    }
+  // State field(s) for TabBar widget.
+  TabController? tabBarController;
+  int get tabBarCurrentIndex =>
+      tabBarController != null ? tabBarController!.index : 0;
 
-    return null;
-  }
+  // State field(s) for ProduktPrisSTK widget.
+  FocusNode? produktPrisSTKFocusNode;
+  TextEditingController? produktPrisSTKTextController;
+  String? Function(BuildContext, String?)?
+      produktPrisSTKTextControllerValidator;
+  // State field(s) for ProduktPrisKg widget.
+  FocusNode? produktPrisKgFocusNode;
+  TextEditingController? produktPrisKgTextController;
+  String? Function(BuildContext, String?)? produktPrisKgTextControllerValidator;
 
   @override
   void initState(BuildContext context) {
     produktNavnTextControllerValidator = _produktNavnTextControllerValidator;
     produktBeskrivelseTextControllerValidator =
         _produktBeskrivelseTextControllerValidator;
-    produktPrisTextControllerValidator = _produktPrisTextControllerValidator;
   }
 
   @override
@@ -90,7 +91,11 @@ class RedigerMatvareModel extends FlutterFlowModel<RedigerMatvareWidget> {
     produktBeskrivelseFocusNode?.dispose();
     produktBeskrivelseTextController?.dispose();
 
-    produktPrisFocusNode?.dispose();
-    produktPrisTextController?.dispose();
+    tabBarController?.dispose();
+    produktPrisSTKFocusNode?.dispose();
+    produktPrisSTKTextController?.dispose();
+
+    produktPrisKgFocusNode?.dispose();
+    produktPrisKgTextController?.dispose();
   }
 }

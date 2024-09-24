@@ -20,6 +20,12 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _bonde = prefs.getBool('ff_bonde') ?? _bonde;
     });
+    _safeInit(() {
+      _kjopAlert = prefs.getBool('ff_kjopAlert') ?? _kjopAlert;
+    });
+    _safeInit(() {
+      _chatAlert = prefs.getBool('ff_chatAlert') ?? _chatAlert;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -46,6 +52,20 @@ class FFAppState extends ChangeNotifier {
   set bonde(bool value) {
     _bonde = value;
     prefs.setBool('ff_bonde', value);
+  }
+
+  bool _kjopAlert = false;
+  bool get kjopAlert => _kjopAlert;
+  set kjopAlert(bool value) {
+    _kjopAlert = value;
+    prefs.setBool('ff_kjopAlert', value);
+  }
+
+  bool _chatAlert = false;
+  bool get chatAlert => _chatAlert;
+  set chatAlert(bool value) {
+    _chatAlert = value;
+    prefs.setBool('ff_chatAlert', value);
   }
 }
 

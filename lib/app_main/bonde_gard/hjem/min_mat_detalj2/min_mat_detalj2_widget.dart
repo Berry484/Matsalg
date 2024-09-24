@@ -10,7 +10,12 @@ import 'min_mat_detalj2_model.dart';
 export 'min_mat_detalj2_model.dart';
 
 class MinMatDetalj2Widget extends StatefulWidget {
-  const MinMatDetalj2Widget({super.key});
+  const MinMatDetalj2Widget({
+    super.key,
+    this.matinfo,
+  });
+
+  final dynamic matinfo;
 
   @override
   State<MinMatDetalj2Widget> createState() => _MinMatDetalj2WidgetState();
@@ -394,6 +399,27 @@ class _MinMatDetalj2WidgetState extends State<MinMatDetalj2Widget> {
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 10.0, 0.0),
                                             child: Text(
+                                              '/kg',
+                                              textAlign: TextAlign.center,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Open Sans',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    fontSize: 22.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 10.0, 0.0),
+                                            child: Text(
                                               '/stk',
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
@@ -682,9 +708,7 @@ class _MinMatDetalj2WidgetState extends State<MinMatDetalj2Widget> {
                                       return Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
-                                        child: const RedigerAntall2Widget(
-                                          antall: 0.0,
-                                        ),
+                                        child: const RedigerAntall2Widget(),
                                       );
                                     },
                                   ).then((value) => safeSetState(() {}));

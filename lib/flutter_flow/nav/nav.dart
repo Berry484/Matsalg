@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
-import '/backend/schema/structs/index.dart';
-
 import '/auth/custom_auth/custom_auth_user_provider.dart';
 
 import '/index.dart';
-import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -76,13 +73,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const RegistrerWidget(),
+          appStateNotifier.loggedIn ? const HjemWidget() : const RegistrerWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const RegistrerWidget(),
+              appStateNotifier.loggedIn ? const HjemWidget() : const RegistrerWidget(),
         ),
         FFRoute(
           name: 'registrer',
@@ -92,19 +89,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'MineKjop',
           path: '/mineKjop',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'MineKjop')
-              : MineKjopWidget(
-                  kjopt: params.getParam(
-                    'kjopt',
-                    ParamType.bool,
-                  ),
-                ),
+          builder: (context, params) => MineKjopWidget(
+            kjopt: params.getParam(
+              'kjopt',
+              ParamType.bool,
+            ),
+          ),
         ),
         FFRoute(
           name: 'MatDetalj',
           path: '/matDetalj',
-          builder: (context, params) => const MatDetaljWidget(),
+          builder: (context, params) => MatDetaljWidget(
+            matinfo: params.getParam(
+              'matinfo',
+              ParamType.JSON,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Godkjentbetaling',
@@ -114,9 +114,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Profil',
           path: '/profil',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'Profil')
-              : const ProfilWidget(),
+          builder: (context, params) => const ProfilWidget(),
         ),
         FFRoute(
           name: 'ProfilRediger',
@@ -126,14 +124,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'LeggUtMatvare',
           path: '/leggUtMatvare',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'LeggUtMatvare')
-              : const LeggUtMatvareWidget(),
+          builder: (context, params) => const LeggUtMatvareWidget(),
         ),
         FFRoute(
           name: 'KjopDetaljGodkjent',
           path: '/kjopDetaljGodkjent',
-          builder: (context, params) => const KjopDetaljGodkjentWidget(),
+          builder: (context, params) => KjopDetaljGodkjentWidget(
+            matinfo: params.getParam(
+              'matinfo',
+              ParamType.JSON,
+            ),
+          ),
         ),
         FFRoute(
           name: 'GodkjentLagtUt',
@@ -143,20 +144,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'ChatMain',
           path: '/chatMain',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'ChatMain')
-              : const ChatMainWidget(),
+          builder: (context, params) => const ChatMainWidget(),
         ),
         FFRoute(
           name: 'Hjem',
           path: '/hjem',
-          builder: (context, params) =>
-              params.isEmpty ? const NavBarPage(initialPage: 'Hjem') : const HjemWidget(),
+          builder: (context, params) => const HjemWidget(),
         ),
         FFRoute(
           name: 'MinMatvareDetalj',
           path: '/minMatvareDetalj',
-          builder: (context, params) => const MinMatvareDetaljWidget(),
+          builder: (context, params) => MinMatvareDetaljWidget(
+            matinfo: params.getParam(
+              'matinfo',
+              ParamType.JSON,
+            ),
+          ),
         ),
         FFRoute(
           name: 'RedigerMatvare',
@@ -166,7 +169,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'MatDetaljBondegard',
           path: '/matDetaljBondegard',
-          builder: (context, params) => const MatDetaljBondegardWidget(),
+          builder: (context, params) => MatDetaljBondegardWidget(
+            matinfo: params.getParam(
+              'matinfo',
+              ParamType.JSON,
+            ),
+          ),
         ),
         FFRoute(
           name: 'SolgteMatvarer',
@@ -181,12 +189,37 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'bonde',
               ParamType.bool,
             ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            fullname: params.getParam(
+              'fullname',
+              ParamType.String,
+            ),
+            password: params.getParam(
+              'password',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
           name: 'RegistrerBonde',
           path: '/registrerBonde',
-          builder: (context, params) => const RegistrerBondeWidget(),
+          builder: (context, params) => RegistrerBondeWidget(
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            fullname: params.getParam(
+              'fullname',
+              ParamType.String,
+            ),
+            password: params.getParam(
+              'password',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'LegUtMat2',
@@ -211,7 +244,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'MinMatDetalj2',
           path: '/minMatDetalj2',
-          builder: (context, params) => const MinMatDetalj2Widget(),
+          builder: (context, params) => MinMatDetalj2Widget(
+            matinfo: params.getParam(
+              'matinfo',
+              ParamType.JSON,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Salg',
@@ -224,7 +262,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => SalgDetaljWidget(
             matvare: params.getParam(
               'matvare',
-              ParamType.String,
+              ParamType.JSON,
             ),
           ),
         ),
@@ -265,6 +303,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'endrepos',
               ParamType.bool,
             ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            fullname: params.getParam(
+              'fullname',
+              ParamType.String,
+            ),
+            password: params.getParam(
+              'password',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -300,6 +350,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'bonde',
               ParamType.bool,
             ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            username: params.getParam(
+              'username',
+              ParamType.String,
+            ),
+            password: params.getParam(
+              'password',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -309,6 +371,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             bonde: params.getParam(
               'bonde',
               ParamType.bool,
+            ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            fullname: params.getParam(
+              'fullname',
+              ParamType.String,
+            ),
+            password: params.getParam(
+              'password',
+              ParamType.String,
             ),
           ),
         ),
@@ -328,19 +402,29 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const BondeChatWidget(),
         ),
         FFRoute(
-          name: 'BondeChatCopy',
-          path: '/bondeChatCopy',
-          builder: (context, params) => const BondeChatCopyWidget(),
-        ),
-        FFRoute(
           name: 'KjopDetaljVentende',
           path: '/kjopDetaljVentende',
-          builder: (context, params) => const KjopDetaljVentendeWidget(),
+          builder: (context, params) => KjopDetaljVentendeWidget(
+            matinfo: params.getParam(
+              'matinfo',
+              ParamType.JSON,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Betaling',
           path: '/betaling',
-          builder: (context, params) => const BetalingWidget(),
+          builder: (context, params) => BetalingWidget(
+            matinfo: params.getParam(
+              'matinfo',
+              ParamType.JSON,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'ProfilCopy2Copy',
+          path: '/profilCopy2Copy',
+          builder: (context, params) => const ProfilCopy2CopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -459,7 +543,6 @@ class FFParameters {
     String paramName,
     ParamType type, {
     bool isList = false,
-    StructBuilder<T>? structBuilder,
   }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -477,7 +560,6 @@ class FFParameters {
       param,
       type,
       isList,
-      structBuilder: structBuilder,
     );
   }
 }

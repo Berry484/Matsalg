@@ -768,7 +768,21 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                                                   Padding(
                                                                                     padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 4.0, 0.0),
                                                                                     child: Text(
-                                                                                      '/Stk',
+                                                                                      '/kg',
+                                                                                      textAlign: TextAlign.end,
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Open Sans',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                            fontSize: 18.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 4.0, 0.0),
+                                                                                    child: Text(
+                                                                                      '/stk',
                                                                                       textAlign: TextAlign.end,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',
@@ -1012,7 +1026,18 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                                                           ),
                                                                                         ),
                                                                                         Text(
-                                                                                          '/Stk',
+                                                                                          '/kg',
+                                                                                          textAlign: TextAlign.end,
+                                                                                          style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                                fontFamily: 'Open Sans',
+                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                fontSize: 16.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
+                                                                                        Text(
+                                                                                          '/stk',
                                                                                           textAlign: TextAlign.end,
                                                                                           style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                 fontFamily: 'Open Sans',

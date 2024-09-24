@@ -8,7 +8,16 @@ import 'registrer_bonde_model.dart';
 export 'registrer_bonde_model.dart';
 
 class RegistrerBondeWidget extends StatefulWidget {
-  const RegistrerBondeWidget({super.key});
+  const RegistrerBondeWidget({
+    super.key,
+    this.email,
+    this.fullname,
+    this.password,
+  });
+
+  final String? email;
+  final String? fullname;
+  final String? password;
 
   @override
   State<RegistrerBondeWidget> createState() => _RegistrerBondeWidgetState();
@@ -699,6 +708,18 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget> {
                                         'bonde': serializeParam(
                                           true,
                                           ParamType.bool,
+                                        ),
+                                        'email': serializeParam(
+                                          widget.email,
+                                          ParamType.String,
+                                        ),
+                                        'fullname': serializeParam(
+                                          widget.fullname,
+                                          ParamType.String,
+                                        ),
+                                        'password': serializeParam(
+                                          widget.password,
+                                          ParamType.String,
                                         ),
                                       }.withoutNulls,
                                       extra: <String, dynamic>{

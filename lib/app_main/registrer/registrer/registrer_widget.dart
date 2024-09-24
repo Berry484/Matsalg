@@ -64,8 +64,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
           body: SafeArea(
             top: true,
             child: Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 200.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 200.0, 0.0, 0.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -84,7 +83,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                 .titleMedium
                                 .override(
                                   fontFamily: 'Open Sans',
+                                  fontSize: 17.0,
                                   letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w600,
                                 ),
                             unselectedLabelStyle: const TextStyle(),
                             indicatorColor:
@@ -120,9 +121,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(
-                                                20.0, 20.0, 20.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    20.0, 20.0, 20.0, 0.0),
                                             child: TextFormField(
                                               controller: _model
                                                   .emailLoginTextController,
@@ -202,8 +203,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .primary,
                                                 contentPadding:
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        20.0, 24.0, 20.0, 24.0),
+                                                        .fromSTEB(20.0, 24.0,
+                                                            20.0, 24.0),
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -226,9 +227,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(
-                                                20.0, 12.0, 20.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    20.0, 12.0, 20.0, 0.0),
                                             child: TextFormField(
                                               controller: _model
                                                   .passordLoginTextController,
@@ -312,8 +313,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .primary,
                                                 contentPadding:
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        20.0, 24.0, 20.0, 24.0),
+                                                        .fromSTEB(20.0, 24.0,
+                                                            20.0, 24.0),
                                                 suffixIcon: InkWell(
                                                   onTap: () => safeSetState(
                                                     () => _model
@@ -353,8 +354,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 24.0, 0.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 24.0, 0.0, 0.0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
                                                 if (_model.formKey1
@@ -376,14 +378,13 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                               options: FFButtonOptions(
                                                 width: 230.0,
                                                 height: 50.0,
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
                                                         0.0, 0.0, 0.0, 0.0),
                                                 iconPadding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                        0.0, 0.0, 0.0, 0.0),
+                                                            0.0, 0.0, 0.0, 0.0),
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
@@ -435,9 +436,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(20.0, 20.0,
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(20.0, 20.0,
                                                           20.0, 0.0),
                                                   child: TextFormField(
                                                     controller: _model
@@ -487,8 +487,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                       ),
                                                       focusedBorder:
                                                           OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
+                                                        borderSide: const BorderSide(
                                                           color:
                                                               Color(0x00000000),
                                                           width: 1.0,
@@ -528,8 +527,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                               .primary,
                                                       contentPadding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(20.0,
-                                                              24.0, 20.0, 24.0),
+                                                              .fromSTEB(
+                                                                  20.0,
+                                                                  24.0,
+                                                                  20.0,
+                                                                  24.0),
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -550,9 +552,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(20.0, 20.0,
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(20.0, 20.0,
                                                           20.0, 0.0),
                                                   child: TextFormField(
                                                     controller: _model
@@ -602,8 +603,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                       ),
                                                       focusedBorder:
                                                           OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
+                                                        borderSide: const BorderSide(
                                                           color:
                                                               Color(0x00000000),
                                                           width: 1.0,
@@ -643,8 +643,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                               .primary,
                                                       contentPadding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(20.0,
-                                                              24.0, 20.0, 24.0),
+                                                              .fromSTEB(
+                                                                  20.0,
+                                                                  24.0,
+                                                                  20.0,
+                                                                  24.0),
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -665,9 +668,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(20.0, 12.0,
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(20.0, 12.0,
                                                           20.0, 0.0),
                                                   child: TextFormField(
                                                     controller: _model
@@ -718,8 +720,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                       ),
                                                       focusedBorder:
                                                           OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
+                                                        borderSide: const BorderSide(
                                                           color:
                                                               Color(0x00000000),
                                                           width: 1.0,
@@ -759,8 +760,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                               .primary,
                                                       contentPadding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(20.0,
-                                                              24.0, 20.0, 24.0),
+                                                              .fromSTEB(
+                                                                  20.0,
+                                                                  24.0,
+                                                                  20.0,
+                                                                  24.0),
                                                       suffixIcon: InkWell(
                                                         onTap: () =>
                                                             safeSetState(
@@ -810,7 +814,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 24.0,
-                                                            0.0, 0.0),
+                                                                0.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         if (_model.formKey2
@@ -830,6 +834,27 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                               false,
                                                               ParamType.bool,
                                                             ),
+                                                            'email':
+                                                                serializeParam(
+                                                              _model
+                                                                  .epostLagTextController
+                                                                  .text,
+                                                              ParamType.String,
+                                                            ),
+                                                            'fullname':
+                                                                serializeParam(
+                                                              _model
+                                                                  .navnLagTextController
+                                                                  .text,
+                                                              ParamType.String,
+                                                            ),
+                                                            'password':
+                                                                serializeParam(
+                                                              _model
+                                                                  .passordLagTextController
+                                                                  .text,
+                                                              ParamType.String,
+                                                            ),
                                                           }.withoutNulls,
                                                         );
                                                       },
@@ -841,13 +866,15 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                       options: FFButtonOptions(
                                                         width: 230.0,
                                                         height: 50.0,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(10.0),
+                                                        padding: const EdgeInsets.all(
+                                                            10.0),
                                                         iconPadding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                0.0, 0.0, 0.0),
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -871,8 +898,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                           .w600,
                                                                 ),
                                                         elevation: 3.0,
-                                                        borderSide:
-                                                            const BorderSide(
+                                                        borderSide: const BorderSide(
                                                           color: Colors
                                                               .transparent,
                                                           width: 1.0,
@@ -891,8 +917,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(20.0,
-                                                            24.0, 20.0, 0.0),
+                                                            .fromSTEB(
+                                                                20.0,
+                                                                24.0,
+                                                                20.0,
+                                                                0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         if (_model.formKey2
@@ -905,20 +934,46 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         }
 
                                                         context.pushNamed(
-                                                            'RegistrerBonde');
+                                                          'RegistrerBonde',
+                                                          queryParameters: {
+                                                            'email':
+                                                                serializeParam(
+                                                              _model
+                                                                  .epostLagTextController
+                                                                  .text,
+                                                              ParamType.String,
+                                                            ),
+                                                            'fullname':
+                                                                serializeParam(
+                                                              _model
+                                                                  .navnLagTextController
+                                                                  .text,
+                                                              ParamType.String,
+                                                            ),
+                                                            'password':
+                                                                serializeParam(
+                                                              _model
+                                                                  .passordLagTextController
+                                                                  .text,
+                                                              ParamType.String,
+                                                            ),
+                                                          }.withoutNulls,
+                                                        );
                                                       },
                                                       text:
                                                           'Registrer din bondegård',
                                                       options: FFButtonOptions(
                                                         width: double.infinity,
                                                         height: 50.0,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(10.0),
+                                                        padding: const EdgeInsets.all(
+                                                            10.0),
                                                         iconPadding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                0.0, 0.0, 0.0),
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -942,8 +997,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                           .bold,
                                                                 ),
                                                         elevation: 3.0,
-                                                        borderSide:
-                                                            const BorderSide(
+                                                        borderSide: const BorderSide(
                                                           color: Colors
                                                               .transparent,
                                                           width: 1.0,

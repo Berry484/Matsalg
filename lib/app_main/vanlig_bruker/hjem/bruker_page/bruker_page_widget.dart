@@ -369,8 +369,10 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         FFButtonWidget(
-                                          onPressed: () {
-                                            print('Button pressed ...');
+                                          onPressed: () async {
+                                            FFAppState().kjopAlert = true;
+                                            FFAppState().chatAlert = true;
+                                            safeSetState(() {});
                                           },
                                           text: 'Følg',
                                           options: FFButtonOptions(
@@ -806,7 +808,29 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           0.0),
                                                                       child:
                                                                           Text(
-                                                                        '/Stk',
+                                                                        '/kg',
+                                                                        textAlign:
+                                                                            TextAlign.end,
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Open Sans',
+                                                                              color: FlutterFlowTheme.of(context).secondaryText,
+                                                                              fontSize: 18.0,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.w600,
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          12.0,
+                                                                          4.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Text(
+                                                                        '/stk',
                                                                         textAlign:
                                                                             TextAlign.end,
                                                                         style: FlutterFlowTheme.of(context)

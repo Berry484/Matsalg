@@ -11,7 +11,7 @@ class SalgDetaljWidget extends StatefulWidget {
     this.matvare,
   });
 
-  final String? matvare;
+  final dynamic matvare;
 
   @override
   State<SalgDetaljWidget> createState() => _SalgDetaljWidgetState();

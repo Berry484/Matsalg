@@ -141,7 +141,7 @@ class _GodkjentLagtUtWidgetState extends State<GodkjentLagtUtWidget>
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Open Sans',
                                   color: FlutterFlowTheme.of(context).alternate,
-                                  fontSize: 22.0,
+                                  fontSize: 23.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),

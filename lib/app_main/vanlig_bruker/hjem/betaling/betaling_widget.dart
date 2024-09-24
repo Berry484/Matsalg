@@ -8,7 +8,12 @@ import 'betaling_model.dart';
 export 'betaling_model.dart';
 
 class BetalingWidget extends StatefulWidget {
-  const BetalingWidget({super.key});
+  const BetalingWidget({
+    super.key,
+    this.matinfo,
+  });
+
+  final dynamic matinfo;
 
   @override
   State<BetalingWidget> createState() => _BetalingWidgetState();
@@ -227,7 +232,30 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                   .fromSTEB(
                                                       0.0, 12.0, 4.0, 0.0),
                                               child: Text(
-                                                '/Stk',
+                                                '/kg',
+                                                textAlign: TextAlign.end,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Open Sans',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      fontSize: 18.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 12.0, 4.0, 0.0),
+                                              child: Text(
+                                                '/stk',
                                                 textAlign: TextAlign.end,
                                                 style: FlutterFlowTheme.of(
                                                         context)

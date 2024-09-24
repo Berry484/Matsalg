@@ -12,11 +12,17 @@ class VelgPosisjonWidget extends StatefulWidget {
     super.key,
     bool? bonde,
     bool? endrepos,
+    this.email,
+    this.fullname,
+    this.password,
   })  : bonde = bonde ?? true,
         endrepos = endrepos ?? false;
 
   final bool bonde;
   final bool endrepos;
+  final String? email;
+  final String? fullname;
+  final String? password;
 
   @override
   State<VelgPosisjonWidget> createState() => _VelgPosisjonWidgetState();
@@ -291,6 +297,18 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                           'bonde': serializeParam(
                                             widget.bonde,
                                             ParamType.bool,
+                                          ),
+                                          'email': serializeParam(
+                                            widget.email,
+                                            ParamType.String,
+                                          ),
+                                          'fullname': serializeParam(
+                                            widget.fullname,
+                                            ParamType.String,
+                                          ),
+                                          'password': serializeParam(
+                                            widget.password,
+                                            ParamType.String,
                                           ),
                                         }.withoutNulls,
                                       );

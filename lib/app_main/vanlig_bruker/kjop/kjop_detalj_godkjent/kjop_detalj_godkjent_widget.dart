@@ -10,7 +10,12 @@ import 'kjop_detalj_godkjent_model.dart';
 export 'kjop_detalj_godkjent_model.dart';
 
 class KjopDetaljGodkjentWidget extends StatefulWidget {
-  const KjopDetaljGodkjentWidget({super.key});
+  const KjopDetaljGodkjentWidget({
+    super.key,
+    this.matinfo,
+  });
+
+  final dynamic matinfo;
 
   @override
   State<KjopDetaljGodkjentWidget> createState() =>
@@ -435,6 +440,29 @@ class _KjopDetaljGodkjentWidgetState extends State<KjopDetaljGodkjentWidget> {
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 10.0, 0.0),
+                                                  child: Text(
+                                                    '/kg',
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 23.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                  ),
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsetsDirectional

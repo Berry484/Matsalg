@@ -1,10 +1,8 @@
 import '/app_main/bonde_gard/custom_navbar/chat_custom_nav_bar/chat_custom_nav_bar_widget.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'bonde_chat_model.dart';
 export 'bonde_chat_model.dart';
 
@@ -15,40 +13,15 @@ class BondeChatWidget extends StatefulWidget {
   State<BondeChatWidget> createState() => _BondeChatWidgetState();
 }
 
-class _BondeChatWidgetState extends State<BondeChatWidget>
-    with TickerProviderStateMixin {
+class _BondeChatWidgetState extends State<BondeChatWidget> {
   late BondeChatModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => BondeChatModel());
-
-    animationsMap.addAll({
-      'listViewOnPageLoadAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          MoveEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 270.0.ms,
-            begin: const Offset(0.0, 13.999999999999986),
-            end: const Offset(0.0, 0.0),
-          ),
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: 0.47,
-            end: 1.0,
-          ),
-        ],
-      ),
-    });
   }
 
   @override
@@ -284,8 +257,7 @@ class _BondeChatWidgetState extends State<BondeChatWidget>
                         ),
                       ),
                     ],
-                  ).animateOnPageLoad(
-                      animationsMap['listViewOnPageLoadAnimation']!),
+                  ),
                 ),
                 wrapWithModel(
                   model: _model.chatCustomNavBarModel,

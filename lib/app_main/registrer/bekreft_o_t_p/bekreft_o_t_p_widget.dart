@@ -10,9 +10,15 @@ class BekreftOTPWidget extends StatefulWidget {
   const BekreftOTPWidget({
     super.key,
     this.bonde,
+    required this.email,
+    required this.username,
+    required this.password,
   });
 
   final bool? bonde;
+  final String? email;
+  final String? username;
+  final String? password;
 
   @override
   State<BekreftOTPWidget> createState() => _BekreftOTPWidgetState();
@@ -179,11 +185,27 @@ class _BekreftOTPWidgetState extends State<BekreftOTPWidget> {
                                 }
                                 if (widget.bonde == true) {
                                   context.pushNamed(
-                                    'OpprettProfil',
+                                    'VelgPosisjon',
                                     queryParameters: {
                                       'bonde': serializeParam(
                                         true,
                                         ParamType.bool,
+                                      ),
+                                      'endrepos': serializeParam(
+                                        false,
+                                        ParamType.bool,
+                                      ),
+                                      'email': serializeParam(
+                                        widget.email,
+                                        ParamType.String,
+                                      ),
+                                      'fullname': serializeParam(
+                                        widget.username,
+                                        ParamType.String,
+                                      ),
+                                      'password': serializeParam(
+                                        widget.password,
+                                        ParamType.String,
                                       ),
                                     }.withoutNulls,
                                   );
@@ -198,6 +220,18 @@ class _BekreftOTPWidgetState extends State<BekreftOTPWidget> {
                                       'endrepos': serializeParam(
                                         false,
                                         ParamType.bool,
+                                      ),
+                                      'email': serializeParam(
+                                        widget.email,
+                                        ParamType.String,
+                                      ),
+                                      'fullname': serializeParam(
+                                        widget.username,
+                                        ParamType.String,
+                                      ),
+                                      'password': serializeParam(
+                                        widget.password,
+                                        ParamType.String,
                                       ),
                                     }.withoutNulls,
                                   );

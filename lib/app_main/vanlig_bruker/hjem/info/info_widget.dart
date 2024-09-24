@@ -6,7 +6,12 @@ import 'info_model.dart';
 export 'info_model.dart';
 
 class InfoWidget extends StatefulWidget {
-  const InfoWidget({super.key});
+  const InfoWidget({
+    super.key,
+    this.matinfo,
+  });
+
+  final dynamic matinfo;
 
   @override
   State<InfoWidget> createState() => _InfoWidgetState();

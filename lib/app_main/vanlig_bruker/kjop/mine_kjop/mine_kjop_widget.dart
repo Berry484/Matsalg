@@ -1,3 +1,4 @@
+import '/app_main/vanlig_bruker/custom_nav_bar_user/kjop_nav_bar/kjop_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -367,7 +368,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                               ),
                                             ),
                                           ),
-                                        ],
+                                        ].divide(const SizedBox(height: 15.0)),
                                       ),
                                     ),
                                   ),
@@ -614,7 +615,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                               ),
                                             ),
                                           ),
-                                        ],
+                                        ].divide(const SizedBox(height: 15.0)),
                                       ),
                                     ),
                                   ),
@@ -626,6 +627,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                       ),
                     ],
                   ),
+                ),
+                wrapWithModel(
+                  model: _model.kjopNavBarModel,
+                  updateCallback: () => safeSetState(() {}),
+                  child: const KjopNavBarWidget(),
                 ),
               ],
             ),

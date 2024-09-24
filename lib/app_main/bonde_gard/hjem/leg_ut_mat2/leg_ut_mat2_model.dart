@@ -62,9 +62,9 @@ class LegUtMat2Model extends FlutterFlowModel<LegUtMat2Widget> {
   }
 
   // State field(s) for TabBar widget.
-  TabController? tabBarController1;
-  int get tabBarCurrentIndex1 =>
-      tabBarController1 != null ? tabBarController1!.index : 0;
+  TabController? tabBarController;
+  int get tabBarCurrentIndex =>
+      tabBarController != null ? tabBarController!.index : 0;
 
   // State field(s) for ProduktPrisSTK widget.
   FocusNode? produktPrisSTKFocusNode;
@@ -84,10 +84,6 @@ class LegUtMat2Model extends FlutterFlowModel<LegUtMat2Widget> {
   FocusNode? antallStkFocusNode;
   TextEditingController? antallStkTextController;
   String? Function(BuildContext, String?)? antallStkTextControllerValidator;
-  // State field(s) for TabBar widget.
-  TabController? tabBarController2;
-  int get tabBarCurrentIndex2 =>
-      tabBarController2 != null ? tabBarController2!.index : 0;
 
   @override
   void initState(BuildContext context) {
@@ -104,7 +100,7 @@ class LegUtMat2Model extends FlutterFlowModel<LegUtMat2Widget> {
     produktBeskrivelseFocusNode?.dispose();
     produktBeskrivelseTextController?.dispose();
 
-    tabBarController1?.dispose();
+    tabBarController?.dispose();
     produktPrisSTKFocusNode?.dispose();
     produktPrisSTKTextController?.dispose();
 
@@ -116,7 +112,5 @@ class LegUtMat2Model extends FlutterFlowModel<LegUtMat2Widget> {
 
     antallStkFocusNode?.dispose();
     antallStkTextController?.dispose();
-
-    tabBarController2?.dispose();
   }
 }

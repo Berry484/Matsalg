@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'bonde_chat_copy_widget.dart' show BondeChatCopyWidget;
+import 'kjop_nav_bar_widget.dart' show KjopNavBarWidget;
 import 'package:flutter/material.dart';
 
-class BondeChatCopyModel extends FlutterFlowModel<BondeChatCopyWidget> {
+class KjopNavBarModel extends FlutterFlowModel<KjopNavBarWidget> {
   @override
   void initState(BuildContext context) {}
 

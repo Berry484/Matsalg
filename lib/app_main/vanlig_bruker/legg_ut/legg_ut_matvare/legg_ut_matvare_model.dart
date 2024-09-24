@@ -1,3 +1,4 @@
+import '/app_main/vanlig_bruker/custom_nav_bar_user/legg_ut_nav_bar/legg_ut_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'legg_ut_matvare_widget.dart' show LeggUtMatvareWidget;
@@ -75,12 +76,15 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
   FocusNode? produktPrisKgFocusNode;
   TextEditingController? produktPrisKgTextController;
   String? Function(BuildContext, String?)? produktPrisKgTextControllerValidator;
+  // Model for LeggUtNavBar component.
+  late LeggUtNavBarModel leggUtNavBarModel;
 
   @override
   void initState(BuildContext context) {
     produktNavnTextControllerValidator = _produktNavnTextControllerValidator;
     produktBeskrivelseTextControllerValidator =
         _produktBeskrivelseTextControllerValidator;
+    leggUtNavBarModel = createModel(context, () => LeggUtNavBarModel());
   }
 
   @override
@@ -97,5 +101,7 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
 
     produktPrisKgFocusNode?.dispose();
     produktPrisKgTextController?.dispose();
+
+    leggUtNavBarModel.dispose();
   }
 }

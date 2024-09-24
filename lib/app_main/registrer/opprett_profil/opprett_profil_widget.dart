@@ -10,9 +10,15 @@ class OpprettProfilWidget extends StatefulWidget {
   const OpprettProfilWidget({
     super.key,
     bool? bonde,
+    required this.email,
+    required this.fullname,
+    required this.password,
   }) : bonde = bonde ?? false;
 
   final bool bonde;
+  final String? email;
+  final String? fullname;
+  final String? password;
 
   @override
   State<OpprettProfilWidget> createState() => _OpprettProfilWidgetState();

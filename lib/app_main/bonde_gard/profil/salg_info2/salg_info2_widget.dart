@@ -8,7 +8,12 @@ import 'salg_info2_model.dart';
 export 'salg_info2_model.dart';
 
 class SalgInfo2Widget extends StatefulWidget {
-  const SalgInfo2Widget({super.key});
+  const SalgInfo2Widget({
+    super.key,
+    this.info,
+  });
+
+  final dynamic info;
 
   @override
   State<SalgInfo2Widget> createState() => _SalgInfo2WidgetState();
@@ -313,7 +318,7 @@ class _SalgInfo2WidgetState extends State<SalgInfo2Widget> {
                               .override(
                                 fontFamily: 'Open Sans',
                                 color: FlutterFlowTheme.of(context).alternate,
-                                fontSize: 15.0,
+                                fontSize: 16.0,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -330,7 +335,7 @@ class _SalgInfo2WidgetState extends State<SalgInfo2Widget> {
                               .override(
                                 fontFamily: 'Open Sans',
                                 color: FlutterFlowTheme.of(context).alternate,
-                                fontSize: 15.0,
+                                fontSize: 16.0,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -340,7 +345,7 @@ class _SalgInfo2WidgetState extends State<SalgInfo2Widget> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                         child: Text(
-                          '/Stk',
+                          '/kg',
                           textAlign: TextAlign.end,
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
@@ -348,7 +353,25 @@ class _SalgInfo2WidgetState extends State<SalgInfo2Widget> {
                                 fontFamily: 'Open Sans',
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
-                                fontSize: 15.0,
+                                fontSize: 16.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                        child: Text(
+                          '/stk',
+                          textAlign: TextAlign.end,
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Open Sans',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                fontSize: 16.0,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -379,7 +402,25 @@ class _SalgInfo2WidgetState extends State<SalgInfo2Widget> {
                                     fontFamily: 'Open Sans',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 15.0,
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 12.0, 0.0, 0.0),
+                            child: Text(
+                              'Kg',
+                              textAlign: TextAlign.end,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontSize: 16.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -397,7 +438,7 @@ class _SalgInfo2WidgetState extends State<SalgInfo2Widget> {
                                     fontFamily: 'Open Sans',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 15.0,
+                                    fontSize: 16.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
