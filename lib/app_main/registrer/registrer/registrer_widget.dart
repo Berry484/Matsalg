@@ -38,11 +38,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
     _model.epostLagTextController ??= TextEditingController();
     _model.epostLagFocusNode ??= FocusNode();
 
-    _model.navnLagTextController ??= TextEditingController();
-    _model.navnLagFocusNode ??= FocusNode();
-
     _model.passordLagTextController ??= TextEditingController();
     _model.passordLagFocusNode ??= FocusNode();
+
+    _model.bekreftPassordLagTextController ??= TextEditingController();
+    _model.bekreftPassordLagFocusNode ??= FocusNode();
   }
 
   @override
@@ -132,32 +132,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 labelText: 'E-post',
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
                                                 alignLabelWithHint: false,
-                                                hintText: 'Skriv inn e-post...',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x4257636C),
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
@@ -239,35 +218,10 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                   .passordLoginVisibility,
                                               decoration: InputDecoration(
                                                 labelText: 'Passord',
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                hintText:
-                                                    'Skriv inn  passord...',
-                                                hintStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodySmall
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      fontSize: 14.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x4257636C),
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
@@ -449,36 +403,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       labelText: 'E-post',
-                                                      labelStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodySmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                      hintText:
-                                                          'Skriv inn e-post...',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodySmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
                                                       enabledBorder:
                                                           OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
+                                                        borderSide: const BorderSide(
+                                                          color:
+                                                              Color(0x4257636C),
                                                           width: 1.0,
                                                         ),
                                                         borderRadius:
@@ -553,122 +482,6 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(20.0, 20.0,
-                                                          20.0, 0.0),
-                                                  child: TextFormField(
-                                                    controller: _model
-                                                        .navnLagTextController,
-                                                    focusNode:
-                                                        _model.navnLagFocusNode,
-                                                    textInputAction:
-                                                        TextInputAction.done,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      labelText: 'Fullt navn',
-                                                      labelStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodySmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                      hintText:
-                                                          'Skriv inn fullt navn...',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodySmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: const BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      filled: true,
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      contentPadding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  20.0,
-                                                                  24.0,
-                                                                  20.0,
-                                                                  24.0),
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 15.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                    maxLines: null,
-                                                    validator: _model
-                                                        .navnLagTextControllerValidator
-                                                        .asValidator(context),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsetsDirectional
                                                       .fromSTEB(20.0, 12.0,
                                                           20.0, 0.0),
                                                   child: TextFormField(
@@ -682,36 +495,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .passordLagVisibility,
                                                     decoration: InputDecoration(
                                                       labelText: 'Passord',
-                                                      labelStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodySmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                      hintText:
-                                                          'Skriv inn passord...',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodySmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
                                                       enabledBorder:
                                                           OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
+                                                        borderSide: const BorderSide(
+                                                          color:
+                                                              Color(0x4257636C),
                                                           width: 1.0,
                                                         ),
                                                         borderRadius:
@@ -806,6 +594,121 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .asValidator(context),
                                                   ),
                                                 ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(20.0, 12.0,
+                                                          20.0, 0.0),
+                                                  child: TextFormField(
+                                                    controller: _model
+                                                        .bekreftPassordLagTextController,
+                                                    focusNode: _model
+                                                        .bekreftPassordLagFocusNode,
+                                                    textInputAction:
+                                                        TextInputAction.done,
+                                                    obscureText: !_model
+                                                        .bekreftPassordLagVisibility,
+                                                    decoration: InputDecoration(
+                                                      labelText:
+                                                          'Bekreft passord',
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: const BorderSide(
+                                                          color:
+                                                              Color(0x4257636C),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: const BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      contentPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  20.0,
+                                                                  24.0,
+                                                                  20.0,
+                                                                  24.0),
+                                                      suffixIcon: InkWell(
+                                                        onTap: () =>
+                                                            safeSetState(
+                                                          () => _model
+                                                                  .bekreftPassordLagVisibility =
+                                                              !_model
+                                                                  .bekreftPassordLagVisibility,
+                                                        ),
+                                                        focusNode: FocusNode(
+                                                            skipTraversal:
+                                                                true),
+                                                        child: Icon(
+                                                          _model.bekreftPassordLagVisibility
+                                                              ? Icons
+                                                                  .visibility_outlined
+                                                              : Icons
+                                                                  .visibility_off_outlined,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          size: 20.0,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 15.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    validator: _model
+                                                        .bekreftPassordLagTextControllerValidator
+                                                        .asValidator(context),
+                                                  ),
+                                                ),
                                                 Align(
                                                   alignment:
                                                       const AlignmentDirectional(
@@ -825,6 +728,29 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                 .validate()) {
                                                           return;
                                                         }
+                                                        if (_model
+                                                                .passordLagTextController
+                                                                .text !=
+                                                            _model
+                                                                .bekreftPassordLagTextController
+                                                                .text) {
+                                                          safeSetState(() {
+                                                            _model
+                                                                .bekreftPassordLagTextController
+                                                                ?.clear();
+                                                            _model
+                                                                .passordLagTextController
+                                                                ?.clear();
+                                                          });
+                                                          if (_model.formKey2
+                                                                      .currentState ==
+                                                                  null ||
+                                                              !_model.formKey2
+                                                                  .currentState!
+                                                                  .validate()) {
+                                                            return;
+                                                          }
+                                                        }
 
                                                         context.pushNamed(
                                                           'BekreftTLF',
@@ -838,13 +764,6 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                 serializeParam(
                                                               _model
                                                                   .epostLagTextController
-                                                                  .text,
-                                                              ParamType.String,
-                                                            ),
-                                                            'fullname':
-                                                                serializeParam(
-                                                              _model
-                                                                  .navnLagTextController
                                                                   .text,
                                                               ParamType.String,
                                                             ),
@@ -865,7 +784,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                       ),
                                                       options: FFButtonOptions(
                                                         width: 230.0,
-                                                        height: 50.0,
+                                                        height: 45.0,
                                                         padding: const EdgeInsets.all(
                                                             10.0),
                                                         iconPadding:
@@ -943,13 +862,6 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                   .text,
                                                               ParamType.String,
                                                             ),
-                                                            'fullname':
-                                                                serializeParam(
-                                                              _model
-                                                                  .navnLagTextController
-                                                                  .text,
-                                                              ParamType.String,
-                                                            ),
                                                             'password':
                                                                 serializeParam(
                                                               _model
@@ -964,7 +876,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           'Registrer din bondegård',
                                                       options: FFButtonOptions(
                                                         width: double.infinity,
-                                                        height: 50.0,
+                                                        height: 45.0,
                                                         padding: const EdgeInsets.all(
                                                             10.0),
                                                         iconPadding:

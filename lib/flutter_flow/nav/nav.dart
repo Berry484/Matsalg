@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '/auth/custom_auth/custom_auth_user_provider.dart';
@@ -146,9 +145,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'GodkjentLagtUt',
-          path: '/godkjentLagtUt',
-          builder: (context, params) => const GodkjentLagtUtWidget(),
+          name: 'BrukerLagtUtInfo',
+          path: '/brukerLagtUtInfo',
+          builder: (context, params) => const BrukerLagtUtInfoWidget(),
         ),
         FFRoute(
           name: 'ChatMain',
@@ -197,10 +196,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'email',
               ParamType.String,
             ),
-            fullname: params.getParam(
-              'fullname',
-              ParamType.String,
-            ),
             password: params.getParam(
               'password',
               ParamType.String,
@@ -213,10 +208,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => RegistrerBondeWidget(
             email: params.getParam(
               'email',
-              ParamType.String,
-            ),
-            fullname: params.getParam(
-              'fullname',
               ParamType.String,
             ),
             password: params.getParam(
@@ -296,10 +287,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'email',
               ParamType.String,
             ),
-            fullname: params.getParam(
-              'fullname',
-              ParamType.String,
-            ),
             password: params.getParam(
               'password',
               ParamType.String,
@@ -343,10 +330,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'email',
               ParamType.String,
             ),
-            username: params.getParam(
-              'username',
-              ParamType.String,
-            ),
             password: params.getParam(
               'password',
               ParamType.String,
@@ -363,10 +346,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             ),
             email: params.getParam(
               'email',
-              ParamType.String,
-            ),
-            fullname: params.getParam(
-              'fullname',
               ParamType.String,
             ),
             password: params.getParam(
@@ -414,6 +393,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'innstillinger',
           path: '/innstillinger',
           builder: (context, params) => const InnstillingerWidget(),
+        ),
+        FFRoute(
+          name: 'Utbetalingsinfo1',
+          path: '/utbetalingsinfo1',
+          builder: (context, params) => const Utbetalingsinfo1Widget(),
+        ),
+        FFRoute(
+          name: 'MatPostInfo',
+          path: '/matPostInfo',
+          builder: (context, params) => const MatPostInfoWidget(),
+        ),
+        FFRoute(
+          name: 'GodkjentbudInfo',
+          path: '/godkjentbudInfo',
+          builder: (context, params) => const GodkjentbudInfoWidget(),
+        ),
+        FFRoute(
+          name: 'BondeLagtUtInfo',
+          path: '/bondeLagtUtInfo',
+          builder: (context, params) => const BondeLagtUtInfoWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -596,14 +595,11 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: SpinKitPulse(
-                      color: FlutterFlowTheme.of(context).primary,
-                      size: 50.0,
-                    ),
+              ? Container(
+                  color: FlutterFlowTheme.of(context).primary,
+                  child: Image.asset(
+                    'assets/images/white.jpg',
+                    fit: BoxFit.cover,
                   ),
                 )
               : page;

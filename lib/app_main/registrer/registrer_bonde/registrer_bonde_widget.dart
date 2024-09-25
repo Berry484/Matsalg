@@ -11,12 +11,10 @@ class RegistrerBondeWidget extends StatefulWidget {
   const RegistrerBondeWidget({
     super.key,
     this.email,
-    this.fullname,
     this.password,
   });
 
   final String? email;
-  final String? fullname;
   final String? password;
 
   @override
@@ -147,21 +145,6 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   labelText: 'Gårdsnavn',
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .bodySmall
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  hintText: 'Skriv inn gårdsnavn...',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .bodySmall
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                      ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color:
@@ -711,10 +694,6 @@ class _RegistrerBondeWidgetState extends State<RegistrerBondeWidget> {
                                         ),
                                         'email': serializeParam(
                                           widget.email,
-                                          ParamType.String,
-                                        ),
-                                        'fullname': serializeParam(
-                                          widget.fullname,
                                           ParamType.String,
                                         ),
                                         'password': serializeParam(

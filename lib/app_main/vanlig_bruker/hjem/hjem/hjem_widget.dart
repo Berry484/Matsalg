@@ -402,6 +402,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                         onPressed: () async {
                                                           FFAppState()
                                                               .kjopAlert = true;
+                                                          FFAppState()
+                                                              .chatAlert = true;
                                                           safeSetState(() {});
                                                           await showDialog(
                                                             barrierColor: const Color(

@@ -82,16 +82,7 @@ class _MerkSolgtWidgetState extends State<MerkSolgtWidget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      context.goNamed(
-                        'SolgteMatvarer',
-                        extra: <String, dynamic>{
-                          kTransitionInfoKey: const TransitionInfo(
-                            hasTransition: true,
-                            transitionType: PageTransitionType.fade,
-                            duration: Duration(milliseconds: 0),
-                          ),
-                        },
-                      );
+                      context.pushNamed('Profil');
                     },
                     text: 'Marker solgt',
                     options: FFButtonOptions(

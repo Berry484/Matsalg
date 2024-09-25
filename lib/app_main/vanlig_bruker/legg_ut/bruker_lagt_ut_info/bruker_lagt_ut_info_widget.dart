@@ -3,22 +3,24 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
-import 'godkjent_lagt_ut_model.dart';
-export 'godkjent_lagt_ut_model.dart';
+import 'bruker_lagt_ut_info_model.dart';
+export 'bruker_lagt_ut_info_model.dart';
 
-class GodkjentLagtUtWidget extends StatefulWidget {
-  const GodkjentLagtUtWidget({super.key});
+class BrukerLagtUtInfoWidget extends StatefulWidget {
+  const BrukerLagtUtInfoWidget({super.key});
 
   @override
-  State<GodkjentLagtUtWidget> createState() => _GodkjentLagtUtWidgetState();
+  State<BrukerLagtUtInfoWidget> createState() => _BrukerLagtUtInfoWidgetState();
 }
 
-class _GodkjentLagtUtWidgetState extends State<GodkjentLagtUtWidget>
+class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
     with TickerProviderStateMixin {
-  late GodkjentLagtUtModel _model;
+  late BrukerLagtUtInfoModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -27,7 +29,12 @@ class _GodkjentLagtUtWidgetState extends State<GodkjentLagtUtWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => GodkjentLagtUtModel());
+    _model = createModel(context, () => BrukerLagtUtInfoModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      HapticFeedback.mediumImpact();
+    });
 
     animationsMap.addAll({
       'textOnPageLoadAnimation': AnimationInfo(

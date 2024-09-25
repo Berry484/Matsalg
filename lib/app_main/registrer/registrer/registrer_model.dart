@@ -51,18 +51,6 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
     return null;
   }
 
-  // State field(s) for NavnLag widget.
-  FocusNode? navnLagFocusNode;
-  TextEditingController? navnLagTextController;
-  String? Function(BuildContext, String?)? navnLagTextControllerValidator;
-  String? _navnLagTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
-    }
-
-    return null;
-  }
-
   // State field(s) for PassordLag widget.
   FocusNode? passordLagFocusNode;
   TextEditingController? passordLagTextController;
@@ -71,7 +59,22 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
   String? _passordLagTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
+      return 'Passord må være like';
+    }
+
+    return null;
+  }
+
+  // State field(s) for BekreftPassordLag widget.
+  FocusNode? bekreftPassordLagFocusNode;
+  TextEditingController? bekreftPassordLagTextController;
+  late bool bekreftPassordLagVisibility;
+  String? Function(BuildContext, String?)?
+      bekreftPassordLagTextControllerValidator;
+  String? _bekreftPassordLagTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Passord må være like';
     }
 
     return null;
@@ -83,9 +86,11 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
     passordLoginVisibility = false;
     passordLoginTextControllerValidator = _passordLoginTextControllerValidator;
     epostLagTextControllerValidator = _epostLagTextControllerValidator;
-    navnLagTextControllerValidator = _navnLagTextControllerValidator;
     passordLagVisibility = false;
     passordLagTextControllerValidator = _passordLagTextControllerValidator;
+    bekreftPassordLagVisibility = false;
+    bekreftPassordLagTextControllerValidator =
+        _bekreftPassordLagTextControllerValidator;
   }
 
   @override
@@ -100,10 +105,10 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
     epostLagFocusNode?.dispose();
     epostLagTextController?.dispose();
 
-    navnLagFocusNode?.dispose();
-    navnLagTextController?.dispose();
-
     passordLagFocusNode?.dispose();
     passordLagTextController?.dispose();
+
+    bekreftPassordLagFocusNode?.dispose();
+    bekreftPassordLagTextController?.dispose();
   }
 }

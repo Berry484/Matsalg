@@ -395,7 +395,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                             context)
                                                         .alternate,
                                                     letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                               elevation: 3.0,
                                               borderRadius:
@@ -428,7 +428,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                         color: Colors.white,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
-                                                            FontWeight.w600,
+                                                            FontWeight.bold,
                                                       ),
                                               elevation: 3.0,
                                               borderRadius:

@@ -1,9 +1,11 @@
+import '/app_main/vanlig_bruker/hjem/like_ikon/like_ikon_widget.dart';
 import '/app_main/vanlig_bruker/kart/kart_pop_up_bondegard/kart_pop_up_bondegard_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
+import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -111,8 +113,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10.0, 0.0, 0.0, 15.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 0.0, 0.0, 15.0),
                                           child: Container(
                                             width: 44.0,
                                             height: 44.0,
@@ -127,8 +130,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 0.0, 13.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  5.0, 0.0, 0.0, 13.0),
                                           child: Text(
                                             'Haugesund gård',
                                             style: FlutterFlowTheme.of(context)
@@ -144,9 +148,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 8.0, 0.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 8.0, 0.0),
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
@@ -164,210 +167,267 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    height: 380.0,
-                                    child: Stack(
-                                      children: [
-                                        SizedBox(
-                                          width: double.infinity,
-                                          height: 380.0,
-                                          child: Stack(
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        10.0, 0.0, 10.0, 40.0),
-                                                child: PageView(
-                                                  controller: _model
-                                                          .pageViewController ??=
-                                                      PageController(
-                                                          initialPage: 0),
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  children: [
-                                                    SizedBox(
-                                                      width: double.infinity,
-                                                      height: 380.0,
-                                                      child: Stack(
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                            child:
-                                                                Image.network(
-                                                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
-                                                              width: double
-                                                                  .infinity,
-                                                              height: 380.0,
-                                                              fit: BoxFit.cover,
-                                                              alignment:
-                                                                  const Alignment(
-                                                                      0.0, 0.0),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: double.infinity,
-                                                      height: 380.0,
-                                                      child: Stack(
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                            child:
-                                                                Image.network(
-                                                              '',
-                                                              width: double
-                                                                  .infinity,
-                                                              height: 380.0,
-                                                              fit: BoxFit.fill,
-                                                              alignment:
-                                                                  const Alignment(
-                                                                      0.0, 0.0),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: double.infinity,
-                                                      height: 380.0,
-                                                      child: Stack(
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                            child:
-                                                                Image.network(
-                                                              '',
-                                                              width: double
-                                                                  .infinity,
-                                                              height: 380.0,
-                                                              fit: BoxFit.fill,
-                                                              alignment:
-                                                                  const Alignment(
-                                                                      0.0, 0.0),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 380.0,
-                                                      child: Stack(
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                            child:
-                                                                Image.network(
-                                                              '',
-                                                              width: double
-                                                                  .infinity,
-                                                              height: 380.0,
-                                                              fit: BoxFit.fill,
-                                                              alignment:
-                                                                  const Alignment(
-                                                                      0.0, 0.0),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: double.infinity,
-                                                      height: 380.0,
-                                                      child: Stack(
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                            child:
-                                                                Image.network(
-                                                              '',
-                                                              width: double
-                                                                  .infinity,
-                                                              height: 380.0,
-                                                              fit: BoxFit.fill,
-                                                              alignment:
-                                                                  const Alignment(
-                                                                      0.0, 0.0),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
+                                  child: Builder(
+                                    builder: (context) => InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onDoubleTap: () async {
+                                        _model.liker = !(_model.liker ?? true);
+                                        safeSetState(() {});
+                                        if (_model.liker == true) {
+                                          await showAlignedDialog(
+                                            barrierColor: Colors.transparent,
+                                            context: context,
+                                            isGlobal: false,
+                                            avoidOverflow: false,
+                                            targetAnchor: const AlignmentDirectional(
+                                                    0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                            followerAnchor:
+                                                const AlignmentDirectional(0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                            builder: (dialogContext) {
+                                              return Material(
+                                                color: Colors.transparent,
+                                                child: GestureDetector(
+                                                  onTap: () => FocusScope.of(
+                                                          dialogContext)
+                                                      .unfocus(),
+                                                  child: const LikeIkonWidget(),
                                                 ),
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        0.0, 1.0),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          16.0, 0.0, 0.0, 16.0),
-                                                  child: smooth_page_indicator
-                                                      .SmoothPageIndicator(
-                                                    controller: _model
-                                                            .pageViewController ??=
-                                                        PageController(
-                                                            initialPage: 0),
-                                                    count: 5,
-                                                    axisDirection:
-                                                        Axis.horizontal,
-                                                    onDotClicked: (i) async {
-                                                      await _model
-                                                          .pageViewController!
-                                                          .animateToPage(
-                                                        i,
-                                                        duration:
-                                                            const Duration(
-                                                                milliseconds:
-                                                                    500),
-                                                        curve: Curves.ease,
-                                                      );
-                                                      safeSetState(() {});
-                                                    },
-                                                    effect: smooth_page_indicator
-                                                        .ExpandingDotsEffect(
-                                                      expansionFactor: 3.0,
-                                                      spacing: 8.0,
-                                                      radius: 16.0,
-                                                      dotWidth: 10.0,
-                                                      dotHeight: 8.0,
-                                                      dotColor: const Color(
-                                                          0xCC616161),
-                                                      activeDotColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      paintStyle:
-                                                          PaintingStyle.fill,
+                                              );
+                                            },
+                                          );
+                                        }
+                                      },
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        height: 380.0,
+                                        child: Stack(
+                                          children: [
+                                            SizedBox(
+                                              width: double.infinity,
+                                              height: 380.0,
+                                              child: Stack(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(10.0, 0.0,
+                                                                10.0, 40.0),
+                                                    child: PageView(
+                                                      controller: _model
+                                                              .pageViewController ??=
+                                                          PageController(
+                                                              initialPage: 0),
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      children: [
+                                                        SizedBox(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 380.0,
+                                                          child: Stack(
+                                                            children: [
+                                                              ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                                child: Image
+                                                                    .network(
+                                                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: 380.0,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  alignment:
+                                                                      const Alignment(
+                                                                          0.0,
+                                                                          0.0),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 380.0,
+                                                          child: Stack(
+                                                            children: [
+                                                              ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                                child: Image
+                                                                    .network(
+                                                                  '',
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: 380.0,
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  alignment:
+                                                                      const Alignment(
+                                                                          0.0,
+                                                                          0.0),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 380.0,
+                                                          child: Stack(
+                                                            children: [
+                                                              ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                                child: Image
+                                                                    .network(
+                                                                  '',
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: 380.0,
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  alignment:
+                                                                      const Alignment(
+                                                                          0.0,
+                                                                          0.0),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 380.0,
+                                                          child: Stack(
+                                                            children: [
+                                                              ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                                child: Image
+                                                                    .network(
+                                                                  '',
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: 380.0,
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  alignment:
+                                                                      const Alignment(
+                                                                          0.0,
+                                                                          0.0),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 380.0,
+                                                          child: Stack(
+                                                            children: [
+                                                              ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                                child: Image
+                                                                    .network(
+                                                                  '',
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: 380.0,
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  alignment:
+                                                                      const Alignment(
+                                                                          0.0,
+                                                                          0.0),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
-                                                ),
+                                                  Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            0.0, 1.0),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  16.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  16.0),
+                                                      child: smooth_page_indicator
+                                                          .SmoothPageIndicator(
+                                                        controller: _model
+                                                                .pageViewController ??=
+                                                            PageController(
+                                                                initialPage: 0),
+                                                        count: 5,
+                                                        axisDirection:
+                                                            Axis.horizontal,
+                                                        onDotClicked:
+                                                            (i) async {
+                                                          await _model
+                                                              .pageViewController!
+                                                              .animateToPage(
+                                                            i,
+                                                            duration: const Duration(
+                                                                milliseconds:
+                                                                    500),
+                                                            curve: Curves.ease,
+                                                          );
+                                                          safeSetState(() {});
+                                                        },
+                                                        effect: smooth_page_indicator
+                                                            .ExpandingDotsEffect(
+                                                          expansionFactor: 3.0,
+                                                          spacing: 8.0,
+                                                          radius: 16.0,
+                                                          dotWidth: 10.0,
+                                                          dotHeight: 8.0,
+                                                          dotColor:
+                                                              const Color(0xCC616161),
+                                                          activeDotColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .alternate,
+                                                          paintStyle:
+                                                              PaintingStyle
+                                                                  .fill,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -396,10 +456,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                         if (FFAppState().bonde == false)
                                           ToggleIcon(
                                             onPressed: () async {
-                                              safeSetState(() => FFAppState()
-                                                  .likt = !FFAppState().likt);
+                                              safeSetState(() => _model.liker =
+                                                  !_model.liker!);
                                             },
-                                            value: FFAppState().likt,
+                                            value: _model.liker!,
                                             onIcon: FaIcon(
                                               FontAwesomeIcons.solidHeart,
                                               color:
@@ -416,8 +476,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             ),
                                           ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 0.0, 0.0, 0.0),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -483,20 +544,17 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         .alternate
                                                   ],
                                                   stops: const [0.0, 1.0],
-                                                  begin:
-                                                      const AlignmentDirectional(
-                                                          0.64, -1.0),
-                                                  end:
-                                                      const AlignmentDirectional(
-                                                          -0.64, 1.0),
+                                                  begin: const AlignmentDirectional(
+                                                      0.64, -1.0),
+                                                  end: const AlignmentDirectional(
+                                                      -0.64, 1.0),
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
                                               ),
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
                                                         10.0, 0.0, 10.0, 0.0),
                                                 child: Row(
                                                   mainAxisSize:
@@ -545,9 +603,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 8.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 8.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -576,8 +633,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             ],
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 0.0, 5.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 5.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -604,9 +662,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                       ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Text(
                                                     '/kg',
@@ -628,9 +685,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Text(
                                                     '/stk',
@@ -658,9 +714,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 15.0, 0.0, 0.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 15.0, 0.0, 0.0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -677,9 +732,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 10.0, 0.0, 5.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 10.0, 0.0, 5.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -691,7 +745,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Text(
-                                                'Andeby 15',
+                                                '1782',
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -705,38 +759,39 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               FontWeight.w600,
                                                         ),
                                               ),
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        5.0, 0.0, 0.0, 0.0),
+                                                child: Text(
+                                                  'Halden',
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleMedium
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                              ),
                                             ],
+                                          ),
+                                          SizedBox(
+                                            height: 14.0,
+                                            child: VerticalDivider(
+                                              thickness: 1.0,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                            ),
                                           ),
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              const Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        10.0, 0.0, 0.0, 0.0),
-                                              ),
-                                              Text(
-                                                '(',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                              // Icon(
-                                              //   Icons.place,
-                                              //   color:
-                                              //       FlutterFlowTheme.of(context)
-                                              //           .alternate,
-                                              //   size: 19.0,
-                                              // ),
                                               Text(
                                                 '3',
                                                 textAlign: TextAlign.start,
@@ -752,28 +807,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               FontWeight.w600,
                                                         ),
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        4.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'Km',
-                                                  textAlign: TextAlign.start,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily: 'Open Sans',
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
                                               Text(
-                                                ')',
+                                                'Km',
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -787,15 +822,21 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               FontWeight.w600,
                                                         ),
                                               ),
+                                              Icon(
+                                                Icons.place,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                size: 19.0,
+                                              ),
                                             ],
                                           ),
                                         ],
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 15.0, 0.0, 0.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 15.0, 0.0, 0.0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -812,9 +853,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 10.0, 0.0, 5.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 10.0, 0.0, 5.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -916,8 +956,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 15.0, 0.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 15.0, 0.0, 0.0),
                                             child: Text(
                                               'Beskrivelse',
                                               style: FlutterFlowTheme.of(
@@ -935,8 +976,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 10.0, 0.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 10.0, 0.0, 0.0),
                                             child: Text(
                                               'En lang fin beskrivelse av varen',
                                               textAlign: TextAlign.start,

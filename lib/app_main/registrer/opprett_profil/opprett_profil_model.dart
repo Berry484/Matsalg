@@ -10,25 +10,49 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
-  // State field(s) for Bio widget.
-  FocusNode? bioFocusNode;
-  TextEditingController? bioTextController;
-  String? Function(BuildContext, String?)? bioTextControllerValidator;
-  String? _bioTextControllerValidator(BuildContext context, String? val) {
+  // State field(s) for Fornavn widget.
+  FocusNode? fornavnFocusNode;
+  TextEditingController? fornavnTextController;
+  String? Function(BuildContext, String?)? fornavnTextControllerValidator;
+  String? _fornavnTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
+      return 'Felt må fylles ut...';
     }
 
     return null;
   }
 
+  // State field(s) for Etternavn widget.
+  FocusNode? etternavnFocusNode;
+  TextEditingController? etternavnTextController;
+  String? Function(BuildContext, String?)? etternavnTextControllerValidator;
+  String? _etternavnTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Felt må fylles ut...';
+    }
+
+    return null;
+  }
+
+  // State field(s) for Bio widget.
+  FocusNode? bioFocusNode;
+  TextEditingController? bioTextController;
+  String? Function(BuildContext, String?)? bioTextControllerValidator;
+
   @override
   void initState(BuildContext context) {
-    bioTextControllerValidator = _bioTextControllerValidator;
+    fornavnTextControllerValidator = _fornavnTextControllerValidator;
+    etternavnTextControllerValidator = _etternavnTextControllerValidator;
   }
 
   @override
   void dispose() {
+    fornavnFocusNode?.dispose();
+    fornavnTextController?.dispose();
+
+    etternavnFocusNode?.dispose();
+    etternavnTextController?.dispose();
+
     bioFocusNode?.dispose();
     bioTextController?.dispose();
   }

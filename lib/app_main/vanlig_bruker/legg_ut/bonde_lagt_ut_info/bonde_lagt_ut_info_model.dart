@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'godkjent_lagt_ut_widget.dart' show GodkjentLagtUtWidget;
+import 'bonde_lagt_ut_info_widget.dart' show BondeLagtUtInfoWidget;
 import 'package:flutter/material.dart';
 
-class GodkjentLagtUtModel extends FlutterFlowModel<GodkjentLagtUtWidget> {
+class BondeLagtUtInfoModel extends FlutterFlowModel<BondeLagtUtInfoWidget> {
   @override
   void initState(BuildContext context) {}
 

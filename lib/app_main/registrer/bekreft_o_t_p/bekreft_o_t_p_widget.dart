@@ -11,13 +11,11 @@ class BekreftOTPWidget extends StatefulWidget {
     super.key,
     this.bonde,
     required this.email,
-    required this.username,
     required this.password,
   });
 
   final bool? bonde;
   final String? email;
-  final String? username;
   final String? password;
 
   @override
@@ -199,10 +197,6 @@ class _BekreftOTPWidgetState extends State<BekreftOTPWidget> {
                                         widget.email,
                                         ParamType.String,
                                       ),
-                                      'fullname': serializeParam(
-                                        widget.username,
-                                        ParamType.String,
-                                      ),
                                       'password': serializeParam(
                                         widget.password,
                                         ParamType.String,
@@ -223,10 +217,6 @@ class _BekreftOTPWidgetState extends State<BekreftOTPWidget> {
                                       ),
                                       'email': serializeParam(
                                         widget.email,
-                                        ParamType.String,
-                                      ),
-                                      'fullname': serializeParam(
-                                        widget.username,
                                         ParamType.String,
                                       ),
                                       'password': serializeParam(

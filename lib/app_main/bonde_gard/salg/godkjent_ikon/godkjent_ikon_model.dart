@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'ingen_bestillinger_widget.dart' show IngenBestillingerWidget;
+import 'godkjent_ikon_widget.dart' show GodkjentIkonWidget;
 import 'package:flutter/material.dart';
 
-class IngenBestillingerModel extends FlutterFlowModel<IngenBestillingerWidget> {
+class GodkjentIkonModel extends FlutterFlowModel<GodkjentIkonWidget> {
   @override
   void initState(BuildContext context) {}
 

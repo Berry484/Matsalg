@@ -1,4 +1,5 @@
 import '/app_main/bonde_gard/custom_navbar/se_custom_nav_bar/se_custom_nav_bar_widget.dart';
+import '/app_main/vanlig_bruker/hjem/filtrer_sok/filtrer_sok_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -377,30 +378,61 @@ class _SeWidgetState extends State<SeWidget> {
                                                     alignment:
                                                         const AlignmentDirectional(
                                                             -1.0, 0.0),
-                                                    child:
-                                                        FlutterFlowIconButton(
-                                                      borderColor:
-                                                          const Color(0x6357636C),
-                                                      borderRadius: 8.0,
-                                                      borderWidth: 1.0,
-                                                      buttonSize: 35.0,
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      icon: FaIcon(
-                                                        FontAwesomeIcons
-                                                            .slidersH,
-                                                        color:
+                                                    child: Builder(
+                                                      builder: (context) =>
+                                                          FlutterFlowIconButton(
+                                                        borderColor:
+                                                            const Color(0x6357636C),
+                                                        borderRadius: 8.0,
+                                                        borderWidth: 1.0,
+                                                        buttonSize: 35.0,
+                                                        fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
-                                                        size: 20.0,
+                                                                .primary,
+                                                        icon: FaIcon(
+                                                          FontAwesomeIcons
+                                                              .slidersH,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          size: 20.0,
+                                                        ),
+                                                        onPressed: () async {
+                                                          await showDialog(
+                                                            barrierColor: const Color(
+                                                                0x1A000000),
+                                                            context: context,
+                                                            builder:
+                                                                (dialogContext) {
+                                                              return Dialog(
+                                                                elevation: 0,
+                                                                insetPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                alignment: const AlignmentDirectional(
+                                                                        1.0,
+                                                                        -0.8)
+                                                                    .resolve(
+                                                                        Directionality.of(
+                                                                            context)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () =>
+                                                                      FocusScope.of(
+                                                                              dialogContext)
+                                                                          .unfocus(),
+                                                                  child:
+                                                                      const FiltrerSokWidget(),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
                                                       ),
-                                                      onPressed: () {
-                                                        print(
-                                                            'IconButton pressed ...');
-                                                      },
                                                     ),
                                                   ),
                                                 ],

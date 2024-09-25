@@ -3,11 +3,11 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'ingen_bestillinger_model.dart';
-export 'ingen_bestillinger_model.dart';
+import 'ingen_kjop_matvarer_model.dart';
+export 'ingen_kjop_matvarer_model.dart';
 
-class IngenBestillingerWidget extends StatefulWidget {
-  const IngenBestillingerWidget({
+class IngenKjopMatvarerWidget extends StatefulWidget {
+  const IngenKjopMatvarerWidget({
     super.key,
     this.icon,
     String? title,
@@ -20,13 +20,13 @@ class IngenBestillingerWidget extends StatefulWidget {
   final String body;
 
   @override
-  State<IngenBestillingerWidget> createState() =>
-      _IngenBestillingerWidgetState();
+  State<IngenKjopMatvarerWidget> createState() =>
+      _IngenKjopMatvarerWidgetState();
 }
 
-class _IngenBestillingerWidgetState extends State<IngenBestillingerWidget>
+class _IngenKjopMatvarerWidgetState extends State<IngenKjopMatvarerWidget>
     with TickerProviderStateMixin {
-  late IngenBestillingerModel _model;
+  late IngenKjopMatvarerModel _model;
 
   final animationsMap = <String, AnimationInfo>{};
 
@@ -39,7 +39,7 @@ class _IngenBestillingerWidgetState extends State<IngenBestillingerWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => IngenBestillingerModel());
+    _model = createModel(context, () => IngenKjopMatvarerModel());
 
     animationsMap.addAll({
       'columnOnPageLoadAnimation': AnimationInfo(
@@ -93,7 +93,7 @@ class _IngenBestillingerWidgetState extends State<IngenBestillingerWidget>
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: Text(
-                'Når du kjøper en matpose ser du den her',
+                'Her kan du se matvarer du har fått kjøpsforespørsler på',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
                       fontFamily: 'Open Sans',

@@ -41,12 +41,6 @@ class FFAppState extends ChangeNotifier {
     _brukersted = value;
   }
 
-  bool _likt = false;
-  bool get likt => _likt;
-  set likt(bool value) {
-    _likt = value;
-  }
-
   bool _bonde = false;
   bool get bonde => _bonde;
   set bonde(bool value) {
@@ -66,12 +60,6 @@ class FFAppState extends ChangeNotifier {
   set chatAlert(bool value) {
     _chatAlert = value;
     prefs.setBool('ff_chatAlert', value);
-  }
-
-  bool _rebuild = false;
-  bool get rebuild => _rebuild;
-  set rebuild(bool value) {
-    _rebuild = value;
   }
 }
 

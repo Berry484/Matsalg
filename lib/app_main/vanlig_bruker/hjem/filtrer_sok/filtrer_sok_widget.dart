@@ -40,7 +40,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
       padding: const EdgeInsets.all(16.0),
       child: Container(
         width: 260.0,
-        height: 330.0,
+        height: 305.0,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: const [
@@ -62,8 +62,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
             Align(
               alignment: const AlignmentDirectional(-1.0, -1.0),
               child: Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(15.0, 12.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 0.0, 0.0),
                 child: Text(
                   'Filtrer',
                   textAlign: TextAlign.start,
@@ -78,8 +77,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
               child: Theme(
                 data: ThemeData(
                   checkboxTheme: const CheckboxThemeData(
@@ -98,7 +96,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                     'Kjøtt',
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Open Sans',
-                          fontSize: 16.0,
+                          fontSize: 18.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -108,8 +106,8 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                   checkColor: FlutterFlowTheme.of(context).alternate,
                   dense: false,
                   controlAffinity: ListTileControlAffinity.trailing,
-                  contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                      12.0, 0.0, 12.0, 0.0),
+                  contentPadding:
+                      const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -117,8 +115,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
               child: Theme(
                 data: ThemeData(
                   checkboxTheme: const CheckboxThemeData(
@@ -137,7 +134,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                     'Grønnt',
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Open Sans',
-                          fontSize: 16.0,
+                          fontSize: 18.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -147,8 +144,8 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                   checkColor: FlutterFlowTheme.of(context).alternate,
                   dense: false,
                   controlAffinity: ListTileControlAffinity.trailing,
-                  contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                      12.0, 0.0, 12.0, 0.0),
+                  contentPadding:
+                      const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -156,8 +153,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
               child: Theme(
                 data: ThemeData(
                   checkboxTheme: const CheckboxThemeData(
@@ -176,7 +172,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                     'Meieri',
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Open Sans',
-                          fontSize: 16.0,
+                          fontSize: 18.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -186,8 +182,8 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                   checkColor: FlutterFlowTheme.of(context).alternate,
                   dense: false,
                   controlAffinity: ListTileControlAffinity.trailing,
-                  contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                      12.0, 0.0, 12.0, 0.0),
+                  contentPadding:
+                      const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -195,8 +191,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
               child: Theme(
                 data: ThemeData(
                   checkboxTheme: const CheckboxThemeData(
@@ -215,7 +210,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                     'Bakverk',
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Open Sans',
-                          fontSize: 16.0,
+                          fontSize: 18.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -225,8 +220,8 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                   checkColor: FlutterFlowTheme.of(context).alternate,
                   dense: false,
                   controlAffinity: ListTileControlAffinity.trailing,
-                  contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                      12.0, 0.0, 12.0, 0.0),
+                  contentPadding:
+                      const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -234,8 +229,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
                   Navigator.pop(context);
@@ -244,8 +238,7 @@ class _FiltrerSokWidgetState extends State<FiltrerSokWidget> {
                 options: FFButtonOptions(
                   width: 170.0,
                   height: 32.0,
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).alternate,

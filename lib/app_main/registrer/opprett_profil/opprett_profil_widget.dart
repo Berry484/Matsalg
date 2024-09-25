@@ -11,13 +11,11 @@ class OpprettProfilWidget extends StatefulWidget {
     super.key,
     bool? bonde,
     required this.email,
-    required this.fullname,
     required this.password,
   }) : bonde = bonde ?? false;
 
   final bool bonde;
   final String? email;
-  final String? fullname;
   final String? password;
 
   @override
@@ -33,6 +31,12 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => OpprettProfilModel());
+
+    _model.fornavnTextController ??= TextEditingController();
+    _model.fornavnFocusNode ??= FocusNode();
+
+    _model.etternavnTextController ??= TextEditingController();
+    _model.etternavnFocusNode ??= FocusNode();
 
     _model.bioTextController ??= TextEditingController();
     _model.bioFocusNode ??= FocusNode();
@@ -196,6 +200,173 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                         ],
                       ),
                       Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    20.0, 20.0, 10.0, 0.0),
+                                child: TextFormField(
+                                  controller: _model.fornavnTextController,
+                                  focusNode: _model.fornavnFocusNode,
+                                  textInputAction: TextInputAction.done,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Fornavn',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .bodySmall
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 14.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintText: 'Fornavn',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodySmall
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 14.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x4257636C),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).primary,
+                                    contentPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            20.0, 24.0, 20.0, 24.0),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 15.0,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  maxLines: null,
+                                  validator: _model
+                                      .fornavnTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10.0, 20.0, 20.0, 0.0),
+                                child: TextFormField(
+                                  controller: _model.etternavnTextController,
+                                  focusNode: _model.etternavnFocusNode,
+                                  textInputAction: TextInputAction.done,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Etternavn',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .bodySmall
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 14.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintText: 'Etternavn',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodySmall
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 14.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x4257636C),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).primary,
+                                    contentPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            20.0, 24.0, 20.0, 24.0),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 15.0,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  maxLines: null,
+                                  validator: _model
+                                      .etternavnTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             20.0, 30.0, 20.0, 12.0),
                         child: TextFormField(
@@ -225,29 +396,29 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                 ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                color: Color(0xFFE0E3E7),
-                                width: 2.0,
+                                color: Color(0x4257636C),
+                                width: 1.5,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
+                                width: 1.5,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Color(0xFFFF5963),
-                                width: 2.0,
+                                width: 1.5,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Color(0xFFFF5963),
-                                width: 2.0,
+                                width: 1.5,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
@@ -281,6 +452,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                         const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        if (_model.formKey.currentState == null ||
+                            !_model.formKey.currentState!.validate()) {
+                          return;
+                        }
                         if (widget.bonde == true) {
                           context.goNamed('BondeOnboarding');
                         } else {

@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 
 class KjopDetaljVentendeModel
     extends FlutterFlowModel<KjopDetaljVentendeWidget> {
+  ///  Local state fields for this page.
+
+  bool? liker = false;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for PageView widget.

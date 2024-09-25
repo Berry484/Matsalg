@@ -15,8 +15,8 @@ export '/app_main/vanlig_bruker/legg_ut/legg_ut_matvare/legg_ut_matvare_widget.d
     show LeggUtMatvareWidget;
 export '/app_main/vanlig_bruker/kjop/kjop_detalj_godkjent/kjop_detalj_godkjent_widget.dart'
     show KjopDetaljGodkjentWidget;
-export '/app_main/vanlig_bruker/legg_ut/godkjent_lagt_ut/godkjent_lagt_ut_widget.dart'
-    show GodkjentLagtUtWidget;
+export '/app_main/vanlig_bruker/legg_ut/bruker_lagt_ut_info/bruker_lagt_ut_info_widget.dart'
+    show BrukerLagtUtInfoWidget;
 export '/app_main/chat/chat_main/chat_main_widget.dart' show ChatMainWidget;
 export '/app_main/vanlig_bruker/hjem/hjem/hjem_widget.dart' show HjemWidget;
 export '/app_main/vanlig_bruker/profil/min_matvare_detalj/min_matvare_detalj_widget.dart'
@@ -70,3 +70,11 @@ export '/app_main/vanlig_bruker/hjem/betaling/betaling_widget.dart'
     show BetalingWidget;
 export '/app_main/vanlig_bruker/profil/innstillinger/innstillinger_widget.dart'
     show InnstillingerWidget;
+export '/app_main/vanlig_bruker/profil/utbetalingsinfo1/utbetalingsinfo1_widget.dart'
+    show Utbetalingsinfo1Widget;
+export '/app_main/vanlig_bruker/legg_ut/mat_post_info/mat_post_info_widget.dart'
+    show MatPostInfoWidget;
+export '/app_main/bonde_gard/salg/godkjentbud_info/godkjentbud_info_widget.dart'
+    show GodkjentbudInfoWidget;
+export '/app_main/vanlig_bruker/legg_ut/bonde_lagt_ut_info/bonde_lagt_ut_info_widget.dart'
+    show BondeLagtUtInfoWidget;

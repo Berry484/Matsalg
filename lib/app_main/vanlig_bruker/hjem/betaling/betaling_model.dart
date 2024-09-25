@@ -18,13 +18,31 @@ class BetalingModel extends FlutterFlowModel<BetalingWidget> {
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController3;
   String? Function(BuildContext, String?)? textController3Validator;
+  String? _textController3Validator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Felt må fylles ut...';
+    }
+
+    return null;
+  }
+
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode3;
   TextEditingController? textController4;
   String? Function(BuildContext, String?)? textController4Validator;
+  String? _textController4Validator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Felt må fylles ut...';
+    }
+
+    return null;
+  }
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    textController3Validator = _textController3Validator;
+    textController4Validator = _textController4Validator;
+  }
 
   @override
   void dispose() {

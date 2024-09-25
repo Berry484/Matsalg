@@ -1,8 +1,10 @@
+import '/app_main/bonde_gard/salg/godkjent_ikon/godkjent_ikon_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'salg_bruker_info_model.dart';
 export 'salg_bruker_info_model.dart';
@@ -469,8 +471,47 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                 ],
               ),
             ),
+            Align(
+              alignment: const AlignmentDirectional(0.0, 0.0),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 5.0, 0.0),
+                child: FFButtonWidget(
+                  onPressed: () {
+                    print('Button pressed ...');
+                  },
+                  text: 'Send melding',
+                  icon: Icon(
+                    Icons.chat,
+                    color: FlutterFlowTheme.of(context).alternate,
+                    size: 27.0,
+                  ),
+                  options: FFButtonOptions(
+                    width: 250.0,
+                    height: 40.0,
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(11.0, 0.0, 0.0, 0.0),
+                    iconPadding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: FlutterFlowTheme.of(context).primary,
+                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          fontFamily: 'Open Sans',
+                          color: FlutterFlowTheme.of(context).alternate,
+                          fontSize: 18.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                    elevation: 3.0,
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(24.0),
+                  ),
+                ),
+              ),
+            ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -511,83 +552,62 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        Navigator.pop(context);
-                      },
-                      text: 'Godkjenn',
-                      icon: FaIcon(
-                        FontAwesomeIcons.check,
-                        color: FlutterFlowTheme.of(context).primary,
-                        size: 24.0,
-                      ),
-                      options: FFButtonOptions(
-                        width: 180.0,
-                        height: 40.0,
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(11.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).alternate,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  fontSize: 16.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                        elevation: 3.0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
+                  Builder(
+                    builder: (context) => Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          HapticFeedback.mediumImpact();
+                          await showDialog(
+                            barrierColor: Colors.transparent,
+                            context: context,
+                            builder: (dialogContext) {
+                              return Dialog(
+                                elevation: 0,
+                                insetPadding: EdgeInsets.zero,
+                                backgroundColor: Colors.transparent,
+                                alignment: const AlignmentDirectional(0.0, 0.0)
+                                    .resolve(Directionality.of(context)),
+                                child: const GodkjentIkonWidget(),
+                              );
+                            },
+                          );
+                        },
+                        text: 'Godkjenn',
+                        icon: FaIcon(
+                          FontAwesomeIcons.check,
+                          color: FlutterFlowTheme.of(context).primary,
+                          size: 24.0,
                         ),
-                        borderRadius: BorderRadius.circular(24.0),
+                        options: FFButtonOptions(
+                          width: 180.0,
+                          height: 40.0,
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              11.0, 0.0, 0.0, 0.0),
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).alternate,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(24.0),
+                        ),
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            Align(
-              alignment: const AlignmentDirectional(0.0, 0.0),
-              child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 5.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
-                  },
-                  text: 'Send melding',
-                  icon: Icon(
-                    Icons.chat,
-                    color: FlutterFlowTheme.of(context).alternate,
-                    size: 27.0,
-                  ),
-                  options: FFButtonOptions(
-                    width: 250.0,
-                    height: 40.0,
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(11.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Open Sans',
-                          color: FlutterFlowTheme.of(context).alternate,
-                          fontSize: 18.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                    elevation: 3.0,
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(24.0),
-                  ),
-                ),
               ),
             ),
           ],

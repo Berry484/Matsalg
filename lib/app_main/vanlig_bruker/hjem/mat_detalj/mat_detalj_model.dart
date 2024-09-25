@@ -3,6 +3,10 @@ import 'mat_detalj_widget.dart' show MatDetaljWidget;
 import 'package:flutter/material.dart';
 
 class MatDetaljModel extends FlutterFlowModel<MatDetaljWidget> {
+  ///  Local state fields for this page.
+
+  bool? liker = false;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for PageView widget.
