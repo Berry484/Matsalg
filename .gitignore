@@ -1,0 +1,151 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.ipr
+*.iws
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# IOS related
+
+# Xcode
+*.mode1v3
+*.mode2v3
+*.pbxuser
+*.xcworkspace/
+xcuserdata/
+*.xccheckout
+
+# Build artifacts
+build/
+DerivedData/
+
+# Flutter-related files
+*.lock
+!pubspec.lock
+.flutter-plugins
+.flutter-plugins-dependencies
+.dart_tool/
+.flutter-plugins
+
+# Dart
+.pub/
+build/
+.packages
+.dart_tool/
+
+# iOS
+Pods/
+Podfile.lock
+Pods.xcodeproj/
+*.xcuserdatad/
+*.xcworkspace/
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+ios/Flutter/App.framework/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/Flutter-Structs.h
+ios/Flutter/flutter_export_environment.sh
+
+# IDE files
+.idea/
+.vscode/
+
+# Other
+*.iml
+*.log
+
+# General
+.DS_Store
+*.sw?
+*.out
+*.bak
+*.swp
+*~
+.project
+.classpath
+.c9/
+*.backup*
+*+~
+.RELEASE_NOTES.md
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/key.properties
+
+# iOS/Xcode related
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.pbxuser
+**/ios/*.perspectivev3
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Pods/
+
+# Web related
+**/web/**/.last_build_id
+
+# Exceptions to above rules.
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages 
+
+# Miscellaneous
+.flutter-plugins-dependencies
+
+# jks files
+*.jks
