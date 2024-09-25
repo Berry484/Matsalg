@@ -241,7 +241,8 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                   onTap: () async {
                                     currentUserLocationValue =
                                         await getCurrentUserLocation(
-                                            defaultLocation: const LatLng(0.0, 0.0));
+                                            defaultLocation:
+                                                const LatLng(0.0, 0.0));
                                     FFAppState().brukersted =
                                         currentUserLocationValue;
                                     safeSetState(() {});
@@ -252,8 +253,8 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 10.0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0.0, 0.0, 0.0, 10.0),
                                         child: Icon(
                                           Icons.location_on,
                                           color: FlutterFlowTheme.of(context)
@@ -262,8 +263,8 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 10.0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0.0, 0.0, 0.0, 10.0),
                                         child: Text(
                                           'Bruk min nåværende posisjon',
                                           style: FlutterFlowTheme.of(context)
@@ -314,10 +315,12 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                   options: FFButtonOptions(
                                     width: 290.0,
                                     height: 50.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                    iconPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
                                     color:
                                         FlutterFlowTheme.of(context).alternate,
                                     textStyle: FlutterFlowTheme.of(context)

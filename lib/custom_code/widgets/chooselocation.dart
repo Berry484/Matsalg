@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom widgets
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -54,9 +55,9 @@ class _ChooselocationState extends State<Chooselocation> {
             height: 100.0,
             point: ChooselocationLatLng.LatLng(
                 widget.matsted.latitude, widget.matsted.longitude),
-            builder: (ctx) => const Icon(
+            builder: (ctx) => Icon(
               Icons.location_pin,
-              color: Colors.redAccent, // Set the icon color to redAccent
+              color: FlutterFlowTheme.of(context).alternate,
               size: 34,
             ),
           )

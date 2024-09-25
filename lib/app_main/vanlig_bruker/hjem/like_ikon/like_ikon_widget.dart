@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -34,6 +36,7 @@ class _LikeIkonWidgetState extends State<LikeIkonWidget>
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      HapticFeedback.heavyImpact();
       await Future.delayed(const Duration(milliseconds: 700));
       Navigator.pop(context);
     });

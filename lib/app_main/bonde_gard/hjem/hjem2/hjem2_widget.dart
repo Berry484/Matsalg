@@ -72,8 +72,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                 children: [
                   Flexible(
                     child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 30.0, 0.0, 0.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +95,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                       shape: BoxShape.circle,
                                     ),
                                     child: CachedNetworkImage(
-                                      fadeInDuration: const Duration(milliseconds: 0),
+                                      fadeInDuration:
+                                          const Duration(milliseconds: 0),
                                       fadeOutDuration:
                                           const Duration(milliseconds: 0),
                                       imageUrl:
@@ -110,17 +111,17 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        7.0, 0.0, 0.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            7.0, 0.0, 0.0, 0.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 0.0, 0.0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10.0, 0.0, 0.0, 0.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
@@ -130,8 +131,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(5.0, 0.0,
-                                                                0.0, 0.0),
+                                                            .fromSTEB(
+                                                            5.0, 0.0, 0.0, 0.0),
                                                     child: Container(
                                                       width: 70.0,
                                                       height: 50.0,
@@ -196,8 +197,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(5.0, 0.0,
-                                                                0.0, 0.0),
+                                                            .fromSTEB(
+                                                            5.0, 0.0, 0.0, 0.0),
                                                     child: Container(
                                                       width: 70.0,
                                                       height: 50.0,
@@ -287,8 +288,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(5.0, 0.0,
-                                                                0.0, 0.0),
+                                                            .fromSTEB(
+                                                            5.0, 0.0, 0.0, 0.0),
                                                     child: Container(
                                                       width: 70.0,
                                                       height: 50.0,
@@ -384,8 +385,10 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(5.0, 7.0, 0.0, 0.0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      5.0, 7.0, 0.0, 0.0),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
                                                   context.pushNamed(
@@ -402,13 +405,14 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                 options: FFButtonOptions(
                                                   width: 225.0,
                                                   height: 30.0,
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           16.0, 0.0, 16.0, 0.0),
                                                   iconPadding:
                                                       const EdgeInsetsDirectional
-                                                          .fromSTEB(0.0, 0.0,
-                                                              0.0, 0.0),
+                                                          .fromSTEB(
+                                                          0.0, 0.0, 0.0, 0.0),
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primary,
@@ -511,8 +515,9 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                     ),
                                     options: FFButtonOptions(
                                       height: 40.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 16.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              16.0, 0.0, 16.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
@@ -589,9 +594,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                             const NeverScrollableScrollPhysics(),
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 0.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 10.0, 0.0, 0.0),
                                             child: Builder(
                                               builder: (context) {
                                                 final removeme1 = List.generate(
@@ -605,7 +609,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                 }
 
                                                 return ListView.builder(
-                                                  padding: const EdgeInsets.fromLTRB(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
                                                     0,
                                                     0,
                                                     0,
@@ -623,11 +628,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                     return Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  15.0),
+                                                              .fromSTEB(10.0,
+                                                              0.0, 10.0, 15.0),
                                                       child: Stack(
                                                         children: [
                                                           InkWell(
@@ -677,7 +679,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                                   child:
                                                                       Padding(
                                                                     padding:
-                                                                        const EdgeInsets.all(
+                                                                        const EdgeInsets
+                                                                            .all(
                                                                             8.0),
                                                                     child: Row(
                                                                       mainAxisSize:
@@ -864,8 +867,9 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                                         1.0,
                                                                         -1.0),
                                                                 child: Padding(
-                                                                  padding: const EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           0.0,
                                                                           11.0,
                                                                           7.0,
@@ -912,8 +916,9 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                             scrollDirection: Axis.vertical,
                                             children: [
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         5.0, 0.0, 5.0, 0.0),
                                                 child: Builder(
                                                   builder: (context) {
@@ -932,9 +937,10 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                       onRefresh: () async {},
                                                       child: GridView.builder(
                                                         padding:
-                                                            const EdgeInsets.fromLTRB(
+                                                            const EdgeInsets
+                                                                .fromLTRB(
                                                           0,
-                                                          1.0,
+                                                          0.0,
                                                           0,
                                                           63.0,
                                                         ),
@@ -944,7 +950,7 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                           crossAxisSpacing:
                                                               10.0,
                                                           childAspectRatio:
-                                                              0.69,
+                                                              0.75,
                                                         ),
                                                         primary: false,
                                                         shrinkWrap: true,
@@ -1016,7 +1022,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                                             0.0),
                                                                         child:
                                                                             Padding(
-                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               0.0,
                                                                               0.0,
                                                                               0.0,
@@ -1041,7 +1048,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                                         ),
                                                                       ),
                                                                       Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             5.0,
                                                                             0.0,
                                                                             5.0,
@@ -1072,7 +1080,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                                         ),
                                                                       ),
                                                                       Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0.0,
                                                                             0.0,
                                                                             0.0,

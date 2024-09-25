@@ -5,6 +5,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'godkjent_ikon_model.dart';
 export 'godkjent_ikon_model.dart';
+import 'package:flutter/services.dart';
 
 class GodkjentIkonWidget extends StatefulWidget {
   const GodkjentIkonWidget({super.key});
@@ -27,8 +28,9 @@ class _GodkjentIkonWidgetState extends State<GodkjentIkonWidget> {
     super.initState();
     _model = createModel(context, () => GodkjentIkonModel());
 
-    // On component load action.
+    // On component load action.    // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      HapticFeedback.heavyImpact();
       await Future.delayed(const Duration(milliseconds: 1200));
       Navigator.pop(context);
     });
