@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as ChooselocationLatLng;
 import 'package:flutter_map/plugin_api.dart';
+import '/flutter_flow/flutter_flow_widgets.dart'; // Add any missing imports if necessary
 
 class Chooselocation extends StatefulWidget {
   const Chooselocation({
@@ -19,12 +20,14 @@ class Chooselocation extends StatefulWidget {
     this.height,
     required this.center,
     required this.matsted,
+    this.onLocationChanged, // Add this line
   });
 
   final double? width;
   final double? height;
   final LatLng center; // From your FlutterFlow LatLng
   final LatLng matsted; // From your FlutterFlow LatLng
+  final void Function(LatLng)? onLocationChanged; // Add this line
 
   @override
   State<Chooselocation> createState() => _ChooselocationState();
@@ -35,8 +38,6 @@ class _ChooselocationState extends State<Chooselocation> {
 
   // Store the current center of the map
   ChooselocationLatLng.LatLng? currentCenter;
-
-  // Define how much to offset the marker's latitude (in degrees)
 
   @override
   void initState() {
@@ -63,10 +64,20 @@ class _ChooselocationState extends State<Chooselocation> {
               minZoom: 6,
               maxZoom: 18,
               onPositionChanged: (position, hasGesture) {
-                // Update currentCenter on map position change
-                setState(() {
-                  currentCenter = position.center;
-                });
+                if (position.center != null) {
+                  // Update currentCenter on map position change
+                  setState(() {
+                    currentCenter = position.center;
+                  });
+
+                  // Call the callback function to notify the parent widget
+                  if (widget.onLocationChanged != null &&
+                      currentCenter != null) {
+                    widget.onLocationChanged!(
+                      LatLng(currentCenter!.latitude, currentCenter!.longitude),
+                    );
+                  }
+                }
               },
             ),
             children: [
@@ -75,42 +86,25 @@ class _ChooselocationState extends State<Chooselocation> {
                 userAgentPackageName: 'com.example.app',
               ),
               // Marker Layer
-              MarkerLayer(markers: [
-                Marker(
-                  width: 50.0,
-                  height: 50.0,
-                  // Offset the latitude of the marker
-                  point: ChooselocationLatLng.LatLng(
-                    currentCenter!.latitude, // Adjust latitude
-                    currentCenter!.longitude,
-                  ),
-                  builder: (ctx) => GestureDetector(
-                    onTap: () {
-                      // Show a dialog with the current marker's coordinates
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text('Marker Location'),
-                          content: Text(
-                            'Latitude: ${currentCenter!.latitude}\nLongitude: ${currentCenter!.longitude}',
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: Text('Close'),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    child: Icon(
-                      Icons.location_pin,
-                      color: FlutterFlowTheme.of(context).alternate,
-                      size: 56,
+              MarkerLayer(
+                markers: [
+                  Marker(
+                    width: 50.0,
+                    height: 50.0,
+                    point: currentCenter ?? ChooselocationLatLng.LatLng(0, 0),
+                    builder: (ctx) => GestureDetector(
+                      onTap: () {
+                        // Add any action when the marker is tapped
+                      },
+                      child: Icon(
+                        Icons.location_pin,
+                        color: FlutterFlowTheme.of(context).alternate,
+                        size: 56,
+                      ),
                     ),
                   ),
-                ),
-              ]),
+                ],
+              ),
             ],
           ),
         ],

@@ -31,6 +31,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng? currentUserLocationValue;
+  LatLng? selectedLocation; // State variable to store selected location
 
   @override
   void initState() {
@@ -40,6 +41,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
+    selectedLocation = functions.doubletillatlon(59.913868, 10.752245);
   }
 
   @override
@@ -127,6 +129,11 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                     59.913868, 10.752245)!,
                                 matsted: functions.doubletillatlon(
                                     59.913868, 10.752245)!,
+                                onLocationChanged: (newLocation) {
+                                  setState(() {
+                                    selectedLocation = newLocation;
+                                  });
+                                },
                               ),
                             ),
                           ),
@@ -291,6 +298,13 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                     0.0, 0.0, 0.0, 55.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
+                                    // Print the selected location
+                                    if (selectedLocation != null) {
+                                      print(
+                                          'Selected location: ${selectedLocation!.latitude}, ${selectedLocation!.longitude}');
+                                    }
+                                    ;
+
                                     if (widget.endrepos == false) {
                                       context.pushNamed(
                                         'OpprettProfil',
