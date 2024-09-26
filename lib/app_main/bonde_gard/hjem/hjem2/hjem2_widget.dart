@@ -1,11 +1,11 @@
 import '/app_main/bonde_gard/custom_navbar/home_custom_nav_bar/home_custom_nav_bar_widget.dart';
+import '/app_main/tom_place_holders/ingen_favoritt/ingen_favoritt_widget.dart';
 import '/app_main/tom_place_holders/ingen_vare_lagt_ut/ingen_vare_lagt_ut_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'dart:math' as math;
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -72,8 +72,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                 children: [
                   Flexible(
                     child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 30.0, 0.0, 0.0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,8 +95,7 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                       shape: BoxShape.circle,
                                     ),
                                     child: CachedNetworkImage(
-                                      fadeInDuration:
-                                          const Duration(milliseconds: 0),
+                                      fadeInDuration: const Duration(milliseconds: 0),
                                       fadeOutDuration:
                                           const Duration(milliseconds: 0),
                                       imageUrl:
@@ -111,17 +110,17 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            7.0, 0.0, 0.0, 0.0),
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        7.0, 0.0, 0.0, 0.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 0.0, 0.0, 0.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
@@ -131,8 +130,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            5.0, 0.0, 0.0, 0.0),
+                                                            .fromSTEB(5.0, 0.0,
+                                                                0.0, 0.0),
                                                     child: Container(
                                                       width: 70.0,
                                                       height: 50.0,
@@ -197,8 +196,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            5.0, 0.0, 0.0, 0.0),
+                                                            .fromSTEB(5.0, 0.0,
+                                                                0.0, 0.0),
                                                     child: Container(
                                                       width: 70.0,
                                                       height: 50.0,
@@ -288,8 +287,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            5.0, 0.0, 0.0, 0.0),
+                                                            .fromSTEB(5.0, 0.0,
+                                                                0.0, 0.0),
                                                     child: Container(
                                                       width: 70.0,
                                                       height: 50.0,
@@ -385,10 +384,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      5.0, 7.0, 0.0, 0.0),
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(5.0, 7.0, 0.0, 0.0),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
                                                   context.pushNamed(
@@ -405,14 +402,13 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                 options: FFButtonOptions(
                                                   width: 225.0,
                                                   height: 30.0,
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                           16.0, 0.0, 16.0, 0.0),
                                                   iconPadding:
                                                       const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0.0, 0.0, 0.0, 0.0),
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primary,
@@ -515,9 +511,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                     ),
                                     options: FFButtonOptions(
                                       height: 40.0,
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 0.0, 16.0, 0.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
@@ -577,7 +572,7 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                           ),
                                           Tab(
                                             icon: FaIcon(
-                                              FontAwesomeIcons.thLarge,
+                                              FontAwesomeIcons.solidHeart,
                                             ),
                                           ),
                                         ],
@@ -594,8 +589,9 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                             const NeverScrollableScrollPhysics(),
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 10.0, 0.0, 0.0),
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 10.0, 0.0, 0.0),
                                             child: Builder(
                                               builder: (context) {
                                                 final removeme1 = List.generate(
@@ -609,8 +605,7 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                 }
 
                                                 return ListView.builder(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
+                                                  padding: const EdgeInsets.fromLTRB(
                                                     0,
                                                     0,
                                                     0,
@@ -628,8 +623,11 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                     return Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(10.0,
-                                                              0.0, 10.0, 15.0),
+                                                              .fromSTEB(
+                                                                  10.0,
+                                                                  0.0,
+                                                                  10.0,
+                                                                  15.0),
                                                       child: Stack(
                                                         children: [
                                                           InkWell(
@@ -649,7 +647,7 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                             child: Material(
                                                               color: Colors
                                                                   .transparent,
-                                                              elevation: 3.0,
+                                                              elevation: 1.0,
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                 borderRadius:
@@ -679,8 +677,7 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                                   child:
                                                                       Padding(
                                                                     padding:
-                                                                        const EdgeInsets
-                                                                            .all(
+                                                                        const EdgeInsets.all(
                                                                             8.0),
                                                                     child: Row(
                                                                       mainAxisSize:
@@ -867,9 +864,8 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                                                         1.0,
                                                                         -1.0),
                                                                 child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
+                                                                  padding: const EdgeInsetsDirectional
+                                                                      .fromSTEB(
                                                                           0.0,
                                                                           11.0,
                                                                           7.0,
@@ -910,301 +906,260 @@ class _Hjem2WidgetState extends State<Hjem2Widget>
                                               },
                                             ),
                                           ),
-                                          ListView(
-                                            padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        5.0, 0.0, 5.0, 0.0),
-                                                child: Builder(
-                                                  builder: (context) {
-                                                    final removeme2 = List.generate(
-                                                        random_data
-                                                            .randomInteger(
-                                                                5, 5),
-                                                        (index) => random_data
-                                                            .randomInteger(0,
-                                                                10)).toList();
-                                                    if (removeme2.isEmpty) {
-                                                      return const IngenVareLagtUtWidget();
-                                                    }
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    10.0, 0.0, 10.0, 0.0),
+                                            child: Builder(
+                                              builder: (context) {
+                                                final removeme2 = List.generate(
+                                                    random_data.randomInteger(
+                                                        5, 5),
+                                                    (index) => random_data
+                                                        .randomInteger(
+                                                            0, 10)).toList();
+                                                if (removeme2.isEmpty) {
+                                                  return const IngenFavorittWidget();
+                                                }
 
-                                                    return RefreshIndicator(
-                                                      onRefresh: () async {},
-                                                      child: GridView.builder(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                          0,
-                                                          0.0,
-                                                          0,
-                                                          63.0,
+                                                return ListView.separated(
+                                                  padding: const EdgeInsets.fromLTRB(
+                                                    0,
+                                                    10.0,
+                                                    0,
+                                                    100.0,
+                                                  ),
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  itemCount: removeme2.length,
+                                                  separatorBuilder: (_, __) =>
+                                                      const SizedBox(height: 10.0),
+                                                  itemBuilder: (context,
+                                                      removeme2Index) {
+                                                    final removeme2Item =
+                                                        removeme2[
+                                                            removeme2Index];
+                                                    return InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        context.pushNamed(
+                                                            'MatDetalj');
+                                                      },
+                                                      child: Material(
+                                                        color:
+                                                            Colors.transparent,
+                                                        elevation: 1.0,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      24.0),
                                                         ),
-                                                        gridDelegate:
-                                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount: 2,
-                                                          crossAxisSpacing:
-                                                              10.0,
-                                                          childAspectRatio:
-                                                              0.75,
-                                                        ),
-                                                        primary: false,
-                                                        shrinkWrap: true,
-                                                        scrollDirection:
-                                                            Axis.vertical,
-                                                        itemCount:
-                                                            removeme2.length,
-                                                        itemBuilder: (context,
-                                                            removeme2Index) {
-                                                          final removeme2Item =
-                                                              removeme2[
-                                                                  removeme2Index];
-                                                          return Align(
+                                                        child: Container(
+                                                          height: 107.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primary,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        24.0),
+                                                            shape: BoxShape
+                                                                .rectangle,
+                                                          ),
+                                                          child: Align(
                                                             alignment:
                                                                 const AlignmentDirectional(
                                                                     0.0, 0.0),
-                                                            child: InkWell(
-                                                              splashColor: Colors
-                                                                  .transparent,
-                                                              focusColor: Colors
-                                                                  .transparent,
-                                                              hoverColor: Colors
-                                                                  .transparent,
-                                                              highlightColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              onTap: () async {
-                                                                context.pushNamed(
-                                                                    'MinMatDetalj2');
-                                                              },
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .transparent,
-                                                                elevation: 0.69,
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              16.0),
-                                                                ),
-                                                                child:
-                                                                    Container(
-                                                                  width: 225.0,
-                                                                  height: 235.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            16.0),
-                                                                  ),
-                                                                  child: Column(
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
-                                                                            .min,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .start,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
+                                                                            .max,
                                                                     children: [
-                                                                      Align(
-                                                                        alignment: const AlignmentDirectional(
+                                                                      Padding(
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                                                             0.0,
-                                                                            0.0),
+                                                                            1.0,
+                                                                            1.0,
+                                                                            1.0),
                                                                         child:
-                                                                            Padding(
-                                                                          padding: const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              12.0),
+                                                                            ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(13.0),
                                                                           child:
-                                                                              ClipRRect(
-                                                                            borderRadius:
-                                                                                const BorderRadius.only(
-                                                                              bottomLeft: Radius.circular(0.0),
-                                                                              bottomRight: Radius.circular(0.0),
-                                                                              topLeft: Radius.circular(16.0),
-                                                                              topRight: Radius.circular(16.0),
-                                                                            ),
-                                                                            child:
-                                                                                Image.network(
-                                                                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
-                                                                              width: double.infinity,
-                                                                              height: 151.0,
-                                                                              fit: BoxFit.cover,
-                                                                            ),
+                                                                              Image.network(
+                                                                            'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                                                            width:
+                                                                                80.0,
+                                                                            height:
+                                                                                80.0,
+                                                                            fit:
+                                                                                BoxFit.cover,
                                                                           ),
                                                                         ),
                                                                       ),
                                                                       Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                                                             5.0,
                                                                             0.0,
-                                                                            5.0,
+                                                                            0.0,
                                                                             0.0),
                                                                         child:
-                                                                            Column(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          children: [
-                                                                            Align(
-                                                                              alignment: const AlignmentDirectional(-1.0, 0.0),
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsetsDirectional.fromSTEB(7.0, 0.0, 0.0, 0.0),
-                                                                                child: AutoSizeText(
-                                                                                  'Kantareller',
-                                                                                  textAlign: TextAlign.start,
-                                                                                  minFontSize: 11.0,
-                                                                                  style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                            Container(
+                                                                          width:
+                                                                              151.0,
+                                                                          height:
+                                                                              103.0,
+                                                                          decoration:
+                                                                              const BoxDecoration(),
+                                                                          child:
+                                                                              Align(
+                                                                            alignment:
+                                                                                const AlignmentDirectional(-1.0, -1.0),
+                                                                            child:
+                                                                                Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                'Kantareller',
+                                                                                textAlign: TextAlign.start,
+                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontSize: 17.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Stack(
+                                                                    alignment:
+                                                                        const AlignmentDirectional(
+                                                                            1.0,
+                                                                            -1.0),
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            3.0,
+                                                                            3.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .open_in_full,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryText,
+                                                                          size:
+                                                                              24.0,
+                                                                        ),
+                                                                      ),
+                                                                      Align(
+                                                                        alignment: const AlignmentDirectional(
+                                                                            1.0,
+                                                                            1.0),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              10.0),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.end,
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                                                                                child: Text(
+                                                                                  '150 Kr',
+                                                                                  textAlign: TextAlign.end,
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Open Sans',
-                                                                                        fontSize: 16.0,
+                                                                                        color: FlutterFlowTheme.of(context).alternate,
+                                                                                        fontSize: 18.0,
                                                                                         letterSpacing: 0.0,
                                                                                         fontWeight: FontWeight.bold,
                                                                                       ),
                                                                                 ),
                                                                               ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            4.0),
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.min,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.end,
-                                                                          children: [
-                                                                            Flexible(
-                                                                              child: Align(
-                                                                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                                                                child: Padding(
-                                                                                  padding: const EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 0.0),
-                                                                                  child: Row(
-                                                                                    mainAxisSize: MainAxisSize.max,
-                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                                                                    children: [
-                                                                                      Padding(
-                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
-                                                                                        child: Row(
-                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                          children: [
-                                                                                            Padding(
-                                                                                              padding: const EdgeInsetsDirectional.fromSTEB(7.0, 0.0, 0.0, 0.0),
-                                                                                              child: Text(
-                                                                                                '300 Kr',
-                                                                                                textAlign: TextAlign.end,
-                                                                                                style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                      fontFamily: 'Open Sans',
-                                                                                                      color: FlutterFlowTheme.of(context).alternate,
-                                                                                                      fontSize: 16.0,
-                                                                                                      letterSpacing: 0.0,
-                                                                                                      fontWeight: FontWeight.bold,
-                                                                                                    ),
-                                                                                              ),
-                                                                                            ),
-                                                                                            Text(
-                                                                                              '/kg',
-                                                                                              textAlign: TextAlign.end,
-                                                                                              style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                    fontFamily: 'Open Sans',
-                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                    fontSize: 16.0,
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FontWeight.w600,
-                                                                                                  ),
-                                                                                            ),
-                                                                                            Text(
-                                                                                              '/stk',
-                                                                                              textAlign: TextAlign.end,
-                                                                                              style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                    fontFamily: 'Open Sans',
-                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                    fontSize: 16.0,
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FontWeight.w600,
-                                                                                                  ),
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 4.0, 0.0),
+                                                                                child: Text(
+                                                                                  '/kg',
+                                                                                  textAlign: TextAlign.end,
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Open Sans',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        fontSize: 18.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
                                                                                       ),
-                                                                                      Row(
-                                                                                        mainAxisSize: MainAxisSize.max,
-                                                                                        children: [
-                                                                                          Icon(
-                                                                                            Icons.place,
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            size: 17.0,
-                                                                                          ),
-                                                                                          Text(
-                                                                                            '3',
-                                                                                            textAlign: TextAlign.start,
-                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                  fontFamily: 'Open Sans',
-                                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                                  fontSize: 14.0,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
-                                                                                                ),
-                                                                                          ),
-                                                                                          Padding(
-                                                                                            padding: const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 0.0),
-                                                                                            child: Text(
-                                                                                              'Km',
-                                                                                              textAlign: TextAlign.start,
-                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                    fontFamily: 'Open Sans',
-                                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                                    fontSize: 14.0,
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FontWeight.w600,
-                                                                                                  ),
-                                                                                            ),
-                                                                                          ),
-                                                                                        ],
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
                                                                                 ),
                                                                               ),
-                                                                            ),
-                                                                          ],
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 4.0, 0.0),
+                                                                                child: Text(
+                                                                                  '/stk',
+                                                                                  textAlign: TextAlign.end,
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Open Sans',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        fontSize: 18.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                ),
+                                                                ],
                                                               ),
                                                             ),
-                                                          );
-                                                        },
+                                                          ),
+                                                        ),
                                                       ),
                                                     );
                                                   },
-                                                ),
-                                              ),
-                                            ],
+                                                );
+                                              },
+                                            ),
                                           ),
                                         ],
                                       ),

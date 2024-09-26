@@ -9,7 +9,6 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'mat_detalj_model.dart';
 export 'mat_detalj_model.dart';
 
@@ -45,8 +44,6 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
@@ -453,28 +450,25 @@ class _MatDetaljWidgetState extends State<MatDetaljWidget> {
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        if (FFAppState().bonde == false)
-                                          ToggleIcon(
-                                            onPressed: () async {
-                                              safeSetState(() => _model.liker =
-                                                  !_model.liker!);
-                                            },
-                                            value: _model.liker!,
-                                            onIcon: FaIcon(
-                                              FontAwesomeIcons.solidHeart,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              size: 30.0,
-                                            ),
-                                            offIcon: FaIcon(
-                                              FontAwesomeIcons.heart,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              size: 30.0,
-                                            ),
+                                        ToggleIcon(
+                                          onPressed: () async {
+                                            safeSetState(() =>
+                                                _model.liker = !_model.liker!);
+                                          },
+                                          value: _model.liker!,
+                                          onIcon: FaIcon(
+                                            FontAwesomeIcons.solidHeart,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 30.0,
                                           ),
+                                          offIcon: FaIcon(
+                                            FontAwesomeIcons.heart,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 30.0,
+                                          ),
+                                        ),
                                         Padding(
                                           padding:
                                               const EdgeInsetsDirectional.fromSTEB(

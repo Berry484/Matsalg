@@ -10,7 +10,6 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'mat_detalj_bondegard_model.dart';
 export 'mat_detalj_bondegard_model.dart';
 
@@ -47,8 +46,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
@@ -455,28 +452,25 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        if (FFAppState().bonde == false)
-                                          ToggleIcon(
-                                            onPressed: () async {
-                                              safeSetState(() => _model.liker =
-                                                  !_model.liker!);
-                                            },
-                                            value: _model.liker!,
-                                            onIcon: FaIcon(
-                                              FontAwesomeIcons.solidHeart,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              size: 30.0,
-                                            ),
-                                            offIcon: FaIcon(
-                                              FontAwesomeIcons.heart,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              size: 30.0,
-                                            ),
+                                        ToggleIcon(
+                                          onPressed: () async {
+                                            safeSetState(() =>
+                                                _model.liker = !_model.liker!);
+                                          },
+                                          value: _model.liker!,
+                                          onIcon: FaIcon(
+                                            FontAwesomeIcons.solidHeart,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 30.0,
                                           ),
+                                          offIcon: FaIcon(
+                                            FontAwesomeIcons.heart,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 30.0,
+                                          ),
+                                        ),
                                         Padding(
                                           padding:
                                               const EdgeInsetsDirectional.fromSTEB(
@@ -535,109 +529,105 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        if (FFAppState().bonde == false)
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                context: context,
-                                                builder: (context) {
-                                                  return GestureDetector(
-                                                    onTap: () =>
-                                                        FocusScope.of(context)
-                                                            .unfocus(),
-                                                    child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
-                                                      child: const InfoWidget(),
-                                                    ),
-                                                  );
-                                                },
-                                              ).then((value) =>
-                                                  safeSetState(() {}));
-                                            },
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              elevation: 4.0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                              ),
-                                              child: SafeArea(
-                                                child: Container(
-                                                  width: 120.0,
-                                                  height: 40.0,
-                                                  constraints: const BoxConstraints(
-                                                    maxWidth: 174.0,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    gradient: LinearGradient(
-                                                      colors: [
-                                                        const Color(0xFF10835F),
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .alternate
-                                                      ],
-                                                      stops: const [0.0, 1.0],
-                                                      begin:
-                                                          const AlignmentDirectional(
-                                                              0.64, -1.0),
-                                                      end: const AlignmentDirectional(
-                                                          -0.64, 1.0),
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            24.0),
-                                                  ),
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              context: context,
+                                              builder: (context) {
+                                                return GestureDetector(
+                                                  onTap: () =>
+                                                      FocusScope.of(context)
+                                                          .unfocus(),
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(10.0, 0.0,
-                                                                10.0, 0.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Text(
-                                                            'Reserver',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize:
-                                                                      17.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                          ),
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: const InfoWidget(),
+                                                  ),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          },
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            elevation: 4.0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(24.0),
+                                            ),
+                                            child: SafeArea(
+                                              child: Container(
+                                                width: 120.0,
+                                                height: 40.0,
+                                                constraints: const BoxConstraints(
+                                                  maxWidth: 174.0,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      const Color(0xFF10835F),
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate
+                                                    ],
+                                                    stops: const [0.0, 1.0],
+                                                    begin: const AlignmentDirectional(
+                                                        0.64, -1.0),
+                                                    end: const AlignmentDirectional(
+                                                        -0.64, 1.0),
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          24.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          10.0, 0.0, 10.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Reserver',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Open Sans',
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 17.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
                                                         ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
+                                        ),
                                       ],
                                     ),
                                   ],

@@ -247,16 +247,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const SalgWidget(),
         ),
         FFRoute(
-          name: 'SalgDetalj',
-          path: '/salgDetalj',
-          builder: (context, params) => SalgDetaljWidget(
-            matvare: params.getParam(
-              'matvare',
-              ParamType.JSON,
-            ),
-          ),
-        ),
-        FFRoute(
           name: 'Profil2',
           path: '/profil2',
           builder: (context, params) => const Profil2Widget(),

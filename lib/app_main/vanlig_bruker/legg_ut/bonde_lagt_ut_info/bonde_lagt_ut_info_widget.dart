@@ -8,8 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'bonde_lagt_ut_info_model.dart';
 export 'bonde_lagt_ut_info_model.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 
 class BondeLagtUtInfoWidget extends StatefulWidget {
   const BondeLagtUtInfoWidget({super.key});
@@ -30,10 +28,6 @@ class _BondeLagtUtInfoWidgetState extends State<BondeLagtUtInfoWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => BondeLagtUtInfoModel());
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      HapticFeedback.heavyImpact();
-    });
 
     animationsMap.addAll({
       'textOnPageLoadAnimation': AnimationInfo(
@@ -82,8 +76,7 @@ class _BondeLagtUtInfoWidgetState extends State<BondeLagtUtInfoWidget>
           body: SafeArea(
             top: true,
             child: Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 150.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 150.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -125,8 +118,8 @@ class _BondeLagtUtInfoWidgetState extends State<BondeLagtUtInfoWidget>
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 16.0, 0.0, 0.0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         context.goNamed('Profil');
@@ -139,10 +132,10 @@ class _BondeLagtUtInfoWidgetState extends State<BondeLagtUtInfoWidget>
                       options: FFButtonOptions(
                         width: 270.0,
                         height: 50.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
-                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primary,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(

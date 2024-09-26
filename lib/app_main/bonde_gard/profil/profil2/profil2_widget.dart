@@ -64,9 +64,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 40.0, 16.0, 12.0),
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 40.0, 16.0, 12.0),
                                     child: GridView(
                                       padding: EdgeInsets.zero,
                                       gridDelegate:
@@ -103,9 +102,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                                   size: 32.0,
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                           0.0, 12.0, 0.0, 12.0),
                                                   child: Text(
                                                     '100',
@@ -116,8 +114,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                                         .override(
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
+                                                          color:
+                                                              const Color(0xFF101213),
                                                           fontSize: 36.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -134,8 +132,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                                       .override(
                                                         fontFamily:
                                                             'Plus Jakarta Sans',
-                                                        color: const Color(
-                                                            0xFF57636C),
+                                                        color:
+                                                            const Color(0xFF57636C),
                                                         fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
@@ -170,9 +168,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                                   size: 44.0,
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                           0.0, 12.0, 0.0, 12.0),
                                                   child: Text(
                                                     '0 Kr',
@@ -215,12 +212,10 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                     ),
                                   ),
                                   Align(
-                                    alignment:
-                                        const AlignmentDirectional(-0.9, 0.0),
+                                    alignment: const AlignmentDirectional(-0.9, 0.0),
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 50.0, 0.0, 0.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 50.0, 0.0, 0.0),
                                       child: Text(
                                         'MIn Bruker',
                                         style: FlutterFlowTheme.of(context)
@@ -238,9 +233,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 12.0, 10.0, 0.0),
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 12.0, 10.0, 0.0),
                                     child: InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,
@@ -291,9 +285,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                                   size: 24.0,
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                           12.0, 0.0, 0.0, 0.0),
                                                   child: Text(
                                                     'Rediger Profil',
@@ -336,9 +329,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 15.0, 10.0, 0.0),
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 15.0, 10.0, 0.0),
                                     child: InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,
@@ -374,6 +366,10 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              context
+                                                  .pushNamed('ProfilRediger');
+                                            },
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -386,9 +382,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                                   size: 22.0,
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                           12.0, 0.0, 0.0, 0.0),
                                                   child: Text(
                                                     'Utbetalingsinformasjon',
@@ -429,12 +424,10 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                     ),
                                   ),
                                   Align(
-                                    alignment:
-                                        const AlignmentDirectional(-0.9, 0.0),
+                                    alignment: const AlignmentDirectional(-0.9, 0.0),
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 16.0, 0.0, 0.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 16.0, 0.0, 0.0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -452,9 +445,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 12.0, 10.0, 0.0),
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 12.0, 10.0, 0.0),
                                     child: InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,
@@ -496,9 +488,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                                 size: 22.0,
                                               ),
                                               Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
                                                         12.0, 0.0, 0.0, 0.0),
                                                 child: Text(
                                                   'Salgs historikk',
@@ -539,9 +530,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 12.0, 10.0, 0.0),
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 12.0, 10.0, 0.0),
                                     child: Container(
                                       width: double.infinity,
                                       height: 60.0,
@@ -575,9 +565,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                               size: 26.0,
                                             ),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
                                                       12.0, 0.0, 0.0, 0.0),
                                               child: Text(
                                                 'juridisk',
@@ -599,9 +588,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                             ),
                                             Expanded(
                                               child: Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        0.9, 0.0),
+                                                alignment: const AlignmentDirectional(
+                                                    0.9, 0.0),
                                                 child: Icon(
                                                   Icons.arrow_forward_ios,
                                                   color: FlutterFlowTheme.of(
@@ -617,9 +605,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 12.0, 10.0, 0.0),
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 12.0, 10.0, 0.0),
                                     child: InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,
@@ -629,8 +616,7 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                         context.pushNamed(
                                           'Hjem',
                                           extra: <String, dynamic>{
-                                            kTransitionInfoKey:
-                                                const TransitionInfo(
+                                            kTransitionInfoKey: const TransitionInfo(
                                               hasTransition: true,
                                               transitionType:
                                                   PageTransitionType.fade,
@@ -673,9 +659,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                                 size: 24.0,
                                               ),
                                               Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
                                                         12.0, 0.0, 0.0, 0.0),
                                                 child: Text(
                                                   'Hjelpesenter',
@@ -734,9 +719,8 @@ class _Profil2WidgetState extends State<Profil2Widget> {
                                     options: FFButtonOptions(
                                       width: 200.0,
                                       height: 40.0,
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),

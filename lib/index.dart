@@ -37,8 +37,6 @@ export '/app_main/bonde_gard/hjem/hjem2/hjem2_widget.dart' show Hjem2Widget;
 export '/app_main/bonde_gard/hjem/min_mat_detalj2/min_mat_detalj2_widget.dart'
     show MinMatDetalj2Widget;
 export '/app_main/bonde_gard/salg/salg/salg_widget.dart' show SalgWidget;
-export '/app_main/bonde_gard/salg/salg_detalj/salg_detalj_widget.dart'
-    show SalgDetaljWidget;
 export '/app_main/bonde_gard/profil/profil2/profil2_widget.dart'
     show Profil2Widget;
 export '/app_main/vanlig_bruker/kjop/bekreftet_hentet/bekreftet_hentet_widget.dart'

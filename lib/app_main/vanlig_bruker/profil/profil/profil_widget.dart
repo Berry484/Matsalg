@@ -677,7 +677,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                               child: Material(
                                                                 color: Colors
                                                                     .transparent,
-                                                                elevation: 3.0,
+                                                                elevation: 1.0,
                                                                 shape:
                                                                     RoundedRectangleBorder(
                                                                   borderRadius:
@@ -979,7 +979,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           child: Material(
                                                             color: Colors
                                                                 .transparent,
-                                                            elevation: 3.0,
+                                                            elevation: 1.0,
                                                             shape:
                                                                 RoundedRectangleBorder(
                                                               borderRadius:

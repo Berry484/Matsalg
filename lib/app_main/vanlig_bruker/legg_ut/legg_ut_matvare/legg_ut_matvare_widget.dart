@@ -1512,7 +1512,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           ),
                                           Container(
                                             width: double.infinity,
-                                            height: 300.0,
+                                            height: 325.0,
                                             decoration: BoxDecoration(
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -2633,11 +2633,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                             endIndent: 30.0,
                                             color: Color(0x62757575),
                                           ),
-                                          if ((FFAppState().bonde == true) &&
-                                              responsiveVisibility(
-                                                context: context,
-                                                tablet: false,
-                                              ))
+                                          if (responsiveVisibility(
+                                            context: context,
+                                            tablet: false,
+                                          ))
                                             Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
@@ -2852,13 +2851,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 ),
                                               ),
                                             ),
-                                          if (FFAppState().bonde == true)
-                                            const Divider(
-                                              thickness: 1.0,
-                                              indent: 30.0,
-                                              endIndent: 30.0,
-                                              color: Color(0x62757575),
-                                            ),
+                                          const Divider(
+                                            thickness: 1.0,
+                                            indent: 30.0,
+                                            endIndent: 30.0,
+                                            color: Color(0x62757575),
+                                          ),
                                           if (widget.rediger == false)
                                             Align(
                                               alignment:
