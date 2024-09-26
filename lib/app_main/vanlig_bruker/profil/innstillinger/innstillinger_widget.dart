@@ -77,7 +77,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
           body: SafeArea(
             top: true,
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 0.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 0.0),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -85,8 +86,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                     Align(
                       alignment: const AlignmentDirectional(-0.9, 0.0),
                       child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 10.0, 0.0, 0.0),
                         child: Text(
                           'MIn Bruker',
                           style: FlutterFlowTheme.of(context)
@@ -103,8 +104,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(10.0, 12.0, 10.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          10.0, 12.0, 10.0, 0.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -151,8 +152,9 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                     size: 22.0,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        12.0, 0.0, 0.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 0.0, 0.0),
                                     child: Text(
                                       'Rediger Profil',
                                       style: FlutterFlowTheme.of(context)
@@ -168,7 +170,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                   ),
                                   Expanded(
                                     child: Align(
-                                      alignment: const AlignmentDirectional(0.9, 0.0),
+                                      alignment:
+                                          const AlignmentDirectional(0.9, 0.0),
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
@@ -185,8 +188,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(10.0, 15.0, 10.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          10.0, 15.0, 10.0, 0.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -220,9 +223,6 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                               focusColor: Colors.transparent,
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed('ProfilRediger');
-                              },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -233,8 +233,9 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                     size: 22.0,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        12.0, 0.0, 0.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 0.0, 0.0),
                                     child: Text(
                                       'Utbetalingsinformasjon',
                                       style: FlutterFlowTheme.of(context)
@@ -250,7 +251,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                   ),
                                   Expanded(
                                     child: Align(
-                                      alignment: const AlignmentDirectional(0.9, 0.0),
+                                      alignment:
+                                          const AlignmentDirectional(0.9, 0.0),
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
@@ -269,8 +271,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                     Align(
                       alignment: const AlignmentDirectional(-0.9, 0.0),
                       child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 16.0, 0.0, 0.0),
                         child: Text(
                           'Informasjon',
                           style: FlutterFlowTheme.of(context)
@@ -287,8 +289,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(10.0, 12.0, 10.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          10.0, 12.0, 10.0, 0.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -342,7 +344,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                 ),
                                 Expanded(
                                   child: Align(
-                                    alignment: const AlignmentDirectional(0.9, 0.0),
+                                    alignment:
+                                        const AlignmentDirectional(0.9, 0.0),
                                     child: Icon(
                                       Icons.arrow_forward_ios,
                                       color: FlutterFlowTheme.of(context)
@@ -358,8 +361,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(10.0, 12.0, 10.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          10.0, 12.0, 10.0, 0.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -413,7 +416,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                 ),
                                 Expanded(
                                   child: Align(
-                                    alignment: const AlignmentDirectional(0.9, 0.0),
+                                    alignment:
+                                        const AlignmentDirectional(0.9, 0.0),
                                     child: Icon(
                                       Icons.arrow_forward_ios,
                                       color: FlutterFlowTheme.of(context)
@@ -429,8 +433,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(10.0, 12.0, 10.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          10.0, 12.0, 10.0, 0.0),
                       child: Container(
                         width: double.infinity,
                         height: 60.0,
@@ -476,7 +480,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                               ),
                               Expanded(
                                 child: Align(
-                                  alignment: const AlignmentDirectional(0.9, 0.0),
+                                  alignment:
+                                      const AlignmentDirectional(0.9, 0.0),
                                   child: Icon(
                                     Icons.arrow_forward_ios,
                                     color: FlutterFlowTheme.of(context)
@@ -491,8 +496,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(10.0, 12.0, 10.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          10.0, 12.0, 10.0, 0.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -555,7 +560,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                 ),
                                 Expanded(
                                   child: Align(
-                                    alignment: const AlignmentDirectional(0.9, 0.0),
+                                    alignment:
+                                        const AlignmentDirectional(0.9, 0.0),
                                     child: Icon(
                                       Icons.arrow_forward_ios,
                                       color: FlutterFlowTheme.of(context)
@@ -573,8 +579,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                     Align(
                       alignment: const AlignmentDirectional(0.0, 0.0),
                       child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 40.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             context.pushNamed('registrer');
