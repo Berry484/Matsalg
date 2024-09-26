@@ -37,7 +37,6 @@ class _ChooselocationState extends State<Chooselocation> {
   ChooselocationLatLng.LatLng? currentCenter;
 
   // Define how much to offset the marker's latitude (in degrees)
-  final double markerOffsetY = 0.01; // Adjust this value as needed
 
   @override
   void initState() {
@@ -82,7 +81,7 @@ class _ChooselocationState extends State<Chooselocation> {
                   height: 50.0,
                   // Offset the latitude of the marker
                   point: ChooselocationLatLng.LatLng(
-                    currentCenter!.latitude + markerOffsetY, // Adjust latitude
+                    currentCenter!.latitude, // Adjust latitude
                     currentCenter!.longitude,
                   ),
                   builder: (ctx) => GestureDetector(
@@ -93,7 +92,7 @@ class _ChooselocationState extends State<Chooselocation> {
                         builder: (context) => AlertDialog(
                           title: Text('Marker Location'),
                           content: Text(
-                            'Latitude: ${currentCenter!.latitude + markerOffsetY}\nLongitude: ${currentCenter!.longitude}',
+                            'Latitude: ${currentCenter!.latitude}\nLongitude: ${currentCenter!.longitude}',
                           ),
                           actions: <Widget>[
                             TextButton(
