@@ -303,7 +303,6 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                       print(
                                           'Selected location: ${selectedLocation!.latitude}, ${selectedLocation!.longitude}');
                                     }
-
                                     if (widget.endrepos == false) {
                                       context.pushNamed(
                                         'OpprettProfil',
