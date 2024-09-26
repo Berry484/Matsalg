@@ -107,6 +107,8 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                       Align(
                         alignment: const AlignmentDirectional(0.0, -1.2),
                         child: Container(
+                          padding: const EdgeInsets.only(
+                              bottom: 230.0), // Adjust the padding as needed
                           width: 500.0,
                           height: MediaQuery.sizeOf(context).height,
                           decoration: BoxDecoration(

@@ -59,7 +59,7 @@ class _ChooselocationState extends State<Chooselocation> {
               center: currentCenter,
               interactiveFlags:
                   InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-              zoom: 13,
+              zoom: 12,
               minZoom: 6,
               maxZoom: 18,
               onPositionChanged: (position, hasGesture) {
@@ -106,7 +106,7 @@ class _ChooselocationState extends State<Chooselocation> {
                     child: Icon(
                       Icons.location_pin,
                       color: FlutterFlowTheme.of(context).alternate,
-                      size: 50,
+                      size: 56,
                     ),
                   ),
                 ),
