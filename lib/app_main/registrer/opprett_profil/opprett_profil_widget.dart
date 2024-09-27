@@ -31,6 +31,7 @@ class OpprettProfilWidget extends StatefulWidget {
 class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   late OpprettProfilModel _model;
   final ApiCalls apiCalls = ApiCalls(); // Instantiate the ApiCalls class
+  final ApiUserSQL apiUserSQL = ApiUserSQL();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -583,6 +584,17 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                             );
                             // Handle the response
                             if (response.statusCode == 200) {
+                              String bio = _model.bioTextController.text.trim();
+                              final response =
+                                  await apiUserSQL.createOrUpdateUserInfo(
+                                username: username,
+                                bio: bio,
+                              );
+                              if (response.statusCode != 200) {
+                                safeSetState(() {
+                                  _model.brukernavnTextController?.clear();
+                                });
+                              }
                             } else {
                               safeSetState(() {
                                 _model.brukernavnTextController?.clear();

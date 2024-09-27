@@ -18,6 +18,7 @@ class ApiCalls {
     return response; // Return the response
   }
 
+  //----Opprett bruker i keycloak---------------
   // Define the method to create a user
   Future<http.Response> createUser({
     required String username,
@@ -50,6 +51,36 @@ class ApiCalls {
     final response = await http.post(
       Uri.parse(
           '$baseUrl/rrh/bruker/opprett'), // Adjust the endpoint as necessary
+      headers: {'Content-Type': 'application/json'},
+      body: jsonBody,
+    );
+
+    return response; // Return the response
+  }
+}
+
+class ApiUserSQL {
+  // ----Create or Update User Info Method---------------
+  // Method to create or update user information in the UserInfoController
+
+  static const String baseUrl = ApiConstants.baseUrl; // Your base URL
+  Future<http.Response> createOrUpdateUserInfo({
+    required String username,
+    required String bio,
+  }) async {
+    // Create the user info data as a Map
+    final Map<String, dynamic> userInfoData = {
+      "username": username,
+      "bio": bio
+    };
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(userInfoData);
+
+    // Send the POST request
+    final response = await http.post(
+      Uri.parse(
+          '$baseUrl/rrh/brukere'), // Endpoint for creating or updating user info
       headers: {'Content-Type': 'application/json'},
       body: jsonBody,
     );
