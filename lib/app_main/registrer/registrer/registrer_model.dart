@@ -46,7 +46,7 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
   String? Function(BuildContext, String?)? epostLagTextControllerValidator;
   String? _epostLagTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Ugyldig eller opptatt epost';
+      return 'E-post ugyldig eller opptatt';
     }
 
     // Check if the email format is valid
