@@ -12,11 +12,13 @@ class BekreftOTPWidget extends StatefulWidget {
     this.bonde,
     required this.email,
     required this.password,
+    required this.phone,
   });
 
   final bool? bonde;
   final String? email;
   final String? password;
+  final String? phone;
 
   @override
   State<BekreftOTPWidget> createState() => _BekreftOTPWidgetState();
@@ -197,6 +199,10 @@ class _BekreftOTPWidgetState extends State<BekreftOTPWidget> {
                                         widget.email,
                                         ParamType.String,
                                       ),
+                                      'phone': serializeParam(
+                                        widget.phone,
+                                        ParamType.String,
+                                      ),
                                       'password': serializeParam(
                                         widget.password,
                                         ParamType.String,
@@ -219,6 +225,10 @@ class _BekreftOTPWidgetState extends State<BekreftOTPWidget> {
                                         widget.email,
                                         ParamType.String,
                                       ),
+                                      'phone': serializeParam(
+                                        widget.phone,
+                                        ParamType.String,
+                                      ),
                                       'password': serializeParam(
                                         widget.password,
                                         ParamType.String,
@@ -232,8 +242,9 @@ class _BekreftOTPWidgetState extends State<BekreftOTPWidget> {
                                 width: 230.0,
                                 height: 50.0,
                                 padding: const EdgeInsets.all(10.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context).alternate,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall

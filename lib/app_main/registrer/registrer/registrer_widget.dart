@@ -714,8 +714,6 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         if (response
                                                                 .statusCode ==
                                                             200) {
-                                                          print(
-                                                              "YO it worked the email is available");
                                                         } else {
                                                           safeSetState(() {
                                                             _model

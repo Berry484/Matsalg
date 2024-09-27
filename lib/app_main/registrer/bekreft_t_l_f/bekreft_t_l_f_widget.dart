@@ -17,7 +17,6 @@ class BekreftTLFWidget extends StatefulWidget {
   final bool? bonde;
   final String? email;
   final String? password;
-
   @override
   State<BekreftTLFWidget> createState() => _BekreftTLFWidgetState();
 }
@@ -152,8 +151,9 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        15.0, 0.0, 0.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            15.0, 0.0, 0.0, 0.0),
                                     child: Text(
                                       '+47',
                                       style: FlutterFlowTheme.of(context)
@@ -167,8 +167,9 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                   ),
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          4.0, 0.0, 8.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              4.0, 0.0, 8.0, 0.0),
                                       child: TextFormField(
                                         controller: _model
                                             .phoneNumberFieldTextController,
@@ -251,6 +252,11 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                       widget.email,
                                       ParamType.String,
                                     ),
+                                    'phone': serializeParam(
+                                      _model
+                                          .phoneNumberFieldTextController.text,
+                                      ParamType.String,
+                                    ),
                                     'password': serializeParam(
                                       widget.password,
                                       ParamType.String,
@@ -263,8 +269,9 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                 width: 230.0,
                                 height: 50.0,
                                 padding: const EdgeInsets.all(10.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context).alternate,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall

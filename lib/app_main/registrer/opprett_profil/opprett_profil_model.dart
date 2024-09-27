@@ -10,13 +10,29 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
+  // State field(s) for Brukernavn widget.
+  FocusNode? brukernavnFocusNode;
+  TextEditingController? brukernavnTextController;
+  String? Function(BuildContext, String?)? brukernavnTextControllerValidator;
+  String? _brukernavnTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Brukernavn  opptatt eller ugyldig';
+    }
+
+    if (!RegExp(kTextValidatorUsernameRegex).hasMatch(val)) {
+      return 'Brukernavn ugyldig';
+    }
+    return null;
+  }
+
   // State field(s) for Fornavn widget.
   FocusNode? fornavnFocusNode;
   TextEditingController? fornavnTextController;
   String? Function(BuildContext, String?)? fornavnTextControllerValidator;
   String? _fornavnTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut...';
+      return 'Felt må fylles ut';
     }
 
     return null;
@@ -28,7 +44,7 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
   String? Function(BuildContext, String?)? etternavnTextControllerValidator;
   String? _etternavnTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut...';
+      return 'Felt må fylles ut';
     }
 
     return null;
@@ -41,12 +57,16 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
 
   @override
   void initState(BuildContext context) {
+    brukernavnTextControllerValidator = _brukernavnTextControllerValidator;
     fornavnTextControllerValidator = _fornavnTextControllerValidator;
     etternavnTextControllerValidator = _etternavnTextControllerValidator;
   }
 
   @override
   void dispose() {
+    brukernavnFocusNode?.dispose();
+    brukernavnTextController?.dispose();
+
     fornavnFocusNode?.dispose();
     fornavnTextController?.dispose();
 
