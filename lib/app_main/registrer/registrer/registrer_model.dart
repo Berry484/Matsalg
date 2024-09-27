@@ -7,6 +7,7 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
 
   final formKey1 = GlobalKey<FormState>();
   final formKey2 = GlobalKey<FormState>();
+
   // State field(s) for TabBar widget.
   TabController? tabBarController;
   int get tabBarCurrentIndex =>
@@ -45,7 +46,13 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
   String? Function(BuildContext, String?)? epostLagTextControllerValidator;
   String? _epostLagTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
+      return 'Ugyldig eller opptatt epost';
+    }
+
+    // Check if the email format is valid
+    if (!RegExp(r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}')
+        .hasMatch(val)) {
+      return 'Ugyldig epostformat'; // Invalid email format
     }
 
     return null;

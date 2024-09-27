@@ -4,6 +4,9 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'registrer_model.dart';
+
+import 'package:mat_salg/app_main/registrer/ApiCalls.dart';
+
 export 'registrer_model.dart';
 
 class RegistrerWidget extends StatefulWidget {
@@ -16,7 +19,7 @@ class RegistrerWidget extends StatefulWidget {
 class _RegistrerWidgetState extends State<RegistrerWidget>
     with TickerProviderStateMixin {
   late RegistrerModel _model;
-
+  final ApiCalls apiCalls = ApiCalls(); // Instantiate the ApiCalls class
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -698,6 +701,30 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                 0, 24, 0, 0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
+                                                        //Check if the email is available:
+                                                        //Check if email is not taken:
+                                                        final response =
+                                                            await apiCalls
+                                                                .checkEmailTaken(
+                                                                    _model
+                                                                        .epostLagTextController
+                                                                        .text);
+
+                                                        // Check the response and display a message
+                                                        if (response
+                                                                .statusCode ==
+                                                            200) {
+                                                          print(
+                                                              "YO it worked the email is available");
+                                                        } else {
+                                                          safeSetState(() {
+                                                            _model
+                                                                .epostLagTextController
+                                                                ?.clear();
+                                                          });
+                                                        }
+
+                                                        //Rest of the logic here:
                                                         if (_model.formKey2
                                                                     .currentState ==
                                                                 null ||
