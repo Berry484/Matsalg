@@ -356,6 +356,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'phone',
               ParamType.String,
             ),
+            posisjon: params.getParam(
+              'posisjon',
+              ParamType.LatLng,
+            ),
           ),
         ),
         FFRoute(

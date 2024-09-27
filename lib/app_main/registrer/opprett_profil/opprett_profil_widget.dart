@@ -17,12 +17,14 @@ class OpprettProfilWidget extends StatefulWidget {
     required this.email,
     required this.password,
     required this.phone,
+    required this.posisjon,
   }) : this.bonde = bonde ?? false;
 
   final bool bonde;
   final String? email;
   final String? password;
   final String? phone;
+  final LatLng posisjon;
 
   @override
   State<OpprettProfilWidget> createState() => _OpprettProfilWidgetState();
@@ -589,6 +591,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                   await apiUserSQL.createOrUpdateUserInfo(
                                 username: username,
                                 bio: bio,
+                                posisjon: widget.posisjon,
                               );
                               if (response.statusCode != 200) {
                                 safeSetState(() {

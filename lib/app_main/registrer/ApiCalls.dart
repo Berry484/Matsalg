@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
 
 class ApiCalls {
   static const String baseUrl = ApiConstants.baseUrl; // Your base URL
@@ -67,11 +68,14 @@ class ApiUserSQL {
   Future<http.Response> createOrUpdateUserInfo({
     required String username,
     required String bio,
+    required LatLng posisjon,
   }) async {
     // Create the user info data as a Map
     final Map<String, dynamic> userInfoData = {
       "username": username,
-      "bio": bio
+      "bio": bio,
+      "lat": posisjon.latitude,
+      "lng": posisjon.longitude
     };
 
     // Convert the Map to JSON

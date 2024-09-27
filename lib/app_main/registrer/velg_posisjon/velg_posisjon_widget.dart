@@ -325,6 +325,10 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                             widget.password,
                                             ParamType.String,
                                           ),
+                                          'posisjon': serializeParam(
+                                            selectedLocation,
+                                            ParamType.LatLng,
+                                          ),
                                         }.withoutNulls,
                                       );
                                     } else {
