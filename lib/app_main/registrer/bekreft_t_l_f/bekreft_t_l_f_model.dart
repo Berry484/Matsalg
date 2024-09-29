@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class BekreftTLFModel extends FlutterFlowModel<BekreftTLFWidget> {
   ///  State fields for stateful widgets in this page.
-
+  static bool opptatt = false;
   final formKey = GlobalKey<FormState>();
+
   // State field(s) for PhoneNumberField widget.
   FocusNode? phoneNumberFieldFocusNode;
   TextEditingController? phoneNumberFieldTextController;
@@ -15,6 +16,11 @@ class BekreftTLFModel extends FlutterFlowModel<BekreftTLFWidget> {
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Felt må fylles ut';
+    }
+
+    if (opptatt == true) {
+      opptatt = false;
+      return 'Tlf. er allerede i bruk';
     }
 
     if (val.length < 8) {

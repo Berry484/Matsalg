@@ -128,9 +128,9 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                 width: 500.0,
                                 height: double.infinity,
                                 center: functions.doubletillatlon(
-                                    59.913868, 10.752245)!,
+                                    59.12681775541445, 11.386219119466823)!,
                                 matsted: functions.doubletillatlon(
-                                    59.913868, 10.752245)!,
+                                    59.12681775541445, 11.386219119466823)!,
                                 onLocationChanged: (newLocation) {
                                   setState(() {
                                     selectedLocation = newLocation;

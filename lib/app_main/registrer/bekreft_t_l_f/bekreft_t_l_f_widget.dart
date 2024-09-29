@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'bekreft_t_l_f_model.dart';
 export 'bekreft_t_l_f_model.dart';
+import 'package:mat_salg/app_main/registrer/ApiCalls.dart';
 
 class BekreftTLFWidget extends StatefulWidget {
   const BekreftTLFWidget({
@@ -23,7 +24,7 @@ class BekreftTLFWidget extends StatefulWidget {
 
 class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
   late BekreftTLFModel _model;
-
+  final ApiCalls apiCalls = ApiCalls();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -240,29 +241,42 @@ class _BekreftTLFWidgetState extends State<BekreftTLFWidget> {
                                     !_model.formKey.currentState!.validate()) {
                                   return;
                                 }
-
-                                context.pushNamed(
-                                  'BekreftOTP',
-                                  queryParameters: {
-                                    'bonde': serializeParam(
-                                      widget.bonde,
-                                      ParamType.bool,
-                                    ),
-                                    'email': serializeParam(
-                                      widget.email,
-                                      ParamType.String,
-                                    ),
-                                    'phone': serializeParam(
-                                      _model
-                                          .phoneNumberFieldTextController.text,
-                                      ParamType.String,
-                                    ),
-                                    'password': serializeParam(
-                                      widget.password,
-                                      ParamType.String,
-                                    ),
-                                  }.withoutNulls,
-                                );
+                                final response = await apiCalls.checkPhoneTaken(
+                                    _model.phoneNumberFieldTextController.text);
+                                if (response.statusCode == 200) {
+                                  BekreftTLFModel.opptatt = false;
+                                  context.pushNamed(
+                                    'BekreftOTP',
+                                    queryParameters: {
+                                      'bonde': serializeParam(
+                                        widget.bonde,
+                                        ParamType.bool,
+                                      ),
+                                      'email': serializeParam(
+                                        widget.email,
+                                        ParamType.String,
+                                      ),
+                                      'phone': serializeParam(
+                                        _model.phoneNumberFieldTextController
+                                            .text,
+                                        ParamType.String,
+                                      ),
+                                      'password': serializeParam(
+                                        widget.password,
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                } else {
+                                  // _model.phoneNumberFieldTextController
+                                  //     ?.clear();
+                                  print("Code ran!");
+                                  BekreftTLFModel.opptatt = true;
+                                  _model
+                                      .phoneNumberFieldTextControllerValidator;
+                                  _model.formKey.currentState?.validate();
+                                  BekreftTLFModel.opptatt = false;
+                                }
                               },
                               text: 'Send kode',
                               options: FFButtonOptions(

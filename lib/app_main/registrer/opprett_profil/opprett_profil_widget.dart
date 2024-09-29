@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:mat_salg/app_main/registrer/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
 
 import 'opprett_profil_model.dart';
 export 'opprett_profil_model.dart';
@@ -34,6 +37,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   late OpprettProfilModel _model;
   final ApiCalls apiCalls = ApiCalls(); // Instantiate the ApiCalls class
   final ApiUserSQL apiUserSQL = ApiUserSQL();
+  final ApiGetToken apiGetToken = ApiGetToken();
+  final Securestorage secureStorage = Securestorage();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -586,13 +591,34 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                             );
                             // Handle the response
                             if (response.statusCode == 200) {
-                              String bio = _model.bioTextController.text.trim();
-                              final response =
-                                  await apiUserSQL.createOrUpdateUserInfo(
+                              String? accessToken =
+                                  await apiGetToken.getAuthToken(
                                 username: username,
-                                bio: bio,
-                                posisjon: widget.posisjon,
+                                password: widget.password,
+                                phoneNumber: widget.phone,
                               );
+                              if (accessToken == null) {
+                                context.goNamed('registrer');
+                              }
+                              if (accessToken != null) {
+                                String bio =
+                                    _model.bioTextController.text.trim();
+                                final response =
+                                    await apiUserSQL.createOrUpdateUserInfo(
+                                  username: username,
+                                  bio: bio,
+                                  posisjon: widget.posisjon,
+                                );
+
+                                if (response.statusCode == 200) {
+                                  final token = await secureStorage
+                                      .writeToken(accessToken);
+                                  if (token == null) {
+                                    context.goNamed('registrer');
+                                  }
+                                }
+                              }
+
                               if (response.statusCode != 200) {
                                 safeSetState(() {
                                   _model.brukernavnTextController?.clear();

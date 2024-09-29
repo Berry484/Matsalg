@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'registrer_model.dart';
 
 import 'package:mat_salg/app_main/registrer/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
 
 export 'registrer_model.dart';
 
@@ -20,6 +21,8 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
     with TickerProviderStateMixin {
   late RegistrerModel _model;
   final ApiCalls apiCalls = ApiCalls(); // Instantiate the ApiCalls class
+  final ApiGetToken apiGetToken = ApiGetToken();
+  final Securestorage secureStorage = Securestorage();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -317,7 +320,51 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                   return;
                                                 }
 
-                                                context.goNamed('Hjem');
+                                                final token = await apiGetToken
+                                                    .getAuthToken(
+                                                        username: _model
+                                                            .emailLoginTextController
+                                                            .text,
+                                                        password: _model
+                                                            .passordLoginTextController
+                                                            .text);
+                                                if (token == null) {
+                                                  final token = await apiGetToken
+                                                      .getAuthToken(
+                                                          username: null,
+                                                          phoneNumber: _model
+                                                              .emailLoginTextController
+                                                              .text,
+                                                          password: _model
+                                                              .passordLoginTextController
+                                                              .text);
+
+                                                  if (token != null) {
+                                                    final auth = secureStorage
+                                                        .writeToken(token);
+                                                    context.goNamed('Hjem');
+                                                    return;
+                                                  }
+                                                }
+
+                                                if (token != null) {
+                                                  final auth =
+                                                      await secureStorage
+                                                          .writeToken(token);
+                                                  if (auth != null) {
+                                                    context.goNamed('Hjem');
+                                                    return;
+                                                  }
+                                                } else {
+                                                  _model
+                                                      .passordLoginTextController
+                                                      ?.clear();
+                                                  _model
+                                                      .emailLoginTextController
+                                                      ?.clear();
+                                                  _model.formKey1.currentState
+                                                      ?.validate();
+                                                }
                                               },
                                               text: 'Logg inn',
                                               icon: Icon(

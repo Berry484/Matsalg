@@ -20,7 +20,7 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
   String? _emailLoginTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
+      return 'Feil brukernavn eller passord';
     }
 
     return null;
@@ -34,7 +34,7 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
   String? _passordLoginTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
+      return 'Feil brukernavn eller passord';
     }
 
     return null;
