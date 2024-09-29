@@ -233,6 +233,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                   child: TextFormField(
                                     controller: _model.brukernavnTextController,
                                     focusNode: _model.brukernavnFocusNode,
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
                                     textInputAction: TextInputAction.done,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -329,6 +331,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     controller: _model.fornavnTextController,
                                     focusNode: _model.fornavnFocusNode,
                                     textInputAction: TextInputAction.done,
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelText: 'Fornavn',
@@ -407,6 +411,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                   child: TextFormField(
                                     controller: _model.etternavnTextController,
                                     focusNode: _model.etternavnFocusNode,
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
                                     textInputAction: TextInputAction.done,
                                     obscureText: false,
                                     decoration: InputDecoration(

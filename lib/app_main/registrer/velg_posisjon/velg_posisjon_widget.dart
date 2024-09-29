@@ -250,13 +250,47 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    currentUserLocationValue =
-                                        await getCurrentUserLocation(
-                                            defaultLocation:
-                                                const LatLng(0.0, 0.0));
-                                    FFAppState().brukersted =
-                                        currentUserLocationValue;
-                                    safeSetState(() {});
+                                    LatLng? location;
+                                    // Print the selected location
+                                    getCurrentUserLocation(
+                                        defaultLocation:
+                                            const LatLng(0.0, 0.0));
+
+                                    if (currentUserLocationValue != null) {
+                                      selectedLocation = location;
+                                    }
+                                    if (currentUserLocationValue == null) {
+                                      return;
+                                    }
+                                    if (widget.endrepos == false) {
+                                      context.pushNamed(
+                                        'OpprettProfil',
+                                        queryParameters: {
+                                          'bonde': serializeParam(
+                                            widget.bonde,
+                                            ParamType.bool,
+                                          ),
+                                          'email': serializeParam(
+                                            widget.email,
+                                            ParamType.String,
+                                          ),
+                                          'phone': serializeParam(
+                                            widget.phone,
+                                            ParamType.String,
+                                          ),
+                                          'password': serializeParam(
+                                            widget.password,
+                                            ParamType.String,
+                                          ),
+                                          'posisjon': serializeParam(
+                                            location,
+                                            ParamType.LatLng,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    } else {
+                                      context.goNamed('Hjem');
+                                    }
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -300,10 +334,15 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                     0.0, 0.0, 0.0, 55.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
+                                    LatLng? location;
                                     // Print the selected location
+                                    if (currentUserLocationValue != null) {
+                                      selectedLocation = location;
+                                    }
                                     if (selectedLocation != null) {
                                       print(
                                           'Selected location: ${selectedLocation!.latitude}, ${selectedLocation!.longitude}');
+                                      location = selectedLocation;
                                     }
                                     if (widget.endrepos == false) {
                                       context.pushNamed(
@@ -326,7 +365,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                             ParamType.String,
                                           ),
                                           'posisjon': serializeParam(
-                                            selectedLocation,
+                                            location,
                                             ParamType.LatLng,
                                           ),
                                         }.withoutNulls,
