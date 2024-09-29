@@ -7,10 +7,13 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'profil_model.dart';
 export 'profil_model.dart';
+import 'package:mat_salg/app_main/registrer/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
 
 class ProfilWidget extends StatefulWidget {
   const ProfilWidget({super.key});
@@ -22,13 +25,75 @@ class ProfilWidget extends StatefulWidget {
 class _ProfilWidgetState extends State<ProfilWidget>
     with TickerProviderStateMixin {
   late ProfilModel _model;
+  final ApiCalls apicalls = ApiCalls();
+  final Securestorage securestorage = Securestorage();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Map<String, dynamic>? userInfo = {
+    "id": 1,
+    "username": " ",
+    "firstname": " ",
+    "lastname": " ",
+    "profile_picture":
+        "http://192.168.1.40:8080/files/a2cb1172-263b-4b52-bc7d-16896188b441",
+    "email": " ",
+    "bio": " ",
+    "lat": 59.151288855131426,
+    "lng": 11.369226646823371
+  };
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => ProfilModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      try {
+        String brukernavn = FFAppState().brukernavn;
+        if (FFAppState().startet == false) {
+          FFAppState().startet = true;
+
+          final response =
+              await apicalls.checkUserInfo(brukernavn, Securestorage.authToken);
+          if (response.statusCode == 200) {
+            setState(() {
+              userInfo = jsonDecode(
+                  response.body); // Update userInfo with fetched data
+              FFAppState().firstname = '${userInfo!['firstname']}';
+              FFAppState().lastname = '${userInfo!['lastname']}';
+              FFAppState().brukernavn = '${userInfo!['brukernavn']}';
+              FFAppState().bio = '${userInfo!['bio']}';
+              FFAppState().profilepic = '${userInfo!['profile_picture']}';
+            });
+          }
+          if (response.statusCode != 200) {
+            throw Exception();
+          }
+        } else {}
+      } catch (e) {
+        // Show error dialog
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Noe gikk galt'),
+              content: const Text(
+                  'Vi har problemer med å fullføre forespørselen din. Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
 
     _model.tabBarController = TabController(
       vsync: this,
@@ -59,7 +124,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
             title: Align(
               alignment: const AlignmentDirectional(-0.02, -1.09),
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
                 child: Text(
                   'Profil',
                   style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -74,7 +140,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
             ),
             actions: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -134,8 +201,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                               const Duration(milliseconds: 0),
                                           fadeOutDuration:
                                               const Duration(milliseconds: 0),
-                                          imageUrl:
-                                              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/y9tyzwvch3sv/Farm.jpg',
+                                          imageUrl: (FFAppState()
+                                                  .profilepic
+                                                  .isNotEmpty
+                                              ? FFAppState().profilepic
+                                              : '${userInfo?['profile_picture']}'),
                                           fit: BoxFit.cover,
                                           errorWidget:
                                               (context, error, stackTrace) =>
@@ -146,16 +216,17 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            7.0, 0.0, 0.0, 0.0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(7.0, 0.0, 0.0, 0.0),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       10.0, 0.0, 0.0, 0.0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
@@ -167,11 +238,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                .fromSTEB(5.0,
+                                                                0.0, 0.0, 0.0),
                                                         child: Container(
                                                           width: 70.0,
                                                           height: 50.0,
@@ -240,11 +308,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                .fromSTEB(5.0,
+                                                                0.0, 0.0, 0.0),
                                                         child: Container(
                                                           width: 70.0,
                                                           height: 50.0,
@@ -336,11 +401,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                .fromSTEB(5.0,
+                                                                0.0, 0.0, 0.0),
                                                         child: Container(
                                                           width: 70.0,
                                                           height: 50.0,
@@ -438,8 +500,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           5.0, 7.0, 0.0, 0.0),
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
@@ -461,18 +524,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       height: 30.0,
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  16.0,
-                                                                  0.0,
-                                                                  16.0,
-                                                                  0.0),
+                                                              .fromSTEB(16.0,
+                                                              0.0, 16.0, 0.0),
                                                       iconPadding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              .fromSTEB(0.0,
+                                                              0.0, 0.0, 0.0),
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -517,10 +574,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 0.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              24.0, 0.0, 0.0, 0.0),
                                       child: Text(
-                                        'Faugsund Gård',
+                                        '${FFAppState().firstname.isNotEmpty ? FFAppState().firstname : '${userInfo?['brukernavn']}'} ${FFAppState().lastname.isNotEmpty ? FFAppState().lastname : '${userInfo?['lastname']}'}',
                                         style: FlutterFlowTheme.of(context)
                                             .headlineLarge
                                             .override(
@@ -546,7 +604,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                         .secondaryBackground,
                                   ),
                                   child: Text(
-                                    'En fin bio om meg selv',
+                                    (FFAppState().bio.isNotEmpty
+                                        ? FFAppState().bio
+                                        : '${userInfo?['bio']}'),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -563,8 +623,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                   child: Container(
                                     decoration: const BoxDecoration(),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          20.0, 30.0, 20.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              20.0, 30.0, 20.0, 0.0),
                                       child: Column(
                                         children: [
                                           Align(
@@ -639,8 +700,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                     }
 
                                                     return ListView.separated(
-                                                      padding:
-                                                          const EdgeInsets.fromLTRB(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(
                                                         0,
                                                         10.0,
                                                         0,
@@ -651,8 +712,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       itemCount:
                                                           removeme1.length,
                                                       separatorBuilder:
-                                                          (_, __) => const SizedBox(
-                                                              height: 10.0),
+                                                          (_, __) =>
+                                                              const SizedBox(
+                                                                  height: 10.0),
                                                       itemBuilder: (context,
                                                           removeme1Index) {
                                                         final removeme1Item =
@@ -706,9 +768,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                             0.0),
                                                                     child:
                                                                         Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
+                                                                      padding: const EdgeInsets
+                                                                          .all(
+                                                                          8.0),
                                                                       child:
                                                                           Row(
                                                                         mainAxisSize:
@@ -895,10 +957,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                       Padding(
                                                                     padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            11.0,
-                                                                            7.0,
-                                                                            0.0),
+                                                                        0.0,
+                                                                        11.0,
+                                                                        7.0,
+                                                                        0.0),
                                                                     child: Transform
                                                                         .rotate(
                                                                       angle: 36.0 *
@@ -942,8 +1004,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                     }
 
                                                     return ListView.separated(
-                                                      padding:
-                                                          const EdgeInsets.fromLTRB(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(
                                                         0,
                                                         10.0,
                                                         0,
@@ -956,8 +1018,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       itemCount:
                                                           removeme2.length,
                                                       separatorBuilder:
-                                                          (_, __) => const SizedBox(
-                                                              height: 10.0),
+                                                          (_, __) =>
+                                                              const SizedBox(
+                                                                  height: 10.0),
                                                       itemBuilder: (context,
                                                           removeme2Index) {
                                                         final removeme2Item =
@@ -1010,7 +1073,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                   padding:
                                                                       const EdgeInsets
                                                                           .all(
-                                                                              8.0),
+                                                                          8.0),
                                                                   child: Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize

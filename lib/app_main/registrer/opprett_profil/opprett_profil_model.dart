@@ -35,6 +35,9 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
       return 'Felt må fylles ut';
     }
 
+    if (!RegExp(kTextValidatorUsernameRegex).hasMatch(val)) {
+      return 'Ugyldig fornavn';
+    }
     return null;
   }
 
@@ -45,6 +48,10 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
   String? _etternavnTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Felt må fylles ut';
+    }
+
+    if (!RegExp(kTextValidatorUsernameRegex).hasMatch(val)) {
+      return 'Ugyldig etternavn';
     }
 
     return null;

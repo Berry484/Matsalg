@@ -7,6 +7,7 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
 
   final formKey1 = GlobalKey<FormState>();
   final formKey2 = GlobalKey<FormState>();
+  // Keycloak regex patterns adapted for Dart
 
   // State field(s) for TabBar widget.
   TabController? tabBarController;
@@ -48,10 +49,8 @@ class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
     if (val == null || val.isEmpty) {
       return 'E-post ugyldig eller opptatt';
     }
-
     // Check if the email format is valid
-    if (!RegExp(r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}')
-        .hasMatch(val)) {
+    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
       return 'Ugyldig epostformat'; // Invalid email format
     }
 

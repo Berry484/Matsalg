@@ -26,6 +26,22 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _chatAlert = prefs.getBool('ff_chatAlert') ?? _chatAlert;
     });
+    _safeInit(() {
+      _brukernavn = prefs.getString('ff_brukernavn') ?? _brukernavn;
+    });
+    _safeInit(() {
+      _firstname = prefs.getString('ff_firstname') ?? _firstname;
+    });
+    _safeInit(() {
+      _lastname = prefs.getString('ff_lastname') ?? _lastname;
+    });
+    _safeInit(() {
+      _bio = prefs.getString('ff_bio') ?? _bio;
+    });
+
+    _safeInit(() {
+      _profilepic = prefs.getString('ff_profilepic') ?? _profilepic;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -35,10 +51,51 @@ class FFAppState extends ChangeNotifier {
 
   late SharedPreferences prefs;
 
+  bool _startet = false;
+  bool get startet => _startet;
+  set startet(bool value) {
+    _startet = value;
+  }
+
   LatLng? _brukersted = const LatLng(40.7127753, -74.0059728);
   LatLng? get brukersted => _brukersted;
   set brukersted(LatLng? value) {
     _brukersted = value;
+  }
+
+  String _brukernavn = "null";
+  String get brukernavn => _brukernavn;
+  set brukernavn(String value) {
+    _brukernavn = value;
+    prefs.setString('ff_brukernavn', value);
+  }
+
+  String _firstname = "null";
+  String get firstname => _firstname;
+  set firstname(String value) {
+    _firstname = value;
+    prefs.setString('ff_firstname', value);
+  }
+
+  String _lastname = "null";
+  String get lastname => _lastname;
+  set lastname(String value) {
+    _lastname = value;
+    prefs.setString('ff_lastname', value);
+  }
+
+  String _bio = "null";
+  String get bio => _bio;
+  set bio(String value) {
+    _bio = value;
+    prefs.setString('ff_bio', value);
+  }
+
+  String _profilepic = "null";
+  String get profilepic => _profilepic;
+  set profilepic(String value) {
+    _profilepic = value;
+    prefs.setString('ff_profilepic', value);
   }
 
   bool _bonde = false;

@@ -319,51 +319,95 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         .validate()) {
                                                   return;
                                                 }
-
-                                                final token = await apiGetToken
-                                                    .getAuthToken(
-                                                        username: _model
-                                                            .emailLoginTextController
-                                                            .text,
-                                                        password: _model
-                                                            .passordLoginTextController
-                                                            .text);
-                                                if (token == null) {
+                                                try {
                                                   final token = await apiGetToken
                                                       .getAuthToken(
-                                                          username: null,
-                                                          phoneNumber: _model
+                                                          username: _model
                                                               .emailLoginTextController
                                                               .text,
                                                           password: _model
                                                               .passordLoginTextController
                                                               .text);
+                                                  if (token == null) {
+                                                    final token = await apiGetToken
+                                                        .getAuthToken(
+                                                            username: null,
+                                                            phoneNumber: _model
+                                                                .emailLoginTextController
+                                                                .text,
+                                                            password: _model
+                                                                .passordLoginTextController
+                                                                .text);
+
+                                                    if (token != null) {
+                                                      final auth = secureStorage
+                                                          .writeToken(token);
+                                                      final response =
+                                                          await apiCalls
+                                                              .whoOwnToken(
+                                                                  token);
+                                                      FFAppState().brukernavn =
+                                                          response.body;
+                                                      if (response.statusCode ==
+                                                          200) {
+                                                        context.goNamed('Hjem');
+                                                        return;
+                                                      }
+
+                                                      if (response.statusCode !=
+                                                          200) {
+                                                        throw (Exception());
+                                                      }
+                                                    }
+                                                  }
 
                                                   if (token != null) {
-                                                    final auth = secureStorage
+                                                    secureStorage
                                                         .writeToken(token);
+                                                    final response =
+                                                        await apiCalls
+                                                            .whoOwnToken(token);
+                                                    if (response.statusCode ==
+                                                        200) {
+                                                      FFAppState().brukernavn =
+                                                          response.body;
+                                                    }
                                                     context.goNamed('Hjem');
                                                     return;
+                                                  } else {
+                                                    _model
+                                                        .passordLoginTextController
+                                                        ?.clear();
+                                                    _model
+                                                        .emailLoginTextController
+                                                        ?.clear();
+                                                    _model.formKey1.currentState
+                                                        ?.validate();
                                                   }
-                                                }
-
-                                                if (token != null) {
-                                                  final auth =
-                                                      await secureStorage
-                                                          .writeToken(token);
-                                                  if (auth != null) {
-                                                    context.goNamed('Hjem');
-                                                    return;
-                                                  }
-                                                } else {
-                                                  _model
-                                                      .passordLoginTextController
-                                                      ?.clear();
-                                                  _model
-                                                      .emailLoginTextController
-                                                      ?.clear();
-                                                  _model.formKey1.currentState
-                                                      ?.validate();
+                                                } catch (e) {
+                                                  // Show error dialog
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text(
+                                                            'Noe gikk galt'),
+                                                        content: const Text(
+                                                            'Vi har problemer med å fullføre forespørselen din. Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            child: Text('OK'),
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(); // Close the dialog
+                                                            },
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
                                                 }
                                               },
                                               text: 'Logg inn',
@@ -748,50 +792,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                 0, 24, 0, 0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
-                                                        //Check if the email is available:
-                                                        //Check if email is not taken:
-                                                        final response =
-                                                            await apiCalls
-                                                                .checkEmailTaken(
-                                                                    _model
-                                                                        .epostLagTextController
-                                                                        .text);
-
-                                                        // Check the response and display a message
-                                                        if (response
-                                                                .statusCode ==
-                                                            200) {
-                                                        } else {
-                                                          safeSetState(() {
-                                                            _model
-                                                                .epostLagTextController
-                                                                ?.clear();
-                                                          });
-                                                        }
-
-                                                        //Rest of the logic here:
-                                                        if (_model.formKey2
-                                                                    .currentState ==
-                                                                null ||
-                                                            !_model.formKey2
-                                                                .currentState!
-                                                                .validate()) {
-                                                          return;
-                                                        }
-                                                        if (_model
-                                                                .passordLagTextController
-                                                                .text !=
-                                                            _model
-                                                                .bekreftPassordLagTextController
-                                                                .text) {
-                                                          safeSetState(() {
-                                                            _model
-                                                                .bekreftPassordLagTextController
-                                                                ?.clear();
-                                                            _model
-                                                                .passordLagTextController
-                                                                ?.clear();
-                                                          });
+                                                        try {
                                                           if (_model.formKey2
                                                                       .currentState ==
                                                                   null ||
@@ -800,32 +801,114 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                                   .validate()) {
                                                             return;
                                                           }
-                                                        }
+                                                          //Check if the email is available:
+                                                          //Check if email is not taken:
+                                                          final response =
+                                                              await apiCalls
+                                                                  .checkEmailTaken(
+                                                                      _model
+                                                                          .epostLagTextController
+                                                                          .text);
 
-                                                        context.pushNamed(
-                                                          'BekreftTLF',
-                                                          queryParameters: {
-                                                            'bonde':
-                                                                serializeParam(
-                                                              false,
-                                                              ParamType.bool,
-                                                            ),
-                                                            'email':
-                                                                serializeParam(
+                                                          // Check the response and display a message
+                                                          if (response
+                                                                  .statusCode ==
+                                                              200) {
+                                                          } else {
+                                                            safeSetState(() {
                                                               _model
                                                                   .epostLagTextController
-                                                                  .text,
-                                                              ParamType.String,
-                                                            ),
-                                                            'password':
-                                                                serializeParam(
+                                                                  ?.clear();
+                                                            });
+                                                          }
+
+                                                          //Rest of the logic here:
+                                                          if (_model.formKey2
+                                                                      .currentState ==
+                                                                  null ||
+                                                              !_model.formKey2
+                                                                  .currentState!
+                                                                  .validate()) {
+                                                            return;
+                                                          }
+                                                          if (_model
+                                                                  .passordLagTextController
+                                                                  .text !=
+                                                              _model
+                                                                  .bekreftPassordLagTextController
+                                                                  .text) {
+                                                            safeSetState(() {
+                                                              _model
+                                                                  .bekreftPassordLagTextController
+                                                                  ?.clear();
                                                               _model
                                                                   .passordLagTextController
-                                                                  .text,
-                                                              ParamType.String,
-                                                            ),
-                                                          }.withoutNulls,
-                                                        );
+                                                                  ?.clear();
+                                                            });
+                                                            if (_model.formKey2
+                                                                        .currentState ==
+                                                                    null ||
+                                                                !_model.formKey2
+                                                                    .currentState!
+                                                                    .validate()) {
+                                                              return;
+                                                            }
+                                                          }
+
+                                                          context.pushNamed(
+                                                            'BekreftTLF',
+                                                            queryParameters: {
+                                                              'bonde':
+                                                                  serializeParam(
+                                                                false,
+                                                                ParamType.bool,
+                                                              ),
+                                                              'email':
+                                                                  serializeParam(
+                                                                _model
+                                                                    .epostLagTextController
+                                                                    .text,
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                              'password':
+                                                                  serializeParam(
+                                                                _model
+                                                                    .passordLagTextController
+                                                                    .text,
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                            }.withoutNulls,
+                                                          );
+                                                        } catch (e) {
+                                                          // Show error dialog
+                                                          showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return AlertDialog(
+                                                                title: Text(
+                                                                    'Feil'),
+                                                                content: const Text(
+                                                                    'En uforvented feil oppstod. Prøv igjen senere eller kontakt oss igjennom nettsiden.'),
+                                                                actions: <Widget>[
+                                                                  TextButton(
+                                                                    child: Text(
+                                                                        'OK'),
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop(); // Close the dialog
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+                                                        }
                                                       },
                                                       text: 'Fortsett',
                                                       icon: FaIcon(

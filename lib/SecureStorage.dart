@@ -8,7 +8,7 @@ class Securestorage {
   static const FlutterSecureStorage storage = FlutterSecureStorage();
 
 // Global variable to hold the token in memory
-  String? AuthToken;
+  static String? authToken;
   String baseurl = ApiConstants.baseUrl;
 
 // Global variable to hold the validity status of the token
@@ -18,8 +18,7 @@ class Securestorage {
   Future<String?> writeToken(String? token) async {
     try {
       await storage.write(key: 'access_token', value: token);
-      print('Token stored successfully!');
-      AuthToken = token;
+      authToken = token;
       return token;
     } catch (e) {
       print('Error storing token: $e');
@@ -32,7 +31,7 @@ class Securestorage {
       final token = await storage.read(key: 'access_token');
       if (token != null) {
         print('Token retrieved successfully!');
-        AuthToken = token;
+        authToken = token;
       } else {
         print('No token found');
       }
@@ -49,14 +48,14 @@ class Securestorage {
       final token =
           await readToken(); // Use the readToken function to get the token
       if (token != null) {
-        AuthToken = token; // Store the token in the global variable
+        authToken = token; // Store the token in the global variable
         print('Token stored in memory successfully!');
 
         // Send an HTTP GET request with the token as a Bearer token, with a timeout
         final response = await http.get(
           Uri.parse('$baseurl/rrh/test_noe'),
           headers: {
-            'Authorization': 'Bearer $AuthToken',
+            'Authorization': 'Bearer $authToken',
             'Content-Type': 'application/json',
           },
         ).timeout(const Duration(seconds: 5)); // Set a timeout of 5 seconds

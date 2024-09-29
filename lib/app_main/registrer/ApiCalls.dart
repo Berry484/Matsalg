@@ -1,8 +1,7 @@
-import 'dart:convert';
-import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
+import 'package:http_parser/http_parser.dart';
 
 class ApiCalls {
   static const String baseUrl = ApiConstants.baseUrl; // Your base URL
@@ -23,7 +22,34 @@ class ApiCalls {
   Future<http.Response> checkPhoneTaken(String phoneNumber) async {
     final response = await http
         .get(Uri.parse('$baseUrl/rrh/check-phone?phoneNumber=$phoneNumber'));
-    print(response.body);
+
+    return response; // Return the response
+  }
+
+  Future<http.Response> checkUserInfo(String username, String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/rrh/brukere/$username'),
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      // Parse the response body as JSON
+      return response;
+    } else {
+      // Print error details if status code is not 200
+      return response;
+    }
+  }
+
+  Future<http.Response> whoOwnToken(String token) async {
+    final response =
+        await http.get(Uri.parse('$baseUrl/rrh/tokeneier?token=$token'));
     return response; // Return the response
   }
 
@@ -77,6 +103,7 @@ class ApiUserSQL {
   Future<http.Response> createOrUpdateUserInfo({
     required String username,
     required String bio,
+    String? profilepic,
     required LatLng posisjon,
     String? token, // Add token parameter
   }) async {
@@ -84,6 +111,7 @@ class ApiUserSQL {
     final Map<String, dynamic> userInfoData = {
       "username": username,
       "bio": bio,
+      "profile_picture": profilepic,
       "lat": posisjon.latitude,
       "lng": posisjon.longitude
     };
@@ -112,7 +140,7 @@ class ApiUserSQL {
 
 class ApiGetToken {
   // ----Create or Update User Info Method---------------
-  // Method to create or update user information in the UserInfoController
+  // Method to getAuthToken
 
   static const String baseUrl = ApiConstants.baseUrl; // Your base URL
 
@@ -148,12 +176,64 @@ class ApiGetToken {
       return accessToken; // Return the access token
     } else {
       // Handle the error
-      print('Request failed with status: ${response.statusCode}.');
-      print(response.body);
-      print(username);
-      print(password);
-      print(phoneNumber);
+
       return null; // Return null if there's an error
+    }
+  }
+}
+
+class ApiUploadProfilePic {
+  static const String baseUrl = ApiConstants.baseUrl; // Your base URL
+
+  // Method to upload profile picture from nullable Uint8List
+  Future<String?> uploadProfilePic({
+    String? token,
+    required Uint8List? fileData, // The file data as nullable Uint8List
+    String fileType = 'jpeg', // Default to 'jpeg', can be changed as needed
+  }) async {
+    // Check if fileData is null
+    if (fileData == null) {
+      return null; // Handle the error as needed
+    }
+
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('$baseUrl/files/rrh/sendbilde'),
+      );
+
+      // If token is needed for authorization
+      if (token != null) {
+        request.headers['Authorization'] = 'Bearer $token';
+      }
+
+      // Add file data (Uint8List) to the request
+      request.files.add(
+        http.MultipartFile.fromBytes(
+          'file', // Key should match the server's expected form-data key
+          fileData,
+          contentType:
+              MediaType('image', fileType), // Use image/jpeg by default
+          filename:
+              'profile_pic.$fileType', // Use a filename with the .jpeg extension
+        ),
+      );
+
+      // Send the request and wait for the response
+      var response = await request.send();
+
+      // Convert the response to a String
+      var responseString = await http.Response.fromStream(response);
+      if (response.statusCode == 200) {
+        // Decode the JSON response to get the fileLink
+        final Map<String, dynamic> responseJson =
+            jsonDecode(responseString.body);
+        return responseJson['fileLink']; // Return only the fileLink
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
     }
   }
 }
