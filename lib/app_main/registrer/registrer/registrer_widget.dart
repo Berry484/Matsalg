@@ -137,7 +137,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                   _model.emailLoginFocusNode,
                                               obscureText: false,
                                               decoration: InputDecoration(
-                                                labelText: 'E-post',
+                                                labelText: 'Tlf eller E-post',
                                                 alignLabelWithHint: false,
                                                 enabledBorder:
                                                     OutlineInputBorder(
