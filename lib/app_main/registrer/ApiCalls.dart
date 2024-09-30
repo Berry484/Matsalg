@@ -52,17 +52,29 @@ class ApiCalls {
         await http.get(Uri.parse('$baseUrl/rrh/tokeneier?token=$token'));
     return response; // Return the response
   }
+}
 
-  //----Opprett bruker i keycloak---------------
-  // Define the method to create a user
-  Future<http.Response> createUser({
+//----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+
+//----Opprett bruker i keycloak---------------
+// Define the method to create a user
+class RegisterUser {
+  Future<http.Response> createUser1({
     required String username,
     required String? email,
     required String? password,
     required String? phoneNumber,
     required String firstName,
     required String lastName,
+    String? bio,
+    LatLng? posisjon,
   }) async {
+    // Base URL for the API
+    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+
     // Create the user data as a Map
     final Map<String, dynamic> userData = {
       "username": username,
@@ -82,10 +94,17 @@ class ApiCalls {
     // Convert the Map to JSON
     final String jsonBody = jsonEncode(userData);
 
+    // Prepare URL with encoded parameters
+    final uri =
+        Uri.parse('$baseUrl/rrh/bruker/opprett').replace(queryParameters: {
+      'bio': bio,
+      'lat': posisjon?.latitude?.toString(),
+      'lng': posisjon?.longitude?.toString(),
+    });
+
     // Send the POST request
     final response = await http.post(
-      Uri.parse(
-          '$baseUrl/rrh/bruker/opprett'), // Adjust the endpoint as necessary
+      uri, // Use the updated URI with query parameters
       headers: {'Content-Type': 'application/json'},
       body: jsonBody,
     );
@@ -185,11 +204,11 @@ class ApiGetToken {
 class ApiUploadProfilePic {
   static const String baseUrl = ApiConstants.baseUrl; // Your base URL
 
-  // Method to upload profile picture from nullable Uint8List
   Future<String?> uploadProfilePic({
     String? token,
     required Uint8List? fileData, // The file data as nullable Uint8List
     String fileType = 'jpeg', // Default to 'jpeg', can be changed as needed
+    String? username,
   }) async {
     // Check if fileData is null
     if (fileData == null) {
@@ -219,21 +238,27 @@ class ApiUploadProfilePic {
         ),
       );
 
+      // Include the username as a part of the request
+      if (username != null) {
+        request.fields['username'] = username; // Add username to the request
+      }
+
       // Send the request and wait for the response
       var response = await request.send();
 
-      // Convert the response to a String
+      // Get the response status code
       var responseString = await http.Response.fromStream(response);
+
+      // Check if the status code is 200 (success)
       if (response.statusCode == 200) {
-        // Decode the JSON response to get the fileLink
         final Map<String, dynamic> responseJson =
             jsonDecode(responseString.body);
-        return responseJson['fileLink']; // Return only the fileLink
+        return responseJson['fileLink']; // Return the file link as a string
       } else {
-        return null;
+        return null; // Or handle the error as needed
       }
     } catch (e) {
-      return null;
+      return null; // Handle exceptions as needed
     }
   }
 }

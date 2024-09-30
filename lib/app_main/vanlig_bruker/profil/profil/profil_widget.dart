@@ -30,18 +30,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Map<String, dynamic>? userInfo = {
-    "id": 1,
-    "username": " ",
-    "firstname": " ",
-    "lastname": " ",
-    "profile_picture":
-        "http://192.168.1.40:8080/files/a2cb1172-263b-4b52-bc7d-16896188b441",
-    "email": " ",
-    "bio": " ",
-    "lat": 59.151288855131426,
-    "lng": 11.369226646823371
-  };
+  Map<String, dynamic>? userInfo;
 
   @override
   void initState() {
@@ -50,48 +39,59 @@ class _ProfilWidgetState extends State<ProfilWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      try {
-        String brukernavn = FFAppState().brukernavn;
-        if (FFAppState().startet == false) {
-          FFAppState().startet = true;
+      Future<void> _loadUserInfo() async {
+        try {
+          String brukernavn = FFAppState().brukernavn;
+          print(brukernavn);
 
-          final response =
-              await apicalls.checkUserInfo(brukernavn, Securestorage.authToken);
-          if (response.statusCode == 200) {
-            setState(() {
-              userInfo = jsonDecode(
-                  response.body); // Update userInfo with fetched data
-              FFAppState().firstname = '${userInfo!['firstname']}';
-              FFAppState().lastname = '${userInfo!['lastname']}';
-              FFAppState().brukernavn = '${userInfo!['brukernavn']}';
-              FFAppState().bio = '${userInfo!['bio']}';
-              FFAppState().profilepic = '${userInfo!['profile_picture']}';
-            });
+          if (!FFAppState().startet) {
+            FFAppState().startet = true;
+
+            final response = await apicalls.checkUserInfo(
+                brukernavn, Securestorage.authToken);
+            if (response.statusCode == 200) {
+              final decodedResponse = jsonDecode(response.body);
+              setState(() {
+                userInfo = decodedResponse; // Update userInfo with fetched data
+                FFAppState().firstname = decodedResponse['firstname'] ?? '';
+                FFAppState().lastname = decodedResponse['lastname'] ?? '';
+                FFAppState().brukernavn = decodedResponse['brukernavn'] ?? '';
+                FFAppState().bio = decodedResponse['bio'] ?? '';
+                FFAppState().profilepic =
+                    decodedResponse['profile_picture'] ?? '';
+              });
+            } else {
+              throw Exception(
+                  'Failed to fetch user info: ${response.statusCode}');
+            }
           }
-          if (response.statusCode != 200) {
-            throw Exception();
-          }
-        } else {}
-      } catch (e) {
-        // Show error dialog
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Noe gikk galt'),
-              content: const Text(
-                  'Vi har problemer med å fullføre forespørselen din. Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
-                ),
-              ],
+        } catch (e) {
+          // Log the error for debugging
+          print('Error fetching user info: $e');
+
+          // Show error dialog
+          if (mounted) {
+            // Check if the widget is still mounted
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Noe gikk galt'),
+                  content: const Text(
+                      'Vi har problemer med å fullføre forespørselen din. Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                    ),
+                  ],
+                );
+              },
             );
-          },
-        );
+          }
+        }
       }
     });
 

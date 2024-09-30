@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:mat_salg/app_main/registrer/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
 import 'hjem_model.dart';
 export 'hjem_model.dart';
 
@@ -24,7 +26,10 @@ class _HjemWidgetState extends State<HjemWidget> {
   late HjemModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final ApiCalls apicalls = ApiCalls();
+  final Securestorage securestorage = Securestorage();
   LatLng? currentUserLocationValue;
+  Map<String, dynamic>? userInfo;
 
   @override
   void initState() {
@@ -33,6 +38,61 @@ class _HjemWidgetState extends State<HjemWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      Future<void> _loadUserInfo() async {
+        try {
+          String brukernavn = FFAppState().brukernavn;
+          print(brukernavn);
+
+          if (!FFAppState().startet) {
+            FFAppState().startet = true;
+
+            final response = await apicalls.checkUserInfo(
+                brukernavn, Securestorage.authToken);
+            if (response.statusCode == 200) {
+              final decodedResponse = jsonDecode(response.body);
+              setState(() {
+                userInfo = decodedResponse; // Update userInfo with fetched data
+                FFAppState().firstname = decodedResponse['firstname'] ?? '';
+                FFAppState().lastname = decodedResponse['lastname'] ?? '';
+                FFAppState().brukernavn = decodedResponse['brukernavn'] ?? '';
+                FFAppState().bio = decodedResponse['bio'] ?? '';
+                FFAppState().profilepic =
+                    decodedResponse['profile_picture'] ?? '';
+              });
+            } else {
+              throw Exception(
+                  'Failed to fetch user info: ${response.statusCode}');
+            }
+          }
+        } catch (e) {
+          // Log the error for debugging
+          print('Error fetching user info: $e');
+
+          // Show error dialog
+          if (mounted) {
+            // Check if the widget is still mounted
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Noe gikk galt'),
+                  content: const Text(
+                      'Vi har problemer med å fullføre forespørselen din. Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        }
+      }
+
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
       FFAppState().brukersted = currentUserLocationValue;

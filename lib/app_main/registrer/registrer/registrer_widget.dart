@@ -320,6 +320,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                   return;
                                                 }
                                                 try {
+                                                  FFAppState().startet = false;
                                                   final token = await apiGetToken
                                                       .getAuthToken(
                                                           username: _model

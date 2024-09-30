@@ -42,6 +42,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   final ApiGetToken apiGetToken = ApiGetToken();
   final Securestorage secureStorage = Securestorage();
   final ApiUploadProfilePic apiUploadProfilePic = ApiUploadProfilePic();
+  final RegisterUser registerUser = RegisterUser();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -691,100 +692,53 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                             return;
                           }
                           try {
-                            final response = await apiCalls.checkUsernameTaken(
-                                _model.brukernavnTextController.text);
+                            String username =
+                                _model.brukernavnTextController.text.trim();
+                            String firstName =
+                                _model.fornavnTextController.text.trim();
+                            String lastName =
+                                _model.etternavnTextController.text.trim();
+                            String? bio = _model.bioTextController.text.trim();
 
-                            // Check the response and display a message
+                            // Call the createUser method
+                            final response = await registerUser.createUser1(
+                              username: username,
+                              email: widget.email,
+                              firstName: firstName,
+                              lastName: lastName,
+                              phoneNumber: widget.phone,
+                              password: widget.password,
+                              bio: bio,
+                              posisjon: widget.posisjon,
+                            );
                             if (response.statusCode == 200) {
-                              String username =
-                                  _model.brukernavnTextController.text.trim();
-                              String firstName =
-                                  _model.fornavnTextController.text.trim();
-                              String lastName =
-                                  _model.etternavnTextController.text.trim();
-
-                              // Call the createUser method
-                              final response = await apiCalls.createUser(
-                                username: username,
-                                email: widget.email,
-                                firstName: firstName,
-                                lastName: lastName,
-                                phoneNumber: widget.phone,
-                                password: widget.password,
-                              );
-                              // Handle the response
-                              if (response.statusCode == 200) {
-                                String? accessToken =
-                                    await apiGetToken.getAuthToken(
-                                  username: username,
-                                  password: widget.password,
-                                  phoneNumber: widget.phone,
-                                );
-                                if (accessToken == null) {
-                                  throw (Exception());
-                                }
-                                if (_model.uploadedLocalFile != null &&
-                                    (_model.uploadedLocalFile.bytes
-                                            ?.isNotEmpty ??
-                                        false)) {
-                                  Uint8List? image =
-                                      _model.uploadedLocalFile.bytes;
-                                  String? profilepic = await apiUploadProfilePic
-                                      .uploadProfilePic(fileData: image);
-
-                                  String bio =
-                                      _model.bioTextController.text.trim();
-                                  final response =
-                                      await apiUserSQL.createOrUpdateUserInfo(
-                                    username: username,
-                                    profilepic: profilepic,
-                                    bio: bio,
-                                    posisjon: widget.posisjon,
-                                    token: accessToken,
-                                  );
-                                  if (response.statusCode == 200) {
-                                    final token = await secureStorage
-                                        .writeToken(accessToken);
-                                    if (token == null) {
-                                      throw (Exception());
-                                    }
-                                    if (response.statusCode != 200) {
-                                      throw (Exception());
-                                    }
-                                    FFAppState().brukernavn = username;
-                                  }
-                                } else {
-                                  String bio =
-                                      _model.bioTextController.text.trim();
-                                  final response =
-                                      await apiUserSQL.createOrUpdateUserInfo(
-                                    username: username,
-                                    bio: bio,
-                                    posisjon: widget.posisjon,
-                                    token: accessToken,
-                                  );
-                                  if (response.statusCode == 200) {
-                                    final token = await secureStorage
-                                        .writeToken(accessToken);
-                                    if (token == null) {
-                                      throw (Exception());
-                                    }
-                                    if (response.statusCode != 200) {
-                                      throw (Exception());
-                                    }
-                                  }
-                                  FFAppState().brukernavn = username;
-                                }
-
-                                if (response.statusCode != 200) {
-                                  safeSetState(() {
-                                    _model.brukernavnTextController?.clear();
-                                  });
-                                }
-                              } else {
+                              final token =
+                                  await secureStorage.writeToken(response.body);
+                              if (token == null) {
                                 throw (Exception());
                               }
-                            } else {
+                              FFAppState().brukernavn = username;
+                              FFAppState().firstname = firstName;
+                              FFAppState().lastname = lastName;
+                              FFAppState().bio = bio ?? ' ';
+                              if (_model.uploadedLocalFile != null &&
+                                  (_model.uploadedLocalFile.bytes?.isNotEmpty ??
+                                      false)) {
+                                Uint8List? image =
+                                    _model.uploadedLocalFile.bytes;
+                                final response =
+                                    await apiUploadProfilePic.uploadProfilePic(
+                                  fileData: image,
+                                  username: username,
+                                );
+                                // Check if the response is not null and the status code is 200
+                                if (response != null && response != 'null') {
+                                  FFAppState().profilepic = response;
+                                }
+                              }
+                            }
+
+                            if (response.statusCode != 200) {
                               safeSetState(() {
                                 _model.brukernavnTextController?.clear();
                               });
@@ -804,9 +758,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text('Feil'),
+                                  title: const Text(
+                                      'Ops! en uforventet feil oppstod'),
                                   content: const Text(
-                                      'En uforvented feil oppstod. Prøv igjen senere eller kontakt oss igjennom nettsiden.'),
+                                      'En uforvented feil oppstod. Prøv igjen senere eller hvis problemet vedvarer kontakt oss'),
                                   actions: <Widget>[
                                     TextButton(
                                       child: Text('OK'),
