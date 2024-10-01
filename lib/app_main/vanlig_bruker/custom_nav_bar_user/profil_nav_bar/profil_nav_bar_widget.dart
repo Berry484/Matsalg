@@ -160,8 +160,8 @@ class _ProfilNavBarWidgetState extends State<ProfilNavBarWidget> {
                         extra: <String, dynamic>{
                           kTransitionInfoKey: const TransitionInfo(
                             hasTransition: true,
-                            transitionType: PageTransitionType.fade,
-                            duration: Duration(milliseconds: 0),
+                            transitionType: PageTransitionType.bottomToTop,
+                            duration: Duration(milliseconds: 200),
                           ),
                         },
                       );

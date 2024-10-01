@@ -1,4 +1,3 @@
-import '/app_main/vanlig_bruker/custom_nav_bar_user/legg_ut_nav_bar/legg_ut_nav_bar_widget.dart';
 import '/app_main/vanlig_bruker/legg_ut/velg_pos/velg_pos_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -34,6 +33,7 @@ class LeggUtMatvareWidget extends StatefulWidget {
 class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     with TickerProviderStateMixin {
   late LeggUtMatvareModel _model;
+  final FocusNode _hiddenFocusNode = FocusNode();
 
   final ApiCalls apiCalls = ApiCalls();
 
@@ -74,7 +74,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
   @override
   void dispose() {
     _model.dispose();
-
+    _hiddenFocusNode.dispose();
     super.dispose();
   }
 
@@ -94,22 +94,33 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: true,
-            leading: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.safePop();
-              },
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).alternate,
-                size: 28.0,
+            leading: Align(
+              alignment: AlignmentDirectional(0, 0),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(9, 0, 0, 0),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.safePop();
+                  },
+                  child: Text(
+                    'Avbryt',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Open Sans',
+                          color: FlutterFlowTheme.of(context).info,
+                          fontSize: 14,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ),
               ),
             ),
             title: Text(
-              'Legg ut matvare',
+              'Publiser matvare',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Montserrat',
@@ -2562,6 +2573,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           0.0, 24.0, 0.0, 80.0),
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
+                                                      FocusScope.of(context)
+                                                          .requestFocus(
+                                                              FocusNode());
+
                                                       // Capture the returned LatLng from the modal bottom sheet
                                                       selectedLatLng =
                                                           await showModalBottomSheet<
@@ -2570,8 +2585,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             true,
                                                         backgroundColor:
                                                             Colors.transparent,
-                                                        isDismissible: false,
-                                                        enableDrag: false,
                                                         context: context,
                                                         builder: (context) {
                                                           return GestureDetector(
@@ -2584,11 +2597,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .viewInsetsOf(
                                                                       context),
                                                               child:
-                                                                  const VelgPosWidget(), // Replace with the widget where you return the LatLng
+                                                                  const VelgPosWidget(),
+                                                              // Replace with the widget where you return the LatLng
                                                             ),
                                                           );
                                                         },
                                                       );
+                                                      setState(() {});
                                                     },
                                                     text: 'Velg posisjon',
                                                     options: FFButtonOptions(
@@ -3160,13 +3175,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       );
                                                     }
                                                   },
-                                                  text: 'Legg ut matvare',
+                                                  text: 'Publiser',
                                                   icon: const FaIcon(
                                                     FontAwesomeIcons.check,
                                                     size: 20.0,
                                                   ),
                                                   options: FFButtonOptions(
-                                                    width: 270.0,
+                                                    width: 220.0,
                                                     height: 45.0,
                                                     padding:
                                                         const EdgeInsetsDirectional
@@ -3281,7 +3296,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 Align(
                                                   alignment:
                                                       const AlignmentDirectional(
-                                                          0.0, 0.05),
+                                                          0.0, 0.09),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
@@ -3355,11 +3370,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                       ],
                     ),
                   ),
-                ),
-                wrapWithModel(
-                  model: _model.leggUtNavBarModel,
-                  updateCallback: () => safeSetState(() {}),
-                  child: const LeggUtNavBarWidget(),
                 ),
               ],
             ),

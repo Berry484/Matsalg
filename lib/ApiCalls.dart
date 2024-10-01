@@ -232,10 +232,12 @@ class ApiUploadProfilePic {
 
       // Include the username as a part of the request
       if (username != null) {
-        request.fields['username'] = username; // Add username to the request
+        request.fields['username'] = username;
+        request.fields['profilbilde'] = 'true';
       }
 
       // Send the request and wait for the response
+      print(username);
       var response = await request.send();
 
       // Get the response status code
