@@ -1,3 +1,7 @@
+import 'package:mat_salg/auth/custom_auth/auth_util.dart';
+import 'package:mat_salg/auth/custom_auth/custom_auth_manager.dart';
+import 'package:mat_salg/auth/custom_auth/custom_auth_user_provider.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -326,54 +330,54 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                           username: _model
                                                               .emailLoginTextController
                                                               .text,
+                                                          phoneNumber: _model
+                                                              .emailLoginTextController
+                                                              .text,
                                                           password: _model
                                                               .passordLoginTextController
                                                               .text);
-                                                  if (token == null) {
-                                                    final token = await apiGetToken
-                                                        .getAuthToken(
-                                                            username: null,
-                                                            phoneNumber: _model
-                                                                .emailLoginTextController
-                                                                .text,
-                                                            password: _model
-                                                                .passordLoginTextController
-                                                                .text);
-
-                                                    if (token != null) {
-                                                      final auth = secureStorage
-                                                          .writeToken(token);
-                                                      final response =
-                                                          await apiCalls
-                                                              .whoOwnToken(
-                                                                  token);
-                                                      FFAppState().brukernavn =
-                                                          response.body;
-                                                      if (response.statusCode ==
-                                                          200) {
-                                                        context.goNamed('Hjem');
-                                                        return;
-                                                      }
-
-                                                      if (response.statusCode !=
-                                                          200) {
-                                                        throw (Exception());
-                                                      }
-                                                    }
-                                                  }
 
                                                   if (token != null) {
                                                     secureStorage
                                                         .writeToken(token);
                                                     final response =
                                                         await apiCalls
-                                                            .whoOwnToken(token);
+                                                            .checkUserInfo(
+                                                                Securestorage
+                                                                    .authToken);
                                                     if (response.statusCode ==
                                                         200) {
+                                                      final decodedResponse =
+                                                          jsonDecode(
+                                                              response.body);
                                                       FFAppState().brukernavn =
-                                                          response.body;
+                                                          decodedResponse[
+                                                                  'brukernavn'] ??
+                                                              '';
+                                                      FFAppState().firstname =
+                                                          decodedResponse[
+                                                                  'firstname'] ??
+                                                              '';
+                                                      FFAppState().lastname =
+                                                          decodedResponse[
+                                                                  'lastname'] ??
+                                                              '';
+                                                      FFAppState().brukernavn =
+                                                          decodedResponse[
+                                                                  'brukernavn'] ??
+                                                              '';
+                                                      FFAppState().bio =
+                                                          decodedResponse[
+                                                                  'bio'] ??
+                                                              '';
+                                                      FFAppState().profilepic =
+                                                          decodedResponse[
+                                                                  'profile_picture'] ??
+                                                              '';
                                                     }
-                                                    context.goNamed('Hjem');
+                                                    context.pushNamed('Hjem');
+                                                    FFAppState().login = true;
+
                                                     return;
                                                   } else {
                                                     _model
@@ -393,9 +397,9 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                                         (BuildContext context) {
                                                       return AlertDialog(
                                                         title: Text(
-                                                            'Noe gikk galt'),
+                                                            'Oopps. Noe gikk galt'),
                                                         content: const Text(
-                                                            'Vi har problemer med å fullføre forespørselen din. Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
+                                                            'Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
                                                         actions: <Widget>[
                                                           TextButton(
                                                             child: Text('OK'),

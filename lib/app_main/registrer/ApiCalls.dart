@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:mat_salg/MyIP.dart';
+import 'dart:async'; // Import this to use Future and TimeoutException
 import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -26,31 +27,25 @@ class ApiCalls {
     return response; // Return the response
   }
 
-  Future<http.Response> checkUserInfo(String username, String? token) async {
+  Future<http.Response> checkUserInfo(String? token) async {
     final headers = {
       'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
+      'Authorization': 'Bearer $token',
     };
 
-    final response = await http.get(
-      Uri.parse('$baseUrl/rrh/brukere/$username'),
-      headers: headers,
-    );
+    // Using the timeout method
+    try {
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/brukere/brukerinfo'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Set timeout to 7 seconds
 
-    if (response.statusCode == 200) {
-      // Parse the response body as JSON
       return response;
-    } else {
-      // Print error details if status code is not 200
-      return response;
+    } on TimeoutException {
+      return http.Response('Request timed out', 500);
     }
-  }
-
-  Future<http.Response> whoOwnToken(String token) async {
-    final response =
-        await http.get(Uri.parse('$baseUrl/rrh/tokeneier?token=$token'));
-    return response; // Return the response
   }
 }
 
@@ -98,8 +93,8 @@ class RegisterUser {
     final uri =
         Uri.parse('$baseUrl/rrh/bruker/opprett').replace(queryParameters: {
       'bio': bio,
-      'lat': posisjon?.latitude?.toString(),
-      'lng': posisjon?.longitude?.toString(),
+      'lat': posisjon?.latitude.toString(),
+      'lng': posisjon?.longitude.toString(),
     });
 
     // Send the POST request
@@ -164,9 +159,9 @@ class ApiGetToken {
   static const String baseUrl = ApiConstants.baseUrl; // Your base URL
 
   Future<String?> getAuthToken({
-    String? username,
+    required String? username,
     required String? password,
-    String? phoneNumber,
+    required String? phoneNumber,
   }) async {
     // Create the user info data as a Map
     final Map<String, dynamic> userInfoData = {
@@ -189,13 +184,10 @@ class ApiGetToken {
     if (response.statusCode == 200) {
       // Parse the JSON response
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-
       // Extract the access token
       String? accessToken = jsonResponse['access_token'];
       return accessToken; // Return the access token
     } else {
-      // Handle the error
-
       return null; // Return null if there's an error
     }
   }

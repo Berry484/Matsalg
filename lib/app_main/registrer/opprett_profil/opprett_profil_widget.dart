@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -193,10 +191,9 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                 child: Stack(
                                   alignment: AlignmentDirectional(1, -1),
                                   children: [
-                                    if (_model.uploadedLocalFile != null &&
-                                        (_model.uploadedLocalFile.bytes
-                                                ?.isNotEmpty ??
-                                            false))
+                                    if (_model.uploadedLocalFile.bytes
+                                            ?.isNotEmpty ??
+                                        false)
                                       Align(
                                         alignment:
                                             AlignmentDirectional(-0.39, 0.03),
@@ -219,7 +216,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   _model.uploadedLocalFile
                                                           .bytes ??
                                                       Uint8List.fromList([]),
-                                                  fit: BoxFit.fill,
+                                                  fit: BoxFit.cover,
                                                   errorBuilder: (context, error,
                                                           stackTrace) =>
                                                       Image.asset(
@@ -247,10 +244,9 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                           ],
                                         ),
                                       ),
-                                    if (_model.uploadedLocalFile != null &&
-                                        (_model.uploadedLocalFile.bytes
-                                                ?.isNotEmpty ??
-                                            false))
+                                    if (_model.uploadedLocalFile.bytes
+                                            ?.isNotEmpty ??
+                                        false)
                                       Align(
                                         alignment: AlignmentDirectional(1, -1),
                                         child: Padding(
@@ -282,10 +278,9 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                           ),
                                         ),
                                       ),
-                                    if (_model.uploadedLocalFile == null ||
-                                        (_model.uploadedLocalFile.bytes
-                                                ?.isEmpty ??
-                                            true))
+                                    if ((_model
+                                            .uploadedLocalFile.bytes?.isEmpty ??
+                                        true))
                                       Align(
                                         alignment:
                                             AlignmentDirectional(-0.39, 0.03),
@@ -613,7 +608,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                               labelStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
-                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontFamily: 'Open Sans',
                                     color: Color(0xFF57636C),
                                     fontSize: 14,
                                     letterSpacing: 0.0,
@@ -623,7 +618,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
-                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontFamily: 'Open Sans',
                                     color: Color(0xFF57636C),
                                     fontSize: 14,
                                     letterSpacing: 0.0,
@@ -720,10 +715,9 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                               FFAppState().brukernavn = username;
                               FFAppState().firstname = firstName;
                               FFAppState().lastname = lastName;
-                              FFAppState().bio = bio ?? ' ';
-                              if (_model.uploadedLocalFile != null &&
-                                  (_model.uploadedLocalFile.bytes?.isNotEmpty ??
-                                      false)) {
+                              FFAppState().bio = bio;
+                              if (_model.uploadedLocalFile.bytes?.isNotEmpty ??
+                                  false) {
                                 Uint8List? image =
                                     _model.uploadedLocalFile.bytes;
                                 final response =
@@ -736,6 +730,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                   FFAppState().profilepic = response;
                                 }
                               }
+                              FFAppState().login = true;
                             }
 
                             if (response.statusCode != 200) {
@@ -748,7 +743,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                 !_model.formKey.currentState!.validate()) {
                               return;
                             }
-                            if (widget!.bonde == true) {
+                            if (widget.bonde == true) {
                               context.goNamed('BondeOnboarding');
                             } else {
                               context.goNamed('BrukerOnboarding');

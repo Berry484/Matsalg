@@ -39,59 +39,26 @@ class _ProfilWidgetState extends State<ProfilWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      Future<void> _loadUserInfo() async {
-        try {
-          String brukernavn = FFAppState().brukernavn;
-          print(brukernavn);
-
-          if (!FFAppState().startet) {
-            FFAppState().startet = true;
-
-            final response = await apicalls.checkUserInfo(
-                brukernavn, Securestorage.authToken);
-            if (response.statusCode == 200) {
-              final decodedResponse = jsonDecode(response.body);
-              setState(() {
-                userInfo = decodedResponse; // Update userInfo with fetched data
-                FFAppState().firstname = decodedResponse['firstname'] ?? '';
-                FFAppState().lastname = decodedResponse['lastname'] ?? '';
-                FFAppState().brukernavn = decodedResponse['brukernavn'] ?? '';
-                FFAppState().bio = decodedResponse['bio'] ?? '';
-                FFAppState().profilepic =
-                    decodedResponse['profile_picture'] ?? '';
-              });
-            } else {
-              throw Exception(
-                  'Failed to fetch user info: ${response.statusCode}');
-            }
-          }
-        } catch (e) {
-          // Log the error for debugging
-          print('Error fetching user info: $e');
-
-          // Show error dialog
-          if (mounted) {
-            // Check if the widget is still mounted
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Noe gikk galt'),
-                  content: const Text(
-                      'Vi har problemer med å fullføre forespørselen din. Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: Text('OK'),
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Close the dialog
-                      },
-                    ),
-                  ],
-                );
-              },
+      try {} catch (e) {
+        // Check if the widget is still mounted
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Oopps, noe gikk galt'),
+              content: const Text(
+                  'Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                ),
+              ],
             );
-          }
-        }
+          },
+        );
       }
     });
 
@@ -606,7 +573,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                   child: Text(
                                     (FFAppState().bio.isNotEmpty
                                         ? FFAppState().bio
-                                        : '${userInfo?['bio']}'),
+                                        : ''),
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(

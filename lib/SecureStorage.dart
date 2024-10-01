@@ -21,7 +21,7 @@ class Securestorage {
       authToken = token;
       return token;
     } catch (e) {
-      print('Error storing token: $e');
+      return null;
     }
   }
 
@@ -30,14 +30,12 @@ class Securestorage {
     try {
       final token = await storage.read(key: 'access_token');
       if (token != null) {
-        print('Token retrieved successfully!');
         authToken = token;
+        return token;
       } else {
-        print('No token found');
+        return null;
       }
-      return token;
     } catch (e) {
-      print('Error retrieving token: $e');
       return null;
     }
   }

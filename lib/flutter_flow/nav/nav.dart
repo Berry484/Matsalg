@@ -78,9 +78,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? const HjemWidget()
-              : const RegistrerWidget(),
+          builder: (context, _) =>
+              FFAppState().login ? const HjemWidget() : const RegistrerWidget(),
         ),
         FFRoute(
           name: 'registrer',

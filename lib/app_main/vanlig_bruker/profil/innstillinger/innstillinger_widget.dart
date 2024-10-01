@@ -583,6 +583,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                             0.0, 40.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            FFAppState().login = false;
+                            FFAppState().startet = false;
                             context.pushNamed('registrer');
                           },
                           text: 'Logg ut',

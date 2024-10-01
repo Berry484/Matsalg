@@ -34,65 +34,11 @@ class _HjemWidgetState extends State<HjemWidget> {
   @override
   void initState() {
     super.initState();
+    fetchData(); // This initiates the API call
     _model = createModel(context, () => HjemModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      Future<void> _loadUserInfo() async {
-        try {
-          String brukernavn = FFAppState().brukernavn;
-          print(brukernavn);
-
-          if (!FFAppState().startet) {
-            FFAppState().startet = true;
-
-            final response = await apicalls.checkUserInfo(
-                brukernavn, Securestorage.authToken);
-            if (response.statusCode == 200) {
-              final decodedResponse = jsonDecode(response.body);
-              setState(() {
-                userInfo = decodedResponse; // Update userInfo with fetched data
-                FFAppState().firstname = decodedResponse['firstname'] ?? '';
-                FFAppState().lastname = decodedResponse['lastname'] ?? '';
-                FFAppState().brukernavn = decodedResponse['brukernavn'] ?? '';
-                FFAppState().bio = decodedResponse['bio'] ?? '';
-                FFAppState().profilepic =
-                    decodedResponse['profile_picture'] ?? '';
-              });
-            } else {
-              throw Exception(
-                  'Failed to fetch user info: ${response.statusCode}');
-            }
-          }
-        } catch (e) {
-          // Log the error for debugging
-          print('Error fetching user info: $e');
-
-          // Show error dialog
-          if (mounted) {
-            // Check if the widget is still mounted
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Noe gikk galt'),
-                  content: const Text(
-                      'Vi har problemer med å fullføre forespørselen din. Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: Text('OK'),
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Close the dialog
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          }
-        }
-      }
-
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
       FFAppState().brukersted = currentUserLocationValue;
@@ -103,6 +49,55 @@ class _HjemWidgetState extends State<HjemWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
+  }
+
+  Future<void> fetchData() async {
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        final response = await apicalls.checkUserInfo(Securestorage.authToken);
+        if (response.statusCode == 200) {
+          final decodedResponse = jsonDecode(response.body);
+          userInfo = decodedResponse; // Update userInfo with fetched data
+          FFAppState().brukernavn = decodedResponse['brukernavn'] ?? '';
+          FFAppState().firstname = decodedResponse['firstname'] ?? '';
+          FFAppState().lastname = decodedResponse['lastname'] ?? '';
+          FFAppState().brukernavn = decodedResponse['brukernavn'] ?? '';
+          FFAppState().bio = decodedResponse['bio'] ?? '';
+          FFAppState().profilepic = decodedResponse['profile_picture'] ?? '';
+        }
+        if (response.statusCode == 401 ||
+            response.statusCode == 404 ||
+            response.statusCode == 500) {
+          FFAppState().login = false;
+          context.pushNamed('registrer');
+          return;
+        }
+      }
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Oops, noe gikk galt'),
+            content: const Text(
+                'Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override

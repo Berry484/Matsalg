@@ -18,6 +18,9 @@ class FFAppState extends ChangeNotifier {
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _safeInit(() {
+      _login = prefs.getBool('ff_login') ?? _login;
+    });
+    _safeInit(() {
       _bonde = prefs.getBool('ff_bonde') ?? _bonde;
     });
     _safeInit(() {
@@ -38,7 +41,6 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _bio = prefs.getString('ff_bio') ?? _bio;
     });
-
     _safeInit(() {
       _profilepic = prefs.getString('ff_profilepic') ?? _profilepic;
     });
@@ -50,6 +52,13 @@ class FFAppState extends ChangeNotifier {
   }
 
   late SharedPreferences prefs;
+
+  bool _login = false;
+  bool get login => _login;
+  set login(bool value) {
+    _login = value;
+    prefs.setBool('ff_login', value);
+  }
 
   bool _startet = false;
   bool get startet => _startet;
