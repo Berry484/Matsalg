@@ -1,7 +1,3 @@
-import 'package:mat_salg/auth/custom_auth/auth_util.dart';
-import 'package:mat_salg/auth/custom_auth/custom_auth_manager.dart';
-import 'package:mat_salg/auth/custom_auth/custom_auth_user_provider.dart';
-
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -9,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'registrer_model.dart';
 
-import 'package:mat_salg/app_main/registrer/ApiCalls.dart';
+import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
 
 export 'registrer_model.dart';

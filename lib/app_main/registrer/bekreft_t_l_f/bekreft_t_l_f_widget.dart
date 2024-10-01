@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'bekreft_t_l_f_model.dart';
 export 'bekreft_t_l_f_model.dart';
-import 'package:mat_salg/app_main/registrer/ApiCalls.dart';
+import 'package:mat_salg/ApiCalls.dart';
 
 class BekreftTLFWidget extends StatefulWidget {
   const BekreftTLFWidget({

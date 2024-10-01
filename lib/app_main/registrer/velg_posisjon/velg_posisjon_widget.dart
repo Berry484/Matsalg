@@ -340,8 +340,6 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                       selectedLocation = location;
                                     }
                                     if (selectedLocation != null) {
-                                      print(
-                                          'Selected location: ${selectedLocation!.latitude}, ${selectedLocation!.longitude}');
                                       location = selectedLocation;
                                     }
                                     if (widget.endrepos == false) {

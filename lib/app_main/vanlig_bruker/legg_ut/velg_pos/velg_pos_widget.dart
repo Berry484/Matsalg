@@ -18,6 +18,9 @@ class VelgPosWidget extends StatefulWidget {
 class _VelgPosWidgetState extends State<VelgPosWidget> {
   late VelgPosModel _model;
 
+  LatLng? currentUserLocationValue;
+  LatLng? selectedLocation; // State variable to store selected location
+
   @override
   void setState(VoidCallback callback) {
     super.setState(callback);
@@ -32,6 +35,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
+    selectedLocation = functions.doubletillatlon(59.913868, 10.752245);
   }
 
   @override
@@ -71,14 +75,15 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 12.0, 0.0, 0.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -96,7 +101,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                               size: 26.0,
                             ),
                             onPressed: () async {
-                              context.safePop();
+                              Navigator.pop(context, const LatLng(5.1, 6.0));
                             },
                           ),
                         ),
@@ -138,6 +143,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                     Align(
                       alignment: const AlignmentDirectional(0.0, -1.2),
                       child: Container(
+                        padding: const EdgeInsets.only(bottom: 220.0),
                         width: 500.0,
                         height: MediaQuery.sizeOf(context).height,
                         decoration: BoxDecoration(
@@ -153,9 +159,14 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                               width: 500.0,
                               height: double.infinity,
                               center: functions.doubletillatlon(
-                                  59.913868, 10.752245)!,
+                                  59.12681775541445, 11.386219119466823)!,
                               matsted: functions.doubletillatlon(
-                                  59.913868, 10.752245)!,
+                                  59.12681775541445, 11.386219119466823)!,
+                              onLocationChanged: (newLocation) {
+                                setState(() {
+                                  selectedLocation = newLocation;
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -293,8 +304,18 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 55.0),
                               child: FFButtonWidget(
-                                onPressed: () async {
-                                  Navigator.pop(context);
+                                onPressed: () {
+                                  LatLng? location;
+                                  if (currentUserLocationValue != null) {
+                                    selectedLocation = location;
+                                  }
+                                  if (selectedLocation != null) {
+                                    location = selectedLocation;
+                                  }
+                                  // Return the selected position when the button is pressed
+                                  if (selectedLocation != null) {
+                                    Navigator.pop(context, selectedLocation);
+                                  }
                                 },
                                 text: 'Velg denne posisjonen',
                                 options: FFButtonOptions(
@@ -302,8 +323,9 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                   height: 50.0,
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding:
+                                      const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
                                   color: FlutterFlowTheme.of(context).alternate,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall

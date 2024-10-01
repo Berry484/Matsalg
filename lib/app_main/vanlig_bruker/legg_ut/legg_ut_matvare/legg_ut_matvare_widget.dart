@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
 import 'legg_ut_matvare_model.dart';
 export 'legg_ut_matvare_model.dart';
 
@@ -32,6 +34,14 @@ class LeggUtMatvareWidget extends StatefulWidget {
 class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     with TickerProviderStateMixin {
   late LeggUtMatvareModel _model;
+
+  final ApiCalls apiCalls = ApiCalls();
+
+  final ApiUploadFood apiUploadFood = ApiUploadFood();
+  final Securestorage securestorage = Securestorage();
+  final ApiMultiplePics apiMultiplePics = ApiMultiplePics();
+
+  LatLng? selectedLatLng;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -2552,7 +2562,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           0.0, 24.0, 0.0, 80.0),
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
-                                                      await showModalBottomSheet(
+                                                      // Capture the returned LatLng from the modal bottom sheet
+                                                      selectedLatLng =
+                                                          await showModalBottomSheet<
+                                                              LatLng>(
                                                         isScrollControlled:
                                                             true,
                                                         backgroundColor:
@@ -2571,12 +2584,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .viewInsetsOf(
                                                                       context),
                                                               child:
-                                                                  const VelgPosWidget(),
+                                                                  const VelgPosWidget(), // Replace with the widget where you return the LatLng
                                                             ),
                                                           );
                                                         },
-                                                      ).then((value) =>
-                                                          safeSetState(() {}));
+                                                      );
                                                     },
                                                     text: 'Velg posisjon',
                                                     options: FFButtonOptions(
@@ -2887,7 +2899,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             (alertDialogContext) {
                                                           return AlertDialog(
                                                             title: const Text(
-                                                                'Felt mangler...'),
+                                                                'Felt mangler'),
                                                             content: const Text(
                                                                 'Last opp minst 3 bilder.'),
                                                             actions: [
@@ -2915,7 +2927,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             (alertDialogContext) {
                                                           return AlertDialog(
                                                             title: const Text(
-                                                                'Felt mangler...'),
+                                                                'Felt mangler'),
                                                             content: const Text(
                                                                 'Last opp minst 3 bilder.'),
                                                             actions: [
@@ -2943,7 +2955,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             (alertDialogContext) {
                                                           return AlertDialog(
                                                             title: const Text(
-                                                                'Felt mangler...'),
+                                                                'Felt mangler'),
                                                             content: const Text(
                                                                 'Last opp minst 3 bilder.'),
                                                             actions: [
@@ -2969,7 +2981,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             (alertDialogContext) {
                                                           return AlertDialog(
                                                             title: const Text(
-                                                                'Felt mangler...'),
+                                                                'Felt mangler'),
                                                             content: const Text(
                                                                 'Velg minst 1 kategori.'),
                                                             actions: [
@@ -2988,18 +3000,165 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       return;
                                                     }
 
-                                                    context.pushNamed(
-                                                      'BrukerLagtUtInfo',
-                                                      extra: <String, dynamic>{
-                                                        kTransitionInfoKey:
-                                                            const TransitionInfo(
-                                                          hasTransition: true,
-                                                          transitionType:
-                                                              PageTransitionType
-                                                                  .rightToLeft,
-                                                        ),
-                                                      },
-                                                    );
+                                                    try {
+                                                      final token =
+                                                          await securestorage
+                                                              .readToken();
+                                                      if (token == null) {
+                                                        FFAppState().login =
+                                                            false;
+                                                        context.pushNamed(
+                                                            'registrer');
+                                                      } else {
+                                                        final List<Uint8List?>
+                                                            filesData = [
+                                                          _model
+                                                              .uploadedLocalFile1
+                                                              .bytes,
+                                                          _model
+                                                              .uploadedLocalFile2
+                                                              .bytes,
+                                                          _model
+                                                              .uploadedLocalFile3
+                                                              .bytes,
+                                                          _model
+                                                              .uploadedLocalFile4
+                                                              .bytes,
+                                                          _model
+                                                              .uploadedLocalFile5
+                                                              .bytes,
+                                                        ];
+
+                                                        final List<Uint8List>
+                                                            filteredFilesData =
+                                                            filesData
+                                                                .where((file) =>
+                                                                    file !=
+                                                                        null &&
+                                                                    file
+                                                                        .isNotEmpty)
+                                                                .cast<
+                                                                    Uint8List>()
+                                                                .toList();
+
+                                                        final filelinks =
+                                                            await apiMultiplePics
+                                                                .uploadPictures(
+                                                                    token:
+                                                                        token,
+                                                                    filesData:
+                                                                        filteredFilesData);
+                                                        String pris;
+                                                        bool kg;
+                                                        if (_model
+                                                            .produktPrisSTKTextController
+                                                            .text
+                                                            .isNotEmpty) {
+                                                          // If STK is set, use its value and set KG to false
+                                                          pris = _model
+                                                              .produktPrisSTKTextController
+                                                              .text;
+                                                          kg =
+                                                              false; // KG is disabled if STK is set
+                                                        } else if (_model
+                                                            .produktPrisKgTextController
+                                                            .text
+                                                            .isNotEmpty) {
+                                                          // If STK is not set, use KG and set KG to true
+                                                          pris = _model
+                                                              .produktPrisKgTextController
+                                                              .text;
+                                                          kg =
+                                                              true; // KG is enabled if STK is not set
+                                                        } else {
+                                                          // If neither is set, you can set a default value (empty string in this case)
+                                                          pris = '';
+                                                          kg =
+                                                              true; // By default, KG is enabled if STK is not set
+                                                        }
+                                                        if (filelinks != null &&
+                                                            filelinks
+                                                                .isNotEmpty) {
+                                                          final response =
+                                                              await apiUploadFood
+                                                                  .uploadfood(
+                                                            token: token,
+                                                            name: _model
+                                                                .produktNavnTextController
+                                                                .text,
+                                                            imgUrl: filelinks,
+                                                            description: _model
+                                                                .produktBeskrivelseTextController
+                                                                .text,
+                                                            price: pris,
+                                                            kategorier: _model
+                                                                .dropDownValueController
+                                                                ?.value,
+                                                            posisjon:
+                                                                selectedLatLng,
+                                                            betaling: _model
+                                                                .checkboxValue,
+                                                            kg: kg,
+                                                          );
+
+                                                          if (response
+                                                                  .statusCode ==
+                                                              200) {
+                                                            context.pushNamed(
+                                                              'BrukerLagtUtInfo',
+                                                              extra: <String,
+                                                                  dynamic>{
+                                                                kTransitionInfoKey:
+                                                                    const TransitionInfo(
+                                                                  hasTransition:
+                                                                      true,
+                                                                  transitionType:
+                                                                      PageTransitionType
+                                                                          .rightToLeft,
+                                                                ),
+                                                              },
+                                                            );
+                                                          }
+                                                          if (response.statusCode == 401 ||
+                                                              response.statusCode ==
+                                                                  404 ||
+                                                              response.statusCode ==
+                                                                  500) {
+                                                            FFAppState().login =
+                                                                false;
+                                                            context.pushNamed(
+                                                                'registrer');
+                                                            return;
+                                                          }
+                                                        } else {
+                                                          throw (Exception);
+                                                        }
+                                                      }
+                                                    } catch (e) {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return AlertDialog(
+                                                            title: const Text(
+                                                                'Oops, noe gikk galt'),
+                                                            content: const Text(
+                                                                'Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child:
+                                                                    Text('OK'),
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop(); // Close the dialog
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    }
                                                   },
                                                   text: 'Legg ut matvare',
                                                   icon: const FaIcon(

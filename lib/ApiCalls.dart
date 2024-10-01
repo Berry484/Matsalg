@@ -254,3 +254,125 @@ class ApiUploadProfilePic {
     }
   }
 }
+
+class ApiUploadFood {
+  // ----Upload food---------------
+
+  static const String baseUrl = ApiConstants.baseUrl; // Your base URL
+
+  Future<http.Response> uploadfood({
+    required String? token,
+    required String name,
+    required var imgUrl,
+    required String description,
+    required String? price,
+    required List<String>? kategorier,
+    required LatLng? posisjon,
+    required bool? betaling,
+    required bool kg,
+  }) async {
+    // Create the user info data as a Map
+    final Map<String, dynamic> userInfoData = {
+      "name": name,
+      "imgUrl": imgUrl,
+      "description": description,
+      "price": price,
+      "kategorier": kategorier,
+      "lat": posisjon?.latitude,
+      "lng": posisjon?.longitude,
+      "betaling": betaling,
+      "kjopt": false,
+      "slettet": false,
+      "kg": kg,
+    };
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(userInfoData);
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+    // Send the POST request
+    final response = await http.post(
+      Uri.parse(
+          '$baseUrl/rrh/send/matvarer'), // Endpoint for creating or updating user info
+      headers: headers,
+      body: jsonBody,
+    );
+    return response;
+  }
+}
+
+class ApiMultiplePics {
+  static const String baseUrl = ApiConstants.baseUrl; // Your base URL
+
+  Future<List<String>?> uploadPictures({
+    required String? token, // Required token parameter
+    required List<Uint8List?> filesData, // Accept a list of Uint8List
+    String fileType = 'jpeg', // Default to 'jpeg', can be changed as needed
+  }) async {
+    // Check if filesData is empty
+    if (filesData.isEmpty) {
+      return null; // Handle the error as needed
+    }
+
+    try {
+      // Create a multipart request
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('$baseUrl/files/rrh/flere_bilder'),
+      );
+
+      // If token is needed for authorization, add it to the request headers
+      if (token != null) {
+        request.headers['Authorization'] = 'Bearer $token';
+      }
+
+      // Iterate over each file and add it to the request under the key "files"
+      for (int i = 0; i < filesData.length; i++) {
+        if (filesData[i] != null) {
+          request.files.add(
+            http.MultipartFile.fromBytes(
+              'files', // Key must match the one expected by the server
+              filesData[i]!,
+              contentType: MediaType(
+                  'image', fileType), // Default content type to image/jpeg
+              filename:
+                  'file_$i.$fileType', // Create a unique filename for each file
+            ),
+          );
+        } else {
+          print('File data at index $i is null.'); // Debugging statement
+        }
+      }
+
+      // Send the request and wait for the response
+      var response = await request.send();
+
+      // Get the response body as a string
+      var responseString = await http.Response.fromStream(response);
+
+      // Check if the request was successful (status code 200)
+      if (response.statusCode == 200) {
+        // Parse the response body as a List<dynamic>
+        List<dynamic> responseJson = jsonDecode(responseString.body);
+
+        // Extract 'fileLink' from each object in the list
+        List<String> fileLinks = responseJson.map((file) {
+          return file['fileLink'] as String;
+        }).toList();
+
+        return fileLinks; // Return the list of file links
+      } else {
+        print(
+            'Failed to upload files. Status code: ${response.statusCode}, Response body: ${responseString.body}');
+        return null; // Or handle the error as needed
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      return null; // Handle exceptions as needed
+    }
+  }
+}
