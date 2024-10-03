@@ -1,3 +1,6 @@
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/hjem/matvarer.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
+
 import '/app_main/vanlig_bruker/hjem/info/info_widget.dart';
 import '/app_main/vanlig_bruker/hjem/like_ikon/like_ikon_widget.dart';
 import '/app_main/vanlig_bruker/kart/kart_pop_up_bondegard/kart_pop_up_bondegard_widget.dart';
@@ -16,10 +19,10 @@ export 'mat_detalj_bondegard_model.dart';
 class MatDetaljBondegardWidget extends StatefulWidget {
   const MatDetaljBondegardWidget({
     super.key,
-    this.matinfo,
+    required this.matvare,
   });
 
-  final dynamic matinfo;
+  final dynamic matvare;
 
   @override
   State<MatDetaljBondegardWidget> createState() =>
@@ -29,12 +32,16 @@ class MatDetaljBondegardWidget extends StatefulWidget {
 class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
   late MatDetaljBondegardModel _model;
 
+  late Matvarer matvare;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => MatDetaljBondegardModel());
+
+    matvare = Matvarer.fromJson1(widget.matvare);
   }
 
   @override
@@ -101,7 +108,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  context.pushNamed('BondeGardPage');
+                                  context.pushNamed('BrukerPage');
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -112,9 +119,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 0.0, 15.0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10.0, 0.0, 0.0, 15.0),
                                           child: Container(
                                             width: 44.0,
                                             height: 44.0,
@@ -123,17 +129,25 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: Image.network(
-                                              'https://picsum.photos/seed/590/600',
+                                              matvare.profilepic ?? '',
                                               fit: BoxFit.cover,
+                                              errorBuilder:
+                                                  (BuildContext context,
+                                                      Object error,
+                                                      StackTrace? stackTrace) {
+                                                return Image.asset(
+                                                  'assets/images/error_image.jpg', // Path to your local error image
+                                                  fit: BoxFit.cover,
+                                                );
+                                              },
                                             ),
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  5.0, 0.0, 0.0, 13.0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(5.0, 0.0, 0.0, 13.0),
                                           child: Text(
-                                            'Geir larsen',
+                                            matvare.username ?? '',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -147,8 +161,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 8.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 8.0, 0.0),
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
@@ -181,12 +196,14 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             context: context,
                                             isGlobal: false,
                                             avoidOverflow: false,
-                                            targetAnchor: const AlignmentDirectional(
-                                                    0.0, 0.0)
-                                                .resolve(
-                                                    Directionality.of(context)),
+                                            targetAnchor:
+                                                const AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
                                             followerAnchor:
-                                                const AlignmentDirectional(0.0, 0.0)
+                                                const AlignmentDirectional(
+                                                        0.0, 0.0)
                                                     .resolve(Directionality.of(
                                                         context)),
                                             builder: (dialogContext) {
@@ -217,7 +234,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(10.0, 0.0,
-                                                                10.0, 40.0),
+                                                            10.0, 40.0),
                                                     child: PageView(
                                                       controller: _model
                                                               .pageViewController ??=
@@ -239,7 +256,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                             8.0),
                                                                 child: Image
                                                                     .network(
-                                                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                                                  matvare
+                                                                      .imgUrls![0],
                                                                   width: double
                                                                       .infinity,
                                                                   height: 380.0,
@@ -249,121 +267,206 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       const Alignment(
                                                                           0.0,
                                                                           0.0),
+                                                                  errorBuilder: (BuildContext
+                                                                          context,
+                                                                      Object
+                                                                          error,
+                                                                      StackTrace?
+                                                                          stackTrace) {
+                                                                    return Image
+                                                                        .asset(
+                                                                      'assets/images/error_image.jpg', // Path to your local error image
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    );
+                                                                  },
                                                                 ),
                                                               ),
                                                             ],
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 380.0,
-                                                          child: Stack(
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  '',
-                                                                  width: double
-                                                                      .infinity,
-                                                                  height: 380.0,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  alignment:
-                                                                      const Alignment(
-                                                                          0.0,
-                                                                          0.0),
+                                                        if (matvare.imgUrls!
+                                                                .length >
+                                                            1)
+                                                          SizedBox(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 380.0,
+                                                            child: Stack(
+                                                              children: [
+                                                                ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
+                                                                  child: Image
+                                                                      .network(
+                                                                    matvare
+                                                                        .imgUrls![1],
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height:
+                                                                        380.0,
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    alignment:
+                                                                        const Alignment(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 380.0,
-                                                          child: Stack(
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  '',
-                                                                  width: double
-                                                                      .infinity,
-                                                                  height: 380.0,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  alignment:
-                                                                      const Alignment(
-                                                                          0.0,
-                                                                          0.0),
+                                                        if (matvare.imgUrls!
+                                                                .length >
+                                                            2)
+                                                          SizedBox(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 380.0,
+                                                            child: Stack(
+                                                              children: [
+                                                                ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
+                                                                  child: Image
+                                                                      .network(
+                                                                    matvare
+                                                                        .imgUrls![2],
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height:
+                                                                        380.0,
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    alignment:
+                                                                        const Alignment(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 380.0,
-                                                          child: Stack(
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  '',
-                                                                  width: double
-                                                                      .infinity,
-                                                                  height: 380.0,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  alignment:
-                                                                      const Alignment(
-                                                                          0.0,
-                                                                          0.0),
+                                                        if (matvare.imgUrls!
+                                                                .length >
+                                                            3)
+                                                          SizedBox(
+                                                            height: 380.0,
+                                                            child: Stack(
+                                                              children: [
+                                                                ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
+                                                                  child: Image
+                                                                      .network(
+                                                                    matvare
+                                                                        .imgUrls![3],
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height:
+                                                                        380.0,
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    alignment:
+                                                                        const Alignment(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 380.0,
-                                                          child: Stack(
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  '',
-                                                                  width: double
-                                                                      .infinity,
-                                                                  height: 380.0,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  alignment:
-                                                                      const Alignment(
-                                                                          0.0,
-                                                                          0.0),
+                                                        if (matvare.imgUrls!
+                                                                .length >
+                                                            4)
+                                                          SizedBox(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 380.0,
+                                                            child: Stack(
+                                                              children: [
+                                                                ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
+                                                                  child: Image
+                                                                      .network(
+                                                                    matvare
+                                                                        .imgUrls![4],
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height:
+                                                                        380.0,
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    alignment:
+                                                                        const Alignment(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -374,18 +477,16 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  16.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  16.0),
+                                                              .fromSTEB(16.0,
+                                                              0.0, 0.0, 16.0),
                                                       child: smooth_page_indicator
                                                           .SmoothPageIndicator(
                                                         controller: _model
                                                                 .pageViewController ??=
                                                             PageController(
                                                                 initialPage: 0),
-                                                        count: 5,
+                                                        count: matvare
+                                                            .imgUrls!.length,
                                                         axisDirection:
                                                             Axis.horizontal,
                                                         onDotClicked:
@@ -394,9 +495,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                               .pageViewController!
                                                               .animateToPage(
                                                             i,
-                                                            duration: const Duration(
-                                                                milliseconds:
-                                                                    500),
+                                                            duration:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        500),
                                                             curve: Curves.ease,
                                                           );
                                                           safeSetState(() {});
@@ -408,8 +510,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           radius: 16.0,
                                                           dotWidth: 10.0,
                                                           dotHeight: 8.0,
-                                                          dotColor:
-                                                              const Color(0xCC616161),
+                                                          dotColor: const Color(
+                                                              0xCC616161),
                                                           activeDotColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
@@ -441,52 +543,98 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 5.0, 10.0, 30.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        ToggleIcon(
-                                          onPressed: () async {
-                                            safeSetState(() =>
-                                                _model.liker = !_model.liker!);
-                                          },
-                                          value: _model.liker!,
-                                          onIcon: FaIcon(
-                                            FontAwesomeIcons.solidHeart,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: 30.0,
+                              if (matvare.bonde == true)
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 5.0, 10.0, 30.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          ToggleIcon(
+                                            onPressed: () async {
+                                              safeSetState(() => _model.liker =
+                                                  !_model.liker!);
+                                            },
+                                            value: _model.liker!,
+                                            onIcon: FaIcon(
+                                              FontAwesomeIcons.solidHeart,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 30.0,
+                                            ),
+                                            offIcon: FaIcon(
+                                              FontAwesomeIcons.heart,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 30.0,
+                                            ),
                                           ),
-                                          offIcon: FaIcon(
-                                            FontAwesomeIcons.heart,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: 30.0,
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                            child: FaIcon(
+                                              FontAwesomeIcons.comment,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 30.0,
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 0.0, 0.0),
-                                          child: FaIcon(
-                                            FontAwesomeIcons.comment,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: 30.0,
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(15.0, 0.0, 0.0, 0.0),
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () =>
+                                                          FocusScope.of(context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            const KartPopUpBondegardWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              },
+                                              child: FaIcon(
+                                                FontAwesomeIcons.mapMarkerAlt,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                size: 31.0,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  15.0, 0.0, 0.0, 0.0),
-                                          child: InkWell(
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
@@ -496,7 +644,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 isScrollControlled: true,
                                                 backgroundColor:
                                                     Colors.transparent,
-                                                enableDrag: false,
                                                 context: context,
                                                 builder: (context) {
                                                   return GestureDetector(
@@ -507,56 +654,176 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       padding: MediaQuery
                                                           .viewInsetsOf(
                                                               context),
-                                                      child:
-                                                          const KartPopUpBondegardWidget(),
+                                                      child: const InfoWidget(),
                                                     ),
                                                   );
                                                 },
                                               ).then((value) =>
                                                   safeSetState(() {}));
                                             },
-                                            child: FaIcon(
-                                              FontAwesomeIcons.mapMarkerAlt,
+                                            child: Material(
+                                              color: Colors.transparent,
+                                              elevation: 4.0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(24.0),
+                                              ),
+                                              child: SafeArea(
+                                                child: Container(
+                                                  width: 120.0,
+                                                  height: 40.0,
+                                                  constraints:
+                                                      const BoxConstraints(
+                                                    maxWidth: 174.0,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        const Color(0xFF10835F),
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .alternate
+                                                      ],
+                                                      stops: const [0.0, 1.0],
+                                                      begin:
+                                                          const AlignmentDirectional(
+                                                              0.64, -1.0),
+                                                      end:
+                                                          const AlignmentDirectional(
+                                                              -0.64, 1.0),
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            24.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(10.0, 0.0,
+                                                            10.0, 0.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            'Reserver',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      17.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              if (matvare.bonde != true)
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 0.0, 10.0, 30.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          ToggleIcon(
+                                            onPressed: () async {
+                                              safeSetState(() => _model.liker =
+                                                  !_model.liker!);
+                                            },
+                                            value: _model.liker!,
+                                            onIcon: FaIcon(
+                                              FontAwesomeIcons.solidHeart,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .alternate,
-                                              size: 31.0,
+                                              size: 30.0,
+                                            ),
+                                            offIcon: FaIcon(
+                                              FontAwesomeIcons.heart,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 30.0,
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            await showModalBottomSheet(
-                                              isScrollControlled: true,
-                                              backgroundColor:
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
                                                   Colors.transparent,
-                                              context: context,
-                                              builder: (context) {
-                                                return GestureDetector(
-                                                  onTap: () =>
-                                                      FocusScope.of(context)
-                                                          .unfocus(),
-                                                  child: Padding(
-                                                    padding:
-                                                        MediaQuery.viewInsetsOf(
-                                                            context),
-                                                    child: const InfoWidget(),
-                                                  ),
-                                                );
+                                              onTap: () async {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () =>
+                                                          FocusScope.of(context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            const KartPopUpWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
                                               },
-                                            ).then(
-                                                (value) => safeSetState(() {}));
-                                          },
-                                          child: Material(
+                                              child: FaIcon(
+                                                FontAwesomeIcons.mapMarkerAlt,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                size: 31.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Material(
                                             color: Colors.transparent,
                                             elevation: 4.0,
                                             shape: RoundedRectangleBorder(
@@ -567,7 +834,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               child: Container(
                                                 width: 120.0,
                                                 height: 40.0,
-                                                constraints: const BoxConstraints(
+                                                constraints:
+                                                    const BoxConstraints(
                                                   maxWidth: 174.0,
                                                 ),
                                                 decoration: BoxDecoration(
@@ -579,18 +847,21 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           .alternate
                                                     ],
                                                     stops: const [0.0, 1.0],
-                                                    begin: const AlignmentDirectional(
-                                                        0.64, -1.0),
-                                                    end: const AlignmentDirectional(
-                                                        -0.64, 1.0),
+                                                    begin:
+                                                        const AlignmentDirectional(
+                                                            0.64, -1.0),
+                                                    end:
+                                                        const AlignmentDirectional(
+                                                            -0.64, 1.0),
                                                   ),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           24.0),
                                                 ),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           10.0, 0.0, 10.0, 0.0),
                                                   child: Row(
                                                     mainAxisSize:
@@ -601,7 +872,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     children: [
                                                       Expanded(
                                                         child: Text(
-                                                          'Reserver',
+                                                          'Melding',
                                                           textAlign:
                                                               TextAlign.center,
                                                           style: FlutterFlowTheme
@@ -627,12 +898,11 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     10.0, 0.0, 0.0, 0.0),
@@ -641,8 +911,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 8.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 8.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -654,7 +925,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Kantarell',
+                                                matvare.name ?? '',
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -671,9 +942,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             ],
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 5.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 0.0, 5.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -682,7 +952,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Kr 284',
+                                                  '${matvare.price ?? 0} Kr',
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -699,52 +969,58 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                             FontWeight.bold,
                                                       ),
                                                 ),
-                                                Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 10.0, 0.0),
-                                                  child: Text(
-                                                    '/kg',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 22.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
+                                                if (matvare.kg == true)
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                            10.0, 0.0),
+                                                    child: Text(
+                                                      '/kg',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            fontSize: 22.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 10.0, 0.0),
-                                                  child: Text(
-                                                    '/stk',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 22.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
+                                                if (matvare.kg != true)
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                            10.0, 0.0),
+                                                    child: Text(
+                                                      '/stk',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            fontSize: 22.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
                                                   ),
-                                                ),
                                               ],
                                             ),
                                           ),
@@ -752,8 +1028,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 15.0, 0.0, 0.0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -770,8 +1047,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 5.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 10.0, 0.0, 5.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -779,30 +1057,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                'Andeby',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        5.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  '3',
+                                          if (matvare.bonde == true)
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Text(
+                                                  'Andeby',
                                                   textAlign: TextAlign.start,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -815,18 +1075,39 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                             FontWeight.w600,
                                                       ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 14.0,
-                                            child: VerticalDivider(
-                                              thickness: 1.0,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          5.0, 0.0, 0.0, 0.0),
+                                                  child: Text(
+                                                    '3',
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
+                                          if (matvare.bonde == true)
+                                            SizedBox(
+                                              height: 14.0,
+                                              child: VerticalDivider(
+                                                thickness: 1.0,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                            ),
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
@@ -846,8 +1127,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         5.0, 0.0, 0.0, 0.0),
                                                 child: Text(
                                                   'Km',
@@ -876,50 +1158,51 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         ],
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Antall',
+                                    if (matvare.bonde == true)
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0.0, 15.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Antall',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ),
+                                    if (matvare.bonde == true)
+                                      Text(
+                                        '20 Stk',
+                                        textAlign: TextAlign.start,
                                         style: FlutterFlowTheme.of(context)
-                                            .bodySmall
+                                            .titleMedium
                                             .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
+                                              fontFamily: 'Open Sans',
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
-                                    ),
-                                    Text(
-                                      '20 Stk',
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
                                     Container(
                                       width: 332.0,
                                       decoration: const BoxDecoration(),
-                                      alignment:
-                                          const AlignmentDirectional(-1.0, -1.0),
+                                      alignment: const AlignmentDirectional(
+                                          -1.0, -1.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 15.0, 0.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 15.0, 0.0, 0.0),
                                             child: Text(
                                               'Beskrivelse',
                                               style: FlutterFlowTheme.of(
@@ -937,11 +1220,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 0.0, 0.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 10.0, 0.0, 0.0),
                                             child: Text(
-                                              'En fin beskrivelse',
+                                              matvare.description ?? '',
                                               textAlign: TextAlign.start,
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -959,8 +1241,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 50.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 50.0, 0.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -1015,7 +1298,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                               scrollDirection: Axis.vertical,
                               children: [
                                 Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment:
+                                      const AlignmentDirectional(0.0, 0.0),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
                                     focusColor: Colors.transparent,
@@ -1048,11 +1332,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Align(
-                                              alignment: const AlignmentDirectional(
-                                                  0.0, 0.0),
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0.0, 0.0),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         0.0, 0.0, 0.0, 12.0),
                                                 child: ClipRRect(
                                                   borderRadius:
@@ -1076,8 +1362,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(5.0, 0.0, 5.0, 0.0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      5.0, 0.0, 5.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
@@ -1088,11 +1376,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  7.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              .fromSTEB(7.0,
+                                                              0.0, 0.0, 0.0),
                                                       child: AutoSizeText(
                                                         'Kantareller',
                                                         textAlign:
@@ -1118,8 +1403,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 4.0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      0.0, 0.0, 0.0, 4.0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
@@ -1135,11 +1422,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5.0,
-                                                                    5.0,
-                                                                    5.0,
-                                                                    0.0),
+                                                                .fromSTEB(5.0,
+                                                                5.0, 5.0, 0.0),
                                                         child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -1154,10 +1438,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                      0.0,
+                                                                      5.0,
+                                                                      0.0,
+                                                                      0.0),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -1166,10 +1450,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   Padding(
                                                                     padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            7.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                        7.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
                                                                     child: Text(
                                                                       '300 Kr',
                                                                       textAlign:
@@ -1250,8 +1534,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: const EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           5.0,
                                                                           0.0,
                                                                           5.0,

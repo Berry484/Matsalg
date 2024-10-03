@@ -3,9 +3,10 @@ import 'package:mat_salg/MyIP.dart';
 import 'dart:async'; // Import this to use Future and TimeoutException
 import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
 import 'package:http_parser/http_parser.dart';
+import 'app_main/vanlig_bruker/hjem/hjem/matvarer.dart';
 
 class ApiCalls {
-  static const String baseUrl = ApiConstants.baseUrl; // Your base URL
+  static const String baseUrl = ApiConstants.baseUrl;
 
   // Define the method to check if the email is taken
   Future<http.Response> checkEmailTaken(String email) async {
@@ -14,12 +15,14 @@ class ApiCalls {
     return response; // Return the response
   }
 
+//----------------------------------------------------------------------------------------------
   Future<http.Response> checkUsernameTaken(String username) async {
     final response = await http
         .get(Uri.parse('$baseUrl/rrh/usernameledig?username=$username'));
     return response; // Return the response
   }
 
+//----------------------------------------------------------------------------------------------
   Future<http.Response> checkPhoneTaken(String phoneNumber) async {
     final response = await http
         .get(Uri.parse('$baseUrl/rrh/check-phone?phoneNumber=$phoneNumber'));
@@ -27,6 +30,7 @@ class ApiCalls {
     return response; // Return the response
   }
 
+//----------------------------------------------------------------------------------------------
   Future<http.Response> checkUserInfo(String? token) async {
     final headers = {
       'Content-Type': 'application/json',
@@ -53,9 +57,8 @@ class ApiCalls {
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
-
-//----Opprett bruker i keycloak---------------
-// Define the method to create a user
+//----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 class RegisterUser {
   Future<http.Response> createUser1({
     required String username,
@@ -125,7 +128,7 @@ class ApiUserSQL {
     final Map<String, dynamic> userInfoData = {
       "username": username,
       "bio": bio,
-      "profile_picture": profilepic,
+      "profilepic": profilepic,
       "lat": posisjon.latitude,
       "lng": posisjon.longitude
     };
@@ -226,7 +229,7 @@ class ApiUploadProfilePic {
           contentType:
               MediaType('image', fileType), // Use image/jpeg by default
           filename:
-              'profile_pic.$fileType', // Use a filename with the .jpeg extension
+              'profilepic.$fileType', // Use a filename with the .jpeg extension
         ),
       );
 
@@ -375,6 +378,82 @@ class ApiMultiplePics {
     } catch (e) {
       print('An error occurred: $e');
       return null; // Handle exceptions as needed
+    }
+  }
+}
+
+class ApiGetAllFoods {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  static Future<List<Matvarer>?> getAllFoods(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/send/matvarer'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        // Decode the JSON response
+
+        final List<dynamic> jsonResponse = jsonDecode(response.body);
+        // Convert the JSON into a list of Matvarer objects
+        return Matvarer.matvarerFromSnapShot(jsonResponse);
+      } else {
+        // Handle unsuccessful response
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      // Handle any other errors that might occur
+      return null;
+    }
+  }
+}
+
+class ApiGetMyFoods {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  static Future<List<Matvarer>?> getMyFoods(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/send/matvarer/mine'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        // Decode the JSON response
+
+        final List<dynamic> jsonResponse = jsonDecode(response.body);
+        // Convert the JSON into a list of Matvarer objects
+        return Matvarer.matvarerFromSnapShot(jsonResponse);
+      } else {
+        // Handle unsuccessful response
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      // Handle any other errors that might occur
+      return null;
     }
   }
 }

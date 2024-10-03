@@ -164,20 +164,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'MinMatvareDetalj',
           path: '/minMatvareDetalj',
           builder: (context, params) => MinMatvareDetaljWidget(
-            matinfo: params.getParam(
-              'matinfo',
-              ParamType.JSON,
-            ),
+            matvare: params.getParam('matvare', ParamType.JSON),
           ),
         ),
         FFRoute(
           name: 'MatDetaljBondegard',
           path: '/matDetaljBondegard',
           builder: (context, params) => MatDetaljBondegardWidget(
-            matinfo: params.getParam(
-              'matinfo',
-              ParamType.JSON,
-            ),
+            matvare: params.getParam('matvare', ParamType.JSON),
           ),
         ),
         FFRoute(
