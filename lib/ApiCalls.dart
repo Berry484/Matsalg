@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'dart:async'; // Import this to use Future and TimeoutException
 import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
@@ -240,7 +243,6 @@ class ApiUploadProfilePic {
       }
 
       // Send the request and wait for the response
-      print(username);
       var response = await request.send();
 
       // Get the response status code
@@ -348,9 +350,7 @@ class ApiMultiplePics {
                   'file_$i.$fileType', // Create a unique filename for each file
             ),
           );
-        } else {
-          print('File data at index $i is null.'); // Debugging statement
-        }
+        } else {}
       }
 
       // Send the request and wait for the response
@@ -371,12 +371,9 @@ class ApiMultiplePics {
 
         return fileLinks; // Return the list of file links
       } else {
-        print(
-            'Failed to upload files. Status code: ${response.statusCode}, Response body: ${responseString.body}');
         return null; // Or handle the error as needed
       }
     } catch (e) {
-      print('An error occurred: $e');
       return null; // Handle exceptions as needed
     }
   }
@@ -404,7 +401,8 @@ class ApiGetAllFoods {
       if (response.statusCode == 200) {
         // Decode the JSON response
 
-        final List<dynamic> jsonResponse = jsonDecode(response.body);
+        final List<dynamic> jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
         // Convert the JSON into a list of Matvarer objects
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {
@@ -442,7 +440,131 @@ class ApiGetMyFoods {
       if (response.statusCode == 200) {
         // Decode the JSON response
 
-        final List<dynamic> jsonResponse = jsonDecode(response.body);
+        final List<dynamic> jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
+        // Convert the JSON into a list of Matvarer objects
+        return Matvarer.matvarerFromSnapShot(jsonResponse);
+      } else {
+        // Handle unsuccessful response
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      // Handle any other errors that might occur
+      return null;
+    }
+  }
+}
+
+class ApiGetBonder {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  static Future<List<Bonder>?> getAllBonder(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/brukere/bonde'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        // Decode the response body as UTF-8 to handle special characters like "å"
+        final List<dynamic> jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
+
+        // Convert the JSON into a list of Bonder objects
+        return Bonder.bonderFromSnapshot(jsonResponse);
+      } else {
+        // Handle unsuccessful response
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      // Handle any other errors that might occur
+      return null;
+    }
+  }
+}
+
+class ApiGetUser {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  static Future<List<Bonder>?> checkUser(
+      String? token, String? username) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/brukere/brukerinfo?username=$username'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        // Decode the response body
+        final dynamic jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
+
+        // If the response is not a list, wrap it in a list before passing to fromSnapshot
+        if (jsonResponse is Map<String, dynamic>) {
+          return Bonder.bonderFromSnapshot(
+              [jsonResponse]); // Wrap single object in a list
+        } else if (jsonResponse is List) {
+          return Bonder.bonderFromSnapshot(
+              jsonResponse); // If it's already a list, pass it directly
+        }
+      } else {
+        // Handle unsuccessful response
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      // Handle any other errors that might occur
+      return null;
+    }
+  }
+}
+
+class ApiGetUserFood {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  static Future<List<Matvarer>?> getUserFood(
+      String? token, String? username) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/send/matvarer/mine?username=${username}'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
         // Convert the JSON into a list of Matvarer objects
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {

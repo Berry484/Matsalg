@@ -959,7 +959,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0.0, 10.0, 0.0, 0.0),
                                             child: Text(
-                                              'En lang fin beskrivelse',
+                                              matvare.description ?? '',
                                               textAlign: TextAlign.start,
                                               style:
                                                   FlutterFlowTheme.of(context)

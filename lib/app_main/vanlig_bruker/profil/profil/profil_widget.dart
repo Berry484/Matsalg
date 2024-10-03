@@ -806,6 +806,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   ),
                                                 );
                                               }
+                                              // if (_isempty) {
+                                              //   return IngenVareLagtUtWidget();
+                                              // }
                                               final matvare = _matvarer![index];
                                               return Stack(
                                                 children: [

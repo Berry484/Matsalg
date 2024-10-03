@@ -1,3 +1,9 @@
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/Bonder.dart';
+import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/hjem/matvarer.dart';
+import 'package:shimmer/shimmer.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -9,7 +15,10 @@ import 'bruker_page_model.dart';
 export 'bruker_page_model.dart';
 
 class BrukerPageWidget extends StatefulWidget {
-  const BrukerPageWidget({super.key});
+  const BrukerPageWidget({this.bruker, this.username, super.key});
+
+  final dynamic bruker;
+  final String? username;
 
   @override
   State<BrukerPageWidget> createState() => _BrukerPageWidgetState();
@@ -18,6 +27,12 @@ class BrukerPageWidget extends StatefulWidget {
 class _BrukerPageWidgetState extends State<BrukerPageWidget>
     with TickerProviderStateMixin {
   late BrukerPageModel _model;
+  bool _isLoading = true;
+  List<Bonder>? _brukerinfo;
+  List<Matvarer>? _matvarer;
+  bool _matisLoading = true;
+  Bonder? bruker;
+  final Securestorage securestorage = Securestorage();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -25,7 +40,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => BrukerPageModel());
-
+    getUserFood();
+    _checkUser();
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -33,10 +49,68 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
     )..addListener(() => safeSetState(() {}));
   }
 
+  Future<void> _checkUser() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      // Fetch user info only if bruker is null
+      if (widget.bruker == null) {
+        _brukerinfo = await ApiGetUser.checkUser(token, widget.username);
+        if (_brukerinfo != null && _brukerinfo!.isNotEmpty) {
+          bruker = _brukerinfo![0]; // Get the first Bonder object
+
+          _isLoading = false;
+        } else {
+          // Fallback values
+          bruker = Bonder(
+            username: '',
+            firstname: '',
+            lastname: '',
+            profilepic: '', // Default image
+            email: '',
+            bio: '',
+            phoneNumber: '',
+            lat: null,
+            lng: null,
+            bonde: null,
+            gardsnavn: '',
+          );
+        }
+      } else {
+        // Initialize bruker from passed parameter
+        bruker = Bonder.fromJson(widget.bruker);
+        _isLoading = false;
+      }
+      setState(() {
+        _isLoading = false; // Update loading state after data is fetched
+      });
+    }
+  }
+
+  Future<void> getUserFood() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      _matvarer = await ApiGetUserFood.getUserFood(token, widget.username);
+      setState(() {
+        if (_matvarer != null && _matvarer!.isEmpty) {
+          return;
+        } else {
+          _matisLoading = false;
+        }
+      });
+    }
+  }
+
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
@@ -70,10 +144,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Align(
-                                    alignment: AlignmentDirectional(0, 0),
+                                    alignment: const AlignmentDirectional(0, 0),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 10, 0, 17),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 10, 0, 17),
                                       child: SafeArea(
                                         child: Container(
                                           width: valueOrDefault<double>(
@@ -86,14 +161,18 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                           ),
                                           child: Stack(
                                             alignment:
-                                                AlignmentDirectional(0, 0),
+                                                const AlignmentDirectional(
+                                                    0, 0),
                                             children: [
                                               Align(
-                                                alignment: AlignmentDirectional(
-                                                    0, -0.38),
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        0, -0.38),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(10, 0, 10, 15),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          10, 0, 10, 15),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -138,7 +217,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                               ),
                                               Align(
                                                 alignment:
-                                                    AlignmentDirectional(0, 0),
+                                                    const AlignmentDirectional(
+                                                        0, 0),
                                                 child: Text(
                                                   'Profil',
                                                   style: FlutterFlowTheme.of(
@@ -170,8 +250,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                     scrollDirection: Axis.vertical,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 30),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 0, 30),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
@@ -179,10 +259,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                           children: [
                                             Align(
                                               alignment:
-                                                  AlignmentDirectional(0, 0),
+                                                  const AlignmentDirectional(
+                                                      0, 0),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(24, 0, 0, 5),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(24, 0, 0, 5),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -194,20 +276,23 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                       height: 85,
                                                       clipBehavior:
                                                           Clip.antiAlias,
-                                                      decoration: BoxDecoration(
+                                                      decoration:
+                                                          const BoxDecoration(
                                                         shape: BoxShape.circle,
                                                       ),
                                                       child: CachedNetworkImage(
                                                         fadeInDuration:
-                                                            Duration(
+                                                            const Duration(
                                                                 milliseconds:
                                                                     0),
                                                         fadeOutDuration:
-                                                            Duration(
+                                                            const Duration(
                                                                 milliseconds:
                                                                     0),
-                                                        imageUrl:
-                                                            'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/mat-salg-h3ee04/assets/eoaca3qszban/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
+                                                        imageUrl: _isLoading
+                                                            ? ''
+                                                            : bruker?.profilepic ??
+                                                                '',
                                                         fit: BoxFit.cover,
                                                         errorWidget: (context,
                                                                 error,
@@ -220,9 +305,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  7, 0, 0, 0),
+                                                              7, 0, 0, 0),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -232,12 +317,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
+                                                                const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        10,
-                                                                        0,
-                                                                        0,
-                                                                        0),
+                                                                    10,
+                                                                    0,
+                                                                    0,
+                                                                    0),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -249,12 +334,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           .max,
                                                                   children: [
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional
+                                                                      padding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
+                                                                          5,
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                                       child:
                                                                           Container(
                                                                         width:
@@ -300,12 +385,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       ),
                                                                     ),
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional
+                                                                      padding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
+                                                                          5,
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                                       child:
                                                                           Container(
                                                                         width:
@@ -374,12 +459,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       ),
                                                                     ),
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional
+                                                                      padding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
+                                                                          5,
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                                       child:
                                                                           Container(
                                                                         width:
@@ -474,14 +559,16 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       FFButtonOptions(
                                                                     width: 95,
                                                                     height: 30,
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             16,
                                                                             0,
                                                                             16,
                                                                             0),
                                                                     iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -525,14 +612,16 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       FFButtonOptions(
                                                                     width: 95,
                                                                     height: 30,
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             16,
                                                                             0,
                                                                             16,
                                                                             0),
                                                                     iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -562,12 +651,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                 ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
+                                                                    const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            9,
-                                                                            0,
-                                                                            0,
-                                                                            0),
+                                                                        9,
+                                                                        0,
+                                                                        0,
+                                                                        0),
                                                                 child:
                                                                     FFButtonWidget(
                                                                   onPressed:
@@ -589,14 +678,16 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       FFButtonOptions(
                                                                     width: 105,
                                                                     height: 30,
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             16,
                                                                             0,
                                                                             16,
                                                                             0),
                                                                     iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -629,12 +720,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
+                                                                    const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            4,
-                                                                            0,
-                                                                            0,
-                                                                            0),
+                                                                        4,
+                                                                        0,
+                                                                        0,
+                                                                        0),
                                                                 child:
                                                                     FFButtonWidget(
                                                                   onPressed:
@@ -656,14 +747,16 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       FFButtonOptions(
                                                                     width: 45,
                                                                     height: 35,
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
                                                                             0),
                                                                     iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             10,
                                                                             1,
                                                                             0,
@@ -704,18 +797,26 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 5, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 5, 0, 0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                24, 0, 0, 0),
+                                                            24, 0, 0, 0),
                                                     child: Text(
-                                                      'Faugsund Gård',
+                                                      _isLoading
+                                                          ? '' // Show an empty string while loading
+                                                          : (bruker?.bonde ==
+                                                                  true
+                                                              ? bruker!
+                                                                  .gardsnavn
+                                                                  .toString()
+                                                              : '${bruker?.firstname} ${bruker?.lastname}'), // Show gardsnavn if bonde is true, otherwise show username
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .headlineLarge
@@ -733,8 +834,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(24, 4, 40, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(24, 4, 40, 0),
                                               child: Container(
                                                 constraints: BoxConstraints(
                                                   maxWidth:
@@ -748,7 +850,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                       .secondaryBackground,
                                                 ),
                                                 child: Text(
-                                                  'En fin bio om meg selv',
+                                                  _isLoading
+                                                      ? ''
+                                                      : bruker?.bio ?? '',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelMedium
@@ -773,13 +877,13 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                               .secondaryBackground,
                                         ),
                                         child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 30, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 30, 0, 0),
                                           child: Column(
                                             children: [
                                               Align(
-                                                alignment: Alignment(0, 0),
+                                                alignment:
+                                                    const Alignment(0, 0),
                                                 child: TabBar(
                                                   labelColor:
                                                       FlutterFlowTheme.of(
@@ -806,7 +910,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                             letterSpacing: 0.0,
                                                           ),
                                                   indicatorColor:
-                                                      Color(0x00F6F6F6),
+                                                      const Color(0x00F6F6F6),
                                                   indicatorWeight: 1,
                                                   tabs: [
                                                     Row(
@@ -829,7 +933,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                   .secondaryText,
                                                           size: 25,
                                                         ),
-                                                        Tab(
+                                                        const Tab(
                                                           text: '',
                                                         ),
                                                       ],
@@ -853,7 +957,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                   .secondaryText,
                                                           size: 25,
                                                         ),
-                                                        Tab(
+                                                        const Tab(
                                                           text: '',
                                                         ),
                                                       ],
@@ -889,19 +993,20 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                   ),
                                   if (_model.tabBarCurrentIndex == 0)
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          5, 15, 5, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              5, 15, 5, 0),
                                       child: RefreshIndicator(
                                         onRefresh: () async {},
-                                        child: GridView(
-                                          padding: EdgeInsets.fromLTRB(
+                                        child: GridView.builder(
+                                          padding: const EdgeInsets.fromLTRB(
                                             0,
                                             0,
                                             0,
                                             70,
                                           ),
                                           gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 2,
                                             crossAxisSpacing: 10,
                                             childAspectRatio: 0.69,
@@ -909,12 +1014,38 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                           primary: false,
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
-                                          children: [
-                                            Stack(
+                                          itemCount: _matisLoading
+                                              ? 6
+                                              : _matvarer?.length ?? 0,
+                                          itemBuilder: (context, index) {
+                                            if (_matisLoading) {
+                                              return Shimmer.fromColors(
+                                                baseColor: Colors.grey[
+                                                    300]!, // Base color for the shimmer
+                                                highlightColor: Colors.grey[
+                                                    100]!, // Highlight color for the shimmer
+                                                child: Container(
+                                                  margin:
+                                                      const EdgeInsets.all(5.0),
+                                                  width: 225.0,
+                                                  height: 235.0,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors
+                                                        .white, // Background color of the shimmer box
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16.0), // Rounded corners
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            final matvarer = _matvarer![index];
+
+                                            return Stack(
                                               children: [
                                                 Align(
                                                   alignment:
-                                                      AlignmentDirectional(
+                                                      const AlignmentDirectional(
                                                           0, -1),
                                                   child: InkWell(
                                                     splashColor:
@@ -927,7 +1058,16 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                         Colors.transparent,
                                                     onTap: () async {
                                                       context.pushNamed(
-                                                          'MatDetalj');
+                                                        'MatDetaljBondegard',
+                                                        queryParameters: {
+                                                          'matvare':
+                                                              serializeParam(
+                                                            matvarer
+                                                                .toJson(), // Convert to JSON before passing
+                                                            ParamType.JSON,
+                                                          ),
+                                                        },
+                                                      );
                                                     },
                                                     child: Material(
                                                       color: Colors.transparent,
@@ -962,20 +1102,20 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                           children: [
                                                             Align(
                                                               alignment:
-                                                                  AlignmentDirectional(
+                                                                  const AlignmentDirectional(
                                                                       0, 0),
                                                               child: Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
+                                                                    const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            12),
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        12),
                                                                 child:
                                                                     ClipRRect(
                                                                   borderRadius:
-                                                                      BorderRadius
+                                                                      const BorderRadius
                                                                           .only(
                                                                     bottomLeft:
                                                                         Radius.circular(
@@ -992,24 +1132,40 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                   ),
                                                                   child: Image
                                                                       .network(
-                                                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                                                    matvarer
+                                                                        .imgUrls![
+                                                                            0]
+                                                                        .toString(),
                                                                     width: double
                                                                         .infinity,
                                                                     height: 151,
                                                                     fit: BoxFit
                                                                         .cover,
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
                                                                   ),
                                                                 ),
                                                               ),
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
+                                                                  const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          5,
-                                                                          0,
-                                                                          5,
-                                                                          0),
+                                                                      5,
+                                                                      0,
+                                                                      5,
+                                                                      0),
                                                               child: Column(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -1017,20 +1173,21 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                 children: [
                                                                   Align(
                                                                     alignment:
-                                                                        AlignmentDirectional(
+                                                                        const AlignmentDirectional(
                                                                             -1,
                                                                             0),
                                                                     child:
                                                                         Padding(
-                                                                      padding: EdgeInsetsDirectional
+                                                                      padding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              7,
-                                                                              0,
-                                                                              0,
-                                                                              0),
+                                                                          7,
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                                       child:
                                                                           AutoSizeText(
-                                                                        'Kantareller',
+                                                                        matvarer.name ??
+                                                                            '',
                                                                         textAlign:
                                                                             TextAlign.start,
                                                                         minFontSize:
@@ -1051,12 +1208,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
+                                                                  const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          4),
+                                                                      0,
+                                                                      0,
+                                                                      0,
+                                                                      4),
                                                               child: Row(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -1072,12 +1229,13 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     child:
                                                                         Align(
                                                                       alignment:
-                                                                          AlignmentDirectional(
+                                                                          const AlignmentDirectional(
                                                                               0,
                                                                               0),
                                                                       child:
                                                                           Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             5,
                                                                             5,
                                                                             5,
@@ -1092,14 +1250,14 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               CrossAxisAlignment.end,
                                                                           children: [
                                                                             Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                     child: Text(
-                                                                                      '300 Kr',
+                                                                                      '${matvarer.price ?? ''} Kr',
                                                                                       textAlign: TextAlign.end,
                                                                                       style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                             fontFamily: 'Open Sans',
@@ -1110,28 +1268,30 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                           ),
                                                                                     ),
                                                                                   ),
-                                                                                  Text(
-                                                                                    '/kg',
-                                                                                    textAlign: TextAlign.end,
-                                                                                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                          fontFamily: 'Open Sans',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                          fontSize: 16,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w600,
-                                                                                        ),
-                                                                                  ),
-                                                                                  Text(
-                                                                                    '/stk',
-                                                                                    textAlign: TextAlign.end,
-                                                                                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                          fontFamily: 'Open Sans',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                          fontSize: 16,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w600,
-                                                                                        ),
-                                                                                  ),
+                                                                                  if (matvarer.kg == true)
+                                                                                    Text(
+                                                                                      '/kg',
+                                                                                      textAlign: TextAlign.end,
+                                                                                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                            fontFamily: 'Open Sans',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                            fontSize: 16,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  if (matvarer.kg != true)
+                                                                                    Text(
+                                                                                      '/stk',
+                                                                                      textAlign: TextAlign.end,
+                                                                                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                            fontFamily: 'Open Sans',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                            fontSize: 16,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
                                                                                 ],
                                                                               ),
                                                                             ),
@@ -1155,7 +1315,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                       ),
                                                                                 ),
                                                                                 Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                                                                  padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                                                                                   child: Text(
                                                                                     'Km',
                                                                                     textAlign: TextAlign.start,
@@ -1185,272 +1345,258 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                   ),
                                                 ),
                                               ],
-                                            ),
-                                          ],
+                                            );
+                                          },
                                         ),
                                       ),
-                                    ),
-                                  if (_model.tabBarCurrentIndex == 1)
-                                    ListView(
-                                      padding: EdgeInsets.zero,
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.vertical,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 10, 0),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              context.pushNamed('MatDetalj');
-                                            },
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              elevation: 3,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(24),
-                                              ),
-                                              child: Container(
-                                                height: 107,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
-                                                  shape: BoxShape.rectangle,
-                                                ),
-                                                child: Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.all(8),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          1,
-                                                                          1,
-                                                                          1),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            13),
-                                                                child: Image
-                                                                    .network(
-                                                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
-                                                                  width: 80,
-                                                                  height: 80,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          5,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                              child: Container(
-                                                                width: 151,
-                                                                height: 103,
-                                                                decoration:
-                                                                    BoxDecoration(),
-                                                                child: Align(
-                                                                  alignment:
-                                                                      AlignmentDirectional(
-                                                                          -1,
-                                                                          -1),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            10,
-                                                                            0,
-                                                                            0),
-                                                                    child: Text(
-                                                                      'Kantareller',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .start,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .headlineSmall
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Open Sans',
-                                                                            fontSize:
-                                                                                17,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Stack(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  1, -1),
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          3,
-                                                                          3,
-                                                                          0),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .open_in_full,
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                size: 24,
-                                                              ),
-                                                            ),
-                                                            Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      1, 1),
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            10),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .end,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              0,
-                                                                              12,
-                                                                              0,
-                                                                              0),
-                                                                      child:
-                                                                          Text(
-                                                                        '150 Kr',
-                                                                        textAlign:
-                                                                            TextAlign.end,
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: 'Open Sans',
-                                                                              color: FlutterFlowTheme.of(context).alternate,
-                                                                              fontSize: 18,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.bold,
-                                                                            ),
-                                                                      ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              0,
-                                                                              12,
-                                                                              4,
-                                                                              0),
-                                                                      child:
-                                                                          Text(
-                                                                        '/kg',
-                                                                        textAlign:
-                                                                            TextAlign.end,
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: 'Open Sans',
-                                                                              color: FlutterFlowTheme.of(context).secondaryText,
-                                                                              fontSize: 18,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
-                                                                      ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              0,
-                                                                              12,
-                                                                              4,
-                                                                              0),
-                                                                      child:
-                                                                          Text(
-                                                                        '/stk',
-                                                                        textAlign:
-                                                                            TextAlign.end,
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: 'Open Sans',
-                                                                              color: FlutterFlowTheme.of(context).secondaryText,
-                                                                              fontSize: 18,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
                                     ),
                                 ],
                               ),
                             ),
                           ],
                         ),
+                        if (_model.tabBarCurrentIndex == 1)
+                          ListView(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 10, 0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed('MatDetalj');
+                                  },
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    elevation: 3,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    child: Container(
+                                      height: 107,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        borderRadius: BorderRadius.circular(24),
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Align(
+                                        alignment:
+                                            const AlignmentDirectional(0, 0),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 1, 1, 1),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              13),
+                                                      child: Image.network(
+                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                                        width: 80,
+                                                        height: 80,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            5, 0, 0, 0),
+                                                    child: Container(
+                                                      width: 151,
+                                                      height: 103,
+                                                      decoration:
+                                                          const BoxDecoration(),
+                                                      child: Align(
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                -1, -1),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  0, 10, 0, 0),
+                                                          child: Text(
+                                                            'Kantareller',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .headlineSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  fontSize: 17,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Stack(
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        1, -1),
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 3, 3, 0),
+                                                    child: Icon(
+                                                      Icons.open_in_full,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 24,
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            1, 1),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 0, 0, 10),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(0,
+                                                                    12, 0, 0),
+                                                            child: Text(
+                                                              '150 Kr',
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Open Sans',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .alternate,
+                                                                    fontSize:
+                                                                        18,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(0,
+                                                                    12, 4, 0),
+                                                            child: Text(
+                                                              '/kg',
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Open Sans',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    fontSize:
+                                                                        18,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(0,
+                                                                    12, 4, 0),
+                                                            child: Text(
+                                                              '/stk',
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Open Sans',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    fontSize:
+                                                                        18,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                   ),

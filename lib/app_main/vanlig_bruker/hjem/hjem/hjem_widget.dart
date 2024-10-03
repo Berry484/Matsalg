@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/hjem/matvarer.dart';
 
 import '/app_main/vanlig_bruker/custom_nav_bar_user/home_nav_bar/home_nav_bar_widget.dart';
@@ -31,7 +32,9 @@ class _HjemWidgetState extends State<HjemWidget> {
   late HjemModel _model;
 
   List<Matvarer>? _matvarer;
+  List<Bonder>? _bonder;
   bool _isloading = true;
+  bool _bondeisloading = true;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final ApiCalls apicalls = ApiCalls();
@@ -45,6 +48,7 @@ class _HjemWidgetState extends State<HjemWidget> {
     super.initState();
     fetchData(); // This initiates the API call
     getAllFoods();
+    getAllBonder();
     _model = createModel(context, () => HjemModel());
 
     // On page load action.
@@ -74,6 +78,24 @@ class _HjemWidgetState extends State<HjemWidget> {
           return;
         } else {
           _isloading = false;
+        }
+      });
+    }
+  }
+
+  Future<void> getAllBonder() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      _bonder = await ApiGetBonder.getAllBonder(token);
+      setState(() {
+        if (_bonder != null && _bonder!.isEmpty) {
+          return;
+        } else {
+          _bondeisloading = false;
         }
       });
     }
@@ -250,7 +272,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10.0, 0.0, 10.0, 0.0),
+                                              .fromSTEB(20.0, 0.0, 20.0, 0.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -267,7 +289,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                   decoration: InputDecoration(
                                                     isDense: true,
                                                     alignLabelWithHint: false,
-                                                    hintText: 'Søk...',
+                                                    hintText: 'Søk',
                                                     hintStyle: FlutterFlowTheme
                                                             .of(context)
                                                         .labelMedium
@@ -276,7 +298,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                               'Open Sans',
                                                           color: const Color(
                                                               0x8F101213),
-                                                          fontSize: 12.0,
+                                                          fontSize: 13.0,
                                                           letterSpacing: 0.0,
                                                         ),
                                                     enabledBorder:
@@ -347,7 +369,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .secondaryText,
-                                                        fontSize: 12.0,
+                                                        fontSize: 13.0,
                                                         letterSpacing: 0.0,
                                                       ),
                                                   textAlign: TextAlign.start,
@@ -360,170 +382,170 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       .asValidator(context),
                                                 ),
                                               ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(10.0,
-                                                              0.0, 10.0, 0.0),
-                                                      child:
-                                                          FlutterFlowDropDown<
-                                                              String>(
-                                                        controller: _model
-                                                                .dropDownValueController ??=
-                                                            FormFieldController<
-                                                                String>(null),
-                                                        options: const [
-                                                          'Pris - lav høy',
-                                                          'Pris - høy lav',
-                                                          'Avstand - lav høy'
-                                                        ],
-                                                        onChanged: (val) async {
-                                                          safeSetState(() =>
-                                                              _model.dropDownValue =
-                                                                  val);
-                                                          if (_model
-                                                                  .dropDownValue ==
-                                                              'Pris') {
-                                                            return;
-                                                          }
-                                                          if (_model
-                                                                  .dropDownValue ==
-                                                              'Avstand') {
-                                                            return;
-                                                          }
-                                                          safeSetState(() {
-                                                            _model
-                                                                .dropDownValueController
-                                                                ?.reset();
-                                                          });
-                                                        },
-                                                        width: 70.0,
-                                                        height: 35.0,
-                                                        textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                        hintText: 'Sorter',
-                                                        icon: FaIcon(
-                                                          FontAwesomeIcons
-                                                              .arrowsAltV,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .alternate,
-                                                          size: 17.0,
-                                                        ),
-                                                        fillColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        elevation: 4.0,
-                                                        borderColor:
-                                                            const Color(
-                                                                0x6357636C),
-                                                        borderWidth: 1.0,
-                                                        borderRadius: 8.0,
-                                                        margin:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(7.0,
-                                                                4.0, 5.0, 4.0),
-                                                        hidesUnderline: true,
-                                                        isOverButton: false,
-                                                        isSearchable: false,
-                                                        isMultiSelect: false,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Builder(
-                                                      builder: (context) =>
-                                                          FlutterFlowIconButton(
-                                                        borderColor:
-                                                            const Color(
-                                                                0x6357636C),
-                                                        borderRadius: 8.0,
-                                                        borderWidth: 1.0,
-                                                        buttonSize: 35.0,
-                                                        fillColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        icon: FaIcon(
-                                                          FontAwesomeIcons
-                                                              .slidersH,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .alternate,
-                                                          size: 20.0,
-                                                        ),
-                                                        onPressed: () async {
-                                                          FFAppState()
-                                                              .kjopAlert = true;
-                                                          FFAppState()
-                                                              .chatAlert = true;
-                                                          safeSetState(() {});
-                                                          await showDialog(
-                                                            barrierColor:
-                                                                const Color(
-                                                                    0x1A000000),
-                                                            context: context,
-                                                            builder:
-                                                                (dialogContext) {
-                                                              return Dialog(
-                                                                elevation: 0,
-                                                                insetPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                alignment: const AlignmentDirectional(
-                                                                        1.0,
-                                                                        -0.8)
-                                                                    .resolve(
-                                                                        Directionality.of(
-                                                                            context)),
-                                                                child:
-                                                                    GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              dialogContext)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      const FiltrerSokWidget(),
-                                                                ),
-                                                              );
-                                                            },
-                                                          );
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                              // Row(
+                                              //   mainAxisSize: MainAxisSize.max,
+                                              //   children: [
+                                              //     Align(
+                                              //       alignment:
+                                              //           const AlignmentDirectional(
+                                              //               -1.0, 0.0),
+                                              //       child: Padding(
+                                              //         padding:
+                                              //             const EdgeInsetsDirectional
+                                              //                 .fromSTEB(10.0,
+                                              //                 0.0, 10.0, 0.0),
+                                              //         child:
+                                              //             FlutterFlowDropDown<
+                                              //                 String>(
+                                              //           controller: _model
+                                              //                   .dropDownValueController ??=
+                                              //               FormFieldController<
+                                              //                   String>(null),
+                                              //           options: const [
+                                              //             'Pris - lav høy',
+                                              //             'Pris - høy lav',
+                                              //             'Avstand - lav høy'
+                                              //           ],
+                                              //           onChanged: (val) async {
+                                              //             safeSetState(() =>
+                                              //                 _model.dropDownValue =
+                                              //                     val);
+                                              //             if (_model
+                                              //                     .dropDownValue ==
+                                              //                 'Pris') {
+                                              //               return;
+                                              //             }
+                                              //             if (_model
+                                              //                     .dropDownValue ==
+                                              //                 'Avstand') {
+                                              //               return;
+                                              //             }
+                                              //             safeSetState(() {
+                                              //               _model
+                                              //                   .dropDownValueController
+                                              //                   ?.reset();
+                                              //             });
+                                              //           },
+                                              //           width: 70.0,
+                                              //           height: 35.0,
+                                              //           textStyle:
+                                              //               FlutterFlowTheme.of(
+                                              //                       context)
+                                              //                   .bodyMedium
+                                              //                   .override(
+                                              //                     fontFamily:
+                                              //                         'Open Sans',
+                                              //                     color: FlutterFlowTheme.of(
+                                              //                             context)
+                                              //                         .alternate,
+                                              //                     fontSize:
+                                              //                         14.0,
+                                              //                     letterSpacing:
+                                              //                         0.0,
+                                              //                     fontWeight:
+                                              //                         FontWeight
+                                              //                             .bold,
+                                              //                   ),
+                                              //           hintText: 'Sorter',
+                                              //           icon: FaIcon(
+                                              //             FontAwesomeIcons
+                                              //                 .arrowsAltV,
+                                              //             color: FlutterFlowTheme
+                                              //                     .of(context)
+                                              //                 .alternate,
+                                              //             size: 17.0,
+                                              //           ),
+                                              //           fillColor:
+                                              //               FlutterFlowTheme.of(
+                                              //                       context)
+                                              //                   .primary,
+                                              //           elevation: 4.0,
+                                              //           borderColor:
+                                              //               const Color(
+                                              //                   0x6357636C),
+                                              //           borderWidth: 1.0,
+                                              //           borderRadius: 8.0,
+                                              //           margin:
+                                              //               const EdgeInsetsDirectional
+                                              //                   .fromSTEB(7.0,
+                                              //                   4.0, 5.0, 4.0),
+                                              //           hidesUnderline: true,
+                                              //           isOverButton: false,
+                                              //           isSearchable: false,
+                                              //           isMultiSelect: false,
+                                              //         ),
+                                              //       ),
+                                              //     ),
+                                              //     Align(
+                                              //       alignment:
+                                              //           const AlignmentDirectional(
+                                              //               -1.0, 0.0),
+                                              //       child: Builder(
+                                              //         builder: (context) =>
+                                              //             FlutterFlowIconButton(
+                                              //           borderColor:
+                                              //               const Color(
+                                              //                   0x6357636C),
+                                              //           borderRadius: 8.0,
+                                              //           borderWidth: 1.0,
+                                              //           buttonSize: 35.0,
+                                              //           fillColor:
+                                              //               FlutterFlowTheme.of(
+                                              //                       context)
+                                              //                   .primary,
+                                              //           icon: FaIcon(
+                                              //             FontAwesomeIcons
+                                              //                 .slidersH,
+                                              //             color: FlutterFlowTheme
+                                              //                     .of(context)
+                                              //                 .alternate,
+                                              //             size: 20.0,
+                                              //           ),
+                                              //           onPressed: () async {
+                                              //             FFAppState()
+                                              //                 .kjopAlert = true;
+                                              //             FFAppState()
+                                              //                 .chatAlert = true;
+                                              //             safeSetState(() {});
+                                              //             await showDialog(
+                                              //               barrierColor:
+                                              //                   const Color(
+                                              //                       0x1A000000),
+                                              //               context: context,
+                                              //               builder:
+                                              //                   (dialogContext) {
+                                              //                 return Dialog(
+                                              //                   elevation: 0,
+                                              //                   insetPadding:
+                                              //                       EdgeInsets
+                                              //                           .zero,
+                                              //                   backgroundColor:
+                                              //                       Colors
+                                              //                           .transparent,
+                                              //                   alignment: const AlignmentDirectional(
+                                              //                           1.0,
+                                              //                           -0.8)
+                                              //                       .resolve(
+                                              //                           Directionality.of(
+                                              //                               context)),
+                                              //                   child:
+                                              //                       GestureDetector(
+                                              //                     onTap: () =>
+                                              //                         FocusScope.of(
+                                              //                                 dialogContext)
+                                              //                             .unfocus(),
+                                              //                     child:
+                                              //                         const FiltrerSokWidget(),
+                                              //                   ),
+                                              //                 );
+                                              //               },
+                                              //             );
+                                              //           },
+                                              //         ),
+                                              //       ),
+                                              //     ),
+                                              //   ],
+                                              // ),
                                             ],
                                           ),
                                         ),
@@ -625,232 +647,279 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(
-                                                          7.0, 0.0, 0.0, 55.0),
-                                                  child: SingleChildScrollView(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  40.0,
-                                                                  0.0),
-                                                          child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
-                                                            highlightColor:
-                                                                Colors
+                                                          7, 0, 0, 55),
+                                                  child: Builder(
+                                                    builder: (context) {
+                                                      return SingleChildScrollView(
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: List.generate(
+                                                              _bondeisloading
+                                                                  ? 3
+                                                                  : _bonder
+                                                                          ?.length ??
+                                                                      0,
+                                                              (index) {
+                                                            if (_bondeisloading) {
+                                                              return Shimmer
+                                                                  .fromColors(
+                                                                baseColor: Colors
+                                                                        .grey[
+                                                                    300]!, // Base color for the shimmer
+                                                                highlightColor:
+                                                                    Colors.grey[
+                                                                        100]!, // Highlight color for the shimmer
+                                                                child:
+                                                                    Container(
+                                                                  margin:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                          5.0),
+                                                                  width: 288.0,
+                                                                  height: 230.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .white, // Background color of the shimmer box
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            16.0), // Rounded corners
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                            final bonder =
+                                                                _bonder![index];
+
+                                                            return Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      0,
+                                                                      0,
+                                                                      15,
+                                                                      0),
+                                                              child: InkWell(
+                                                                splashColor: Colors
                                                                     .transparent,
-                                                            onTap: () async {
-                                                              context.pushNamed(
-                                                                  'BondeGardPage');
-                                                            },
-                                                            child: Material(
-                                                              color: Colors
-                                                                  .transparent,
-                                                              elevation: 1.2,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            16.0),
-                                                              ),
-                                                              child: Container(
-                                                                width: 288.0,
-                                                                height: 230.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              16.0),
-                                                                ),
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .min,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .start,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                          const AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            12.0),
-                                                                        child:
-                                                                            ClipRRect(
-                                                                          borderRadius:
-                                                                              const BorderRadius.only(
-                                                                            bottomLeft:
-                                                                                Radius.circular(0.0),
-                                                                            bottomRight:
-                                                                                Radius.circular(0.0),
-                                                                            topLeft:
-                                                                                Radius.circular(16.0),
-                                                                            topRight:
-                                                                                Radius.circular(16.0),
-                                                                          ),
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                onTap:
+                                                                    () async {
+                                                                  context
+                                                                      .pushNamed(
+                                                                    'BrukerPage',
+                                                                    queryParameters: {
+                                                                      'bruker':
+                                                                          serializeParam(
+                                                                        bonder
+                                                                            .toJson(), // Convert to JSON before passing
+                                                                        ParamType
+                                                                            .JSON,
+                                                                      ),
+                                                                      'username':
+                                                                          serializeParam(
+                                                                        bonder
+                                                                            .username,
+                                                                        ParamType
+                                                                            .String,
+                                                                      ),
+                                                                    },
+                                                                  );
+                                                                },
+                                                                child: Material(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  elevation:
+                                                                      1.2,
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            16),
+                                                                  ),
+                                                                  child:
+                                                                      Container(
+                                                                    width: 288,
+                                                                    height: 230,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              16),
+                                                                    ),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Align(
+                                                                          alignment: const AlignmentDirectional(
+                                                                              0,
+                                                                              0),
                                                                           child:
-                                                                              Image.network(
-                                                                            'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/y9tyzwvch3sv/Farm.jpg',
-                                                                            width:
-                                                                                double.infinity,
-                                                                            height:
-                                                                                149.0,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                            cacheWidth:
-                                                                                210,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Align(
-                                                                      alignment:
-                                                                          const AlignmentDirectional(
-                                                                              -1.0,
-                                                                              0.0),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            10.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            AutoSizeText(
-                                                                          'Faugsted Gård',
-                                                                          textAlign:
-                                                                              TextAlign.start,
-                                                                          minFontSize:
-                                                                              11.0,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyLarge
-                                                                              .override(
-                                                                                fontFamily: 'Open Sans',
-                                                                                fontSize: 16.0,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0.0,
-                                                                          10.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children: [
-                                                                          Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            children: [
-                                                                              const Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 2.0),
-                                                                                child: FaIcon(
-                                                                                  FontAwesomeIcons.solidStar,
-                                                                                  color: Color(0x94FFCD3C),
-                                                                                  size: 17.0,
-                                                                                ),
-                                                                              ),
-                                                                              Text(
-                                                                                '4.6',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Open Sans',
-                                                                                      fontSize: 14.0,
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w500,
-                                                                                    ),
-                                                                              ),
-                                                                              const SizedBox(
-                                                                                height: 20.0,
-                                                                                child: VerticalDivider(
-                                                                                  thickness: 1.0,
-                                                                                  color: Color(0x6B616161),
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                          Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            children: [
-                                                                              Icon(
-                                                                                Icons.place,
-                                                                                color: FlutterFlowTheme.of(context).alternate,
-                                                                                size: 17.0,
-                                                                              ),
-                                                                              Text(
-                                                                                '3',
-                                                                                textAlign: TextAlign.start,
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Open Sans',
-                                                                                      color: FlutterFlowTheme.of(context).primaryText,
-                                                                                      fontSize: 14.0,
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
-                                                                              ),
                                                                               Padding(
-                                                                                padding: const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
-                                                                                child: Text(
-                                                                                  'Km',
-                                                                                  textAlign: TextAlign.start,
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Open Sans',
-                                                                                        color: FlutterFlowTheme.of(context).primaryText,
-                                                                                        fontSize: 14.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                12),
+                                                                            child:
+                                                                                ClipRRect(
+                                                                              borderRadius: const BorderRadius.only(
+                                                                                bottomLeft: Radius.circular(0),
+                                                                                bottomRight: Radius.circular(0),
+                                                                                topLeft: Radius.circular(16),
+                                                                                topRight: Radius.circular(16),
+                                                                              ),
+                                                                              child: Image.network(
+                                                                                bonder.profilepic.toString(),
+                                                                                width: double.infinity,
+                                                                                height: 149,
+                                                                                fit: BoxFit.cover,
+                                                                                cacheWidth: 210,
+                                                                                errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                                                  return Image.asset(
+                                                                                    'assets/images/error_image.jpg', // Path to your local error image
+                                                                                    fit: BoxFit.cover,
+                                                                                  );
+                                                                                },
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Align(
+                                                                          alignment: const AlignmentDirectional(
+                                                                              -1,
+                                                                              0),
+                                                                          child:
+                                                                              Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                10,
+                                                                                0,
+                                                                                0,
+                                                                                0),
+                                                                            child:
+                                                                                AutoSizeText(
+                                                                              bonder.gardsnavn ?? '',
+                                                                              textAlign: TextAlign.start,
+                                                                              minFontSize: 11,
+                                                                              style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontSize: 16,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                              0,
+                                                                              10,
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                children: [
+                                                                                  const Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 2),
+                                                                                    child: FaIcon(
+                                                                                      FontAwesomeIcons.solidStar,
+                                                                                      color: Color(0x94FFCD3C),
+                                                                                      size: 17,
+                                                                                    ),
+                                                                                  ),
+                                                                                  Text(
+                                                                                    '4.6',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Open Sans',
+                                                                                          fontSize: 14,
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w500,
+                                                                                        ),
+                                                                                  ),
+                                                                                  const SizedBox(
+                                                                                    height: 20,
+                                                                                    child: VerticalDivider(
+                                                                                      thickness: 1,
+                                                                                      color: Color(0x6B616161),
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                              Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                children: [
+                                                                                  Icon(
+                                                                                    Icons.place,
+                                                                                    color: FlutterFlowTheme.of(context).alternate,
+                                                                                    size: 17,
+                                                                                  ),
+                                                                                  Text(
+                                                                                    '3',
+                                                                                    textAlign: TextAlign.start,
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Open Sans',
+                                                                                          color: FlutterFlowTheme.of(context).primaryText,
+                                                                                          fontSize: 14,
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                                                                                    child: Text(
+                                                                                      'Km',
+                                                                                      textAlign: TextAlign.start,
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Open Sans',
+                                                                                            color: FlutterFlowTheme.of(context).primaryText,
+                                                                                            fontSize: 14,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
                                                                               ),
                                                                             ],
                                                                           ),
-                                                                        ],
-                                                                      ),
+                                                                        ),
+                                                                      ],
                                                                     ),
-                                                                  ],
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          ),
+                                                            );
+                                                          }),
                                                         ),
-                                                      ],
-                                                    ),
+                                                      );
+                                                    },
                                                   ),
                                                 ),
                                                 Align(

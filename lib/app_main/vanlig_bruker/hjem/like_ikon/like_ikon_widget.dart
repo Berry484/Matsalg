@@ -70,8 +70,8 @@ class _LikeIkonWidgetState extends State<LikeIkonWidget>
       alignment: const AlignmentDirectional(0.0, 0.0),
       child: FaIcon(
         FontAwesomeIcons.solidHeart,
-        color: FlutterFlowTheme.of(context).alternate,
-        size: 145.0,
+        color: FlutterFlowTheme.of(context).secondaryBackground,
+        size: 130.0,
       ).animateOnPageLoad(animationsMap['iconOnPageLoadAnimation']!),
     );
   }

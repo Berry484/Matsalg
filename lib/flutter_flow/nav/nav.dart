@@ -285,7 +285,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'BrukerPage',
           path: '/brukerPage',
-          builder: (context, params) => const BrukerPageWidget(),
+          builder: (context, params) => BrukerPageWidget(
+            bruker: params.getParam('bruker', ParamType.JSON),
+            username: params.getParam('username', ParamType.String),
+          ),
         ),
         FFRoute(
           name: 'Folgere',
