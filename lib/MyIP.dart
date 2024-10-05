@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------|
 
 class ApiConstants {
-  static const String baseUrl = "https://service.matsalg.no";
+  static const String baseUrl = "https://service.matsalg.no:8443";
 }

@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 class Matvarer {
+  final int? matId;
   final String? name;
   final List<String>? imgUrls;
   final String? description;
@@ -14,6 +17,7 @@ class Matvarer {
   final bool? kjopt;
 
   Matvarer({
+    this.matId,
     this.name,
     this.imgUrls,
     this.description,
@@ -30,6 +34,7 @@ class Matvarer {
   });
   factory Matvarer.fromJson1(Map<String, dynamic> json) {
     return Matvarer(
+      matId: json['matId'] as int?,
       name: json['name'] as String?,
       imgUrls: (json['imgUrl'] != null && json['imgUrl'] is List)
           ? List<String>.from(json['imgUrl'])
@@ -52,6 +57,7 @@ class Matvarer {
 
   factory Matvarer.fromJson(Map<String, dynamic> json) {
     return Matvarer(
+      matId: json['matId'] as int?,
       name: json['name'] as String?,
       imgUrls: (json['imgUrl'] != null && json['imgUrl'] is List)
           ? List<String>.from(json['imgUrl'])
@@ -82,6 +88,7 @@ class Matvarer {
   // Convert Matvarer object to JSON
   Map<String, dynamic> toJson() {
     return {
+      'matId': matId,
       'name': name,
       'imgUrl': imgUrls, // Ensure to convert to a list
       'description': description,
@@ -101,6 +108,7 @@ class Matvarer {
   @override
   String toString() {
     return 'Matvarer {'
+        'matId: $matId, '
         'name: $name, '
         'imgUrls: $imgUrls, ' // Adjusted to reflect the new field
         'description: $description, '

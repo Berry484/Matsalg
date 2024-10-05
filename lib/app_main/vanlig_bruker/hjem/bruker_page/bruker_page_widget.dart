@@ -1,7 +1,7 @@
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/SecureStorage.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/hjem/hjem/matvarer.dart';
+import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -1356,21 +1356,53 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                           ],
                         ),
                         if (_model.tabBarCurrentIndex == 1)
-                          ListView(
+                          ListView.builder(
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            children: [
-                              Padding(
+                            itemCount:
+                                _matisLoading ? 6 : _matvarer?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              if (_matisLoading) {
+                                return Shimmer.fromColors(
+                                  baseColor: Colors
+                                      .grey[300]!, // Base color for the shimmer
+                                  highlightColor: Colors.grey[
+                                      100]!, // Highlight color for the shimmer
+                                  child: Container(
+                                    margin: const EdgeInsets.all(5.0),
+                                    width: 225.0,
+                                    height: 107.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors
+                                          .white, // Background color of the shimmer box
+                                      borderRadius: BorderRadius.circular(
+                                          16.0), // Rounded corners
+                                    ),
+                                  ),
+                                );
+                              }
+                              final matvarer = _matvarer![index];
+
+                              return Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
+                                    10, 13, 10, 0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    context.pushNamed('MatDetalj');
+                                    context.pushNamed(
+                                      'MatDetaljBondegard',
+                                      queryParameters: {
+                                        'matvare': serializeParam(
+                                          matvarer
+                                              .toJson(), // Convert to JSON before passing
+                                          ParamType.JSON,
+                                        ),
+                                      },
+                                    );
                                   },
                                   child: Material(
                                     color: Colors.transparent,
@@ -1409,10 +1441,22 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                           BorderRadius.circular(
                                                               13),
                                                       child: Image.network(
-                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                                        matvarer.imgUrls![0]
+                                                            .toString(),
                                                         width: 80,
                                                         height: 80,
                                                         fit: BoxFit.cover,
+                                                        errorBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                Object error,
+                                                                StackTrace?
+                                                                    stackTrace) {
+                                                          return Image.asset(
+                                                            'assets/images/error_image.jpg', // Path to your local error image
+                                                            fit: BoxFit.cover,
+                                                          );
+                                                        },
                                                       ),
                                                     ),
                                                   ),
@@ -1436,7 +1480,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                   .fromSTEB(
                                                                   0, 10, 0, 0),
                                                           child: Text(
-                                                            'Kantareller',
+                                                            matvarer.name ?? '',
                                                             textAlign:
                                                                 TextAlign.start,
                                                             style: FlutterFlowTheme
@@ -1503,7 +1547,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     .fromSTEB(0,
                                                                     12, 0, 0),
                                                             child: Text(
-                                                              '150 Kr',
+                                                              '${matvarer.price ?? ''} Kr',
                                                               textAlign:
                                                                   TextAlign.end,
                                                               style: FlutterFlowTheme
@@ -1525,62 +1569,74 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                   ),
                                                             ),
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(0,
-                                                                    12, 4, 0),
-                                                            child: Text(
-                                                              '/kg',
-                                                              textAlign:
-                                                                  TextAlign.end,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Open Sans',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
-                                                                    fontSize:
-                                                                        18,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
+                                                          if (matvarer.kg ==
+                                                              true)
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      0,
+                                                                      12,
+                                                                      4,
+                                                                      0),
+                                                              child: Text(
+                                                                '/kg',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .end,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                      fontSize:
+                                                                          18,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(0,
-                                                                    12, 4, 0),
-                                                            child: Text(
-                                                              '/stk',
-                                                              textAlign:
-                                                                  TextAlign.end,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Open Sans',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
-                                                                    fontSize:
-                                                                        18,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
+                                                          if (matvarer.kg !=
+                                                              true)
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      0,
+                                                                      12,
+                                                                      4,
+                                                                      0),
+                                                              child: Text(
+                                                                '/stk',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .end,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                      fontSize:
+                                                                          18,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
                                                             ),
-                                                          ),
                                                         ],
                                                       ),
                                                     ),
@@ -1594,8 +1650,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              );
+                            },
                           ),
                       ],
                     ),

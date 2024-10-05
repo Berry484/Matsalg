@@ -1,5 +1,4 @@
-import 'package:json_path/fun_extra.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/hjem/hjem/matvarer.dart';
+import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '/app_main/tom_place_holders/ingen_favoritt/ingen_favoritt_widget.dart';
@@ -8,7 +7,6 @@ import '/app_main/vanlig_bruker/custom_nav_bar_user/profil_nav_bar/profil_nav_ba
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'dart:math' as math;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -33,8 +31,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
     with TickerProviderStateMixin {
   late ProfilModel _model;
   List<Matvarer>? _matvarer;
+  List<Matvarer>? _likesmatvarer;
   bool _isloading = true;
   bool _isempty = true;
+  bool _likesisloading = true;
+  bool _likesisempty = true;
   final ApiCalls apicalls = ApiCalls();
   final Securestorage securestorage = Securestorage();
 
@@ -46,6 +47,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
   void initState() {
     super.initState();
     getMyFoods();
+    getAllLikes();
+
     _model = createModel(context, () => ProfilModel());
 
     // On page load action.
@@ -95,6 +98,25 @@ class _ProfilWidgetState extends State<ProfilWidget>
         }
         _isloading = false;
         _isempty = false;
+      });
+    }
+  }
+
+  Future<void> getAllLikes() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      _likesmatvarer = await ApiGetAllLikes.getAllLikes(token);
+      setState(() {
+        if (_likesmatvarer != null && _likesmatvarer!.isEmpty) {
+          _likesisempty = true;
+          return;
+        }
+        _likesisloading = false;
+        _likesisempty = false;
       });
     }
   }
@@ -1138,8 +1160,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             5, 15, 5, 0),
                                         child: RefreshIndicator(
-                                          onRefresh: () async {},
-                                          child: GridView(
+                                          onRefresh: () async {
+                                            getAllLikes();
+                                          },
+                                          child: GridView.builder(
                                             padding: EdgeInsets.fromLTRB(
                                               0,
                                               0,
@@ -1155,8 +1179,39 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             primary: false,
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
-                                            children: [
-                                              Stack(
+                                            itemCount: _likesisloading
+                                                ? 6
+                                                : _likesmatvarer?.length ?? 0,
+                                            itemBuilder: (context, index) {
+                                              if (_likesisloading) {
+                                                return Shimmer.fromColors(
+                                                  baseColor: Colors.grey[
+                                                      300]!, // Base color for the shimmer
+                                                  highlightColor: Colors.grey[
+                                                      100]!, // Highlight color for the shimmer
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    width: 225.0,
+                                                    height: 235.0,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors
+                                                          .white, // Background color of the shimmer box
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              16.0), // Rounded corners
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              // if (_isempty) {
+                                              //   return IngenVareLagtUtWidget();
+                                              // }
+                                              final likesmatvare =
+                                                  _likesmatvarer![index];
+
+                                              return Stack(
                                                 children: [
                                                   Align(
                                                     alignment:
@@ -1173,7 +1228,16 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           Colors.transparent,
                                                       onTap: () async {
                                                         context.pushNamed(
-                                                            'MatDetalj');
+                                                          'MatDetaljBondegard',
+                                                          queryParameters: {
+                                                            'matvare':
+                                                                serializeParam(
+                                                              likesmatvare
+                                                                  .toJson(), // Convert to JSON before passing
+                                                              ParamType.JSON,
+                                                            ),
+                                                          },
+                                                        );
                                                       },
                                                       child: Material(
                                                         color:
@@ -1240,13 +1304,28 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     ),
                                                                     child: Image
                                                                         .network(
-                                                                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                                                      likesmatvare
+                                                                          .imgUrls![
+                                                                              0]
+                                                                          .toString(),
                                                                       width: double
                                                                           .infinity,
                                                                       height:
                                                                           151,
                                                                       fit: BoxFit
                                                                           .cover,
+                                                                      errorBuilder: (BuildContext context,
+                                                                          Object
+                                                                              error,
+                                                                          StackTrace?
+                                                                              stackTrace) {
+                                                                        return Image
+                                                                            .asset(
+                                                                          'assets/images/error_image.jpg', // Path to your local error image
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        );
+                                                                      },
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1278,7 +1357,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                             0),
                                                                         child:
                                                                             AutoSizeText(
-                                                                          'Kantareller',
+                                                                          likesmatvare.name ??
+                                                                              '',
                                                                           textAlign:
                                                                               TextAlign.start,
                                                                           minFontSize:
@@ -1346,7 +1426,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     Padding(
                                                                                       padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                       child: Text(
-                                                                                        '300 Kr',
+                                                                                        '${likesmatvare.price ?? ''} Kr',
                                                                                         textAlign: TextAlign.end,
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                               fontFamily: 'Open Sans',
@@ -1357,28 +1437,30 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             ),
                                                                                       ),
                                                                                     ),
-                                                                                    Text(
-                                                                                      '/kg',
-                                                                                      textAlign: TextAlign.end,
-                                                                                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                            fontFamily: 'Open Sans',
-                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                            fontSize: 16,
-                                                                                            letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.w600,
-                                                                                          ),
-                                                                                    ),
-                                                                                    Text(
-                                                                                      '/stk',
-                                                                                      textAlign: TextAlign.end,
-                                                                                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                            fontFamily: 'Open Sans',
-                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                            fontSize: 16,
-                                                                                            letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.w600,
-                                                                                          ),
-                                                                                    ),
+                                                                                    if (likesmatvare.kg == true)
+                                                                                      Text(
+                                                                                        '/kg',
+                                                                                        textAlign: TextAlign.end,
+                                                                                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                              fontFamily: 'Open Sans',
+                                                                                              color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                              fontSize: 16,
+                                                                                              letterSpacing: 0.0,
+                                                                                              fontWeight: FontWeight.w600,
+                                                                                            ),
+                                                                                      ),
+                                                                                    if (likesmatvare.kg != true)
+                                                                                      Text(
+                                                                                        '/stk',
+                                                                                        textAlign: TextAlign.end,
+                                                                                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                              fontFamily: 'Open Sans',
+                                                                                              color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                              fontSize: 16,
+                                                                                              letterSpacing: 0.0,
+                                                                                              fontWeight: FontWeight.w600,
+                                                                                            ),
+                                                                                      ),
                                                                                   ],
                                                                                 ),
                                                                               ),
@@ -1432,8 +1514,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                     ),
                                                   ),
                                                 ],
-                                              ),
-                                            ],
+                                              );
+                                            },
                                           ),
                                         ),
                                       ),

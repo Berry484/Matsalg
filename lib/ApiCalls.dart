@@ -1,12 +1,14 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:http/http.dart' as http;
+import 'package:json_path/fun_extra.dart';
 import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'dart:async'; // Import this to use Future and TimeoutException
 import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
 import 'package:http_parser/http_parser.dart';
-import 'app_main/vanlig_bruker/hjem/hjem/matvarer.dart';
+import 'matvarer.dart';
 
 class ApiCalls {
   static const String baseUrl = ApiConstants.baseUrl;
@@ -576,6 +578,131 @@ class ApiGetUserFood {
     } catch (e) {
       // Handle any other errors that might occur
       return null;
+    }
+  }
+}
+
+class ApiLike {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  Future<http.Response?> sendLike(String? token, int? matId) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/api/likes?mat_id=${matId}'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      return response;
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<http.Response?> deleteLike(String? token, int? matId) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .delete(
+            Uri.parse('$baseUrl/api/likes?mat_id=${matId}'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      return response;
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+}
+
+class ApiGetAllLikes {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  static Future<List<Matvarer>?> getAllLikes(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/likes/mine'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        // Decode the JSON response
+
+        final List<dynamic> jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
+        // Convert the JSON into a list of Matvarer objects
+        return Matvarer.matvarerFromSnapShot(jsonResponse);
+      } else {
+        // Handle unsuccessful response
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      // Handle any other errors that might occur
+      return null;
+    }
+  }
+}
+
+class ApiCheckLiked {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  static Future<bool?> getChecklike(String? token, int? matId) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/likes/check?matId=$matId'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      if (response.statusCode == 200) {
+        // Parse the response body to a boolean value
+        final responseBody = response.body.toLowerCase();
+        if (responseBody == 'true') {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } on TimeoutException {
+      return false;
+    } catch (e) {
+      return false;
     }
   }
 }

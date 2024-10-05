@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:mat_salg/Bonder.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/hjem/hjem/matvarer.dart';
+import 'package:mat_salg/matvarer.dart';
 
 import '/app_main/vanlig_bruker/custom_nav_bar_user/home_nav_bar/home_nav_bar_widget.dart';
 import '/app_main/vanlig_bruker/hjem/filtrer_sok/filtrer_sok_widget.dart';

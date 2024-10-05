@@ -1,4 +1,4 @@
-import 'package:mat_salg/app_main/vanlig_bruker/hjem/hjem/matvarer.dart';
+import 'package:mat_salg/matvarer.dart';
 
 import '/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
 import '/app_main/vanlig_bruker/profil/merk_solgt/merk_solgt_widget.dart';
@@ -257,8 +257,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                 width: double
                                                                     .infinity,
                                                                 height: 380.0,
-                                                                fit:
-                                                                    BoxFit.fill,
+                                                                fit: BoxFit
+                                                                    .cover,
                                                                 alignment:
                                                                     const Alignment(
                                                                         0.0,
@@ -301,8 +301,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                 width: double
                                                                     .infinity,
                                                                 height: 380.0,
-                                                                fit:
-                                                                    BoxFit.fill,
+                                                                fit: BoxFit
+                                                                    .cover,
                                                                 alignment:
                                                                     const Alignment(
                                                                         0.0,
@@ -344,8 +344,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                 width: double
                                                                     .infinity,
                                                                 height: 380.0,
-                                                                fit:
-                                                                    BoxFit.fill,
+                                                                fit: BoxFit
+                                                                    .cover,
                                                                 alignment:
                                                                     const Alignment(
                                                                         0.0,
@@ -388,8 +388,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                 width: double
                                                                     .infinity,
                                                                 height: 380.0,
-                                                                fit:
-                                                                    BoxFit.fill,
+                                                                fit: BoxFit
+                                                                    .cover,
                                                                 alignment:
                                                                     const Alignment(
                                                                         0.0,

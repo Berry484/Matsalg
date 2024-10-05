@@ -118,7 +118,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             ),
                                     labelColor: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    unselectedLabelColor: const Color(0xC557636C),
+                                    unselectedLabelColor:
+                                        const Color(0xC557636C),
                                     backgroundColor:
                                         FlutterFlowTheme.of(context).primary,
                                     unselectedBackgroundColor:
@@ -132,8 +133,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                     buttonMargin:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             20.0, 0.0, 20.0, 0.0),
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        30.0, 5.0, 30.0, 5.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            30.0, 5.0, 30.0, 5.0),
                                     tabs: const [
                                       Tab(
                                         text: 'Kjøp',
@@ -162,8 +164,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                     controller: _model.tabBarController,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 10.0, 0.0, 0.0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0.0, 10.0, 0.0, 0.0),
                                         child: Builder(
                                           builder: (context) {
                                             final removeme2 = List.generate(
@@ -176,7 +178,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             }
 
                                             return ListView.separated(
-                                              padding: const EdgeInsets.fromLTRB(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
                                                 0,
                                                 0,
                                                 0,
@@ -192,8 +195,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                 final removeme2Item =
                                                     removeme2[removeme2Index];
                                                 return Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           10.0, 0.0, 10.0, 0.0),
                                                   child: InkWell(
                                                     splashColor:
@@ -233,8 +237,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                         ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsets.all(
-                                                                  8.0),
+                                                              const EdgeInsets
+                                                                  .all(8.0),
                                                           child: Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
@@ -244,10 +248,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            1.0,
-                                                                            1.0),
+                                                                        0.0,
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0),
                                                                 child:
                                                                     ClipRRect(
                                                                   borderRadius:
@@ -267,8 +271,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                               ),
                                                               Expanded(
                                                                 child: Padding(
-                                                                  padding: const EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           8.0,
                                                                           0.0,
                                                                           4.0,
@@ -285,7 +290,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             .start,
                                                                     children: [
                                                                       Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0.0,
                                                                             10.0,
                                                                             0.0,
@@ -304,7 +310,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         ),
                                                                       ),
                                                                       Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0.0,
                                                                             0.0,
                                                                             0.0,
@@ -354,7 +361,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               .end,
                                                                       children: [
                                                                         Padding(
-                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               0.0,
                                                                               12.0,
                                                                               4.0,
@@ -374,7 +382,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           ),
                                                                         ),
                                                                         Padding(
-                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               0.0,
                                                                               12.0,
                                                                               4.0,
@@ -411,8 +420,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 10.0, 0.0, 0.0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0.0, 10.0, 0.0, 0.0),
                                         child: Builder(
                                           builder: (context) {
                                             final removeme2 = List.generate(
@@ -425,7 +434,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             }
 
                                             return ListView.separated(
-                                              padding: const EdgeInsets.fromLTRB(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
                                                 0,
                                                 0,
                                                 0,
@@ -441,8 +451,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                 final removeme2Item =
                                                     removeme2[removeme2Index];
                                                 return Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
                                                           10.0, 0.0, 10.0, 0.0),
                                                   child: InkWell(
                                                     splashColor:
@@ -504,8 +515,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                         ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsets.all(
-                                                                  8.0),
+                                                              const EdgeInsets
+                                                                  .all(8.0),
                                                           child: Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
@@ -515,10 +526,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            1.0,
-                                                                            1.0),
+                                                                        0.0,
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0),
                                                                 child:
                                                                     ClipRRect(
                                                                   borderRadius:
@@ -538,8 +549,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                               ),
                                                               Expanded(
                                                                 child: Padding(
-                                                                  padding: const EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           8.0,
                                                                           0.0,
                                                                           4.0,
@@ -556,7 +568,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             .start,
                                                                     children: [
                                                                       Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0.0,
                                                                             10.0,
                                                                             0.0,
@@ -575,7 +588,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         ),
                                                                       ),
                                                                       Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0.0,
                                                                             0.0,
                                                                             0.0,
@@ -625,7 +639,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               .end,
                                                                       children: [
                                                                         Padding(
-                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               0.0,
                                                                               12.0,
                                                                               4.0,
@@ -645,7 +660,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           ),
                                                                         ),
                                                                         Padding(
-                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               0.0,
                                                                               12.0,
                                                                               4.0,
@@ -689,7 +705,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                           ),
                           if (FFAppState().kjopAlert == true)
                             Align(
-                              alignment: const AlignmentDirectional(0.55, -0.95),
+                              alignment:
+                                  const AlignmentDirectional(0.55, -0.95),
                               child: Container(
                                 width: 10.0,
                                 height: 10.0,

@@ -1,6 +1,7 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/hjem/hjem/matvarer.dart';
+import 'package:mat_salg/matvarer.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -38,6 +39,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
   bool _isloading = true;
   late Matvarer matvare;
   final Securestorage securestorage = Securestorage();
+  final ApiLike apiLike = ApiLike();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -46,6 +48,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
     super.initState();
     _model = createModel(context, () => MatDetaljBondegardModel());
     getAllFoods();
+    getChecklike();
 
     matvare = Matvarer.fromJson1(widget.matvare);
   }
@@ -64,6 +67,20 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         } else {
           _isloading = false;
         }
+      });
+    }
+  }
+
+  Future<void> getChecklike() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      _model.liker = await ApiCheckLiked.getChecklike(token, matvare.matId);
+      setState(() {
+        return;
       });
     }
   }
@@ -225,8 +242,14 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       highlightColor: Colors.transparent,
                                       onDoubleTap: () async {
                                         _model.liker = !(_model.liker ?? true);
+                                        await apiLike.deleteLike(
+                                            Securestorage.authToken,
+                                            matvare.matId);
                                         safeSetState(() {});
                                         if (_model.liker == true) {
+                                          await apiLike.sendLike(
+                                              Securestorage.authToken,
+                                              matvare.matId);
                                           await showAlignedDialog(
                                             barrierColor: Colors.transparent,
                                             context: context,
@@ -593,8 +616,18 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         children: [
                                           ToggleIcon(
                                             onPressed: () async {
+                                              // Toggle the current like state
                                               safeSetState(() => _model.liker =
                                                   !_model.liker!);
+                                              if (_model.liker!) {
+                                                await apiLike.sendLike(
+                                                    Securestorage.authToken,
+                                                    matvare.matId);
+                                              } else {
+                                                await apiLike.deleteLike(
+                                                    Securestorage.authToken,
+                                                    matvare.matId);
+                                              }
                                             },
                                             value: _model.liker!,
                                             onIcon: FaIcon(
@@ -795,6 +828,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             onPressed: () async {
                                               safeSetState(() => _model.liker =
                                                   !_model.liker!);
+                                              if (_model.liker!) {
+                                                await apiLike.sendLike(
+                                                    Securestorage.authToken,
+                                                    matvare.matId);
+                                              } else {
+                                                await apiLike.deleteLike(
+                                                    Securestorage.authToken,
+                                                    matvare.matId);
+                                              }
                                             },
                                             value: _model.liker!,
                                             onIcon: FaIcon(
