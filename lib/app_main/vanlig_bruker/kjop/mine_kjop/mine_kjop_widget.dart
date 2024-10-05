@@ -260,12 +260,29 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               6.0),
                                                                   child: Image
                                                                       .network(
-                                                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                                                    '',
                                                                     width: 80.0,
                                                                     height:
                                                                         80.0,
                                                                     fit: BoxFit
                                                                         .cover,
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        width:
+                                                                            80.0,
+                                                                        height:
+                                                                            80.0,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
                                                                   ),
                                                                 ),
                                                               ),
@@ -544,6 +561,23 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         80.0,
                                                                     fit: BoxFit
                                                                         .cover,
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        width:
+                                                                            80.0,
+                                                                        height:
+                                                                            80.0,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
                                                                   ),
                                                                 ),
                                                               ),
