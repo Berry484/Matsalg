@@ -314,7 +314,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           padding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(7,
-                                                                      0, 0, 0),
+                                                                      0, 0, 20),
                                                           child: Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
@@ -451,7 +451,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                           ),
                                                                         ),
                                                                         Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               5,
                                                                               0,
                                                                               0,
@@ -518,72 +519,72 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                   ],
                                                                 ),
                                                               ),
-                                                              Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            5,
-                                                                            7,
-                                                                            0,
-                                                                            0),
-                                                                    child:
-                                                                        FFButtonWidget(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        context.pushNamed(
-                                                                            'BrukerRating');
-                                                                      },
-                                                                      text:
-                                                                          '4.3 (15)',
-                                                                      icon:
-                                                                          FaIcon(
-                                                                        FontAwesomeIcons
-                                                                            .solidStar,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                        size:
-                                                                            17,
-                                                                      ),
-                                                                      options:
-                                                                          FFButtonOptions(
-                                                                        width:
-                                                                            225,
-                                                                        height:
-                                                                            30,
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            16,
-                                                                            0,
-                                                                            16,
-                                                                            0),
-                                                                        iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primary,
-                                                                        textStyle: FlutterFlowTheme.of(context)
-                                                                            .titleSmall
-                                                                            .override(
-                                                                              fontFamily: 'Open Sans',
-                                                                              color: FlutterFlowTheme.of(context).alternate,
-                                                                              fontSize: 15,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
-                                                                        elevation:
-                                                                            1,
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(8),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
+                                                              // Row(
+                                                              //   mainAxisSize:
+                                                              //       MainAxisSize
+                                                              //           .max,
+                                                              //   children: [
+                                                              //     Padding(
+                                                              //       padding: EdgeInsetsDirectional
+                                                              //           .fromSTEB(
+                                                              //               5,
+                                                              //               7,
+                                                              //               0,
+                                                              //               0),
+                                                              //       child:
+                                                              //           FFButtonWidget(
+                                                              //         onPressed:
+                                                              //             () async {
+                                                              //           context.pushNamed(
+                                                              //               'BrukerRating');
+                                                              //         },
+                                                              //         text:
+                                                              //             '4.3 (15)',
+                                                              //         icon:
+                                                              //             FaIcon(
+                                                              //           FontAwesomeIcons
+                                                              //               .solidStar,
+                                                              //           color: FlutterFlowTheme.of(context)
+                                                              //               .alternate,
+                                                              //           size:
+                                                              //               17,
+                                                              //         ),
+                                                              //         options:
+                                                              //             FFButtonOptions(
+                                                              //           width:
+                                                              //               225,
+                                                              //           height:
+                                                              //               30,
+                                                              //           padding: EdgeInsetsDirectional.fromSTEB(
+                                                              //               16,
+                                                              //               0,
+                                                              //               16,
+                                                              //               0),
+                                                              //           iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                              //               0,
+                                                              //               0,
+                                                              //               0,
+                                                              //               0),
+                                                              //           color: FlutterFlowTheme.of(context)
+                                                              //               .primary,
+                                                              //           textStyle: FlutterFlowTheme.of(context)
+                                                              //               .titleSmall
+                                                              //               .override(
+                                                              //                 fontFamily: 'Open Sans',
+                                                              //                 color: FlutterFlowTheme.of(context).alternate,
+                                                              //                 fontSize: 15,
+                                                              //                 letterSpacing: 0.0,
+                                                              //                 fontWeight: FontWeight.w600,
+                                                              //               ),
+                                                              //           elevation:
+                                                              //               1,
+                                                              //           borderRadius:
+                                                              //               BorderRadius.circular(8),
+                                                              //         ),
+                                                              //       ),
+                                                              //     ),
+                                                              //   ],
+                                                              // ),
                                                             ],
                                                           ),
                                                         ),

@@ -74,14 +74,15 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 12.0, 0.0),
                     child: FlutterFlowIconButton(
                       borderColor: Colors.transparent,
                       borderRadius: 30.0,
@@ -96,34 +97,6 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                         Navigator.pop(context);
                       },
                     ),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'ID:',
-                        textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Open Sans',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 18.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                      Text(
-                        '194378',
-                        textAlign: TextAlign.end,
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Open Sans',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 19.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ],
                   ),
                 ],
               ),
@@ -144,14 +117,14 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                     },
                     child: Material(
                       color: Colors.transparent,
-                      elevation: 3.0,
+                      elevation: 0.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(13.0),
                       ),
                       child: Container(
                         height: 80.0,
                         decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primary,
+                          color: FlutterFlowTheme.of(context).secondary,
                           borderRadius: BorderRadius.circular(13.0),
                           shape: BoxShape.rectangle,
                         ),
@@ -176,8 +149,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          4.0, 3.0, 1.0, 1.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              4.0, 3.0, 1.0, 1.0),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(200.0),
@@ -190,8 +164,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          5.0, 0.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              5.0, 0.0, 0.0, 0.0),
                                       child: Text(
                                         'Geir lars',
                                         textAlign: TextAlign.start,
@@ -213,8 +188,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 12.0, 4.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 12.0, 4.0, 0.0),
                                       child: Text(
                                         '300',
                                         textAlign: TextAlign.end,
@@ -232,8 +208,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 12.0, 12.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 12.0, 12.0, 0.0),
                                       child: Text(
                                         'Kr',
                                         textAlign: TextAlign.end,
@@ -262,8 +239,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                   Align(
                     alignment: const AlignmentDirectional(-1.0, 1.0),
                     child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(5.0, 15.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          5.0, 15.0, 0.0, 0.0),
                       child: Text(
                         'Matvare',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -277,7 +254,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(5.0, 7.0, 4.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        5.0, 7.0, 4.0, 0.0),
                     child: Text(
                       'Epler',
                       textAlign: TextAlign.end,
@@ -314,8 +292,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 10.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            5.0, 0.0, 0.0, 10.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -474,7 +452,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
             Align(
               alignment: const AlignmentDirectional(0.0, 0.0),
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 5.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 5.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () {
                     print('Button pressed ...');
@@ -488,10 +467,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                   options: FFButtonOptions(
                     width: 250.0,
                     height: 40.0,
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(11.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        11.0, 0.0, 0.0, 0.0),
+                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 0.0, 0.0),
                     color: FlutterFlowTheme.of(context).primary,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Open Sans',
@@ -500,7 +479,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.bold,
                         ),
-                    elevation: 3.0,
+                    elevation: 1.5,
                     borderSide: const BorderSide(
                       color: Colors.transparent,
                       width: 1.0,
@@ -511,13 +490,15 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 5.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         Navigator.pop(context);
@@ -530,10 +511,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                       options: FFButtonOptions(
                         width: 180.0,
                         height: 40.0,
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(11.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            11.0, 0.0, 0.0, 0.0),
+                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).error,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
@@ -554,8 +535,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                   ),
                   Builder(
                     builder: (context) => Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          5.0, 0.0, 0.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           Navigator.pop(context);

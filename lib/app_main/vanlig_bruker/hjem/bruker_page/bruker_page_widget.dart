@@ -590,7 +590,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               FontWeight.bold,
                                                                         ),
                                                                     elevation:
-                                                                        3,
+                                                                        1,
                                                                     borderRadius:
                                                                         BorderRadius
                                                                             .circular(8),
@@ -643,7 +643,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               FontWeight.bold,
                                                                         ),
                                                                     elevation:
-                                                                        3,
+                                                                        1,
                                                                     borderRadius:
                                                                         BorderRadius
                                                                             .circular(8),
@@ -661,19 +661,19 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     FFButtonWidget(
                                                                   onPressed:
                                                                       () async {
-                                                                    context.pushNamed(
-                                                                        'BrukerRating');
+                                                                    // context.pushNamed(
+                                                                    //     'BrukerRating');
                                                                   },
                                                                   text:
-                                                                      '4.3 (15)',
-                                                                  icon: FaIcon(
-                                                                    FontAwesomeIcons
-                                                                        .solidStar,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    size: 17,
-                                                                  ),
+                                                                      'Melding',
+                                                                  // icon: FaIcon(
+                                                                  //   FontAwesomeIcons
+                                                                  //       .solidStar,
+                                                                  //   color: FlutterFlowTheme.of(
+                                                                  //           context)
+                                                                  //       .alternate,
+                                                                  //   size: 17,
+                                                                  // ),
                                                                   options:
                                                                       FFButtonOptions(
                                                                     width: 105,
@@ -704,89 +704,89 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           color:
                                                                               FlutterFlowTheme.of(context).alternate,
                                                                           fontSize:
-                                                                              13,
+                                                                              14,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
-                                                                              FontWeight.w600,
+                                                                              FontWeight.bold,
                                                                         ),
                                                                     elevation:
-                                                                        3,
+                                                                        1,
                                                                     borderRadius:
                                                                         BorderRadius
                                                                             .circular(8),
                                                                   ),
                                                                 ),
                                                               ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        4,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                                child:
-                                                                    FFButtonWidget(
-                                                                  onPressed:
-                                                                      () {
-                                                                    print(
-                                                                        'Button pressed ...');
-                                                                  },
-                                                                  text:
-                                                                      '4.3 (15)',
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .message,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    size: 25,
-                                                                  ),
-                                                                  options:
-                                                                      FFButtonOptions(
-                                                                    width: 45,
-                                                                    height: 35,
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                    iconPadding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            10,
-                                                                            1,
-                                                                            0,
-                                                                            0),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    textStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .titleSmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Open Sans',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).alternate,
-                                                                          fontSize:
-                                                                              1,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                        ),
-                                                                    elevation:
-                                                                        3,
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(8),
-                                                                  ),
-                                                                ),
-                                                              ),
+                                                              // Padding(
+                                                              //   padding:
+                                                              //       const EdgeInsetsDirectional
+                                                              //           .fromSTEB(
+                                                              //           4,
+                                                              //           0,
+                                                              //           0,
+                                                              //           0),
+                                                              //   child:
+                                                              //       FFButtonWidget(
+                                                              //     onPressed:
+                                                              //         () {
+                                                              //       print(
+                                                              //           'Button pressed ...');
+                                                              //     },
+                                                              //     text:
+                                                              //         '4.3 (15)',
+                                                              //     icon: Icon(
+                                                              //       Icons
+                                                              //           .message,
+                                                              //       color: FlutterFlowTheme.of(
+                                                              //               context)
+                                                              //           .alternate,
+                                                              //       size: 25,
+                                                              //     ),
+                                                              //     options:
+                                                              //         FFButtonOptions(
+                                                              //       width: 45,
+                                                              //       height: 35,
+                                                              //       padding:
+                                                              //           const EdgeInsetsDirectional
+                                                              //               .fromSTEB(
+                                                              //               0,
+                                                              //               0,
+                                                              //               0,
+                                                              //               0),
+                                                              //       iconPadding:
+                                                              //           const EdgeInsetsDirectional
+                                                              //               .fromSTEB(
+                                                              //               10,
+                                                              //               1,
+                                                              //               0,
+                                                              //               0),
+                                                              //       color: FlutterFlowTheme.of(
+                                                              //               context)
+                                                              //           .primary,
+                                                              //       textStyle: FlutterFlowTheme.of(
+                                                              //               context)
+                                                              //           .titleSmall
+                                                              //           .override(
+                                                              //             fontFamily:
+                                                              //                 'Open Sans',
+                                                              //             color:
+                                                              //                 FlutterFlowTheme.of(context).alternate,
+                                                              //             fontSize:
+                                                              //                 1,
+                                                              //             letterSpacing:
+                                                              //                 0.0,
+                                                              //             fontWeight:
+                                                              //                 FontWeight.w600,
+                                                              //           ),
+                                                              //       elevation:
+                                                              //           3,
+                                                              //       borderRadius:
+                                                              //           BorderRadius
+                                                              //               .circular(8),
+                                                              //     ),
+                                                              //   ),
+                                                              // ),
                                                             ],
                                                           ),
                                                         ],

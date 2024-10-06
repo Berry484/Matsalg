@@ -602,7 +602,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (matvare.bonde == true)
+                              if (1 == 2)
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       10.0, 5.0, 10.0, 30.0),
@@ -732,7 +732,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             },
                                             child: Material(
                                               color: Colors.transparent,
-                                              elevation: 4.0,
+                                              elevation: 1.0,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
@@ -812,7 +812,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     ],
                                   ),
                                 ),
-                              if (matvare.bonde != true)
+                              if (matvare.bonde != true ||
+                                  matvare.bonde == true)
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       10.0, 0.0, 10.0, 30.0),
@@ -903,7 +904,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         children: [
                                           Material(
                                             color: Colors.transparent,
-                                            elevation: 4.0,
+                                            elevation: 1.0,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(24.0),
