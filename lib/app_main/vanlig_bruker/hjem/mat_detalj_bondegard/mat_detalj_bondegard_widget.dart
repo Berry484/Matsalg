@@ -602,7 +602,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (1 == 2)
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       10.0, 5.0, 10.0, 30.0),
@@ -812,176 +811,174 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     ],
                                   ),
                                 ),
-                              if (matvare.bonde != true ||
-                                  matvare.bonde == true)
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 0.0, 10.0, 30.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          ToggleIcon(
-                                            onPressed: () async {
-                                              safeSetState(() => _model.liker =
-                                                  !_model.liker!);
-                                              if (_model.liker!) {
-                                                await apiLike.sendLike(
-                                                    Securestorage.authToken,
-                                                    matvare.matId);
-                                              } else {
-                                                await apiLike.deleteLike(
-                                                    Securestorage.authToken,
-                                                    matvare.matId);
-                                              }
-                                            },
-                                            value: _model.liker!,
-                                            onIcon: FaIcon(
-                                              FontAwesomeIcons.solidHeart,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              size: 30.0,
-                                            ),
-                                            offIcon: FaIcon(
-                                              FontAwesomeIcons.heart,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              size: 30.0,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(10.0, 0.0, 0.0, 0.0),
-                                            child: InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  enableDrag: false,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(context)
-                                                              .unfocus(),
-                                                      child: Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child:
-                                                            const KartPopUpWidget(),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) =>
-                                                    safeSetState(() {}));
-                                              },
-                                              child: FaIcon(
-                                                FontAwesomeIcons.mapMarkerAlt,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                size: 31.0,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Material(
-                                            color: Colors.transparent,
-                                            elevation: 1.0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(24.0),
-                                            ),
-                                            child: SafeArea(
-                                              child: Container(
-                                                width: 120.0,
-                                                height: 40.0,
-                                                constraints:
-                                                    const BoxConstraints(
-                                                  maxWidth: 174.0,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    colors: [
-                                                      const Color(0xFF10835F),
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .alternate
-                                                    ],
-                                                    stops: const [0.0, 1.0],
-                                                    begin:
-                                                        const AlignmentDirectional(
-                                                            0.64, -1.0),
-                                                    end:
-                                                        const AlignmentDirectional(
-                                                            -0.64, 1.0),
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          24.0),
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          10.0, 0.0, 10.0, 0.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Expanded(
-                                                        child: Text(
-                                                          'Melding',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 17.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsetsDirectional.fromSTEB(
+                                //       10.0, 0.0, 10.0, 30.0),
+                                //   child: Row(
+                                //     mainAxisSize: MainAxisSize.max,
+                                //     mainAxisAlignment:
+                                //         MainAxisAlignment.spaceBetween,
+                                //     children: [
+                                //       Row(
+                                //         mainAxisSize: MainAxisSize.max,
+                                //         children: [
+                                //           ToggleIcon(
+                                //             onPressed: () async {
+                                //               safeSetState(() => _model.liker =
+                                //                   !_model.liker!);
+                                //               if (_model.liker!) {
+                                //                 await apiLike.sendLike(
+                                //                     Securestorage.authToken,
+                                //                     matvare.matId);
+                                //               } else {
+                                //                 await apiLike.deleteLike(
+                                //                     Securestorage.authToken,
+                                //                     matvare.matId);
+                                //               }
+                                //             },
+                                //             value: _model.liker!,
+                                //             onIcon: FaIcon(
+                                //               FontAwesomeIcons.solidHeart,
+                                //               color:
+                                //                   FlutterFlowTheme.of(context)
+                                //                       .alternate,
+                                //               size: 30.0,
+                                //             ),
+                                //             offIcon: FaIcon(
+                                //               FontAwesomeIcons.heart,
+                                //               color:
+                                //                   FlutterFlowTheme.of(context)
+                                //                       .alternate,
+                                //               size: 30.0,
+                                //             ),
+                                //           ),
+                                //           Padding(
+                                //             padding: const EdgeInsetsDirectional
+                                //                 .fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                //             child: InkWell(
+                                //               splashColor: Colors.transparent,
+                                //               focusColor: Colors.transparent,
+                                //               hoverColor: Colors.transparent,
+                                //               highlightColor:
+                                //                   Colors.transparent,
+                                //               onTap: () async {
+                                //                 await showModalBottomSheet(
+                                //                   isScrollControlled: true,
+                                //                   backgroundColor:
+                                //                       Colors.transparent,
+                                //                   enableDrag: false,
+                                //                   context: context,
+                                //                   builder: (context) {
+                                //                     return GestureDetector(
+                                //                       onTap: () =>
+                                //                           FocusScope.of(context)
+                                //                               .unfocus(),
+                                //                       child: Padding(
+                                //                         padding: MediaQuery
+                                //                             .viewInsetsOf(
+                                //                                 context),
+                                //                         child:
+                                //                             const KartPopUpWidget(),
+                                //                       ),
+                                //                     );
+                                //                   },
+                                //                 ).then((value) =>
+                                //                     safeSetState(() {}));
+                                //               },
+                                //               child: FaIcon(
+                                //                 FontAwesomeIcons.mapMarkerAlt,
+                                //                 color:
+                                //                     FlutterFlowTheme.of(context)
+                                //                         .alternate,
+                                //                 size: 31.0,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ],
+                                //       ),
+                                //       Row(
+                                //         mainAxisSize: MainAxisSize.max,
+                                //         children: [
+                                //           Material(
+                                //             color: Colors.transparent,
+                                //             elevation: 1.0,
+                                //             shape: RoundedRectangleBorder(
+                                //               borderRadius:
+                                //                   BorderRadius.circular(24.0),
+                                //             ),
+                                //             child: SafeArea(
+                                //               child: Container(
+                                //                 width: 120.0,
+                                //                 height: 40.0,
+                                //                 constraints:
+                                //                     const BoxConstraints(
+                                //                   maxWidth: 174.0,
+                                //                 ),
+                                //                 decoration: BoxDecoration(
+                                //                   gradient: LinearGradient(
+                                //                     colors: [
+                                //                       const Color(0xFF10835F),
+                                //                       FlutterFlowTheme.of(
+                                //                               context)
+                                //                           .alternate
+                                //                     ],
+                                //                     stops: const [0.0, 1.0],
+                                //                     begin:
+                                //                         const AlignmentDirectional(
+                                //                             0.64, -1.0),
+                                //                     end:
+                                //                         const AlignmentDirectional(
+                                //                             -0.64, 1.0),
+                                //                   ),
+                                //                   borderRadius:
+                                //                       BorderRadius.circular(
+                                //                           24.0),
+                                //                 ),
+                                //                 child: Padding(
+                                //                   padding:
+                                //                       const EdgeInsetsDirectional
+                                //                           .fromSTEB(
+                                //                           10.0, 0.0, 10.0, 0.0),
+                                //                   child: Row(
+                                //                     mainAxisSize:
+                                //                         MainAxisSize.max,
+                                //                     mainAxisAlignment:
+                                //                         MainAxisAlignment
+                                //                             .center,
+                                //                     children: [
+                                //                       Expanded(
+                                //                         child: Text(
+                                //                           'Melding',
+                                //                           textAlign:
+                                //                               TextAlign.center,
+                                //                           style: FlutterFlowTheme
+                                //                                   .of(context)
+                                //                               .bodyMedium
+                                //                               .override(
+                                //                                 fontFamily:
+                                //                                     'Open Sans',
+                                //                                 color: Colors
+                                //                                     .white,
+                                //                                 fontSize: 17.0,
+                                //                                 letterSpacing:
+                                //                                     0.0,
+                                //                                 fontWeight:
+                                //                                     FontWeight
+                                //                                         .bold,
+                                //                               ),
+                                //                         ),
+                                //                       ),
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ],
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     10.0, 0.0, 0.0, 0.0),
