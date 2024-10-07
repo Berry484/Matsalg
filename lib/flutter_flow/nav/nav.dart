@@ -219,7 +219,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'BondeGardPage',
           path: '/bondeGardPage',
-          builder: (context, params) => const BondeGardPageWidget(),
+          builder: (context, params) => BondeGardPageWidget(
+            kategori: params.getParam('kategori', ParamType.String),
+          ),
         ),
         FFRoute(
           name: 'Hjem2',

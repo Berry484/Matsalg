@@ -32,7 +32,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   List<Matvarer>? _matvarer;
   bool _matisLoading = true;
   Bonder? bruker;
+  String? folgere;
+  String? folger;
+  bool? brukerFolger = false;
   final Securestorage securestorage = Securestorage();
+  final ApiFolg apiFolg = ApiFolg();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -42,6 +46,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
     _model = createModel(context, () => BrukerPageModel());
     getUserFood();
     _checkUser();
+    tellFolger();
+    tellFolgere();
+    sjekkFolger();
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -90,6 +97,22 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
     }
   }
 
+  Future<void> sjekkFolger() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      brukerFolger = await ApiFolg.sjekkFolger(token, widget.username);
+      if (brukerFolger == true) {
+        print(brukerFolger);
+        _model.folger = true;
+      }
+      setState(() {});
+    }
+  }
+
   Future<void> getUserFood() async {
     String? token = await Securestorage().readToken();
     if (token == null) {
@@ -105,6 +128,30 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
           _matisLoading = false;
         }
       });
+    }
+  }
+
+  Future<void> tellFolger() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      folger = await ApiFolg.tellFolger(token, widget.username);
+      setState(() {});
+    }
+  }
+
+  Future<void> tellFolgere() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      folgere = await ApiFolg.tellFolgere(token, widget.username);
+      setState(() {});
     }
   }
 
@@ -434,7 +481,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 MainAxisAlignment.center,
                                                                             children: [
                                                                               Text(
-                                                                                '43',
+                                                                                folgere ?? '',
                                                                                 textAlign: TextAlign.center,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Open Sans',
@@ -508,7 +555,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 MainAxisAlignment.center,
                                                                             children: [
                                                                               Text(
-                                                                                '12',
+                                                                                folger ?? '',
                                                                                 textAlign: TextAlign.center,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Open Sans',
@@ -548,6 +595,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                 FFButtonWidget(
                                                                   onPressed:
                                                                       () async {
+                                                                    final response = await apiFolg.unfolgBruker(
+                                                                        Securestorage
+                                                                            .authToken,
+                                                                        bruker
+                                                                            ?.username);
                                                                     _model.folger =
                                                                         false;
                                                                     safeSetState(
@@ -602,9 +654,16 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                 FFButtonWidget(
                                                                   onPressed:
                                                                       () async {
+                                                                    final response = await apiFolg.folgbruker(
+                                                                        Securestorage
+                                                                            .authToken,
+                                                                        bruker
+                                                                            ?.username);
                                                                     _model.folger =
                                                                         true;
                                                                     safeSetState(
+                                                                        () {});
+                                                                    setState(
                                                                         () {});
                                                                   },
                                                                   text: 'Følg',

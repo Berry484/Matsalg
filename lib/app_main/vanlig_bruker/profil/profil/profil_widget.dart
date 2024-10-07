@@ -38,6 +38,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
   bool _likesisempty = true;
   final ApiCalls apicalls = ApiCalls();
   final Securestorage securestorage = Securestorage();
+  String? folger;
+  String? folgere;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -48,6 +50,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
     super.initState();
     getMyFoods();
     getAllLikes();
+    tellMineFolger();
+    tellMineFolgere();
 
     _model = createModel(context, () => ProfilModel());
 
@@ -118,6 +122,30 @@ class _ProfilWidgetState extends State<ProfilWidget>
         _likesisloading = false;
         _likesisempty = false;
       });
+    }
+  }
+
+  Future<void> tellMineFolger() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      folger = await ApiFolg.tellMineFolger(token);
+      setState(() {});
+    }
+  }
+
+  Future<void> tellMineFolgere() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      folgere = await ApiFolg.tellMineFolgere(token);
+      setState(() {});
     }
   }
 
@@ -426,7 +454,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                                 children: [
                                                                                   Text(
-                                                                                    '43',
+                                                                                    folgere ?? '',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Open Sans',
@@ -490,7 +518,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                                 children: [
                                                                                   Text(
-                                                                                    '12',
+                                                                                    folger ?? '',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Open Sans',

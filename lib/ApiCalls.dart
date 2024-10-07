@@ -706,3 +706,185 @@ class ApiCheckLiked {
     }
   }
 }
+
+class ApiFolg {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  Future<http.Response?> folgbruker(String? token, String? brukernavn) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/api/follow?bruker=$brukernavn'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      return response;
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<http.Response?> unfolgBruker(String? token, String? brukernavn) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .delete(
+            Uri.parse('$baseUrl/api/unfollow?bruker=$brukernavn'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      return response;
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<String?> tellFolger(String? token, String? brukernavn) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/followers/folger?folger=$brukernavn'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      if (response.statusCode == 200) {
+        String? folger = response.body;
+        return folger;
+      } else {
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<String?> tellFolgere(String? token, String? brukernavn) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/followers/bruker?bruker=$brukernavn'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      if (response.statusCode == 200) {
+        String? folgere = response.body;
+        return folgere;
+      } else {
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<bool?> sjekkFolger(String? token, String? brukernavn) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/follows?bruker=$brukernavn'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      if (response.body.toLowerCase() == 'true') {
+        return true;
+      } else {
+        return false;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<String?> tellMineFolger(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/followers/mine/folger'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      if (response.statusCode == 200) {
+        String? folger = response.body;
+        return folger;
+      } else {
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<String?> tellMineFolgere(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/followers/mine/bruker'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      if (response.statusCode == 200) {
+        String? folgere = response.body;
+        return folgere;
+      } else {
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+}
