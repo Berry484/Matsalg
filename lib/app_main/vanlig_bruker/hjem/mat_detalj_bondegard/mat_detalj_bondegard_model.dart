@@ -7,6 +7,7 @@ class MatDetaljBondegardModel
   ///  Local state fields for this page.
 
   bool? liker = false;
+  bool folges = false;
 
   ///  State fields for stateful widgets in this page.
 

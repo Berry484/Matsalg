@@ -439,15 +439,18 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               hoverColor: Colors.transparent,
                                                                               highlightColor: Colors.transparent,
                                                                               onTap: () async {
-                                                                                context.pushNamed(
-                                                                                  'Folgere',
-                                                                                  queryParameters: {
-                                                                                    'folger': serializeParam(
-                                                                                      'Følgere',
-                                                                                      ParamType.String,
-                                                                                    ),
-                                                                                  }.withoutNulls,
-                                                                                );
+                                                                                if (folgere != '0') {
+                                                                                  context.pushNamed(
+                                                                                    'Folgere',
+                                                                                    queryParameters: {
+                                                                                      'username': serializeParam(FFAppState().brukernavn, ParamType.String),
+                                                                                      'folger': serializeParam(
+                                                                                        'Følgere',
+                                                                                        ParamType.String,
+                                                                                      ),
+                                                                                    }.withoutNulls,
+                                                                                  );
+                                                                                }
                                                                               },
                                                                               child: Column(
                                                                                 mainAxisSize: MainAxisSize.max,
@@ -503,15 +506,18 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               hoverColor: Colors.transparent,
                                                                               highlightColor: Colors.transparent,
                                                                               onTap: () async {
-                                                                                context.pushNamed(
-                                                                                  'Folgere',
-                                                                                  queryParameters: {
-                                                                                    'folger': serializeParam(
-                                                                                      'Følger',
-                                                                                      ParamType.String,
-                                                                                    ),
-                                                                                  }.withoutNulls,
-                                                                                );
+                                                                                if (folger != '0') {
+                                                                                  context.pushNamed(
+                                                                                    'Folgere',
+                                                                                    queryParameters: {
+                                                                                      'username': serializeParam(FFAppState().brukernavn, ParamType.String),
+                                                                                      'folger': serializeParam(
+                                                                                        'Følger',
+                                                                                        ParamType.String,
+                                                                                      ),
+                                                                                    }.withoutNulls,
+                                                                                  );
+                                                                                }
                                                                               },
                                                                               child: Column(
                                                                                 mainAxisSize: MainAxisSize.max,
@@ -848,8 +854,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                     width: 225.0,
                                                     height: 235.0,
                                                     decoration: BoxDecoration(
-                                                      color: Colors
-                                                          .white, // Background color of the shimmer box
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              127,
+                                                              255,
+                                                              255,
+                                                              255),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               16.0), // Rounded corners
@@ -1223,10 +1233,14 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                         const EdgeInsets.all(
                                                             5.0),
                                                     width: 225.0,
-                                                    height: 235.0,
+                                                    height: 205.0,
                                                     decoration: BoxDecoration(
-                                                      color: Colors
-                                                          .white, // Background color of the shimmer box
+                                                      color: const Color
+                                                          .fromARGB(
+                                                          127,
+                                                          255,
+                                                          255,
+                                                          255), // Background color of the shimmer box
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               16.0), // Rounded corners

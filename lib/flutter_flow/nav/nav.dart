@@ -288,18 +288,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'BrukerPage',
           path: '/brukerPage',
           builder: (context, params) => BrukerPageWidget(
-            bruker: params.getParam('bruker', ParamType.JSON),
-            username: params.getParam('username', ParamType.String),
-          ),
+              bruker: params.getParam('bruker', ParamType.JSON),
+              username: params.getParam('username', ParamType.String)),
         ),
         FFRoute(
           name: 'Folgere',
           path: '/folgere',
           builder: (context, params) => FolgereWidget(
-            folger: params.getParam(
-              'folger',
-              ParamType.String,
-            ),
+            username: params.getParam('username', ParamType.String),
+            folger: params.getParam('folger', ParamType.String),
           ),
         ),
         FFRoute(

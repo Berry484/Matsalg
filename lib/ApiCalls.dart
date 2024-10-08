@@ -887,4 +887,106 @@ class ApiFolg {
       return null;
     }
   }
+
+  static Future<List<UserInfo>?> listFolgere(
+      String? token, String? username) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request with a timeout of 5 seconds
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/folgere/folger?folger=$username'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      if (response.statusCode == 200) {
+        // Parse the response body
+        List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        // Map the dynamic data to UserInfo instances
+        List<UserInfo> folgere = data.map((userData) {
+          return UserInfo(
+            username: userData['username'],
+            firstname: userData['firstname'],
+            lastname: userData['lastname'],
+            profilepic: userData['profilepic'],
+            following: userData['following'],
+          );
+        }).toList();
+
+        return folgere; // Return populated UserInfo list
+      } else {
+        // Handle any other response codes appropriately
+        return null; // Or throw an error
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<List<UserInfo>?> listFolger(
+      String? token, String? username) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request with a timeout of 5 seconds
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/folger/bruker?bruker=$username'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      if (response.statusCode == 200) {
+        // Parse the response body
+        List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        // Map the dynamic data to UserInfo instances
+        List<UserInfo> folgere = data.map((userData) {
+          return UserInfo(
+            username: userData['username'],
+            firstname: userData['firstname'],
+            lastname: userData['lastname'],
+            profilepic: userData['profilepic'],
+            following: userData['following'],
+          );
+        }).toList();
+
+        return folgere; // Return populated UserInfo list
+      } else {
+        // Handle any other response codes appropriately
+        return null; // Or throw an error
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+}
+
+class UserInfo {
+  final String username;
+  final String firstname;
+  final String lastname;
+  final String profilepic;
+  bool following;
+
+  UserInfo({
+    required this.username,
+    required this.firstname,
+    required this.lastname,
+    required this.profilepic,
+    required this.following,
+  });
 }

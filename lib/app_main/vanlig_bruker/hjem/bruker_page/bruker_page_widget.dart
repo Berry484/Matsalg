@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/SecureStorage.dart';
@@ -44,11 +45,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => BrukerPageModel());
-    getUserFood();
+    sjekkFolger();
     _checkUser();
+    getUserFood();
     tellFolger();
     tellFolgere();
-    sjekkFolger();
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -106,7 +107,6 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
     } else {
       brukerFolger = await ApiFolg.sjekkFolger(token, widget.username);
       if (brukerFolger == true) {
-        print(brukerFolger);
         _model.folger = true;
       }
       setState(() {});
@@ -463,15 +463,16 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               Colors.transparent,
                                                                           onTap:
                                                                               () async {
-                                                                            context.pushNamed(
-                                                                              'Folgere',
-                                                                              queryParameters: {
-                                                                                'folger': serializeParam(
-                                                                                  'Følgere',
-                                                                                  ParamType.String,
-                                                                                ),
-                                                                              }.withoutNulls,
-                                                                            );
+                                                                            if (folgere !=
+                                                                                '0') {
+                                                                              context.pushNamed(
+                                                                                'Folgere',
+                                                                                queryParameters: {
+                                                                                  'username': serializeParam(widget.username, ParamType.String),
+                                                                                  'folger': serializeParam('Følgere', ParamType.String),
+                                                                                }.withoutNulls,
+                                                                              );
+                                                                            }
                                                                           },
                                                                           child:
                                                                               Column(
@@ -537,15 +538,19 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               Colors.transparent,
                                                                           onTap:
                                                                               () async {
-                                                                            context.pushNamed(
-                                                                              'Folgere',
-                                                                              queryParameters: {
-                                                                                'folger': serializeParam(
-                                                                                  'Følger',
-                                                                                  ParamType.String,
-                                                                                ),
-                                                                              }.withoutNulls,
-                                                                            );
+                                                                            if (folger !=
+                                                                                '0') {
+                                                                              context.pushNamed(
+                                                                                'Folgere',
+                                                                                queryParameters: {
+                                                                                  'username': serializeParam(widget.username, ParamType.String),
+                                                                                  'folger': serializeParam(
+                                                                                    'Følger',
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                }.withoutNulls,
+                                                                              );
+                                                                            }
                                                                           },
                                                                           child:
                                                                               Column(
@@ -595,15 +600,17 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                 FFButtonWidget(
                                                                   onPressed:
                                                                       () async {
-                                                                    final response = await apiFolg.unfolgBruker(
-                                                                        Securestorage
-                                                                            .authToken,
-                                                                        bruker
-                                                                            ?.username);
+                                                                    HapticFeedback
+                                                                        .mediumImpact();
                                                                     _model.folger =
                                                                         false;
                                                                     safeSetState(
                                                                         () {});
+                                                                    apiFolg.unfolgBruker(
+                                                                        Securestorage
+                                                                            .authToken,
+                                                                        bruker
+                                                                            ?.username);
                                                                   },
                                                                   text:
                                                                       'Følger',
@@ -649,22 +656,22 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                   ),
                                                                 ),
                                                               if (_model
-                                                                      .folger ==
-                                                                  false)
+                                                                      .folger !=
+                                                                  true)
                                                                 FFButtonWidget(
                                                                   onPressed:
                                                                       () async {
-                                                                    final response = await apiFolg.folgbruker(
-                                                                        Securestorage
-                                                                            .authToken,
-                                                                        bruker
-                                                                            ?.username);
+                                                                    HapticFeedback
+                                                                        .mediumImpact();
                                                                     _model.folger =
                                                                         true;
                                                                     safeSetState(
                                                                         () {});
-                                                                    setState(
-                                                                        () {});
+                                                                    apiFolg.folgbruker(
+                                                                        Securestorage
+                                                                            .authToken,
+                                                                        bruker
+                                                                            ?.username);
                                                                   },
                                                                   text: 'Følg',
                                                                   options:
@@ -1089,8 +1096,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                   width: 225.0,
                                                   height: 235.0,
                                                   decoration: BoxDecoration(
-                                                    color: Colors
-                                                        .white, // Background color of the shimmer box
+                                                    color: const Color.fromARGB(
+                                                        127,
+                                                        255,
+                                                        255,
+                                                        255), // Background color of the shimmer box
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             16.0), // Rounded corners
@@ -1433,8 +1443,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                     width: 225.0,
                                     height: 107.0,
                                     decoration: BoxDecoration(
-                                      color: Colors
-                                          .white, // Background color of the shimmer box
+                                      color: const Color.fromARGB(
+                                          127, 255, 255, 255),
                                       borderRadius: BorderRadius.circular(
                                           16.0), // Rounded corners
                                     ),
