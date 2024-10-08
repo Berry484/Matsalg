@@ -159,7 +159,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                               'BrukerPage',
                               queryParameters: {
                                 'username': serializeParam(
-                                  widget.username,
+                                  brukere.username,
                                   ParamType.String,
                                 ),
                                 'bruker': serializeParam(
