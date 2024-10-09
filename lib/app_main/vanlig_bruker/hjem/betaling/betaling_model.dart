@@ -10,29 +10,17 @@ class BetalingModel extends FlutterFlowModel<BetalingWidget> {
   FocusNode? antallStkFocusNode;
   TextEditingController? antallStkTextController;
   String? Function(BuildContext, String?)? antallStkTextControllerValidator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)? textController3Validator;
-  String? _textController3Validator(BuildContext context, String? val) {
+  String? _antallStkTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut...';
+      return 'Ugyldig antall';
     }
 
-    return null;
-  }
+    if (val == '0') {
+      return 'Ugyldig antall';
+    }
 
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
-  String? _textController4Validator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut...';
+    if (val.length < 1) {
+      return 'Ugyldig antall';
     }
 
     return null;
@@ -40,22 +28,12 @@ class BetalingModel extends FlutterFlowModel<BetalingWidget> {
 
   @override
   void initState(BuildContext context) {
-    textController3Validator = _textController3Validator;
-    textController4Validator = _textController4Validator;
+    antallStkTextControllerValidator = _antallStkTextControllerValidator;
   }
 
   @override
   void dispose() {
     antallStkFocusNode?.dispose();
     antallStkTextController?.dispose();
-
-    textFieldFocusNode1?.dispose();
-    textController2?.dispose();
-
-    textFieldFocusNode2?.dispose();
-    textController3?.dispose();
-
-    textFieldFocusNode3?.dispose();
-    textController4?.dispose();
   }
 }

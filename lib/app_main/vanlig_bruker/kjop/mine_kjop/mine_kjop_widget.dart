@@ -57,9 +57,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
+            backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: false,

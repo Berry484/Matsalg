@@ -68,7 +68,7 @@ class _KjopNavBarWidgetState extends State<KjopNavBarWidget> {
                     width: double.infinity,
                     height: 80.0,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      color: FlutterFlowTheme.of(context).primary,
                       boxShadow: const [
                         BoxShadow(
                           blurRadius: 10.0,

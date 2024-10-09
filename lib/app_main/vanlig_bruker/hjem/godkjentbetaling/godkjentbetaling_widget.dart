@@ -125,7 +125,7 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 16.0, 0.0, 0.0),
+                        40.0, 16.0, 40.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         context.goNamed('MineKjop');
@@ -136,7 +136,7 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
                         size: 15.0,
                       ),
                       options: FFButtonOptions(
-                        width: 270.0,
+                        width: 230.0,
                         height: 50.0,
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 0.0, 0.0),

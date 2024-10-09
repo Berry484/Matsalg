@@ -50,12 +50,12 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
+            backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
-            automaticallyImplyLeading: true,
+            automaticallyImplyLeading: false,
             leading: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -70,9 +70,20 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                 size: 28,
               ),
             ),
-            actions: [],
+            title: Text(
+              widget.kategori ?? '',
+              textAlign: TextAlign.center,
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Montserrat',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 20.0,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            actions: const [],
             centerTitle: true,
-            elevation: 0,
+            elevation: 0.0,
           ),
           body: SafeArea(
             top: true,
@@ -98,8 +109,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                     500.0,
                                   ),
                                   decoration: BoxDecoration(
-                                    color:
-                                        FlutterFlowTheme.of(context).secondary,
+                                    color: FlutterFlowTheme.of(context).primary,
                                   ),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -123,36 +133,39 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                 decoration: InputDecoration(
                                                   isDense: true,
                                                   alignLabelWithHint: false,
-                                                  hintText: 'Søk...',
+                                                  hintText: 'Søk',
                                                   hintStyle: FlutterFlowTheme
                                                           .of(context)
                                                       .labelMedium
                                                       .override(
                                                         fontFamily: 'Open Sans',
-                                                        color:
-                                                            Color(0x8F101213),
-                                                        fontSize: 12,
+                                                        color: const Color(
+                                                            0x8F101213),
+                                                        fontSize: 15.0,
                                                         letterSpacing: 0.0,
                                                       ),
                                                   enabledBorder:
                                                       OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x3257636C),
-                                                      width: 1,
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                          0, 85, 85, 85),
+                                                      width: 1.0,
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            13),
+                                                            13.0),
                                                   ),
                                                   focusedBorder:
                                                       OutlineInputBorder(
-                                                    borderSide: BorderSide(
+                                                    borderSide:
+                                                        const BorderSide(
                                                       color: Color(0x00000000),
-                                                      width: 1,
+                                                      width: 1.0,
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            13),
+                                                            13.0),
                                                   ),
                                                   errorBorder:
                                                       OutlineInputBorder(
@@ -161,11 +174,11 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .error,
-                                                      width: 1,
+                                                      width: 1.0,
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            13),
+                                                            13.0),
                                                   ),
                                                   focusedErrorBorder:
                                                       OutlineInputBorder(
@@ -174,18 +187,16 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .error,
-                                                      width: 1,
+                                                      width: 1.0,
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            13),
+                                                            13.0),
                                                   ),
                                                   filled: true,
-                                                  fillColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                  prefixIcon: Icon(
+                                                  fillColor: Color.fromARGB(
+                                                      246, 243, 243, 243),
+                                                  prefixIcon: const Icon(
                                                     Icons.search_outlined,
                                                   ),
                                                 ),
@@ -197,11 +208,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primaryText,
-                                                      fontSize: 13,
+                                                              .secondaryText,
+                                                      fontSize: 13.0,
                                                       letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
                                                     ),
                                                 textAlign: TextAlign.start,
                                                 cursorColor:

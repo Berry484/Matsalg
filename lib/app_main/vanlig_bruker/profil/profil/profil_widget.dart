@@ -166,7 +166,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           body: SafeArea(
             top: true,
             child: Column(
@@ -194,8 +194,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                       500.0,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondary,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                     ),
                                     child: Stack(
                                       alignment: AlignmentDirectional(0, 0),
@@ -383,7 +383,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 50,
                                                                             decoration:
                                                                                 BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondary,
+                                                                              color: FlutterFlowTheme.of(context).primary,
                                                                               borderRadius: BorderRadius.circular(10),
                                                                             ),
                                                                             child:
@@ -429,7 +429,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 50,
                                                                             decoration:
                                                                                 BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondary,
+                                                                              color: FlutterFlowTheme.of(context).primary,
                                                                               borderRadius: BorderRadius.circular(10),
                                                                             ),
                                                                             child:
@@ -496,7 +496,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 50,
                                                                             decoration:
                                                                                 BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondary,
+                                                                              color: FlutterFlowTheme.of(context).primary,
                                                                               borderRadius: BorderRadius.circular(10),
                                                                             ),
                                                                             child:
@@ -666,9 +666,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       maxHeight: 90,
                                                     ),
                                                     decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
                                                     ),
                                                     child: Text(
                                                       FFAppState().bio,
@@ -692,7 +693,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .secondaryBackground,
+                                                        .primary,
                                                   ),
                                                   child: Padding(
                                                     padding:
@@ -831,15 +832,14 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             gridDelegate:
                                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,
-                                              crossAxisSpacing: 10,
-                                              childAspectRatio: 0.69,
+                                              childAspectRatio: 0.64,
                                             ),
                                             primary: false,
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
                                             itemCount: _isloading
-                                                ? 6
-                                                : _matvarer?.length ?? 0,
+                                                ? 1
+                                                : _matvarer?.length ?? 1,
                                             itemBuilder: (context, index) {
                                               if (_isloading) {
                                                 return Shimmer.fromColors(
@@ -851,8 +851,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                     margin:
                                                         const EdgeInsets.all(
                                                             5.0),
-                                                    width: 225.0,
-                                                    height: 235.0,
+                                                    width: 235.0,
+                                                    height: 290.0,
                                                     decoration: BoxDecoration(
                                                       color:
                                                           const Color.fromARGB(
@@ -870,6 +870,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                               // if (_isempty) {
                                               //   return IngenVareLagtUtWidget();
                                               // }
+
                                               final matvare = _matvarer![index];
                                               return Stack(
                                                 children: [
@@ -877,7 +878,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                     children: [
                                                       Align(
                                                         alignment:
-                                                            const AlignmentDirectional(
+                                                            AlignmentDirectional(
                                                                 0, -1),
                                                         child: InkWell(
                                                           splashColor: Colors
@@ -905,7 +906,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           child: Material(
                                                             color: Colors
                                                                 .transparent,
-                                                            elevation: 0.3,
+                                                            elevation: 0,
                                                             shape:
                                                                 RoundedRectangleBorder(
                                                               borderRadius:
@@ -914,17 +915,19 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                           16),
                                                             ),
                                                             child: Container(
-                                                              width: 225,
-                                                              height: 235,
+                                                              width: 235,
+                                                              height: 290,
                                                               decoration:
                                                                   BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
                                                                             16),
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                ),
                                                               ),
                                                               child: Column(
                                                                 mainAxisSize:
@@ -937,6 +940,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     CrossAxisAlignment
                                                                         .center,
                                                                 children: [
+// Generated code for this Image Widget...
                                                                   Align(
                                                                     alignment:
                                                                         AlignmentDirectional(
@@ -946,32 +950,23 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                         Padding(
                                                                       padding: EdgeInsetsDirectional
                                                                           .fromSTEB(
+                                                                              3,
                                                                               0,
-                                                                              0,
-                                                                              0,
-                                                                              12),
+                                                                              3,
+                                                                              0),
                                                                       child:
                                                                           ClipRRect(
                                                                         borderRadius:
-                                                                            BorderRadius.only(
-                                                                          bottomLeft:
-                                                                              Radius.circular(0),
-                                                                          bottomRight:
-                                                                              Radius.circular(0),
-                                                                          topLeft:
-                                                                              Radius.circular(16),
-                                                                          topRight:
-                                                                              Radius.circular(16),
-                                                                        ),
+                                                                            BorderRadius.circular(17),
                                                                         child: Image
                                                                             .network(
                                                                           matvare
                                                                               .imgUrls![0]
                                                                               .toString(),
                                                                           width:
-                                                                              double.infinity,
+                                                                              200,
                                                                           height:
-                                                                              151,
+                                                                              229,
                                                                           fit: BoxFit
                                                                               .cover,
                                                                           errorBuilder: (BuildContext context,
@@ -1017,7 +1012,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               minFontSize: 11,
                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                     fontFamily: 'Open Sans',
-                                                                                    fontSize: 16,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.bold,
                                                                                   ),
@@ -1052,7 +1047,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 AlignmentDirectional(0, 0),
                                                                             child:
                                                                                 Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 0),
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1066,12 +1061,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         Padding(
                                                                                           padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                           child: Text(
-                                                                                            '${matvare.price ?? 0} Kr',
+                                                                                            '${matvare.price} Kr',
                                                                                             textAlign: TextAlign.end,
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
                                                                                                   color: FlutterFlowTheme.of(context).alternate,
-                                                                                                  fontSize: 16,
+                                                                                                  fontSize: 15,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontWeight: FontWeight.bold,
                                                                                                 ),
@@ -1084,7 +1079,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 16,
+                                                                                                  fontSize: 15,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontWeight: FontWeight.w600,
                                                                                                 ),
@@ -1096,13 +1091,32 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 16,
+                                                                                                  fontSize: 15,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontWeight: FontWeight.w600,
                                                                                                 ),
                                                                                           ),
                                                                                       ],
                                                                                     ),
+                                                                                  ),
+                                                                                  Row(
+                                                                                    mainAxisSize: MainAxisSize.max,
+                                                                                    children: [
+                                                                                      Padding(
+                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                                        child: Text(
+                                                                                          '(3Km)',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Open Sans',
+                                                                                                color: FlutterFlowTheme.of(context).primaryText,
+                                                                                                fontSize: 14,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
                                                                                   ),
                                                                                 ],
                                                                               ),
@@ -1123,62 +1137,67 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           alignment:
                                                               AlignmentDirectional(
                                                                   0, -1),
-                                                          child: Material(
-                                                            color: Colors
-                                                                .transparent,
-                                                            elevation: 0.3,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16),
-                                                            ),
-                                                            child: Container(
-                                                              width: 225,
-                                                              height: 235,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Color(
-                                                                    0xA7FFFFFF),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        3,
+                                                                        0,
+                                                                        3,
+                                                                        0),
+                                                            child: Material(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              elevation: 0.3,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
                                                                             16),
                                                               ),
-                                                              child: Align(
-                                                                alignment:
-                                                                    AlignmentDirectional(
-                                                                        1, -1),
-                                                                child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          15,
-                                                                          15,
-                                                                          0),
-                                                                  child: Transform
-                                                                      .rotate(
-                                                                    angle: 27 *
-                                                                        (math.pi /
-                                                                            180),
-                                                                    child: Text(
-                                                                      'Solgt',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Open Sans',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            fontSize:
-                                                                                21,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          ),
+                                                              child: Container(
+                                                                height: 230,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Color(
+                                                                      0xA7FFFFFF),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              16),
+                                                                ),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      AlignmentDirectional(
+                                                                          1,
+                                                                          -1),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            15,
+                                                                            15,
+                                                                            0),
+                                                                    child: Transform
+                                                                        .rotate(
+                                                                      angle: 27 *
+                                                                          (math.pi /
+                                                                              180),
+                                                                      child:
+                                                                          Text(
+                                                                        'Solgt',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Open Sans',
+                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                              fontSize: 21,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.bold,
+                                                                            ),
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1212,15 +1231,14 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             gridDelegate:
                                                 SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,
-                                              crossAxisSpacing: 10,
-                                              childAspectRatio: 0.69,
+                                              childAspectRatio: 0.64,
                                             ),
                                             primary: false,
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
                                             itemCount: _likesisloading
-                                                ? 6
-                                                : _likesmatvarer?.length ?? 0,
+                                                ? 1
+                                                : _likesmatvarer?.length ?? 1,
                                             itemBuilder: (context, index) {
                                               if (_likesisloading) {
                                                 return Shimmer.fromColors(
@@ -1251,6 +1269,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                               // if (_isempty) {
                                               //   return IngenVareLagtUtWidget();
                                               // }
+
                                               final likesmatvare =
                                                   _likesmatvarer![index];
 
@@ -1285,7 +1304,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       child: Material(
                                                         color:
                                                             Colors.transparent,
-                                                        elevation: 0.3,
+                                                        elevation: 0,
                                                         shape:
                                                             RoundedRectangleBorder(
                                                           borderRadius:
@@ -1293,17 +1312,18 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                   .circular(16),
                                                         ),
                                                         child: Container(
-                                                          width: 225,
-                                                          height: 235,
+                                                          width: 235,
+                                                          height: 290,
                                                           decoration:
                                                               BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
                                                                         16),
+                                                            border: Border.all(
+                                                              color: Colors
+                                                                  .transparent,
+                                                            ),
                                                           ),
                                                           child: Column(
                                                             mainAxisSize:
@@ -1316,6 +1336,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 CrossAxisAlignment
                                                                     .center,
                                                             children: [
+// Generated code for this Image Widget...
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
@@ -1323,38 +1344,25 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 child: Padding(
                                                                   padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
+                                                                          3,
                                                                           0,
-                                                                          0,
-                                                                          0,
-                                                                          12),
+                                                                          3,
+                                                                          0),
                                                                   child:
                                                                       ClipRRect(
                                                                     borderRadius:
-                                                                        BorderRadius
-                                                                            .only(
-                                                                      bottomLeft:
-                                                                          Radius.circular(
-                                                                              0),
-                                                                      bottomRight:
-                                                                          Radius.circular(
-                                                                              0),
-                                                                      topLeft: Radius
-                                                                          .circular(
-                                                                              16),
-                                                                      topRight:
-                                                                          Radius.circular(
-                                                                              16),
-                                                                    ),
+                                                                        BorderRadius.circular(
+                                                                            17),
                                                                     child: Image
                                                                         .network(
                                                                       likesmatvare
                                                                           .imgUrls![
                                                                               0]
                                                                           .toString(),
-                                                                      width: double
-                                                                          .infinity,
+                                                                      width:
+                                                                          200,
                                                                       height:
-                                                                          151,
+                                                                          229,
                                                                       fit: BoxFit
                                                                           .cover,
                                                                       errorBuilder: (BuildContext context,
@@ -1410,7 +1418,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               .bodyLarge
                                                                               .override(
                                                                                 fontFamily: 'Open Sans',
-                                                                                fontSize: 16,
+                                                                                fontSize: 15,
                                                                                 letterSpacing: 0.0,
                                                                                 fontWeight: FontWeight.bold,
                                                                               ),
@@ -1449,7 +1457,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                             Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
                                                                               5,
-                                                                              5,
+                                                                              0,
                                                                               5,
                                                                               0),
                                                                           child:
@@ -1469,12 +1477,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     Padding(
                                                                                       padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                       child: Text(
-                                                                                        '${likesmatvare.price ?? ''} Kr',
+                                                                                        '${likesmatvare.price} Kr',
                                                                                         textAlign: TextAlign.end,
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                               fontFamily: 'Open Sans',
                                                                                               color: FlutterFlowTheme.of(context).alternate,
-                                                                                              fontSize: 16,
+                                                                                              fontSize: 15,
                                                                                               letterSpacing: 0.0,
                                                                                               fontWeight: FontWeight.bold,
                                                                                             ),
@@ -1487,7 +1495,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                               fontFamily: 'Open Sans',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                              fontSize: 16,
+                                                                                              fontSize: 15,
                                                                                               letterSpacing: 0.0,
                                                                                               fontWeight: FontWeight.w600,
                                                                                             ),
@@ -1499,7 +1507,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                               fontFamily: 'Open Sans',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                              fontSize: 16,
+                                                                                              fontSize: 15,
                                                                                               letterSpacing: 0.0,
                                                                                               fontWeight: FontWeight.w600,
                                                                                             ),
@@ -1510,26 +1518,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 children: [
-                                                                                  Icon(
-                                                                                    Icons.place,
-                                                                                    color: FlutterFlowTheme.of(context).alternate,
-                                                                                    size: 17,
-                                                                                  ),
-                                                                                  Text(
-                                                                                    '3',
-                                                                                    textAlign: TextAlign.start,
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Open Sans',
-                                                                                          color: FlutterFlowTheme.of(context).primaryText,
-                                                                                          fontSize: 14,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w600,
-                                                                                        ),
-                                                                                  ),
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                     child: Text(
-                                                                                      'Km',
+                                                                                      '(3Km)',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',

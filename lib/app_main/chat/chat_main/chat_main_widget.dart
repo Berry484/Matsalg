@@ -41,9 +41,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
+            backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: false,
@@ -119,16 +119,16 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                               child: Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   borderRadius: BorderRadius.circular(0.0),
                                 ),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 12.0, 12.0, 12.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              16.0, 12.0, 12.0, 12.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         crossAxisAlignment:
@@ -136,7 +136,8 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                                         children: [
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(1.0, 1.0),
+                                                const AlignmentDirectional(
+                                                    1.0, 1.0),
                                             child: Material(
                                               color: Colors.transparent,
                                               elevation: 0.2,
@@ -156,14 +157,17 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                                                   width: 120.0,
                                                   height: 120.0,
                                                   clipBehavior: Clip.antiAlias,
-                                                  decoration: const BoxDecoration(
+                                                  decoration:
+                                                      const BoxDecoration(
                                                     shape: BoxShape.circle,
                                                   ),
                                                   child: CachedNetworkImage(
-                                                    fadeInDuration: const Duration(
-                                                        milliseconds: 0),
-                                                    fadeOutDuration: const Duration(
-                                                        milliseconds: 0),
+                                                    fadeInDuration:
+                                                        const Duration(
+                                                            milliseconds: 0),
+                                                    fadeOutDuration:
+                                                        const Duration(
+                                                            milliseconds: 0),
                                                     imageUrl:
                                                         'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
                                                     fit: BoxFit.cover,
@@ -174,8 +178,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(8.0, 0.0, 0.0, 0.0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      8.0, 0.0, 0.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -193,10 +199,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                                                           padding:
                                                               const EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      12.0,
-                                                                      0.0),
+                                                                  0.0,
+                                                                  0.0,
+                                                                  12.0,
+                                                                  0.0),
                                                           child: Text(
                                                             'Geir johan',
                                                             textAlign:
@@ -216,11 +222,8 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    8.0,
-                                                                    0.0),
+                                                                .fromSTEB(0.0,
+                                                                0.0, 8.0, 0.0),
                                                         child: Container(
                                                           width: 8.0,
                                                           height: 8.0,
@@ -252,11 +255,8 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    4.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                .fromSTEB(0.0,
+                                                                4.0, 0.0, 0.0),
                                                         child: Text(
                                                           'Man. 3 Juli - 14:12',
                                                           textAlign:
@@ -281,8 +281,8 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                                                                 .secondaryText,
                                                         size: 24.0,
                                                       ),
-                                                    ].divide(
-                                                        const SizedBox(width: 16.0)),
+                                                    ].divide(const SizedBox(
+                                                        width: 16.0)),
                                                   ),
                                                 ],
                                               ),
