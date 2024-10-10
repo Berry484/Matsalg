@@ -1,3 +1,5 @@
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -26,6 +28,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int matpris = 1;
   late Matvarer matvare;
+  final Securestorage securestorage = Securestorage();
 
   @override
   void initState() {
@@ -753,8 +756,61 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                   !_model.formKey.currentState!.validate()) {
                                 return;
                               }
-
-                              context.pushNamed('Godkjentbetaling');
+                              try {
+                                if (matvare.matId != null &&
+                                    _model.antallStkTextController.text
+                                        .isNotEmpty) {
+                                  int? antall = int.tryParse(
+                                      _model.antallStkTextController.text);
+                                  int pris = antall! * matpris;
+                                  int matId = matvare.matId ?? 0;
+                                  if (matvare.matId != null) {
+                                    String? token =
+                                        await Securestorage().readToken();
+                                    if (token == null) {
+                                      FFAppState().login = false;
+                                      context.pushNamed('registrer');
+                                      return;
+                                    } else {
+                                      if (matId != 0) {
+                                        final response = await ApiKjop()
+                                            .kjopMat(
+                                                matId: matId,
+                                                price: pris,
+                                                antall: antall,
+                                                token: token);
+                                        if (response.statusCode == 200) {
+                                          context.pushNamed('Godkjentbetaling');
+                                        }
+                                      } else {
+                                        throw (Exception);
+                                      }
+                                    }
+                                  } else {
+                                    throw (Exception);
+                                  }
+                                }
+                              } catch (e) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Oops, noe gikk galt'),
+                                      content: const Text(
+                                          'Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('OK'),
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pop(); // Close the dialog
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
                             },
                             child: Material(
                               color: Colors.transparent,
@@ -764,6 +820,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                               ),
                               child: Container(
                                 width: 250,
+                                height: 45,
                                 decoration: BoxDecoration(
                                   color: Color(0xFFFF5B24),
                                   borderRadius: BorderRadius.circular(13),
@@ -773,7 +830,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                   child: Image.asset(
                                     'assets/images/vipps-rgb-orange-neg.png',
                                     width: 170,
-                                    height: 50,
+                                    height: 40,
                                     fit: BoxFit.contain,
                                   ),
                                 ),

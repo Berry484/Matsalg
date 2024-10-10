@@ -990,3 +990,193 @@ class UserInfo {
     required this.following,
   });
 }
+
+class ApiKjop {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  Future<http.Response> kjopMat({
+    required int matId,
+    required int price,
+    required int antall,
+    required String token,
+  }) async {
+    // Base URL for the API
+    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+
+    // Create the user data as a Map
+    final Map<String, dynamic> userData = {
+      "matId": matId,
+      "pris": price,
+      "antall": antall,
+    };
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(userData);
+
+    // Prepare URL with encoded parameters
+    final uri = Uri.parse('$baseUrl/ordre');
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    // Send the POST request
+    final response = await http.post(
+      uri, // Use the updated URI with query parameters
+      headers: headers,
+      body: jsonBody,
+    );
+    return response; // Return the response
+  }
+
+  static Future<List<OrdreInfo>?> getKjop(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request with a timeout of 5 seconds
+      final response = await http
+          .get(
+            Uri.parse(
+                '$baseUrl/ordre/kjoper'), // Adjust the endpoint as necessary
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      if (response.statusCode == 200) {
+        // Parse the response body
+        List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        // Map the dynamic data to OrdreInfo instances
+        List<OrdreInfo> kjopOrders = data.map((orderData) {
+          // Check for foodDetails existence
+          if (orderData['foodDetails'] == null) {
+            throw Exception(
+                'Food details not available for order ID: ${orderData['id']}');
+          }
+
+          // Extract food details and create Matvarer instance
+          Matvarer foodDetails = Matvarer.fromJson(
+              orderData['foodDetails']); // Use the new Matvarer.fromJson
+
+          return OrdreInfo(
+            id: orderData['id'], // Unique ID of the order
+            kjoper: orderData['kjoper'], // Username of the buyer
+            selger: orderData['selger'], // Username of the seller
+            matId: orderData['matId'], // Corrected to 'matId'
+            antall: orderData['antall'], // Quantity ordered
+            pris: orderData['pris'], // Ensure this is a double
+            time: DateTime.parse(orderData['time']), // Convert to DateTime
+            godkjenttid: orderData['godkjenttid'] != null
+                ? DateTime.parse(orderData['godkjenttid'])
+                : null, // Parse if exists
+            hentet: orderData['hentet'], // Status of whether picked up
+            godkjent: orderData['godkjent'], // Approval status
+            foodDetails: foodDetails, // Pass the Matvarer instance here
+          );
+        }).toList();
+
+        return kjopOrders; // Return populated OrdreInfo list
+      } else {
+        return null; // Or throw an error
+      }
+    } on TimeoutException {
+      return null; // Handle timeout
+    } catch (e) {
+      return null; // Handle other errors
+    }
+  }
+
+  static Future<List<OrdreInfo>?> getSalg(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request with a timeout of 5 seconds
+      final response = await http
+          .get(
+            Uri.parse(
+                '$baseUrl/ordre/selger'), // Adjust the endpoint as necessary
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      if (response.statusCode == 200) {
+        // Parse the response body
+        List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        // Map the dynamic data to OrdreInfo instances
+        List<OrdreInfo> kjopOrders = data.map((orderData) {
+          // Check for foodDetails existence
+          if (orderData['foodDetails'] == null) {
+            throw Exception(
+                'Food details not available for order ID: ${orderData['id']}');
+          }
+
+          // Extract food details and create Matvarer instance
+          Matvarer foodDetails = Matvarer.fromJson(
+              orderData['foodDetails']); // Use the new Matvarer.fromJson
+
+          return OrdreInfo(
+            id: orderData['id'], // Unique ID of the order
+            kjoper: orderData['kjoper'], // Username of the buyer
+            selger: orderData['selger'], // Username of the seller
+            matId: orderData['matId'], // Corrected to 'matId'
+            antall: orderData['antall'], // Quantity ordered
+            pris: orderData['pris'], // Ensure this is a double
+            time: DateTime.parse(orderData['time']), // Convert to DateTime
+            godkjenttid: orderData['godkjenttid'] != null
+                ? DateTime.parse(orderData['godkjenttid'])
+                : null, // Parse if exists
+            hentet: orderData['hentet'], // Status of whether picked up
+            godkjent: orderData['godkjent'], // Approval status
+            foodDetails: foodDetails, // Pass the Matvarer instance here
+          );
+        }).toList();
+
+        return kjopOrders; // Return populated OrdreInfo list
+      } else {
+        return null; // Or throw an error
+      }
+    } on TimeoutException {
+      return null; // Handle timeout
+    } catch (e) {
+      return null; // Handle other errors
+    }
+  }
+}
+
+class OrdreInfo {
+  final int id;
+  final String kjoper;
+  final String selger;
+  final int matId;
+  final int antall;
+  final int pris; // Ensure this is a double
+  final DateTime time;
+  final DateTime? godkjenttid;
+  final bool? hentet;
+  final bool? godkjent;
+  final Matvarer foodDetails; // Change this to Matvarer
+
+  OrdreInfo({
+    required this.id,
+    required this.kjoper,
+    required this.selger,
+    required this.matId,
+    required this.antall,
+    required this.pris,
+    required this.time,
+    this.godkjenttid,
+    required this.hentet,
+    required this.godkjent,
+    required this.foodDetails, // Pass food details to the constructor
+  });
+}

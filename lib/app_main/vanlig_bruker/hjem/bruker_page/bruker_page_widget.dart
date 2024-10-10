@@ -1399,7 +1399,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount:
-                                _matisLoading ? 6 : _matvarer?.length ?? 0,
+                                _matisLoading ? 1 : _matvarer?.length ?? 1,
                             itemBuilder: (context, index) {
                               if (_matisLoading) {
                                 return Shimmer.fromColors(
