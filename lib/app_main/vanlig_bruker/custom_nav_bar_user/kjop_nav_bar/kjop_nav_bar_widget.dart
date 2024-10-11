@@ -127,7 +127,7 @@ class _KjopNavBarWidgetState extends State<KjopNavBarWidget> {
                     borderWidth: 1.0,
                     buttonSize: 50.0,
                     icon: FaIcon(
-                      FontAwesomeIcons.exchangeAlt,
+                      FontAwesomeIcons.moneyBillTransfer,
                       color: FlutterFlowTheme.of(context).alternate,
                       size: 24.0,
                     ),
@@ -189,7 +189,7 @@ class _KjopNavBarWidgetState extends State<KjopNavBarWidget> {
                     icon: const Icon(
                       Icons.person,
                       color: Color(0xFF9299A1),
-                      size: 27.0,
+                      size: 30.0,
                     ),
                     onPressed: () async {
                       context.pushNamed(

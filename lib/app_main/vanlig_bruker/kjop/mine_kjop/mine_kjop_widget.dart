@@ -270,7 +270,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                           Colors.transparent,
                                                       onTap: () async {
                                                         if (ordreInfo.hentet !=
-                                                            true) {
+                                                                true &&
+                                                            ordreInfo.avvist !=
+                                                                true) {
                                                           await showModalBottomSheet(
                                                             isScrollControlled:
                                                                 true,
@@ -300,8 +302,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                               );
                                                             },
                                                           ).then((value) =>
-                                                              safeSetState(
-                                                                  () {}));
+                                                              setState(() {
+                                                                getKjop();
+                                                                getSalg();
+                                                              }));
                                                         }
                                                       },
                                                       child: Material(
@@ -334,42 +338,70 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          1,
-                                                                          1,
-                                                                          1),
-                                                                  child:
-                                                                      ClipRRect(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(6),
-                                                                    child: Image
-                                                                        .network(
-                                                                      ordreInfo
-                                                                          .foodDetails
-                                                                          .imgUrls![0],
-                                                                      width: 60,
-                                                                      height:
-                                                                          60,
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                      errorBuilder: (BuildContext context,
-                                                                          Object
-                                                                              error,
-                                                                          StackTrace?
-                                                                              stackTrace) {
-                                                                        return Image
-                                                                            .asset(
-                                                                          'assets/images/error_image.jpg', // Path to your local error image
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        );
-                                                                      },
+                                                                Stack(
+                                                                  children: [
+                                                                    Align(
+                                                                      alignment: AlignmentDirectional(
+                                                                          1.76,
+                                                                          -0.05),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0,
+                                                                            1,
+                                                                            1,
+                                                                            1),
+                                                                        child:
+                                                                            ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(6),
+                                                                          child:
+                                                                              Image.network(
+                                                                            ordreInfo.foodDetails.imgUrls![0],
+                                                                            width:
+                                                                                60,
+                                                                            height:
+                                                                                60,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            errorBuilder: (BuildContext context,
+                                                                                Object error,
+                                                                                StackTrace? stackTrace) {
+                                                                              return Image.asset(
+                                                                                'assets/images/error_image.jpg', // Path to your local error image
+                                                                                fit: BoxFit.cover,
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                        ),
+                                                                      ),
                                                                     ),
-                                                                  ),
+                                                                    if (ordreInfo
+                                                                            .hentet ==
+                                                                        true)
+                                                                      Align(
+                                                                        alignment: AlignmentDirectional(
+                                                                            0,
+                                                                            0),
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              61,
+                                                                          height:
+                                                                              61,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color: Color.fromARGB(
+                                                                                84,
+                                                                                159,
+                                                                                159,
+                                                                                159),
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(0),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                                 Expanded(
                                                                   child:
@@ -410,6 +442,26 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 ),
                                                                           ),
                                                                         ),
+                                                                        if (ordreInfo.avvist ==
+                                                                            true)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                6),
+                                                                            child:
+                                                                                Text(
+                                                                              'Selgeren avslo budet',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Open Sans',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    fontSize: 13,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
                                                                         if (ordreInfo.godkjent ==
                                                                                 true &&
                                                                             ordreInfo.hentet !=
@@ -432,9 +484,32 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                   ),
                                                                             ),
                                                                           ),
-                                                                        if (ordreInfo.godkjent !=
-                                                                                true &&
+                                                                        if (ordreInfo.trekt ==
+                                                                            true)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                6),
+                                                                            child:
+                                                                                Text(
+                                                                              'Du trakk budet',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Open Sans',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    fontSize: 13,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        if (ordreInfo.godkjent != true &&
                                                                             ordreInfo.hentet !=
+                                                                                true &&
+                                                                            ordreInfo.trekt !=
+                                                                                true &&
+                                                                            ordreInfo.avvist !=
                                                                                 true)
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -489,16 +564,18 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                       CrossAxisAlignment
                                                                           .center,
                                                                   children: [
-                                                                    if (ordreInfo
-                                                                            .trekt !=
-                                                                        true)
+                                                                    if (ordreInfo.trekt !=
+                                                                            true &&
+                                                                        ordreInfo.avvist !=
+                                                                            true)
                                                                       Container(
                                                                         height:
                                                                             30,
                                                                         decoration:
                                                                             BoxDecoration(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).alternate,
+                                                                          color: ordreInfo.hentet == true
+                                                                              ? Color(0xC40B695B)
+                                                                              : FlutterFlowTheme.of(context).alternate,
                                                                           borderRadius:
                                                                               BorderRadius.circular(13),
                                                                         ),
@@ -529,9 +606,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                    if (ordreInfo
-                                                                            .trekt ==
-                                                                        true)
+                                                                    if (ordreInfo.trekt ==
+                                                                            true ||
+                                                                        ordreInfo.avvist ==
+                                                                            true)
                                                                       Container(
                                                                         height:
                                                                             30,
@@ -667,7 +745,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                           Colors.transparent,
                                                       onTap: () async {
                                                         if (salgInfo.godkjent !=
-                                                            true) {
+                                                                true &&
+                                                            salgInfo.trekt !=
+                                                                true &&
+                                                            salgInfo.avvist !=
+                                                                true) {
                                                           await showModalBottomSheet(
                                                             isScrollControlled:
                                                                 true,
@@ -697,8 +779,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                               );
                                                             },
                                                           ).then((value) =>
-                                                              safeSetState(
-                                                                  () {}));
+                                                              setState(() {
+                                                                getSalg();
+                                                                getKjop();
+                                                              }));
                                                         }
 
                                                         if (salgInfo.godkjent ==
@@ -732,8 +816,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                               );
                                                             },
                                                           ).then((value) =>
-                                                              safeSetState(
-                                                                  () {}));
+                                                              setState(() {
+                                                                getSalg();
+                                                                getKjop();
+                                                              }));
                                                         }
                                                       },
                                                       child: Material(
@@ -766,42 +852,70 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          1,
-                                                                          1,
-                                                                          1),
-                                                                  child:
-                                                                      ClipRRect(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(6),
-                                                                    child: Image
-                                                                        .network(
-                                                                      salgInfo
-                                                                          .foodDetails
-                                                                          .imgUrls![0],
-                                                                      width: 60,
-                                                                      height:
-                                                                          60,
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                      errorBuilder: (BuildContext context,
-                                                                          Object
-                                                                              error,
-                                                                          StackTrace?
-                                                                              stackTrace) {
-                                                                        return Image
-                                                                            .asset(
-                                                                          'assets/images/error_image.jpg', // Path to your local error image
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        );
-                                                                      },
+                                                                Stack(
+                                                                  children: [
+                                                                    Align(
+                                                                      alignment: AlignmentDirectional(
+                                                                          1.76,
+                                                                          -0.05),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0,
+                                                                            1,
+                                                                            1,
+                                                                            1),
+                                                                        child:
+                                                                            ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(6),
+                                                                          child:
+                                                                              Image.network(
+                                                                            salgInfo.foodDetails.imgUrls![0],
+                                                                            width:
+                                                                                60,
+                                                                            height:
+                                                                                60,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            errorBuilder: (BuildContext context,
+                                                                                Object error,
+                                                                                StackTrace? stackTrace) {
+                                                                              return Image.asset(
+                                                                                'assets/images/error_image.jpg', // Path to your local error image
+                                                                                fit: BoxFit.cover,
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                        ),
+                                                                      ),
                                                                     ),
-                                                                  ),
+                                                                    if (salgInfo
+                                                                            .hentet ==
+                                                                        true)
+                                                                      Align(
+                                                                        alignment: AlignmentDirectional(
+                                                                            0,
+                                                                            0),
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              61,
+                                                                          height:
+                                                                              61,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color: Color.fromARGB(
+                                                                                91,
+                                                                                135,
+                                                                                135,
+                                                                                135),
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(0),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                                 Expanded(
                                                                   child:
@@ -842,9 +956,32 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 ),
                                                                           ),
                                                                         ),
-                                                                        if (salgInfo.godkjent !=
-                                                                                true &&
+                                                                        if (salgInfo.trekt ==
+                                                                            true)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                6),
+                                                                            child:
+                                                                                Text(
+                                                                              'Kjøperen trakk budet',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Open Sans',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    fontSize: 13,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        if (salgInfo.godkjent != true &&
                                                                             salgInfo.hentet !=
+                                                                                true &&
+                                                                            salgInfo.trekt !=
+                                                                                true &&
+                                                                            salgInfo.avvist !=
                                                                                 true)
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -855,6 +992,26 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             child:
                                                                                 Text(
                                                                               'Vurder kjøperen',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Open Sans',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    fontSize: 13,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        if (salgInfo.avvist ==
+                                                                            true)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                6),
+                                                                            child:
+                                                                                Text(
+                                                                              'Du avslo budet',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
@@ -921,16 +1078,18 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                       CrossAxisAlignment
                                                                           .center,
                                                                   children: [
-                                                                    if (salgInfo
-                                                                            .trekt !=
-                                                                        true)
+                                                                    if (salgInfo.trekt !=
+                                                                            true &&
+                                                                        salgInfo.avvist !=
+                                                                            true)
                                                                       Container(
                                                                         height:
                                                                             30,
                                                                         decoration:
                                                                             BoxDecoration(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).alternate,
+                                                                          color: salgInfo.hentet == true
+                                                                              ? Color(0xC40B695B)
+                                                                              : FlutterFlowTheme.of(context).alternate,
                                                                           borderRadius:
                                                                               BorderRadius.circular(13),
                                                                         ),
@@ -961,9 +1120,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                    if (salgInfo
-                                                                            .trekt ==
-                                                                        true)
+                                                                    if (salgInfo.trekt ==
+                                                                            true ||
+                                                                        salgInfo.avvist ==
+                                                                            true)
                                                                       Container(
                                                                         height:
                                                                             30,

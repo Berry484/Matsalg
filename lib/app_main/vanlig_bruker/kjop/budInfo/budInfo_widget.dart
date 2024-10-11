@@ -550,40 +550,43 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                           ),
                                         ),
                                         CupertinoDialogAction(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             String? token =
                                                 Securestorage.authToken;
                                             if (token != null) {
-                                              ApiKjop().hentMat(
-                                                  id: ordreInfo.id,
-                                                  hentet: true,
-                                                  token: token);
+                                              final response = await ApiKjop()
+                                                  .hentMat(
+                                                      id: ordreInfo.id,
+                                                      hentet: true,
+                                                      token: token);
                                               // Perform action for 'Yes'
-                                              Navigator.of(context)
-                                                  .pop(); // Close the dialog
-                                              Navigator.pop(context);
-                                              HapticFeedback.mediumImpact();
-                                              showDialog(
-                                                barrierColor:
-                                                    Colors.transparent,
-                                                context: context,
-                                                builder: (dialogContext) {
-                                                  return Dialog(
-                                                    elevation: 0,
-                                                    insetPadding:
-                                                        EdgeInsets.zero,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                                0, 0)
-                                                            .resolve(
-                                                                Directionality.of(
-                                                                    context)),
-                                                    child: GodkjentIkonWidget(),
-                                                  );
-                                                },
-                                              );
+                                              if (response.statusCode == 200) {
+                                                Navigator.of(context).pop();
+                                                Navigator.pop(context);
+                                                HapticFeedback.mediumImpact();
+                                                showDialog(
+                                                  barrierColor:
+                                                      Colors.transparent,
+                                                  context: context,
+                                                  builder: (dialogContext) {
+                                                    return Dialog(
+                                                      elevation: 0,
+                                                      insetPadding:
+                                                          EdgeInsets.zero,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                                  0, 0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                      child:
+                                                          GodkjentIkonWidget(),
+                                                    );
+                                                  },
+                                                );
+                                              }
                                             }
                                           },
                                           child: Text("Ja, jeg bekrefter"),

@@ -189,7 +189,7 @@ class _LeggUtNavBarWidgetState extends State<LeggUtNavBarWidget> {
                     icon: const Icon(
                       Icons.person,
                       color: Color(0xFF9299A1),
-                      size: 27.0,
+                      size: 30.0,
                     ),
                     onPressed: () async {
                       context.pushNamed(

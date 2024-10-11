@@ -456,34 +456,39 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                   ),
                                 ),
                                 CupertinoDialogAction(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     String? token = Securestorage.authToken;
                                     if (token != null) {
-                                      ApiKjop().svarBud(
+                                      final response = await ApiKjop().avvis(
                                           id: salgInfo.id,
+                                          avvist: true,
                                           godkjent: false,
                                           token: token);
                                       // Perform action for 'Yes'
-                                      Navigator.of(context)
-                                          .pop(); // Close the dialog
-                                      Navigator.pop(context);
-                                      HapticFeedback.mediumImpact();
-                                      showDialog(
-                                        barrierColor: Colors.transparent,
-                                        context: context,
-                                        builder: (dialogContext) {
-                                          return Dialog(
-                                            elevation: 0,
-                                            insetPadding: EdgeInsets.zero,
-                                            backgroundColor: Colors.transparent,
-                                            alignment: AlignmentDirectional(
-                                                    0, 0)
-                                                .resolve(
-                                                    Directionality.of(context)),
-                                            child: AvbrytIkonWidget(),
-                                          );
-                                        },
-                                      );
+                                      if (response.statusCode == 200) {
+                                        Navigator.of(context)
+                                            .pop(); // Close the dialog
+                                        Navigator.pop(context);
+                                        HapticFeedback.mediumImpact();
+                                        showDialog(
+                                          barrierColor: Colors.transparent,
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0, 0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: AvbrytIkonWidget(),
+                                            );
+                                          },
+                                        );
+                                      }
                                     }
                                   },
                                   child: Text("Ja, avslå"),
@@ -548,36 +553,39 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                     ),
                                   ),
                                   CupertinoDialogAction(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       String? token = Securestorage.authToken;
                                       if (token != null) {
-                                        ApiKjop().svarBud(
-                                            id: salgInfo.id,
-                                            godkjent: true,
-                                            token: token);
+                                        final response = await ApiKjop()
+                                            .svarBud(
+                                                id: salgInfo.id,
+                                                godkjent: true,
+                                                token: token);
                                         // Perform action for 'Yes'
-                                        Navigator.of(context)
-                                            .pop(); // Close the dialog
-                                        Navigator.pop(context);
-                                        HapticFeedback.mediumImpact();
-                                        showDialog(
-                                          barrierColor: Colors.transparent,
-                                          context: context,
-                                          builder: (dialogContext) {
-                                            return Dialog(
-                                              elevation: 0,
-                                              insetPadding: EdgeInsets.zero,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              alignment:
-                                                  AlignmentDirectional(0, 0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              child: GodkjentIkonWidget(),
-                                            );
-                                          },
-                                        );
+                                        if (response.statusCode == 200) {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                          Navigator.pop(context);
+                                          HapticFeedback.mediumImpact();
+                                          showDialog(
+                                            barrierColor: Colors.transparent,
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment:
+                                                    AlignmentDirectional(0, 0)
+                                                        .resolve(
+                                                            Directionality.of(
+                                                                context)),
+                                                child: GodkjentIkonWidget(),
+                                              );
+                                            },
+                                          );
+                                        }
                                       }
                                     },
                                     child: Text("Ja, godta"),

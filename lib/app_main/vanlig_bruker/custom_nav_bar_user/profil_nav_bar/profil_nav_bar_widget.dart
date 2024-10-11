@@ -127,7 +127,7 @@ class _ProfilNavBarWidgetState extends State<ProfilNavBarWidget> {
                     borderWidth: 1.0,
                     buttonSize: 50.0,
                     icon: const FaIcon(
-                      FontAwesomeIcons.exchangeAlt,
+                      FontAwesomeIcons.moneyBillTransfer,
                       color: Color(0xFF9299A1),
                       size: 24.0,
                     ),
@@ -198,7 +198,7 @@ class _ProfilNavBarWidgetState extends State<ProfilNavBarWidget> {
                     icon: Icon(
                       Icons.person,
                       color: FlutterFlowTheme.of(context).alternate,
-                      size: 27.0,
+                      size: 30.0,
                     ),
                     onPressed: () {
                       print('IconButton pressed ...');

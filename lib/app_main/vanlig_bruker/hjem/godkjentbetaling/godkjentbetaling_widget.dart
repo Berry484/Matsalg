@@ -128,7 +128,7 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
                         40.0, 16.0, 40.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        context.goNamed('MineKjop');
+                        context.pushNamed('MineKjop');
                       },
                       text: 'Ferdig',
                       icon: const FaIcon(

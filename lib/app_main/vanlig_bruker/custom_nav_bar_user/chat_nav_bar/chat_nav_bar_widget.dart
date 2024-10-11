@@ -127,7 +127,7 @@ class _ChatNavBarWidgetState extends State<ChatNavBarWidget> {
                     borderWidth: 1.0,
                     buttonSize: 50.0,
                     icon: const FaIcon(
-                      FontAwesomeIcons.exchangeAlt,
+                      FontAwesomeIcons.moneyBillTransfer,
                       color: Color(0xFF9299A1),
                       size: 24.0,
                     ),
@@ -177,9 +177,7 @@ class _ChatNavBarWidgetState extends State<ChatNavBarWidget> {
                       color: FlutterFlowTheme.of(context).alternate,
                       size: 24.0,
                     ),
-                    onPressed: () {
-                      print('IconButton pressed ...');
-                    },
+                    onPressed: () {},
                   ),
                   FlutterFlowIconButton(
                     borderColor: Colors.transparent,
@@ -189,7 +187,7 @@ class _ChatNavBarWidgetState extends State<ChatNavBarWidget> {
                     icon: const Icon(
                       Icons.person,
                       color: Color(0xFF9299A1),
-                      size: 27.0,
+                      size: 30.0,
                     ),
                     onPressed: () async {
                       context.pushNamed(

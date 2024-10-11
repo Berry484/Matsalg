@@ -1078,6 +1078,7 @@ class ApiKjop {
             hentet: orderData['hentet'], // Status of whether picked up
             godkjent: orderData['godkjent'], // Approval status
             trekt: orderData['trekt'], // Approval status
+            avvist: orderData['avvist'], // Approval status
             foodDetails: foodDetails, // Pass the Matvarer instance here
           );
         }).toList();
@@ -1139,6 +1140,7 @@ class ApiKjop {
             hentet: orderData['hentet'], // Status of whether picked up
             godkjent: orderData['godkjent'], // Approval status
             trekt: orderData['trekt'], // Approval status
+            avvist: orderData['avvist'], // Approval status
             foodDetails: foodDetails, // Pass the Matvarer instance here
           );
         }).toList();
@@ -1224,6 +1226,44 @@ class ApiKjop {
     );
     return response; // Return the response
   }
+
+  Future<http.Response> avvis({
+    required int id,
+    required bool avvist,
+    required bool godkjent,
+    required String token,
+  }) async {
+    // Base URL for the API
+    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+
+    // Create the user data as a Map
+    final Map<String, dynamic> userData = {
+      "id": id,
+      "avvist": avvist,
+      "godkjent": godkjent,
+    };
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(userData);
+
+    // Prepare URL with encoded parameters
+    final uri = Uri.parse('$baseUrl/ordre/update');
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    // Send the POST request
+    final response = await http.post(
+      uri, // Use the updated URI with query parameters
+      headers: headers,
+      body: jsonBody,
+    );
+    return response; // Return the response
+  }
 }
 
 class OrdreInfo {
@@ -1238,6 +1278,7 @@ class OrdreInfo {
   final bool? hentet;
   final bool? godkjent;
   final bool? trekt;
+  final bool? avvist;
   final Matvarer foodDetails; // Change this to Matvarer
 
   OrdreInfo({
@@ -1252,6 +1293,7 @@ class OrdreInfo {
     required this.hentet,
     required this.godkjent,
     required this.trekt,
+    required this.avvist,
     required this.foodDetails, // Pass food details to the constructor
   });
 }
