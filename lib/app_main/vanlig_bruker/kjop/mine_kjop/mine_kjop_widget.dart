@@ -1,6 +1,9 @@
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/bonde_gard/salg/godkjentebud/godkjentebud_widget.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/kjop/budInfo/budInfo_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/kjop_bekreft_hente/kjop_bekreft_hente_widget.dart';
+import 'package:mat_salg/index.dart';
 import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -218,40 +221,44 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                 : _ordreInfo?.length ?? 1,
                                             itemBuilder: (context, index) {
                                               if (_isloading) {
-                                                return Shimmer.fromColors(
-                                                  baseColor: Colors.grey[
-                                                      300]!, // Base color for the shimmer
-                                                  highlightColor: Colors.grey[
-                                                      100]!, // Highlight color for the shimmer
-                                                  child: Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            5.0),
-                                                    width: 225.0,
-                                                    height: 107.0,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              127,
-                                                              255,
-                                                              255,
-                                                              255),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16.0), // Rounded corners
+                                                return Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal:
+                                                          10.0), // Add 10px padding to left and right
+                                                  child: Shimmer.fromColors(
+                                                    baseColor: Colors.grey[
+                                                        300]!, // Base color for the shimmer
+                                                    highlightColor: Colors.grey[
+                                                        100]!, // Highlight color for the shimmer
+                                                    child: Container(
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              5.0),
+                                                      width: 225.0,
+                                                      height: 107.0,
+                                                      decoration: BoxDecoration(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            127, 255, 255, 255),
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                16.0), // Rounded corners
+                                                      ),
                                                     ),
                                                   ),
                                                 );
                                               }
                                               final ordreInfo =
                                                   _ordreInfo![index];
+
                                               return Stack(
                                                 children: [
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                10, 0, 10, 15),
+                                                                10, 0, 10, 0),
                                                     child: InkWell(
                                                       splashColor:
                                                           Colors.transparent,
@@ -262,13 +269,45 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
-                                                        context.pushNamed(
-                                                            'KjopDetaljVentende');
+                                                        if (ordreInfo.hentet !=
+                                                            true) {
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            useSafeArea: true,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return GestureDetector(
+                                                                onTap: () =>
+                                                                    FocusScope.of(
+                                                                            context)
+                                                                        .unfocus(),
+                                                                child: Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
+                                                                  child:
+                                                                      BudInfoWidget(
+                                                                    info: ordreInfo
+                                                                        .foodDetails,
+                                                                    ordre:
+                                                                        ordreInfo,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ).then((value) =>
+                                                              safeSetState(
+                                                                  () {}));
+                                                        }
                                                       },
                                                       child: Material(
                                                         color:
                                                             Colors.transparent,
-                                                        elevation: 1,
+                                                        elevation: 0,
                                                         shape:
                                                             RoundedRectangleBorder(
                                                           borderRadius:
@@ -279,9 +318,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                           height: 107,
                                                           decoration:
                                                               BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -314,12 +350,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         .network(
                                                                       ordreInfo
                                                                           .foodDetails
-                                                                          .imgUrls![
-                                                                              0]
-                                                                          .toString(),
-                                                                      width: 80,
+                                                                          .imgUrls![0],
+                                                                      width: 60,
                                                                       height:
-                                                                          80,
+                                                                          60,
                                                                       fit: BoxFit
                                                                           .cover,
                                                                       errorBuilder: (BuildContext context,
@@ -353,7 +387,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               .max,
                                                                       mainAxisAlignment:
                                                                           MainAxisAlignment
-                                                                              .spaceBetween,
+                                                                              .center,
                                                                       crossAxisAlignment:
                                                                           CrossAxisAlignment
                                                                               .start,
@@ -370,7 +404,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 '',
                                                                             style: FlutterFlowTheme.of(context).headlineSmall.override(
                                                                                   fontFamily: 'Open Sans',
-                                                                                  fontSize: 22,
+                                                                                  fontSize: 20,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w500,
                                                                                 ),
@@ -378,8 +412,50 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         ),
                                                                         if (ordreInfo.godkjent ==
                                                                                 true &&
-                                                                            ordreInfo.hentet ==
+                                                                            ordreInfo.hentet !=
                                                                                 true)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                6),
+                                                                            child:
+                                                                                Text(
+                                                                              'Budet er godkjent, kontakt selgeren',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Open Sans',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    fontSize: 13,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        if (ordreInfo.godkjent !=
+                                                                                true &&
+                                                                            ordreInfo.hentet !=
+                                                                                true)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                6),
+                                                                            child:
+                                                                                Text(
+                                                                              'Venter svar fra selgeren',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Open Sans',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    fontSize: 13,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        if (ordreInfo.hentet ==
+                                                                            true)
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
                                                                                 0,
@@ -391,44 +467,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               'Kjøpet er fullført',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
-                                                                                    fontSize: 13,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        if (ordreInfo.godkjent !=
-                                                                            true)
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                6),
-                                                                            child:
-                                                                                Text(
-                                                                              'Venter svar fra selger',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
-                                                                                    fontSize: 13,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        if (ordreInfo.godkjent ==
-                                                                            true)
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                6),
-                                                                            child:
-                                                                                Text(
-                                                                              'Hent matvaren',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
                                                                                     fontSize: 13,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
@@ -445,117 +484,107 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           .max,
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
-                                                                          .spaceBetween,
+                                                                          .center,
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
-                                                                          .end,
+                                                                          .center,
                                                                   children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                          AlignmentDirectional(
-                                                                              0,
-                                                                              1),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.min,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.end,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.end,
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                12,
-                                                                                4,
-                                                                                8),
-                                                                            child:
-                                                                                Text(
-                                                                              '${ordreInfo.pris}',
-                                                                              textAlign: TextAlign.end,
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
-                                                                                    color: FlutterFlowTheme.of(context).alternate,
-                                                                                    fontSize: 19,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                12,
-                                                                                4,
-                                                                                8),
-                                                                            child:
-                                                                                Text(
-                                                                              'Kr',
-                                                                              textAlign: TextAlign.end,
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
-                                                                                    color: FlutterFlowTheme.of(context).alternate,
-                                                                                    fontSize: 19,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
                                                                     if (ordreInfo
-                                                                            .godkjent ==
+                                                                            .trekt !=
                                                                         true)
-                                                                      Builder(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                      Container(
+                                                                        height:
+                                                                            30,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).alternate,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(13),
+                                                                        ),
+                                                                        child:
+                                                                            Align(
+                                                                          alignment: AlignmentDirectional(
                                                                               0,
-                                                                              0,
-                                                                              4,
-                                                                              5),
+                                                                              0),
                                                                           child:
-                                                                              FFButtonWidget(
-                                                                            onPressed:
-                                                                                () async {
-                                                                              await showDialog(
-                                                                                context: context,
-                                                                                builder: (dialogContext) {
-                                                                                  return Dialog(
-                                                                                    elevation: 0,
-                                                                                    insetPadding: EdgeInsets.zero,
-                                                                                    backgroundColor: Colors.transparent,
-                                                                                    alignment: AlignmentDirectional(0, 0).resolve(Directionality.of(context)),
-                                                                                    child: GestureDetector(
-                                                                                      onTap: () => FocusScope.of(dialogContext).unfocus(),
-                                                                                      child: KjopBekreftHenteWidget(),
-                                                                                    ),
-                                                                                  );
-                                                                                },
-                                                                              );
-                                                                            },
-                                                                            text:
-                                                                                'Mottatt',
-                                                                            options:
-                                                                                FFButtonOptions(
-                                                                              height: 35,
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                                                              color: FlutterFlowTheme.of(context).alternate,
-                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                              Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                15,
+                                                                                0,
+                                                                                12,
+                                                                                0),
+                                                                            child:
+                                                                                Text(
+                                                                              '${ordreInfo.pris} Kr',
+                                                                              textAlign: TextAlign.start,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).primary,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
-                                                                              elevation: 1,
-                                                                              borderRadius: BorderRadius.circular(8),
                                                                             ),
                                                                           ),
+                                                                        ),
+                                                                      ),
+                                                                    if (ordreInfo
+                                                                            .trekt ==
+                                                                        true)
+                                                                      Container(
+                                                                        height:
+                                                                            30,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              Color(0xAA262C2D),
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(13),
+                                                                          border:
+                                                                              Border.all(
+                                                                            color:
+                                                                                Color(0x0D262C2D),
+                                                                          ),
+                                                                        ),
+                                                                        child:
+                                                                            Stack(
+                                                                          children: [
+                                                                            Align(
+                                                                              alignment: AlignmentDirectional(0, 0),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
+                                                                                child: Stack(
+                                                                                  children: [
+                                                                                    // White line behind the text
+                                                                                    Positioned(
+                                                                                      top: 10, // Adjust this value to control the vertical alignment of the line
+                                                                                      left: 0,
+                                                                                      right: 0,
+                                                                                      child: Container(
+                                                                                        height: 1.2, // Thickness of the line
+                                                                                        color: Colors.white, // Color of the line
+                                                                                      ),
+                                                                                    ),
+                                                                                    // The actual text
+                                                                                    Text(
+                                                                                      '${ordreInfo.pris} Kr',
+                                                                                      textAlign: TextAlign.start,
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Open Sans',
+                                                                                            color: Color(0xE0FFFFFF),
+                                                                                            fontSize: 14,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                            // You can still keep the text decoration if you want, but the line through won't be white or thick.
+                                                                                            decoration: TextDecoration.none,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ),
                                                                   ],
@@ -567,40 +596,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                       ),
                                                     ),
                                                   ),
-                                                  if (ordreInfo.hentet == true)
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  10, 0, 10, 0),
-                                                      child: Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        elevation: 0,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(24),
-                                                        ),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 107,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0x64262C2D),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        24),
-                                                            shape: BoxShape
-                                                                .rectangle,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
                                                 ],
                                               );
                                             },
@@ -624,27 +619,30 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                 : _salgInfo?.length ?? 1,
                                             itemBuilder: (context, index) {
                                               if (_salgisLoading) {
-                                                return Shimmer.fromColors(
-                                                  baseColor: Colors.grey[
-                                                      300]!, // Base color for the shimmer
-                                                  highlightColor: Colors.grey[
-                                                      100]!, // Highlight color for the shimmer
-                                                  child: Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            5.0),
-                                                    width: 225.0,
-                                                    height: 107.0,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              127,
-                                                              255,
-                                                              255,
-                                                              255),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16.0), // Rounded corners
+                                                return Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal:
+                                                          10.0), // Add 10px padding to left and right
+                                                  child: Shimmer.fromColors(
+                                                    baseColor: Colors.grey[
+                                                        300]!, // Base color for the shimmer
+                                                    highlightColor: Colors.grey[
+                                                        100]!, // Highlight color for the shimmer
+                                                    child: Container(
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              5.0),
+                                                      width: 225.0,
+                                                      height: 107.0,
+                                                      decoration: BoxDecoration(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            127, 255, 255, 255),
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                16.0), // Rounded corners
+                                                      ),
                                                     ),
                                                   ),
                                                 );
@@ -657,7 +655,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                10, 0, 10, 15),
+                                                                10, 0, 10, 0),
                                                     child: InkWell(
                                                       splashColor:
                                                           Colors.transparent,
@@ -668,37 +666,80 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
-                                                        await showModalBottomSheet(
-                                                          isScrollControlled:
-                                                              true,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          useSafeArea: true,
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return GestureDetector(
-                                                              onTap: () =>
-                                                                  FocusScope.of(
-                                                                          context)
-                                                                      .unfocus(),
-                                                              child: Padding(
-                                                                padding: MediaQuery
-                                                                    .viewInsetsOf(
-                                                                        context),
-                                                                child:
-                                                                    SalgBrukerInfoWidget(),
-                                                              ),
-                                                            );
-                                                          },
-                                                        ).then((value) =>
-                                                            safeSetState(
-                                                                () {}));
+                                                        if (salgInfo.godkjent !=
+                                                            true) {
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            useSafeArea: true,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return GestureDetector(
+                                                                onTap: () =>
+                                                                    FocusScope.of(
+                                                                            context)
+                                                                        .unfocus(),
+                                                                child: Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
+                                                                  child:
+                                                                      SalgBrukerInfoWidget(
+                                                                    info: salgInfo
+                                                                        .foodDetails,
+                                                                    ordre:
+                                                                        salgInfo,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ).then((value) =>
+                                                              safeSetState(
+                                                                  () {}));
+                                                        }
+
+                                                        if (salgInfo.godkjent ==
+                                                            true) {
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            useSafeArea: true,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return GestureDetector(
+                                                                onTap: () =>
+                                                                    FocusScope.of(
+                                                                            context)
+                                                                        .unfocus(),
+                                                                child: Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
+                                                                  child:
+                                                                      GodkjentebudWidget(
+                                                                    info: salgInfo
+                                                                        .foodDetails,
+                                                                    ordre:
+                                                                        salgInfo,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ).then((value) =>
+                                                              safeSetState(
+                                                                  () {}));
+                                                        }
                                                       },
                                                       child: Material(
                                                         color:
                                                             Colors.transparent,
-                                                        elevation: 1,
+                                                        elevation: 0,
                                                         shape:
                                                             RoundedRectangleBorder(
                                                           borderRadius:
@@ -709,9 +750,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                           height: 107,
                                                           decoration:
                                                               BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -744,12 +782,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         .network(
                                                                       salgInfo
                                                                           .foodDetails
-                                                                          .imgUrls![
-                                                                              0]
-                                                                          .toString(),
-                                                                      width: 80,
+                                                                          .imgUrls![0],
+                                                                      width: 60,
                                                                       height:
-                                                                          80,
+                                                                          60,
                                                                       fit: BoxFit
                                                                           .cover,
                                                                       errorBuilder: (BuildContext context,
@@ -783,7 +819,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               .max,
                                                                       mainAxisAlignment:
                                                                           MainAxisAlignment
-                                                                              .spaceBetween,
+                                                                              .center,
                                                                       crossAxisAlignment:
                                                                           CrossAxisAlignment
                                                                               .start,
@@ -800,54 +836,16 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 '',
                                                                             style: FlutterFlowTheme.of(context).headlineSmall.override(
                                                                                   fontFamily: 'Open Sans',
-                                                                                  fontSize: 22,
+                                                                                  fontSize: 20,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w500,
                                                                                 ),
                                                                           ),
                                                                         ),
-                                                                        if (salgInfo.godkjent ==
-                                                                                true &&
-                                                                            salgInfo.hentet ==
-                                                                                true)
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                6),
-                                                                            child:
-                                                                                Text(
-                                                                              'Kjøpet er fullført',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
-                                                                                    fontSize: 13,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        if (salgInfo.godkjent ==
-                                                                            true)
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                6),
-                                                                            child:
-                                                                                Text(
-                                                                              'Avtal henting med kjøperen',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
-                                                                                    fontSize: 13,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
                                                                         if (salgInfo.godkjent !=
-                                                                            true)
+                                                                                true &&
+                                                                            salgInfo.hentet !=
+                                                                                true)
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
                                                                                 0,
@@ -859,6 +857,49 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               'Vurder kjøperen',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    fontSize: 13,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        if (salgInfo.godkjent ==
+                                                                                true &&
+                                                                            salgInfo.hentet !=
+                                                                                true)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                6),
+                                                                            child:
+                                                                                Text(
+                                                                              'Budet er godkjent, kontakt kjøperen',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Open Sans',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    fontSize: 13,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        if (salgInfo.hentet ==
+                                                                            true)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                6),
+                                                                            child:
+                                                                                Text(
+                                                                              'Kjøpet er fullført',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Open Sans',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
                                                                                     fontSize: 13,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
@@ -875,66 +916,109 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           .max,
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
-                                                                          .spaceBetween,
+                                                                          .center,
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
-                                                                          .end,
+                                                                          .center,
                                                                   children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                          AlignmentDirectional(
+                                                                    if (salgInfo
+                                                                            .trekt !=
+                                                                        true)
+                                                                      Container(
+                                                                        height:
+                                                                            30,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).alternate,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(13),
+                                                                        ),
+                                                                        child:
+                                                                            Align(
+                                                                          alignment: AlignmentDirectional(
                                                                               0,
-                                                                              1),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.min,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.end,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.end,
-                                                                        children: [
-                                                                          Padding(
+                                                                              0),
+                                                                          child:
+                                                                              Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                15,
                                                                                 0,
                                                                                 12,
-                                                                                4,
-                                                                                8),
+                                                                                0),
                                                                             child:
                                                                                 Text(
-                                                                              '${salgInfo.pris}',
-                                                                              textAlign: TextAlign.end,
+                                                                              '+${salgInfo.pris} Kr',
+                                                                              textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
-                                                                                    color: FlutterFlowTheme.of(context).alternate,
-                                                                                    fontSize: 19,
+                                                                                    color: FlutterFlowTheme.of(context).primary,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontWeight: FontWeight.w600,
                                                                                   ),
                                                                             ),
                                                                           ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                12,
-                                                                                4,
-                                                                                8),
-                                                                            child:
-                                                                                Text(
-                                                                              'Kr',
-                                                                              textAlign: TextAlign.end,
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
-                                                                                    color: FlutterFlowTheme.of(context).alternate,
-                                                                                    fontSize: 19,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
+                                                                        ),
                                                                       ),
-                                                                    ),
+                                                                    if (salgInfo
+                                                                            .trekt ==
+                                                                        true)
+                                                                      Container(
+                                                                        height:
+                                                                            30,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              Color(0xAA262C2D),
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(13),
+                                                                          border:
+                                                                              Border.all(
+                                                                            color:
+                                                                                Color(0x0D262C2D),
+                                                                          ),
+                                                                        ),
+                                                                        child:
+                                                                            Stack(
+                                                                          children: [
+                                                                            Align(
+                                                                              alignment: AlignmentDirectional(0, 0),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
+                                                                                child: Stack(
+                                                                                  children: [
+                                                                                    // White line behind the text
+                                                                                    Positioned(
+                                                                                      top: 10, // Adjust this value to control the vertical alignment of the line
+                                                                                      left: 0,
+                                                                                      right: 0,
+                                                                                      child: Container(
+                                                                                        height: 1.2, // Thickness of the line
+                                                                                        color: Colors.white, // Color of the line
+                                                                                      ),
+                                                                                    ),
+                                                                                    // The actual text
+                                                                                    Text(
+                                                                                      '${salgInfo.pris} Kr',
+                                                                                      textAlign: TextAlign.start,
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Open Sans',
+                                                                                            color: Color(0xE0FFFFFF),
+                                                                                            fontSize: 14,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                            // You can still keep the text decoration if you want, but the line through won't be white or thick.
+                                                                                            decoration: TextDecoration.none,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
                                                                   ],
                                                                 ),
                                                               ],
@@ -944,40 +1028,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                       ),
                                                     ),
                                                   ),
-                                                  if (salgInfo.hentet == true)
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  10, 0, 10, 0),
-                                                      child: Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        elevation: 0,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(24),
-                                                        ),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 107,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0x64262C2D),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        24),
-                                                            shape: BoxShape
-                                                                .rectangle,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
                                                 ],
                                               );
                                             },

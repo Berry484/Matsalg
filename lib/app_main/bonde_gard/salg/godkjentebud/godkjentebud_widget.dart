@@ -1,3 +1,6 @@
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/matvarer.dart';
+
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -11,9 +14,11 @@ class GodkjentebudWidget extends StatefulWidget {
   const GodkjentebudWidget({
     super.key,
     this.info,
+    this.ordre,
   });
 
   final dynamic info;
+  final dynamic ordre;
 
   @override
   State<GodkjentebudWidget> createState() => _GodkjentebudWidgetState();
@@ -21,6 +26,8 @@ class GodkjentebudWidget extends StatefulWidget {
 
 class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
   late GodkjentebudModel _model;
+  late Matvarer matvare;
+  late OrdreInfo salgInfo;
 
   @override
   void setState(VoidCallback callback) {
@@ -32,6 +39,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => GodkjentebudModel());
+    matvare = widget.info;
+    salgInfo = widget.ordre;
   }
 
   @override
@@ -47,7 +56,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
       width: 500,
       height: 580,
       decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).secondary,
+        color: FlutterFlowTheme.of(context).primary,
         boxShadow: [
           BoxShadow(
             blurRadius: 4,
@@ -103,11 +112,23 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.pushNamed('BrukerPage');
+                context.pushNamed(
+                  'BrukerPage',
+                  queryParameters: {
+                    'username': serializeParam(
+                      matvare.username,
+                      ParamType.String,
+                    ),
+                    'bruker': serializeParam(
+                      null,
+                      ParamType.JSON,
+                    ),
+                  },
+                );
               },
               child: Material(
                 color: Colors.transparent,
-                elevation: 3,
+                elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(13),
                 ),
@@ -143,10 +164,17 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(200),
                                   child: Image.network(
-                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                    matvare.profilepic ?? '',
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context,
+                                        Object error, StackTrace? stackTrace) {
+                                      return Image.asset(
+                                        'assets/images/error_image.jpg', // Path to your local error image
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
@@ -154,7 +182,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                                 child: Text(
-                                  'Geir lars',
+                                  matvare.username ?? '',
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
@@ -203,7 +231,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(5, 7, 4, 0),
                       child: Text(
-                        'Epler',
+                        matvare.name ?? '',
                         textAlign: TextAlign.end,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Open Sans',
@@ -217,7 +245,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
                       child: Text(
-                        '300 Kr',
+                        '${salgInfo.pris} Kr',
                         textAlign: TextAlign.end,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Open Sans',
@@ -256,7 +284,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
                         child: Text(
-                          '150',
+                          '${matvare.price} Kr',
                           textAlign: TextAlign.end,
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
@@ -269,64 +297,42 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                               ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                        child: Text(
-                          'Kr',
-                          textAlign: TextAlign.end,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context).alternate,
-                                fontSize: 16,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      if (matvare.kg == true)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          child: Text(
+                            '/kg',
+                            textAlign: TextAlign.end,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  fontSize: 16,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                        child: Text(
-                          '/kg',
-                          textAlign: TextAlign.end,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Open Sans',
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                fontSize: 16,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
+                      if (matvare.kg != true)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          child: Text(
+                            '/stk',
+                            textAlign: TextAlign.end,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  fontSize: 16,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                        child: Text(
-                          '/stk',
-                          textAlign: TextAlign.end,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Open Sans',
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                fontSize: 16,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 18,
-                        child: VerticalDivider(
-                          thickness: 1,
-                          endIndent: 2,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                        ),
-                      ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -334,9 +340,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         children: [
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
+                                EdgeInsetsDirectional.fromSTEB(10, 12, 4, 0),
                             child: Text(
-                              '11',
+                              '(${salgInfo.antall}',
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -344,48 +350,50 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                     fontFamily: 'Open Sans',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 16,
+                                    fontSize: 15,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),
                           ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                            child: Text(
-                              'Kg',
-                              textAlign: TextAlign.end,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 16,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                          if (matvare.kg == true)
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                              child: Text(
+                                'Kg)',
+                                textAlign: TextAlign.end,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 15,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                            child: Text(
-                              'Stk',
-                              textAlign: TextAlign.end,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 16,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                          if (matvare.kg != true)
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                              child: Text(
+                                'Stk)',
+                                textAlign: TextAlign.end,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 15,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ],
@@ -428,7 +436,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '10:10',
+                            '${salgInfo.godkjenttid != null ? DateFormat("HH:mm dd.MMMM", "nb_NO").format(salgInfo.godkjenttid!.toLocal()) : ""}',
                             textAlign: TextAlign.end,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -441,24 +449,6 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                            child: Text(
-                              '22/09/2024',
-                              textAlign: TextAlign.end,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 16,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ),
                         ],
                       ),
                     ],
@@ -466,42 +456,59 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 ),
               ],
             ),
-            Align(
-              alignment: AlignmentDirectional(0, 0),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 25, 5, 0),
-                child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
-                  },
-                  text: 'Melding',
-                  icon: Icon(
-                    Icons.chat,
-                    color: FlutterFlowTheme.of(context).primary,
-                    size: 23,
-                  ),
-                  options: FFButtonOptions(
-                    width: 203,
-                    height: 40,
-                    padding: EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
-                    iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    color: FlutterFlowTheme.of(context).alternate,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Open Sans',
-                          color: FlutterFlowTheme.of(context).primary,
-                          fontSize: 18,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.bold,
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Align(
+                  alignment: AlignmentDirectional(0, 0),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 5, 0),
+                    child: FFButtonWidget(
+                      onPressed: () {
+                        print('Button pressed ...');
+                      },
+                      text: 'Melding',
+                      icon: Icon(
+                        Icons.chat,
+                        color: FlutterFlowTheme.of(context).primary,
+                        size: 23,
+                      ),
+                      options: FFButtonOptions(
+                        width: 203,
+                        height: 40,
+                        padding: EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
+                        iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        color: FlutterFlowTheme.of(context).alternate,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Open Sans',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  fontSize: 18,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                        elevation: 3,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
                         ),
-                    elevation: 3,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(24),
                   ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                  child: Text(
+                    'Husk å be kjøperen bekrefte at \nmatvaren er hentet',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Open Sans',
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

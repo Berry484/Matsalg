@@ -1,3 +1,9 @@
+import 'package:flutter/cupertino.dart';
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/bonde_gard/salg/avbryt_ikon/avbryt_ikon_widget.dart';
+import 'package:mat_salg/matvarer.dart';
+
 import '/app_main/bonde_gard/salg/godkjent_ikon/godkjent_ikon_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -13,9 +19,11 @@ class SalgBrukerInfoWidget extends StatefulWidget {
   const SalgBrukerInfoWidget({
     super.key,
     this.info,
+    this.ordre,
   });
 
   final dynamic info;
+  final dynamic ordre;
 
   @override
   State<SalgBrukerInfoWidget> createState() => _SalgBrukerInfoWidgetState();
@@ -23,6 +31,8 @@ class SalgBrukerInfoWidget extends StatefulWidget {
 
 class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
   late SalgBrukerInfoModel _model;
+  late Matvarer matvare;
+  late OrdreInfo salgInfo;
 
   @override
   void setState(VoidCallback callback) {
@@ -34,6 +44,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SalgBrukerInfoModel());
+    matvare = widget.info;
+    salgInfo = widget.ordre;
   }
 
   @override
@@ -118,7 +130,19 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            context.pushNamed('BrukerPage');
+                            context.pushNamed(
+                              'BrukerPage',
+                              queryParameters: {
+                                'username': serializeParam(
+                                  matvare.username,
+                                  ParamType.String,
+                                ),
+                                'bruker': serializeParam(
+                                  null,
+                                  ParamType.JSON,
+                                ),
+                              },
+                            );
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -130,10 +154,17 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(200),
                                   child: Image.network(
-                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                    matvare.profilepic ?? '',
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context,
+                                        Object error, StackTrace? stackTrace) {
+                                      return Image.asset(
+                                        'assets/images/error_image.jpg', // Path to your local error image
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
@@ -141,7 +172,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(5, 0, 7, 0),
                                 child: Text(
-                                  'Geir lars',
+                                  matvare.username ?? '',
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
@@ -203,7 +234,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'Epler',
+                          matvare.name ?? '',
                           textAlign: TextAlign.end,
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
@@ -216,7 +247,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               ),
                         ),
                         Text(
-                          '300 Kr',
+                          '${salgInfo.pris} Kr',
                           textAlign: TextAlign.end,
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
@@ -267,7 +298,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
                                 child: Text(
-                                  '150',
+                                  '${matvare.price} Kr',
                                   textAlign: TextAlign.end,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -281,69 +312,44 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                       ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                                child: Text(
-                                  'Kr',
-                                  textAlign: TextAlign.end,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        fontSize: 16,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              if (matvare.kg == true)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 12, 0, 0),
+                                  child: Text(
+                                    '/kg',
+                                    textAlign: TextAlign.end,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 16,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                                child: Text(
-                                  '/kg',
-                                  textAlign: TextAlign.end,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 16,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                              if (matvare.kg != true)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 12, 0, 0),
+                                  child: Text(
+                                    '/stk',
+                                    textAlign: TextAlign.end,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 16,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                                child: Text(
-                                  '/stk',
-                                  textAlign: TextAlign.end,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 16,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 18,
-                                child: VerticalDivider(
-                                  thickness: 1,
-                                  endIndent: 2,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                              ),
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -351,9 +357,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 12, 4, 0),
+                                        10, 12, 4, 0),
                                     child: Text(
-                                      '11',
+                                      '(${salgInfo.antall}',
                                       textAlign: TextAlign.end,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -361,48 +367,52 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                             fontFamily: 'Open Sans',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            fontSize: 16,
+                                            fontSize: 15,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 12, 0, 0),
-                                    child: Text(
-                                      'Kg',
-                                      textAlign: TextAlign.end,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 16,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                  if (matvare.kg == true)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 12, 0, 0),
+                                      child: Text(
+                                        'Kg)',
+                                        textAlign: TextAlign.end,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontSize: 15,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 12, 0, 0),
-                                    child: Text(
-                                      'Stk',
-                                      textAlign: TextAlign.end,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 16,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                  if (matvare.kg != true)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 12, 0, 0),
+                                      child: Text(
+                                        'Stk)',
+                                        textAlign: TextAlign.end,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontSize: 15,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
                                     ),
-                                  ),
                                 ],
                               ),
                             ],
@@ -424,7 +434,64 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        Navigator.pop(context);
+                        showCupertinoDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CupertinoAlertDialog(
+                              title: Text("Bekreftelse"),
+                              content: Text(
+                                  "Er du sikker på at du ønsker å avslå budet?"),
+                              actions: [
+                                CupertinoDialogAction(
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  isDefaultAction: true,
+                                  child: const Text(
+                                    "Nei, avbryt",
+                                    style: TextStyle(
+                                        color: Colors
+                                            .red), // Red text for 'No' button
+                                  ),
+                                ),
+                                CupertinoDialogAction(
+                                  onPressed: () {
+                                    String? token = Securestorage.authToken;
+                                    if (token != null) {
+                                      ApiKjop().svarBud(
+                                          id: salgInfo.id,
+                                          godkjent: false,
+                                          token: token);
+                                      // Perform action for 'Yes'
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                      Navigator.pop(context);
+                                      HapticFeedback.mediumImpact();
+                                      showDialog(
+                                        barrierColor: Colors.transparent,
+                                        context: context,
+                                        builder: (dialogContext) {
+                                          return Dialog(
+                                            elevation: 0,
+                                            insetPadding: EdgeInsets.zero,
+                                            backgroundColor: Colors.transparent,
+                                            alignment: AlignmentDirectional(
+                                                    0, 0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                            child: AvbrytIkonWidget(),
+                                          );
+                                        },
+                                      );
+                                    }
+                                  },
+                                  child: Text("Ja, avslå"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       text: 'Avslå',
                       icon: FaIcon(
@@ -459,19 +526,63 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          Navigator.pop(context);
-                          HapticFeedback.mediumImpact();
-                          await showDialog(
-                            barrierColor: Colors.transparent,
+                          showCupertinoDialog(
                             context: context,
-                            builder: (dialogContext) {
-                              return Dialog(
-                                elevation: 0,
-                                insetPadding: EdgeInsets.zero,
-                                backgroundColor: Colors.transparent,
-                                alignment: AlignmentDirectional(0, 0)
-                                    .resolve(Directionality.of(context)),
-                                child: GodkjentIkonWidget(),
+                            builder: (BuildContext context) {
+                              return CupertinoAlertDialog(
+                                title: Text("Bekreftelse"),
+                                content: Text(
+                                    "Er du sikker på at du ønsker å godta budet?"),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                    },
+                                    isDefaultAction: true,
+                                    child: Text(
+                                      "Nei, avbryt",
+                                      style: TextStyle(
+                                          color: Colors
+                                              .red), // Red text for 'No' button
+                                    ),
+                                  ),
+                                  CupertinoDialogAction(
+                                    onPressed: () {
+                                      String? token = Securestorage.authToken;
+                                      if (token != null) {
+                                        ApiKjop().svarBud(
+                                            id: salgInfo.id,
+                                            godkjent: true,
+                                            token: token);
+                                        // Perform action for 'Yes'
+                                        Navigator.of(context)
+                                            .pop(); // Close the dialog
+                                        Navigator.pop(context);
+                                        HapticFeedback.mediumImpact();
+                                        showDialog(
+                                          barrierColor: Colors.transparent,
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0, 0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: GodkjentIkonWidget(),
+                                            );
+                                          },
+                                        );
+                                      }
+                                    },
+                                    child: Text("Ja, godta"),
+                                  ),
+                                ],
                               );
                             },
                           );

@@ -1,3 +1,9 @@
+import 'package:flutter/services.dart';
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
+import 'package:mat_salg/matvarer.dart';
+
 import '/app_main/vanlig_bruker/hjem/like_ikon/like_ikon_widget.dart';
 import '/app_main/vanlig_bruker/kart/kart_pop_up_bondegard/kart_pop_up_bondegard_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -27,6 +33,8 @@ class KjopDetaljVentendeWidget extends StatefulWidget {
 
 class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
   late KjopDetaljVentendeModel _model;
+  late Matvarer matvare;
+  ApiLike apiLike = ApiLike();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -34,6 +42,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => KjopDetaljVentendeModel());
+    matvare = Matvarer.fromJson1(widget.matinfo);
   }
 
   @override
@@ -45,8 +54,6 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
@@ -70,12 +77,12 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
               child: Icon(
                 Icons.arrow_back_ios,
                 color: FlutterFlowTheme.of(context).alternate,
-                size: 28.0,
+                size: 28,
               ),
             ),
-            actions: const [],
+            actions: [],
             centerTitle: true,
-            elevation: 0.0,
+            elevation: 0,
           ),
           body: SafeArea(
             top: true,
@@ -94,15 +101,27 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 5.0, 0.0, 0.0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  context.pushNamed('BondeGardPage');
+                                  context.pushNamed(
+                                    'BrukerPage',
+                                    queryParameters: {
+                                      'username': serializeParam(
+                                        matvare.username,
+                                        ParamType.String,
+                                      ),
+                                      'bruker': serializeParam(
+                                        null,
+                                        ParamType.JSON,
+                                      ),
+                                    },
+                                  );
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -113,31 +132,42 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10.0, 0.0, 0.0, 15.0),
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 0, 15),
                                           child: Container(
-                                            width: 44.0,
-                                            height: 44.0,
+                                            width: 44,
+                                            height: 44,
                                             clipBehavior: Clip.antiAlias,
-                                            decoration: const BoxDecoration(
+                                            decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
                                             child: Image.network(
-                                              'https://picsum.photos/seed/590/600',
+                                              matvare.profilepic ?? '',
                                               fit: BoxFit.cover,
+                                              errorBuilder:
+                                                  (BuildContext context,
+                                                      Object error,
+                                                      StackTrace? stackTrace) {
+                                                return Image.asset(
+                                                  'assets/images/error_image.jpg', // Path to your local error image
+                                                  fit: BoxFit.cover,
+                                                );
+                                              },
                                             ),
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 0.0, 13.0),
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 0, 13),
                                           child: Text(
-                                            'Haugesund gård',
+                                            matvare.username ?? '',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Open Sans',
-                                                  fontSize: 15.0,
+                                                  fontSize: 15,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -146,14 +176,13 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 8.0, 0.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 8, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
-                                        size: 24.0,
+                                        size: 24,
                                       ),
                                     ),
                                   ],
@@ -174,9 +203,16 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       highlightColor: Colors.transparent,
                                       onDoubleTap: () async {
                                         _model.liker = !(_model.liker ?? true);
+                                        HapticFeedback.mediumImpact();
+                                        apiLike.deleteLike(
+                                            Securestorage.authToken,
+                                            matvare.matId);
                                         safeSetState(() {});
                                         if (_model.liker == true) {
-                                          await showAlignedDialog(
+                                          apiLike.sendLike(
+                                              Securestorage.authToken,
+                                              matvare.matId);
+                                          showAlignedDialog(
                                             barrierColor: Colors.transparent,
                                             context: context,
                                             isGlobal: false,
@@ -205,21 +241,21 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                           );
                                         }
                                       },
-                                      child: SizedBox(
+                                      child: Container(
                                         width: double.infinity,
-                                        height: 380.0,
+                                        height: 380,
                                         child: Stack(
                                           children: [
-                                            SizedBox(
+                                            Container(
                                               width: double.infinity,
-                                              height: 380.0,
+                                              height: 380,
                                               child: Stack(
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(10.0, 0.0,
-                                                            10.0, 40.0),
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                10, 0, 10, 40),
                                                     child: PageView(
                                                       controller: _model
                                                               .pageViewController ??=
@@ -228,20 +264,21 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                       scrollDirection:
                                                           Axis.horizontal,
                                                       children: [
-                                                        SizedBox(
+                                                        Container(
                                                           width:
                                                               double.infinity,
-                                                          height: 380.0,
+                                                          height: 380,
                                                           child: Stack(
                                                             children: [
                                                               ClipRRect(
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8.0),
+                                                                            8),
                                                                 child: Image
                                                                     .network(
-                                                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
+                                                                  matvare
+                                                                      .imgUrls![0],
                                                                   width: double
                                                                       .infinity,
                                                                   height: 380.0,
@@ -251,140 +288,226 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                       const Alignment(
                                                                           0.0,
                                                                           0.0),
+                                                                  errorBuilder: (BuildContext
+                                                                          context,
+                                                                      Object
+                                                                          error,
+                                                                      StackTrace?
+                                                                          stackTrace) {
+                                                                    return Image
+                                                                        .asset(
+                                                                      'assets/images/error_image.jpg', // Path to your local error image
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    );
+                                                                  },
                                                                 ),
                                                               ),
                                                             ],
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 380.0,
-                                                          child: Stack(
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  '',
-                                                                  width: double
-                                                                      .infinity,
-                                                                  height: 380.0,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  alignment:
-                                                                      const Alignment(
-                                                                          0.0,
-                                                                          0.0),
+                                                        if (matvare.imgUrls!
+                                                                .length >
+                                                            1)
+                                                          Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 380,
+                                                            child: Stack(
+                                                              children: [
+                                                                ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8),
+                                                                  child: Image
+                                                                      .network(
+                                                                    matvare
+                                                                        .imgUrls![1],
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height:
+                                                                        380.0,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    alignment:
+                                                                        const Alignment(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 380.0,
-                                                          child: Stack(
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  '',
-                                                                  width: double
-                                                                      .infinity,
-                                                                  height: 380.0,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  alignment:
-                                                                      const Alignment(
-                                                                          0.0,
-                                                                          0.0),
+                                                        if (matvare.imgUrls!
+                                                                .length >
+                                                            2)
+                                                          Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 380,
+                                                            child: Stack(
+                                                              children: [
+                                                                ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8),
+                                                                  child: Image
+                                                                      .network(
+                                                                    matvare
+                                                                        .imgUrls![2],
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height:
+                                                                        380.0,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    alignment:
+                                                                        const Alignment(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 380.0,
-                                                          child: Stack(
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  '',
-                                                                  width: double
-                                                                      .infinity,
-                                                                  height: 380.0,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  alignment:
-                                                                      const Alignment(
-                                                                          0.0,
-                                                                          0.0),
+                                                        if (matvare.imgUrls!
+                                                                .length >
+                                                            3)
+                                                          Container(
+                                                            height: 380,
+                                                            child: Stack(
+                                                              children: [
+                                                                ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8),
+                                                                  child: Image
+                                                                      .network(
+                                                                    matvare
+                                                                        .imgUrls![3],
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height:
+                                                                        380.0,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    alignment:
+                                                                        const Alignment(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 380.0,
-                                                          child: Stack(
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  '',
-                                                                  width: double
-                                                                      .infinity,
-                                                                  height: 380.0,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  alignment:
-                                                                      const Alignment(
-                                                                          0.0,
-                                                                          0.0),
+                                                        if (matvare.imgUrls!
+                                                                .length >
+                                                            4)
+                                                          Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 380,
+                                                            child: Stack(
+                                                              children: [
+                                                                ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8),
+                                                                  child: Image
+                                                                      .network(
+                                                                    matvare
+                                                                        .imgUrls![4],
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height:
+                                                                        380.0,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    alignment:
+                                                                        const Alignment(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    errorBuilder: (BuildContext
+                                                                            context,
+                                                                        Object
+                                                                            error,
+                                                                        StackTrace?
+                                                                            stackTrace) {
+                                                                      return Image
+                                                                          .asset(
+                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    },
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
                                                       ],
                                                     ),
                                                   ),
                                                   Align(
                                                     alignment:
-                                                        const AlignmentDirectional(
-                                                            0.0, 1.0),
+                                                        AlignmentDirectional(
+                                                            0, 1),
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(16.0,
-                                                              0.0, 0.0, 16.0),
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  16, 0, 0, 16),
                                                       child: smooth_page_indicator
                                                           .SmoothPageIndicator(
                                                         controller: _model
                                                                 .pageViewController ??=
                                                             PageController(
                                                                 initialPage: 0),
-                                                        count: 5,
+                                                        count: matvare
+                                                            .imgUrls!.length,
                                                         axisDirection:
                                                             Axis.horizontal,
                                                         onDotClicked:
@@ -393,23 +516,22 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               .pageViewController!
                                                               .animateToPage(
                                                             i,
-                                                            duration:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        500),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    500),
                                                             curve: Curves.ease,
                                                           );
                                                           safeSetState(() {});
                                                         },
                                                         effect: smooth_page_indicator
                                                             .ExpandingDotsEffect(
-                                                          expansionFactor: 3.0,
-                                                          spacing: 8.0,
-                                                          radius: 16.0,
-                                                          dotWidth: 10.0,
-                                                          dotHeight: 8.0,
-                                                          dotColor: const Color(
-                                                              0xCC616161),
+                                                          expansionFactor: 3,
+                                                          spacing: 8,
+                                                          radius: 16,
+                                                          dotWidth: 10,
+                                                          dotHeight: 8,
+                                                          dotColor:
+                                                              Color(0xCC616161),
                                                           activeDotColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
@@ -435,15 +557,14 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              5.0, 0.0, 0.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 10.0, 30.0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 10, 30),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -454,8 +575,18 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       children: [
                                         ToggleIcon(
                                           onPressed: () async {
+                                            // Toggle the current like state
                                             safeSetState(() =>
                                                 _model.liker = !_model.liker!);
+                                            if (_model.liker!) {
+                                              apiLike.sendLike(
+                                                  Securestorage.authToken,
+                                                  matvare.matId);
+                                            } else {
+                                              apiLike.deleteLike(
+                                                  Securestorage.authToken,
+                                                  matvare.matId);
+                                            }
                                           },
                                           value: _model.liker!,
                                           onIcon: FaIcon(
@@ -480,28 +611,53 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                enableDrag: false,
-                                                context: context,
-                                                builder: (context) {
-                                                  return GestureDetector(
-                                                    onTap: () =>
-                                                        FocusScope.of(context)
-                                                            .unfocus(),
-                                                    child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
-                                                      child:
-                                                          const KartPopUpBondegardWidget(),
-                                                    ),
-                                                  );
-                                                },
-                                              ).then((value) =>
-                                                  safeSetState(() {}));
+                                              if (matvare.bonde == true) {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () =>
+                                                          FocusScope.of(context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            const KartPopUpBondegardWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              } else {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () =>
+                                                          FocusScope.of(context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            const KartPopUpWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              }
                                             },
                                             child: FaIcon(
                                               FontAwesomeIcons.mapMarkerAlt,
@@ -519,41 +675,37 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       children: [
                                         Material(
                                           color: Colors.transparent,
-                                          elevation: 4.0,
+                                          elevation: 4,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(24.0),
+                                                BorderRadius.circular(24),
                                           ),
                                           child: SafeArea(
                                             child: Container(
-                                              width: 120.0,
-                                              height: 40.0,
-                                              constraints: const BoxConstraints(
-                                                maxWidth: 174.0,
+                                              width: 120,
+                                              height: 40,
+                                              constraints: BoxConstraints(
+                                                maxWidth: 174,
                                               ),
                                               decoration: BoxDecoration(
                                                 gradient: LinearGradient(
                                                   colors: [
-                                                    const Color(0xFF10835F),
+                                                    Color(0xFF10835F),
                                                     FlutterFlowTheme.of(context)
                                                         .alternate
                                                   ],
-                                                  stops: const [0.0, 1.0],
-                                                  begin:
-                                                      const AlignmentDirectional(
-                                                          0.64, -1.0),
-                                                  end:
-                                                      const AlignmentDirectional(
-                                                          -0.64, 1.0),
+                                                  stops: [0, 1],
+                                                  begin: AlignmentDirectional(
+                                                      0.64, -1),
+                                                  end: AlignmentDirectional(
+                                                      -0.64, 1),
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(24.0),
+                                                    BorderRadius.circular(24),
                                               ),
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        10.0, 0.0, 10.0, 0.0),
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(10, 0, 10, 0),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -573,7 +725,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                   'Open Sans',
                                                               color:
                                                                   Colors.white,
-                                                              fontSize: 17.0,
+                                                              fontSize: 17,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -594,16 +746,15 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 8.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 8),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -615,7 +766,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Kantarell',
+                                                matvare.name ?? '',
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -623,7 +774,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-                                                          fontSize: 19.0,
+                                                          fontSize: 19,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -632,8 +783,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             ],
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 0.0, 5.0, 0.0),
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 5, 0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -642,7 +794,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Kr 284',
+                                                  '${matvare.price} Kr',
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -653,60 +805,64 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .alternate,
-                                                        fontSize: 23.0,
+                                                        fontSize: 23,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0.0, 0.0, 10.0, 0.0),
-                                                  child: Text(
-                                                    '/kg',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 23.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
+                                                if (matvare.kg == true)
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 10, 0),
+                                                    child: Text(
+                                                      '/kg',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            fontSize: 23,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0.0, 0.0, 10.0, 0.0),
-                                                  child: Text(
-                                                    '/stk',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 23.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
+                                                if (matvare.kg != true)
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 10, 0),
+                                                    child: Text(
+                                                      '/stk',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            fontSize: 23,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
                                                   ),
-                                                ),
                                               ],
                                             ),
                                           ),
@@ -714,9 +870,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 15.0, 0.0, 0.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 15, 0, 0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -726,16 +881,15 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
-                                              fontSize: 14.0,
+                                              fontSize: 14,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 10.0, 0.0, 5.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 10, 0, 5),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -744,59 +898,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                '1782',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        5.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'Halden',
-                                                  textAlign: TextAlign.start,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily: 'Open Sans',
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 14.0,
-                                            child: VerticalDivider(
-                                              thickness: 1.0,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                            ),
-                                          ),
-                                          Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Text(
-                                                '3',
+                                                '3 Km',
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -804,22 +909,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                              Text(
-                                                'Km',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
+                                                          fontSize: 14,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -830,119 +920,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
-                                                size: 19.0,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 15.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Informasjon',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 10.0, 0.0, 5.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                '70Kr',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                              Text(
-                                                '/Stk',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 14.0,
-                                            child: VerticalDivider(
-                                              thickness: 1.0,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                            ),
-                                          ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text(
-                                                '11',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                              Text(
-                                                ' Stk',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
+                                                size: 19,
                                               ),
                                             ],
                                           ),
@@ -950,19 +928,19 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ),
                                     ),
                                     Container(
-                                      width: 332.0,
-                                      height: 235.0,
-                                      decoration: const BoxDecoration(),
-                                      alignment:
-                                          const AlignmentDirectional(-1.0, 0.0),
+                                      width: 332,
+                                      height: 235,
+                                      decoration: BoxDecoration(),
+                                      alignment: AlignmentDirectional(-1, 0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 15.0, 0.0, 0.0),
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 15, 0, 0),
                                             child: Text(
                                               'Beskrivelse',
                                               style: FlutterFlowTheme.of(
@@ -973,24 +951,25 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
-                                                    fontSize: 14.0,
+                                                    fontSize: 14,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 10.0, 0.0, 0.0),
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 10, 0, 0),
                                             child: Text(
-                                              'En lang fin beskrivelse av varen',
+                                              matvare.description ?? '',
                                               textAlign: TextAlign.start,
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .titleSmall
                                                       .override(
                                                         fontFamily: 'Open Sans',
-                                                        fontSize: 14.0,
+                                                        fontSize: 14,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -1006,7 +985,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                             ],
                           ),
                         ),
-                      ].addToEnd(const SizedBox(height: 150.0)),
+                      ].addToEnd(SizedBox(height: 150)),
                     ),
                   ),
                 ),

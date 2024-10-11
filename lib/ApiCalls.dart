@@ -1077,6 +1077,7 @@ class ApiKjop {
                 : null, // Parse if exists
             hentet: orderData['hentet'], // Status of whether picked up
             godkjent: orderData['godkjent'], // Approval status
+            trekt: orderData['trekt'], // Approval status
             foodDetails: foodDetails, // Pass the Matvarer instance here
           );
         }).toList();
@@ -1137,10 +1138,10 @@ class ApiKjop {
                 : null, // Parse if exists
             hentet: orderData['hentet'], // Status of whether picked up
             godkjent: orderData['godkjent'], // Approval status
+            trekt: orderData['trekt'], // Approval status
             foodDetails: foodDetails, // Pass the Matvarer instance here
           );
         }).toList();
-
         return kjopOrders; // Return populated OrdreInfo list
       } else {
         return null; // Or throw an error
@@ -1150,6 +1151,78 @@ class ApiKjop {
     } catch (e) {
       return null; // Handle other errors
     }
+  }
+
+  Future<http.Response> svarBud({
+    required int id,
+    required bool godkjent,
+    required String token,
+  }) async {
+    // Base URL for the API
+    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+
+    // Create the user data as a Map
+    final Map<String, dynamic> userData = {
+      "id": id,
+      "godkjent": godkjent,
+    };
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(userData);
+
+    // Prepare URL with encoded parameters
+    final uri = Uri.parse('$baseUrl/ordre/update');
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    // Send the POST request
+    final response = await http.post(
+      uri, // Use the updated URI with query parameters
+      headers: headers,
+      body: jsonBody,
+    );
+    return response; // Return the response
+  }
+
+  Future<http.Response> hentMat({
+    required int id,
+    required bool hentet,
+    required String token,
+  }) async {
+    // Base URL for the API
+    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+
+    // Create the user data as a Map
+    final Map<String, dynamic> userData = {
+      "id": id,
+      "hentet": hentet,
+    };
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(userData);
+
+    // Prepare URL with encoded parameters
+    final uri = Uri.parse('$baseUrl/ordre/update');
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    // Send the POST request
+    final response = await http.post(
+      uri, // Use the updated URI with query parameters
+      headers: headers,
+      body: jsonBody,
+    );
+    return response; // Return the response
   }
 }
 
@@ -1164,6 +1237,7 @@ class OrdreInfo {
   final DateTime? godkjenttid;
   final bool? hentet;
   final bool? godkjent;
+  final bool? trekt;
   final Matvarer foodDetails; // Change this to Matvarer
 
   OrdreInfo({
@@ -1177,6 +1251,7 @@ class OrdreInfo {
     this.godkjenttid,
     required this.hentet,
     required this.godkjent,
+    required this.trekt,
     required this.foodDetails, // Pass food details to the constructor
   });
 }
