@@ -1,4 +1,5 @@
 import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -164,7 +165,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(200),
                                   child: Image.network(
-                                    matvare.profilepic ?? '',
+                                    '${ApiConstants.baseUrl}${salgInfo.kjoperProfilePic}',
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
@@ -500,7 +501,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                   child: Text(
-                    'Husk å be kjøperen bekrefte at \nmatvaren er hentet',
+                    'Husk å be kjøperen bekrefte at \nmatvaren er mottatt',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Open Sans',
                           letterSpacing: 0.0,

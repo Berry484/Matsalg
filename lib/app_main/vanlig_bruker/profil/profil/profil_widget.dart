@@ -1,3 +1,4 @@
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -326,8 +327,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     milliseconds:
                                                                         0),
                                                             imageUrl:
-                                                                FFAppState()
-                                                                    .profilepic,
+                                                                '${ApiConstants.baseUrl}${FFAppState().profilepic}',
                                                             fit: BoxFit.cover,
                                                             errorWidget: (context,
                                                                     error,
@@ -960,9 +960,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                             BorderRadius.circular(17),
                                                                         child: Image
                                                                             .network(
-                                                                          matvare
-                                                                              .imgUrls![0]
-                                                                              .toString(),
+                                                                          '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                                           width:
                                                                               200,
                                                                           height:
@@ -1355,10 +1353,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                             17),
                                                                     child: Image
                                                                         .network(
-                                                                      likesmatvare
-                                                                          .imgUrls![
-                                                                              0]
-                                                                          .toString(),
+                                                                      '${ApiConstants.baseUrl}${likesmatvare.imgUrls![0]}',
                                                                       width:
                                                                           200,
                                                                       height:

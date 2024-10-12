@@ -1079,6 +1079,7 @@ class ApiKjop {
             godkjent: orderData['godkjent'], // Approval status
             trekt: orderData['trekt'], // Approval status
             avvist: orderData['avvist'], // Approval status
+            kjoperProfilePic: orderData['user']['profilepic'] as String?,
             foodDetails: foodDetails, // Pass the Matvarer instance here
           );
         }).toList();
@@ -1141,6 +1142,7 @@ class ApiKjop {
             godkjent: orderData['godkjent'], // Approval status
             trekt: orderData['trekt'], // Approval status
             avvist: orderData['avvist'], // Approval status
+            kjoperProfilePic: orderData['user']['profilepic'] as String?,
             foodDetails: foodDetails, // Pass the Matvarer instance here
           );
         }).toList();
@@ -1264,6 +1266,149 @@ class ApiKjop {
     );
     return response; // Return the response
   }
+
+  Future<http.Response> trekk({
+    required int id,
+    required bool trekt,
+    required String token,
+  }) async {
+    // Base URL for the API
+    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+
+    // Create the user data as a Map
+    final Map<String, dynamic> userData = {
+      "id": id,
+      "trekt": trekt,
+    };
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(userData);
+
+    // Prepare URL with encoded parameters
+    final uri = Uri.parse('$baseUrl/ordre/update');
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    // Send the POST request
+    final response = await http.post(
+      uri, // Use the updated URI with query parameters
+      headers: headers,
+      body: jsonBody,
+    );
+    return response; // Return the response
+  }
+}
+
+class ApiGetFilterFood {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  static Future<List<Matvarer>?> getFilterFood(
+      String? token, String? kategorier) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      final response = await http
+          .get(
+            Uri.parse(
+                '$baseUrl/rrh/send/matvarer/filter?kategorier=$kategorier'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        // Decode the JSON response
+
+        final List<dynamic> jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
+        // Convert the JSON into a list of Matvarer objects
+        return Matvarer.matvarerFromSnapShot(jsonResponse);
+      } else {
+        // Handle unsuccessful response
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      // Handle any other errors that might occur
+      return null;
+    }
+  }
+
+  static Future<List<Matvarer>?> getBondeFood(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/send/matvarer/bonde'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        // Decode the JSON response
+
+        final List<dynamic> jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
+        // Convert the JSON into a list of Matvarer objects
+        return Matvarer.matvarerFromSnapShot(jsonResponse);
+      } else {
+        // Handle unsuccessful response
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      // Handle any other errors that might occur
+      return null;
+    }
+  }
+
+  static Future<List<Matvarer>?> getFolgerFood(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/send/matvarer/folger'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        // Decode the JSON response
+
+        final List<dynamic> jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
+        // Convert the JSON into a list of Matvarer objects
+        return Matvarer.matvarerFromSnapShot(jsonResponse);
+      } else {
+        // Handle unsuccessful response
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      // Handle any other errors that might occur
+      return null;
+    }
+  }
 }
 
 class OrdreInfo {
@@ -1279,6 +1424,7 @@ class OrdreInfo {
   final bool? godkjent;
   final bool? trekt;
   final bool? avvist;
+  final String? kjoperProfilePic;
   final Matvarer foodDetails; // Change this to Matvarer
 
   OrdreInfo({
@@ -1294,6 +1440,7 @@ class OrdreInfo {
     required this.godkjent,
     required this.trekt,
     required this.avvist,
+    required this.kjoperProfilePic,
     required this.foodDetails, // Pass food details to the constructor
   });
 }

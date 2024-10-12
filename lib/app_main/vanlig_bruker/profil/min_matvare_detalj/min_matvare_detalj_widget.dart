@@ -1,3 +1,4 @@
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
@@ -121,7 +122,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: Image.network(
-                                              matvare.profilepic ?? '',
+                                              '${ApiConstants.baseUrl}${matvare.profilepic}',
                                               fit: BoxFit.cover,
                                               errorBuilder:
                                                   (BuildContext context,
@@ -209,8 +210,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                         8.0),
                                                             child:
                                                                 Image.network(
-                                                              matvare
-                                                                  .imgUrls![0],
+                                                              '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                               width: double
                                                                   .infinity,
                                                               height: 380.0,
@@ -252,8 +252,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                           8.0),
                                                               child:
                                                                   Image.network(
-                                                                matvare
-                                                                    .imgUrls![1],
+                                                                '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
                                                                 width: double
                                                                     .infinity,
                                                                 height: 380.0,
@@ -296,8 +295,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                           8.0),
                                                               child:
                                                                   Image.network(
-                                                                matvare
-                                                                    .imgUrls![2],
+                                                                '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
                                                                 width: double
                                                                     .infinity,
                                                                 height: 380.0,
@@ -339,8 +337,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                           8.0),
                                                               child:
                                                                   Image.network(
-                                                                matvare
-                                                                    .imgUrls![3],
+                                                                '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
                                                                 width: double
                                                                     .infinity,
                                                                 height: 380.0,
@@ -383,8 +380,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                           8.0),
                                                               child:
                                                                   Image.network(
-                                                                matvare
-                                                                    .imgUrls![4],
+                                                                '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
                                                                 width: double
                                                                     .infinity,
                                                                 height: 380.0,
@@ -503,19 +499,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              context.pushNamed(
-                                                'LeggUtMatvare',
-                                                queryParameters: {
-                                                  'rediger': serializeParam(
-                                                    true,
-                                                    ParamType.bool,
-                                                  ),
-                                                }.withoutNulls,
-                                              );
-                                            },
+                                            onTap: () async {},
                                             child: FaIcon(
-                                              FontAwesomeIcons.solidEdit,
+                                              FontAwesomeIcons.solidHeart,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .alternate,
@@ -576,32 +562,14 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              await showDialog(
-                                                barrierDismissible: false,
-                                                context: context,
-                                                builder: (dialogContext) {
-                                                  return Dialog(
-                                                    elevation: 0,
-                                                    insetPadding:
-                                                        EdgeInsets.zero,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                                0.0, 0.0)
-                                                            .resolve(
-                                                                Directionality.of(
-                                                                    context)),
-                                                    child: GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(
-                                                                  dialogContext)
-                                                              .unfocus(),
-                                                      child:
-                                                          const MerkSolgtWidget(),
-                                                    ),
-                                                  );
-                                                },
+                                              context.pushNamed(
+                                                'LeggUtMatvare',
+                                                queryParameters: {
+                                                  'rediger': serializeParam(
+                                                    true,
+                                                    ParamType.bool,
+                                                  ),
+                                                }.withoutNulls,
                                               );
                                             },
                                             child: Material(
@@ -613,7 +581,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                               ),
                                               child: SafeArea(
                                                 child: Container(
-                                                  width: 150.0,
+                                                  width: 130.0,
                                                   height: 40.0,
                                                   constraints:
                                                       const BoxConstraints(
@@ -653,7 +621,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       children: [
                                                         Expanded(
                                                           child: Text(
-                                                            'Marker solgt',
+                                                            'Rediger',
                                                             textAlign: TextAlign
                                                                 .center,
                                                             style: FlutterFlowTheme

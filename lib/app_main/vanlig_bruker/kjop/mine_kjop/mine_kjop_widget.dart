@@ -1,4 +1,5 @@
 import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/bonde_gard/salg/godkjentebud/godkjentebud_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/budInfo/budInfo_widget.dart';
@@ -269,9 +270,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
-                                                        if (ordreInfo.hentet !=
-                                                                true &&
+                                                        if (ordreInfo.hentet != true &&
                                                             ordreInfo.avvist !=
+                                                                true &&
+                                                            ordreInfo.trekt !=
                                                                 true) {
                                                           await showModalBottomSheet(
                                                             isScrollControlled:
@@ -357,7 +359,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               BorderRadius.circular(6),
                                                                           child:
                                                                               Image.network(
-                                                                            ordreInfo.foodDetails.imgUrls![0],
+                                                                            '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
                                                                             width:
                                                                                 60,
                                                                             height:
@@ -871,7 +873,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               BorderRadius.circular(6),
                                                                           child:
                                                                               Image.network(
-                                                                            salgInfo.foodDetails.imgUrls![0],
+                                                                            '${ApiConstants.baseUrl}${salgInfo.foodDetails.imgUrls![0]}',
                                                                             width:
                                                                                 60,
                                                                             height:

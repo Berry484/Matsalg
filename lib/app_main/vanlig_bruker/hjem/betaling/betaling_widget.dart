@@ -1,4 +1,5 @@
 import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/matvarer.dart';
 
@@ -284,7 +285,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                               borderRadius:
                                                   BorderRadius.circular(6),
                                               child: Image.network(
-                                                matvare.imgUrls![0].toString(),
+                                                '${ApiConstants.baseUrl}${matvare.imgUrls![0].toString()}',
                                                 width: 80,
                                                 height: 80,
                                                 fit: BoxFit.cover,

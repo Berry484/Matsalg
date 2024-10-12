@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/Bonder.dart';
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
@@ -330,7 +331,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       0),
                                                           imageUrl: _isLoading
                                                               ? ''
-                                                              : bruker?.profilepic ??
+                                                              : '${ApiConstants.baseUrl}${bruker?.profilepic}' ??
                                                                   '',
                                                           fit: BoxFit.cover,
                                                           errorWidget: (context,
@@ -1189,10 +1190,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                             17),
                                                                     child: Image
                                                                         .network(
-                                                                      matvarer
-                                                                          .imgUrls![
-                                                                              0]
-                                                                          .toString(),
+                                                                      '${ApiConstants.baseUrl}${matvarer.imgUrls![0]}',
                                                                       width:
                                                                           200,
                                                                       height:
@@ -1479,8 +1477,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                           BorderRadius.circular(
                                                               13),
                                                       child: Image.network(
-                                                        matvarer.imgUrls![0]
-                                                            .toString(),
+                                                        '${ApiConstants.baseUrl}${matvarer.imgUrls![0]}',
                                                         width: 80,
                                                         height: 80,
                                                         fit: BoxFit.cover,

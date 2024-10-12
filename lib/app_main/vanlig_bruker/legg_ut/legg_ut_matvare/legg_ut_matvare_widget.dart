@@ -1259,9 +1259,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         String>(null),
                                                 options: const [
                                                   'kjøtt',
-                                                  'Grønnt',
+                                                  'Grønt',
                                                   'Meieri',
                                                   'Sjømat',
+                                                  'Drikke',
                                                   'Bakverk'
                                                 ],
                                                 width:

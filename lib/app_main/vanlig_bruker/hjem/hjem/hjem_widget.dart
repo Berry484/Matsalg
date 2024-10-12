@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:mat_salg/Bonder.dart';
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/app_main/vanlig_bruker/custom_nav_bar_user/home_nav_bar/home_nav_bar_widget.dart';
@@ -1395,7 +1396,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                           scrollDirection: Axis.vertical,
                                           itemCount: _isloading
                                               ? 1
-                                              : _matvarer?.length ?? 1,
+                                              : _matvarer?.length ?? 0,
                                           itemBuilder: (context, index) {
                                             if (_isloading) {
                                               return Shimmer.fromColors(
@@ -1502,10 +1503,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             17),
                                                                     child: Image
                                                                         .network(
-                                                                      matvare
-                                                                          .imgUrls![
-                                                                              0]
-                                                                          .toString(),
+                                                                      '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                                       width:
                                                                           200,
                                                                       height:

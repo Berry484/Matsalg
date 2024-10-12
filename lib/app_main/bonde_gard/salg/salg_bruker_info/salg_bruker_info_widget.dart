@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/bonde_gard/salg/avbryt_ikon/avbryt_ikon_widget.dart';
 import 'package:mat_salg/matvarer.dart';
@@ -134,7 +135,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               'BrukerPage',
                               queryParameters: {
                                 'username': serializeParam(
-                                  matvare.username,
+                                  salgInfo.kjoper,
                                   ParamType.String,
                                 ),
                                 'bruker': serializeParam(
@@ -154,17 +155,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(200),
                                   child: Image.network(
-                                    matvare.profilepic ?? '',
+                                    '${ApiConstants.baseUrl}${salgInfo.kjoperProfilePic}',
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
-                                    errorBuilder: (BuildContext context,
-                                        Object error, StackTrace? stackTrace) {
-                                      return Image.asset(
-                                        'assets/images/error_image.jpg', // Path to your local error image
-                                        fit: BoxFit.cover,
-                                      );
-                                    },
                                   ),
                                 ),
                               ),
@@ -172,7 +166,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(5, 0, 7, 0),
                                 child: Text(
-                                  matvare.username ?? '',
+                                  salgInfo.kjoper ?? '',
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall

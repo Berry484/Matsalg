@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/bonde_gard/salg/godkjent_ikon/godkjent_ikon_widget.dart';
 import 'package:mat_salg/matvarer.dart';
@@ -58,7 +59,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: 500,
-      height: 509,
+      height: 527,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondary,
         boxShadow: [
@@ -162,7 +163,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(13),
                                   child: Image.network(
-                                    ordreInfo.foodDetails.imgUrls![0],
+                                    '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
                                     width: 70,
                                     height: 70,
                                     fit: BoxFit.cover,
@@ -478,6 +479,87 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                       ),
                     ),
                   ),
+                if (ordreInfo.godkjent != true)
+                  Align(
+                    alignment: AlignmentDirectional(0, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 5, 0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CupertinoAlertDialog(
+                                title: Text("Bekreftelse"),
+                                content: Text(
+                                    "Er du sikker på at du ønsker å trekke budet ditt?"),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                    },
+                                    isDefaultAction: true,
+                                    child: const Text(
+                                      "Nei, avbryt",
+                                      style: TextStyle(
+                                          color: Colors
+                                              .red), // Red text for 'No' button
+                                    ),
+                                  ),
+                                  CupertinoDialogAction(
+                                    onPressed: () async {
+                                      String? token = Securestorage.authToken;
+                                      if (token != null) {
+                                        final response = await ApiKjop().trekk(
+                                            id: ordreInfo.id,
+                                            trekt: true,
+                                            token: token);
+                                        if (response.statusCode == 200) {
+                                          HapticFeedback.mediumImpact();
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        }
+                                      }
+                                    },
+                                    child: Text("Ja, bekreft"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        text: 'Trekk bud',
+                        icon: FaIcon(
+                          FontAwesomeIcons.times,
+                          color: FlutterFlowTheme.of(context).primary,
+                          size: 23,
+                        ),
+                        options: FFButtonOptions(
+                          width: 203,
+                          height: 40,
+                          padding: EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
+                          iconPadding:
+                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: FlutterFlowTheme.of(context).error,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    fontSize: 18,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                          elevation: 3,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                      ),
+                    ),
+                  ),
                 if (ordreInfo.godkjent == true)
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
@@ -589,7 +671,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                               }
                                             }
                                           },
-                                          child: Text("Ja, jeg bekrefter"),
+                                          child: Text("Ja, bekreft"),
                                         ),
                                       ],
                                     );

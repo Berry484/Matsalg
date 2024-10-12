@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/matvarer.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
@@ -200,7 +201,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: Image.network(
-                                              matvare.profilepic ?? '',
+                                              '${ApiConstants.baseUrl}${matvare.profilepic}',
                                               fit: BoxFit.cover,
                                               errorBuilder:
                                                   (BuildContext context,
@@ -334,8 +335,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                             8.0),
                                                                 child: Image
                                                                     .network(
-                                                                  matvare
-                                                                      .imgUrls![0],
+                                                                  '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                                   width: double
                                                                       .infinity,
                                                                   height: 380.0,
@@ -379,8 +379,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                               8.0),
                                                                   child: Image
                                                                       .network(
-                                                                    matvare
-                                                                        .imgUrls![1],
+                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
                                                                     width: double
                                                                         .infinity,
                                                                     height:
@@ -425,8 +424,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                               8.0),
                                                                   child: Image
                                                                       .network(
-                                                                    matvare
-                                                                        .imgUrls![2],
+                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
                                                                     width: double
                                                                         .infinity,
                                                                     height:
@@ -469,8 +467,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                               8.0),
                                                                   child: Image
                                                                       .network(
-                                                                    matvare
-                                                                        .imgUrls![3],
+                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
                                                                     width: double
                                                                         .infinity,
                                                                     height:
@@ -515,8 +512,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                               8.0),
                                                                   child: Image
                                                                       .network(
-                                                                    matvare
-                                                                        .imgUrls![4],
+                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
                                                                     width: double
                                                                         .infinity,
                                                                     height:
@@ -1497,8 +1493,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           BorderRadius.circular(
                                                               17),
                                                       child: Image.network(
-                                                        nyematvarer.imgUrls![0]
-                                                            .toString(),
+                                                        '${ApiConstants.baseUrl}${nyematvarer.imgUrls![0]}',
                                                         width: 200,
                                                         height: 229,
                                                         fit: BoxFit.cover,
