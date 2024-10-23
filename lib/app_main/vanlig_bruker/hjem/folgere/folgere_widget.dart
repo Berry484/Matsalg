@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
@@ -202,7 +203,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                               borderRadius:
                                                   BorderRadius.circular(100.0),
                                               child: Image.network(
-                                                brukere.profilepic ?? '',
+                                                '${ApiConstants.baseUrl}${brukere.profilepic}',
                                                 width: 60.0,
                                                 height: 60.0,
                                                 fit: BoxFit.cover,

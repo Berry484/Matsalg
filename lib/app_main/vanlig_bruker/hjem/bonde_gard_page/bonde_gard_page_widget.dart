@@ -30,6 +30,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
   late BondeGardPageModel _model;
 
   List<Matvarer>? _matvarer;
+  List<Matvarer>? _allmatvarer;
   bool _isloading = true;
   final Securestorage securestorage = Securestorage();
   final ApiGetFilterFood apiGetFilterFood = ApiGetFilterFood();
@@ -47,6 +48,47 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
   }
 
+void _runFilter(String enteredKeyword) {
+  List<Matvarer>? results = [];
+
+  if (enteredKeyword.isEmpty) {
+    // Reset to full list if no search term
+    results = _allmatvarer;
+  } else {
+    // Filter and sort by best match
+    results = _allmatvarer?.where((matvare) {
+      // Check if the name contains the entered keyword
+      return matvare.name!.toLowerCase().contains(enteredKeyword.toLowerCase());
+    }).toList();
+
+    // Sort the results based on match quality
+    results?.sort((a, b) {
+      String keyword = enteredKeyword.toLowerCase();
+
+      // Check for exact matches (case-insensitive)
+      bool aExactMatch = a.name!.toLowerCase() == keyword;
+      bool bExactMatch = b.name!.toLowerCase() == keyword;
+
+      if (aExactMatch && !bExactMatch) return -1;
+      if (bExactMatch && !aExactMatch) return 1;
+
+      // Check if the keyword is at the start of the name
+      bool aStartsWith = a.name!.toLowerCase().startsWith(keyword);
+      bool bStartsWith = b.name!.toLowerCase().startsWith(keyword);
+
+      if (aStartsWith && !bStartsWith) return -1;
+      if (bStartsWith && !aStartsWith) return 1;
+
+      // Otherwise, fall back to regular string comparison for alphabetical order
+      return a.name!.toLowerCase().compareTo(b.name!.toLowerCase());
+    });
+  }
+
+  // Update the UI with the filtered and sorted results
+  setState(() {
+    _matvarer = results;
+  });
+}
   Future<void> getFilterFoods() async {
     String? token = await Securestorage().readToken();
     if (token == null) {
@@ -55,7 +97,8 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
       return;
     } else {
       if (widget.kategori?.toLowerCase() == 'gårder') {
-        _matvarer = await ApiGetFilterFood.getBondeFood(token);
+        _allmatvarer = await ApiGetFilterFood.getBondeFood(token);
+        _matvarer = _allmatvarer;
         setState(() {
           if (_matvarer != null && _matvarer!.isEmpty) {
             return;
@@ -66,7 +109,8 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         return;
       }
       if (widget.kategori?.toLowerCase() == 'følger') {
-        _matvarer = await ApiGetFilterFood.getFolgerFood(token);
+        _allmatvarer = await ApiGetFilterFood.getFolgerFood(token);
+        _matvarer = _allmatvarer;
         setState(() {
           if (_matvarer != null && _matvarer!.isEmpty) {
             return;
@@ -76,8 +120,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         });
         return;
       } else {
-        _matvarer =
+        _allmatvarer =
             await ApiGetFilterFood.getFilterFood(token, widget.kategori);
+        _matvarer = _allmatvarer;
         setState(() {
           if (_matvarer != null && _matvarer!.isEmpty) {
             return;
@@ -106,6 +151,18 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primary,
+          floatingActionButton:           FloatingActionButton(
+          onPressed: () {
+            print('FloatingActionButton pressed ...');
+          },
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          elevation: 8,
+          child: FaIcon(
+            FontAwesomeIcons.sortAmountDown,
+            color: FlutterFlowTheme.of(context).alternate,
+            size: 25,
+          ),
+        ),
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme:
@@ -185,6 +242,8 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                     _model.textFieldFocusNode,
                                                 autofocus: false,
                                                 obscureText: false,
+                                                onChanged: (value) => _runFilter(value),
+                                                textInputAction: TextInputAction.search,  // Add this line to
                                                 decoration: InputDecoration(
                                                   isDense: true,
                                                   alignLabelWithHint: false,
@@ -257,14 +316,14 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                 ),
                                                 style: FlutterFlowTheme.of(
                                                         context)
-                                                    .bodyMedium
+                                                    .bodyLarge
                                                     .override(
                                                       fontFamily: 'Open Sans',
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .secondaryText,
-                                                      fontSize: 13.0,
+                                                              .primaryText,
+                                                      fontSize: 15.0,
                                                       letterSpacing: 0.0,
                                                     ),
                                                 textAlign: TextAlign.start,
@@ -645,44 +704,44 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(13),
                       ),
-                      child: Container(
-                        width: 125,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primary,
-                          borderRadius: BorderRadius.circular(13),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 3, 0),
-                              child: FaIcon(
-                                FontAwesomeIcons.sortAmountDownAlt,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 25,
-                              ),
-                            ),
-                            VerticalDivider(
-                              thickness: 1.5,
-                              indent: 15,
-                              endIndent: 15,
-                              color: Color(0x8557636C),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(3, 0, 0, 0),
-                              child: FaIcon(
-                                FontAwesomeIcons.slidersH,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 25,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // child: Container(
+                      //   width: 125,
+                      //   height: 52,
+                      //   decoration: BoxDecoration(
+                      //     color: FlutterFlowTheme.of(context).primary,
+                      //     borderRadius: BorderRadius.circular(13),
+                      //   ),
+                      //   child: Row(
+                      //     mainAxisSize: MainAxisSize.max,
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       Padding(
+                      //         padding:
+                      //             EdgeInsetsDirectional.fromSTEB(0, 0, 3, 0),
+                      //         child: FaIcon(
+                      //           FontAwesomeIcons.sortAmountDownAlt,
+                      //           color: FlutterFlowTheme.of(context).primaryText,
+                      //           size: 25,
+                      //         ),
+                      //       ),
+                      //       VerticalDivider(
+                      //         thickness: 1.5,
+                      //         indent: 15,
+                      //         endIndent: 15,
+                      //         color: Color(0x8557636C),
+                      //       ),
+                      //       Padding(
+                      //         padding:
+                      //             EdgeInsetsDirectional.fromSTEB(3, 0, 0, 0),
+                      //         child: FaIcon(
+                      //           FontAwesomeIcons.slidersH,
+                      //           color: FlutterFlowTheme.of(context).primaryText,
+                      //           size: 25,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ),
                   ),
                 ),

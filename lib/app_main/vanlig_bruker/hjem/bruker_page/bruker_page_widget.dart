@@ -114,6 +114,16 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
     }
   }
 
+    Future<void> unFolg() async {
+      await apiFolg.unfolgBruker(Securestorage.authToken, bruker?.username);
+      safeSetState(() {tellFolgere();});
+  }
+
+      Future<void> folgBruker() async {
+      await apiFolg.folgbruker(Securestorage.authToken, bruker?.username);
+      safeSetState(() {tellFolgere();});
+  }
+
   Future<void> getUserFood() async {
     String? token = await Securestorage().readToken();
     if (token == null) {
@@ -591,13 +601,13 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           .mediumImpact();
                                                                       _model.folger =
                                                                           false;
-                                                                      safeSetState(
-                                                                          () {});
-                                                                      apiFolg.unfolgBruker(
-                                                                          Securestorage
-                                                                              .authToken,
-                                                                          bruker
-                                                                              ?.username);
+                                                                          // apiFolg.unfolgBruker(
+                                                                          // Securestorage
+                                                                          //     .authToken,
+                                                                          // bruker
+                                                                          //     ?.username);
+                                                                              safeSetState(() {});
+                                                                              unFolg();
                                                                     },
                                                                     text:
                                                                         'Følger',
@@ -652,13 +662,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           .mediumImpact();
                                                                       _model.folger =
                                                                           true;
-                                                                      safeSetState(
-                                                                          () {});
-                                                                      apiFolg.folgbruker(
-                                                                          Securestorage
-                                                                              .authToken,
-                                                                          bruker
-                                                                              ?.username);
+                                                                              safeSetState(() {});
+                                                                              folgBruker();
                                                                     },
                                                                     text:
                                                                         'Følg',

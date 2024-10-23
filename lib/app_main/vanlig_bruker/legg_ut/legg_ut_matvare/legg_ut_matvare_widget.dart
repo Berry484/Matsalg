@@ -2655,167 +2655,167 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               ),
                                             ],
                                           ),
-                                          const Divider(
-                                            thickness: 1.0,
-                                            indent: 30.0,
-                                            endIndent: 30.0,
-                                            color: Color(0x62757575),
-                                          ),
-                                          if (responsiveVisibility(
-                                            context: context,
-                                            tablet: false,
-                                          ))
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      0.0, 20.0, 0.0, 20.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(20.0,
-                                                              50.0, 0.0, 10.0),
-                                                      child: Text(
-                                                        'Ta betalt igjennom appen?',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
-                                                                  fontSize:
-                                                                      17.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(20.0,
-                                                              0.0, 0.0, 10.0),
-                                                      child: Text(
-                                                        'Ta betalt i appen for å hjelpe å holde matsalg.no oppe.\nPengene vi tjener går til å dekke serverkostnader',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize:
-                                                                      13.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(20.0,
-                                                                0.0, 0.0, 0.0),
-                                                        child: Text(
-                                                          'Jeg ønsker å ta betalt igjennom appen',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                      Theme(
-                                                        data: ThemeData(
-                                                          checkboxTheme:
-                                                              CheckboxThemeData(
-                                                            visualDensity:
-                                                                VisualDensity
-                                                                    .compact,
-                                                            materialTapTargetSize:
-                                                                MaterialTapTargetSize
-                                                                    .shrinkWrap,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          4.0),
-                                                            ),
-                                                          ),
-                                                          unselectedWidgetColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .alternate,
-                                                        ),
-                                                        child: Checkbox(
-                                                          value: _model
-                                                                  .checkboxValue ??=
-                                                              false,
-                                                          onChanged:
-                                                              (newValue) async {
-                                                            safeSetState(() =>
-                                                                _model.checkboxValue =
-                                                                    newValue!);
-                                                          },
-                                                          side: BorderSide(
-                                                            width: 2,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .alternate,
-                                                          ),
-                                                          activeColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primary,
-                                                          checkColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .alternate,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                          // const Divider(
+                                          //   thickness: 1.0,
+                                          //   indent: 30.0,
+                                          //   endIndent: 30.0,
+                                          //   color: Color(0x62757575),
+                                          // ),
+                                          // if (responsiveVisibility(
+                                          //   context: context,
+                                          //   tablet: false,
+                                          // ))
+                                            // Padding(
+                                            //   padding:
+                                            //       const EdgeInsetsDirectional
+                                            //           .fromSTEB(
+                                            //           0.0, 20.0, 0.0, 20.0),
+                                            //   child: Column(
+                                            //     mainAxisSize: MainAxisSize.max,
+                                            //     children: [
+                                            //       Align(
+                                            //         alignment:
+                                            //             const AlignmentDirectional(
+                                            //                 -1.0, 0.0),
+                                            //         child: Padding(
+                                            //           padding:
+                                            //               const EdgeInsetsDirectional
+                                            //                   .fromSTEB(20.0,
+                                            //                   50.0, 0.0, 10.0),
+                                            //           child: Text(
+                                            //             'Ta betalt igjennom appen?',
+                                            //             style:
+                                            //                 FlutterFlowTheme.of(
+                                            //                         context)
+                                            //                     .bodyMedium
+                                            //                     .override(
+                                            //                       fontFamily:
+                                            //                           'Open Sans',
+                                            //                       color: FlutterFlowTheme.of(
+                                            //                               context)
+                                            //                           .alternate,
+                                            //                       fontSize:
+                                            //                           17.0,
+                                            //                       letterSpacing:
+                                            //                           0.0,
+                                            //                       fontWeight:
+                                            //                           FontWeight
+                                            //                               .bold,
+                                            //                     ),
+                                            //           ),
+                                            //         ),
+                                            //       ),
+                                            //       Align(
+                                            //         alignment:
+                                            //             const AlignmentDirectional(
+                                            //                 -1.0, 0.0),
+                                            //         child: Padding(
+                                            //           padding:
+                                            //               const EdgeInsetsDirectional
+                                            //                   .fromSTEB(20.0,
+                                            //                   0.0, 0.0, 10.0),
+                                            //           child: Text(
+                                            //             'Ta betalt i appen for å hjelpe å holde matsalg.no oppe.\nPengene vi tjener går til å dekke serverkostnader',
+                                            //             style:
+                                            //                 FlutterFlowTheme.of(
+                                            //                         context)
+                                            //                     .bodyMedium
+                                            //                     .override(
+                                            //                       fontFamily:
+                                            //                           'Open Sans',
+                                            //                       color: FlutterFlowTheme.of(
+                                            //                               context)
+                                            //                           .primaryText,
+                                            //                       fontSize:
+                                            //                           13.0,
+                                            //                       letterSpacing:
+                                            //                           0.0,
+                                            //                       fontWeight:
+                                            //                           FontWeight
+                                            //                               .w500,
+                                            //                     ),
+                                            //           ),
+                                            //         ),
+                                            //       ),
+                                            //       Row(
+                                            //         mainAxisSize:
+                                            //             MainAxisSize.max,
+                                            //         children: [
+                                            //           Padding(
+                                            //             padding:
+                                            //                 const EdgeInsetsDirectional
+                                            //                     .fromSTEB(20.0,
+                                            //                     0.0, 0.0, 0.0),
+                                            //             child: Text(
+                                            //               'Jeg ønsker å ta betalt igjennom appen',
+                                            //               style: FlutterFlowTheme
+                                            //                       .of(context)
+                                            //                   .bodyMedium
+                                            //                   .override(
+                                            //                     fontFamily:
+                                            //                         'Open Sans',
+                                            //                     letterSpacing:
+                                            //                         0.0,
+                                            //                     fontWeight:
+                                            //                         FontWeight
+                                            //                             .bold,
+                                            //                   ),
+                                            //             ),
+                                            //           ),
+                                            //           Theme(
+                                            //             data: ThemeData(
+                                            //               checkboxTheme:
+                                            //                   CheckboxThemeData(
+                                            //                 visualDensity:
+                                            //                     VisualDensity
+                                            //                         .compact,
+                                            //                 materialTapTargetSize:
+                                            //                     MaterialTapTargetSize
+                                            //                         .shrinkWrap,
+                                            //                 shape:
+                                            //                     RoundedRectangleBorder(
+                                            //                   borderRadius:
+                                            //                       BorderRadius
+                                            //                           .circular(
+                                            //                               4.0),
+                                            //                 ),
+                                            //               ),
+                                            //               unselectedWidgetColor:
+                                            //                   FlutterFlowTheme.of(
+                                            //                           context)
+                                            //                       .alternate,
+                                            //             ),
+                                            //             child: Checkbox(
+                                            //               value: _model
+                                            //                       .checkboxValue ??=
+                                            //                   false,
+                                            //               onChanged:
+                                            //                   (newValue) async {
+                                            //                 safeSetState(() =>
+                                            //                     _model.checkboxValue =
+                                            //                         newValue!);
+                                            //               },
+                                            //               side: BorderSide(
+                                            //                 width: 2,
+                                            //                 color: FlutterFlowTheme
+                                            //                         .of(context)
+                                            //                     .alternate,
+                                            //               ),
+                                            //               activeColor:
+                                            //                   FlutterFlowTheme.of(
+                                            //                           context)
+                                            //                       .primary,
+                                            //               checkColor:
+                                            //                   FlutterFlowTheme.of(
+                                            //                           context)
+                                            //                       .alternate,
+                                            //             ),
+                                            //           ),
+                                            //         ],
+                                            //       ),
+                                            //     ],
+                                            //   ),
+                                            // ),
                                           if (_model.checkboxValue == true)
                                             Align(
                                               alignment:
@@ -2894,7 +2894,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 padding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                        0.0, 24.0, 0.0, 0.0),
+                                                        0.0, 70.0, 0.0, 0.0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
                                                     if (_model.formKey
