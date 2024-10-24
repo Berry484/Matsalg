@@ -1437,6 +1437,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
+                                                        FocusScope.of(context)
+                                                            .requestFocus(
+                                                                FocusNode());
                                                         context.pushNamed(
                                                           'MatDetaljBondegard',
                                                           queryParameters: {

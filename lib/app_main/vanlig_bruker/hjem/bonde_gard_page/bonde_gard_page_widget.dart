@@ -1,14 +1,13 @@
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/sorter/sorter_widget.dart';
 import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'bonde_gard_page_model.dart';
@@ -31,7 +30,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
 
   List<Matvarer>? _matvarer;
   List<Matvarer>? _allmatvarer;
+  List<Matvarer>? _allSokmatvarer;
   bool _isloading = true;
+  int sorterVerdi = 1;
   final Securestorage securestorage = Securestorage();
   final ApiGetFilterFood apiGetFilterFood = ApiGetFilterFood();
 
@@ -48,47 +49,70 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
   }
 
-void _runFilter(String enteredKeyword) {
-  List<Matvarer>? results = [];
+  void _runFilter(String enteredKeyword) {
+    // If no keyword is entered, reset _matvarer to the full list
+    if (enteredKeyword.isEmpty) {
+      _matvarer = List.from(_allmatvarer as Iterable);
+      _allSokmatvarer =
+          List.from(_allmatvarer as Iterable); // Keep original unsorted list
+    } else {
+      // If a keyword is entered, filter the _allmatvarer list
+      List<Matvarer> filteredResults = _allmatvarer!.where((matvare) {
+        // Check if the name contains the entered keyword
+        return matvare.name!
+            .toLowerCase()
+            .contains(enteredKeyword.toLowerCase());
+      }).toList();
 
-  if (enteredKeyword.isEmpty) {
-    // Reset to full list if no search term
-    results = _allmatvarer;
-  } else {
-    // Filter and sort by best match
-    results = _allmatvarer?.where((matvare) {
-      // Check if the name contains the entered keyword
-      return matvare.name!.toLowerCase().contains(enteredKeyword.toLowerCase());
-    }).toList();
+      // Store the unsorted search results in _allSokmatvarer
+      _allSokmatvarer =
+          List.from(filteredResults); // Keep the filtered results unsorted
 
-    // Sort the results based on match quality
-    results?.sort((a, b) {
-      String keyword = enteredKeyword.toLowerCase();
+      // Now sort the filtered results based on match quality
+      filteredResults.sort((a, b) {
+        String keyword = enteredKeyword.toLowerCase();
 
-      // Check for exact matches (case-insensitive)
-      bool aExactMatch = a.name!.toLowerCase() == keyword;
-      bool bExactMatch = b.name!.toLowerCase() == keyword;
+        // Check for exact matches (case-insensitive)
+        bool aExactMatch = a.name!.toLowerCase() == keyword;
+        bool bExactMatch = b.name!.toLowerCase() == keyword;
 
-      if (aExactMatch && !bExactMatch) return -1;
-      if (bExactMatch && !aExactMatch) return 1;
+        if (aExactMatch && !bExactMatch) return -1;
+        if (bExactMatch && !aExactMatch) return 1;
 
-      // Check if the keyword is at the start of the name
-      bool aStartsWith = a.name!.toLowerCase().startsWith(keyword);
-      bool bStartsWith = b.name!.toLowerCase().startsWith(keyword);
+        // Check if the keyword is at the start of the name
+        bool aStartsWith = a.name!.toLowerCase().startsWith(keyword);
+        bool bStartsWith = b.name!.toLowerCase().startsWith(keyword);
 
-      if (aStartsWith && !bStartsWith) return -1;
-      if (bStartsWith && !aStartsWith) return 1;
+        if (aStartsWith && !bStartsWith) return -1;
+        if (bStartsWith && !aStartsWith) return 1;
 
-      // Otherwise, fall back to regular string comparison for alphabetical order
-      return a.name!.toLowerCase().compareTo(b.name!.toLowerCase());
-    });
+        // Otherwise, fall back to regular string comparison for alphabetical order
+        return a.name!.toLowerCase().compareTo(b.name!.toLowerCase());
+      });
+
+      // Assign the sorted results to _matvarer
+      _matvarer = filteredResults;
+    }
+
+    // Apply sorting based on the selected sorterVerdi
+    if (sorterVerdi == 2) {
+      // Sort low to high
+      _matvarer!.sort((a, b) {
+        return (a.price ?? double.infinity)
+            .compareTo(b.price ?? double.infinity);
+      });
+    } else if (sorterVerdi == 3) {
+      // Sort high to low
+      _matvarer!.sort((a, b) {
+        return (b.price ?? double.negativeInfinity)
+            .compareTo(a.price ?? double.negativeInfinity);
+      });
+    }
+
+    // Update the UI
+    setState(() {});
   }
 
-  // Update the UI with the filtered and sorted results
-  setState(() {
-    _matvarer = results;
-  });
-}
   Future<void> getFilterFoods() async {
     String? token = await Securestorage().readToken();
     if (token == null) {
@@ -99,6 +123,7 @@ void _runFilter(String enteredKeyword) {
       if (widget.kategori?.toLowerCase() == 'gårder') {
         _allmatvarer = await ApiGetFilterFood.getBondeFood(token);
         _matvarer = _allmatvarer;
+        _allSokmatvarer = _allmatvarer;
         setState(() {
           if (_matvarer != null && _matvarer!.isEmpty) {
             return;
@@ -111,6 +136,7 @@ void _runFilter(String enteredKeyword) {
       if (widget.kategori?.toLowerCase() == 'følger') {
         _allmatvarer = await ApiGetFilterFood.getFolgerFood(token);
         _matvarer = _allmatvarer;
+        _allSokmatvarer = _allmatvarer;
         setState(() {
           if (_matvarer != null && _matvarer!.isEmpty) {
             return;
@@ -123,6 +149,7 @@ void _runFilter(String enteredKeyword) {
         _allmatvarer =
             await ApiGetFilterFood.getFilterFood(token, widget.kategori);
         _matvarer = _allmatvarer;
+        _allSokmatvarer = _allmatvarer;
         setState(() {
           if (_matvarer != null && _matvarer!.isEmpty) {
             return;
@@ -151,18 +178,58 @@ void _runFilter(String enteredKeyword) {
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primary,
-          floatingActionButton:           FloatingActionButton(
-          onPressed: () {
-            print('FloatingActionButton pressed ...');
-          },
-          backgroundColor: FlutterFlowTheme.of(context).primary,
-          elevation: 8,
-          child: FaIcon(
-            FontAwesomeIcons.sortAmountDown,
-            color: FlutterFlowTheme.of(context).alternate,
-            size: 25,
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              FocusScope.of(context).requestFocus(FocusNode());
+              final selectedValue = await showModalBottomSheet<List<String>>(
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                context: context,
+                builder: (context) {
+                  return GestureDetector(
+                    onTap: () => FocusScope.of(context).unfocus(),
+                    child: Padding(
+                      padding: MediaQuery.viewInsetsOf(context),
+                      child: SorterWidget(
+                        sorterVerdi: sorterVerdi,
+                      ),
+                    ),
+                  );
+                },
+              );
+
+              if (selectedValue != null && selectedValue.isNotEmpty) {
+                final String selectedOption = selectedValue.first;
+
+                safeSetState(() {
+                  if (selectedOption == 'Pris: lav til høy') {
+                    sorterVerdi = 2;
+                    _matvarer!.sort((a, b) {
+                      return (a.price ?? double.infinity)
+                          .compareTo(b.price ?? double.infinity);
+                    });
+                  } else if (selectedOption == 'Pris: høy til lav') {
+                    sorterVerdi = 3;
+                    _matvarer!.sort((a, b) {
+                      return (b.price ?? double.negativeInfinity)
+                          .compareTo(a.price ?? double.negativeInfinity);
+                    });
+                  } else {
+                    sorterVerdi = 1; // Reset to original
+                    _matvarer = List.from(
+                        _allSokmatvarer as Iterable); // Reset to original copy
+                  }
+                });
+              }
+            },
+            backgroundColor: FlutterFlowTheme.of(context).primary,
+            elevation: 8,
+            child: FaIcon(
+              FontAwesomeIcons.sortAmountDown,
+              color: FlutterFlowTheme.of(context).alternate,
+              size: 25,
+            ),
           ),
-        ),
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme:
@@ -242,8 +309,10 @@ void _runFilter(String enteredKeyword) {
                                                     _model.textFieldFocusNode,
                                                 autofocus: false,
                                                 obscureText: false,
-                                                onChanged: (value) => _runFilter(value),
-                                                textInputAction: TextInputAction.search,  // Add this line to
+                                                onChanged: (value) =>
+                                                    _runFilter(value),
+                                                textInputAction: TextInputAction
+                                                    .search, // Add this line to
                                                 decoration: InputDecoration(
                                                   isDense: true,
                                                   alignLabelWithHint: false,
@@ -425,6 +494,9 @@ void _runFilter(String enteredKeyword) {
                                                         highlightColor:
                                                             Colors.transparent,
                                                         onTap: () async {
+                                                          FocusScope.of(context)
+                                                              .requestFocus(
+                                                                  FocusNode());
                                                           context.pushNamed(
                                                             'MatDetaljBondegard',
                                                             queryParameters: {
