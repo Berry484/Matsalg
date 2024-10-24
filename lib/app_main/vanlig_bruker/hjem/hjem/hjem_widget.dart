@@ -114,12 +114,16 @@ class _HjemWidgetState extends State<HjemWidget> {
         if (response.statusCode == 200) {
           final decodedResponse = jsonDecode(response.body);
           userInfo = decodedResponse; // Update userInfo with fetched data
+          FFAppState().brukerLat = decodedResponse['lat'] ?? 59.9138688;
+          FFAppState().brukerLng = decodedResponse['lng'] ?? 10.7522454;
           FFAppState().brukernavn = decodedResponse['brukernavn'] ?? '';
           FFAppState().firstname = decodedResponse['firstname'] ?? '';
           FFAppState().lastname = decodedResponse['lastname'] ?? '';
           FFAppState().brukernavn = decodedResponse['username'] ?? '';
           FFAppState().bio = decodedResponse['bio'] ?? '';
           FFAppState().profilepic = decodedResponse['profilepic'] ?? '';
+          print(
+              'Dette er koordinatene   ${FFAppState().brukerLat}, ${FFAppState().brukerLng}');
         }
         if (response.statusCode == 401 ||
             response.statusCode == 404 ||
@@ -381,170 +385,6 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       .asValidator(context),
                                                 ),
                                               ),
-                                              // Row(
-                                              //   mainAxisSize: MainAxisSize.max,
-                                              //   children: [
-                                              //     Align(
-                                              //       alignment:
-                                              //           const AlignmentDirectional(
-                                              //               -1.0, 0.0),
-                                              //       child: Padding(
-                                              //         padding:
-                                              //             const EdgeInsetsDirectional
-                                              //                 .fromSTEB(10.0,
-                                              //                 0.0, 10.0, 0.0),
-                                              //         child:
-                                              //             FlutterFlowDropDown<
-                                              //                 String>(
-                                              //           controller: _model
-                                              //                   .dropDownValueController ??=
-                                              //               FormFieldController<
-                                              //                   String>(null),
-                                              //           options: const [
-                                              //             'Pris - lav høy',
-                                              //             'Pris - høy lav',
-                                              //             'Avstand - lav høy'
-                                              //           ],
-                                              //           onChanged: (val) async {
-                                              //             safeSetState(() =>
-                                              //                 _model.dropDownValue =
-                                              //                     val);
-                                              //             if (_model
-                                              //                     .dropDownValue ==
-                                              //                 'Pris') {
-                                              //               return;
-                                              //             }
-                                              //             if (_model
-                                              //                     .dropDownValue ==
-                                              //                 'Avstand') {
-                                              //               return;
-                                              //             }
-                                              //             safeSetState(() {
-                                              //               _model
-                                              //                   .dropDownValueController
-                                              //                   ?.reset();
-                                              //             });
-                                              //           },
-                                              //           width: 70.0,
-                                              //           height: 35.0,
-                                              //           textStyle:
-                                              //               FlutterFlowTheme.of(
-                                              //                       context)
-                                              //                   .bodyMedium
-                                              //                   .override(
-                                              //                     fontFamily:
-                                              //                         'Open Sans',
-                                              //                     color: FlutterFlowTheme.of(
-                                              //                             context)
-                                              //                         .alternate,
-                                              //                     fontSize:
-                                              //                         14.0,
-                                              //                     letterSpacing:
-                                              //                         0.0,
-                                              //                     fontWeight:
-                                              //                         FontWeight
-                                              //                             .bold,
-                                              //                   ),
-                                              //           hintText: 'Sorter',
-                                              //           icon: FaIcon(
-                                              //             FontAwesomeIcons
-                                              //                 .arrowsAltV,
-                                              //             color: FlutterFlowTheme
-                                              //                     .of(context)
-                                              //                 .alternate,
-                                              //             size: 17.0,
-                                              //           ),
-                                              //           fillColor:
-                                              //               FlutterFlowTheme.of(
-                                              //                       context)
-                                              //                   .primary,
-                                              //           elevation: 4.0,
-                                              //           borderColor:
-                                              //               const Color(
-                                              //                   0x6357636C),
-                                              //           borderWidth: 1.0,
-                                              //           borderRadius: 8.0,
-                                              //           margin:
-                                              //               const EdgeInsetsDirectional
-                                              //                   .fromSTEB(7.0,
-                                              //                   4.0, 5.0, 4.0),
-                                              //           hidesUnderline: true,
-                                              //           isOverButton: false,
-                                              //           isSearchable: false,
-                                              //           isMultiSelect: false,
-                                              //         ),
-                                              //       ),
-                                              //     ),
-                                              //     Align(
-                                              //       alignment:
-                                              //           const AlignmentDirectional(
-                                              //               -1.0, 0.0),
-                                              //       child: Builder(
-                                              //         builder: (context) =>
-                                              //             FlutterFlowIconButton(
-                                              //           borderColor:
-                                              //               const Color(
-                                              //                   0x6357636C),
-                                              //           borderRadius: 8.0,
-                                              //           borderWidth: 1.0,
-                                              //           buttonSize: 35.0,
-                                              //           fillColor:
-                                              //               FlutterFlowTheme.of(
-                                              //                       context)
-                                              //                   .primary,
-                                              //           icon: FaIcon(
-                                              //             FontAwesomeIcons
-                                              //                 .slidersH,
-                                              //             color: FlutterFlowTheme
-                                              //                     .of(context)
-                                              //                 .alternate,
-                                              //             size: 20.0,
-                                              //           ),
-                                              //           onPressed: () async {
-                                              //             FFAppState()
-                                              //                 .kjopAlert = true;
-                                              //             FFAppState()
-                                              //                 .chatAlert = true;
-                                              //             safeSetState(() {});
-                                              //             await showDialog(
-                                              //               barrierColor:
-                                              //                   const Color(
-                                              //                       0x1A000000),
-                                              //               context: context,
-                                              //               builder:
-                                              //                   (dialogContext) {
-                                              //                 return Dialog(
-                                              //                   elevation: 0,
-                                              //                   insetPadding:
-                                              //                       EdgeInsets
-                                              //                           .zero,
-                                              //                   backgroundColor:
-                                              //                       Colors
-                                              //                           .transparent,
-                                              //                   alignment: const AlignmentDirectional(
-                                              //                           1.0,
-                                              //                           -0.8)
-                                              //                       .resolve(
-                                              //                           Directionality.of(
-                                              //                               context)),
-                                              //                   child:
-                                              //                       GestureDetector(
-                                              //                     onTap: () =>
-                                              //                         FocusScope.of(
-                                              //                                 dialogContext)
-                                              //                             .unfocus(),
-                                              //                     child:
-                                              //                         const FiltrerSokWidget(),
-                                              //                   ),
-                                              //                 );
-                                              //               },
-                                              //             );
-                                              //           },
-                                              //         ),
-                                              //       ),
-                                              //     ),
-                                              //   ],
-                                              // ),
                                             ],
                                           ),
                                         ),

@@ -8,7 +8,14 @@ import 'kart_pop_up_model.dart';
 export 'kart_pop_up_model.dart';
 
 class KartPopUpWidget extends StatefulWidget {
-  const KartPopUpWidget({super.key});
+  const KartPopUpWidget({
+    super.key,
+    this.startLat,
+    this.startLng,
+  });
+
+  final dynamic startLat;
+  final dynamic startLng;
 
   @override
   State<KartPopUpWidget> createState() => _KartPopUpWidgetState();
@@ -71,14 +78,15 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
               Align(
                 alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 12.0, 0.0),
                         child: FlutterFlowIconButton(
                           borderColor: Colors.transparent,
                           borderRadius: 30.0,
@@ -129,7 +137,8 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
                   child: custom_widgets.MyOsmKart(
                     width: 500.0,
                     height: 450.0,
-                    center: functions.doubletillatlon(58.940090, 11.634092)!,
+                    center: functions.doubletillatlon(
+                        widget.startLat, widget.startLng)!,
                   ),
                 ),
               ),

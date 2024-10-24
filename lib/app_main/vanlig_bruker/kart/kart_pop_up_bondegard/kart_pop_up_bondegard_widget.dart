@@ -8,7 +8,14 @@ import 'kart_pop_up_bondegard_model.dart';
 export 'kart_pop_up_bondegard_model.dart';
 
 class KartPopUpBondegardWidget extends StatefulWidget {
-  const KartPopUpBondegardWidget({super.key});
+  const KartPopUpBondegardWidget({
+    super.key,
+    this.startLat,
+    this.startLng,
+  });
+
+  final dynamic startLat;
+  final dynamic startLng;
 
   @override
   State<KartPopUpBondegardWidget> createState() =>
@@ -72,14 +79,15 @@ class _KartPopUpBondegardWidgetState extends State<KartPopUpBondegardWidget> {
               Align(
                 alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 12.0, 0.0),
                         child: FlutterFlowIconButton(
                           borderColor: Colors.transparent,
                           borderRadius: 30.0,
@@ -130,8 +138,10 @@ class _KartPopUpBondegardWidgetState extends State<KartPopUpBondegardWidget> {
                   child: custom_widgets.MyOsmKartBedrift(
                     width: 500.0,
                     height: 450.0,
-                    center: functions.doubletillatlon(58.940090, 11.634092)!,
-                    matsted: functions.doubletillatlon(58.940090, 11.634092)!,
+                    center: functions.doubletillatlon(
+                        widget.startLat, widget.startLng)!,
+                    matsted: functions.doubletillatlon(
+                        widget.startLat, widget.startLng)!,
                   ),
                 ),
               ),

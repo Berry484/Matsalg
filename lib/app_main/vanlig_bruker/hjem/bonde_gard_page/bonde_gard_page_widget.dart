@@ -216,8 +216,8 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                     });
                   } else {
                     sorterVerdi = 1; // Reset to original
-                    _matvarer = List.from(
-                        _allSokmatvarer as Iterable); // Reset to original copy
+                    _runFilter(_model.textController.text);
+                    _matvarer = List.from(_allSokmatvarer as Iterable);
                   }
                 });
               }

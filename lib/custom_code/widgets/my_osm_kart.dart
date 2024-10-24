@@ -30,8 +30,8 @@ class MyOsmKart extends StatefulWidget {
 
 class _MyOsmKartState extends State<MyOsmKart> {
   MapController mapController = MapController();
-  double baseRadiusMeters = 1500; // Base radius in meters (represents 1 km)
-  double zoomLevel = 14.5; // Initial zoom level
+  double baseRadiusMeters = 2500; // Base radius in meters (represents 1 km)
+  double zoomLevel = 12.5; // Initial zoom level
 
   @override
   void initState() {

@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'mat_detalj_bondegard_model.dart';
 export 'mat_detalj_bondegard_model.dart';
+import 'dart:math';
 
 class MatDetaljBondegardWidget extends StatefulWidget {
   const MatDetaljBondegardWidget({
@@ -73,6 +74,24 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         }
       });
     }
+  }
+
+// Haversine formula to calculate distance between two lat/lng points
+  double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
+    const earthRadius = 6371.0; // Earth's radius in kilometers
+    double dLat = _degreesToRadians(lat2 - lat1);
+    double dLng = _degreesToRadians(lng2 - lng1);
+    double a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(_degreesToRadians(lat1)) *
+            cos(_degreesToRadians(lat2)) *
+            sin(dLng / 2) *
+            sin(dLng / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    return earthRadius * c;
+  }
+
+  double _degreesToRadians(double degrees) {
+    return degrees * pi / 180;
   }
 
   Future<void> sjekkFolger() async {
@@ -676,6 +695,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
+                                              double startLat =
+                                                  matvare.lat ?? 59.9138688;
+                                              double startLng =
+                                                  matvare.lng ?? 10.7522454;
                                               if (matvare.bonde == true) {
                                                 await showModalBottomSheet(
                                                   isScrollControlled: true,
@@ -693,7 +716,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                             .viewInsetsOf(
                                                                 context),
                                                         child:
-                                                            const KartPopUpBondegardWidget(),
+                                                            KartPopUpBondegardWidget(
+                                                          startLat: startLat,
+                                                          startLng: startLng,
+                                                        ),
                                                       ),
                                                     );
                                                   },
@@ -715,8 +741,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         padding: MediaQuery
                                                             .viewInsetsOf(
                                                                 context),
-                                                        child:
-                                                            const KartPopUpWidget(),
+                                                        child: KartPopUpWidget(
+                                                          startLat: startLat,
+                                                          startLng: startLng,
+                                                        ),
                                                       ),
                                                     );
                                                   },
@@ -1174,7 +1202,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Text(
-                                                '3',
+                                                // Directly calculate the distance using the provided latitude and longitude
+                                                '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(2)} Km', // Display the distance rounded to 2 decimal places
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -1187,26 +1216,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        5.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'Km',
-                                                  textAlign: TextAlign.start,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily: 'Open Sans',
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
                                               ),
                                               Icon(
                                                 Icons.place,

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
@@ -17,6 +19,12 @@ class FFAppState extends ChangeNotifier {
 
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
+    _safeInit(() {
+      _brukerLat = prefs.getDouble('ff_brukerLat') ?? _brukerLat;
+    });
+    _safeInit(() {
+      _brukerLng = prefs.getDouble('ff_brukerLng') ?? _brukerLng;
+    });
     _safeInit(() {
       _login = prefs.getBool('ff_login') ?? _login;
     });
@@ -66,10 +74,22 @@ class FFAppState extends ChangeNotifier {
     _startet = value;
   }
 
-  LatLng? _brukersted = const LatLng(40.7127753, -74.0059728);
+  LatLng? _brukersted = const LatLng(59.9138688, 10.7522454);
   LatLng? get brukersted => _brukersted;
   set brukersted(LatLng? value) {
     _brukersted = value;
+  }
+
+  double? _brukerLat = 59.9138688;
+  double? get brukerLat => _brukerLat;
+  set brukerLat(double? value) {
+    _brukerLat = value;
+  }
+
+  double? _brukerLng = 10.7522454;
+  double? get brukerLng => _brukerLng;
+  set brukerLng(double? value) {
+    _brukerLng = value;
   }
 
   String _brukernavn = " ";

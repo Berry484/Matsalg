@@ -40,7 +40,7 @@ class _MyOsmKartBedriftState extends State<MyOsmKartBedrift> {
           center: MyOsmKartBedriftLatLng.LatLng(
               widget.center.latitude, widget.center.longitude),
           interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-          zoom: 16,
+          zoom: 12.5,
           minZoom: 6,
           maxZoom: 18),
       children: [
@@ -54,10 +54,10 @@ class _MyOsmKartBedriftState extends State<MyOsmKartBedrift> {
             height: 100.0,
             point: MyOsmKartBedriftLatLng.LatLng(
                 widget.matsted.latitude, widget.matsted.longitude),
-            builder: (ctx) => const Icon(
+            builder: (ctx) => Icon(
               Icons.location_pin,
-              color: Colors.redAccent, // Set the icon color to redAccent
-              size: 34,
+              color: FlutterFlowTheme.of(context).alternate,
+              size: 50,
             ),
           )
         ]),
