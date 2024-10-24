@@ -1203,7 +1203,19 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             children: [
                                               Text(
                                                 // Directly calculate the distance using the provided latitude and longitude
-                                                '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(2)} Km', // Display the distance rounded to 2 decimal places
+                                                (calculateDistance(
+                                                            FFAppState()
+                                                                    .brukerLat ??
+                                                                0.0,
+                                                            FFAppState()
+                                                                    .brukerLng ??
+                                                                0.0,
+                                                            matvare.lat ?? 0.0,
+                                                            matvare.lng ??
+                                                                0.0) <
+                                                        1)
+                                                    ? '>1 Km'
+                                                    : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)

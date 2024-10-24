@@ -1,3 +1,6 @@
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -34,6 +37,8 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng? currentUserLocationValue;
   LatLng? selectedLocation; // State variable to store selected location
+  final ApiUserSQL apiUserSQL = ApiUserSQL();
+  final Securestorage securestorage = Securestorage();
 
   @override
   void initState() {
@@ -43,7 +48,9 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
-    selectedLocation = functions.doubletillatlon(59.913868, 10.752245);
+    selectedLocation = functions.doubletillatlon(
+        FFAppState().brukerLat ?? 59.9138688,
+        FFAppState().brukerLng ?? 10.7522454)!;
   }
 
   @override
@@ -128,9 +135,11 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                 width: 500.0,
                                 height: double.infinity,
                                 center: functions.doubletillatlon(
-                                    59.12681775541445, 11.386219119466823)!,
+                                    FFAppState().brukerLat ?? 59.9138688,
+                                    FFAppState().brukerLng ?? 10.7522454)!,
                                 matsted: functions.doubletillatlon(
-                                    59.12681775541445, 11.386219119466823)!,
+                                    FFAppState().brukerLat ?? 59.9138688,
+                                    FFAppState().brukerLng ?? 10.7522454)!,
                                 onLocationChanged: (newLocation) {
                                   setState(() {
                                     selectedLocation = newLocation;
@@ -251,7 +260,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
                                     LatLng? location;
-                                    // Print the selected location
+
                                     getCurrentUserLocation(
                                         defaultLocation:
                                             const LatLng(0.0, 0.0));
@@ -335,12 +344,26 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     LatLng? location;
-                                    // Print the selected location
                                     if (currentUserLocationValue != null) {
                                       selectedLocation = location;
                                     }
                                     if (selectedLocation != null) {
                                       location = selectedLocation;
+                                      FFAppState().brukerLat =
+                                          location?.latitude;
+                                      FFAppState().brukerLng =
+                                          location?.longitude;
+                                      String? token =
+                                          await Securestorage().readToken();
+                                      if (token == null) {
+                                        FFAppState().login = false;
+                                        context.pushNamed('registrer');
+                                        return;
+                                      } else {
+                                        final apiUserSQL = ApiUserSQL();
+                                        final response = await apiUserSQL
+                                            .updatePosisjon(token: token);
+                                      }
                                     }
                                     if (widget.endrepos == false) {
                                       context.pushNamed(
@@ -369,7 +392,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         }.withoutNulls,
                                       );
                                     } else {
-                                      context.goNamed('Hjem');
+                                      context.pushNamed('Hjem');
                                     }
                                   },
                                   text: 'Velg denne posisjonen',

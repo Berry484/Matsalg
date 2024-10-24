@@ -19,6 +19,7 @@ import 'package:provider/provider.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:mat_salg/SecureStorage.dart';
+import 'dart:math';
 import 'hjem_model.dart';
 export 'hjem_model.dart';
 
@@ -73,6 +74,10 @@ class _HjemWidgetState extends State<HjemWidget> {
       context.pushNamed('registrer');
       return;
     } else {
+      if (FFAppState().brukerLat == 59.9138688 ||
+          FFAppState().brukerLng == 10.7522454) {
+        await fetchData();
+      }
       _matvarer = await ApiGetAllFoods.getAllFoods(token);
       setState(() {
         if (_matvarer != null && _matvarer!.isEmpty) {
@@ -122,8 +127,6 @@ class _HjemWidgetState extends State<HjemWidget> {
           FFAppState().brukernavn = decodedResponse['username'] ?? '';
           FFAppState().bio = decodedResponse['bio'] ?? '';
           FFAppState().profilepic = decodedResponse['profilepic'] ?? '';
-          print(
-              'Dette er koordinatene   ${FFAppState().brukerLat}, ${FFAppState().brukerLng}');
         }
         if (response.statusCode == 401 ||
             response.statusCode == 404 ||
@@ -153,6 +156,24 @@ class _HjemWidgetState extends State<HjemWidget> {
         },
       );
     }
+  }
+
+  // Haversine formula to calculate distance between two lat/lng points
+  double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
+    const earthRadius = 6371.0; // Earth's radius in kilometers
+    double dLat = _degreesToRadians(lat2 - lat1);
+    double dLng = _degreesToRadians(lng2 - lng1);
+    double a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(_degreesToRadians(lat1)) *
+            cos(_degreesToRadians(lat2)) *
+            sin(dLng / 2) *
+            sin(dLng / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    return earthRadius * c;
+  }
+
+  double _degreesToRadians(double degrees) {
+    return degrees * pi / 180;
   }
 
   @override
@@ -1509,7 +1530,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                   Padding(
                                                                                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                     child: Text(
-                                                                                      '(3Km)',
+                                                                                      // Directly calculate the distance using the provided latitude and longitude
+                                                                                      (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '>1 Km' : '(${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km)',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',

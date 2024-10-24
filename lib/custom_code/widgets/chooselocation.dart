@@ -12,6 +12,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as ChooselocationLatLng;
 import 'package:flutter_map/plugin_api.dart';
 import '/flutter_flow/flutter_flow_widgets.dart'; // Add any missing imports if necessary
+import 'dart:math' as math;
 
 class Chooselocation extends StatefulWidget {
   const Chooselocation({
@@ -35,6 +36,8 @@ class Chooselocation extends StatefulWidget {
 
 class _ChooselocationState extends State<Chooselocation> {
   MapController mapController = MapController();
+  double baseRadiusMeters = 80000; // Base radius in meters (represents 1 km)
+  double zoomLevel = 8; // Initial zoom level
 
   // Store the current center of the map
   ChooselocationLatLng.LatLng? currentCenter;
@@ -47,6 +50,16 @@ class _ChooselocationState extends State<Chooselocation> {
       widget.center.latitude,
       widget.center.longitude,
     );
+    mapController.mapEventStream.listen((event) {
+      if (event is MapEvent) {
+        setState(() {
+          zoomLevel =
+              mapController.zoom; // Update the zoom level from the controller
+        });
+      }
+    });
+    // Force initial rendering of the circle
+    setState(() {});
   }
 
   @override
@@ -60,7 +73,7 @@ class _ChooselocationState extends State<Chooselocation> {
               center: currentCenter,
               interactiveFlags:
                   InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-              zoom: 12,
+              zoom: zoomLevel,
               minZoom: 6,
               maxZoom: 18,
               onPositionChanged: (position, hasGesture) {
@@ -85,30 +98,102 @@ class _ChooselocationState extends State<Chooselocation> {
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                 userAgentPackageName: 'com.example.app',
               ),
-              // Marker Layer
-              MarkerLayer(
-                markers: [
-                  Marker(
-                    width: 50.0,
-                    height: 50.0,
-                    point: currentCenter ?? ChooselocationLatLng.LatLng(0, 0),
-                    builder: (ctx) => GestureDetector(
-                      onTap: () {
-                        // Add any action when the marker is tapped
-                      },
-                      child: Icon(
-                        Icons.location_pin,
-                        color: FlutterFlowTheme.of(context).alternate,
-                        size: 56,
-                      ),
+              MarkerLayer(markers: [
+                Marker(
+                  width: 100.0,
+                  height: 100.0,
+                  point: currentCenter ??
+                      ChooselocationLatLng.LatLng(
+                          widget.center.latitude, widget.center.longitude),
+                  builder: (ctx) => Icon(
+                    Icons.location_pin,
+                    color: FlutterFlowTheme.of(context).alternate,
+                    size: 50,
+                  ),
+                ),
+                Marker(
+                  width:
+                      _calculateCircleSize(), // Dynamic width of the marker widget
+                  height:
+                      _calculateCircleSize(), // Dynamic height of the marker widget
+                  point: currentCenter ??
+                      ChooselocationLatLng.LatLng(
+                          widget.center.latitude, widget.center.longitude),
+                  builder: (ctx) => CustomPaint(
+                    size: Size(
+                      _calculateCircleSize(),
+                      _calculateCircleSize(),
+                    ), // Dynamic size based on zoom
+                    painter: CirclePainter(
+                      radius:
+                          _calculateCircleRadius(), // Pass the radius to the painter
                     ),
                   ),
-                ],
-              ),
+                ),
+              ]),
             ],
           ),
         ],
       ),
     );
+  }
+
+  // Calculate the pixel size of the circle based on the zoom level
+  double _calculateCircleSize() {
+    // Convert the radius in meters to a pixel size
+    double scale = _metersToPixels(baseRadiusMeters, zoomLevel);
+    return scale;
+  }
+
+  // Calculate the radius for drawing the circle
+  double _calculateCircleRadius() {
+    double radiusInPixels = _calculateCircleSize() / 2;
+    return radiusInPixels;
+  }
+
+  // Convert meters to pixels based on zoom level
+  double _metersToPixels(double meters, double zoom) {
+    // Conversion factor for meters to pixels at zoom level 0
+    const double metersPerPixelAtZoomLevel0 = 156543.03392804097;
+    double metersPerPixel = metersPerPixelAtZoomLevel0 / math.pow(2, zoom);
+    return meters / metersPerPixel;
+  }
+}
+
+class CirclePainter extends CustomPainter {
+  CirclePainter({required this.radius});
+
+  final double radius;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color =
+          Colors.redAccent.withOpacity(0.3) // Circle color with transparency
+      ..style = PaintingStyle.fill;
+
+    // Draw the circle in the center of the CustomPaint widget
+    canvas.drawCircle(
+      Offset(size.width / 2, size.height / 2),
+      radius, // Radius in pixels
+      paint,
+    );
+
+    final Paint borderPaint = Paint()
+      ..color = Colors.red // Border color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2; // Border stroke width
+
+    // Draw the circle border
+    canvas.drawCircle(
+      Offset(size.width / 2, size.height / 2),
+      radius,
+      borderPaint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }

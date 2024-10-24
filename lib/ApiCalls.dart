@@ -158,6 +158,36 @@ class ApiUserSQL {
 
     return response; // Return the response
   }
+
+  Future<http.Response> updatePosisjon({
+    String? token, // Add token parameter
+  }) async {
+    // Create the user info data as a Map
+    final Map<String, dynamic> userInfoData = {
+      "lat": FFAppState().brukerLat,
+      "lng": FFAppState().brukerLng,
+    };
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(userInfoData);
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    // Send the POST request
+    final response = await http.post(
+      Uri.parse(
+          '$baseUrl/rrh/brukere'), // Endpoint for creating or updating user info
+      headers: headers,
+      body: jsonBody,
+    );
+
+    return response; // Return the response
+  }
 }
 
 class ApiGetToken {
@@ -394,7 +424,8 @@ class ApiGetAllFoods {
       // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse('$baseUrl/rrh/send/matvarer'),
+            Uri.parse(
+                '$baseUrl/rrh/send/matvarer?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -433,7 +464,8 @@ class ApiGetMyFoods {
       // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse('$baseUrl/rrh/send/matvarer/mine'),
+            Uri.parse(
+                '$baseUrl/rrh/send/matvarer/mine?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -558,7 +590,8 @@ class ApiGetUserFood {
       // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse('$baseUrl/rrh/send/matvarer/mine?username=${username}'),
+            Uri.parse(
+                '$baseUrl/rrh/send/matvarer/mine?username=${username}?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -1318,14 +1351,12 @@ class ApiGetFilterFood {
       final response = await http
           .get(
             Uri.parse(
-                '$baseUrl/rrh/send/matvarer/filter?kategorier=$kategorier'),
+                '$baseUrl/rrh/send/matvarer/filter?kategorier=${kategorier}&userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
       // Check if the response is successful (status code 200)
       if (response.statusCode == 200) {
-        // Decode the JSON response
-
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
         // Convert the JSON into a list of Matvarer objects
@@ -1352,7 +1383,8 @@ class ApiGetFilterFood {
       // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse('$baseUrl/rrh/send/matvarer/bonde'),
+            Uri.parse(
+                '$baseUrl/rrh/send/matvarer/bonde?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -1386,7 +1418,8 @@ class ApiGetFilterFood {
       // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse('$baseUrl/rrh/send/matvarer/folger'),
+            Uri.parse(
+                '$baseUrl/rrh/send/matvarer/folger?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
