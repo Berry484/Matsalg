@@ -60,122 +60,106 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 500.0,
-      height: 607.0,
-      decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).primary,
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 4.0,
-            color: Color(0x25090F13),
-            offset: Offset(
-              0.0,
-              2.0,
+    return GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Container(
+          width: 500.0,
+          height: 607.0,
+          decoration: BoxDecoration(
+            color: FlutterFlowTheme.of(context).primary,
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 4.0,
+                color: Color(0x25090F13),
+                offset: Offset(
+                  0.0,
+                  2.0,
+                ),
+              )
+            ],
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(0.0),
+              bottomRight: Radius.circular(0.0),
+              topLeft: Radius.circular(12.0),
+              topRight: Radius.circular(12.0),
             ),
-          )
-        ],
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(0.0),
-          bottomRight: Radius.circular(0.0),
-          topLeft: Radius.circular(12.0),
-          topRight: Radius.circular(12.0),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 0.0, 12.0, 0.0),
-                    child: FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30.0,
-                      borderWidth: 1.0,
-                      buttonSize: 44.0,
-                      icon: Icon(
-                        Icons.close_sharp,
-                        color: FlutterFlowTheme.of(context).alternate,
-                        size: 24.0,
-                      ),
-                      onPressed: () async {
-                        context.safePop();
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Endre tilgjengelig antall',
-                          style: FlutterFlowTheme.of(context)
-                              .headlineSmall
-                              .override(
-                                fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 25.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Divider(
-              height: 24.0,
-              thickness: 2.0,
-              color: FlutterFlowTheme.of(context).primaryBackground,
-            ),
-            Column(
+          ),
+          child: Padding(
+            padding:
+                const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
+            child: Column(
               mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      0.0, 40.0, 0.0, 20.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 5.0, 0.0),
-                        child: Text(
-                          'Nåverende antall:',
-                          textAlign: TextAlign.end,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 20.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            0.0, 0.0, 12.0, 0.0),
+                        child: FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 30.0,
+                          borderWidth: 1.0,
+                          buttonSize: 44.0,
+                          icon: Icon(
+                            Icons.close_sharp,
+                            color: FlutterFlowTheme.of(context).alternate,
+                            size: 24.0,
+                          ),
+                          onPressed: () async {
+                            context.safePop();
+                          },
                         ),
                       ),
-                      Row(
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Endre tilgjengelig antall',
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineSmall
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontSize: 25.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  height: 24.0,
+                  thickness: 2.0,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 40.0, 0.0, 20.0),
+                      child: Row(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 12.0, 0.0, 0.0),
+                                0.0, 0.0, 5.0, 0.0),
                             child: Text(
-                              widget.antall ?? '0',
+                              'Nåverende antall:',
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -189,238 +173,266 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                                   ),
                             ),
                           ),
-                          Stack(
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
                             children: [
-                              if (widget.kg == true)
-                                Align(
-                                  alignment:
-                                      const AlignmentDirectional(0.7, 0.86),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 0.0),
-                                    child: Text(
-                                      ' Kg',
-                                      textAlign: TextAlign.end,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 20.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                  ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 0.0, 0.0),
+                                child: Text(
+                                  widget.antall ?? '0',
+                                  textAlign: TextAlign.end,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 20.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
-                              if (widget.kg != true)
-                                Align(
-                                  alignment:
-                                      const AlignmentDirectional(0.7, 0.86),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 0.0),
-                                    child: Text(
-                                      ' Stk',
-                                      textAlign: TextAlign.end,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 20.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                              ),
+                              Stack(
+                                children: [
+                                  if (widget.kg == true)
+                                    Align(
+                                      alignment:
+                                          const AlignmentDirectional(0.7, 0.86),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0.0, 12.0, 0.0, 0.0),
+                                        child: Text(
+                                          ' Kg',
+                                          textAlign: TextAlign.end,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 20.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                  if (widget.kg != true)
+                                    Align(
+                                      alignment:
+                                          const AlignmentDirectional(0.7, 0.86),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0.0, 12.0, 0.0, 0.0),
+                                        child: Text(
+                                          ' Stk',
+                                          textAlign: TextAlign.end,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 20.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      0.0, 20.0, 0.0, 50.0),
-                  child: SizedBox(
-                    width: 250.0,
-                    child: TextFormField(
-                      controller: _model.textController,
-                      focusNode: _model.textFieldFocusNode,
-                      autofocus: false,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        labelText: 'Endre antall',
-                        labelStyle:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  fontFamily: 'Open Sans',
-                                  letterSpacing: 0.0,
-                                ),
-                        hintText: 'Skriv inn nye antall...',
-                        hintStyle:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  fontFamily: 'Open Sans',
-                                  letterSpacing: 0.0,
-                                ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).alternate,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).error,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).error,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        filled: true,
-                        fillColor: FlutterFlowTheme.of(context).primary,
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Open Sans',
-                            fontSize: 17.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                      textAlign: TextAlign.start,
-                      cursorColor: FlutterFlowTheme.of(context).primaryText,
-                      validator:
-                          _model.textControllerValidator.asValidator(context),
                     ),
-                  ),
-                ),
-                const Divider(
-                  thickness: 1.0,
-                  indent: 30.0,
-                  endIndent: 30.0,
-                  color: Color(0x5514AF26),
-                ),
-                Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 25.0, 5.0, 0.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        String? token = await Securestorage().readToken();
-                        if (token == null) {
-                          FFAppState().login = false;
-                          context.pushNamed('registrer');
-                          return;
-                        } else {
-                          ApiUpdateFood apiUpdateFood = ApiUpdateFood();
-                          final response = await apiUpdateFood.updateAntall(
-                              token: token,
-                              id: widget.id,
-                              antall: _model.textController.text);
-                          if (response.statusCode == 200) {
-                            setState(() {
-                              context.pushNamed(
-                                'Profil',
-                              );
-                            });
-                          } else {}
-                          setState(() {});
-                        }
-                      },
-                      text: 'Bekreft',
-                      icon: FaIcon(
-                        FontAwesomeIcons.check,
-                        color: FlutterFlowTheme.of(context).primary,
-                        size: 25.0,
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 20.0, 0.0, 50.0),
+                      child: SizedBox(
+                        width: 250.0,
+                        child: TextFormField(
+                          controller: _model.textController,
+                          focusNode: _model.textFieldFocusNode,
+                          autofocus: false,
+                          obscureText: false,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          decoration: InputDecoration(
+                            isDense: true,
+                            labelText: 'Endre antall',
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  letterSpacing: 0.0,
+                                ),
+                            hintText: 'Skriv inn nye antall...',
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  letterSpacing: 0.0,
+                                ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).alternate,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            filled: true,
+                            fillColor: FlutterFlowTheme.of(context).primary,
+                          ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Open Sans',
+                                    fontSize: 17.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                          textAlign: TextAlign.start,
+                          cursorColor: FlutterFlowTheme.of(context).primaryText,
+                          validator: _model.textControllerValidator
+                              .asValidator(context),
+                        ),
                       ),
-                      options: FFButtonOptions(
-                        width: 200.0,
-                        height: 45.0,
+                    ),
+                    const Divider(
+                      thickness: 1.0,
+                      indent: 30.0,
+                      endIndent: 30.0,
+                      color: Color(0x5514AF26),
+                    ),
+                    Align(
+                      alignment: const AlignmentDirectional(0.0, 0.0),
+                      child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
-                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).alternate,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
+                            0.0, 25.0, 5.0, 0.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            String? token = await Securestorage().readToken();
+                            if (token == null) {
+                              FFAppState().login = false;
+                              context.pushNamed('registrer');
+                              return;
+                            } else {
+                              ApiUpdateFood apiUpdateFood = ApiUpdateFood();
+                              final response = await apiUpdateFood.updateAntall(
+                                  token: token,
+                                  id: widget.id,
+                                  antall: _model.textController.text);
+                              if (response.statusCode == 200) {
+                                setState(() {
+                                  context.pushNamed(
+                                    'Profil',
+                                  );
+                                });
+                              } else {}
+                              setState(() {});
+                            }
+                          },
+                          text: 'Bekreft',
+                          icon: FaIcon(
+                            FontAwesomeIcons.check,
+                            color: FlutterFlowTheme.of(context).primary,
+                            size: 25.0,
+                          ),
+                          options: FFButtonOptions(
+                            width: 200.0,
+                            height: 45.0,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).alternate,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
                                   fontFamily: 'Open Sans',
                                   color: FlutterFlowTheme.of(context).primary,
                                   fontSize: 18.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
-                        elevation: 3.0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
+                            elevation: 3.0,
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(24.0),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(24.0),
                       ),
                     ),
-                  ),
-                ),
-                Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 15.0, 5.0, 0.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        context.pop();
-                      },
-                      text: 'Avbryt',
-                      options: FFButtonOptions(
-                        width: 200.0,
-                        height: 45.0,
+                    Align(
+                      alignment: const AlignmentDirectional(0.0, 0.0),
+                      child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            11.0, 0.0, 0.0, 0.0),
-                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).error,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
+                            0.0, 15.0, 5.0, 0.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            context.pop();
+                          },
+                          text: 'Avbryt',
+                          options: FFButtonOptions(
+                            width: 200.0,
+                            height: 45.0,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                11.0, 0.0, 0.0, 0.0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).error,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
                                   fontFamily: 'Open Sans',
                                   color: FlutterFlowTheme.of(context).primary,
                                   fontSize: 17.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
-                        elevation: 3.0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
+                            elevation: 3.0,
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(24.0),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(24.0),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

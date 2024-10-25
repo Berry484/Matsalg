@@ -583,19 +583,31 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                     .transparent,
                                                             context: context,
                                                             builder: (context) {
-                                                              return Padding(
-                                                                padding: MediaQuery
-                                                                    .viewInsetsOf(
-                                                                        context),
-                                                                child:
-                                                                    RedigerAntall2Widget(
-                                                                  id: matvare
-                                                                      .matId,
-                                                                  antall: matvare
-                                                                      .antall
-                                                                      .toString(),
-                                                                  kg: matvare
-                                                                      .kg,
+                                                              return SizedBox(
+                                                                height:
+                                                                    610.0, // Lock the height to 610 pixels
+                                                                child: Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .only(
+                                                                    bottom: MediaQuery.of(
+                                                                            context)
+                                                                        .viewInsets
+                                                                        .bottom, // Add padding for the keyboard
+                                                                  ),
+                                                                  child:
+                                                                      SingleChildScrollView(
+                                                                    child:
+                                                                        RedigerAntall2Widget(
+                                                                      id: matvare
+                                                                          .matId,
+                                                                      antall: matvare
+                                                                          .antall
+                                                                          .toString(),
+                                                                      kg: matvare
+                                                                          .kg,
+                                                                    ),
+                                                                  ),
                                                                 ),
                                                               );
                                                             },
