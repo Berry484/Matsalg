@@ -36,8 +36,8 @@ class Chooselocation extends StatefulWidget {
 
 class _ChooselocationState extends State<Chooselocation> {
   MapController mapController = MapController();
-  double baseRadiusMeters = 80000; // Base radius in meters (represents 1 km)
-  double zoomLevel = 8; // Initial zoom level
+  double baseRadiusMeters = 345000; // Base radius in meters (represents 1 km)
+  double zoomLevel = 9; // Initial zoom level
 
   // Store the current center of the map
   ChooselocationLatLng.LatLng? currentCenter;
@@ -67,6 +67,7 @@ class _ChooselocationState extends State<Chooselocation> {
     return Scaffold(
       body: Stack(
         children: [
+          // FlutterMap widget remains interactive
           FlutterMap(
             mapController: mapController,
             options: MapOptions(
@@ -111,27 +112,22 @@ class _ChooselocationState extends State<Chooselocation> {
                     size: 50,
                   ),
                 ),
-                Marker(
-                  width:
-                      _calculateCircleSize(), // Dynamic width of the marker widget
-                  height:
-                      _calculateCircleSize(), // Dynamic height of the marker widget
-                  point: currentCenter ??
-                      ChooselocationLatLng.LatLng(
-                          widget.center.latitude, widget.center.longitude),
-                  builder: (ctx) => CustomPaint(
-                    size: Size(
-                      _calculateCircleSize(),
-                      _calculateCircleSize(),
-                    ), // Dynamic size based on zoom
-                    painter: CirclePainter(
-                      radius:
-                          _calculateCircleRadius(), // Pass the radius to the painter
-                    ),
-                  ),
-                ),
               ]),
             ],
+          ),
+          // Dark overlay with transparent circle
+          IgnorePointer(
+            ignoring: true, // This allows touch events to pass through
+            child: CustomPaint(
+              size: Size(double.infinity, double.infinity),
+              painter: OverlayPainter(
+                center: currentCenter ??
+                    ChooselocationLatLng.LatLng(
+                        widget.center.latitude, widget.center.longitude),
+                zoom: zoomLevel,
+                circleRadius: _calculateCircleRadius(),
+              ),
+            ),
           ),
         ],
       ),
@@ -139,61 +135,72 @@ class _ChooselocationState extends State<Chooselocation> {
   }
 
   // Calculate the pixel size of the circle based on the zoom level
-  double _calculateCircleSize() {
-    // Convert the radius in meters to a pixel size
-    double scale = _metersToPixels(baseRadiusMeters, zoomLevel);
-    return scale;
-  }
-
-  // Calculate the radius for drawing the circle
   double _calculateCircleRadius() {
-    double radiusInPixels = _calculateCircleSize() / 2;
-    return radiusInPixels;
+    return _metersToPixels(baseRadiusMeters, zoomLevel) / 2;
   }
 
   // Convert meters to pixels based on zoom level
   double _metersToPixels(double meters, double zoom) {
-    // Conversion factor for meters to pixels at zoom level 0
     const double metersPerPixelAtZoomLevel0 = 156543.03392804097;
     double metersPerPixel = metersPerPixelAtZoomLevel0 / math.pow(2, zoom);
     return meters / metersPerPixel;
   }
 }
 
-class CirclePainter extends CustomPainter {
-  CirclePainter({required this.radius});
+class OverlayPainter extends CustomPainter {
+  final ChooselocationLatLng.LatLng center;
+  final double zoom;
+  final double circleRadius;
 
-  final double radius;
+  OverlayPainter({
+    required this.center,
+    required this.zoom,
+    required this.circleRadius,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color =
-          Colors.redAccent.withOpacity(0.3) // Circle color with transparency
+    final Paint overlayPaint = Paint()
+      ..color = Colors.black.withOpacity(0.5) // Dark semi-transparent overlay
       ..style = PaintingStyle.fill;
 
-    // Draw the circle in the center of the CustomPaint widget
-    canvas.drawCircle(
-      Offset(size.width / 2, size.height / 2),
-      radius, // Radius in pixels
-      paint,
+    // Create a path that represents the entire screen area
+    Path screenPath = Path();
+    screenPath.addRect(Rect.fromLTWH(0, 0, size.width, size.height));
+
+    // Create a path for the circle that will remain clear
+    Path circlePath = Path();
+    circlePath.addOval(Rect.fromCircle(
+      center: Offset(size.width / 2, size.height / 2),
+      radius: circleRadius,
+    ));
+
+    // Subtract the circle from the screen to leave it clear
+    Path overlayPath = Path.combine(
+      PathOperation.difference,
+      screenPath,
+      circlePath,
     );
 
-    final Paint borderPaint = Paint()
-      ..color = Colors.red // Border color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2; // Border stroke width
+    // Draw the overlay, excluding the circle
+    canvas.drawPath(overlayPath, overlayPaint);
 
-    // Draw the circle border
+    // Optionally, draw a border around the circle (if needed)
+    final Paint borderPaint = Paint()
+      ..color = Colors.transparent
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+
+    // Draw the border around the transparent circle
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
-      radius,
+      circleRadius,
       borderPaint,
     );
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true; // Repaint every time to update the zoom and center
   }
 }

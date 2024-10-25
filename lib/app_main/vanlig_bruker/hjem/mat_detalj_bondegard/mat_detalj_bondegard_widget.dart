@@ -1241,38 +1241,37 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         ],
                                       ),
                                     ),
-                                    if (matvare.bonde == true)
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0.0, 15.0, 0.0, 0.0),
-                                        child: Text(
-                                          'Antall',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodySmall
-                                              .override(
-                                                fontFamily: 'Montserrat',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ),
-                                    if (matvare.bonde == true)
-                                      Text(
-                                        '20 Stk',
-                                        textAlign: TextAlign.start,
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 15.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Antall',
                                         style: FlutterFlowTheme.of(context)
-                                            .titleMedium
+                                            .bodySmall
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
+                                    ),
+                                    Text(
+                                      '${matvare.antall ?? 0} ${matvare.kg == true ? 'Kg' : 'stk'}',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
                                     Container(
                                       width: 332.0,
                                       decoration: const BoxDecoration(),

@@ -26,6 +26,9 @@ class FFAppState extends ChangeNotifier {
       _brukerLng = prefs.getDouble('ff_brukerLng') ?? _brukerLng;
     });
     _safeInit(() {
+      _firstname = prefs.getString('ff_kommune') ?? _kommune;
+    });
+    _safeInit(() {
       _login = prefs.getBool('ff_login') ?? _login;
     });
     _safeInit(() {
@@ -66,6 +69,13 @@ class FFAppState extends ChangeNotifier {
   set login(bool value) {
     _login = value;
     prefs.setBool('ff_login', value);
+  }
+
+  String _kommune = 'Norge';
+  String get kommune => _kommune;
+  set kommune(String value) {
+    _kommune = value;
+    prefs.setString('ff_kommune', value);
   }
 
   bool _startet = false;

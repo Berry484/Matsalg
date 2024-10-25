@@ -66,7 +66,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
       return;
     } else {
       // Fetch user info only if bruker is null
-      if (widget.bruker == null) {
+      if (widget.bruker != 1) {
         _brukerinfo = await ApiGetUser.checkUser(token, widget.username);
         if (_brukerinfo != null && _brukerinfo!.isNotEmpty) {
           bruker = _brukerinfo![0]; // Get the first Bonder object
@@ -114,14 +114,18 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
     }
   }
 
-    Future<void> unFolg() async {
-      await apiFolg.unfolgBruker(Securestorage.authToken, bruker?.username);
-      safeSetState(() {tellFolgere();});
+  Future<void> unFolg() async {
+    await apiFolg.unfolgBruker(Securestorage.authToken, bruker?.username);
+    safeSetState(() {
+      tellFolgere();
+    });
   }
 
-      Future<void> folgBruker() async {
-      await apiFolg.folgbruker(Securestorage.authToken, bruker?.username);
-      safeSetState(() {tellFolgere();});
+  Future<void> folgBruker() async {
+    await apiFolg.folgbruker(Securestorage.authToken, bruker?.username);
+    safeSetState(() {
+      tellFolgere();
+    });
   }
 
   Future<void> getUserFood() async {
@@ -601,13 +605,14 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           .mediumImpact();
                                                                       _model.folger =
                                                                           false;
-                                                                          // apiFolg.unfolgBruker(
-                                                                          // Securestorage
-                                                                          //     .authToken,
-                                                                          // bruker
-                                                                          //     ?.username);
-                                                                              safeSetState(() {});
-                                                                              unFolg();
+                                                                      // apiFolg.unfolgBruker(
+                                                                      // Securestorage
+                                                                      //     .authToken,
+                                                                      // bruker
+                                                                      //     ?.username);
+                                                                      safeSetState(
+                                                                          () {});
+                                                                      unFolg();
                                                                     },
                                                                     text:
                                                                         'Følger',
@@ -662,8 +667,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           .mediumImpact();
                                                                       _model.folger =
                                                                           true;
-                                                                              safeSetState(() {});
-                                                                              folgBruker();
+                                                                      safeSetState(
+                                                                          () {});
+                                                                      folgBruker();
                                                                     },
                                                                     text:
                                                                         'Følg',

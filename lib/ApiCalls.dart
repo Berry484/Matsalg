@@ -56,6 +56,39 @@ class ApiCalls {
       return http.Response('Request timed out', 500);
     }
   }
+
+  Future<String> getKommune(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      final response = await http
+          .get(
+            Uri.parse(
+                'https://ws.geonorge.no/adresser/v1/punktsok?lat=${FFAppState().brukerLat ?? 59.9138688}&lon=${FFAppState().brukerLng ?? 10.7522454}&radius=9999999999999&treffPerSide=1&side=1'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
+
+      if (response.statusCode == 200) {
+        // Parse the JSON response
+        final jsonResponse = json.decode(response.body);
+
+        // Extract the first "adresser" element and get the "kommunenavn"
+        final kommunenavn = jsonResponse['adresser'][0]['kommunenavn'];
+
+        return kommunenavn ?? 'Norge';
+      } else {
+        return 'Norge';
+      }
+    } on TimeoutException {
+      return 'Norge';
+    } catch (e) {
+      return 'Norge';
+    }
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -590,8 +623,7 @@ class ApiGetUserFood {
       // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse(
-                '$baseUrl/rrh/send/matvarer/mine?username=${username}?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
+            Uri.parse('$baseUrl/rrh/send/matvarer/mine?username=${username}'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -1476,4 +1508,45 @@ class OrdreInfo {
     required this.kjoperProfilePic,
     required this.foodDetails, // Pass food details to the constructor
   });
+}
+
+class ApiUpdateFood {
+  static const String baseUrl = ApiConstants.baseUrl; // Your base URL
+
+  Future<http.Response> updateAntall({
+    required String? antall,
+    required int? id,
+    String? token, // Add token parameter
+  }) async {
+    // Convert the String antall to double
+    double? antallAsDouble;
+    if (antall != null) {
+      try {
+        antallAsDouble = double.parse(antall);
+      } catch (e) {
+        return http.Response("", 400); // Return bad request if parsing fails
+      }
+    }
+
+    final Map<String, dynamic> requestBody = {"antall": antallAsDouble};
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(requestBody);
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    final response = await http.put(
+      Uri.parse(
+          '$baseUrl/rrh/send/matvarer/$id'), // Endpoint for updating user info
+      headers: headers,
+      body: jsonBody,
+    );
+
+    return response; // Return the response
+  }
 }

@@ -49,6 +49,7 @@ class _HjemWidgetState extends State<HjemWidget> {
   void initState() {
     super.initState();
     fetchData(); // This initiates the API call
+    getKommune();
     getAllFoods();
     getAllBonder();
     _model = createModel(context, () => HjemModel());
@@ -86,6 +87,27 @@ class _HjemWidgetState extends State<HjemWidget> {
           _isloading = false;
         }
       });
+    }
+  }
+
+  Future<void> getKommune() async {
+    String? token = await Securestorage().readToken();
+
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      String? response = await apicalls.getKommune(token);
+
+      if (response != null && response.isNotEmpty) {
+        // Convert the response to lowercase and then capitalize the first letter
+        String formattedResponse =
+            response[0].toUpperCase() + response.substring(1).toLowerCase();
+
+        FFAppState().kommune = formattedResponse;
+        setState(() {});
+      }
     }
   }
 
@@ -127,6 +149,7 @@ class _HjemWidgetState extends State<HjemWidget> {
           FFAppState().brukernavn = decodedResponse['username'] ?? '';
           FFAppState().bio = decodedResponse['bio'] ?? '';
           FFAppState().profilepic = decodedResponse['profilepic'] ?? '';
+          getKommune();
         }
         if (response.statusCode == 401 ||
             response.statusCode == 404 ||
@@ -241,8 +264,19 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                context.pushNamed(
+                                                context.goNamed(
                                                   'VelgPosisjon',
+                                                  extra: <String, dynamic>{
+                                                    kTransitionInfoKey:
+                                                        const TransitionInfo(
+                                                      hasTransition: true,
+                                                      transitionType:
+                                                          PageTransitionType
+                                                              .bottomToTop,
+                                                      duration: Duration(
+                                                          milliseconds: 200),
+                                                    ),
+                                                  },
                                                   queryParameters: {
                                                     'bonde': serializeParam(
                                                       false,
@@ -268,7 +302,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                     size: 24.0,
                                                   ),
                                                   Text(
-                                                    'Halden',
+                                                    FFAppState().kommune ??
+                                                        'Norge',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium

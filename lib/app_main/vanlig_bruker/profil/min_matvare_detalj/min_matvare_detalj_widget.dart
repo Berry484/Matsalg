@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/app_main/bonde_gard/hjem/rediger_antall2/rediger_antall2_widget.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
@@ -562,14 +564,95 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              context.pushNamed(
-                                                'LeggUtMatvare',
-                                                queryParameters: {
-                                                  'rediger': serializeParam(
-                                                    true,
-                                                    ParamType.bool,
-                                                  ),
-                                                }.withoutNulls,
+                                              // Show the Cupertino action sheet when the user taps
+                                              showCupertinoModalPopup(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return CupertinoActionSheet(
+                                                    actions: <Widget>[
+                                                      CupertinoActionSheetAction(
+                                                        onPressed: () async {
+                                                          Navigator.pop(
+                                                              context);
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    RedigerAntall2Widget(
+                                                                  id: matvare
+                                                                      .matId,
+                                                                  antall: matvare
+                                                                      .antall
+                                                                      .toString(),
+                                                                  kg: matvare
+                                                                      .kg,
+                                                                ),
+                                                              );
+                                                            },
+                                                          ).then((value) =>
+                                                              safeSetState(
+                                                                  () {}));
+                                                        },
+                                                        child: const Text(
+                                                          'Juster antall',
+                                                          style: TextStyle(
+                                                            fontSize:
+                                                                20, // Set the font size
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      CupertinoActionSheetAction(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          context.pushNamed(
+                                                            'LeggUtMatvare',
+                                                            queryParameters: {
+                                                              'rediger':
+                                                                  serializeParam(
+                                                                true,
+                                                                ParamType.bool,
+                                                              ),
+                                                            }.withoutNulls,
+                                                          );
+                                                        },
+                                                        child: const Text(
+                                                          'Rediger annonse',
+                                                          style: TextStyle(
+                                                            fontSize: 20,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                    cancelButton:
+                                                        CupertinoActionSheetAction(
+                                                      onPressed: () {
+                                                        Navigator.pop(
+                                                            context); // Close the action sheet
+                                                      },
+                                                      isDefaultAction: true,
+                                                      child: const Text(
+                                                        'Avbryt',
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              18, // Set the font size for the cancel button
+                                                          fontWeight: FontWeight
+                                                              .bold, // Make the text bold
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
                                               );
                                             },
                                             child: Material(
@@ -835,7 +918,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 10.0, 0.0, 5.0),
+                                              0.0, 10.0, 0.0, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -892,6 +975,37 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                           ),
                                         ],
                                       ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 15.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Antall',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    ),
+                                    Text(
+                                      '${matvare.antall ?? 0} ${matvare.kg == true ? 'Kg' : 'stk'}',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                     ),
                                     Container(
                                       width: 332.0,

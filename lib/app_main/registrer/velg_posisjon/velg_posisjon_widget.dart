@@ -82,7 +82,16 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context.goNamed('Hjem');
+                  context.goNamed(
+                    'Hjem',
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: const TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
+                      ),
+                    },
+                  );
                 },
                 child: Icon(
                   Icons.arrow_back_ios,
@@ -261,14 +270,36 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                   onTap: () async {
                                     LatLng? location;
 
-                                    getCurrentUserLocation(
+                                    // Await the result of getCurrentUserLocation
+                                    location = await getCurrentUserLocation(
                                         defaultLocation:
                                             const LatLng(0.0, 0.0));
 
-                                    if (currentUserLocationValue != null) {
+                                    // Check if the location was retrieved
+                                    if (location != null) {
                                       selectedLocation = location;
                                     }
-                                    if (currentUserLocationValue == null) {
+                                    if (selectedLocation != null) {
+                                      location = selectedLocation;
+                                      FFAppState().brukerLat =
+                                          location?.latitude;
+                                      FFAppState().brukerLng =
+                                          location?.longitude;
+                                      String? token =
+                                          await Securestorage().readToken();
+                                      if (token == null) {
+                                        FFAppState().login = false;
+                                        context.pushNamed('registrer');
+                                        return;
+                                      } else {
+                                        final apiUserSQL = ApiUserSQL();
+                                        final response = await apiUserSQL
+                                            .updatePosisjon(token: token);
+                                      }
+                                    }
+
+                                    // If location was not retrieved, exit
+                                    if (location == null) {
                                       return;
                                     }
                                     if (widget.endrepos == false) {

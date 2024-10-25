@@ -13,6 +13,7 @@ class Matvarer {
   final bool? kg;
   final String? username;
   final bool? bonde;
+  final double? antall;
   final String? profilepic; // This is where the profile picture will go
   final bool? kjopt;
 
@@ -29,6 +30,7 @@ class Matvarer {
     this.kg,
     this.username,
     this.bonde,
+    this.antall,
     this.profilepic,
     this.kjopt,
   });
@@ -50,6 +52,7 @@ class Matvarer {
       kg: json['kg'] as bool?,
       username: json['username'] as String?,
       bonde: json['bonde'] as bool?,
+      antall: json['antall'] as double?,
       profilepic: json['profilepic'] as String?,
       kjopt: json['kjopt'] as bool?,
     );
@@ -73,6 +76,7 @@ class Matvarer {
       kg: json['kg'] as bool?,
       username: json['username'] as String?,
       bonde: json['bonde'] as bool?,
+      antall: json['antall'] as double?,
       profilepic: json['user']['profilepic'] as String?,
       kjopt: json['kjopt'] as bool?,
     );
@@ -100,6 +104,7 @@ class Matvarer {
       'kg': kg,
       'username': username,
       'bonde': bonde,
+      'antall': antall,
       'profilepic': profilepic,
       'kjopt': kjopt,
     };
@@ -120,6 +125,7 @@ class Matvarer {
         'kg: $kg, '
         'username: $username, '
         'bonde: $bonde, '
+        'antall: $antall, '
         'profilepic: $profilepic, '
         'kjopt: $kjopt'
         '}';

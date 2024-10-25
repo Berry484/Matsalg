@@ -1,3 +1,6 @@
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
+
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -11,9 +14,15 @@ class RedigerAntall2Widget extends StatefulWidget {
   const RedigerAntall2Widget({
     super.key,
     this.info,
+    this.id,
+    this.kg,
+    this.antall,
   });
 
   final dynamic info;
+  final dynamic id;
+  final dynamic kg;
+  final dynamic antall;
 
   @override
   State<RedigerAntall2Widget> createState() => _RedigerAntall2WidgetState();
@@ -32,12 +41,13 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => RedigerAntall2Model());
+    final ApiUpdateFood apiUpdateFood = ApiUpdateFood();
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {
-          _model.textController?.text = '0';
+          _model.textController?.text = widget.antall ?? '0';
         }));
   }
 
@@ -79,13 +89,14 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 12.0, 0.0),
                     child: FlutterFlowIconButton(
                       borderColor: Colors.transparent,
                       borderRadius: 30.0,
@@ -133,15 +144,16 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 20.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      0.0, 40.0, 0.0, 20.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 5.0, 0.0),
                         child: Text(
                           'Nåverende antall:',
                           textAlign: TextAlign.end,
@@ -149,7 +161,7 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                               .bodyMedium
                               .override(
                                 fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context).alternate,
+                                color: FlutterFlowTheme.of(context).primaryText,
                                 fontSize: 20.0,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.w600,
@@ -163,14 +175,14 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 12.0, 0.0, 0.0),
                             child: Text(
-                              '10',
+                              widget.antall ?? '0',
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Open Sans',
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
                                     fontSize: 20.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
@@ -179,48 +191,54 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                           ),
                           Stack(
                             children: [
-                              Align(
-                                alignment: const AlignmentDirectional(0.7, 0.86),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 12.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Kg',
-                                    textAlign: TextAlign.end,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          fontSize: 20.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                              if (widget.kg == true)
+                                Align(
+                                  alignment:
+                                      const AlignmentDirectional(0.7, 0.86),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 12.0, 0.0, 0.0),
+                                    child: Text(
+                                      ' Kg',
+                                      textAlign: TextAlign.end,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 20.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Align(
-                                alignment: const AlignmentDirectional(0.7, 0.86),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 12.0, 0.0, 0.0),
-                                  child: Text(
-                                    ' Stk',
-                                    textAlign: TextAlign.end,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          fontSize: 20.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                              if (widget.kg != true)
+                                Align(
+                                  alignment:
+                                      const AlignmentDirectional(0.7, 0.86),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 12.0, 0.0, 0.0),
+                                    child: Text(
+                                      ' Stk',
+                                      textAlign: TextAlign.end,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 20.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ],
@@ -229,7 +247,8 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 50.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      0.0, 20.0, 0.0, 50.0),
                   child: SizedBox(
                     width: 250.0,
                     child: TextFormField(
@@ -304,11 +323,30 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                 Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 5.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 25.0, 5.0, 0.0),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        String? token = await Securestorage().readToken();
+                        if (token == null) {
+                          FFAppState().login = false;
+                          context.pushNamed('registrer');
+                          return;
+                        } else {
+                          ApiUpdateFood apiUpdateFood = ApiUpdateFood();
+                          final response = await apiUpdateFood.updateAntall(
+                              token: token,
+                              id: widget.id,
+                              antall: _model.textController.text);
+                          if (response.statusCode == 200) {
+                            setState(() {
+                              context.pushNamed(
+                                'Profil',
+                              );
+                            });
+                          } else {}
+                          setState(() {});
+                        }
                       },
                       text: 'Bekreft',
                       icon: FaIcon(
@@ -319,10 +357,10 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                       options: FFButtonOptions(
                         width: 200.0,
                         height: 45.0,
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
+                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).alternate,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
@@ -345,8 +383,8 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                 Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 5.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 15.0, 5.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         context.pop();
@@ -355,10 +393,10 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                       options: FFButtonOptions(
                         width: 200.0,
                         height: 45.0,
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(11.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            11.0, 0.0, 0.0, 0.0),
+                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).error,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
