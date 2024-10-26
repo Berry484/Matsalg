@@ -10,7 +10,12 @@ import 'velg_pos_model.dart';
 export 'velg_pos_model.dart';
 
 class VelgPosWidget extends StatefulWidget {
-  const VelgPosWidget({super.key});
+  const VelgPosWidget({
+    super.key,
+    this.currentLocation,
+  });
+
+  final dynamic currentLocation;
 
   @override
   State<VelgPosWidget> createState() => _VelgPosWidgetState();
@@ -36,7 +41,8 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
-    selectedLocation = functions.doubletillatlon(59.913868, 10.752245);
+    selectedLocation = widget.currentLocation ??
+        functions.doubletillatlon(59.913868, 10.752245);
   }
 
   @override
@@ -99,7 +105,10 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                               onTap: () async {
                                 // Unfocus the text field to ensure the keyboard is dismissed
                                 FocusScope.of(context).unfocus();
-                                Navigator.pop(context, const LatLng(0.0, 0.0));
+                                Navigator.pop(
+                                    context,
+                                    widget.currentLocation ??
+                                        const LatLng(0, 0));
                               },
                               child: Text(
                                 'Avbryt',
@@ -151,10 +160,12 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                             child: custom_widgets.Chooselocation(
                               width: 500.0,
                               height: double.infinity,
-                              center: functions.doubletillatlon(
-                                  59.12681775541445, 11.386219119466823)!,
-                              matsted: functions.doubletillatlon(
-                                  59.12681775541445, 11.386219119466823)!,
+                              center: widget.currentLocation ??
+                                  functions.doubletillatlon(
+                                      59.12681775541445, 11.386219119466823)!,
+                              matsted: widget.currentLocation ??
+                                  functions.doubletillatlon(
+                                      59.12681775541445, 11.386219119466823)!,
                               onLocationChanged: (newLocation) {
                                 setState(() {
                                   selectedLocation = newLocation;

@@ -38,6 +38,9 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
   String? Function(BuildContext, String?)? produktNavnTextControllerValidator;
   String? _produktNavnTextControllerValidator(
       BuildContext context, String? val) {
+    if (val!.toLowerCase() == 'null') {
+      return 'Felt kan ikke være null';
+    }
     if (val == null || val.isEmpty) {
       return 'Felt må fylles ut';
     }
@@ -55,6 +58,9 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
       produktBeskrivelseTextControllerValidator;
   String? _produktBeskrivelseTextControllerValidator(
       BuildContext context, String? val) {
+    if (val!.toLowerCase() == 'null') {
+      return 'Felt kan ikke være null';
+    }
     if (val == null || val.isEmpty) {
       return 'Felt må fylles ut';
     }
@@ -80,6 +86,26 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
   FocusNode? antallStkFocusNode;
   TextEditingController? antallStkTextController;
   String? Function(BuildContext, String?)? antallStkTextControllerValidator;
+  String? _antallStkTextControllerValidator(BuildContext context, String? val) {
+    if (val!.toLowerCase() == 'null') {
+      return 'Felt kan ikke være null';
+    }
+    if (val == null || val.isEmpty) {
+      return 'Felt må fylles ut';
+    }
+
+    // Try parsing the string to a number
+    final number = double.tryParse(val);
+
+    // Check if the parsing failed or the number is not greater than 0
+    if (number == null || number < 0) {
+      val = '0';
+      return 'Verdi må være større enn 0';
+    }
+
+    return null; // If all checks pass, return null (no error)
+  }
+
   // State field(s) for Checkbox widget.
   bool? checkboxValue;
   // Model for LeggUtNavBar component.
@@ -90,6 +116,7 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
     produktNavnTextControllerValidator = _produktNavnTextControllerValidator;
     produktBeskrivelseTextControllerValidator =
         _produktBeskrivelseTextControllerValidator;
+    antallStkTextControllerValidator = _antallStkTextControllerValidator;
     leggUtNavBarModel = createModel(context, () => LeggUtNavBarModel());
   }
 

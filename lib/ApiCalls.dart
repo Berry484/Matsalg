@@ -342,6 +342,7 @@ class ApiUploadFood {
     required LatLng? posisjon,
     required bool? betaling,
     required bool kg,
+    required String? antall,
   }) async {
     // Create the user info data as a Map
     final Map<String, dynamic> userInfoData = {
@@ -353,6 +354,7 @@ class ApiUploadFood {
       "lat": posisjon?.latitude,
       "lng": posisjon?.longitude,
       "betaling": betaling,
+      "antall": antall,
       "kjopt": false,
       "slettet": false,
       "kg": kg,

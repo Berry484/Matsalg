@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
+
 import '/app_main/vanlig_bruker/legg_ut/velg_pos/velg_pos_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -13,6 +17,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
+import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'legg_ut_matvare_model.dart';
 export 'legg_ut_matvare_model.dart';
 
@@ -30,6 +36,30 @@ class LeggUtMatvareWidget extends StatefulWidget {
   State<LeggUtMatvareWidget> createState() => _LeggUtMatvareWidgetState();
 }
 
+class DecimalInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    String newText = newValue.text;
+
+    // Prevent starting with a dot
+    if (newText.startsWith('.')) {
+      return oldValue;
+    }
+
+    // Prevent multiple dots or consecutive dots
+    if (newText.indexOf('.') != newText.lastIndexOf('.') ||
+        newText.contains('..')) {
+      return oldValue;
+    }
+
+    // If all conditions are met, return the new value
+    return newValue;
+  }
+}
+
 class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     with TickerProviderStateMixin {
   late LeggUtMatvareModel _model;
@@ -42,6 +72,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
   final ApiMultiplePics apiMultiplePics = ApiMultiplePics();
 
   LatLng? selectedLatLng;
+  LatLng? currentselectedLatLng =
+      (FFAppState().brukerLat != null && FFAppState().brukerLng != null)
+          ? LatLng(FFAppState().brukerLat!, FFAppState().brukerLng!)
+          : const LatLng(0, 0);
+  bool test = true;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -69,6 +104,18 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
 
     _model.antallStkTextController ??= TextEditingController();
     _model.antallStkFocusNode ??= FocusNode();
+  }
+
+  void updateSelectedLatLng(LatLng? newLatLng) {
+    setState(() {
+      selectedLatLng = null;
+    });
+
+    Timer(const Duration(milliseconds: 100), () {
+      setState(() {
+        selectedLatLng = newLatLng;
+      });
+    });
   }
 
   @override
@@ -1599,12 +1646,18 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             _model
                                                                 .produktPrisKgTextController
                                                                 ?.clear();
+                                                            _model
+                                                                .antallStkTextController
+                                                                ?.clear();
                                                           });
                                                         },
                                                         () async {
                                                           safeSetState(() {
                                                             _model
                                                                 .produktPrisSTKTextController
+                                                                ?.clear();
+                                                            _model
+                                                                .antallStkTextController
                                                                 ?.clear();
                                                           });
                                                         }
@@ -2193,258 +2246,271 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               ],
                                             ),
                                           ),
-                                          if (FFAppState().bonde == true)
-                                            const Divider(
-                                              thickness: 1.0,
-                                              indent: 30.0,
-                                              endIndent: 30.0,
-                                              color: Color(0x62757575),
-                                            ),
-                                          if (FFAppState().bonde == true)
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          -1.0, 0.0),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(20.0,
-                                                            30.0, 0.0, 10.0),
-                                                    child: Text(
-                                                      'Velg antall',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Open Sans',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .alternate,
-                                                            fontSize: 17.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                    ),
+
+                                          const Divider(
+                                            thickness: 1.0,
+                                            indent: 30.0,
+                                            endIndent: 30.0,
+                                            color: Color(0x62757575),
+                                          ),
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Align(
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        -1.0, 0.0),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(20.0, 30.0,
+                                                          0.0, 10.0),
+                                                  child: Text(
+                                                    'Velg antall',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          fontSize: 17.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                   ),
                                                 ),
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          -1.0, 0.0),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(20.0, 0.0,
-                                                            0.0, 0.0),
-                                                    child: Text(
-                                                      'hvor mye selger du av matvaren?',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Open Sans',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                            fontSize: 13.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        -1.0, 0.0),
+                                                child: Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(
-                                                          0.0, 50.0, 0.0, 20.0),
-                                                  child: Stack(
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            1.0, -0.3),
-                                                    children: [
-                                                      Align(
-                                                        alignment:
-                                                            const AlignmentDirectional(
-                                                                0.0, 0.0),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  20.0,
-                                                                  0.0,
-                                                                  20.0,
-                                                                  20.0),
-                                                          child: TextFormField(
-                                                            controller: _model
-                                                                .antallStkTextController,
-                                                            focusNode: _model
-                                                                .antallStkFocusNode,
-                                                            onChanged: (_) =>
-                                                                EasyDebounce
-                                                                    .debounce(
-                                                              '_model.antallStkTextController',
-                                                              const Duration(
-                                                                  milliseconds:
-                                                                      300),
-                                                              () =>
-                                                                  safeSetState(
-                                                                      () {}),
-                                                            ),
-                                                            textCapitalization:
-                                                                TextCapitalization
-                                                                    .none,
-                                                            obscureText: false,
-                                                            decoration:
-                                                                InputDecoration(
-                                                              labelText:
-                                                                  'Antall',
-                                                              labelStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Open Sans',
-                                                                        fontSize:
-                                                                            14.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
-                                                              alignLabelWithHint:
-                                                                  false,
-                                                              hintText:
-                                                                  'Skriv inn antall',
-                                                              hintStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Open Sans',
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
-                                                              enabledBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    const BorderSide(
-                                                                  color: Color(
-                                                                      0x00000000),
-                                                                  width: 1.0,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                              ),
-                                                              focusedBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  width: 1.0,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                              ),
-                                                              errorBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .error,
-                                                                  width: 1.0,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                              ),
-                                                              focusedErrorBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .error,
-                                                                  width: 1.0,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                              ),
-                                                              filled: true,
-                                                              fillColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                              contentPadding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      20.0,
-                                                                      24.0,
-                                                                      0.0,
-                                                                      24.0),
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize:
-                                                                      17.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                            maxLength: 5,
-                                                            maxLengthEnforcement:
-                                                                MaxLengthEnforcement
-                                                                    .enforced,
-                                                            buildCounter: (context,
-                                                                    {required currentLength,
-                                                                    required isFocused,
-                                                                    maxLength}) =>
-                                                                null,
-                                                            keyboardType:
-                                                                TextInputType
-                                                                    .number,
-                                                            validator: _model
-                                                                .antallStkTextControllerValidator
-                                                                .asValidator(
-                                                                    context),
-                                                            inputFormatters: [
-                                                              FilteringTextInputFormatter
-                                                                  .allow(RegExp(
-                                                                      '[0-9]'))
-                                                            ],
+                                                          20.0, 0.0, 0.0, 0.0),
+                                                  child: Text(
+                                                    'hvor mye selger du av matvaren?',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 13.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        0.0, 50.0, 0.0, 20.0),
+                                                child: Stack(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          1.0, -0.3),
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          const AlignmentDirectional(
+                                                              0.0, 0.0),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                20.0,
+                                                                0.0,
+                                                                20.0,
+                                                                20.0),
+                                                        child: TextFormField(
+                                                          controller: _model
+                                                              .antallStkTextController,
+                                                          focusNode: _model
+                                                              .antallStkFocusNode,
+                                                          onChanged: (_) =>
+                                                              EasyDebounce
+                                                                  .debounce(
+                                                            '_model.antallStkTextController',
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    300),
+                                                            () => safeSetState(
+                                                                () {}),
                                                           ),
+                                                          textCapitalization:
+                                                              TextCapitalization
+                                                                  .none,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            labelText: 'Antall',
+                                                            labelStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                            alignLabelWithHint:
+                                                                false,
+                                                            hintText:
+                                                                'Skriv inn antall',
+                                                            hintStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Color(
+                                                                    0x00000000),
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            errorBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            filled: true,
+                                                            fillColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                            contentPadding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                    20.0,
+                                                                    24.0,
+                                                                    0.0,
+                                                                    24.0),
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Open Sans',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 17.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                          maxLength: 5,
+                                                          maxLengthEnforcement:
+                                                              MaxLengthEnforcement
+                                                                  .enforced,
+                                                          buildCounter: (context,
+                                                                  {required currentLength,
+                                                                  required isFocused,
+                                                                  maxLength}) =>
+                                                              null,
+                                                          keyboardType: _model
+                                                                      .tabBarController!
+                                                                      .index !=
+                                                                  0
+                                                              ? const TextInputType
+                                                                  .numberWithOptions(
+                                                                  decimal:
+                                                                      true) // Enable decimal (.)
+                                                              : TextInputType
+                                                                  .number, // Regular number keyboard (no decimal)
+                                                          validator: _model
+                                                              .antallStkTextControllerValidator
+                                                              .asValidator(
+                                                                  context),
+                                                          // Change input formatters based on index
+                                                          inputFormatters: [
+                                                            _model.tabBarController!
+                                                                        .index !=
+                                                                    0
+                                                                ? DecimalInputFormatter() // Custom formatter for numbers and one dot
+                                                                : FilteringTextInputFormatter
+                                                                    .allow(RegExp(
+                                                                        r'[0-9]')), // Allow only numbers
+                                                          ],
                                                         ),
                                                       ),
+                                                    ),
+                                                    if (_model.tabBarController!
+                                                            .index ==
+                                                        0)
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
@@ -2469,6 +2535,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               ),
                                                         ),
                                                       ),
+                                                    if (_model.tabBarController!
+                                                            .index !=
+                                                        0)
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
@@ -2493,11 +2562,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               ),
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
+                                          ),
                                           const Divider(
                                             thickness: 1.0,
                                             indent: 30.0,
@@ -2598,13 +2667,26 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .viewInsetsOf(
                                                                       context),
                                                               child:
-                                                                  const VelgPosWidget(),
-                                                              // Replace with the widget where you return the LatLng
+                                                                  VelgPosWidget(
+                                                                currentLocation:
+                                                                    currentselectedLatLng,
+                                                              ),
                                                             ),
                                                           );
                                                         },
                                                       );
-                                                      setState(() {});
+                                                      setState(() {
+                                                        if (selectedLatLng ==
+                                                            const LatLng(
+                                                                0, 0)) {
+                                                          selectedLatLng = null;
+                                                        } else {
+                                                          currentselectedLatLng =
+                                                              selectedLatLng;
+                                                          updateSelectedLatLng(
+                                                              selectedLatLng);
+                                                        }
+                                                      });
                                                     },
                                                     text: 'Velg posisjon',
                                                     options: FFButtonOptions(
@@ -2639,7 +2721,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     FontWeight
                                                                         .bold,
                                                               ),
-                                                      elevation: 3.0,
+                                                      elevation: 2.0,
                                                       borderSide:
                                                           const BorderSide(
                                                         color:
@@ -2653,6 +2735,46 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                               ),
+                                              if (selectedLatLng != null)
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(30, 0, 30, 80),
+                                                  child: Container(
+                                                    width: 500,
+                                                    height: 200,
+                                                    child: GestureDetector(
+                                                      onTap:
+                                                          () {}, // Disable tap interactions
+                                                      onPanUpdate:
+                                                          (_) {}, // Disable dragging interactions
+                                                      child: FFAppState()
+                                                                  .bonde ==
+                                                              true
+                                                          ? custom_widgets
+                                                              .MyOsmKartBedrift(
+                                                              width: 500,
+                                                              height: 200,
+                                                              center: selectedLatLng ??
+                                                                  LatLng(
+                                                                      58.940090,
+                                                                      11.634092),
+                                                              matsted: selectedLatLng ??
+                                                                  LatLng(
+                                                                      58.940090,
+                                                                      11.634092),
+                                                            )
+                                                          : custom_widgets
+                                                              .MyOsmKart(
+                                                              width: 500,
+                                                              height: 200,
+                                                              center: selectedLatLng ??
+                                                                  LatLng(
+                                                                      58.940090,
+                                                                      11.634092),
+                                                            ),
+                                                    ),
+                                                  ),
+                                                )
                                             ],
                                           ),
                                           // const Divider(
@@ -2913,13 +3035,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         context: context,
                                                         builder:
                                                             (alertDialogContext) {
-                                                          return AlertDialog(
+                                                          return CupertinoAlertDialog(
                                                             title: const Text(
-                                                                'Felt mangler'),
+                                                                'Bilder mangler'),
                                                             content: const Text(
                                                                 'Last opp minst 3 bilder.'),
                                                             actions: [
-                                                              TextButton(
+                                                              CupertinoDialogAction(
                                                                 onPressed: () =>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
@@ -2933,6 +3055,35 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       );
                                                       return;
                                                     }
+                                                    if ((_model.uploadedLocalFile1
+                                                                .bytes ??
+                                                            [])
+                                                        .isEmpty) {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return CupertinoAlertDialog(
+                                                            title: const Text(
+                                                                'Bilder mangler'),
+                                                            content: const Text(
+                                                                'Last opp minst 3 bilder.'),
+                                                            actions: [
+                                                              CupertinoDialogAction(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext),
+                                                                child:
+                                                                    const Text(
+                                                                        'Ok'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                      return;
+                                                    }
+
                                                     if ((_model.uploadedLocalFile2
                                                                 .bytes ??
                                                             [])
@@ -2941,13 +3092,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         context: context,
                                                         builder:
                                                             (alertDialogContext) {
-                                                          return AlertDialog(
+                                                          return CupertinoAlertDialog(
                                                             title: const Text(
                                                                 'Felt mangler'),
                                                             content: const Text(
                                                                 'Last opp minst 3 bilder.'),
                                                             actions: [
-                                                              TextButton(
+                                                              CupertinoDialogAction(
                                                                 onPressed: () =>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
@@ -2961,6 +3112,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       );
                                                       return;
                                                     }
+
                                                     if ((_model.uploadedLocalFile3
                                                                 .bytes ??
                                                             [])
@@ -2969,13 +3121,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         context: context,
                                                         builder:
                                                             (alertDialogContext) {
-                                                          return AlertDialog(
+                                                          return CupertinoAlertDialog(
                                                             title: const Text(
                                                                 'Felt mangler'),
                                                             content: const Text(
                                                                 'Last opp minst 3 bilder.'),
                                                             actions: [
-                                                              TextButton(
+                                                              CupertinoDialogAction(
                                                                 onPressed: () =>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
@@ -2989,19 +3141,20 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       );
                                                       return;
                                                     }
+
                                                     if (_model.dropDownValue ==
                                                         null) {
                                                       await showDialog(
                                                         context: context,
                                                         builder:
                                                             (alertDialogContext) {
-                                                          return AlertDialog(
+                                                          return CupertinoAlertDialog(
                                                             title: const Text(
-                                                                'Felt mangler'),
+                                                                'Mangler kategori'),
                                                             content: const Text(
                                                                 'Velg minst 1 kategori.'),
                                                             actions: [
-                                                              TextButton(
+                                                              CupertinoDialogAction(
                                                                 onPressed: () =>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
@@ -3014,6 +3167,95 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         },
                                                       );
                                                       return;
+                                                    }
+
+                                                    if (_model.tabBarCurrentIndex ==
+                                                            0 &&
+                                                        _model
+                                                            .produktPrisSTKTextController
+                                                            .text
+                                                            .isEmpty) {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return CupertinoAlertDialog(
+                                                            title: const Text(
+                                                                'Velg pris'),
+                                                            content: const Text(
+                                                                'Velg en pris på matvaren'),
+                                                            actions: [
+                                                              CupertinoDialogAction(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext),
+                                                                child:
+                                                                    const Text(
+                                                                        'Ok'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                      return;
+                                                    }
+
+                                                    if (_model.tabBarCurrentIndex !=
+                                                            0 &&
+                                                        _model
+                                                            .produktPrisKgTextController
+                                                            .text
+                                                            .isEmpty) {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return CupertinoAlertDialog(
+                                                            title: const Text(
+                                                                'Velg pris'),
+                                                            content: const Text(
+                                                                'Velg en pris på matvaren'),
+                                                            actions: [
+                                                              CupertinoDialogAction(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext),
+                                                                child:
+                                                                    const Text(
+                                                                        'Ok'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                      return null;
+                                                    }
+
+                                                    if (selectedLatLng ==
+                                                        null) {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return CupertinoAlertDialog(
+                                                            title: const Text(
+                                                                'Velg posisjon'),
+                                                            content: const Text(
+                                                                'Mangler posisjon'),
+                                                            actions: [
+                                                              CupertinoDialogAction(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext),
+                                                                child:
+                                                                    const Text(
+                                                                        'Ok'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                      return null;
                                                     }
 
                                                     try {
@@ -3112,6 +3354,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 ?.value,
                                                             posisjon:
                                                                 selectedLatLng,
+                                                            antall: _model
+                                                                .antallStkTextController
+                                                                .text,
                                                             betaling: _model
                                                                 .checkboxValue,
                                                             kg: kg,

@@ -48,6 +48,9 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {
           _model.textController?.text = widget.antall ?? '0';
+          if (_model.textController?.text.toLowerCase() == 'null') {
+            _model.textController?.text = '0';
+          }
         }));
   }
 
@@ -180,7 +183,10 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 12.0, 0.0, 0.0),
                                 child: Text(
-                                  widget.antall ?? '0',
+                                  (widget.antall == null ||
+                                          widget.antall == "null")
+                                      ? '0'
+                                      : widget.antall.toString(),
                                   textAlign: TextAlign.end,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium

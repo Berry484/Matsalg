@@ -49,8 +49,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
     selectedLocation = functions.doubletillatlon(
-        FFAppState().brukerLat ?? 59.9138688,
-        FFAppState().brukerLng ?? 10.7522454)!;
+        FFAppState().brukerLat ?? 0, FFAppState().brukerLng ?? 0)!;
   }
 
   @override
