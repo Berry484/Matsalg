@@ -1291,50 +1291,30 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           ),
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(
-                                                    -1.0, 0.0),
+                                                AlignmentDirectional(-1, 0),
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      20.0, 0.0, 20.0, 40.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(20, 0, 20, 40),
                                               child:
                                                   FlutterFlowDropDown<String>(
-                                                multiSelectController: _model
+                                                controller: _model
                                                         .dropDownValueController ??=
-                                                    FormListFieldController<
-                                                        String>(null),
+                                                    FormFieldController<String>(
+                                                        null),
                                                 options: const [
                                                   'kjøtt',
-                                                  'Grønt',
+                                                  'Grønnt',
                                                   'Meieri',
                                                   'Sjømat',
-                                                  'Drikke',
                                                   'Bakverk'
                                                 ],
+                                                onChanged: (val) =>
+                                                    safeSetState(() => _model
+                                                        .dropDownValue = val),
                                                 width:
                                                     MediaQuery.sizeOf(context)
                                                         .width,
-                                                height: 60.0,
-                                                searchHintTextStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 13.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                searchTextStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          letterSpacing: 0.0,
-                                                        ),
+                                                height: 60,
                                                 textStyle: FlutterFlowTheme.of(
                                                         context)
                                                     .bodyMedium
@@ -1344,41 +1324,35 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primaryText,
-                                                      fontSize: 13.0,
+                                                      fontSize: 13,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                     ),
                                                 hintText: 'Velg kategorier...',
-                                                searchHintText: 'Søk',
                                                 icon: Icon(
                                                   Icons
                                                       .keyboard_arrow_down_rounded,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
-                                                  size: 23.0,
+                                                  size: 23,
                                                 ),
                                                 fillColor:
                                                     FlutterFlowTheme.of(context)
                                                         .primary,
-                                                elevation: 6.0,
+                                                elevation: 6,
                                                 borderColor:
                                                     FlutterFlowTheme.of(context)
                                                         .secondary,
-                                                borderWidth: 1.0,
-                                                borderRadius: 8.0,
-                                                margin:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        12.0, 0.0, 12.0, 0.0),
+                                                borderWidth: 1,
+                                                borderRadius: 8,
+                                                margin: EdgeInsetsDirectional
+                                                    .fromSTEB(12, 0, 12, 0),
                                                 hidesUnderline: true,
                                                 isOverButton: false,
-                                                isSearchable: true,
-                                                isMultiSelect: true,
-                                                onMultiSelectChanged: (val) =>
-                                                    safeSetState(() => _model
-                                                        .dropDownValue = val),
+                                                isSearchable: false,
+                                                isMultiSelect: false,
                                               ),
                                             ),
                                           ),
@@ -2739,42 +2713,59 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(30, 0, 30, 80),
-                                                  child: Container(
-                                                    width: 500,
-                                                    height: 200,
-                                                    child: GestureDetector(
-                                                      onTap:
-                                                          () {}, // Disable tap interactions
-                                                      onPanUpdate:
-                                                          (_) {}, // Disable dragging interactions
-                                                      child: FFAppState()
-                                                                  .bonde ==
-                                                              true
-                                                          ? custom_widgets
-                                                              .MyOsmKartBedrift(
-                                                              width: 500,
-                                                              height: 200,
-                                                              center: selectedLatLng ??
-                                                                  LatLng(
-                                                                      58.940090,
-                                                                      11.634092),
-                                                              matsted: selectedLatLng ??
-                                                                  LatLng(
-                                                                      58.940090,
-                                                                      11.634092),
-                                                            )
-                                                          : custom_widgets
-                                                              .MyOsmKart(
-                                                              width: 500,
-                                                              height: 200,
-                                                              center: selectedLatLng ??
-                                                                  LatLng(
-                                                                      58.940090,
-                                                                      11.634092),
-                                                            ),
-                                                    ),
+                                                  child: Stack(
+                                                    children: [
+                                                      // The map widget wrapped in a Container for consistent sizing
+                                                      Container(
+                                                        width:
+                                                            500, // Set this to the desired width
+                                                        height:
+                                                            200, // Set this to the desired height
+                                                        child: FFAppState()
+                                                                    .bonde ==
+                                                                true
+                                                            ? custom_widgets
+                                                                .MyOsmKartBedrift(
+                                                                width:
+                                                                    500, // Using the same size
+                                                                height: 200,
+                                                                center: selectedLatLng ??
+                                                                    LatLng(
+                                                                        58.940090,
+                                                                        11.634092),
+                                                                matsted: selectedLatLng ??
+                                                                    LatLng(
+                                                                        58.940090,
+                                                                        11.634092),
+                                                              )
+                                                            : custom_widgets
+                                                                .MyOsmKart(
+                                                                width:
+                                                                    500, // Using the same size
+                                                                height: 200,
+                                                                center: selectedLatLng ??
+                                                                    LatLng(
+                                                                        58.940090,
+                                                                        11.634092),
+                                                              ),
+                                                      ),
+
+                                                      // Overlay to disable interactions
+                                                      Positioned.fill(
+                                                        child: GestureDetector(
+                                                          onTap:
+                                                              () {}, // Consuming tap interactions
+                                                          onPanUpdate:
+                                                              (_) {}, // Consuming drag interactions
+                                                          child: Container(
+                                                            color: Colors
+                                                                .transparent, // Keeps the overlay invisible
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                )
+                                                ),
                                             ],
                                           ),
                                           // const Divider(

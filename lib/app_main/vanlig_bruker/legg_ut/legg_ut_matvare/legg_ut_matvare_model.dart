@@ -48,24 +48,31 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
     return null;
   }
 
-  // State field(s) for DropDown widget.
-  List<String>? dropDownValue;
-  FormFieldController<List<String>>? dropDownValueController;
-  // State field(s) for ProduktBeskrivelse widget.
-  FocusNode? produktBeskrivelseFocusNode;
-  TextEditingController? produktBeskrivelseTextController;
+// State field(s) for DropDown widget.
+  String? dropDownValue; // This will hold the selected value from the dropdown.
+  FormFieldController<String>?
+      dropDownValueController; // Changed to String for single selection.
+
+// State field(s) for ProduktBeskrivelse widget.
+  FocusNode?
+      produktBeskrivelseFocusNode; // This will manage focus for the description input.
+  TextEditingController?
+      produktBeskrivelseTextController; // Controller for the product description text input.
+
+// Validator for ProduktBeskrivelse text controller.
   String? Function(BuildContext, String?)?
       produktBeskrivelseTextControllerValidator;
+
+// Validation logic for the product description input.
   String? _produktBeskrivelseTextControllerValidator(
       BuildContext context, String? val) {
-    if (val!.toLowerCase() == 'null') {
-      return 'Felt kan ikke være null';
-    }
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
+      return 'Felt må fylles ut'; // Field must be filled.
     }
-
-    return null;
+    if (val.toLowerCase() == 'null') {
+      return 'Felt kan ikke være null'; // Field cannot be null.
+    }
+    return null; // No validation errors.
   }
 
   // State field(s) for TabBar widget.

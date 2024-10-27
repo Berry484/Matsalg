@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,86 +52,82 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
   int? imageQuality,
   required bool allowPhoto,
   bool allowVideo = false,
-  String pickerFontFamily = 'Roboto',
+  String pickerFontFamily = 'Open Sans',
   Color textColor = const Color(0xFF111417),
   Color backgroundColor = const Color(0xFFF5F5F5),
   bool includeDimensions = false,
   bool includeBlurHash = false,
 }) async {
   createUploadMediaListTile(String label, MediaSource mediaSource) => ListTile(
-            title: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.getFont(
-                pickerFontFamily,
-                color: textColor,
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
-              ),
+        title: Text(
+          label,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.getFont(
+            pickerFontFamily,
+            color: textColor,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ),
+        ),
+        tileColor: backgroundColor,
+        dense: false,
+        onTap: () => Navigator.pop(
+          context,
+          mediaSource,
+        ),
+      );
+  final mediaSource = await showCupertinoModalPopup<MediaSource>(
+    context: context,
+    builder: (context) {
+      return CupertinoActionSheet(
+        actions: <Widget>[
+          if (allowPhoto && allowVideo) ...[
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context, MediaSource.photoGallery);
+              },
+              child: Text('Bildebibliotek (Bilde)'),
             ),
-            tileColor: backgroundColor,
-            dense: false,
-            onTap: () => Navigator.pop(
-              context,
-              mediaSource,
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context, MediaSource.videoGallery);
+              },
+              child: Text('Bildebibliotek (Video)'),
             ),
-          );
-  final mediaSource = await showModalBottomSheet<MediaSource>(
-      context: context,
-      backgroundColor: backgroundColor,
-      builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (!kIsWeb) ...[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                child: ListTile(
-                  title: Text(
-                    'Choose Source',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.getFont(
-                      pickerFontFamily,
-                      color: textColor.withOpacity(0.65),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
-                  ),
-                  tileColor: backgroundColor,
-                  dense: false,
-                ),
-              ),
-              const Divider(),
-            ],
-            if (allowPhoto && allowVideo) ...[
-              createUploadMediaListTile(
-                'Gallery (Photo)',
-                MediaSource.photoGallery,
-              ),
-              const Divider(),
-              createUploadMediaListTile(
-                'Gallery (Video)',
-                MediaSource.videoGallery,
-              ),
-            ] else if (allowPhoto)
-              createUploadMediaListTile(
-                'Gallery',
-                MediaSource.photoGallery,
-              )
-            else
-              createUploadMediaListTile(
-                'Gallery',
-                MediaSource.videoGallery,
-              ),
-            if (!kIsWeb) ...[
-              const Divider(),
-              createUploadMediaListTile('Camera', MediaSource.camera),
-              const Divider(),
-            ],
-            const SizedBox(height: 10),
+          ] else if (allowPhoto) ...[
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context, MediaSource.photoGallery);
+              },
+              child: Text('Bildebibliotek'),
+            ),
+          ] else if (allowVideo) ...[
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context, MediaSource.videoGallery);
+              },
+              child: Text('Bildebibliotek'),
+            ),
           ],
-        );
-      });
+          if (!kIsWeb) ...[
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context, MediaSource.camera);
+              },
+              child: Text('Kamera'),
+            ),
+          ],
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          isDefaultAction: true,
+          child: Text('Avbryt'),
+        ),
+      );
+    },
+  );
   if (mediaSource == null) {
     return null;
   }
@@ -367,7 +364,8 @@ void showUploadMessage(
             Text(message),
           ],
         ),
-        duration: showLoading ? const Duration(days: 1) : const Duration(seconds: 4),
+        duration:
+            showLoading ? const Duration(days: 1) : const Duration(seconds: 4),
       ),
     );
 }
