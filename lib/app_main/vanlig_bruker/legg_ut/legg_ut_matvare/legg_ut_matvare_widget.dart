@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/matvarer.dart';
 
 import '/app_main/vanlig_bruker/legg_ut/velg_pos/velg_pos_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -64,6 +66,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     with TickerProviderStateMixin {
   late LeggUtMatvareModel _model;
   final FocusNode _hiddenFocusNode = FocusNode();
+  late Matvarer matvare;
 
   final ApiCalls apiCalls = ApiCalls();
 
@@ -104,6 +107,35 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
 
     _model.antallStkTextController ??= TextEditingController();
     _model.antallStkFocusNode ??= FocusNode();
+    _model.dropDownValueController ??= FormFieldController<String>(null);
+
+    if (widget.matinfo != null) {
+      matvare = Matvarer.fromJson1(widget.matinfo);
+
+      while (matvare.imgUrls!.length <= 4) {
+        matvare.imgUrls?.add(''); // Add empty string placeholders
+      }
+      _model.produktNavnTextController.text = matvare.name ?? '';
+      _model.dropDownValueController!.value = matvare.kategorier!.first;
+      _model.produktBeskrivelseTextController.text = matvare.description ?? '';
+      if (matvare.antall.toString() == 'null') {
+        _model.antallStkTextController.text = '0';
+      } else {
+        _model.antallStkTextController.text = matvare.antall.toString();
+      }
+      if (matvare.kg == true) {
+        _model.tabBarController!.index = 1;
+        _model.produktPrisKgTextController.text = matvare.price.toString();
+      } else {
+        _model.produktPrisSTKTextController.text = matvare.price.toString();
+      }
+      selectedLatLng = LatLng(matvare.lat ?? 0, matvare.lng ?? 0);
+    } else {
+      matvare = Matvarer.fromJson1({'imgUrl': []});
+      while (matvare.imgUrls!.length <= 4) {
+        matvare.imgUrls?.add('');
+      }
+    }
   }
 
   void updateSelectedLatLng(LatLng? newLatLng) {
@@ -280,8 +312,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 if ((_model.uploadedLocalFile1
-                                                        .bytes?.isEmpty ??
-                                                    true))
+                                                            .bytes?.isEmpty ??
+                                                        true) &&
+                                                    (matvare
+                                                        .imgUrls![0].isEmpty))
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
@@ -379,6 +413,60 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         const AlignmentDirectional(
                                                             1.0, -1.0),
                                                     children: [
+                                                      if (widget.matinfo !=
+                                                              null &&
+                                                          matvare.imgUrls![0]
+                                                              .isNotEmpty)
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0.0, 0.0),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                            child:
+                                                                Image.network(
+                                                              '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
+                                                              width: 100.0,
+                                                              height: 100.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      if (widget.matinfo !=
+                                                              null &&
+                                                          matvare.imgUrls![0]
+                                                              .isNotEmpty)
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  1.22, -1.2),
+                                                          child:
+                                                              FlutterFlowIconButton(
+                                                            borderRadius: 100.0,
+                                                            buttonSize: 29.0,
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xB3262C2D),
+                                                            icon: FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .times,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                              size: 16.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              matvare.imgUrls![
+                                                                  0] = '';
+                                                              safeSetState(
+                                                                  () {});
+                                                            },
+                                                          ),
+                                                        ),
                                                       if ((_model
                                                               .uploadedLocalFile1
                                                               .bytes
@@ -455,6 +543,60 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         const AlignmentDirectional(
                                                             1.0, -1.0),
                                                     children: [
+                                                      if (widget.matinfo !=
+                                                              null &&
+                                                          matvare.imgUrls![1]
+                                                              .isNotEmpty)
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0.0, 0.0),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                            child:
+                                                                Image.network(
+                                                              '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
+                                                              width: 100.0,
+                                                              height: 100.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      if (widget.matinfo !=
+                                                              null &&
+                                                          matvare.imgUrls![1]
+                                                              .isNotEmpty)
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  1.22, -1.2),
+                                                          child:
+                                                              FlutterFlowIconButton(
+                                                            borderRadius: 100.0,
+                                                            buttonSize: 29.0,
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xB3262C2D),
+                                                            icon: FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .times,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                              size: 16.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              matvare.imgUrls![
+                                                                  1] = '';
+                                                              safeSetState(
+                                                                  () {});
+                                                            },
+                                                          ),
+                                                        ),
                                                       if ((_model
                                                               .uploadedLocalFile2
                                                               .bytes
@@ -524,8 +666,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 if ((_model.uploadedLocalFile2
-                                                        .bytes?.isEmpty ??
-                                                    true))
+                                                            .bytes?.isEmpty ??
+                                                        true) &&
+                                                    (matvare
+                                                        .imgUrls![1].isEmpty))
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
@@ -623,6 +767,60 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         const AlignmentDirectional(
                                                             1.0, -1.0),
                                                     children: [
+                                                      if (widget.matinfo !=
+                                                              null &&
+                                                          matvare.imgUrls![2]
+                                                              .isNotEmpty)
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0.0, 0.0),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                            child:
+                                                                Image.network(
+                                                              '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
+                                                              width: 100.0,
+                                                              height: 100.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      if (widget.matinfo !=
+                                                              null &&
+                                                          matvare.imgUrls![2]
+                                                              .isNotEmpty)
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  1.22, -1.2),
+                                                          child:
+                                                              FlutterFlowIconButton(
+                                                            borderRadius: 100.0,
+                                                            buttonSize: 29.0,
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xB3262C2D),
+                                                            icon: FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .times,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                              size: 16.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              matvare.imgUrls![
+                                                                  2] = '';
+                                                              safeSetState(
+                                                                  () {});
+                                                            },
+                                                          ),
+                                                        ),
                                                       if ((_model
                                                               .uploadedLocalFile3
                                                               .bytes
@@ -692,8 +890,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 if ((_model.uploadedLocalFile3
-                                                        .bytes?.isEmpty ??
-                                                    true))
+                                                            .bytes?.isEmpty ??
+                                                        true) &&
+                                                    (matvare
+                                                        .imgUrls![2].isEmpty))
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
@@ -791,6 +991,60 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         const AlignmentDirectional(
                                                             1.0, -1.0),
                                                     children: [
+                                                      if (widget.matinfo !=
+                                                              null &&
+                                                          matvare.imgUrls![3]
+                                                              .isNotEmpty)
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0.0, 0.0),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                            child:
+                                                                Image.network(
+                                                              '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
+                                                              width: 100.0,
+                                                              height: 100.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      if (widget.matinfo !=
+                                                              null &&
+                                                          matvare.imgUrls![3]
+                                                              .isNotEmpty)
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  1.22, -1.2),
+                                                          child:
+                                                              FlutterFlowIconButton(
+                                                            borderRadius: 100.0,
+                                                            buttonSize: 29.0,
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xB3262C2D),
+                                                            icon: FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .times,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                              size: 16.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              matvare.imgUrls![
+                                                                  3] = '';
+                                                              safeSetState(
+                                                                  () {});
+                                                            },
+                                                          ),
+                                                        ),
                                                       if ((_model
                                                               .uploadedLocalFile4
                                                               .bytes
@@ -860,8 +1114,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 if ((_model.uploadedLocalFile4
-                                                        .bytes?.isEmpty ??
-                                                    true))
+                                                            .bytes?.isEmpty ??
+                                                        true) &&
+                                                    (matvare
+                                                        .imgUrls![3].isEmpty))
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
@@ -959,6 +1215,60 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         const AlignmentDirectional(
                                                             1.0, -1.0),
                                                     children: [
+                                                      if (widget.matinfo !=
+                                                              null &&
+                                                          matvare.imgUrls![4]
+                                                              .isNotEmpty)
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0.0, 0.0),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                            child:
+                                                                Image.network(
+                                                              '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
+                                                              width: 100.0,
+                                                              height: 100.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      if (widget.matinfo !=
+                                                              null &&
+                                                          matvare.imgUrls![4]
+                                                              .isNotEmpty)
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  1.22, -1.2),
+                                                          child:
+                                                              FlutterFlowIconButton(
+                                                            borderRadius: 100.0,
+                                                            buttonSize: 29.0,
+                                                            fillColor:
+                                                                const Color(
+                                                                    0xB3262C2D),
+                                                            icon: FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .times,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                              size: 16.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              matvare.imgUrls![
+                                                                  4] = '';
+                                                              safeSetState(
+                                                                  () {});
+                                                            },
+                                                          ),
+                                                        ),
                                                       if ((_model
                                                               .uploadedLocalFile5
                                                               .bytes
@@ -1028,8 +1338,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                                 if ((_model.uploadedLocalFile5
-                                                        .bytes?.isEmpty ??
-                                                    true))
+                                                            .bytes?.isEmpty ??
+                                                        true) &&
+                                                    (matvare
+                                                        .imgUrls![4].isEmpty))
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
@@ -1329,7 +1641,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       fontWeight:
                                                           FontWeight.w500,
                                                     ),
-                                                hintText: 'Velg kategorier...',
+                                                hintText: 'Velg kategori',
                                                 icon: Icon(
                                                   Icons
                                                       .keyboard_arrow_down_rounded,

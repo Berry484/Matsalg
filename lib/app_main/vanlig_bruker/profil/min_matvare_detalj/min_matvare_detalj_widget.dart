@@ -635,6 +635,12 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                 true,
                                                                 ParamType.bool,
                                                               ),
+                                                              'matinfo':
+                                                                  serializeParam(
+                                                                matvare
+                                                                    .toJson(),
+                                                                ParamType.JSON,
+                                                              ),
                                                             }.withoutNulls,
                                                           );
                                                         },

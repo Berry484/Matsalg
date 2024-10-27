@@ -34,27 +34,27 @@ class Matvarer {
     this.profilepic,
     this.kjopt,
   });
-  factory Matvarer.fromJson1(Map<String, dynamic> json) {
+  factory Matvarer.fromJson1(Map<String, dynamic>? json) {
     return Matvarer(
-      matId: json['matId'] as int?,
-      name: json['name'] as String?,
-      imgUrls: (json['imgUrl'] != null && json['imgUrl'] is List)
-          ? List<String>.from(json['imgUrl'])
+      matId: json?['matId'] as int?,
+      name: json?['name'] as String?,
+      imgUrls: (json?['imgUrl'] != null && json?['imgUrl'] is List)
+          ? List<String>.from(json?['imgUrl'])
           : null,
-      description: json['description'] as String?,
-      price: json['price'] as int?,
-      kategorier: (json['kategorier'] != null && json['kategorier'] is List)
-          ? List<String>.from(json['kategorier'])
+      description: json?['description'] as String?,
+      price: json?['price'] as int?,
+      kategorier: (json?['kategorier'] != null && json?['kategorier'] is List)
+          ? List<String>.from(json?['kategorier'])
           : null,
-      lat: json['lat'] as double?,
-      lng: json['lng'] as double?,
-      betaling: json['betaling'] as bool?,
-      kg: json['kg'] as bool?,
-      username: json['username'] as String?,
-      bonde: json['bonde'] as bool?,
-      antall: json['antall'] as double?,
-      profilepic: json['profilepic'] as String?,
-      kjopt: json['kjopt'] as bool?,
+      lat: json?['lat'] as double?,
+      lng: json?['lng'] as double?,
+      betaling: json?['betaling'] as bool?,
+      kg: json?['kg'] as bool?,
+      username: json?['username'] as String?,
+      bonde: json?['bonde'] as bool?,
+      antall: json?['antall'] as double?,
+      profilepic: json?['profilepic'] as String?,
+      kjopt: json?['kjopt'] as bool?,
     );
   }
 
