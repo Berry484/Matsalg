@@ -1551,4 +1551,62 @@ class ApiUpdateFood {
 
     return response; // Return the response
   }
+
+  Future<http.Response> updateFood({
+    String? token,
+    required int? id,
+    String? name,
+    var imgUrl,
+    String? description,
+    String? price,
+    String? kategorier,
+    LatLng? posisjon,
+    bool? betaling,
+    bool? kg,
+    String? antall,
+  }) async {
+    // Convert the String antall to double
+    double? antallAsDouble;
+    if (antall != null) {
+      try {
+        antallAsDouble = double.parse(antall);
+      } catch (e) {
+        return http.Response("", 400); // Return bad request if parsing fails
+      }
+    }
+
+    final Map<String, dynamic> requestBody = {
+      "name": name,
+      "imgUrl": imgUrl,
+      "description": description,
+      "price": price,
+      "kategorier": [kategorier],
+      "lat": posisjon?.latitude,
+      "lng": posisjon?.longitude,
+      "betaling": betaling,
+      "antall": antall,
+      "kjopt": false,
+      "slettet": false,
+      "kg": kg,
+    };
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(requestBody);
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    final response = await http.put(
+      Uri.parse(
+          '$baseUrl/rrh/send/matvarer/$id'), // Endpoint for updating user info
+      headers: headers,
+      body: jsonBody,
+    );
+
+    return response; // Return the response
+  }
 }

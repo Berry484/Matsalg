@@ -3785,8 +3785,277 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             0.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
-                                                        context
-                                                            .goNamed('Profil');
+                                                        if (_model.formKey
+                                                                    .currentState ==
+                                                                null ||
+                                                            !_model.formKey
+                                                                .currentState!
+                                                                .validate()) {
+                                                          return;
+                                                        }
+
+                                                        if (_model.tabBarCurrentIndex ==
+                                                                0 &&
+                                                            _model
+                                                                .produktPrisSTKTextController
+                                                                .text
+                                                                .isEmpty) {
+                                                          await showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (alertDialogContext) {
+                                                              return CupertinoAlertDialog(
+                                                                title: const Text(
+                                                                    'Velg pris'),
+                                                                content: const Text(
+                                                                    'Velg en pris på matvaren'),
+                                                                actions: [
+                                                                  CupertinoDialogAction(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext),
+                                                                    child:
+                                                                        const Text(
+                                                                            'Ok'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+                                                          return;
+                                                        }
+
+                                                        if (_model.tabBarCurrentIndex !=
+                                                                0 &&
+                                                            _model
+                                                                .produktPrisKgTextController
+                                                                .text
+                                                                .isEmpty) {
+                                                          await showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (alertDialogContext) {
+                                                              return CupertinoAlertDialog(
+                                                                title: const Text(
+                                                                    'Velg pris'),
+                                                                content: const Text(
+                                                                    'Velg en pris på matvaren'),
+                                                                actions: [
+                                                                  CupertinoDialogAction(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext),
+                                                                    child:
+                                                                        const Text(
+                                                                            'Ok'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+                                                          return null;
+                                                        }
+
+                                                        if (selectedLatLng ==
+                                                            null) {
+                                                          await showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (alertDialogContext) {
+                                                              return CupertinoAlertDialog(
+                                                                title: const Text(
+                                                                    'Velg posisjon'),
+                                                                content: const Text(
+                                                                    'Mangler posisjon'),
+                                                                actions: [
+                                                                  CupertinoDialogAction(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext),
+                                                                    child:
+                                                                        const Text(
+                                                                            'Ok'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+                                                          return null;
+                                                        }
+
+                                                        String? token =
+                                                            await Securestorage()
+                                                                .readToken();
+                                                        if (token == null) {
+                                                          FFAppState().login =
+                                                              false;
+                                                          context.pushNamed(
+                                                              'registrer');
+                                                          return;
+                                                        } else {
+                                                          final List<Uint8List?>
+                                                              filesData = [
+                                                            _model
+                                                                .uploadedLocalFile1
+                                                                .bytes,
+                                                            _model
+                                                                .uploadedLocalFile2
+                                                                .bytes,
+                                                            _model
+                                                                .uploadedLocalFile3
+                                                                .bytes,
+                                                            _model
+                                                                .uploadedLocalFile4
+                                                                .bytes,
+                                                            _model
+                                                                .uploadedLocalFile5
+                                                                .bytes,
+                                                          ];
+
+                                                          final List<Uint8List>
+                                                              filteredFilesData =
+                                                              filesData
+                                                                  .where((file) =>
+                                                                      file !=
+                                                                          null &&
+                                                                      file
+                                                                          .isNotEmpty)
+                                                                  .cast<
+                                                                      Uint8List>()
+                                                                  .toList();
+
+                                                          final filelinks =
+                                                              await apiMultiplePics
+                                                                  .uploadPictures(
+                                                                      token:
+                                                                          token,
+                                                                      filesData:
+                                                                          filteredFilesData);
+                                                          final List<String>
+                                                              combinedLinks = [
+                                                            ...matvare.imgUrls!
+                                                                .where((url) =>
+                                                                    url.isNotEmpty) // Filters out both null and empty strings
+                                                          ];
+
+                                                          if (filelinks !=
+                                                                  null &&
+                                                              filelinks
+                                                                  .isNotEmpty) {
+                                                            combinedLinks
+                                                                .addAll(
+                                                                    filelinks);
+                                                          }
+
+                                                          if (combinedLinks
+                                                              .isEmpty) {
+                                                            await showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (alertDialogContext) {
+                                                                return CupertinoAlertDialog(
+                                                                  title: const Text(
+                                                                      'Mangler bilder'),
+                                                                  content:
+                                                                      const Text(
+                                                                          'Last opp minst 1 bilde'),
+                                                                  actions: [
+                                                                    CupertinoDialogAction(
+                                                                      onPressed:
+                                                                          () =>
+                                                                              Navigator.pop(alertDialogContext),
+                                                                      child: const Text(
+                                                                          'Ok'),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            );
+                                                            return null;
+                                                          }
+                                                          String pris;
+                                                          bool kg;
+                                                          if (_model
+                                                              .produktPrisSTKTextController
+                                                              .text
+                                                              .isNotEmpty) {
+                                                            pris = _model
+                                                                .produktPrisSTKTextController
+                                                                .text;
+                                                            kg =
+                                                                false; // KG is disabled if STK is set
+                                                          } else if (_model
+                                                              .produktPrisKgTextController
+                                                              .text
+                                                              .isNotEmpty) {
+                                                            // If STK is not set, use KG and set KG to true
+                                                            pris = _model
+                                                                .produktPrisKgTextController
+                                                                .text;
+                                                            kg =
+                                                                true; // KG is enabled if STK is not set
+                                                          } else {
+                                                            // If neither is set, you can set a default value (empty string in this case)
+                                                            pris = '';
+                                                            kg =
+                                                                true; // By default, KG is enabled if STK is not set
+                                                          }
+                                                          ApiUpdateFood
+                                                              apiUpdateFood =
+                                                              ApiUpdateFood();
+                                                          final response =
+                                                              await apiUpdateFood
+                                                                  .updateFood(
+                                                            token: token,
+                                                            id: matvare.matId,
+                                                            name: _model
+                                                                .produktNavnTextController
+                                                                .text,
+                                                            imgUrl:
+                                                                combinedLinks,
+                                                            description: _model
+                                                                .produktBeskrivelseTextController
+                                                                .text,
+                                                            price: pris,
+                                                            kategorier: _model
+                                                                .dropDownValueController
+                                                                ?.value,
+                                                            posisjon:
+                                                                selectedLatLng,
+                                                            antall: _model
+                                                                .antallStkTextController
+                                                                .text,
+                                                            betaling: _model
+                                                                .checkboxValue,
+                                                            kg: kg,
+                                                          );
+
+                                                          if (response
+                                                                  .statusCode ==
+                                                              200) {
+                                                            setState(() {});
+                                                            print(
+                                                                "this code ran??");
+                                                            context.goNamed(
+                                                              'Hjem',
+                                                              extra: <String,
+                                                                  dynamic>{
+                                                                kTransitionInfoKey:
+                                                                    const TransitionInfo(
+                                                                  hasTransition:
+                                                                      true,
+                                                                  transitionType:
+                                                                      PageTransitionType
+                                                                          .fade,
+                                                                  duration: Duration(
+                                                                      milliseconds:
+                                                                          0),
+                                                                ),
+                                                              },
+                                                            );
+                                                          } else {}
+                                                          setState(() {});
+                                                        }
                                                       },
                                                       text:
                                                           'Oppdater informasjon',

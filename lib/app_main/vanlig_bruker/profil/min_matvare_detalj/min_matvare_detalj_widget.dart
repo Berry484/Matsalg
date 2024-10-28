@@ -520,6 +520,10 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
+                                              double startLat =
+                                                  matvare.lat ?? 59.9138688;
+                                              double startLng =
+                                                  matvare.lng ?? 10.7522454;
                                               await showModalBottomSheet(
                                                 isScrollControlled: true,
                                                 backgroundColor:
@@ -535,8 +539,10 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       padding: MediaQuery
                                                           .viewInsetsOf(
                                                               context),
-                                                      child:
-                                                          const KartPopUpWidget(),
+                                                      child: KartPopUpWidget(
+                                                        startLat: startLat,
+                                                        startLng: startLng,
+                                                      ),
                                                     ),
                                                   );
                                                 },
