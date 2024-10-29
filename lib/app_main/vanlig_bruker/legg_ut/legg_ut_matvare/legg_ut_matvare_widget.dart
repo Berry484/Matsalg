@@ -3872,8 +3872,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .statusCode ==
                                                               200) {
                                                             setState(() {});
-                                                            print(
-                                                                "this code ran??");
                                                             context.goNamed(
                                                               'Hjem',
                                                               extra: <String,
