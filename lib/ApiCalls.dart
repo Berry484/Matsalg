@@ -1,8 +1,8 @@
+// ignore: file_names
 import 'dart:convert';
-import 'dart:ffi';
 
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
-import 'package:json_path/fun_extra.dart';
 import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'dart:async'; // Import this to use Future and TimeoutException
@@ -1565,16 +1565,6 @@ class ApiUpdateFood {
     bool? kg,
     String? antall,
   }) async {
-    // Convert the String antall to double
-    double? antallAsDouble;
-    if (antall != null) {
-      try {
-        antallAsDouble = double.parse(antall);
-      } catch (e) {
-        return http.Response("", 400); // Return bad request if parsing fails
-      }
-    }
-
     final Map<String, dynamic> requestBody = {
       "name": name,
       "imgUrl": imgUrl,
