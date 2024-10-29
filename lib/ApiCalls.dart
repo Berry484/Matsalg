@@ -1,7 +1,5 @@
-// ignore: file_names
 import 'dart:convert';
 
-// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -1599,4 +1597,62 @@ class ApiUpdateFood {
 
     return response; // Return the response
   }
+}
+
+class ApiSearchUsers {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  static Future<List<UserInfoSearch>?> searchUsers(
+      String? token, String? query) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      if (query != null && query.isNotEmpty) {
+        // Make the API request with a timeout of 5 seconds
+        final response = await http
+            .get(
+              Uri.parse('$baseUrl/rrh/brukere/search?query=$query'),
+              headers: headers,
+            )
+            .timeout(const Duration(seconds: 5));
+        if (response.statusCode == 200) {
+          List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+
+          List<UserInfoSearch> profiler = data.map((userData) {
+            return UserInfoSearch(
+              username: userData['username'],
+              firstname: userData['firstname'],
+              lastname: userData['lastname'],
+              profilepic: userData['profilepic'],
+            );
+          }).toList();
+          return profiler;
+        }
+      } else {
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+    return null;
+  }
+}
+
+class UserInfoSearch {
+  final String username;
+  final String firstname;
+  final String lastname;
+  final String profilepic;
+
+  UserInfoSearch({
+    required this.username,
+    required this.firstname,
+    required this.lastname,
+    required this.profilepic,
+  });
 }
