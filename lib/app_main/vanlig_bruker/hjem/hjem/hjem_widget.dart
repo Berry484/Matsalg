@@ -211,7 +211,7 @@ class _HjemWidgetState extends State<HjemWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -347,6 +347,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       _model.textFieldFocusNode,
                                                   autofocus: false,
                                                   obscureText: false,
+                                                  textInputAction: TextInputAction
+                                                      .search, // Add this line to
                                                   decoration: InputDecoration(
                                                     isDense: true,
                                                     alignLabelWithHint: false,
@@ -417,18 +419,19 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                         246, 243, 243, 243),
                                                     prefixIcon: const Icon(
                                                       Icons.search_outlined,
+                                                      size: 20,
                                                     ),
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyMedium
+                                                      .bodyLarge
                                                       .override(
                                                         fontFamily: 'Open Sans',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .secondaryText,
-                                                        fontSize: 13.0,
+                                                                .primaryText,
+                                                        fontSize: 15.0,
                                                         letterSpacing: 0.0,
                                                       ),
                                                   textAlign: TextAlign.start,
@@ -544,8 +547,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   ),
                                                                 ),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           0,
                                                                           0,
                                                                           0,
@@ -558,7 +562,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                         MainAxisAlignment
                                                                             .start,
                                                                     children: [
-                                                                      Icon(
+                                                                      const Icon(
                                                                         Icons
                                                                             .person_outlined,
                                                                         color: Color(
@@ -567,7 +571,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             36,
                                                                       ),
                                                                       Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             2,
                                                                             0,

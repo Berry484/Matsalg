@@ -400,6 +400,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                       246, 243, 243, 243),
                                                   prefixIcon: const Icon(
                                                     Icons.search_outlined,
+                                                    size: 20,
                                                   ),
                                                 ),
                                                 style: FlutterFlowTheme.of(

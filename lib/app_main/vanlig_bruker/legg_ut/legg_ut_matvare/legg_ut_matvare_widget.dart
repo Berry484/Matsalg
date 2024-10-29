@@ -162,16 +162,16 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
+            backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme:
-                IconThemeData(color: FlutterFlowTheme.of(context).alternate),
+                IconThemeData(color: FlutterFlowTheme.of(context).primaryText),
             automaticallyImplyLeading: true,
             leading: Align(
               alignment: AlignmentDirectional(0, 0),
@@ -189,7 +189,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                     'Avbryt',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Open Sans',
-                          color: FlutterFlowTheme.of(context).info,
+                          color: FlutterFlowTheme.of(context).primaryText,
                           fontSize: 14,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.bold,
@@ -199,7 +199,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
               ),
             ),
             title: Text(
-              'Publiser matvare',
+              'Ny matvare',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Montserrat',
@@ -267,7 +267,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               'Open Sans',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .alternate,
+                                                              .primaryText,
                                                           fontSize: 17.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -279,7 +279,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(
-                                                          0.0, 0.0, 0.0, 15.0),
+                                                          0.0, 0.0, 0.0, 30.0),
                                                   child: Text(
                                                     'Last opp minst 3 bilder',
                                                     textAlign: TextAlign.start,
@@ -291,7 +291,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               'Open Sans',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .alternate,
+                                                              .primaryText,
                                                           fontSize: 13.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -326,20 +326,21 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       borderColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .secondaryText,
+                                                              .secondary,
                                                       borderRadius: 10.0,
                                                       buttonSize: 100.0,
                                                       fillColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primary,
-                                                      icon: FaIcon(
-                                                        FontAwesomeIcons.camera,
+                                                              .secondary,
+                                                      icon: Icon(
+                                                        Icons
+                                                            .photo_camera_outlined,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
-                                                        size: 24.0,
+                                                                .primaryText,
+                                                        size: 30.0,
                                                       ),
                                                       onPressed: () async {
                                                         final selectedMedia =
@@ -417,21 +418,28 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               null &&
                                                           matvare.imgUrls![0]
                                                               .isNotEmpty)
-                                                        Align(
-                                                          alignment:
-                                                              const AlignmentDirectional(
-                                                                  0.0, 0.0),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                            child:
-                                                                Image.network(
-                                                              '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
-                                                              width: 100.0,
-                                                              height: 100.0,
-                                                              fit: BoxFit.cover,
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 20.0),
+                                                          child: Align(
+                                                            alignment:
+                                                                const AlignmentDirectional(
+                                                                    0.0, 0.0),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                              child:
+                                                                  Image.network(
+                                                                '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
+                                                                width: 100.0,
+                                                                height: 100.0,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
@@ -455,7 +463,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .times,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primary,
+                                                                  .secondary,
                                                               size: 16.0,
                                                             ),
                                                             onPressed:
@@ -514,7 +522,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .times,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primary,
+                                                                  .secondary,
                                                               size: 16.0,
                                                             ),
                                                             onPressed:
@@ -585,7 +593,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .times,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primary,
+                                                                  .secondary,
                                                               size: 16.0,
                                                             ),
                                                             onPressed:
@@ -646,7 +654,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .times,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primary,
+                                                                  .secondary,
                                                               size: 16.0,
                                                             ),
                                                             onPressed:
@@ -680,20 +688,21 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       borderColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .secondaryText,
+                                                              .secondary,
                                                       borderRadius: 10.0,
                                                       buttonSize: 100.0,
                                                       fillColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primary,
-                                                      icon: FaIcon(
-                                                        FontAwesomeIcons.camera,
+                                                              .secondary,
+                                                      icon: Icon(
+                                                        Icons
+                                                            .photo_camera_outlined,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
-                                                        size: 24.0,
+                                                                .primaryText,
+                                                        size: 30.0,
                                                       ),
                                                       onPressed: () async {
                                                         final selectedMedia =
@@ -809,7 +818,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .times,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primary,
+                                                                  .secondary,
                                                               size: 16.0,
                                                             ),
                                                             onPressed:
@@ -870,7 +879,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .times,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primary,
+                                                                  .secondary,
                                                               size: 16.0,
                                                             ),
                                                             onPressed:
@@ -904,20 +913,21 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       borderColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .secondaryText,
+                                                              .secondary,
                                                       borderRadius: 10.0,
                                                       buttonSize: 100.0,
                                                       fillColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primary,
-                                                      icon: FaIcon(
-                                                        FontAwesomeIcons.camera,
+                                                              .secondary,
+                                                      icon: Icon(
+                                                        Icons
+                                                            .photo_camera_outlined,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
-                                                        size: 24.0,
+                                                                .primaryText,
+                                                        size: 30.0,
                                                       ),
                                                       onPressed: () async {
                                                         final selectedMedia =
@@ -1033,7 +1043,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .times,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primary,
+                                                                  .secondary,
                                                               size: 16.0,
                                                             ),
                                                             onPressed:
@@ -1094,7 +1104,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .times,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primary,
+                                                                  .secondary,
                                                               size: 16.0,
                                                             ),
                                                             onPressed:
@@ -1128,20 +1138,21 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       borderColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .secondaryText,
+                                                              .secondary,
                                                       borderRadius: 10.0,
                                                       buttonSize: 100.0,
                                                       fillColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primary,
-                                                      icon: FaIcon(
-                                                        FontAwesomeIcons.camera,
+                                                              .secondary,
+                                                      icon: Icon(
+                                                        Icons
+                                                            .photo_camera_outlined,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
-                                                        size: 24.0,
+                                                                .primaryText,
+                                                        size: 30.0,
                                                       ),
                                                       onPressed: () async {
                                                         final selectedMedia =
@@ -1257,7 +1268,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .times,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primary,
+                                                                  .secondary,
                                                               size: 16.0,
                                                             ),
                                                             onPressed:
@@ -1318,7 +1329,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .times,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primary,
+                                                                  .secondary,
                                                               size: 16.0,
                                                             ),
                                                             onPressed:
@@ -1352,20 +1363,21 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       borderColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .secondaryText,
+                                                              .secondary,
                                                       borderRadius: 10.0,
                                                       buttonSize: 100.0,
                                                       fillColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primary,
-                                                      icon: FaIcon(
-                                                        FontAwesomeIcons.camera,
+                                                              .secondary,
+                                                      icon: Icon(
+                                                        Icons
+                                                            .photo_camera_outlined,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
-                                                        size: 24.0,
+                                                                .primaryText,
+                                                        size: 30.0,
                                                       ),
                                                       onPressed: () async {
                                                         final selectedMedia =
@@ -1457,7 +1469,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .alternate,
+                                                              .primaryText,
                                                       fontSize: 17.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -1479,14 +1491,17 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   TextCapitalization.words,
                                               obscureText: false,
                                               decoration: InputDecoration(
-                                                labelText: 'Matvarenavn',
+                                                labelText: 'Tittel',
                                                 labelStyle:
                                                     FlutterFlowTheme.of(context)
-                                                        .labelMedium
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
+                                                          fontSize: 14.0,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                 hintStyle:
                                                     FlutterFlowTheme.of(context)
@@ -1511,7 +1526,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   borderSide: BorderSide(
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .primary,
+                                                        .secondary,
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
@@ -1544,7 +1559,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 filled: true,
                                                 fillColor:
                                                     FlutterFlowTheme.of(context)
-                                                        .primary,
+                                                        .secondary,
                                                 contentPadding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
@@ -1592,7 +1607,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .alternate,
+                                                              .primaryText,
                                                       fontSize: 17.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -1627,21 +1642,18 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     MediaQuery.sizeOf(context)
                                                         .width,
                                                 height: 60,
-                                                textStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      fontSize: 13,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                hintText: 'Velg kategori',
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                hintText: 'Kategori',
                                                 icon: Icon(
                                                   Icons
                                                       .keyboard_arrow_down_rounded,
@@ -1652,7 +1664,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 ),
                                                 fillColor:
                                                     FlutterFlowTheme.of(context)
-                                                        .primary,
+                                                        .secondary,
                                                 elevation: 6,
                                                 borderColor:
                                                     FlutterFlowTheme.of(context)
@@ -1693,7 +1705,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .alternate,
+                                                              .primaryText,
                                                       fontSize: 17.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -1745,11 +1757,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               decoration: InputDecoration(
                                                 labelStyle:
                                                     FlutterFlowTheme.of(context)
-                                                        .labelMedium
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
+                                                          fontSize: 14.0,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                 hintText: 'Beskrivelse',
                                                 hintStyle:
@@ -1758,6 +1773,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
+                                                          fontSize: 13.0,
                                                           letterSpacing: 0.0,
                                                         ),
                                                 enabledBorder:
@@ -1775,7 +1791,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   borderSide: BorderSide(
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .primary,
+                                                        .secondary,
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
@@ -1808,7 +1824,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 filled: true,
                                                 fillColor:
                                                     FlutterFlowTheme.of(context)
-                                                        .primary,
+                                                        .secondary,
                                                 contentPadding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
@@ -1856,7 +1872,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .alternate,
+                                                              .primaryText,
                                                       fontSize: 17.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -1871,7 +1887,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                             decoration: BoxDecoration(
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
+                                                      .primary,
                                             ),
                                             child: Column(
                                               children: [
@@ -1879,6 +1895,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   alignment:
                                                       const Alignment(0.0, 0),
                                                   child: TabBar(
+                                                    dividerColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
                                                     labelColor:
                                                         FlutterFlowTheme.of(
                                                                 context)
@@ -1911,7 +1931,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     indicatorColor:
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .alternate,
+                                                            .primaryText,
                                                     padding:
                                                         const EdgeInsets.all(
                                                             8.0),
@@ -1965,38 +1985,18 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             MainAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Align(
+                                                          const Align(
                                                             alignment:
-                                                                const AlignmentDirectional(
+                                                                AlignmentDirectional(
                                                                     -1.0, 0.0),
                                                             child: Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                      20.0,
-                                                                      30.0,
-                                                                      0.0,
-                                                                      5.0),
-                                                              child: Text(
-                                                                'Skriv prisen pr stk, for eks \"9Kr pr stk\"',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          13.0,
-                                                                      letterSpacing:
+                                                                          20.0,
+                                                                          30.0,
                                                                           0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
-                                                              ),
+                                                                          5.0),
                                                             ),
                                                           ),
                                                           Padding(
@@ -2089,7 +2089,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                         borderSide:
                                                                             BorderSide(
                                                                           color:
-                                                                              FlutterFlowTheme.of(context).primary,
+                                                                              FlutterFlowTheme.of(context).secondary,
                                                                           width:
                                                                               1.0,
                                                                         ),
@@ -2124,7 +2124,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           true,
                                                                       fillColor:
                                                                           FlutterFlowTheme.of(context)
-                                                                              .primary,
+                                                                              .secondary,
                                                                       contentPadding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
                                                                           20.0,
@@ -2185,7 +2185,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           fontFamily:
                                                                               'Open Sans',
                                                                           color:
-                                                                              FlutterFlowTheme.of(context).alternate,
+                                                                              FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
                                                                               17.0,
                                                                           letterSpacing:
@@ -2234,7 +2234,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           fontFamily:
                                                                               'Open Sans',
                                                                           color:
-                                                                              FlutterFlowTheme.of(context).alternate,
+                                                                              FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
                                                                               17.0,
                                                                           letterSpacing:
@@ -2258,7 +2258,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           fontFamily:
                                                                               'Open Sans',
                                                                           color:
-                                                                              FlutterFlowTheme.of(context).alternate,
+                                                                              FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
                                                                               17.0,
                                                                           letterSpacing:
@@ -2362,7 +2362,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               OutlineInputBorder(
                                                                             borderSide:
                                                                                 BorderSide(
-                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                              color: FlutterFlowTheme.of(context).secondary,
                                                                               width: 1.0,
                                                                             ),
                                                                             borderRadius:
@@ -2391,7 +2391,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           filled:
                                                                               true,
                                                                           fillColor:
-                                                                              FlutterFlowTheme.of(context).primary,
+                                                                              FlutterFlowTheme.of(context).secondary,
                                                                           contentPadding: const EdgeInsetsDirectional
                                                                               .fromSTEB(
                                                                               20.0,
@@ -2448,7 +2448,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               .bodyMedium
                                                                               .override(
                                                                                 fontFamily: 'Open Sans',
-                                                                                color: FlutterFlowTheme.of(context).alternate,
+                                                                                color: FlutterFlowTheme.of(context).primaryText,
                                                                                 fontSize: 17.0,
                                                                                 letterSpacing: 0.0,
                                                                                 fontWeight: FontWeight.w600,
@@ -2493,7 +2493,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                             .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Montserrat',
-                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
                                                                               fontSize: 17.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.bold,
@@ -2512,7 +2512,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                             .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Montserrat',
-                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
                                                                               fontSize: 17.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.bold,
@@ -2532,7 +2532,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               ],
                                             ),
                                           ),
-
                                           const Divider(
                                             thickness: 1.0,
                                             indent: 30.0,
@@ -2561,7 +2560,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               'Open Sans',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .alternate,
+                                                              .primaryText,
                                                           fontSize: 17.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -2693,7 +2692,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   BorderSide(
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primary,
+                                                                    .secondary,
                                                                 width: 1.0,
                                                               ),
                                                               borderRadius:
@@ -2733,7 +2732,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             fillColor:
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primary,
+                                                                    .secondary,
                                                             contentPadding:
                                                                 const EdgeInsetsDirectional
                                                                     .fromSTEB(
@@ -2811,7 +2810,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     'Open Sans',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .alternate,
+                                                                    .primaryText,
                                                                 fontSize: 17.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -2838,7 +2837,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     'Open Sans',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .alternate,
+                                                                    .primaryText,
                                                                 fontSize: 17.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -2881,7 +2880,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               'Open Sans',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .alternate,
+                                                              .primaryText,
                                                           fontSize: 17.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -3080,167 +3079,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 ),
                                             ],
                                           ),
-                                          // const Divider(
-                                          //   thickness: 1.0,
-                                          //   indent: 30.0,
-                                          //   endIndent: 30.0,
-                                          //   color: Color(0x62757575),
-                                          // ),
-                                          // if (responsiveVisibility(
-                                          //   context: context,
-                                          //   tablet: false,
-                                          // ))
-                                          // Padding(
-                                          //   padding:
-                                          //       const EdgeInsetsDirectional
-                                          //           .fromSTEB(
-                                          //           0.0, 20.0, 0.0, 20.0),
-                                          //   child: Column(
-                                          //     mainAxisSize: MainAxisSize.max,
-                                          //     children: [
-                                          //       Align(
-                                          //         alignment:
-                                          //             const AlignmentDirectional(
-                                          //                 -1.0, 0.0),
-                                          //         child: Padding(
-                                          //           padding:
-                                          //               const EdgeInsetsDirectional
-                                          //                   .fromSTEB(20.0,
-                                          //                   50.0, 0.0, 10.0),
-                                          //           child: Text(
-                                          //             'Ta betalt igjennom appen?',
-                                          //             style:
-                                          //                 FlutterFlowTheme.of(
-                                          //                         context)
-                                          //                     .bodyMedium
-                                          //                     .override(
-                                          //                       fontFamily:
-                                          //                           'Open Sans',
-                                          //                       color: FlutterFlowTheme.of(
-                                          //                               context)
-                                          //                           .alternate,
-                                          //                       fontSize:
-                                          //                           17.0,
-                                          //                       letterSpacing:
-                                          //                           0.0,
-                                          //                       fontWeight:
-                                          //                           FontWeight
-                                          //                               .bold,
-                                          //                     ),
-                                          //           ),
-                                          //         ),
-                                          //       ),
-                                          //       Align(
-                                          //         alignment:
-                                          //             const AlignmentDirectional(
-                                          //                 -1.0, 0.0),
-                                          //         child: Padding(
-                                          //           padding:
-                                          //               const EdgeInsetsDirectional
-                                          //                   .fromSTEB(20.0,
-                                          //                   0.0, 0.0, 10.0),
-                                          //           child: Text(
-                                          //             'Ta betalt i appen for å hjelpe å holde matsalg.no oppe.\nPengene vi tjener går til å dekke serverkostnader',
-                                          //             style:
-                                          //                 FlutterFlowTheme.of(
-                                          //                         context)
-                                          //                     .bodyMedium
-                                          //                     .override(
-                                          //                       fontFamily:
-                                          //                           'Open Sans',
-                                          //                       color: FlutterFlowTheme.of(
-                                          //                               context)
-                                          //                           .primaryText,
-                                          //                       fontSize:
-                                          //                           13.0,
-                                          //                       letterSpacing:
-                                          //                           0.0,
-                                          //                       fontWeight:
-                                          //                           FontWeight
-                                          //                               .w500,
-                                          //                     ),
-                                          //           ),
-                                          //         ),
-                                          //       ),
-                                          //       Row(
-                                          //         mainAxisSize:
-                                          //             MainAxisSize.max,
-                                          //         children: [
-                                          //           Padding(
-                                          //             padding:
-                                          //                 const EdgeInsetsDirectional
-                                          //                     .fromSTEB(20.0,
-                                          //                     0.0, 0.0, 0.0),
-                                          //             child: Text(
-                                          //               'Jeg ønsker å ta betalt igjennom appen',
-                                          //               style: FlutterFlowTheme
-                                          //                       .of(context)
-                                          //                   .bodyMedium
-                                          //                   .override(
-                                          //                     fontFamily:
-                                          //                         'Open Sans',
-                                          //                     letterSpacing:
-                                          //                         0.0,
-                                          //                     fontWeight:
-                                          //                         FontWeight
-                                          //                             .bold,
-                                          //                   ),
-                                          //             ),
-                                          //           ),
-                                          //           Theme(
-                                          //             data: ThemeData(
-                                          //               checkboxTheme:
-                                          //                   CheckboxThemeData(
-                                          //                 visualDensity:
-                                          //                     VisualDensity
-                                          //                         .compact,
-                                          //                 materialTapTargetSize:
-                                          //                     MaterialTapTargetSize
-                                          //                         .shrinkWrap,
-                                          //                 shape:
-                                          //                     RoundedRectangleBorder(
-                                          //                   borderRadius:
-                                          //                       BorderRadius
-                                          //                           .circular(
-                                          //                               4.0),
-                                          //                 ),
-                                          //               ),
-                                          //               unselectedWidgetColor:
-                                          //                   FlutterFlowTheme.of(
-                                          //                           context)
-                                          //                       .alternate,
-                                          //             ),
-                                          //             child: Checkbox(
-                                          //               value: _model
-                                          //                       .checkboxValue ??=
-                                          //                   false,
-                                          //               onChanged:
-                                          //                   (newValue) async {
-                                          //                 safeSetState(() =>
-                                          //                     _model.checkboxValue =
-                                          //                         newValue!);
-                                          //               },
-                                          //               side: BorderSide(
-                                          //                 width: 2,
-                                          //                 color: FlutterFlowTheme
-                                          //                         .of(context)
-                                          //                     .alternate,
-                                          //               ),
-                                          //               activeColor:
-                                          //                   FlutterFlowTheme.of(
-                                          //                           context)
-                                          //                       .primary,
-                                          //               checkColor:
-                                          //                   FlutterFlowTheme.of(
-                                          //                           context)
-                                          //                       .alternate,
-                                          //             ),
-                                          //           ),
-                                          //         ],
-                                          //       ),
-                                          //     ],
-                                          //   ),
-                                          // ),
                                           if (_model.checkboxValue == true)
                                             Align(
                                               alignment:
@@ -3276,7 +3114,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             0.0, 0.0, 0.0, 0.0),
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .primary,
+                                                        .secondary,
                                                     textStyle: FlutterFlowTheme
                                                             .of(context)
                                                         .titleMedium
@@ -3751,13 +3589,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               'Open Sans',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primary,
+                                                              .secondary,
                                                           fontSize: 17.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
-                                                    elevation: 3.0,
+                                                    elevation: 1.0,
                                                     borderSide:
                                                         const BorderSide(
                                                       color: Colors.transparent,
@@ -3781,7 +3619,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 24.0,
+                                                            .fromSTEB(0.0, 80.0,
                                                             0.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
@@ -4057,15 +3895,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           setState(() {});
                                                         }
                                                       },
-                                                      text:
-                                                          'Oppdater informasjon',
-                                                      icon: const FaIcon(
-                                                        FontAwesomeIcons
-                                                            .solidCheckCircle,
-                                                        size: 18.0,
-                                                      ),
+                                                      text: 'Oppdater',
                                                       options: FFButtonOptions(
-                                                        width: 270.0,
+                                                        width: 170.0,
                                                         height: 45.0,
                                                         padding:
                                                             const EdgeInsetsDirectional
@@ -4088,69 +3920,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                       'Open Sans',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .primary,
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                        elevation: 3.0,
-                                                        borderSide:
-                                                            const BorderSide(
-                                                          color: Colors
-                                                              .transparent,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(24.0),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          0.0, 0.09),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 24.0,
-                                                            0.0, 0.0),
-                                                    child: FFButtonWidget(
-                                                      onPressed: () async {
-                                                        context
-                                                            .goNamed('Profil');
-                                                      },
-                                                      text: 'Avbryt',
-                                                      options: FFButtonOptions(
-                                                        width: 270.0,
-                                                        height: 45.0,
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                0.0, 0.0, 0.0),
-                                                        iconPadding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                0.0, 0.0, 0.0),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
+                                                                      .secondary,
                                                                   fontSize:
                                                                       18.0,
                                                                   letterSpacing:
