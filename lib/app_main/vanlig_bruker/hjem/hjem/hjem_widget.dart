@@ -40,7 +40,6 @@ class _HjemWidgetState extends State<HjemWidget> {
   List<UserInfoSearch>? _profiler;
   bool _isloading = true;
   bool _profilisloading = false;
-  bool _venterSearch = true;
   bool _bondeisloading = true;
   bool searching = false;
   Timer? _debounce;
@@ -391,10 +390,6 @@ class _HjemWidgetState extends State<HjemWidget> {
 
                                                   onChanged: (text) {
                                                     setState(() {
-                                                      if (_model.textController
-                                                          .text.isNotEmpty) {
-                                                        _venterSearch = false;
-                                                      }
                                                       _profilisloading = true;
                                                     });
                                                     if (_debounce?.isActive ??
@@ -603,103 +598,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                 ? 10
                                                 : _profiler?.length ?? 0,
                                             itemBuilder: (context, index) {
-                                              if (_venterSearch = true) {
-                                                return Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 8.0,
-                                                      horizontal: 16.0),
-                                                  child: Row(
-                                                    children: [
-                                                      // Circular profile picture placeholder
-                                                      Shimmer.fromColors(
-                                                        baseColor:
-                                                            Colors.grey[300]!,
-                                                        highlightColor:
-                                                            Colors.grey[100]!,
-                                                        child: Container(
-                                                          width: 50.0,
-                                                          height: 50.0,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: const Color
-                                                                .fromARGB(127,
-                                                                255, 255, 255),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        100.0),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                          width: 16.0),
-                                                      Expanded(
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Shimmer.fromColors(
-                                                              baseColor: Colors
-                                                                  .grey[300]!,
-                                                              highlightColor:
-                                                                  Colors.grey[
-                                                                      100]!,
-                                                              child: Container(
-                                                                width: 120,
-                                                                height: 16.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: const Color
-                                                                      .fromARGB(
-                                                                      127,
-                                                                      255,
-                                                                      255,
-                                                                      255),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8.0),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 8.0),
-                                                            Shimmer.fromColors(
-                                                              baseColor: Colors
-                                                                  .grey[300]!,
-                                                              highlightColor:
-                                                                  Colors.grey[
-                                                                      100]!,
-                                                              child: Container(
-                                                                width:
-                                                                    90.0, // Narrower width for second line
-                                                                height: 16.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: const Color
-                                                                      .fromARGB(
-                                                                      127,
-                                                                      255,
-                                                                      255,
-                                                                      255),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8.0),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              }
                                               if (_profilisloading) {
-                                                // Shimmer loading item with rounded and narrower text outlines
                                                 return Padding(
                                                   padding: const EdgeInsets
                                                       .symmetric(
