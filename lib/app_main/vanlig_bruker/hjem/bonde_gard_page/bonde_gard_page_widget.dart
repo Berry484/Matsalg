@@ -18,9 +18,11 @@ class BondeGardPageWidget extends StatefulWidget {
   const BondeGardPageWidget({
     super.key,
     required this.kategori,
+    this.query,
   });
 
   final String? kategori;
+  final dynamic query;
 
   @override
   State<BondeGardPageWidget> createState() => _BondeGardPageWidgetState();
@@ -47,6 +49,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+    if (widget.query != null && widget.query.isNotEmpty) {
+      _model.textController.text = widget.query;
+    }
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
   }
 
@@ -147,18 +152,34 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         });
         return;
       } else {
-        _allmatvarer =
-            await ApiGetFilterFood.getFilterFood(token, widget.kategori);
-        _matvarer = _allmatvarer;
-        _allSokmatvarer = _allmatvarer;
-        setState(() {
-          if (_matvarer != null && _matvarer!.isEmpty) {
-            return;
-          } else {
-            _isloading = false;
+        if (widget.kategori != 'Søk') {
+          _allmatvarer =
+              await ApiGetFilterFood.getFilterFood(token, widget.kategori);
+          _matvarer = _allmatvarer;
+          _allSokmatvarer = _allmatvarer;
+          setState(() {
+            if (_matvarer != null && _matvarer!.isEmpty) {
+              return;
+            } else {
+              _isloading = false;
+            }
+          });
+          return;
+        } else {
+          _allmatvarer = await ApiGetAllFoods.getAllFoods(token);
+          _allSokmatvarer = _allmatvarer;
+          if (widget.query != null && widget.query.isNotEmpty) {
+            _runFilter(widget.query);
           }
-        });
-        return;
+          setState(() {
+            if (_matvarer != null && _matvarer!.isEmpty) {
+              return;
+            } else {
+              _isloading = false;
+            }
+          });
+          return;
+        }
       }
     }
   }
@@ -472,27 +493,46 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                             itemBuilder: (context, index) {
                                               if (_isloading) {
                                                 return Shimmer.fromColors(
-                                                  baseColor: Colors.grey[
-                                                      300]!, // Base color for the shimmer
-                                                  highlightColor: Colors.grey[
-                                                      100]!, // Highlight color for the shimmer
-                                                  child: Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            5.0),
-                                                    width: 225.0,
-                                                    height: 235.0,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              127,
-                                                              255,
-                                                              255,
-                                                              255),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16.0), // Rounded corners
-                                                    ),
+                                                  baseColor: Colors.grey[300]!,
+                                                  highlightColor:
+                                                      Colors.grey[100]!,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                            .all(5.0),
+                                                        width: 200.0,
+                                                        height: 230.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(127,
+                                                              255, 255, 255),
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  16.0), // Rounded corners
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 8.0),
+                                                      Container(
+                                                        width: 150,
+                                                        height: 20,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(127,
+                                                              255, 255, 255),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 );
                                               }

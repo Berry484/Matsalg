@@ -422,7 +422,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           padding:
                                                               const EdgeInsets
                                                                   .only(
-                                                                  left: 20.0),
+                                                                  left: 15.0),
                                                           child: Align(
                                                             alignment:
                                                                 const AlignmentDirectional(
@@ -480,24 +480,32 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               .bytes
                                                               ?.isNotEmpty ??
                                                           false))
-                                                        Align(
-                                                          alignment:
-                                                              const AlignmentDirectional(
-                                                                  0.0, 0.0),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                            child: Image.memory(
-                                                              _model.uploadedLocalFile1
-                                                                      .bytes ??
-                                                                  Uint8List
-                                                                      .fromList(
-                                                                          []),
-                                                              width: 100.0,
-                                                              height: 100.0,
-                                                              fit: BoxFit.cover,
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 15.0),
+                                                          child: Align(
+                                                            alignment:
+                                                                const AlignmentDirectional(
+                                                                    0.0, 0.0),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                              child:
+                                                                  Image.memory(
+                                                                _model.uploadedLocalFile1
+                                                                        .bytes ??
+                                                                    Uint8List
+                                                                        .fromList(
+                                                                            []),
+                                                                width: 100.0,
+                                                                height: 100.0,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
                                                             ),
                                                           ),
                                                         ),

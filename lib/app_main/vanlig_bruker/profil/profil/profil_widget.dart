@@ -843,27 +843,46 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             itemBuilder: (context, index) {
                                               if (_isloading) {
                                                 return Shimmer.fromColors(
-                                                  baseColor: Colors.grey[
-                                                      300]!, // Base color for the shimmer
-                                                  highlightColor: Colors.grey[
-                                                      100]!, // Highlight color for the shimmer
-                                                  child: Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            5.0),
-                                                    width: 235.0,
-                                                    height: 290.0,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              127,
-                                                              255,
-                                                              255,
-                                                              255),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16.0), // Rounded corners
-                                                    ),
+                                                  baseColor: Colors.grey[300]!,
+                                                  highlightColor:
+                                                      Colors.grey[100]!,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                            .all(5.0),
+                                                        width: 200.0,
+                                                        height: 230.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(127,
+                                                              255, 255, 255),
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  16.0), // Rounded corners
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 8.0),
+                                                      Container(
+                                                        width: 150,
+                                                        height: 20,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(127,
+                                                              255, 255, 255),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 );
                                               }
@@ -1240,27 +1259,46 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             itemBuilder: (context, index) {
                                               if (_likesisloading) {
                                                 return Shimmer.fromColors(
-                                                  baseColor: Colors.grey[
-                                                      300]!, // Base color for the shimmer
-                                                  highlightColor: Colors.grey[
-                                                      100]!, // Highlight color for the shimmer
-                                                  child: Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            5.0),
-                                                    width: 225.0,
-                                                    height: 205.0,
-                                                    decoration: BoxDecoration(
-                                                      color: const Color
-                                                          .fromARGB(
-                                                          127,
-                                                          255,
-                                                          255,
-                                                          255), // Background color of the shimmer box
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16.0), // Rounded corners
-                                                    ),
+                                                  baseColor: Colors.grey[300]!,
+                                                  highlightColor:
+                                                      Colors.grey[100]!,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                            .all(5.0),
+                                                        width: 200.0,
+                                                        height: 230.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(127,
+                                                              255, 255, 255),
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  16.0), // Rounded corners
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 8.0),
+                                                      Container(
+                                                        width: 150,
+                                                        height: 20,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(127,
+                                                              255, 255, 255),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 );
                                               }

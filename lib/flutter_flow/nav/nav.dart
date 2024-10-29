@@ -221,6 +221,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/bondeGardPage',
           builder: (context, params) => BondeGardPageWidget(
             kategori: params.getParam('kategori', ParamType.String),
+            query: params.getParam('query', ParamType.String),
           ),
         ),
         FFRoute(

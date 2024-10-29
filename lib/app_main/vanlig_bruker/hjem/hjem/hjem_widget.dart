@@ -401,6 +401,27 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       handleSearch();
                                                     });
                                                   },
+                                                  onFieldSubmitted: (value) {
+                                                    if (_model.textController
+                                                        .text.isNotEmpty) {
+                                                      // When the search button is pressed
+                                                      context.pushNamed(
+                                                        'BondeGardPage',
+                                                        queryParameters: {
+                                                          'kategori':
+                                                              serializeParam(
+                                                            'Søk',
+                                                            ParamType.String,
+                                                          ),
+                                                          'query': serializeParam(
+                                                              _model
+                                                                  .textController
+                                                                  .text,
+                                                              ParamType.String)
+                                                        }.withoutNulls,
+                                                      );
+                                                    }
+                                                  },
                                                   textInputAction: TextInputAction
                                                       .search, // Add this line to
                                                   decoration: InputDecoration(
@@ -476,6 +497,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       size: 20,
                                                     ),
                                                   ),
+
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyLarge
@@ -501,8 +523,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                               if (searching == true)
                                                 GestureDetector(
                                                   onTap: () async {
+                                                    _model.textController!
+                                                        .clear();
                                                     setState(() {
                                                       searching = false;
+                                                      _profiler = null;
+                                                      _profilisloading = false;
                                                     });
                                                     FocusScope.of(context)
                                                         .requestFocus(
@@ -591,7 +617,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           height: 50.0,
                                                           decoration:
                                                               BoxDecoration(
-                                                            color: Colors.white,
+                                                            color: const Color
+                                                                .fromARGB(127,
+                                                                255, 255, 255),
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -618,8 +646,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                 height: 16.0,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Colors
-                                                                      .grey,
+                                                                  color: const Color
+                                                                      .fromARGB(
+                                                                      127,
+                                                                      255,
+                                                                      255,
+                                                                      255),
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
@@ -641,8 +673,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                 height: 16.0,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
+                                                                  color: const Color
+                                                                      .fromARGB(
+                                                                      127,
+                                                                      255,
+                                                                      255,
+                                                                      255),
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
@@ -1700,27 +1736,46 @@ class _HjemWidgetState extends State<HjemWidget> {
                                             itemBuilder: (context, index) {
                                               if (_isloading) {
                                                 return Shimmer.fromColors(
-                                                  baseColor: Colors.grey[
-                                                      300]!, // Base color for the shimmer
-                                                  highlightColor: Colors.grey[
-                                                      100]!, // Highlight color for the shimmer
-                                                  child: Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            5.0),
-                                                    width: 225.0,
-                                                    height: 235.0,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              127,
-                                                              255,
-                                                              255,
-                                                              255),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16.0), // Rounded corners
-                                                    ),
+                                                  baseColor: Colors.grey[300]!,
+                                                  highlightColor:
+                                                      Colors.grey[100]!,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                            .all(5.0),
+                                                        width: 200.0,
+                                                        height: 230.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(127,
+                                                              255, 255, 255),
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  16.0), // Rounded corners
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 8.0),
+                                                      Container(
+                                                        width: 150,
+                                                        height: 20,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(127,
+                                                              255, 255, 255),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 );
                                               }
@@ -1794,7 +1849,6 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   CrossAxisAlignment
                                                                       .center,
                                                               children: [
-// Generated code for this Image Widget...
                                                                 Align(
                                                                   alignment:
                                                                       AlignmentDirectional(

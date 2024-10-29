@@ -223,29 +223,100 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             itemBuilder: (context, index) {
                                               if (_isloading) {
                                                 return Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal:
-                                                          10.0), // Add 10px padding to left and right
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          20, 20, 10, 0),
                                                   child: Shimmer.fromColors(
-                                                    baseColor: Colors.grey[
-                                                        300]!, // Base color for the shimmer
-                                                    highlightColor: Colors.grey[
-                                                        100]!, // Highlight color for the shimmer
-                                                    child: Container(
-                                                      margin:
-                                                          const EdgeInsets.all(
-                                                              5.0),
-                                                      width: 225.0,
-                                                      height: 107.0,
-                                                      decoration: BoxDecoration(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            127, 255, 255, 255),
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                16.0), // Rounded corners
-                                                      ),
+                                                    baseColor:
+                                                        Colors.grey[300]!,
+                                                    highlightColor:
+                                                        Colors.grey[100]!,
+                                                    child: Row(
+                                                      children: [
+                                                        // Shimmer for Image
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(6),
+                                                          child: Container(
+                                                            width: 60,
+                                                            height: 60,
+                                                            color: const Color
+                                                                .fromARGB(
+                                                                127,
+                                                                255,
+                                                                255,
+                                                                255), // Background color
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 16.0),
+                                                        Expanded(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Shimmer
+                                                                  .fromColors(
+                                                                baseColor:
+                                                                    Colors.grey[
+                                                                        300]!,
+                                                                highlightColor:
+                                                                    Colors.grey[
+                                                                        100]!,
+                                                                child:
+                                                                    Container(
+                                                                  width: 120,
+                                                                  height: 16.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                        127,
+                                                                        255,
+                                                                        255,
+                                                                        255),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                  height: 8.0),
+                                                              Shimmer
+                                                                  .fromColors(
+                                                                baseColor:
+                                                                    Colors.grey[
+                                                                        300]!,
+                                                                highlightColor:
+                                                                    Colors.grey[
+                                                                        100]!,
+                                                                child:
+                                                                    Container(
+                                                                  width:
+                                                                      90.0, // Narrower width for second line
+                                                                  height: 16.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                        127,
+                                                                        255,
+                                                                        255,
+                                                                        255),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 );
@@ -700,29 +771,100 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             itemBuilder: (context, index) {
                                               if (_salgisLoading) {
                                                 return Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal:
-                                                          10.0), // Add 10px padding to left and right
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          20, 20, 10, 0),
                                                   child: Shimmer.fromColors(
-                                                    baseColor: Colors.grey[
-                                                        300]!, // Base color for the shimmer
-                                                    highlightColor: Colors.grey[
-                                                        100]!, // Highlight color for the shimmer
-                                                    child: Container(
-                                                      margin:
-                                                          const EdgeInsets.all(
-                                                              5.0),
-                                                      width: 225.0,
-                                                      height: 107.0,
-                                                      decoration: BoxDecoration(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            127, 255, 255, 255),
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                16.0), // Rounded corners
-                                                      ),
+                                                    baseColor:
+                                                        Colors.grey[300]!,
+                                                    highlightColor:
+                                                        Colors.grey[100]!,
+                                                    child: Row(
+                                                      children: [
+                                                        // Shimmer for Image
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(6),
+                                                          child: Container(
+                                                            width: 60,
+                                                            height: 60,
+                                                            color: const Color
+                                                                .fromARGB(
+                                                                127,
+                                                                255,
+                                                                255,
+                                                                255), // Background color
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 16.0),
+                                                        Expanded(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Shimmer
+                                                                  .fromColors(
+                                                                baseColor:
+                                                                    Colors.grey[
+                                                                        300]!,
+                                                                highlightColor:
+                                                                    Colors.grey[
+                                                                        100]!,
+                                                                child:
+                                                                    Container(
+                                                                  width: 120,
+                                                                  height: 16.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                        127,
+                                                                        255,
+                                                                        255,
+                                                                        255),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                  height: 8.0),
+                                                              Shimmer
+                                                                  .fromColors(
+                                                                baseColor:
+                                                                    Colors.grey[
+                                                                        300]!,
+                                                                highlightColor:
+                                                                    Colors.grey[
+                                                                        100]!,
+                                                                child:
+                                                                    Container(
+                                                                  width:
+                                                                      90.0, // Narrower width for second line
+                                                                  height: 16.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                        127,
+                                                                        255,
+                                                                        255,
+                                                                        255),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 );
