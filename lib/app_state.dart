@@ -84,6 +84,30 @@ class FFAppState extends ChangeNotifier {
     _startet = value;
   }
 
+  bool _lagtUt = false;
+  bool get lagtUt => _lagtUt;
+  set lagtUt(bool value) {
+    _lagtUt = value;
+  }
+
+  bool _liked = false;
+  bool get liked => _liked;
+  set liked(bool value) {
+    _liked = value;
+  }
+
+  bool _harKjopt = false;
+  bool get harKjopt => _harKjopt;
+  set harKjopt(bool value) {
+    _harKjopt = value;
+  }
+
+  bool _harSolgt = false;
+  bool get harSolgt => _harSolgt;
+  set harSolgt(bool value) {
+    _harSolgt = value;
+  }
+
   LatLng? _brukersted = const LatLng(59.9138688, 10.7522454);
   LatLng? get brukersted => _brukersted;
   set brukersted(LatLng? value) {

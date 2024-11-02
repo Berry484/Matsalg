@@ -588,12 +588,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                             context.pushNamed('registrer');
                           },
                           text: 'Logg ut',
-                          icon: const FaIcon(
-                            FontAwesomeIcons.signOutAlt,
-                            size: 20.0,
-                          ),
                           options: FFButtonOptions(
-                            width: 200.0,
+                            width: 170.0,
                             height: 40.0,
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
@@ -604,17 +600,18 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context).alternate,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
-                            elevation: 1.0,
+                            elevation: 2.0,
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).alternate,
+                              color: Colors.transparent,
                               width: 0.5,
                             ),
-                            borderRadius: BorderRadius.circular(38.0),
+                            borderRadius: BorderRadius.circular(14.0),
                           ),
                         ),
                       ),

@@ -118,27 +118,6 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                           },
                         ),
                       ),
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Endre tilgjengelig antall',
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineSmall
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 25.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -162,7 +141,7 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 5.0, 0.0),
                             child: Text(
-                              'Nåverende antall:',
+                              'Nåværende antall:',
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -287,7 +266,7 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                                 ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).alternate,
+                                color: Colors.transparent,
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
@@ -314,7 +293,7 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             filled: true,
-                            fillColor: FlutterFlowTheme.of(context).primary,
+                            fillColor: FlutterFlowTheme.of(context).secondary,
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -329,12 +308,6 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                               .asValidator(context),
                         ),
                       ),
-                    ),
-                    const Divider(
-                      thickness: 1.0,
-                      indent: 30.0,
-                      endIndent: 30.0,
-                      color: Color(0x5514AF26),
                     ),
                     Align(
                       alignment: const AlignmentDirectional(0.0, 0.0),
@@ -371,8 +344,8 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                             size: 25.0,
                           ),
                           options: FFButtonOptions(
-                            width: 200.0,
-                            height: 45.0,
+                            width: 170.0,
+                            height: 44.0,
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -392,44 +365,7 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                               color: Colors.transparent,
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(24.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: const AlignmentDirectional(0.0, 0.0),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 15.0, 5.0, 0.0),
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            context.pop();
-                          },
-                          text: 'Avbryt',
-                          options: FFButtonOptions(
-                            width: 200.0,
-                            height: 45.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                11.0, 0.0, 0.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).error,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  fontSize: 17.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                            elevation: 3.0,
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(24.0),
+                            borderRadius: BorderRadius.circular(14.0),
                           ),
                         ),
                       ),

@@ -47,9 +47,10 @@ class ApiCalls {
             Uri.parse('$baseUrl/rrh/brukere/brukerinfo'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Set timeout to 7 seconds
+          .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
 
-      return response;
+      final decodedBody = utf8.decode(response.bodyBytes);
+      return http.Response(decodedBody, response.statusCode);
     } on TimeoutException {
       return http.Response('Request timed out', 500);
     }
