@@ -56,11 +56,10 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
   }
 
   void _runFilter(String enteredKeyword) {
-    // If no keyword is entered, reset _matvarer to the full list
+    // If no keyword is entered, reset _matvarer to the original list
     if (enteredKeyword.isEmpty) {
+      // Instead of assigning from _allSokmatvarer, assign the original list
       _matvarer = List.from(_allmatvarer as Iterable);
-      _allSokmatvarer =
-          List.from(_allmatvarer as Iterable); // Keep original unsorted list
     } else {
       // If a keyword is entered, filter the _allmatvarer list
       List<Matvarer> filteredResults = _allmatvarer!.where((matvare) {
@@ -237,28 +236,39 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                   );
                 },
               );
-
               if (selectedValue != null && selectedValue.isNotEmpty) {
                 final String selectedOption = selectedValue.first;
 
                 safeSetState(() {
+                  // Create a copy of the original list for sorting
+                  List<Matvarer> sortedList = List.from(
+                      _matvarer ?? []); // Use ?? [] to avoid null issues
+
                   if (selectedOption == 'Pris: lav til høy') {
-                    sorterVerdi = 2;
-                    _matvarer!.sort((a, b) {
+                    sorterVerdi = 2; // Set the sorting to low to high
+                    sortedList.sort((a, b) {
                       return (a.price ?? double.infinity)
                           .compareTo(b.price ?? double.infinity);
                     });
                   } else if (selectedOption == 'Pris: høy til lav') {
-                    sorterVerdi = 3;
-                    _matvarer!.sort((a, b) {
+                    sorterVerdi = 3; // Set the sorting to high to low
+                    sortedList.sort((a, b) {
                       return (b.price ?? double.negativeInfinity)
                           .compareTo(a.price ?? double.negativeInfinity);
                     });
                   } else {
-                    sorterVerdi = 1; // Reset to original
-                    _runFilter(_model.textController.text);
-                    _matvarer = List.from(_allSokmatvarer as Iterable);
+                    // Assuming this is for "Best Match"
+                    sorterVerdi = 1; // Reset to best match sorting
+                    _runFilter(_model
+                        .textController.text); // Run filter to get best matches
+                    return; // Exit early to avoid setting _matvarer below
                   }
+
+                  // Update _matvarer to the sorted list
+                  _matvarer = sortedList;
+
+                  // Refresh the UI
+                  setState(() {});
                 });
               }
             },
@@ -423,6 +433,34 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                     Icons.search_outlined,
                                                     size: 20,
                                                   ),
+                                                  suffixIcon: _model
+                                                          .textController
+                                                          .text
+                                                          .isNotEmpty
+                                                      ? IconButton(
+                                                          icon: Icon(
+                                                            FontAwesomeIcons
+                                                                .solidTimesCircle,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText, // Set the desired color here
+                                                          ),
+                                                          onPressed: () {
+                                                            _model
+                                                                .textController!
+                                                                .clear();
+                                                            setState(() {
+                                                              _runFilter('');
+                                                            });
+                                                          },
+                                                        )
+                                                      : null,
+                                                  contentPadding:
+                                                      const EdgeInsets.only(
+                                                          top: 6.0,
+                                                          bottom: 6.0,
+                                                          left: 10.0,
+                                                          right: 10.0),
                                                 ),
                                                 style: FlutterFlowTheme.of(
                                                         context)
@@ -519,8 +557,8 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                       const SizedBox(
                                                           height: 8.0),
                                                       Container(
-                                                        width: 150,
-                                                        height: 20,
+                                                        width: 200,
+                                                        height: 15,
                                                         decoration:
                                                             BoxDecoration(
                                                           color: const Color
@@ -532,6 +570,35 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                       10.0),
                                                         ),
                                                       ),
+                                                      const SizedBox(
+                                                          height: 8.0),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 10.0),
+                                                          child: Container(
+                                                            width: 38,
+                                                            height: 15,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: const Color
+                                                                  .fromARGB(
+                                                                  127,
+                                                                  255,
+                                                                  255,
+                                                                  255),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
                                                     ],
                                                   ),
                                                 );

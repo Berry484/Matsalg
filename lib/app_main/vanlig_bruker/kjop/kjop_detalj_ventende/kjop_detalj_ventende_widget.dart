@@ -527,11 +527,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           dotWidth: 10,
                                                           dotHeight: 8,
                                                           dotColor:
-                                                              Color(0xCC616161),
+                                                              Color(0x64616161),
                                                           activeDotColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .alternate,
+                                                                  .secondaryText,
                                                           paintStyle:
                                                               PaintingStyle
                                                                   .fill,
@@ -594,19 +594,23 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                           offIcon: FaIcon(
                                             FontAwesomeIcons.heart,
                                             color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: 30.0,
+                                                .primaryText,
+                                            size: 30,
                                           ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                              .fromSTEB(0.0, 0.0, 0.0, 0.0),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
+                                              double startLat =
+                                                  matvare.lat ?? 59.9138688;
+                                              double startLng =
+                                                  matvare.lng ?? 10.7522454;
                                               if (matvare.bonde == true) {
                                                 await showModalBottomSheet(
                                                   isScrollControlled: true,
@@ -624,7 +628,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                             .viewInsetsOf(
                                                                 context),
                                                         child:
-                                                            const KartPopUpBondegardWidget(),
+                                                            KartPopUpBondegardWidget(
+                                                          startLat: startLat,
+                                                          startLng: startLng,
+                                                        ),
                                                       ),
                                                     );
                                                   },
@@ -646,8 +653,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         padding: MediaQuery
                                                             .viewInsetsOf(
                                                                 context),
-                                                        child:
-                                                            const KartPopUpWidget(),
+                                                        child: KartPopUpWidget(
+                                                          startLat: startLat,
+                                                          startLng: startLng,
+                                                        ),
                                                       ),
                                                     );
                                                   },
@@ -655,88 +664,96 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                     safeSetState(() {}));
                                               }
                                             },
-                                            child: FaIcon(
-                                              FontAwesomeIcons.mapMarkerAlt,
+                                            child: Icon(
+                                              Icons.location_on_outlined,
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              size: 31.0,
+                                                      .primaryText,
+                                              size: 36,
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Material(
-                                          color: Colors.transparent,
-                                          elevation: 4,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(24),
-                                          ),
-                                          child: SafeArea(
-                                            child: Container(
-                                              width: 120,
-                                              height: 40,
-                                              constraints: BoxConstraints(
-                                                maxWidth: 174,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Color(0xFF10835F),
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate
-                                                  ],
-                                                  stops: [0, 1],
-                                                  begin: AlignmentDirectional(
-                                                      0.64, -1),
-                                                  end: AlignmentDirectional(
-                                                      -0.64, 1),
-                                                ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 10, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {},
+                                            child: Material(
+                                              color: Colors.transparent,
+                                              elevation: 1,
+                                              shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(24),
+                                                    BorderRadius.circular(14),
                                               ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(10, 0, 10, 0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        'Melding',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: FlutterFlowTheme
-                                                                .of(context)
-                                                            .bodyMedium
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Open Sans',
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 17,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                      ),
+                                              child: SafeArea(
+                                                child: Container(
+                                                  width: 100,
+                                                  height: 40,
+                                                  constraints: BoxConstraints(
+                                                    maxWidth: 174,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                10, 0, 10, 0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            'Melding',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 16,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),

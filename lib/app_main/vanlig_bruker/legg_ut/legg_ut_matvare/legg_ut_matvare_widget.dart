@@ -281,7 +281,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           .fromSTEB(
                                                           0.0, 0.0, 0.0, 30.0),
                                                   child: Text(
-                                                    'Last opp minst 3 bilder',
+                                                    'Last opp minst 1 bilde',
                                                     textAlign: TextAlign.start,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -1571,7 +1571,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 contentPadding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                        20.0, 24.0, 0.0, 24.0),
+                                                        20.0, 15.0, 0.0, 24.0),
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -1585,51 +1585,56 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               maxLength: 16,
                                               maxLengthEnforcement:
                                                   MaxLengthEnforcement.enforced,
+                                              buildCounter: (context,
+                                                      {required currentLength,
+                                                      required isFocused,
+                                                      maxLength}) =>
+                                                  null,
                                               validator: _model
                                                   .produktNavnTextControllerValidator
                                                   .asValidator(context),
                                             ),
                                           ),
-                                          const Divider(
-                                            thickness: 1.0,
-                                            indent: 30.0,
-                                            endIndent: 30.0,
-                                            color: Color(0x62757575),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                const AlignmentDirectional(
-                                                    -1.0, 0.0),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      20.0, 50.0, 0.0, 10.0),
-                                              child: Text(
-                                                'Velg Kategori',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      fontSize: 17.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
+                                          // const Divider(
+                                          //   thickness: 1.0,
+                                          //   indent: 30.0,
+                                          //   endIndent: 30.0,
+                                          //   color: Color(0x62757575),
+                                          // ),
+                                          // Align(
+                                          //   alignment:
+                                          //       const AlignmentDirectional(
+                                          //           -1.0, 0.0),
+                                          //   child: Padding(
+                                          //     padding:
+                                          //         const EdgeInsetsDirectional
+                                          //             .fromSTEB(
+                                          //             20.0, 50.0, 0.0, 10.0),
+                                          //     child: Text(
+                                          //       'Velg Kategori',
+                                          //       style: FlutterFlowTheme.of(
+                                          //               context)
+                                          //           .bodyMedium
+                                          //           .override(
+                                          //             fontFamily: 'Open Sans',
+                                          //             color:
+                                          //                 FlutterFlowTheme.of(
+                                          //                         context)
+                                          //                     .primaryText,
+                                          //             fontSize: 17.0,
+                                          //             letterSpacing: 0.0,
+                                          //             fontWeight:
+                                          //                 FontWeight.bold,
+                                          //           ),
+                                          //     ),
+                                          //   ),
+                                          // ),
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(-1, 0),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 20, 40),
+                                                  .fromSTEB(20, 0, 20, 35),
                                               child:
                                                   FlutterFlowDropDown<String>(
                                                 controller: _model
@@ -1836,7 +1841,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 contentPadding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                        20.0, 24.0, 0.0, 24.0),
+                                                        20.0, 15.0, 0.0, 24.0),
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -1891,7 +1896,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           ),
                                           Container(
                                             width: double.infinity,
-                                            height: 325.0,
+                                            height: 250.0,
                                             decoration: BoxDecoration(
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -2136,7 +2141,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                       contentPadding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
                                                                           20.0,
-                                                                          24.0,
+                                                                          15.0,
                                                                           0.0,
                                                                           24.0),
                                                                     ),
@@ -2185,7 +2190,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           0.8,
                                                                           -0.19),
                                                                   child: Text(
-                                                                    'NOK',
+                                                                    'Kr/stk',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -2200,79 +2205,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               0.0,
                                                                           fontWeight:
                                                                               FontWeight.w600,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    40.0),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Align(
-                                                                  alignment:
-                                                                      const AlignmentDirectional(
-                                                                          0.0,
-                                                                          -1.0),
-                                                                  child: Text(
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                      _model
-                                                                          .produktPrisSTKTextController
-                                                                          .text,
-                                                                      '0',
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Open Sans',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primaryText,
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                                Align(
-                                                                  alignment:
-                                                                      const AlignmentDirectional(
-                                                                          0.0,
-                                                                          -1.0),
-                                                                  child: Text(
-                                                                    ' Kr  pr stk',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Open Sans',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primaryText,
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
                                                                         ),
                                                                   ),
                                                                 ),
@@ -2403,7 +2335,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           contentPadding: const EdgeInsetsDirectional
                                                                               .fromSTEB(
                                                                               20.0,
-                                                                              24.0,
+                                                                              15.0,
                                                                               0.0,
                                                                               24.0),
                                                                         ),
@@ -2451,7 +2383,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                             0.0),
                                                                         child:
                                                                             Text(
-                                                                          'NOK',
+                                                                          'Kr/kg',
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .bodyMedium
                                                                               .override(
@@ -2462,69 +2394,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                                 fontWeight: FontWeight.w600,
                                                                               ),
                                                                         ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        40.0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .min,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                          const AlignmentDirectional(
-                                                                              0.0,
-                                                                              -1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        valueOrDefault<
-                                                                            String>(
-                                                                          _model
-                                                                              .produktPrisKgTextController
-                                                                              .text,
-                                                                          '0',
-                                                                        ),
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: 'Montserrat',
-                                                                              color: FlutterFlowTheme.of(context).primaryText,
-                                                                              fontSize: 17.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.bold,
-                                                                            ),
-                                                                      ),
-                                                                    ),
-                                                                    Align(
-                                                                      alignment:
-                                                                          const AlignmentDirectional(
-                                                                              0.0,
-                                                                              -1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        ' Kr pr kg',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: 'Montserrat',
-                                                                              color: FlutterFlowTheme.of(context).primaryText,
-                                                                              fontSize: 17.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.bold,
-                                                                            ),
                                                                       ),
                                                                     ),
                                                                   ],
@@ -2745,7 +2614,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 const EdgeInsetsDirectional
                                                                     .fromSTEB(
                                                                     20.0,
-                                                                    24.0,
+                                                                    15.0,
                                                                     0.0,
                                                                     24.0),
                                                           ),
@@ -3176,105 +3045,32 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             .validate()) {
                                                       return;
                                                     }
-                                                    if ((_model.uploadedLocalFile1
-                                                                .bytes ??
-                                                            [])
-                                                        .isEmpty) {
+                                                    if ((_model.uploadedLocalFile1.bytes ?? []).isEmpty &&
+                                                        (_model.uploadedLocalFile2
+                                                                    .bytes ??
+                                                                [])
+                                                            .isEmpty &&
+                                                        (_model.uploadedLocalFile3
+                                                                    .bytes ??
+                                                                [])
+                                                            .isEmpty &&
+                                                        (_model.uploadedLocalFile4
+                                                                    .bytes ??
+                                                                [])
+                                                            .isEmpty &&
+                                                        (_model.uploadedLocalFile5
+                                                                    .bytes ??
+                                                                [])
+                                                            .isEmpty) {
                                                       await showDialog(
                                                         context: context,
                                                         builder:
                                                             (alertDialogContext) {
                                                           return CupertinoAlertDialog(
                                                             title: const Text(
-                                                                'Bilder mangler'),
+                                                                'Bilde mangler'),
                                                             content: const Text(
-                                                                'Last opp minst 3 bilder.'),
-                                                            actions: [
-                                                              CupertinoDialogAction(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child:
-                                                                    const Text(
-                                                                        'Ok'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      return;
-                                                    }
-                                                    if ((_model.uploadedLocalFile1
-                                                                .bytes ??
-                                                            [])
-                                                        .isEmpty) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return CupertinoAlertDialog(
-                                                            title: const Text(
-                                                                'Bilder mangler'),
-                                                            content: const Text(
-                                                                'Last opp minst 3 bilder.'),
-                                                            actions: [
-                                                              CupertinoDialogAction(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child:
-                                                                    const Text(
-                                                                        'Ok'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      return;
-                                                    }
-
-                                                    if ((_model.uploadedLocalFile2
-                                                                .bytes ??
-                                                            [])
-                                                        .isEmpty) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return CupertinoAlertDialog(
-                                                            title: const Text(
-                                                                'Felt mangler'),
-                                                            content: const Text(
-                                                                'Last opp minst 3 bilder.'),
-                                                            actions: [
-                                                              CupertinoDialogAction(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child:
-                                                                    const Text(
-                                                                        'Ok'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      return;
-                                                    }
-
-                                                    if ((_model.uploadedLocalFile3
-                                                                .bytes ??
-                                                            [])
-                                                        .isEmpty) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return CupertinoAlertDialog(
-                                                            title: const Text(
-                                                                'Felt mangler'),
-                                                            content: const Text(
-                                                                'Last opp minst 3 bilder.'),
+                                                                'Last opp minst 1 bilde.'),
                                                             actions: [
                                                               CupertinoDialogAction(
                                                                 onPressed: () =>

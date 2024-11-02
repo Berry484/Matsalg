@@ -48,11 +48,6 @@ class _SorterWidgetState extends State<SorterWidget> {
     }
   }
 
-  Future<void> testee() async {
-    print("test : ");
-    print(widget.sorterVerdi);
-  }
-
   @override
   void dispose() {
     _model.maybeDispose();

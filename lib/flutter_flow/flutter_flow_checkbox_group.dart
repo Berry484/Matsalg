@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '/flutter_flow/form_field_controller.dart'; // Import your FormFieldController
 
 class FlutterFlowCheckboxGroup extends StatefulWidget {
@@ -59,6 +60,9 @@ class _FlutterFlowCheckboxGroupState extends State<FlutterFlowCheckboxGroup> {
     widget.controller.value = selectedValues; // Update the controller value
     widget
         .onChanged(selectedValues); // Call the onChanged callback with the list
+
+    HapticFeedback.mediumImpact();
+    Navigator.pop(context, selectedValues);
   }
 
   @override
@@ -94,9 +98,6 @@ class _FlutterFlowCheckboxGroupState extends State<FlutterFlowCheckboxGroup> {
                     final newValue =
                         !isSelected; // Toggle the current selection
                     _onCheckboxChanged(newValue, option);
-                    // Return selected value when tapping on the option
-                    Navigator.pop(
-                        context, selectedValues); // Pop the selected value
                   },
                   child: Text(
                     option,

@@ -54,7 +54,7 @@ class _HjemWidgetState extends State<HjemWidget> {
   @override
   void initState() {
     super.initState();
-    fetchData(); // This initiates the API call
+    fetchData();
     getKommune();
     getAllFoods();
     getAllBonder();
@@ -497,6 +497,36 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       Icons.search_outlined,
                                                       size: 20,
                                                     ),
+                                                    suffixIcon:
+                                                        _model.textController
+                                                                .text.isNotEmpty
+                                                            ? IconButton(
+                                                                icon: Icon(
+                                                                  FontAwesomeIcons
+                                                                      .solidTimesCircle,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText, // Set the desired color here
+                                                                ),
+                                                                onPressed: () {
+                                                                  _model
+                                                                      .textController!
+                                                                      .clear();
+                                                                  setState(() {
+                                                                    _profiler =
+                                                                        null;
+                                                                    _profilisloading =
+                                                                        false;
+                                                                  });
+                                                                },
+                                                              )
+                                                            : null,
+                                                    contentPadding:
+                                                        const EdgeInsets.only(
+                                                            top: 6.0,
+                                                            bottom: 6.0,
+                                                            left: 10.0,
+                                                            right: 10.0),
                                                   ),
 
                                                   style: FlutterFlowTheme.of(
@@ -642,8 +672,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   Colors.grey[
                                                                       100]!,
                                                               child: Container(
-                                                                width: 120,
-                                                                height: 16.0,
+                                                                width:
+                                                                    75.0, // Narrower width for second line
+                                                                height: 13.0,
                                                                 decoration:
                                                                     BoxDecoration(
                                                                   color: const Color
@@ -668,9 +699,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   Colors.grey[
                                                                       100]!,
                                                               child: Container(
-                                                                width:
-                                                                    90.0, // Narrower width for second line
-                                                                height: 16.0,
+                                                                width: 120,
+                                                                height: 13.0,
                                                                 decoration:
                                                                     BoxDecoration(
                                                                   color: const Color
@@ -1762,8 +1792,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       const SizedBox(
                                                           height: 8.0),
                                                       Container(
-                                                        width: 150,
-                                                        height: 20,
+                                                        width: 200,
+                                                        height: 15,
                                                         decoration:
                                                             BoxDecoration(
                                                           color: const Color
@@ -1775,6 +1805,35 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       10.0),
                                                         ),
                                                       ),
+                                                      const SizedBox(
+                                                          height: 8.0),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 10.0),
+                                                          child: Container(
+                                                            width: 38,
+                                                            height: 15,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: const Color
+                                                                  .fromARGB(
+                                                                  127,
+                                                                  255,
+                                                                  255,
+                                                                  255),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
                                                     ],
                                                   ),
                                                 );
