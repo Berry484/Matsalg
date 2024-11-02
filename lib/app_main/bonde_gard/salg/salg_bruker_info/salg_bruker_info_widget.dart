@@ -116,14 +116,14 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         InkWell(
                           splashColor: Colors.transparent,
@@ -147,7 +147,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding:
@@ -164,7 +164,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               ),
                               Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 0, 7, 0),
+                                    EdgeInsetsDirectional.fromSTEB(13, 0, 7, 0),
                                 child: Text(
                                   salgInfo.kjoper ?? '',
                                   textAlign: TextAlign.start,
@@ -183,15 +183,13 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 5, 5, 0),
                               child: FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
-                                },
+                                onPressed: () {},
                                 text: 'Melding',
                                 options: FFButtonOptions(
                                   height: 30,
@@ -299,7 +297,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                       .override(
                                         fontFamily: 'Open Sans',
                                         color: FlutterFlowTheme.of(context)
-                                            .alternate,
+                                            .primaryText,
                                         fontSize: 16,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
@@ -318,7 +316,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                         .override(
                                           fontFamily: 'Open Sans',
                                           color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
+                                              .primaryText,
                                           fontSize: 16,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
@@ -337,7 +335,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                         .override(
                                           fontFamily: 'Open Sans',
                                           color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
+                                              .primaryText,
                                           fontSize: 16,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
@@ -460,8 +458,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                           token: token);
                                       // Perform action for 'Yes'
                                       if (response.statusCode == 200) {
-                                        Navigator.of(context)
-                                            .pop(); // Close the dialog
+                                        Navigator.of(context).pop();
                                         Navigator.pop(context);
                                         HapticFeedback.mediumImpact();
                                         showDialog(
@@ -516,7 +513,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                           color: Colors.transparent,
                           width: 1,
                         ),
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                   ),
@@ -615,7 +612,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                             color: Colors.transparent,
                             width: 1,
                           ),
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(14),
                         ),
                       ),
                     ),

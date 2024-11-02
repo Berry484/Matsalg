@@ -157,7 +157,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         children: [
                           Row(
                             mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding:
@@ -181,7 +181,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                               ),
                               Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                                    EdgeInsetsDirectional.fromSTEB(9, 0, 0, 0),
                                 child: Text(
                                   matvare.username ?? '',
                                   textAlign: TextAlign.start,
@@ -437,7 +437,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '${salgInfo.godkjenttid != null ? DateFormat("HH:mm dd.MMMM", "nb_NO").format(salgInfo.godkjenttid!.toLocal()) : ""}',
+                            '${salgInfo.godkjenttid != null ? DateFormat("HH:mm  EEEE", "nb_NO").format(salgInfo.godkjenttid!.toLocal()) : ""}',
                             textAlign: TextAlign.end,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -463,11 +463,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 Align(
                   alignment: AlignmentDirectional(0, 0),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 5, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 25, 5, 0),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
-                      },
+                      onPressed: () {},
                       text: 'Melding',
                       icon: Icon(
                         Icons.chat,
@@ -493,7 +491,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                           color: Colors.transparent,
                           width: 1,
                         ),
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                   ),
