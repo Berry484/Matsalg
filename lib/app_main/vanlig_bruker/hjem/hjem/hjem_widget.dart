@@ -649,7 +649,6 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       horizontal: 16.0),
                                                   child: Row(
                                                     children: [
-                                                      // Circular profile picture placeholder
                                                       Shimmer.fromColors(
                                                         baseColor:
                                                             Colors.grey[300]!,

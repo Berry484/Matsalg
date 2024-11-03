@@ -257,7 +257,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'LeggIgjenRating',
           path: '/leggIgjenRating',
-          builder: (context, params) => const LeggIgjenRatingWidget(),
+          builder: (context, params) => LeggIgjenRatingWidget(
+            kjop: params.getParam(
+              'kjop',
+              ParamType.bool,
+            ),
+            username: params.getParam(
+              'username',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'VelgPosisjon',
@@ -303,7 +312,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'BrukerRating',
           path: '/brukerRating',
-          builder: (context, params) => const BrukerRatingWidget(),
+          builder: (context, params) => BrukerRatingWidget(
+            username: params.getParam('username', ParamType.String),
+            mine: params.getParam('mine', ParamType.bool),
+          ),
         ),
         FFRoute(
           name: 'SalgsHistorikk2',

@@ -1695,7 +1695,7 @@ class ApiRating {
   Future<http.Response?> giRating(
     String? token,
     String? brukernavn,
-    Int rating,
+    int rating,
     bool kjoper,
   ) async {
     final headers = {
@@ -1722,6 +1722,11 @@ class ApiRating {
 
   static Future<List<UserInfoRating>?> listRatings(
       String? token, String? username) async {
+    // Validate token and username
+    if (token == null || username == null || username.isEmpty) {
+      return null; // Early return for invalid inputs
+    }
+
     final headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
@@ -1731,7 +1736,7 @@ class ApiRating {
       // Make the API request with a timeout of 5 seconds
       final response = await http
           .get(
-            Uri.parse('$baseUrl/api/ratings/$username'),
+            Uri.parse('$baseUrl/api/ratings/${username.toLowerCase()}'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5));
@@ -1740,14 +1745,24 @@ class ApiRating {
         // Parse the response body
         List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
 
-        // Map the dynamic data to UserInfo instances
+        if (data.isEmpty) {
+          return []; // Return an empty list if no ratings are found
+        }
+
         List<UserInfoRating> ratings = data.map((userData) {
+          // Ensure all keys are present and valid
+          String username = userData['giverUsername'] ?? 'Unknown';
+          String? profilepic = userData['giverProfilePic'];
+          int value = userData['value'] ?? 0;
+          bool kjoper = userData['kjoper'] ?? false;
+          DateTime time = DateTime.tryParse(userData['time']) ?? DateTime.now();
+
           return UserInfoRating(
-            username: userData['giverUsername'],
-            profilepic: userData['giverProfilePic'],
-            value: userData['value'],
-            kjoper: userData['kjoper'],
-            time: userData['time'],
+            username: username,
+            profilepic: profilepic,
+            value: value,
+            kjoper: kjoper,
+            time: time,
           );
         }).toList();
 
@@ -1776,25 +1791,97 @@ class ApiRating {
             headers: headers,
           )
           .timeout(const Duration(seconds: 5));
-
       if (response.statusCode == 200) {
-        // Parse the response body
         List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
 
-        // Map the dynamic data to UserInfo instances
+        if (data.isEmpty) {
+          return [];
+        }
+
         List<UserInfoRating> ratings = data.map((userData) {
+          String username = userData['giverUsername'] ?? '';
+          String? profilepic = userData['giverProfilePic'];
+          int value = userData['value'] ?? 0;
+          bool kjoper = userData['kjoper'] ?? false;
+          DateTime time = DateTime.tryParse(userData['time']) ?? DateTime.now();
+
           return UserInfoRating(
-            username: userData['giverUsername'],
-            profilepic: userData['giverProfilePic'],
-            value: userData['value'],
-            kjoper: userData['kjoper'],
-            time: userData['time'],
+            username: username,
+            profilepic: profilepic,
+            value: value,
+            kjoper: kjoper,
+            time: time,
           );
         }).toList();
 
         return ratings;
       } else {
-        return null; // Or throw an error
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<UserInfoStats?> ratingSummary(
+      String? token, String? username) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request with a timeout of 5 seconds
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/ratings/summary/$username'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5));
+      if (response.statusCode == 200) {
+        Map<String, dynamic> userData =
+            jsonDecode(utf8.decode(response.bodyBytes));
+        return UserInfoStats(
+          totalCount: userData['totalCount'] ?? 0,
+          averageValue: (userData['averageValue'] as num?)?.toDouble(),
+        );
+      } else {
+        return null;
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<UserInfoStats?> mineRatingSummary(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request with a timeout of 5 seconds
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/ratings/summary/mine'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5));
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> userData =
+            jsonDecode(utf8.decode(response.bodyBytes));
+
+        return UserInfoStats(
+          totalCount: userData['totalCount'] ?? 0,
+          averageValue: (userData['averageValue'] as num?)?.toDouble() ?? 0,
+        );
+      } else {
+        return null;
       }
     } on TimeoutException {
       return null;
@@ -1806,16 +1893,26 @@ class ApiRating {
 
 class UserInfoRating {
   final String username;
-  final String profilepic;
-  final Int value;
-  bool kjoper;
+  final String? profilepic;
+  final int value;
+  bool? kjoper;
   final DateTime time;
 
   UserInfoRating({
     required this.username,
-    required this.profilepic,
+    this.profilepic, // Optional
     required this.value,
     required this.kjoper,
     required this.time,
+  });
+}
+
+class UserInfoStats {
+  final int? totalCount;
+  final double? averageValue;
+
+  UserInfoStats({
+    required this.totalCount,
+    required this.averageValue,
   });
 }

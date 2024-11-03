@@ -33,11 +33,15 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   bool _empty = false;
   List<Bonder>? _brukerinfo;
   List<Matvarer>? _matvarer;
+  UserInfoStats? _ratingStats;
   bool _matisLoading = true;
   Bonder? bruker;
   String? folgere;
   String? folger;
   bool? brukerFolger = false;
+  double ratingVerdi = 5.0;
+  int ratingantall = 0;
+  bool ingenRatings = false;
   final Securestorage securestorage = Securestorage();
   final ApiFolg apiFolg = ApiFolg();
 
@@ -47,6 +51,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => BrukerPageModel());
+    getRatingStats();
     sjekkFolger();
     _checkUser();
     getUserFood();
@@ -96,6 +101,24 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
       }
       setState(() {
         _isLoading = false; // Update loading state after data is fetched
+      });
+    }
+  }
+
+  Future<void> getRatingStats() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      _ratingStats = await ApiRating.ratingSummary(token, widget.username);
+      setState(() {
+        ratingVerdi = _ratingStats!.averageValue ?? 5.0;
+        ratingantall = _ratingStats!.totalCount ?? 0;
+        if (ratingantall == 0) {
+          ingenRatings = true;
+        }
       });
     }
   }
@@ -723,100 +746,104 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                             BorderRadius.circular(9),
                                                                       ),
                                                                     ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            9,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                    child:
-                                                                        InkWell(
-                                                                      splashColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      focusColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      hoverColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      highlightColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      onTap:
-                                                                          () async {
-                                                                        context.pushNamed(
-                                                                            'BrukerRating');
-                                                                      },
+                                                                  if (ingenRatings !=
+                                                                      true)
+                                                                    Padding(
+                                                                      padding: const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          9,
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                                       child:
-                                                                          Container(
-                                                                        width:
-                                                                            88,
-                                                                        height:
-                                                                            33,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primary,
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(8),
-                                                                          border:
-                                                                              Border.all(
-                                                                            color: const Color.fromARGB(
-                                                                                32,
-                                                                                87,
-                                                                                99,
-                                                                                108),
-                                                                            width:
-                                                                                1.3,
-                                                                          ),
-                                                                        ),
+                                                                          InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            'BrukerRating',
+                                                                            queryParameters: {
+                                                                              'username': serializeParam(
+                                                                                widget.username,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                              'mine': serializeParam(
+                                                                                false,
+                                                                                ParamType.bool,
+                                                                              ),
+                                                                            },
+                                                                          );
+                                                                        },
                                                                         child:
-                                                                            Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          children: [
-                                                                            FaIcon(
-                                                                              FontAwesomeIcons.solidStar,
-                                                                              color: FlutterFlowTheme.of(context).primaryText,
-                                                                              size: 16,
+                                                                            Container(
+                                                                          width:
+                                                                              88,
+                                                                          height:
+                                                                              33,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primary,
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(8),
+                                                                            border:
+                                                                                Border.all(
+                                                                              color: const Color.fromARGB(32, 87, 99, 108),
+                                                                              width: 1.3,
                                                                             ),
-                                                                            Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                                                                              child: Text(
-                                                                                '4.3',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Open Sans',
-                                                                                      fontSize: 14,
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
+                                                                          ),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.center,
+                                                                            children: [
+                                                                              FaIcon(
+                                                                                FontAwesomeIcons.solidStar,
+                                                                                color: FlutterFlowTheme.of(context).primaryText,
+                                                                                size: 16,
                                                                               ),
-                                                                            ),
-                                                                            Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                                                                              child: Text(
-                                                                                ' (15)',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Open Sans',
-                                                                                      color: Color(0xB0262C2D),
-                                                                                      fontSize: 14,
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w500,
-                                                                                    ),
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                child: Text(
+                                                                                  ratingVerdi.toString(),
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Open Sans',
+                                                                                        fontSize: 14,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                      ),
+                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                          ],
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                child: Text(
+                                                                                  ' (${ratingantall.toString()})',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Open Sans',
+                                                                                        color: Color(0xB0262C2D),
+                                                                                        fontSize: 14,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w500,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                  ),
                                                                   Padding(
                                                                     padding:
                                                                         const EdgeInsetsDirectional

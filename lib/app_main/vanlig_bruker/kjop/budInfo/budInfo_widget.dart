@@ -618,33 +618,20 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                       token: token);
                                               // Perform action for 'Yes'
                                               if (response.statusCode == 200) {
-                                                Navigator.of(context).pop();
-                                                Navigator.of(context).pop();
                                                 HapticFeedback.mediumImpact();
-                                                // showDialog(
-                                                //   barrierColor:
-                                                //       Colors.transparent,
-                                                //   context: context,
-                                                //   builder: (dialogContext) {
-                                                //     return Dialog(
-                                                //       elevation: 0,
-                                                //       insetPadding:
-                                                //           EdgeInsets.zero,
-                                                //       backgroundColor:
-                                                //           Colors.transparent,
-                                                //       alignment:
-                                                //           AlignmentDirectional(
-                                                //                   0, 0)
-                                                //               .resolve(
-                                                //                   Directionality.of(
-                                                //                       context)),
-                                                //       child:
-                                                //           GodkjentIkonWidget(),
-                                                //     );
-                                                //   },
-                                                // );
                                                 context.pushNamed(
-                                                    'LeggIgjenRating');
+                                                  'LeggIgjenRating',
+                                                  queryParameters: {
+                                                    'kjop': serializeParam(
+                                                      true,
+                                                      ParamType.bool,
+                                                    ),
+                                                    'username': serializeParam(
+                                                      matvare.username,
+                                                      ParamType.String,
+                                                    ),
+                                                  },
+                                                );
                                               }
                                             }
                                           },

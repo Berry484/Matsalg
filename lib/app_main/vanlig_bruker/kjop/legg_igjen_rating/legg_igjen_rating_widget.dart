@@ -1,3 +1,8 @@
+import 'dart:ffi';
+
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -8,7 +13,14 @@ import 'legg_igjen_rating_model.dart';
 export 'legg_igjen_rating_model.dart';
 
 class LeggIgjenRatingWidget extends StatefulWidget {
-  const LeggIgjenRatingWidget({super.key});
+  const LeggIgjenRatingWidget({
+    super.key,
+    required this.username,
+    required this.kjop,
+  });
+
+  final dynamic username;
+  final dynamic kjop;
 
   @override
   State<LeggIgjenRatingWidget> createState() => _LeggIgjenRatingWidgetState();
@@ -16,6 +28,7 @@ class LeggIgjenRatingWidget extends StatefulWidget {
 
 class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
   late LeggIgjenRatingModel _model;
+  final ApiRating apiRating = ApiRating();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -100,6 +113,7 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                             FlutterFlowTheme.of(context).secondaryText,
                         itemCount: 5,
                         itemSize: 45,
+                        allowHalfRating: false,
                         glowColor: Color(0xFFF65E55),
                       ),
                     ),
@@ -107,7 +121,29 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 80, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          context.goNamed('Hjem');
+                          String? token = await Securestorage().readToken();
+
+                          // Early return if token is null
+                          if (token == null) {
+                            FFAppState().login = false;
+                            if (mounted) {
+                              context.pushNamed('registrer');
+                            }
+                            return;
+                          }
+                          int rating = _model.ratingBarValue?.round() ?? 5;
+
+                          try {
+                            final response = await apiRating.giRating(
+                                token, widget.username, rating, widget.kjop);
+                            if (mounted) {
+                              context.pushNamed('Hjem');
+                            }
+                          } catch (e) {
+                            if (mounted) {
+                              context.pushNamed('Hjem');
+                            }
+                          }
                         },
                         text: 'Send',
                         options: FFButtonOptions(

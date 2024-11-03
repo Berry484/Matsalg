@@ -33,10 +33,14 @@ class _ProfilWidgetState extends State<ProfilWidget>
   late ProfilModel _model;
   List<Matvarer>? _matvarer;
   List<Matvarer>? _likesmatvarer;
+  UserInfoStats? _ratingStats;
   bool _isloading = true;
   bool _isempty = true;
   bool _likesisloading = true;
   bool _likesisempty = true;
+  double ratingVerdi = 5.0;
+  int ratingantall = 0;
+  bool ingenRatings = false;
   final ApiCalls apicalls = ApiCalls();
   final Securestorage securestorage = Securestorage();
   String? folger;
@@ -54,6 +58,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
     tellMineFolger();
     tellMineFolgere();
     updateUserStats();
+    getRatingStats();
 
     _model = createModel(context, () => ProfilModel());
 
@@ -117,6 +122,24 @@ class _ProfilWidgetState extends State<ProfilWidget>
     } else {
       await apicalls.updateUserStats(token);
       setState(() {});
+    }
+  }
+
+  Future<void> getRatingStats() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      _ratingStats = await ApiRating.mineRatingSummary(token);
+      setState(() {
+        ratingVerdi = _ratingStats!.averageValue ?? 5.0;
+        ratingantall = _ratingStats!.totalCount ?? 0;
+        if (ratingantall == 0) {
+          ingenRatings = true;
+        }
+      });
     }
   }
 
@@ -600,7 +623,15 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                         onTap:
                                                                             () async {
                                                                           context
-                                                                              .pushNamed('BrukerRating');
+                                                                              .pushNamed(
+                                                                            'BrukerRating',
+                                                                            queryParameters: {
+                                                                              'mine': serializeParam(
+                                                                                true,
+                                                                                ParamType.bool,
+                                                                              ),
+                                                                            },
+                                                                          );
                                                                         },
                                                                         child:
                                                                             Container(
@@ -633,36 +664,52 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               mainAxisAlignment: MainAxisAlignment.center,
                                                                               crossAxisAlignment: CrossAxisAlignment.center,
                                                                               children: [
-                                                                                FaIcon(
-                                                                                  FontAwesomeIcons.solidStar,
-                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  size: 16,
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                                                                                  child: Text(
-                                                                                    '4.3',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Open Sans',
-                                                                                          fontSize: 14,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w600,
-                                                                                        ),
+                                                                                if (ingenRatings == true)
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                    child: Text(
+                                                                                      'Ingen vurderinger',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontSize: 14,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
                                                                                   ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                                                                                  child: Text(
-                                                                                    ' (15)',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Open Sans',
-                                                                                          color: Color(0xB0262C2D),
-                                                                                          fontSize: 14,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w500,
-                                                                                        ),
+                                                                                if (ingenRatings != true && ratingantall != 0)
+                                                                                  FaIcon(
+                                                                                    FontAwesomeIcons.solidStar,
+                                                                                    color: FlutterFlowTheme.of(context).primaryText,
+                                                                                    size: 16,
                                                                                   ),
-                                                                                ),
+                                                                                if (ingenRatings != true && ratingantall != 0)
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                    child: Text(
+                                                                                      ratingVerdi.toString(),
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontSize: 14,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                if (ingenRatings != true && ratingantall != 0)
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                    child: Text(
+                                                                                      ' (${ratingantall.toString()})',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Open Sans',
+                                                                                            color: Color(0xB0262C2D),
+                                                                                            fontSize: 14,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w500,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
                                                                               ],
                                                                             ),
                                                                           ),
