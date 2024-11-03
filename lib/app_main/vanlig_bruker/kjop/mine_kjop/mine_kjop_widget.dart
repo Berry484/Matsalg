@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
@@ -41,6 +42,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
   bool _isloading = true;
   bool _salgisLoading = true;
   final Securestorage securestorage = Securestorage();
+  final ApiCalls apicalls = ApiCalls();
 
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
     _model = createModel(context, () => MineKjopModel());
     getKjop();
     getSalg();
-
+    updateUserStats();
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -89,6 +91,18 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
           _salgisLoading = false;
         }
       });
+    }
+  }
+
+  Future<void> updateUserStats() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      await apicalls.updateUserStats(token);
+      setState(() {});
     }
   }
 
@@ -221,6 +235,92 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                 ? 1
                                                 : _ordreInfo?.length ?? 1,
                                             itemBuilder: (context, index) {
+                                              if (FFAppState().harKjopt !=
+                                                  true) {
+                                                return Container(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                          .width,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height -
+                                                          315,
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0, -1),
+                                                    child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(0, 0,
+                                                                    0, 110),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      70,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/In_no_time-rafiki.png',
+                                                                  width: 276,
+                                                                  height: 215,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          16,
+                                                                          0,
+                                                                          0),
+                                                              child: Text(
+                                                                'Du kan se mat du har kjøpt her',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .headlineSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          20,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )),
+                                                  ),
+                                                );
+                                              }
                                               if (_isloading) {
                                                 return Padding(
                                                   padding:
@@ -441,7 +541,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Object error,
                                                                                 StackTrace? stackTrace) {
                                                                               return Image.asset(
-                                                                                'assets/images/error_image.jpg', // Path to your local error image
+                                                                                'assets/images/error_image.jpg',
+                                                                                width: 60,
+                                                                                height: 60,
                                                                                 fit: BoxFit.cover,
                                                                               );
                                                                             },
@@ -769,6 +871,92 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                 ? 1
                                                 : _salgInfo?.length ?? 1,
                                             itemBuilder: (context, index) {
+                                              if (FFAppState().harSolgt !=
+                                                  true) {
+                                                return Container(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                          .width,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height -
+                                                          315,
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0, -1),
+                                                    child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(0, 0,
+                                                                    0, 110),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      70,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/In_no_time-rafiki.png',
+                                                                  width: 276,
+                                                                  height: 215,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          16,
+                                                                          0,
+                                                                          0),
+                                                              child: Text(
+                                                                'Du kan se mat du har solgt her',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .headlineSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          20,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )),
+                                                  ),
+                                                );
+                                              }
                                               if (_salgisLoading) {
                                                 return Padding(
                                                   padding:
@@ -1026,7 +1214,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Object error,
                                                                                 StackTrace? stackTrace) {
                                                                               return Image.asset(
-                                                                                'assets/images/error_image.jpg', // Path to your local error image
+                                                                                'assets/images/error_image.jpg',
+                                                                                width: 60,
+                                                                                height: 60,
                                                                                 fit: BoxFit.cover,
                                                                               );
                                                                             },

@@ -152,6 +152,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                       StackTrace? stackTrace) {
                                                 return Image.asset(
                                                   'assets/images/error_image.jpg', // Path to your local error image
+                                                  width: 44,
+                                                  height: 44,
                                                   fit: BoxFit.cover,
                                                 );
                                               },
@@ -297,6 +299,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                     return Image
                                                                         .asset(
                                                                       'assets/images/error_image.jpg', // Path to your local error image
+                                                                      width: double
+                                                                          .infinity,
+                                                                      height:
+                                                                          380.0,
                                                                       fit: BoxFit
                                                                           .cover,
                                                                     );
@@ -341,7 +347,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                             stackTrace) {
                                                                       return Image
                                                                           .asset(
-                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        'assets/images/error_image.jpg',
+                                                                        width: double
+                                                                            .infinity,
+                                                                        height:
+                                                                            380.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -386,7 +396,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                             stackTrace) {
                                                                       return Image
                                                                           .asset(
-                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        'assets/images/error_image.jpg',
+                                                                        width: double
+                                                                            .infinity,
+                                                                        height:
+                                                                            380.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -429,7 +443,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                             stackTrace) {
                                                                       return Image
                                                                           .asset(
-                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        'assets/images/error_image.jpg',
+                                                                        width: double
+                                                                            .infinity,
+                                                                        height:
+                                                                            380.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -474,7 +492,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                             stackTrace) {
                                                                       return Image
                                                                           .asset(
-                                                                        'assets/images/error_image.jpg', // Path to your local error image
+                                                                        'assets/images/error_image.jpg',
+                                                                        width: double
+                                                                            .infinity,
+                                                                        height:
+                                                                            380.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );

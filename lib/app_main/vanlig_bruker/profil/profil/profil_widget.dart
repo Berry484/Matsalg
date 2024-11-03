@@ -53,6 +53,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
     getAllLikes();
     tellMineFolger();
     tellMineFolgere();
+    updateUserStats();
 
     _model = createModel(context, () => ProfilModel());
 
@@ -104,6 +105,18 @@ class _ProfilWidgetState extends State<ProfilWidget>
         _isloading = false;
         _isempty = false;
       });
+    }
+  }
+
+  Future<void> updateUserStats() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      await apicalls.updateUserStats(token);
+      setState(() {});
     }
   }
 
@@ -333,7 +346,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     error,
                                                                     stackTrace) =>
                                                                 Image.asset(
-                                                              'assets/images/error_image.jpg',
+                                                              'assets/images/profile_pic.png',
                                                               fit: BoxFit.cover,
                                                             ),
                                                           ),
@@ -815,6 +828,83 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                       ],
                                     ),
                                     if (_model.tabBarCurrentIndex == 0)
+                                      if (FFAppState().lagtUt != true &&
+                                          _model.tabBarCurrentIndex == 0)
+                                        Container(
+                                          width:
+                                              MediaQuery.sizeOf(context).width,
+                                          height: MediaQuery.sizeOf(context)
+                                                  .height -
+                                              550,
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize
+                                                  .min, // Use min to fit content
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.add,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: 53,
+                                                ),
+                                                const SizedBox(height: 16),
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Trykk på',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            fontSize: 16,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
+                                                    Icon(
+                                                      Icons.add,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      size: 20,
+                                                    ),
+                                                    Text(
+                                                      'for å lage din første annonse',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            fontSize: 16,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                    if (FFAppState().lagtUt &&
+                                        _model.tabBarCurrentIndex == 0)
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 15, 5, 0),
@@ -910,7 +1000,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                             ),
                                                           ),
                                                         ),
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                 );
@@ -988,7 +1078,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     CrossAxisAlignment
                                                                         .center,
                                                                 children: [
-// Generated code for this Image Widget...
                                                                   Align(
                                                                     alignment:
                                                                         AlignmentDirectional(
@@ -1020,6 +1109,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               StackTrace? stackTrace) {
                                                                             return Image.asset(
                                                                               'assets/images/error_image.jpg', // Path to your local error image
+                                                                              width: 200,
+                                                                              height: 229,
                                                                               fit: BoxFit.cover,
                                                                             );
                                                                           },
@@ -1260,6 +1351,50 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                         ),
                                       ),
                                     if (_model.tabBarCurrentIndex == 1)
+                                      if (FFAppState().liked != true &&
+                                          _model.tabBarCurrentIndex == 1)
+                                        Container(
+                                          width:
+                                              MediaQuery.sizeOf(context).width,
+                                          height: MediaQuery.sizeOf(context)
+                                                  .height -
+                                              550,
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize
+                                                  .min, // Use min to fit content
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  FontAwesomeIcons.heart,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: 50,
+                                                ),
+                                                const SizedBox(height: 16),
+                                                Text(
+                                                  'Du kan se mat du har likt her. Bare du kan se disse',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 16,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                    if (FFAppState().liked &&
+                                        _model.tabBarCurrentIndex == 1)
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             5, 15, 5, 0),
@@ -1360,9 +1495,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   ),
                                                 );
                                               }
-                                              // if (_isempty) {
-                                              //   return IngenVareLagtUtWidget();
-                                              // }
 
                                               final likesmatvare =
                                                   _likesmatvarer![index];
@@ -1430,7 +1562,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 CrossAxisAlignment
                                                                     .center,
                                                             children: [
-// Generated code for this Image Widget...
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
@@ -1463,7 +1594,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               stackTrace) {
                                                                         return Image
                                                                             .asset(
-                                                                          'assets/images/error_image.jpg', // Path to your local error image
+                                                                          'assets/images/error_image.jpg',
+                                                                          width:
+                                                                              200,
+                                                                          height:
+                                                                              229,
                                                                           fit: BoxFit
                                                                               .cover,
                                                                         );

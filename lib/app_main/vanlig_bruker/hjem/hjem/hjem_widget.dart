@@ -157,6 +157,18 @@ class _HjemWidgetState extends State<HjemWidget> {
     }
   }
 
+  Future<void> updateUserStats() async {
+    String? token = await Securestorage().readToken();
+    if (token == null) {
+      FFAppState().login = false;
+      context.pushNamed('registrer');
+      return;
+    } else {
+      await apicalls.updateUserStats(token);
+      setState(() {});
+    }
+  }
+
   Future<void> fetchData() async {
     try {
       String? token = await Securestorage().readToken();
@@ -178,6 +190,7 @@ class _HjemWidgetState extends State<HjemWidget> {
           FFAppState().bio = decodedResponse['bio'] ?? '';
           FFAppState().profilepic = decodedResponse['profilepic'] ?? '';
           getKommune();
+          updateUserStats();
         }
         if (response.statusCode == 401 ||
             response.statusCode == 404 ||
@@ -830,7 +843,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               Object error,
                                                                               StackTrace? stackTrace) {
                                                                             return Image.asset(
-                                                                              'assets/images/error_image.jpg', // Path to your local error image
+                                                                              'assets/images/profile_pic.png',
+                                                                              width: 50.0,
+                                                                              height: 50.0,
                                                                               fit: BoxFit.cover,
                                                                             );
                                                                           },
@@ -1941,7 +1956,11 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                 stackTrace) {
                                                                           return Image
                                                                               .asset(
-                                                                            'assets/images/error_image.jpg', // Path to your local error image
+                                                                            'assets/images/error_image.jpg',
+                                                                            width:
+                                                                                200,
+                                                                            height:
+                                                                                229,
                                                                             fit:
                                                                                 BoxFit.cover,
                                                                           );

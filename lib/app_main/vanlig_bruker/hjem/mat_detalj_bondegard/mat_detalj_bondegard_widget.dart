@@ -227,7 +227,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       Object error,
                                                       StackTrace? stackTrace) {
                                                 return Image.asset(
-                                                  'assets/images/error_image.jpg', // Path to your local error image
+                                                  'assets/images/profile_pic.png',
+                                                  width: 44.0,
+                                                  height: 44.0,
                                                   fit: BoxFit.cover,
                                                 );
                                               },
@@ -373,6 +375,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                     return Image
                                                                         .asset(
                                                                       'assets/images/error_image.jpg', // Path to your local error image
+                                                                      width: double
+                                                                          .infinity,
+                                                                      height:
+                                                                          380.0,
                                                                       fit: BoxFit
                                                                           .cover,
                                                                     );
@@ -418,6 +424,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       return Image
                                                                           .asset(
                                                                         'assets/images/error_image.jpg', // Path to your local error image
+                                                                        width: double
+                                                                            .infinity,
+                                                                        height:
+                                                                            380.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -463,6 +473,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       return Image
                                                                           .asset(
                                                                         'assets/images/error_image.jpg',
+                                                                        width: double
+                                                                            .infinity,
+                                                                        height:
+                                                                            380.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -506,6 +520,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       return Image
                                                                           .asset(
                                                                         'assets/images/error_image.jpg', // Path to your local error image
+                                                                        width: double
+                                                                            .infinity,
+                                                                        height:
+                                                                            380.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -551,6 +569,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       return Image
                                                                           .asset(
                                                                         'assets/images/error_image.jpg', // Path to your local error image
+                                                                        width: double
+                                                                            .infinity,
+                                                                        height:
+                                                                            380.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -1333,6 +1355,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                     stackTrace) {
                                                           return Image.asset(
                                                             'assets/images/error_image.jpg', // Path to your local error image
+                                                            width: 200,
+                                                            height: 229,
                                                             fit: BoxFit.cover,
                                                           );
                                                         },

@@ -113,7 +113,7 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  fontSize: 22.0,
+                                  fontSize: 24.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -125,19 +125,15 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        40.0, 16.0, 40.0, 0.0),
+                        90.0, 16.0, 90.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         context.pushNamed('MineKjop');
                       },
                       text: 'Ferdig',
-                      icon: const FaIcon(
-                        FontAwesomeIcons.check,
-                        size: 15.0,
-                      ),
                       options: FFButtonOptions(
-                        width: 230.0,
-                        height: 50.0,
+                        width: 170.0,
+                        height: 45.0,
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 0.0, 0.0),
                         iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -145,7 +141,7 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
                         color: FlutterFlowTheme.of(context).alternate,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Lexend Deca',
+                                  fontFamily: 'Open Sans',
                                   color: FlutterFlowTheme.of(context).primary,
                                   fontSize: 22.0,
                                   letterSpacing: 0.0,
@@ -156,7 +152,7 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(24.0),
+                        borderRadius: BorderRadius.circular(14.0),
                       ),
                     ).animateOnPageLoad(
                         animationsMap['buttonOnPageLoadAnimation']!),

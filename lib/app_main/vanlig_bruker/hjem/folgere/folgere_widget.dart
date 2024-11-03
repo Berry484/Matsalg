@@ -212,7 +212,9 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                     Object error,
                                                     StackTrace? stackTrace) {
                                                   return Image.asset(
-                                                    'assets/images/error_image.jpg', // Path to your local error image
+                                                    'assets/images/profile_pic.png',
+                                                    width: 60.0,
+                                                    height: 60.0,
                                                     fit: BoxFit.cover,
                                                   );
                                                 },

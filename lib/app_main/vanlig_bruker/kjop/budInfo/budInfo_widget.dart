@@ -166,7 +166,9 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     errorBuilder: (BuildContext context,
                                         Object error, StackTrace? stackTrace) {
                                       return Image.asset(
-                                        'assets/images/error_image.jpg', // Path to your local error image
+                                        'assets/images/error_image.jpg',
+                                        width: 70,
+                                        height: 70,
                                         fit: BoxFit.cover,
                                       );
                                     },

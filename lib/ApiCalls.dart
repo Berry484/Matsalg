@@ -56,7 +56,7 @@ class ApiCalls {
     }
   }
 
-  Future<Map<String, bool>> updateUserStats(String? token) async {
+  Future<http.Response?> updateUserStats(String? token) async {
     final headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
@@ -71,48 +71,18 @@ class ApiCalls {
           )
           .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
 
-      if (response.statusCode == 200) {
-        // Parse the JSON response
-        final jsonResponse = json.decode(response.body);
+      final jsonResponse = json.decode(response.body);
 
-        // Extract the boolean values from the response
-        bool hasLiked = jsonResponse['hasLiked'] ?? false;
-        bool hasPosted = jsonResponse['hasPosted'] ?? false;
-        bool hasBought = jsonResponse['hasBought'] ?? false;
-        bool hasSold = jsonResponse['hasSold'] ?? false;
+      FFAppState().liked = jsonResponse['hasLiked'] ?? false;
+      FFAppState().lagtUt = jsonResponse['hasPosted'] ?? false;
+      FFAppState().harKjopt = jsonResponse['hasBought'] ?? false;
+      FFAppState().harSolgt = jsonResponse['hasSold'] ?? false;
 
-        // Return a map of the boolean values (or update your state as needed)
-        return {
-          'hasLiked': hasLiked,
-          'hasPosted': hasPosted,
-          'hasBought': hasBought,
-          'hasSold': hasSold,
-        };
-      } else {
-        // Handle the case where the response is not 200
-        return {
-          'hasLiked': false,
-          'hasPosted': false,
-          'hasBought': false,
-          'hasSold': false,
-        };
-      }
+      return response;
     } on TimeoutException {
-      // Handle timeout exception
-      return {
-        'hasLiked': false,
-        'hasPosted': false,
-        'hasBought': false,
-        'hasSold': false,
-      };
+      return null;
     } catch (e) {
-      // Handle other exceptions
-      return {
-        'hasLiked': false,
-        'hasPosted': false,
-        'hasBought': false,
-        'hasSold': false,
-      };
+      return null;
     }
   }
 
@@ -1684,10 +1654,10 @@ class ApiSearchUsers {
 
           List<UserInfoSearch> profiler = data.map((userData) {
             return UserInfoSearch(
-              username: userData['username'],
-              firstname: userData['firstname'],
-              lastname: userData['lastname'],
-              profilepic: userData['profilepic'],
+              username: userData['username'] ?? '',
+              firstname: userData['firstname'] ?? '',
+              lastname: userData['lastname'] ?? '',
+              profilepic: userData['profilepic'] ?? '',
             );
           }).toList();
           return profiler;

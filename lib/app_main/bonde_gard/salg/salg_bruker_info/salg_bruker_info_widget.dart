@@ -159,6 +159,15 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context,
+                                        Object error, StackTrace? stackTrace) {
+                                      return Image.asset(
+                                        'assets/images/profile_pic.png',
+                                        width: 60,
+                                        height: 60,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
