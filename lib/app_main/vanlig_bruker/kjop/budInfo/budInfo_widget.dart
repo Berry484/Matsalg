@@ -619,30 +619,32 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                               // Perform action for 'Yes'
                                               if (response.statusCode == 200) {
                                                 Navigator.of(context).pop();
-                                                Navigator.pop(context);
+                                                Navigator.of(context).pop();
                                                 HapticFeedback.mediumImpact();
-                                                showDialog(
-                                                  barrierColor:
-                                                      Colors.transparent,
-                                                  context: context,
-                                                  builder: (dialogContext) {
-                                                    return Dialog(
-                                                      elevation: 0,
-                                                      insetPadding:
-                                                          EdgeInsets.zero,
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                                  0, 0)
-                                                              .resolve(
-                                                                  Directionality.of(
-                                                                      context)),
-                                                      child:
-                                                          GodkjentIkonWidget(),
-                                                    );
-                                                  },
-                                                );
+                                                // showDialog(
+                                                //   barrierColor:
+                                                //       Colors.transparent,
+                                                //   context: context,
+                                                //   builder: (dialogContext) {
+                                                //     return Dialog(
+                                                //       elevation: 0,
+                                                //       insetPadding:
+                                                //           EdgeInsets.zero,
+                                                //       backgroundColor:
+                                                //           Colors.transparent,
+                                                //       alignment:
+                                                //           AlignmentDirectional(
+                                                //                   0, 0)
+                                                //               .resolve(
+                                                //                   Directionality.of(
+                                                //                       context)),
+                                                //       child:
+                                                //           GodkjentIkonWidget(),
+                                                //     );
+                                                //   },
+                                                // );
+                                                context.pushNamed(
+                                                    'LeggIgjenRating');
                                               }
                                             }
                                           },

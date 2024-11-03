@@ -336,7 +336,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     milliseconds:
                                                                         0),
                                                             fadeOutDuration:
-                                                                Duration(
+                                                                const Duration(
                                                                     milliseconds:
                                                                         0),
                                                             imageUrl:
@@ -353,9 +353,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(7,
-                                                                      0, 0, 20),
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  7, 0, 0, 20),
                                                           child: Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
@@ -366,12 +366,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                             children: [
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
+                                                                    const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            10,
-                                                                            0,
-                                                                            0,
-                                                                            0),
+                                                                        10,
+                                                                        15,
+                                                                        0,
+                                                                        0),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -383,7 +383,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               .max,
                                                                       children: [
                                                                         Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               5,
                                                                               0,
                                                                               0,
@@ -566,6 +567,112 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                   ],
                                                                 ),
                                                               ),
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            10,
+                                                                            0,
+                                                                            0),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              9,
+                                                                              0,
+                                                                              0,
+                                                                              0),
+                                                                      child:
+                                                                          InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          context
+                                                                              .pushNamed('BrukerRating');
+                                                                        },
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              200,
+                                                                          height:
+                                                                              30,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primary,
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(8),
+                                                                            border:
+                                                                                Border.all(
+                                                                              color: Color(0x4A57636C),
+                                                                              width: 1.3,
+                                                                            ),
+                                                                          ),
+                                                                          child:
+                                                                              Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                1,
+                                                                                0,
+                                                                                0),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                FaIcon(
+                                                                                  FontAwesomeIcons.solidStar,
+                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                  size: 16,
+                                                                                ),
+                                                                                Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                  child: Text(
+                                                                                    '4.3',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Open Sans',
+                                                                                          fontSize: 14,
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                ),
+                                                                                Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                  child: Text(
+                                                                                    ' (15)',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Open Sans',
+                                                                                          color: Color(0xB0262C2D),
+                                                                                          fontSize: 14,
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w500,
+                                                                                        ),
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+
                                                               // Row(
                                                               //   mainAxisSize:
                                                               //       MainAxisSize

@@ -319,7 +319,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(
-                                                          24, 0, 0, 5),
+                                                          24, 10, 0, 5),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -593,270 +593,301 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                 ],
                                                               ),
                                                             ),
-                                                            Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                if (_model
-                                                                        .folger ==
-                                                                    true)
-                                                                  FFButtonWidget(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      HapticFeedback
-                                                                          .mediumImpact();
-                                                                      _model.folger =
-                                                                          false;
-                                                                      // apiFolg.unfolgBruker(
-                                                                      // Securestorage
-                                                                      //     .authToken,
-                                                                      // bruker
-                                                                      //     ?.username);
-                                                                      safeSetState(
-                                                                          () {});
-                                                                      unFolg();
-                                                                    },
-                                                                    text:
-                                                                        'Følger',
-                                                                    options:
-                                                                        FFButtonOptions(
-                                                                      width: 95,
-                                                                      height:
-                                                                          30,
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          16,
-                                                                          0,
-                                                                          16,
-                                                                          0),
-                                                                      iconPadding:
-                                                                          const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              0,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary,
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleSmall
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Open Sans',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      0,
+                                                                      10,
+                                                                      0,
+                                                                      0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  if (_model
+                                                                          .folger ==
+                                                                      true)
+                                                                    FFButtonWidget(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        HapticFeedback
+                                                                            .mediumImpact();
+                                                                        _model.folger =
+                                                                            false;
+                                                                        // apiFolg.unfolgBruker(
+                                                                        // Securestorage
+                                                                        //     .authToken,
+                                                                        // bruker
+                                                                        //     ?.username);
+                                                                        safeSetState(
+                                                                            () {});
+                                                                        unFolg();
+                                                                      },
+                                                                      text:
+                                                                          'Følger',
+                                                                      options:
+                                                                          FFButtonOptions(
+                                                                        width:
+                                                                            120,
+                                                                        height:
+                                                                            34,
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            16,
+                                                                            0,
+                                                                            16,
+                                                                            0),
+                                                                        iconPadding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            0,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        textStyle: FlutterFlowTheme.of(context)
+                                                                            .titleSmall
+                                                                            .override(
+                                                                              fontFamily: 'Open Sans',
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                              fontSize: 14,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.bold,
+                                                                            ),
+                                                                        elevation:
+                                                                            0,
+                                                                        borderSide:
+                                                                            const BorderSide(
+                                                                          color: const Color
+                                                                              .fromARGB(
+                                                                              32,
+                                                                              87,
+                                                                              99,
+                                                                              108),
+                                                                          width:
+                                                                              1.3,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(9),
+                                                                      ),
+                                                                    ),
+                                                                  if (_model
+                                                                          .folger !=
+                                                                      true)
+                                                                    FFButtonWidget(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        HapticFeedback
+                                                                            .mediumImpact();
+                                                                        _model.folger =
+                                                                            true;
+                                                                        safeSetState(
+                                                                            () {});
+                                                                        folgBruker();
+                                                                      },
+                                                                      text:
+                                                                          'Følg',
+                                                                      options:
+                                                                          FFButtonOptions(
+                                                                        width:
+                                                                            120,
+                                                                        height:
+                                                                            34,
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            16,
+                                                                            0,
+                                                                            16,
+                                                                            0),
+                                                                        iconPadding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            0,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .alternate,
+                                                                        textStyle: FlutterFlowTheme.of(context)
+                                                                            .titleSmall
+                                                                            .override(
+                                                                              fontFamily: 'Open Sans',
+                                                                              color: Colors.white,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.bold,
+                                                                            ),
+                                                                        elevation:
+                                                                            0,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(9),
+                                                                      ),
+                                                                    ),
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            9,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child:
+                                                                        InkWell(
+                                                                      splashColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      focusColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      hoverColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      highlightColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      onTap:
+                                                                          () async {
+                                                                        context.pushNamed(
+                                                                            'BrukerRating');
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            88,
+                                                                        height:
+                                                                            33,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(8),
+                                                                          border:
+                                                                              Border.all(
+                                                                            color: const Color.fromARGB(
+                                                                                32,
+                                                                                87,
+                                                                                99,
+                                                                                108),
+                                                                            width:
+                                                                                1.3,
                                                                           ),
-                                                                      elevation:
-                                                                          1,
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8),
+                                                                        ),
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.center,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            FaIcon(
+                                                                              FontAwesomeIcons.solidStar,
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                              size: 16,
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                              child: Text(
+                                                                                '4.3',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontSize: 14,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                              child: Text(
+                                                                                ' (15)',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Open Sans',
+                                                                                      color: Color(0xB0262C2D),
+                                                                                      fontSize: 14,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                if (_model
-                                                                        .folger !=
-                                                                    true)
-                                                                  FFButtonWidget(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      HapticFeedback
-                                                                          .mediumImpact();
-                                                                      _model.folger =
-                                                                          true;
-                                                                      safeSetState(
-                                                                          () {});
-                                                                      folgBruker();
-                                                                    },
-                                                                    text:
-                                                                        'Følg',
-                                                                    options:
-                                                                        FFButtonOptions(
-                                                                      width: 95,
-                                                                      height:
-                                                                          30,
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          16,
-                                                                          0,
-                                                                          16,
-                                                                          0),
-                                                                      iconPadding:
-                                                                          const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              0,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .alternate,
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleSmall
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Open Sans',
-                                                                            color:
-                                                                                Colors.white,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          ),
-                                                                      elevation:
-                                                                          1,
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8),
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            9,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child:
+                                                                        FFButtonWidget(
+                                                                      onPressed:
+                                                                          () {},
+                                                                      text: '',
+                                                                      icon:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .message,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                      options:
+                                                                          FFButtonOptions(
+                                                                        width:
+                                                                            45,
+                                                                        height:
+                                                                            33,
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            0,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                        iconPadding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            10,
+                                                                            1,
+                                                                            0,
+                                                                            0),
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        textStyle: FlutterFlowTheme.of(context)
+                                                                            .titleSmall
+                                                                            .override(
+                                                                              fontFamily: 'Open Sans',
+                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                              fontSize: 1,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.w600,
+                                                                            ),
+                                                                        elevation:
+                                                                            0,
+                                                                        borderSide:
+                                                                            const BorderSide(
+                                                                          color: const Color
+                                                                              .fromARGB(
+                                                                              32,
+                                                                              87,
+                                                                              99,
+                                                                              108),
+                                                                          width:
+                                                                              1.3,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(9),
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          9,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                  child:
-                                                                      FFButtonWidget(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      // context.pushNamed(
-                                                                      //     'BrukerRating');
-                                                                    },
-                                                                    text:
-                                                                        'Melding',
-                                                                    // icon: FaIcon(
-                                                                    //   FontAwesomeIcons
-                                                                    //       .solidStar,
-                                                                    //   color: FlutterFlowTheme.of(
-                                                                    //           context)
-                                                                    //       .alternate,
-                                                                    //   size: 17,
-                                                                    // ),
-                                                                    options:
-                                                                        FFButtonOptions(
-                                                                      width:
-                                                                          105,
-                                                                      height:
-                                                                          30,
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          16,
-                                                                          0,
-                                                                          16,
-                                                                          0),
-                                                                      iconPadding:
-                                                                          const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              0,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary,
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleSmall
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Open Sans',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            fontSize:
-                                                                                14,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          ),
-                                                                      elevation:
-                                                                          1,
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                // Padding(
-                                                                //   padding:
-                                                                //       const EdgeInsetsDirectional
-                                                                //           .fromSTEB(
-                                                                //           4,
-                                                                //           0,
-                                                                //           0,
-                                                                //           0),
-                                                                //   child:
-                                                                //       FFButtonWidget(
-                                                                //     onPressed:
-                                                                //         () {
-                                                                //       print(
-                                                                //           'Button pressed ...');
-                                                                //     },
-                                                                //     text:
-                                                                //         '4.3 (15)',
-                                                                //     icon: Icon(
-                                                                //       Icons
-                                                                //           .message,
-                                                                //       color: FlutterFlowTheme.of(
-                                                                //               context)
-                                                                //           .alternate,
-                                                                //       size: 25,
-                                                                //     ),
-                                                                //     options:
-                                                                //         FFButtonOptions(
-                                                                //       width: 45,
-                                                                //       height: 35,
-                                                                //       padding:
-                                                                //           const EdgeInsetsDirectional
-                                                                //               .fromSTEB(
-                                                                //               0,
-                                                                //               0,
-                                                                //               0,
-                                                                //               0),
-                                                                //       iconPadding:
-                                                                //           const EdgeInsetsDirectional
-                                                                //               .fromSTEB(
-                                                                //               10,
-                                                                //               1,
-                                                                //               0,
-                                                                //               0),
-                                                                //       color: FlutterFlowTheme.of(
-                                                                //               context)
-                                                                //           .primary,
-                                                                //       textStyle: FlutterFlowTheme.of(
-                                                                //               context)
-                                                                //           .titleSmall
-                                                                //           .override(
-                                                                //             fontFamily:
-                                                                //                 'Open Sans',
-                                                                //             color:
-                                                                //                 FlutterFlowTheme.of(context).alternate,
-                                                                //             fontSize:
-                                                                //                 1,
-                                                                //             letterSpacing:
-                                                                //                 0.0,
-                                                                //             fontWeight:
-                                                                //                 FontWeight.w600,
-                                                                //           ),
-                                                                //       elevation:
-                                                                //           3,
-                                                                //       borderRadius:
-                                                                //           BorderRadius
-                                                                //               .circular(8),
-                                                                //     ),
-                                                                //   ),
-                                                                // ),
-                                                              ],
+                                                                ],
+                                                              ),
                                                             ),
                                                           ],
                                                         ),

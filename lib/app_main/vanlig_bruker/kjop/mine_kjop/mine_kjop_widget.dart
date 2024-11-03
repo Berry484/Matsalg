@@ -223,7 +223,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0, 20, 0, 0),
                                           child: ListView.builder(
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                               0,
                                               0,
                                               0,
