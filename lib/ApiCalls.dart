@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:http/http.dart' as http;
 import 'package:mat_salg/Bonder.dart';
@@ -1685,5 +1686,136 @@ class UserInfoSearch {
     required this.firstname,
     required this.lastname,
     required this.profilepic,
+  });
+}
+
+class ApiRating {
+  static const String baseUrl = ApiConstants.baseUrl;
+
+  Future<http.Response?> giRating(
+    String? token,
+    String? brukernavn,
+    Int rating,
+    bool kjoper,
+  ) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request and parse the response
+      final response = await http
+          .post(
+            Uri.parse(
+                '$baseUrl/api/ratings?receiver=$brukernavn&value=$rating&kjoper=$kjoper'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      return response;
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<List<UserInfoRating>?> listRatings(
+      String? token, String? username) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request with a timeout of 5 seconds
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/ratings/$username'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5));
+
+      if (response.statusCode == 200) {
+        // Parse the response body
+        List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        // Map the dynamic data to UserInfo instances
+        List<UserInfoRating> ratings = data.map((userData) {
+          return UserInfoRating(
+            username: userData['giverUsername'],
+            profilepic: userData['giverProfilePic'],
+            value: userData['value'],
+            kjoper: userData['kjoper'],
+            time: userData['time'],
+          );
+        }).toList();
+
+        return ratings;
+      } else {
+        return null; // Or throw an error
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<List<UserInfoRating>?> listMineRatings(String? token) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // Make the API request with a timeout of 5 seconds
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/api/ratings/mine'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5));
+
+      if (response.statusCode == 200) {
+        // Parse the response body
+        List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        // Map the dynamic data to UserInfo instances
+        List<UserInfoRating> ratings = data.map((userData) {
+          return UserInfoRating(
+            username: userData['giverUsername'],
+            profilepic: userData['giverProfilePic'],
+            value: userData['value'],
+            kjoper: userData['kjoper'],
+            time: userData['time'],
+          );
+        }).toList();
+
+        return ratings;
+      } else {
+        return null; // Or throw an error
+      }
+    } on TimeoutException {
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+}
+
+class UserInfoRating {
+  final String username;
+  final String profilepic;
+  final Int value;
+  bool kjoper;
+  final DateTime time;
+
+  UserInfoRating({
+    required this.username,
+    required this.profilepic,
+    required this.value,
+    required this.kjoper,
+    required this.time,
   });
 }
