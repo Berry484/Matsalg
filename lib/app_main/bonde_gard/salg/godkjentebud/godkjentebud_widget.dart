@@ -148,7 +148,19 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        context.pushNamed('BrukerPage');
+                        context.pushNamed(
+                          'BrukerPage',
+                          queryParameters: {
+                            'username': serializeParam(
+                              salgInfo.kjoper,
+                              ParamType.String,
+                            ),
+                            'bruker': serializeParam(
+                              null,
+                              ParamType.JSON,
+                            ),
+                          },
+                        );
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -172,7 +184,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                     errorBuilder: (BuildContext context,
                                         Object error, StackTrace? stackTrace) {
                                       return Image.asset(
-                                        'assets/images/error_image.jpg', // Path to your local error image
+                                        'assets/images/profile_pic.png', // Path to your local error image
+                                        width: 60,
+                                        height: 60,
                                         fit: BoxFit.cover,
                                       );
                                     },

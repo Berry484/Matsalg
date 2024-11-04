@@ -144,6 +144,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: true,
+            scrolledUnderElevation: 0.0,
             leading: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,

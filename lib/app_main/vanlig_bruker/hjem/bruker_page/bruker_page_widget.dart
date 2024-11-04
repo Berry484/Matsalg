@@ -211,6 +211,35 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primary,
+          appBar: AppBar(
+            backgroundColor: FlutterFlowTheme.of(context)
+                .primary, // Set to your primary color, e.g., Colors.white
+            elevation: 0, // Removes shadow to keep it flat
+            scrolledUnderElevation: 0.0,
+            systemOverlayStyle: SystemUiOverlayStyle
+                .dark, // Adjusts status bar icons for light background
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: FlutterFlowTheme.of(context).alternate,
+                size: 28.0,
+              ),
+              onPressed: () {
+                context.safePop();
+              },
+            ),
+            centerTitle: true,
+            title: Text(
+              'Profil',
+              style: FlutterFlowTheme.of(context).headlineMedium.override(
+                    fontFamily: 'Open Sans',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 24,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
+          ),
           body: SafeArea(
             top: true,
             child: Column(
@@ -246,74 +275,6 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .primary,
-                                          ),
-                                          child: Stack(
-                                            alignment:
-                                                const AlignmentDirectional(
-                                                    0, 0),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        0, -0.38),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          13, 0, 10, 15),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      InkWell(
-                                                        splashColor:
-                                                            Colors.transparent,
-                                                        focusColor:
-                                                            Colors.transparent,
-                                                        hoverColor:
-                                                            Colors.transparent,
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        onTap: () async {
-                                                          context.safePop();
-                                                        },
-                                                        child: Icon(
-                                                          Icons.arrow_back_ios,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .alternate,
-                                                          size: 28.0,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        0, 0),
-                                                child: Text(
-                                                  'Profil',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .headlineMedium
-                                                      .override(
-                                                        fontFamily: 'Open Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 24,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
                                           ),
                                         ),
                                       ),
@@ -1516,7 +1477,13 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                         ),
                         if (_model.tabBarCurrentIndex == 1)
                           ListView.builder(
-                            padding: EdgeInsets.zero,
+                            padding: const EdgeInsets.fromLTRB(
+                              0,
+                              0,
+                              0,
+                              170,
+                            ),
+                            primary: false,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount:
@@ -1524,10 +1491,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                             itemBuilder: (context, index) {
                               if (_matisLoading) {
                                 return Shimmer.fromColors(
-                                  baseColor: Colors
-                                      .grey[300]!, // Base color for the shimmer
-                                  highlightColor: Colors.grey[
-                                      100]!, // Highlight color for the shimmer
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
                                   child: Container(
                                     margin: const EdgeInsets.all(5.0),
                                     width: 225.0,
@@ -1535,8 +1500,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                     decoration: BoxDecoration(
                                       color: const Color.fromARGB(
                                           127, 255, 255, 255),
-                                      borderRadius: BorderRadius.circular(
-                                          16.0), // Rounded corners
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
                                   ),
                                 );

@@ -27,8 +27,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
   late BrukerRatingModel _model;
   List<UserInfoRating>? _ratings;
   UserInfoStats? _ratingStats;
-  List<UserInfoRating>? _kjopratings;
-  List<UserInfoRating>? _selgratings;
+  List<UserInfoRating>? _kjopratings = [];
+  List<UserInfoRating>? _selgratings = [];
   bool _ratingisLoading = true;
   bool _empty = false;
   double ratingVerdi = 5.0;
@@ -90,10 +90,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       setState(() {
         if (_ratings != null && _ratings!.isNotEmpty) {
           _kjopratings =
-              _ratings!.where((rating) => rating.kjoper == true).toList();
+              _ratings!.where((rating) => rating.kjoper == false).toList();
           _selgratings = _ratings!
-              .where(
-                  (rating) => rating.kjoper == false || rating.kjoper == null)
+              .where((rating) => rating.kjoper == true || rating.kjoper == null)
               .toList();
 
           _ratingisLoading = false;
@@ -338,7 +337,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                           Align(
                             alignment: Alignment(0, 0),
                             child: Container(
-                              height: 40.0,
+                              height: 36.0,
                               padding: const EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
                                 color: Colors.grey[300],
@@ -388,7 +387,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                         .primaryText,
                                     unselectedLabelColor:
                                         FlutterFlowTheme.of(context)
-                                            .secondaryText,
+                                            .primaryText,
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .titleMedium
                                         .override(
@@ -404,8 +403,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
                                             ),
-                                    indicatorColor: Colors
-                                        .transparent, // Disable default indicator
+                                    indicatorColor: Colors.transparent,
                                     dividerColor: Colors.transparent,
                                     tabs: const [
                                       Tab(text: 'Alle'),
@@ -421,6 +419,66 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                             child: TabBarView(
                               controller: _model.tabBarController,
                               children: [
+                                if (_model.tabBarController!.index == 0)
+                                  if (ingenRatings == true)
+                                    Container(
+                                      width: MediaQuery.sizeOf(context).width,
+                                      height:
+                                          MediaQuery.sizeOf(context).height -
+                                              315,
+                                      child: Align(
+                                        alignment: AlignmentDirectional(0, -1),
+                                        child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 0, 110),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(0, 0, 0, 0),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    child: Image.asset(
+                                                      'assets/images/none_reviews.png',
+                                                      width: 276,
+                                                      height: 215,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 16, 0, 0),
+                                                  child: Text(
+                                                    'Ingen vurderinger fra kjøpere',
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .headlineSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 20,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                      ),
+                                    ),
                                 ListView.builder(
                                     padding: const EdgeInsets.fromLTRB(
                                       0,
@@ -765,6 +823,67 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                         ),
                                       );
                                     }),
+                                if (_model.tabBarController!.index == 1)
+                                  if (_selgratings!.isEmpty &&
+                                      _ratingisLoading == false)
+                                    Container(
+                                      width: MediaQuery.sizeOf(context).width,
+                                      height:
+                                          MediaQuery.sizeOf(context).height -
+                                              315,
+                                      child: Align(
+                                        alignment: AlignmentDirectional(0, -1),
+                                        child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 0, 110),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(0, 0, 0, 0),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    child: Image.asset(
+                                                      'assets/images/none_reviews.png',
+                                                      width: 276,
+                                                      height: 215,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 16, 0, 0),
+                                                  child: Text(
+                                                    'Ingen vurderinger fra kjøpere',
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .headlineSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 20,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                      ),
+                                    ),
                                 ListView.builder(
                                     padding: const EdgeInsets.fromLTRB(
                                       0,
@@ -991,7 +1110,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                             -1,
                                                                             1),
                                                                     child: Text(
-                                                                      'Selger',
+                                                                      'Kjøper',
                                                                       textAlign:
                                                                           TextAlign
                                                                               .start,
@@ -1109,6 +1228,67 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                         ),
                                       );
                                     }),
+                                if (_model.tabBarController!.index == 2)
+                                  if (_kjopratings!.isEmpty &&
+                                      _ratingisLoading == false)
+                                    Container(
+                                      width: MediaQuery.sizeOf(context).width,
+                                      height:
+                                          MediaQuery.sizeOf(context).height -
+                                              315,
+                                      child: Align(
+                                        alignment: AlignmentDirectional(0, -1),
+                                        child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 0, 110),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(0, 0, 0, 0),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    child: Image.asset(
+                                                      'assets/images/none_reviews.png',
+                                                      width: 276,
+                                                      height: 215,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 16, 0, 0),
+                                                  child: Text(
+                                                    'Ingen vurderinger fra selgere',
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .headlineSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 20,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                      ),
+                                    ),
                                 ListView.builder(
                                     padding: const EdgeInsets.fromLTRB(
                                       0,
@@ -1335,7 +1515,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                             -1,
                                                                             1),
                                                                     child: Text(
-                                                                      'Kjøper',
+                                                                      'Selger',
                                                                       textAlign:
                                                                           TextAlign
                                                                               .start,
