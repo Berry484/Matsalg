@@ -731,6 +731,14 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           context
                                                                               .pushNamed(
                                                                             'BrukerRating',
+                                                                            extra: <String,
+                                                                                dynamic>{
+                                                                              kTransitionInfoKey: const TransitionInfo(
+                                                                                hasTransition: true,
+                                                                                transitionType: PageTransitionType.bottomToTop,
+                                                                                duration: Duration(milliseconds: 200),
+                                                                              ),
+                                                                            },
                                                                             queryParameters: {
                                                                               'username': serializeParam(
                                                                                 widget.username,

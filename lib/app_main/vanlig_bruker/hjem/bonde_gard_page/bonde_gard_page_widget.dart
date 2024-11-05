@@ -57,9 +57,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
   }
 
   void _runFilter(String enteredKeyword) {
-    // If no keyword is entered, reset _matvarer to the original list
     if (enteredKeyword.isEmpty) {
-      // Instead of assigning from _allSokmatvarer, assign the original list
       _matvarer = List.from(_allmatvarer as Iterable);
     } else {
       // If a keyword is entered, filter the _allmatvarer list
@@ -96,7 +94,6 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         return a.name!.toLowerCase().compareTo(b.name!.toLowerCase());
       });
 
-      // Assign the sorted results to _matvarer
       _matvarer = filteredResults;
     }
 
@@ -114,9 +111,18 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
             .compareTo(a.price ?? double.negativeInfinity);
       });
     }
-
-    // Update the UI
-    setState(() {});
+    setState(() {
+      if (widget.kategori == 'Søk') {
+        if (_matvarer != null && _matvarer!.isNotEmpty) {
+          _isloading = false;
+          _empty = false;
+          return;
+        } else {
+          _empty = true;
+          _isloading = false;
+        }
+      }
+    });
   }
 
   Future<void> getFilterFoods() async {
@@ -133,6 +139,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         setState(() {
           if (_matvarer != null && _matvarer!.isNotEmpty) {
             _isloading = false;
+            _empty = false;
             return;
           } else {
             _empty = true;
@@ -148,6 +155,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         setState(() {
           if (_matvarer != null && _matvarer!.isNotEmpty) {
             _isloading = false;
+            _empty = false;
             return;
           } else {
             _empty = true;
@@ -164,6 +172,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
           setState(() {
             if (_matvarer != null && _matvarer!.isNotEmpty) {
               _isloading = false;
+              _empty = false;
               return;
             } else {
               _empty = true;
@@ -177,15 +186,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
           if (widget.query != null && widget.query.isNotEmpty) {
             _runFilter(widget.query);
           }
-          setState(() {
-            if (_matvarer != null && _matvarer!.isEmpty) {
-              _isloading = false;
-              return;
-            } else {
-              _empty = true;
-              _isloading = false;
-            }
-          });
+          setState(() {});
           return;
         }
       }

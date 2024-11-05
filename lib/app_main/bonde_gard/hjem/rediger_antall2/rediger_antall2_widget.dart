@@ -1,5 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/legg_ut/legg_ut_matvare/legg_ut_matvare_widget.dart';
 
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -247,7 +249,22 @@ class _RedigerAntall2WidgetState extends State<RedigerAntall2Widget> {
                           autofocus: false,
                           obscureText: false,
                           keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true),
+                              decimal: true), // Always decimal keyboard
+                          inputFormatters: [
+                            TextInputFormatter.withFunction(
+                                (oldValue, newValue) {
+                              if (newValue.text.contains(',')) {
+                                return TextEditingValue(
+                                  text: newValue.text.replaceAll(
+                                      ',', '.'), // Replace comma with dot
+                                  selection: TextSelection.collapsed(
+                                      offset: newValue.selection.end),
+                                );
+                              }
+                              return newValue; // Otherwise return the unmodified value
+                            }),
+                            DecimalInputFormatter(),
+                          ],
                           decoration: InputDecoration(
                             isDense: true,
                             labelText: 'Endre antall',

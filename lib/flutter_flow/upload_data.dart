@@ -86,27 +86,39 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               onPressed: () {
                 Navigator.pop(context, MediaSource.photoGallery);
               },
-              child: Text('Bildebibliotek (Bilde)'),
+              child: Text(
+                'Bildebibliotek (Bilde)',
+                style: TextStyle(fontSize: 18), // Set the font size here
+              ),
             ),
             CupertinoActionSheetAction(
               onPressed: () {
                 Navigator.pop(context, MediaSource.videoGallery);
               },
-              child: Text('Bildebibliotek (Video)'),
+              child: Text(
+                'Bildebibliotek (Video)',
+                style: TextStyle(fontSize: 18), // Set the font size here
+              ),
             ),
           ] else if (allowPhoto) ...[
             CupertinoActionSheetAction(
               onPressed: () {
                 Navigator.pop(context, MediaSource.photoGallery);
               },
-              child: Text('Bildebibliotek'),
+              child: Text(
+                'Bildebibliotek',
+                style: TextStyle(fontSize: 18), // Set the font size here
+              ),
             ),
           ] else if (allowVideo) ...[
             CupertinoActionSheetAction(
               onPressed: () {
                 Navigator.pop(context, MediaSource.videoGallery);
               },
-              child: Text('Bildebibliotek'),
+              child: Text(
+                'Bildebibliotek',
+                style: TextStyle(fontSize: 18), // Set the font size here
+              ),
             ),
           ],
           if (!kIsWeb) ...[
@@ -114,7 +126,10 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               onPressed: () {
                 Navigator.pop(context, MediaSource.camera);
               },
-              child: Text('Kamera'),
+              child: Text(
+                'Kamera',
+                style: TextStyle(fontSize: 18), // Set the font size here
+              ),
             ),
           ],
         ],
@@ -123,7 +138,10 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
             Navigator.pop(context);
           },
           isDefaultAction: true,
-          child: Text('Avbryt'),
+          child: Text(
+            'Avbryt',
+            style: TextStyle(fontSize: 18), // Set the font size here
+          ),
         ),
       );
     },

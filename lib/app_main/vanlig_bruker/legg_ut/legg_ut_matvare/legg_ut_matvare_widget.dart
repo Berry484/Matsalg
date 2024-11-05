@@ -2650,14 +2650,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               ? const TextInputType
                                                                   .numberWithOptions(
                                                                   decimal:
-                                                                      true) // Enable decimal (.)
+                                                                      true) // Decimal keyboard
                                                               : TextInputType
                                                                   .number, // Regular number keyboard (no decimal)
+
                                                           validator: _model
                                                               .antallStkTextControllerValidator
                                                               .asValidator(
                                                                   context),
-                                                          // Change input formatters based on index
                                                           inputFormatters: [
                                                             _model.tabBarController!
                                                                         .index !=
@@ -2665,7 +2665,30 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 ? DecimalInputFormatter() // Custom formatter for numbers and one dot
                                                                 : FilteringTextInputFormatter
                                                                     .allow(RegExp(
-                                                                        r'[0-9]')), // Allow only numbers
+                                                                        r'[0-9]')),
+                                                            TextInputFormatter
+                                                                .withFunction(
+                                                                    (oldValue,
+                                                                        newValue) {
+                                                              // Check if newValue contains a comma and replace with dot
+                                                              if (newValue.text
+                                                                  .contains(
+                                                                      ',')) {
+                                                                // Replace comma with dot
+                                                                return TextEditingValue(
+                                                                  text: newValue
+                                                                      .text
+                                                                      .replaceAll(
+                                                                          ',',
+                                                                          '.'), // Replace comma with dot
+                                                                  selection: TextSelection.collapsed(
+                                                                      offset: newValue
+                                                                          .selection
+                                                                          .end),
+                                                                );
+                                                              }
+                                                              return newValue; // Otherwise return the unmodified value
+                                                            }),
                                                           ],
                                                         ),
                                                       ),

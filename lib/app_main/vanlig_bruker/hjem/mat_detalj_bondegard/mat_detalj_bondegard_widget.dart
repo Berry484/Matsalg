@@ -728,7 +728,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   isScrollControlled: true,
                                                   backgroundColor:
                                                       Colors.transparent,
-                                                  enableDrag: false,
+                                                  enableDrag: true,
+                                                  isDismissible: true,
                                                   context: context,
                                                   builder: (context) {
                                                     return GestureDetector(
@@ -754,8 +755,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   isScrollControlled: true,
                                                   backgroundColor:
                                                       Colors.transparent,
-                                                  enableDrag: false,
+                                                  enableDrag: true,
                                                   context: context,
+                                                  isDismissible: true,
                                                   builder: (context) {
                                                     return GestureDetector(
                                                       onTap: () =>
