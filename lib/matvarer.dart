@@ -14,7 +14,7 @@ class Matvarer {
   final String? username;
   final bool? bonde;
   final double? antall;
-  final String? profilepic; // This is where the profile picture will go
+  final String? profilepic;
   final bool? kjopt;
 
   Matvarer({
@@ -37,11 +37,12 @@ class Matvarer {
   factory Matvarer.fromJson1(Map<String, dynamic>? json) {
     return Matvarer(
       matId: json?['matId'] as int?,
-      name: json?['name'] as String?,
+      name: json?['name'] as String? ?? "", // Set default empty string if null
       imgUrls: (json?['imgUrl'] != null && json?['imgUrl'] is List)
-          ? List<String>.from(json?['imgUrl'])
-          : null,
-      description: json?['description'] as String?,
+          ? List<String>.from(json?['imgUrl']?.whereType<String>() ?? [])
+          : [],
+      description: json?['description'] as String? ??
+          "", // Set default empty string if null
       price: json?['price'] as int?,
       kategorier: (json?['kategorier'] != null && json?['kategorier'] is List)
           ? List<String>.from(json?['kategorier'])
@@ -50,10 +51,12 @@ class Matvarer {
       lng: json?['lng'] as double?,
       betaling: json?['betaling'] as bool?,
       kg: json?['kg'] as bool?,
-      username: json?['username'] as String?,
+      username: json?['username'] as String? ??
+          "", // Set default empty string if null
       bonde: json?['bonde'] as bool?,
       antall: json?['antall'] as double?,
-      profilepic: json?['profilepic'] as String?,
+      profilepic: json?['profilepic'] as String? ??
+          "", // Set default empty string if null
       kjopt: json?['kjopt'] as bool?,
     );
   }
@@ -61,11 +64,11 @@ class Matvarer {
   factory Matvarer.fromJson(Map<String, dynamic> json) {
     return Matvarer(
       matId: json['matId'] as int?,
-      name: json['name'] as String?,
+      name: json['name'] as String? ?? "",
       imgUrls: (json['imgUrl'] != null && json['imgUrl'] is List)
-          ? List<String>.from(json['imgUrl'])
-          : null,
-      description: json['description'] as String?,
+          ? List<String>.from(json['imgUrl']?.whereType<String>() ?? [])
+          : [],
+      description: json['description'] as String? ?? "",
       price: json['price'] as int?,
       kategorier: (json['kategorier'] != null && json['kategorier'] is List)
           ? List<String>.from(json['kategorier'])
@@ -74,10 +77,12 @@ class Matvarer {
       lng: json['lng'] as double?,
       betaling: json['betaling'] as bool?,
       kg: json['kg'] as bool?,
-      username: json['username'] as String?,
+      username:
+          json['username'] as String? ?? "", // Set default empty string if null
       bonde: json['bonde'] as bool?,
       antall: json['antall'] as double?,
-      profilepic: json['user']['profilepic'] as String?,
+      profilepic: json['user']['profilepic'] as String? ??
+          "", // Set default empty string if null
       kjopt: json['kjopt'] as bool?,
     );
   }
@@ -94,7 +99,7 @@ class Matvarer {
     return {
       'matId': matId,
       'name': name,
-      'imgUrl': imgUrls, // Ensure to convert to a list
+      'imgUrl': imgUrls,
       'description': description,
       'price': price,
       'kategorier': kategorier,
@@ -115,7 +120,7 @@ class Matvarer {
     return 'Matvarer {'
         'matId: $matId, '
         'name: $name, '
-        'imgUrls: $imgUrls, ' // Adjusted to reflect the new field
+        'imgUrls: $imgUrls, '
         'description: $description, '
         'price: $price, '
         'kategorier: $kategorier, '
