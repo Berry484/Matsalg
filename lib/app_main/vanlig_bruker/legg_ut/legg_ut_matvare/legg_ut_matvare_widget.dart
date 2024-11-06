@@ -73,6 +73,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
   final ApiUploadFood apiUploadFood = ApiUploadFood();
   final Securestorage securestorage = Securestorage();
   final ApiMultiplePics apiMultiplePics = ApiMultiplePics();
+  bool _leggUtLoading = false;
+  bool _oppdaterLoading = false;
 
   LatLng? selectedLatLng;
   LatLng? currentselectedLatLng =
@@ -3068,6 +3070,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             .validate()) {
                                                       return;
                                                     }
+                                                    if (_oppdaterLoading) {
+                                                      return;
+                                                    }
                                                     if ((_model.uploadedLocalFile1.bytes ?? []).isEmpty &&
                                                         (_model.uploadedLocalFile2
                                                                     .bytes ??
@@ -3227,6 +3232,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     }
 
                                                     try {
+                                                      _oppdaterLoading = true;
                                                       final token =
                                                           await securestorage
                                                               .readToken();
@@ -3333,6 +3339,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           if (response
                                                                   .statusCode ==
                                                               200) {
+                                                            _oppdaterLoading =
+                                                                false;
                                                             context.pushNamed(
                                                               'BrukerLagtUtInfo',
                                                               extra: <String,
@@ -3353,6 +3361,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   404 ||
                                                               response.statusCode ==
                                                                   500) {
+                                                            _oppdaterLoading =
+                                                                false;
                                                             FFAppState().login =
                                                                 false;
                                                             context.pushNamed(
@@ -3360,10 +3370,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             return;
                                                           }
                                                         } else {
+                                                          _oppdaterLoading =
+                                                              false;
                                                           throw (Exception);
                                                         }
                                                       }
                                                     } catch (e) {
+                                                      _oppdaterLoading = false;
                                                       showDialog(
                                                         context: context,
                                                         builder: (BuildContext
@@ -3458,7 +3471,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 .validate()) {
                                                           return;
                                                         }
-
+                                                        if (_leggUtLoading ==
+                                                            true) {
+                                                          return;
+                                                        }
                                                         if (_model.tabBarCurrentIndex ==
                                                                 0 &&
                                                             _model
@@ -3547,7 +3563,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           );
                                                           return null;
                                                         }
-
+                                                        _leggUtLoading = true;
                                                         String? token =
                                                             await Securestorage()
                                                                 .readToken();
@@ -3699,6 +3715,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .statusCode ==
                                                               200) {
                                                             setState(() {});
+                                                            _leggUtLoading =
+                                                                false;
                                                             context.goNamed(
                                                               'Hjem',
                                                               extra: <String,
@@ -3716,7 +3734,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 ),
                                                               },
                                                             );
-                                                          } else {}
+                                                          } else {
+                                                            _leggUtLoading =
+                                                                false;
+                                                          }
                                                           setState(() {});
                                                         }
                                                       },

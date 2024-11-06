@@ -33,6 +33,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
   late BudInfoModel _model;
   late Matvarer matvare;
   late OrdreInfo ordreInfo;
+  bool _trekkIsLoading = false;
+  bool _bekreftIsLoading = false;
 
   @override
   void setState(VoidCallback callback) {
@@ -471,8 +473,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 actions: [
                                   CupertinoDialogAction(
                                     onPressed: () {
-                                      Navigator.of(context)
-                                          .pop(); // Close the dialog
+                                      if (_bekreftIsLoading) {
+                                        return;
+                                      }
+                                      _bekreftIsLoading = true;
+                                      Navigator.of(context).pop();
+                                      _bekreftIsLoading = false;
                                     },
                                     isDefaultAction: true,
                                     child: const Text(
@@ -484,6 +490,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                   ),
                                   CupertinoDialogAction(
                                     onPressed: () async {
+                                      if (_trekkIsLoading) {
+                                        return;
+                                      }
+                                      _trekkIsLoading = true;
                                       String? token = Securestorage.authToken;
                                       if (token != null) {
                                         final response = await ApiKjop().trekk(
@@ -495,6 +505,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                           Navigator.pop(context);
                                           Navigator.pop(context);
                                         }
+                                        _trekkIsLoading = false;
                                       }
                                     },
                                     child: Text("Ja, bekreft"),
@@ -608,6 +619,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                         ),
                                         CupertinoDialogAction(
                                           onPressed: () async {
+                                            if (_bekreftIsLoading) {
+                                              return;
+                                            }
+                                            _bekreftIsLoading = true;
                                             String? token =
                                                 Securestorage.authToken;
                                             if (token != null) {
@@ -616,8 +631,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                       id: ordreInfo.id,
                                                       hentet: true,
                                                       token: token);
-                                              // Perform action for 'Yes'
                                               if (response.statusCode == 200) {
+                                                _bekreftIsLoading = false;
                                                 HapticFeedback.mediumImpact();
                                                 context.pushNamed(
                                                   'LeggIgjenRating',
@@ -633,6 +648,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                   },
                                                 );
                                               }
+                                              _bekreftIsLoading = false;
                                             }
                                           },
                                           child: Text("Ja, bekreft"),

@@ -34,6 +34,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
   late SalgBrukerInfoModel _model;
   late Matvarer matvare;
   late OrdreInfo salgInfo;
+  bool godkjennIsLoading = false;
 
   @override
   void setState(VoidCallback callback) {
@@ -445,6 +446,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               actions: [
                                 CupertinoDialogAction(
                                   onPressed: () {
+                                    godkjennIsLoading = false;
                                     Navigator.of(context)
                                         .pop(); // Close the dialog
                                   },
@@ -458,6 +460,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 ),
                                 CupertinoDialogAction(
                                   onPressed: () async {
+                                    if (godkjennIsLoading) {
+                                      return;
+                                    }
+                                    godkjennIsLoading = true;
                                     String? token = Securestorage.authToken;
                                     if (token != null) {
                                       final response = await ApiKjop().avvis(
@@ -467,6 +473,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                           token: token);
                                       // Perform action for 'Yes'
                                       if (response.statusCode == 200) {
+                                        godkjennIsLoading = false;
                                         Navigator.of(context).pop();
                                         Navigator.pop(context);
                                         HapticFeedback.mediumImpact();
@@ -489,6 +496,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                           },
                                         );
                                       }
+                                      godkjennIsLoading = false;
                                     }
                                   },
                                   child: Text("Ja, avslå"),
@@ -554,6 +562,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                   ),
                                   CupertinoDialogAction(
                                     onPressed: () async {
+                                      if (godkjennIsLoading) {
+                                        return;
+                                      }
+                                      godkjennIsLoading = true;
                                       String? token = Securestorage.authToken;
                                       if (token != null) {
                                         final response = await ApiKjop()
@@ -563,6 +575,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                                 token: token);
                                         // Perform action for 'Yes'
                                         if (response.statusCode == 200) {
+                                          godkjennIsLoading = false;
                                           Navigator.of(context)
                                               .pop(); // Close the dialog
                                           Navigator.pop(context);
@@ -586,6 +599,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                             },
                                           );
                                         }
+                                        godkjennIsLoading = false;
                                       }
                                     },
                                     child: Text("Ja, godta"),

@@ -29,6 +29,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int matpris = 1;
   late Matvarer matvare;
+  bool _isLoading = false;
   final Securestorage securestorage = Securestorage();
 
   @override
@@ -753,11 +754,15 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
+                              if (_isLoading == true) {
+                                return;
+                              }
                               if (_model.formKey.currentState == null ||
                                   !_model.formKey.currentState!.validate()) {
                                 return;
                               }
                               try {
+                                _isLoading = true;
                                 if (matvare.matId != null &&
                                     _model.antallStkTextController.text
                                         .isNotEmpty) {
@@ -784,14 +789,17 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           context.pushNamed('Godkjentbetaling');
                                         }
                                       } else {
+                                        _isLoading = false;
                                         throw (Exception);
                                       }
                                     }
                                   } else {
+                                    _isLoading = false;
                                     throw (Exception);
                                   }
                                 }
                               } catch (e) {
+                                _isLoading = false;
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {

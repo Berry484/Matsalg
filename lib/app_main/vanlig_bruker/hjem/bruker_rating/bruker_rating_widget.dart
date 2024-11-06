@@ -40,7 +40,6 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => BrukerRatingModel());
-
     getRatingStats();
     getAllRatings();
     timeago.setLocaleMessages('nb_NO', timeago.NbNoMessages());
