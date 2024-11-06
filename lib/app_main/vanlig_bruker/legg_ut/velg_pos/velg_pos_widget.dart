@@ -1,4 +1,6 @@
 import 'package:flutter/services.dart';
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/SecureStorage.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -277,31 +279,65 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 25.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    size: 25.0,
-                                  ),
-                                  Text(
-                                    'Bruk min nåværende posisjon',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          fontSize: 16.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ],
+                              child: GestureDetector(
+                                onTap: () async {
+                                  LatLng? location;
+
+                                  // Attempt to get the current user's location
+                                  location = await getCurrentUserLocation(
+                                      defaultLocation: const LatLng(0.0, 0.0));
+
+                                  // Check if location is successfully retrieved
+                                  if (location != null) {
+                                    selectedLocation = location;
+                                    FFAppState().brukerLat = location.latitude;
+                                    FFAppState().brukerLng = location.longitude;
+
+                                    // Retrieve the token
+                                    String? token =
+                                        await Securestorage().readToken();
+
+                                    // If no token is found, redirect to registration
+                                    if (token == null) {
+                                      FFAppState().login = false;
+                                      context.pushNamed('registrer');
+                                      return;
+                                    } else {
+                                      final apiUserSQL = ApiUserSQL();
+                                      await apiUserSQL.updatePosisjon(
+                                          token: token);
+                                    }
+                                  } else {
+                                    // If no location was retrieved, exit
+                                    return;
+                                  }
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      size: 25.0,
+                                    ),
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      'Bruk min nåværende posisjon',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             Padding(

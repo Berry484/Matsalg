@@ -416,6 +416,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                           ),
                           Expanded(
                             child: TabBarView(
+                              physics: NeverScrollableScrollPhysics(),
                               controller: _model.tabBarController,
                               children: [
                                 if (_model.tabBarController!.index == 0)
