@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
 
@@ -328,6 +329,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         }.withoutNulls,
                                       );
                                     } else {
+                                      HapticFeedback.mediumImpact();
                                       context.goNamed('Hjem');
                                     }
                                   },
@@ -422,6 +424,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         }.withoutNulls,
                                       );
                                     } else {
+                                      HapticFeedback.mediumImpact();
                                       context.pushNamed('Hjem');
                                     }
                                   },
