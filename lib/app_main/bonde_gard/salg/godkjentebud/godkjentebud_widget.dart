@@ -197,7 +197,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(9, 0, 0, 0),
                                 child: Text(
-                                  matvare.username ?? '',
+                                  salgInfo.kjoper,
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
