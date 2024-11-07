@@ -289,8 +289,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             dividerColor: Colors.transparent,
                                             tabs: const [
                                               Tab(text: 'Alle'),
-                                              Tab(text: 'Kjøpt'),
-                                              Tab(text: 'Solgt'),
+                                              Tab(text: 'Kjøp'),
+                                              Tab(text: 'Salg'),
                                             ],
                                           ),
                                         ],
@@ -972,7 +972,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 6),
                                                                             child:
                                                                                 Text(
-                                                                              'Kjøpet er fullført',
+                                                                              alleInfo.kjoper == FFAppState().brukernavn.toLowerCase() ? 'Kjøpet er fullført' : 'Salget er fullført',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
@@ -1159,7 +1159,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   .fromSTEB(0,
                                                                       16, 0, 0),
                                                           child: Text(
-                                                            'Ingen aktive salg',
+                                                            'Ingen pågående kjøp',
                                                             textAlign: TextAlign
                                                                 .center,
                                                             style: FlutterFlowTheme
@@ -1868,7 +1868,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   .fromSTEB(0,
                                                                       16, 0, 0),
                                                           child: Text(
-                                                            'Ingen aktive kjøp',
+                                                            'Ingen pågående salg',
                                                             textAlign: TextAlign
                                                                 .center,
                                                             style: FlutterFlowTheme

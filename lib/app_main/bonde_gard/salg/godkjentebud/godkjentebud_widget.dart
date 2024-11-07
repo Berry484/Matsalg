@@ -510,17 +510,18 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                  child: Text(
-                    'Husk å be kjøperen bekrefte at \nmatvaren er mottatt',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Open Sans',
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w500,
-                        ),
+                if (salgInfo.hentet != true)
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                    child: Text(
+                      'Husk å be kjøperen bekrefte at \nmatvaren er mottatt',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Open Sans',
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
                   ),
-                ),
               ],
             ),
           ],
