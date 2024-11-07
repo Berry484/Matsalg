@@ -157,7 +157,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
 
             _ratingisLoading = false;
           } else {
-            _ratingisLoading = false;
+            if (widget.mine != true) {
+              _ratingisLoading = true;
+            }
           }
         });
       }

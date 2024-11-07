@@ -219,7 +219,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                             'BrukerPage',
                             queryParameters: {
                               'username': serializeParam(
-                                salgInfo.kjoper,
+                                salgInfo.kjoper == FFAppState().brukernavn
+                                    ? salgInfo.selger
+                                    : salgInfo.kjoper,
                                 ParamType.String,
                               ),
                               'bruker': serializeParam(
@@ -249,7 +251,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(200),
                                   child: Image.network(
-                                    '${ApiConstants.baseUrl}${salgInfo.kjoperProfilePic}',
+                                    '${ApiConstants.baseUrl}${salgInfo.kjoper == FFAppState().brukernavn ? matvare.profilepic : salgInfo.kjoperProfilePic}',
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
@@ -269,7 +271,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     9, 0, 0, 0),
                                 child: Text(
-                                  salgInfo.kjoper,
+                                  salgInfo.kjoper == FFAppState().brukernavn
+                                      ? salgInfo.selger
+                                      : salgInfo.kjoper,
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall

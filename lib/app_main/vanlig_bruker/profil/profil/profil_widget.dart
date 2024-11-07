@@ -127,10 +127,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
       } else {
         _matvarer = await ApiGetMyFoods.getMyFoods(token);
         setState(() {
-          if (_matvarer != null && _matvarer!.isEmpty) {
+          if (_matvarer != null && _matvarer!.isNotEmpty) {
+            _isloading = false;
             return;
           }
-          _isloading = false;
         });
       }
     } on SocketException {
