@@ -414,30 +414,31 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Align(
-                      alignment: AlignmentDirectional(-1, 1),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
-                        child: Text(
-                          'Godkjent tid',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Open Sans',
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                fontSize: 14,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
+                if (salgInfo.godkjent == true)
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(-1, 1),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
+                          child: Text(
+                            'Godkjent tid',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  fontSize: 14,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(5, 12, 0, 0),
                   child: Row(
@@ -510,7 +511,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     ),
                   ),
                 ),
-                if (salgInfo.hentet != true)
+                if (salgInfo.hentet != true && salgInfo.godkjent == true)
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                     child: Text(

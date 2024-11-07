@@ -1,22 +1,16 @@
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/bonde_gard/salg/godkjentebud/godkjentebud_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/budInfo/budInfo_widget.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/kjop/kjop_bekreft_hente/kjop_bekreft_hente_widget.dart';
-import 'package:mat_salg/index.dart';
-import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '/app_main/bonde_gard/salg/salg_bruker_info/salg_bruker_info_widget.dart';
-import '/app_main/tom_place_holders/ingen_kjop/ingen_kjop_widget.dart';
 import '/app_main/vanlig_bruker/custom_nav_bar_user/kjop_nav_bar/kjop_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'mine_kjop_model.dart';
 export 'mine_kjop_model.dart';
 
@@ -302,78 +296,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                       physics: NeverScrollableScrollPhysics(),
                                       controller: _model.tabBarController,
                                       children: [
-                                        // if (_model.tabBarCurrentIndex == 0)
-                                        //   if (_allEmpty == true)
-                                        //     Container(
-                                        //       width: MediaQuery.sizeOf(context)
-                                        //           .width,
-                                        //       height: MediaQuery.sizeOf(context)
-                                        //               .height -
-                                        //           315,
-                                        //       child: Align(
-                                        //         alignment:
-                                        //             AlignmentDirectional(0, -1),
-                                        //         child: Padding(
-                                        //             padding:
-                                        //                 EdgeInsetsDirectional
-                                        //                     .fromSTEB(
-                                        //                         0, 0, 0, 110),
-                                        //             child: Column(
-                                        //               mainAxisSize:
-                                        //                   MainAxisSize.max,
-                                        //               mainAxisAlignment:
-                                        //                   MainAxisAlignment
-                                        //                       .center,
-                                        //               children: [
-                                        //                 Padding(
-                                        //                   padding:
-                                        //                       const EdgeInsetsDirectional
-                                        //                           .fromSTEB(
-                                        //                           70, 0, 0, 0),
-                                        //                   child: ClipRRect(
-                                        //                     borderRadius:
-                                        //                         BorderRadius
-                                        //                             .circular(
-                                        //                                 8),
-                                        //                     child: Image.asset(
-                                        //                       'assets/images/In_no_time-rafiki.png',
-                                        //                       width: 276,
-                                        //                       height: 215,
-                                        //                       fit: BoxFit.cover,
-                                        //                     ),
-                                        //                   ),
-                                        //                 ),
-                                        //                 Padding(
-                                        //                   padding:
-                                        //                       EdgeInsetsDirectional
-                                        //                           .fromSTEB(0,
-                                        //                               16, 0, 0),
-                                        //                   child: Text(
-                                        //                     'Ingen handler enda',
-                                        //                     textAlign: TextAlign
-                                        //                         .center,
-                                        //                     style: FlutterFlowTheme
-                                        //                             .of(context)
-                                        //                         .headlineSmall
-                                        //                         .override(
-                                        //                           fontFamily:
-                                        //                               'Open Sans',
-                                        //                           color: FlutterFlowTheme.of(
-                                        //                                   context)
-                                        //                               .primaryText,
-                                        //                           fontSize: 20,
-                                        //                           letterSpacing:
-                                        //                               0.0,
-                                        //                           fontWeight:
-                                        //                               FontWeight
-                                        //                                   .w600,
-                                        //                         ),
-                                        //                   ),
-                                        //                 ),
-                                        //               ],
-                                        //             )),
-                                        //       ),
-                                        //     ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -393,11 +315,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                     ? 1
                                                     : _alleInfo!.length,
                                             itemBuilder: (context, index) {
-                                              if (_allEmpty == true &&
-                                                  ((FFAppState().harSolgt ==
-                                                          true &&
-                                                      FFAppState().harKjopt ==
-                                                          true))) {
+                                              if (_allEmpty == true) {
                                                 return Container(
                                                   width:
                                                       MediaQuery.sizeOf(context)
@@ -482,94 +400,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                   ),
                                                 );
                                               }
-                                              if (FFAppState().harSolgt !=
-                                                      true &&
-                                                  FFAppState().harKjopt !=
-                                                      true) {
-                                                return Container(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                          .width,
-                                                  height:
-                                                      MediaQuery.sizeOf(context)
-                                                              .height -
-                                                          315,
-                                                  child: Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0, -1),
-                                                    child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(0, 0,
-                                                                    0, 110),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      70,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/In_no_time-rafiki.png',
-                                                                  width: 276,
-                                                                  height: 215,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          16,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                'Ingen kjøp eller salg',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .headlineSmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          20,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )),
-                                                  ),
-                                                );
-                                              }
                                               if (_isloading) {
                                                 return Padding(
                                                   padding:
@@ -583,7 +413,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                         Colors.grey[100]!,
                                                     child: Row(
                                                       children: [
-                                                        // Shimmer for Image
                                                         ClipRRect(
                                                           borderRadius:
                                                               BorderRadius
@@ -592,11 +421,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                             width: 60,
                                                             height: 60,
                                                             color: const Color
-                                                                .fromARGB(
-                                                                127,
-                                                                255,
-                                                                255,
-                                                                255), // Background color
+                                                                .fromARGB(127,
+                                                                255, 255, 255),
                                                           ),
                                                         ),
                                                         const SizedBox(
@@ -734,6 +560,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   getKjop();
                                                                   getSalg();
                                                                 }));
+                                                            return;
                                                           }
                                                         }
                                                         if (alleInfo.kjoper !=
@@ -782,52 +609,51 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   getSalg();
                                                                   getKjop();
                                                                 }));
+                                                            return;
                                                           }
                                                         }
-                                                        if (alleInfo.kjoper !=
-                                                            FFAppState()
-                                                                .brukernavn
-                                                                .toLowerCase()) {
-                                                          if (alleInfo
-                                                                  .godkjent ==
-                                                              true) {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              useSafeArea: true,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
+                                                        if (alleInfo.hentet == true ||
+                                                            alleInfo.trekt ==
+                                                                true ||
+                                                            alleInfo.avvist ==
+                                                                true ||
+                                                            alleInfo.godkjent ==
+                                                                true) {
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            useSafeArea: true,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return GestureDetector(
+                                                                onTap: () =>
+                                                                    FocusScope.of(
+                                                                            context)
+                                                                        .unfocus(),
+                                                                child: Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
                                                                   child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
-                                                                    child:
-                                                                        GodkjentebudWidget(
-                                                                      info: alleInfo
-                                                                          .foodDetails,
-                                                                      ordre:
-                                                                          alleInfo,
-                                                                    ),
+                                                                      GodkjentebudWidget(
+                                                                    info: alleInfo
+                                                                        .foodDetails,
+                                                                    ordre:
+                                                                        alleInfo,
                                                                   ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                setState(() {
-                                                                  getAll();
-                                                                  getSalg();
-                                                                  getKjop();
-                                                                }));
-                                                          }
+                                                                ),
+                                                              );
+                                                            },
+                                                          ).then((value) =>
+                                                              setState(() {
+                                                                getAll();
+                                                                getSalg();
+                                                                getKjop();
+                                                              }));
+                                                          return;
                                                         }
                                                       },
                                                       child: Material(
@@ -1352,92 +1178,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           0),
                                                               child: Text(
                                                                 'Ingen pågående kjøp',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .headlineSmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          20,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )),
-                                                  ),
-                                                );
-                                              }
-                                              if (FFAppState().harKjopt !=
-                                                  true) {
-                                                return Container(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                          .width,
-                                                  height:
-                                                      MediaQuery.sizeOf(context)
-                                                              .height -
-                                                          315,
-                                                  child: Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0, -1),
-                                                    child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(0, 0,
-                                                                    0, 110),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      70,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/In_no_time-rafiki.png',
-                                                                  width: 276,
-                                                                  height: 215,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          16,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                'Du kan se dine aktive kjøp her',
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,
@@ -1999,78 +1739,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             },
                                           ),
                                         ),
-                                        // if (_model.tabBarCurrentIndex == 2)
-                                        //   if (_salgEmpty != true)
-                                        //     Container(
-                                        //       width: MediaQuery.sizeOf(context)
-                                        //           .width,
-                                        //       height: MediaQuery.sizeOf(context)
-                                        //               .height -
-                                        //           315,
-                                        //       child: Align(
-                                        //         alignment:
-                                        //             AlignmentDirectional(0, -1),
-                                        //         child: Padding(
-                                        //             padding:
-                                        //                 EdgeInsetsDirectional
-                                        //                     .fromSTEB(
-                                        //                         0, 0, 0, 110),
-                                        //             child: Column(
-                                        //               mainAxisSize:
-                                        //                   MainAxisSize.max,
-                                        //               mainAxisAlignment:
-                                        //                   MainAxisAlignment
-                                        //                       .center,
-                                        //               children: [
-                                        //                 Padding(
-                                        //                   padding:
-                                        //                       const EdgeInsetsDirectional
-                                        //                           .fromSTEB(
-                                        //                           70, 0, 0, 0),
-                                        //                   child: ClipRRect(
-                                        //                     borderRadius:
-                                        //                         BorderRadius
-                                        //                             .circular(
-                                        //                                 8),
-                                        //                     child: Image.asset(
-                                        //                       'assets/images/In_no_time-rafiki.png',
-                                        //                       width: 276,
-                                        //                       height: 215,
-                                        //                       fit: BoxFit.cover,
-                                        //                     ),
-                                        //                   ),
-                                        //                 ),
-                                        //                 Padding(
-                                        //                   padding:
-                                        //                       EdgeInsetsDirectional
-                                        //                           .fromSTEB(0,
-                                        //                               16, 0, 0),
-                                        //                   child: Text(
-                                        //                     'Ingen pågående salg',
-                                        //                     textAlign: TextAlign
-                                        //                         .center,
-                                        //                     style: FlutterFlowTheme
-                                        //                             .of(context)
-                                        //                         .headlineSmall
-                                        //                         .override(
-                                        //                           fontFamily:
-                                        //                               'Open Sans',
-                                        //                           color: FlutterFlowTheme.of(
-                                        //                                   context)
-                                        //                               .primaryText,
-                                        //                           fontSize: 20,
-                                        //                           letterSpacing:
-                                        //                               0.0,
-                                        //                           fontWeight:
-                                        //                               FontWeight
-                                        //                                   .w600,
-                                        //                         ),
-                                        //                   ),
-                                        //                 ),
-                                        //               ],
-                                        //             )),
-                                        //       ),
-                                        //     ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -2148,92 +1816,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           0),
                                                               child: Text(
                                                                 'Ingen pågående salg',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .headlineSmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          20,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )),
-                                                  ),
-                                                );
-                                              }
-                                              if (FFAppState().harSolgt !=
-                                                  true) {
-                                                return Container(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                          .width,
-                                                  height:
-                                                      MediaQuery.sizeOf(context)
-                                                              .height -
-                                                          315,
-                                                  child: Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0, -1),
-                                                    child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(0, 0,
-                                                                    0, 110),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      70,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/In_no_time-rafiki.png',
-                                                                  width: 276,
-                                                                  height: 215,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          16,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                'Du kan se dine aktive salg her',
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,
