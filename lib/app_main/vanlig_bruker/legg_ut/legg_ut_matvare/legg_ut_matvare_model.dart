@@ -41,7 +41,7 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
     if (val!.toLowerCase() == 'null') {
       return 'Felt kan ikke være null';
     }
-    if (val == null || val.isEmpty) {
+    if (val.isEmpty) {
       return 'Felt må fylles ut';
     }
 
@@ -97,7 +97,7 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
     if (val!.toLowerCase() == 'null') {
       return 'Felt kan ikke være null';
     }
-    if (val == null || val.isEmpty) {
+    if (val.isEmpty) {
       return 'Felt må fylles ut';
     }
 

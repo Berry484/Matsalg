@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:http/http.dart' as http;
 import 'package:mat_salg/Bonder.dart';
@@ -638,6 +637,7 @@ class ApiGetUser {
       // Handle any other errors that might occur
       return null;
     }
+    return null;
   }
 }
 
@@ -1116,8 +1116,7 @@ class ApiKjop {
     // Prepare headers
     final headers = {
       'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
+      'Authorization': 'Bearer $token', // Add Bearer token if present
     };
 
     // Send the POST request
@@ -1340,8 +1339,7 @@ class ApiKjop {
     // Prepare headers
     final headers = {
       'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
+      'Authorization': 'Bearer $token', // Add Bearer token if present
     };
 
     // Send the POST request
@@ -1376,8 +1374,7 @@ class ApiKjop {
     // Prepare headers
     final headers = {
       'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
+      'Authorization': 'Bearer $token', // Add Bearer token if present
     };
 
     // Send the POST request
@@ -1414,8 +1411,7 @@ class ApiKjop {
     // Prepare headers
     final headers = {
       'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
+      'Authorization': 'Bearer $token', // Add Bearer token if present
     };
 
     // Send the POST request
@@ -1450,8 +1446,7 @@ class ApiKjop {
     // Prepare headers
     final headers = {
       'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
+      'Authorization': 'Bearer $token', // Add Bearer token if present
     };
 
     // Send the POST request
@@ -1478,7 +1473,7 @@ class ApiGetFilterFood {
       final response = await http
           .get(
             Uri.parse(
-                '$baseUrl/rrh/send/matvarer/filter?kategorier=${kategorier}&userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
+                '$baseUrl/rrh/send/matvarer/filter?kategorier=$kategorier&userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds

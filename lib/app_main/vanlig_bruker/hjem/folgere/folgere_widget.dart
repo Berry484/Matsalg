@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
-import 'package:mat_salg/matvarer.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -42,25 +43,84 @@ class _FolgereWidgetState extends State<FolgereWidget> {
     _model = createModel(context, () => FolgereModel());
   }
 
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   Future<void> listFolgere() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      if (widget.folger == 'Følgere') {
-        _brukere = await ApiFolg.listFolger(token, widget.username);
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
       } else {
-        _brukere = await ApiFolg.listFolgere(token, widget.username);
-      }
-      setState(() {
-        if (_brukere != null && _brukere!.isEmpty) {
-          return;
+        if (widget.folger == 'Følgere') {
+          _brukere = await ApiFolg.listFolger(token, widget.username);
         } else {
-          _isloading = false;
+          _brukere = await ApiFolg.listFolgere(token, widget.username);
         }
-      });
+        setState(() {
+          if (_brukere != null && _brukere!.isNotEmpty) {
+            _isloading = false;
+            return;
+          } else {
+            _isloading = true;
+          }
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -271,12 +331,20 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                       if (brukere.following == true)
                                         FFButtonWidget(
                                           onPressed: () async {
-                                            HapticFeedback.lightImpact();
-                                            brukere.following = false;
-                                            safeSetState(() {});
-                                            apiFolg.unfolgBruker(
-                                                Securestorage.authToken,
-                                                brukere.username);
+                                            try {
+                                              HapticFeedback.lightImpact();
+                                              brukere.following = false;
+                                              safeSetState(() {});
+                                              apiFolg.unfolgBruker(
+                                                  Securestorage.authToken,
+                                                  brukere.username);
+                                            } on SocketException {
+                                              showErrorToast(context,
+                                                  'Ingen internettforbindelse');
+                                            } catch (e) {
+                                              showErrorToast(
+                                                  context, 'En feil oppstod');
+                                            }
                                           },
                                           text: 'Følger',
                                           options: FFButtonOptions(
@@ -310,12 +378,20 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                       if (brukere.following != true)
                                         FFButtonWidget(
                                           onPressed: () async {
-                                            HapticFeedback.mediumImpact();
-                                            brukere.following = true;
-                                            safeSetState(() {});
-                                            apiFolg.folgbruker(
-                                                Securestorage.authToken,
-                                                brukere.username);
+                                            try {
+                                              HapticFeedback.mediumImpact();
+                                              brukere.following = true;
+                                              safeSetState(() {});
+                                              apiFolg.folgbruker(
+                                                  Securestorage.authToken,
+                                                  brukere.username);
+                                            } on SocketException {
+                                              showErrorToast(context,
+                                                  'Ingen internettforbindelse');
+                                            } catch (e) {
+                                              showErrorToast(
+                                                  context, 'En feil oppstod');
+                                            }
                                           },
                                           text: 'Følg',
                                           options: FFButtonOptions(

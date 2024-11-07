@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
@@ -33,7 +35,6 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
 
   List<Matvarer>? _matvarer;
   List<Matvarer>? _allmatvarer;
-  List<Matvarer>? _allSokmatvarer;
   bool _isloading = true;
   bool _empty = false;
   int sorterVerdi = 1;
@@ -56,103 +57,112 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
   }
 
-  void _runFilter(String enteredKeyword) {
-    if (enteredKeyword.isEmpty) {
-      _matvarer = List.from(_allmatvarer as Iterable);
-    } else {
-      // If a keyword is entered, filter the _allmatvarer list
-      List<Matvarer> filteredResults = _allmatvarer!.where((matvare) {
-        // Check if the name contains the entered keyword
-        return matvare.name!
-            .toLowerCase()
-            .contains(enteredKeyword.toLowerCase());
-      }).toList();
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
 
-      // Store the unsorted search results in _allSokmatvarer
-      _allSokmatvarer =
-          List.from(filteredResults); // Keep the filtered results unsorted
+    overlay.insert(overlayEntry);
 
-      // Now sort the filtered results based on match quality
-      filteredResults.sort((a, b) {
-        String keyword = enteredKeyword.toLowerCase();
-
-        // Check for exact matches (case-insensitive)
-        bool aExactMatch = a.name!.toLowerCase() == keyword;
-        bool bExactMatch = b.name!.toLowerCase() == keyword;
-
-        if (aExactMatch && !bExactMatch) return -1;
-        if (bExactMatch && !aExactMatch) return 1;
-
-        // Check if the keyword is at the start of the name
-        bool aStartsWith = a.name!.toLowerCase().startsWith(keyword);
-        bool bStartsWith = b.name!.toLowerCase().startsWith(keyword);
-
-        if (aStartsWith && !bStartsWith) return -1;
-        if (bStartsWith && !aStartsWith) return 1;
-
-        // Otherwise, fall back to regular string comparison for alphabetical order
-        return a.name!.toLowerCase().compareTo(b.name!.toLowerCase());
-      });
-
-      _matvarer = filteredResults;
-    }
-
-    // Apply sorting based on the selected sorterVerdi
-    if (sorterVerdi == 2) {
-      // Sort low to high
-      _matvarer!.sort((a, b) {
-        return (a.price ?? double.infinity)
-            .compareTo(b.price ?? double.infinity);
-      });
-    } else if (sorterVerdi == 3) {
-      // Sort high to low
-      _matvarer!.sort((a, b) {
-        return (b.price ?? double.negativeInfinity)
-            .compareTo(a.price ?? double.negativeInfinity);
-      });
-    }
-    setState(() {
-      if (widget.kategori == 'Søk') {
-        if (_matvarer != null && _matvarer!.isNotEmpty) {
-          _isloading = false;
-          _empty = false;
-          return;
-        } else {
-          _empty = true;
-          _isloading = false;
-        }
-      }
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
     });
   }
 
-  Future<void> getFilterFoods() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      if (widget.kategori?.toLowerCase() == 'gårder') {
-        _allmatvarer = await ApiGetFilterFood.getBondeFood(token);
-        _matvarer = _allmatvarer;
-        _allSokmatvarer = _allmatvarer;
-        setState(() {
-          if (_matvarer != null && _matvarer!.isNotEmpty) {
-            _isloading = false;
-            _empty = false;
-            return;
-          } else {
-            _empty = true;
-            _isloading = false;
-          }
+  void _runFilter(String enteredKeyword) {
+    try {
+      if (enteredKeyword.isEmpty) {
+        _matvarer = List.from(_allmatvarer as Iterable);
+      } else {
+        // If a keyword is entered, filter the _allmatvarer list
+        List<Matvarer> filteredResults = _allmatvarer!.where((matvare) {
+          // Check if the name contains the entered keyword
+          return matvare.name!
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase());
+        }).toList();
+
+        // Now sort the filtered results based on match quality
+        filteredResults.sort((a, b) {
+          String keyword = enteredKeyword.toLowerCase();
+
+          // Check for exact matches (case-insensitive)
+          bool aExactMatch = a.name!.toLowerCase() == keyword;
+          bool bExactMatch = b.name!.toLowerCase() == keyword;
+
+          if (aExactMatch && !bExactMatch) return -1;
+          if (bExactMatch && !aExactMatch) return 1;
+
+          // Check if the keyword is at the start of the name
+          bool aStartsWith = a.name!.toLowerCase().startsWith(keyword);
+          bool bStartsWith = b.name!.toLowerCase().startsWith(keyword);
+
+          if (aStartsWith && !bStartsWith) return -1;
+          if (bStartsWith && !aStartsWith) return 1;
+
+          // Otherwise, fall back to regular string comparison for alphabetical order
+          return a.name!.toLowerCase().compareTo(b.name!.toLowerCase());
         });
-        return;
+
+        _matvarer = filteredResults;
       }
-      if (widget.kategori?.toLowerCase() == 'følger') {
-        _allmatvarer = await ApiGetFilterFood.getFolgerFood(token);
-        _matvarer = _allmatvarer;
-        _allSokmatvarer = _allmatvarer;
-        setState(() {
+
+      // Apply sorting based on the selected sorterVerdi
+      if (sorterVerdi == 2) {
+        // Sort low to high
+        _matvarer!.sort((a, b) {
+          return (a.price ?? double.infinity)
+              .compareTo(b.price ?? double.infinity);
+        });
+      } else if (sorterVerdi == 3) {
+        // Sort high to low
+        _matvarer!.sort((a, b) {
+          return (b.price ?? double.negativeInfinity)
+              .compareTo(a.price ?? double.negativeInfinity);
+        });
+      }
+      setState(() {
+        if (widget.kategori == 'Søk') {
           if (_matvarer != null && _matvarer!.isNotEmpty) {
             _isloading = false;
             _empty = false;
@@ -161,14 +171,41 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
             _empty = true;
             _isloading = false;
           }
-        });
+        }
+      });
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
+    }
+  }
+
+  Future<void> getFilterFoods() async {
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
         return;
       } else {
-        if (widget.kategori != 'Søk') {
-          _allmatvarer =
-              await ApiGetFilterFood.getFilterFood(token, widget.kategori);
+        if (widget.kategori?.toLowerCase() == 'gårder') {
+          _allmatvarer = await ApiGetFilterFood.getBondeFood(token);
           _matvarer = _allmatvarer;
-          _allSokmatvarer = _allmatvarer;
+          setState(() {
+            if (_matvarer != null && _matvarer!.isNotEmpty) {
+              _isloading = false;
+              _empty = false;
+              return;
+            } else {
+              _empty = true;
+              _isloading = false;
+            }
+          });
+          return;
+        }
+        if (widget.kategori?.toLowerCase() == 'følger') {
+          _allmatvarer = await ApiGetFilterFood.getFolgerFood(token);
+          _matvarer = _allmatvarer;
           setState(() {
             if (_matvarer != null && _matvarer!.isNotEmpty) {
               _isloading = false;
@@ -181,21 +218,40 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
           });
           return;
         } else {
-          _allmatvarer = await ApiGetAllFoods.getAllFoods(token);
-          _allSokmatvarer = _allmatvarer;
-          if (widget.query != null && widget.query.isNotEmpty) {
-            _runFilter(widget.query);
+          if (widget.kategori != 'Søk') {
+            _allmatvarer =
+                await ApiGetFilterFood.getFilterFood(token, widget.kategori);
+            _matvarer = _allmatvarer;
+            setState(() {
+              if (_matvarer != null && _matvarer!.isNotEmpty) {
+                _isloading = false;
+                _empty = false;
+                return;
+              } else {
+                _empty = true;
+                _isloading = false;
+              }
+            });
+            return;
+          } else {
+            _allmatvarer = await ApiGetAllFoods.getAllFoods(token);
+            if (widget.query != null && widget.query.isNotEmpty) {
+              _runFilter(widget.query);
+            }
+            setState(() {});
+            return;
           }
-          setState(() {});
-          return;
         }
       }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
-  // Haversine formula to calculate distance between two lat/lng points
   double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
-    const earthRadius = 6371.0; // Earth's radius in kilometers
+    const earthRadius = 6371.0;
     double dLat = _degreesToRadians(lat2 - lat1);
     double dLng = _degreesToRadians(lng2 - lng1);
     double a = sin(dLat / 2) * sin(dLat / 2) +
@@ -334,13 +390,13 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Stack(
-                        alignment: AlignmentDirectional(0, -1),
+                        alignment: const AlignmentDirectional(0, -1),
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(0, 0),
+                            alignment: const AlignmentDirectional(0, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 10, 0, 17),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 10, 0, 17),
                               child: SafeArea(
                                 child: Container(
                                   width: valueOrDefault<double>(
@@ -354,8 +410,8 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10, 0, 10, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(10, 0, 10, 0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -437,8 +493,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                             13.0),
                                                   ),
                                                   filled: true,
-                                                  fillColor: Color.fromARGB(
-                                                      246, 243, 243, 243),
+                                                  fillColor:
+                                                      const Color.fromARGB(
+                                                          246, 243, 243, 243),
                                                   prefixIcon: const Icon(
                                                     Icons.search_outlined,
                                                     size: 20,
@@ -508,10 +565,11 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                               width: MediaQuery.sizeOf(context).width,
                               height: MediaQuery.sizeOf(context).height - 150,
                               child: Align(
-                                alignment: AlignmentDirectional(0, -1),
+                                alignment: const AlignmentDirectional(0, -1),
                                 child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 110),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 110),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -528,9 +586,8 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 16, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 16, 0, 0),
                                           child: Text(
                                             'Her var det tomt',
                                             textAlign: TextAlign.center,
@@ -553,20 +610,20 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                             ),
                           if (_empty != true)
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 60, 0, 0),
                               child: SingleChildScrollView(
                                 primary: false,
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Stack(
-                                      alignment: AlignmentDirectional(0, 0.9),
+                                      alignment:
+                                          const AlignmentDirectional(0, 0.9),
                                       children: [
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  5, 22, 5, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(5, 22, 5, 0),
                                           child: RefreshIndicator(
                                             onRefresh: () async {
                                               await getFilterFoods();
@@ -675,7 +732,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                     children: [
                                                       Align(
                                                         alignment:
-                                                            AlignmentDirectional(
+                                                            const AlignmentDirectional(
                                                                 0, -1),
                                                         child: InkWell(
                                                           splashColor: Colors
@@ -743,17 +800,17 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                 children: [
                                                                   Align(
                                                                     alignment:
-                                                                        AlignmentDirectional(
+                                                                        const AlignmentDirectional(
                                                                             0,
                                                                             0),
                                                                     child:
                                                                         Padding(
-                                                                      padding: EdgeInsetsDirectional
+                                                                      padding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              3,
-                                                                              0,
-                                                                              3,
-                                                                              0),
+                                                                          3,
+                                                                          0,
+                                                                          3,
+                                                                          0),
                                                                       child:
                                                                           ClipRRect(
                                                                         borderRadius:
@@ -782,8 +839,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                     ),
                                                                   ),
                                                                   Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             5,
                                                                             0,
                                                                             5,
@@ -795,12 +853,12 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                               .max,
                                                                       children: [
                                                                         Align(
-                                                                          alignment: AlignmentDirectional(
+                                                                          alignment: const AlignmentDirectional(
                                                                               -1,
                                                                               0),
                                                                           child:
                                                                               Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
                                                                                 7,
                                                                                 0,
                                                                                 0,
@@ -823,8 +881,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                     ),
                                                                   ),
                                                                   Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -844,22 +903,22 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                           child:
                                                                               Align(
                                                                             alignment:
-                                                                                AlignmentDirectional(0, 0),
+                                                                                const AlignmentDirectional(0, 0),
                                                                             child:
                                                                                 Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                                                                     child: Row(
                                                                                       mainAxisSize: MainAxisSize.max,
                                                                                       children: [
                                                                                         Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                          padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                           child: Text(
                                                                                             '${matvare.price} Kr',
                                                                                             textAlign: TextAlign.end,
@@ -903,7 +962,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                     mainAxisSize: MainAxisSize.max,
                                                                                     children: [
                                                                                       Padding(
-                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                         child: Text(
                                                                                           (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '>1 Km' : '(${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km)',
                                                                                           textAlign: TextAlign.start,
@@ -947,57 +1006,19 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                             ),
                         ],
                       ),
-                    ].addToEnd(SizedBox(height: 100)),
+                    ].addToEnd(const SizedBox(height: 100)),
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(0, 1),
+                  alignment: const AlignmentDirectional(0, 1),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 1, 0, 50),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 1, 0, 50),
                     child: Material(
                       color: Colors.transparent,
                       elevation: 1,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(13),
                       ),
-                      // child: Container(
-                      //   width: 125,
-                      //   height: 52,
-                      //   decoration: BoxDecoration(
-                      //     color: FlutterFlowTheme.of(context).primary,
-                      //     borderRadius: BorderRadius.circular(13),
-                      //   ),
-                      //   child: Row(
-                      //     mainAxisSize: MainAxisSize.max,
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       Padding(
-                      //         padding:
-                      //             EdgeInsetsDirectional.fromSTEB(0, 0, 3, 0),
-                      //         child: FaIcon(
-                      //           FontAwesomeIcons.sortAmountDownAlt,
-                      //           color: FlutterFlowTheme.of(context).primaryText,
-                      //           size: 25,
-                      //         ),
-                      //       ),
-                      //       VerticalDivider(
-                      //         thickness: 1.5,
-                      //         indent: 15,
-                      //         endIndent: 15,
-                      //         color: Color(0x8557636C),
-                      //       ),
-                      //       Padding(
-                      //         padding:
-                      //             EdgeInsetsDirectional.fromSTEB(3, 0, 0, 0),
-                      //         child: FaIcon(
-                      //           FontAwesomeIcons.slidersH,
-                      //           color: FlutterFlowTheme.of(context).primaryText,
-                      //           size: 25,
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                     ),
                   ),
                 ),

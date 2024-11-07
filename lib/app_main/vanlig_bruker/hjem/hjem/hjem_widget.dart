@@ -1,18 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
+import 'dart:io';
 
-import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/app_main/vanlig_bruker/custom_nav_bar_user/home_nav_bar/home_nav_bar_widget.dart';
-import '/app_main/vanlig_bruker/hjem/filtrer_sok/filtrer_sok_widget.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -36,11 +30,9 @@ class _HjemWidgetState extends State<HjemWidget> {
   late HjemModel _model;
 
   List<Matvarer>? _matvarer;
-  List<Bonder>? _bonder;
   List<UserInfoSearch>? _profiler;
   bool _isloading = true;
   bool _profilisloading = false;
-  bool _bondeisloading = true;
   bool searching = false;
   Timer? _debounce;
 
@@ -57,11 +49,9 @@ class _HjemWidgetState extends State<HjemWidget> {
     fetchData();
     getKommune();
     getAllFoods();
-    getAllBonder();
 
     _model = createModel(context, () => HjemModel());
 
-    // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
@@ -75,97 +65,159 @@ class _HjemWidgetState extends State<HjemWidget> {
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
   }
 
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   Future<void> handleSearch() async {
-    _profilisloading = true;
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _profiler =
-          await ApiSearchUsers.searchUsers(token, _model.textController.text);
-      setState(() {
-        if (_profiler != null && _profiler!.isEmpty) {
-          _profilisloading = false;
-          return;
-        } else {
-          _profilisloading = false;
-        }
-      });
+    try {
+      _profilisloading = true;
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        _profiler =
+            await ApiSearchUsers.searchUsers(token, _model.textController.text);
+        setState(() {
+          if (_profiler != null && _profiler!.isEmpty) {
+            _profilisloading = false;
+            return;
+          } else {
+            _profilisloading = false;
+          }
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> getAllFoods() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      if (FFAppState().brukerLat == 59.9138688 ||
-          FFAppState().brukerLng == 10.7522454) {
-        await fetchData();
-      }
-      _matvarer = await ApiGetAllFoods.getAllFoods(token);
-      setState(() {
-        if (_matvarer != null && _matvarer!.isEmpty) {
-          return;
-        } else {
-          _isloading = false;
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        if (FFAppState().brukerLat == 59.9138688 ||
+            FFAppState().brukerLng == 10.7522454) {
+          await fetchData();
         }
-      });
+        _matvarer = await ApiGetAllFoods.getAllFoods(token);
+        setState(() {
+          if (_matvarer != null && _matvarer!.isEmpty) {
+            return;
+          } else {
+            _isloading = false;
+          }
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> getKommune() async {
-    String? token = await Securestorage().readToken();
+    try {
+      String? token = await Securestorage().readToken();
 
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      String? response = await apicalls.getKommune(token);
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        String? response = await apicalls.getKommune(token);
 
-      if (response != null && response.isNotEmpty) {
-        // Convert the response to lowercase and then capitalize the first letter
-        String formattedResponse =
-            response[0].toUpperCase() + response.substring(1).toLowerCase();
+        if (response.isNotEmpty) {
+          // Convert the response to lowercase and then capitalize the first letter
+          String formattedResponse =
+              response[0].toUpperCase() + response.substring(1).toLowerCase();
 
-        FFAppState().kommune = formattedResponse;
-        setState(() {});
-      }
-    }
-  }
-
-  Future<void> getAllBonder() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _bonder = await ApiGetBonder.getAllBonder(token);
-      setState(() {
-        if (_bonder != null && _bonder!.isEmpty) {
-          return;
-        } else {
-          _bondeisloading = false;
+          FFAppState().kommune = formattedResponse;
+          setState(() {});
         }
-      });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> updateUserStats() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      await apicalls.updateUserStats(token);
-      setState(() {});
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        final response = await apicalls.updateUserStats(token);
+        if (response?.statusCode == 401) {
+          FFAppState().login = false;
+          context.pushNamed('registrer');
+          return;
+        }
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -192,33 +244,16 @@ class _HjemWidgetState extends State<HjemWidget> {
           getKommune();
           updateUserStats();
         }
-        if (response.statusCode == 401 ||
-            response.statusCode == 404 ||
-            response.statusCode == 500) {
+        if (response.statusCode == 401) {
           FFAppState().login = false;
           context.pushNamed('registrer');
           return;
         }
       }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Oops, noe gikk galt'),
-            content: const Text(
-                'Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
-            actions: <Widget>[
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-              ),
-            ],
-          );
-        },
-      );
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -349,8 +384,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       size: 24.0,
                                                     ),
                                                     Text(
-                                                      FFAppState().kommune ??
-                                                          'Norge',
+                                                      FFAppState().kommune,
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
@@ -504,8 +538,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                               13.0),
                                                     ),
                                                     filled: true,
-                                                    fillColor: Color.fromARGB(
-                                                        246, 243, 243, 243),
+                                                    fillColor:
+                                                        const Color.fromARGB(
+                                                            246, 243, 243, 243),
                                                     prefixIcon: const Icon(
                                                       Icons.search_outlined,
                                                       size: 20,
@@ -970,7 +1005,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                         children: [
                                                           Align(
                                                             alignment:
-                                                                AlignmentDirectional(
+                                                                const AlignmentDirectional(
                                                                     0, -1),
                                                             child: InkWell(
                                                               splashColor: Colors
@@ -1078,7 +1113,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           ),
                                                           Align(
                                                             alignment:
-                                                                AlignmentDirectional(
+                                                                const AlignmentDirectional(
                                                                     0, -1),
                                                             child: InkWell(
                                                               splashColor: Colors
@@ -1134,8 +1169,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   ),
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -1149,7 +1185,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           MainAxisAlignment
                                                                               .start,
                                                                       children: [
-                                                                        Icon(
+                                                                        const Icon(
                                                                           Icons
                                                                               .agriculture_outlined,
                                                                           color:
@@ -1158,7 +1194,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               36,
                                                                         ),
                                                                         Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               0,
                                                                               2,
                                                                               0,
@@ -1184,7 +1221,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           ),
                                                           Align(
                                                             alignment:
-                                                                AlignmentDirectional(
+                                                                const AlignmentDirectional(
                                                                     0, -1),
                                                             child: InkWell(
                                                               splashColor: Colors
@@ -1233,8 +1270,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   ),
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -1248,7 +1286,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           MainAxisAlignment
                                                                               .start,
                                                                       children: [
-                                                                        Icon(
+                                                                        const Icon(
                                                                           Icons
                                                                               .eco_outlined,
                                                                           color:
@@ -1257,7 +1295,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               36,
                                                                         ),
                                                                         Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               0,
                                                                               2,
                                                                               0,
@@ -1283,7 +1322,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           ),
                                                           Align(
                                                             alignment:
-                                                                AlignmentDirectional(
+                                                                const AlignmentDirectional(
                                                                     0, -1),
                                                             child: InkWell(
                                                               splashColor: Colors
@@ -1338,7 +1377,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                         MainAxisAlignment
                                                                             .start,
                                                                     children: [
-                                                                      Icon(
+                                                                      const Icon(
                                                                         Icons
                                                                             .egg_outlined,
                                                                         color: Color(
@@ -1347,7 +1386,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             36,
                                                                       ),
                                                                       Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             2,
                                                                             0,
@@ -1374,7 +1414,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           ),
                                                           Align(
                                                             alignment:
-                                                                AlignmentDirectional(
+                                                                const AlignmentDirectional(
                                                                     0, -1),
                                                             child: InkWell(
                                                               splashColor: Colors
@@ -1423,8 +1463,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   ),
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -1438,7 +1479,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           MainAxisAlignment
                                                                               .start,
                                                                       children: [
-                                                                        Icon(
+                                                                        const Icon(
                                                                           Icons
                                                                               .bakery_dining_outlined,
                                                                           color:
@@ -1447,7 +1488,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               36,
                                                                         ),
                                                                         Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               0,
                                                                               2,
                                                                               0,
@@ -1473,7 +1515,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           ),
                                                           Align(
                                                             alignment:
-                                                                AlignmentDirectional(
+                                                                const AlignmentDirectional(
                                                                     0, -1),
                                                             child: InkWell(
                                                               splashColor: Colors
@@ -1522,8 +1564,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   ),
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -1537,7 +1580,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           MainAxisAlignment
                                                                               .start,
                                                                       children: [
-                                                                        Icon(
+                                                                        const Icon(
                                                                           Icons
                                                                               .water_drop_outlined,
                                                                           color:
@@ -1546,7 +1589,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               36,
                                                                         ),
                                                                         Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               0,
                                                                               2,
                                                                               0,
@@ -1572,16 +1616,16 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                           ),
                                                           Align(
                                                             alignment:
-                                                                AlignmentDirectional(
+                                                                const AlignmentDirectional(
                                                                     0, -1),
                                                             child: Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
+                                                                  const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          30,
-                                                                          0),
+                                                                      0,
+                                                                      0,
+                                                                      30,
+                                                                      0),
                                                               child: InkWell(
                                                                 splashColor: Colors
                                                                     .transparent,
@@ -1629,12 +1673,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                     ),
                                                                     child:
                                                                         Padding(
-                                                                      padding: EdgeInsetsDirectional
+                                                                      padding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              0,
-                                                                              0,
-                                                                              0,
-                                                                              7),
+                                                                          0,
+                                                                          0,
+                                                                          0,
+                                                                          7),
                                                                       child:
                                                                           Column(
                                                                         mainAxisSize:
@@ -1642,7 +1686,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                         mainAxisAlignment:
                                                                             MainAxisAlignment.start,
                                                                         children: [
-                                                                          Icon(
+                                                                          const Icon(
                                                                             Icons.local_drink_outlined,
                                                                             color:
                                                                                 Color(0xDB0B695B),
@@ -1650,7 +1694,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                 36,
                                                                           ),
                                                                           Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
                                                                                 0,
                                                                                 2,
                                                                                 0,
@@ -1858,7 +1902,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                   children: [
                                                     Align(
                                                       alignment:
-                                                          AlignmentDirectional(
+                                                          const AlignmentDirectional(
                                                               0, -1),
                                                       child: InkWell(
                                                         splashColor:
@@ -1924,12 +1968,13 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                               children: [
                                                                 Align(
                                                                   alignment:
-                                                                      AlignmentDirectional(
+                                                                      const AlignmentDirectional(
                                                                           0, 0),
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             3,
                                                                             0,
                                                                             3,
@@ -1969,8 +2014,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           5,
                                                                           0,
                                                                           5,
@@ -1981,12 +2027,13 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             .max,
                                                                     children: [
                                                                       Align(
-                                                                        alignment: AlignmentDirectional(
+                                                                        alignment: const AlignmentDirectional(
                                                                             -1,
                                                                             0),
                                                                         child:
                                                                             Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               7,
                                                                               0,
                                                                               0,
@@ -2012,8 +2059,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           0,
                                                                           0,
                                                                           0,
@@ -2032,12 +2080,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       Flexible(
                                                                         child:
                                                                             Align(
-                                                                          alignment: AlignmentDirectional(
+                                                                          alignment: const AlignmentDirectional(
                                                                               0,
                                                                               0),
                                                                           child:
                                                                               Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
                                                                                 5,
                                                                                 0,
                                                                                 5,
@@ -2049,12 +2097,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               crossAxisAlignment: CrossAxisAlignment.end,
                                                                               children: [
                                                                                 Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                                                                   child: Row(
                                                                                     mainAxisSize: MainAxisSize.max,
                                                                                     children: [
                                                                                       Padding(
-                                                                                        padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                         child: Text(
                                                                                           '${matvare.price} Kr',
                                                                                           textAlign: TextAlign.end,
@@ -2098,7 +2146,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                   mainAxisSize: MainAxisSize.max,
                                                                                   children: [
                                                                                     Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                       child: Text(
                                                                                         // Directly calculate the distance using the provided latitude and longitude
                                                                                         (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '>1 Km' : '(${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km)',

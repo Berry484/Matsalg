@@ -97,16 +97,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'MatDetalj',
-          path: '/matDetalj',
-          builder: (context, params) => MatDetaljWidget(
-            matinfo: params.getParam(
-              'matinfo',
-              ParamType.JSON,
-            ),
-          ),
-        ),
-        FFRoute(
           name: 'Godkjentbetaling',
           path: '/godkjentbetaling',
           builder: (context, params) => const GodkjentbetalingWidget(),
@@ -129,16 +119,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'rediger',
               ParamType.bool,
             ),
-            matinfo: params.getParam(
-              'matinfo',
-              ParamType.JSON,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: 'KjopDetaljGodkjent',
-          path: '/kjopDetaljGodkjent',
-          builder: (context, params) => KjopDetaljGodkjentWidget(
             matinfo: params.getParam(
               'matinfo',
               ParamType.JSON,
@@ -225,36 +205,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'Hjem2',
-          path: '/hjem2',
-          builder: (context, params) => const Hjem2Widget(),
-        ),
-        FFRoute(
-          name: 'MinMatDetalj2',
-          path: '/minMatDetalj2',
-          builder: (context, params) => MinMatDetalj2Widget(
-            matinfo: params.getParam(
-              'matinfo',
-              ParamType.JSON,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: 'Salg',
-          path: '/salg',
-          builder: (context, params) => const SalgWidget(),
-        ),
-        FFRoute(
-          name: 'Profil2',
-          path: '/profil2',
-          builder: (context, params) => const Profil2Widget(),
-        ),
-        FFRoute(
-          name: 'BekreftetHentet',
-          path: '/MatvareHentet',
-          builder: (context, params) => const BekreftetHentetWidget(),
-        ),
-        FFRoute(
           name: 'LeggIgjenRating',
           path: '/leggIgjenRating',
           builder: (context, params) => LeggIgjenRatingWidget(
@@ -318,11 +268,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'SalgsHistorikk2',
-          path: '/salgsHistorikk2',
-          builder: (context, params) => const SalgsHistorikk2Widget(),
-        ),
-        FFRoute(
           name: 'BekreftOTP',
           path: '/bekreftOTP',
           builder: (context, params) => BekreftOTPWidget(
@@ -376,16 +321,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const BondeOnboardingWidget(),
         ),
         FFRoute(
-          name: 'Se',
-          path: '/se',
-          builder: (context, params) => const SeWidget(),
-        ),
-        FFRoute(
-          name: 'BondeChat',
-          path: '/bondeChat',
-          builder: (context, params) => const BondeChatWidget(),
-        ),
-        FFRoute(
           name: 'KjopDetaljVentende',
           path: '/kjopDetaljVentende',
           builder: (context, params) => KjopDetaljVentendeWidget(
@@ -414,16 +349,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Utbetalingsinfo1',
           path: '/utbetalingsinfo1',
           builder: (context, params) => const Utbetalingsinfo1Widget(),
-        ),
-        FFRoute(
-          name: 'MatPostInfo',
-          path: '/matPostInfo',
-          builder: (context, params) => const MatPostInfoWidget(),
-        ),
-        FFRoute(
-          name: 'GodkjentbudInfo',
-          path: '/godkjentbudInfo',
-          builder: (context, params) => const GodkjentbudInfoWidget(),
         ),
         FFRoute(
           name: 'BondeLagtUtInfo',

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/matvarer.dart';
@@ -44,6 +46,58 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
     salgInfo = widget.ordre;
   }
 
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   @override
   void dispose() {
     _model.maybeDispose();
@@ -58,7 +112,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
       height: 580,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             blurRadius: 4,
             color: Color(0x25090F13),
@@ -68,7 +122,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
             ),
           )
         ],
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
           topLeft: Radius.circular(12),
@@ -76,19 +130,19 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(15, 4, 5, 16),
+        padding: const EdgeInsetsDirectional.fromSTEB(15, 4, 5, 16),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                     child: FlutterFlowIconButton(
                       borderColor: Colors.transparent,
                       borderRadius: 30,
@@ -100,7 +154,13 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         size: 26,
                       ),
                       onPressed: () async {
-                        Navigator.pop(context);
+                        try {
+                          Navigator.pop(context);
+                        } on SocketException {
+                          showErrorToast(context, 'Ingen internettforbindelse');
+                        } catch (e) {
+                          showErrorToast(context, 'En feil oppstod');
+                        }
                       },
                     ),
                   ),
@@ -113,19 +173,25 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.pushNamed(
-                  'BrukerPage',
-                  queryParameters: {
-                    'username': serializeParam(
-                      matvare.username,
-                      ParamType.String,
-                    ),
-                    'bruker': serializeParam(
-                      null,
-                      ParamType.JSON,
-                    ),
-                  },
-                );
+                try {
+                  context.pushNamed(
+                    'BrukerPage',
+                    queryParameters: {
+                      'username': serializeParam(
+                        matvare.username,
+                        ParamType.String,
+                      ),
+                      'bruker': serializeParam(
+                        null,
+                        ParamType.JSON,
+                      ),
+                    },
+                  );
+                } on SocketException {
+                  showErrorToast(context, 'Ingen internettforbindelse');
+                } catch (e) {
+                  showErrorToast(context, 'En feil oppstod');
+                }
               },
               child: Material(
                 color: Colors.transparent,
@@ -141,26 +207,32 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     shape: BoxShape.rectangle,
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        context.pushNamed(
-                          'BrukerPage',
-                          queryParameters: {
-                            'username': serializeParam(
-                              salgInfo.kjoper,
-                              ParamType.String,
-                            ),
-                            'bruker': serializeParam(
-                              null,
-                              ParamType.JSON,
-                            ),
-                          },
-                        );
+                        try {
+                          context.pushNamed(
+                            'BrukerPage',
+                            queryParameters: {
+                              'username': serializeParam(
+                                salgInfo.kjoper,
+                                ParamType.String,
+                              ),
+                              'bruker': serializeParam(
+                                null,
+                                ParamType.JSON,
+                              ),
+                            },
+                          );
+                        } on SocketException {
+                          showErrorToast(context, 'Ingen internettforbindelse');
+                        } catch (e) {
+                          showErrorToast(context, 'En feil oppstod');
+                        }
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -172,8 +244,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(4, 3, 1, 1),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    4, 3, 1, 1),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(200),
                                   child: Image.network(
@@ -194,8 +266,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(9, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    9, 0, 0, 0),
                                 child: Text(
                                   salgInfo.kjoper,
                                   textAlign: TextAlign.start,
@@ -223,9 +295,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
-                  alignment: AlignmentDirectional(-1, 1),
+                  alignment: const AlignmentDirectional(-1, 1),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
                     child: Text(
                       'Matvare',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -244,7 +316,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(5, 7, 4, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(5, 7, 4, 0),
                       child: Text(
                         matvare.name ?? '',
                         textAlign: TextAlign.end,
@@ -258,7 +330,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
                       child: Text(
                         '${salgInfo.pris} Kr',
                         textAlign: TextAlign.end,
@@ -274,9 +347,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                   ],
                 ),
                 Align(
-                  alignment: AlignmentDirectional(-1, 1),
+                  alignment: const AlignmentDirectional(-1, 1),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
                     child: Text(
                       'Informasjon',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -290,14 +363,15 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 10),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
                         child: Text(
                           '${matvare.price} Kr',
                           textAlign: TextAlign.end,
@@ -314,7 +388,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       ),
                       if (matvare.kg == true)
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                           child: Text(
                             '/kg',
                             textAlign: TextAlign.end,
@@ -332,7 +407,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         ),
                       if (matvare.kg != true)
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                           child: Text(
                             '/stk',
                             textAlign: TextAlign.end,
@@ -354,8 +430,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 12, 4, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10, 12, 4, 0),
                             child: Text(
                               '(${salgInfo.antall}',
                               textAlign: TextAlign.end,
@@ -373,8 +449,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                           ),
                           if (matvare.kg == true)
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 12, 0, 0),
                               child: Text(
                                 'Kg)',
                                 textAlign: TextAlign.end,
@@ -392,8 +468,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                             ),
                           if (matvare.kg != true)
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 12, 0, 0),
                               child: Text(
                                 'Stk)',
                                 textAlign: TextAlign.end,
@@ -419,9 +495,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(-1, 1),
+                        alignment: const AlignmentDirectional(-1, 1),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
                           child: Text(
                             'Godkjent tid',
                             style: FlutterFlowTheme.of(context)
@@ -440,7 +517,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     ],
                   ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(5, 12, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(5, 12, 0, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -476,9 +553,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
-                  alignment: AlignmentDirectional(0, 0),
+                  alignment: const AlignmentDirectional(0, 0),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 25, 5, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 25, 5, 0),
                     child: FFButtonWidget(
                       onPressed: () {},
                       text: 'Melding',
@@ -490,8 +567,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       options: FFButtonOptions(
                         width: 203,
                         height: 40,
-                        padding: EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
-                        iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
+                        iconPadding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         color: FlutterFlowTheme.of(context).alternate,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
@@ -502,7 +581,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                   fontWeight: FontWeight.bold,
                                 ),
                         elevation: 3,
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.transparent,
                           width: 1,
                         ),
@@ -513,7 +592,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 ),
                 if (salgInfo.hentet != true && salgInfo.godkjent == true)
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                     child: Text(
                       'Husk å be kjøperen bekrefte at \nmatvaren er mottatt',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(

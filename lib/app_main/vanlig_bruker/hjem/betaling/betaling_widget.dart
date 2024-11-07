@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
@@ -5,7 +8,6 @@ import 'package:mat_salg/matvarer.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,6 +44,58 @@ class _BetalingWidgetState extends State<BetalingWidget> {
 
     matvare = Matvarer.fromJson1(widget.matinfo);
     matpris = matvare.price ?? 1;
+  }
+
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
   }
 
   @override
@@ -102,7 +156,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(12, 40, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(12, 40, 0, 0),
                     child: Text(
                       'Fint å vite',
                       textAlign: TextAlign.start,
@@ -116,13 +170,14 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 40),
+                    padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 40),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -141,8 +196,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 0, 0),
                                 child: Text(
                                   'Når du sender en kjøpsforespørsel, \nmå du fullføre kjøpet hvis selgeren godtar.',
                                   textAlign: TextAlign.start,
@@ -162,7 +217,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -181,8 +237,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 0, 0),
                                 child: Text(
                                   ' Selgeren har 3 dager til å godta, \nellers får du pengene tilbake.',
                                   textAlign: TextAlign.start,
@@ -202,7 +258,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -221,8 +278,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 0, 0),
                                 child: Text(
                                   'Ta gjerne kontakt med selgeren i appen',
                                   textAlign: TextAlign.start,
@@ -245,19 +302,20 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 30),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              12, 0, 0, 30),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 30, 10, 20),
                                 child: Material(
                                   color: Colors.transparent,
@@ -274,14 +332,13 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                       shape: BoxShape.rectangle,
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsets.all(8),
+                                      padding: const EdgeInsets.all(8),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 1, 1, 1),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 1, 1, 1),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(6),
@@ -304,8 +361,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 0, 4, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(8, 0, 4, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -315,9 +373,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                0, 10, 0, 0),
+                                                            0, 10, 0, 0),
                                                     child: Text(
                                                       matvare.name ?? '',
                                                       style: FlutterFlowTheme
@@ -346,10 +404,13 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                             children: [
                                               Align(
                                                 alignment:
-                                                    AlignmentDirectional(1, 1),
+                                                    const AlignmentDirectional(
+                                                        1, 1),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 0, 10),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0, 0, 0, 10),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -361,9 +422,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(0, 12,
-                                                                    0, 0),
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 12, 0, 0),
                                                         child: Text(
                                                           '${matvare.price ?? 0} Kr',
                                                           textAlign:
@@ -389,9 +450,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                       if (matvare.kg == true)
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      12, 4, 0),
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  0, 12, 4, 0),
                                                           child: Text(
                                                             '/kg',
                                                             textAlign:
@@ -417,9 +478,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                       if (matvare.kg != true)
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      12, 4, 0),
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  0, 12, 4, 0),
                                                           child: Text(
                                                             '/stk',
                                                             textAlign:
@@ -455,8 +516,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 30, 0, 0),
                                 child: Text(
                                   'Antall',
                                   textAlign: TextAlign.start,
@@ -473,8 +534,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 10, 0, 0),
                                 child: Text(
                                   'Skriv inn antallet du ønsker å kjøpe',
                                   textAlign: TextAlign.start,
@@ -494,17 +555,18 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 key: _model.formKey,
                                 autovalidateMode: AutovalidateMode.disabled,
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       15, 20, 15, 20),
                                   child: Stack(
-                                    alignment: AlignmentDirectional(1, -0.3),
+                                    alignment:
+                                        const AlignmentDirectional(1, -0.3),
                                     children: [
                                       Align(
-                                        alignment: AlignmentDirectional(0, 0),
+                                        alignment:
+                                            const AlignmentDirectional(0, 0),
                                         child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 20, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 0, 20, 0),
                                           child: TextFormField(
                                             controller:
                                                 _model.antallStkTextController,
@@ -513,7 +575,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                             onChanged: (_) =>
                                                 EasyDebounce.debounce(
                                               '_model.antallStkTextController',
-                                              Duration(milliseconds: 300),
+                                              const Duration(milliseconds: 300),
                                               () => safeSetState(() {}),
                                             ),
                                             textCapitalization:
@@ -543,7 +605,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                             FontWeight.w600,
                                                       ),
                                               enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
+                                                borderSide: const BorderSide(
                                                   color: Color(0x4757636C),
                                                   width: 1,
                                                 ),
@@ -586,7 +648,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .primary,
                                               contentPadding:
-                                                  EdgeInsetsDirectional
+                                                  const EdgeInsetsDirectional
                                                       .fromSTEB(20, 24, 0, 24),
                                             ),
                                             style: FlutterFlowTheme.of(context)
@@ -621,12 +683,11 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                       ),
                                       if (matvare.kg != true)
                                         Align(
-                                          alignment:
-                                              AlignmentDirectional(0.8, 0),
+                                          alignment: const AlignmentDirectional(
+                                              0.8, 0),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 7, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 7, 0, 0),
                                             child: Text(
                                               'Stk',
                                               style: FlutterFlowTheme.of(
@@ -646,12 +707,11 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                         ),
                                       if (matvare.kg == true)
                                         Align(
-                                          alignment:
-                                              AlignmentDirectional(0.8, -0.19),
+                                          alignment: const AlignmentDirectional(
+                                              0.8, -0.19),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 7, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 7, 0, 0),
                                             child: Text(
                                               'Kg',
                                               style: FlutterFlowTheme.of(
@@ -677,8 +737,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(12, 30, 12, 16),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              12, 30, 12, 16),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -725,8 +785,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                         ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 0, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            5, 0, 0, 0),
                                     child: Text(
                                       'Kr',
                                       style: FlutterFlowTheme.of(context)
@@ -747,7 +808,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 45, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 45, 0, 0),
                           child: InkWell(
                             splashColor: Colors.transparent,
                             focusColor: Colors.transparent,
@@ -798,27 +860,11 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     throw (Exception);
                                   }
                                 }
+                              } on SocketException {
+                                showErrorToast(
+                                    context, 'Ingen internettforbindelse');
                               } catch (e) {
-                                _isLoading = false;
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text('Oops, noe gikk galt'),
-                                      content: const Text(
-                                          'Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: Text('OK'),
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .pop(); // Close the dialog
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+                                showErrorToast(context, 'En feil oppstod');
                               }
                             },
                             child: Material(
@@ -831,11 +877,11 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 width: 250,
                                 height: 45,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFFF5B24),
+                                  color: const Color(0xFFFF5B24),
                                   borderRadius: BorderRadius.circular(13),
                                 ),
                                 child: Align(
-                                  alignment: AlignmentDirectional(0, 0),
+                                  alignment: const AlignmentDirectional(0, 0),
                                   child: Image.asset(
                                     'assets/images/vipps-rgb-orange-neg.png',
                                     width: 170,
@@ -850,7 +896,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                       ],
                     ),
                   ),
-                ].addToEnd(SizedBox(height: 100)),
+                ].addToEnd(const SizedBox(height: 100)),
               ),
             ),
           ),

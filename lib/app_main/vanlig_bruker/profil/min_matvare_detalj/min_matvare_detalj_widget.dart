@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/app_main/bonde_gard/hjem/rediger_antall2/rediger_antall2_widget.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
-import '/app_main/vanlig_bruker/profil/merk_solgt/merk_solgt_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
@@ -574,65 +572,12 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              // Show the Cupertino action sheet when the user taps
                                               showCupertinoModalPopup(
                                                 context: context,
                                                 builder:
                                                     (BuildContext context) {
                                                   return CupertinoActionSheet(
                                                     actions: <Widget>[
-                                                      CupertinoActionSheetAction(
-                                                        onPressed: () async {
-                                                          Navigator.pop(
-                                                              context);
-                                                          await showModalBottomSheet(
-                                                            isScrollControlled:
-                                                                true,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return SizedBox(
-                                                                height:
-                                                                    610.0, // Lock the height to 610 pixels
-                                                                child: Padding(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .only(
-                                                                    bottom: MediaQuery.of(
-                                                                            context)
-                                                                        .viewInsets
-                                                                        .bottom, // Add padding for the keyboard
-                                                                  ),
-                                                                  child:
-                                                                      SingleChildScrollView(
-                                                                    child:
-                                                                        RedigerAntall2Widget(
-                                                                      id: matvare
-                                                                          .matId,
-                                                                      antall: matvare
-                                                                          .antall
-                                                                          .toString(),
-                                                                      kg: matvare
-                                                                          .kg,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ).then((value) =>
-                                                              safeSetState(
-                                                                  () {}));
-                                                        },
-                                                        child: const Text(
-                                                          'Juster antall',
-                                                          style: TextStyle(
-                                                            fontSize:
-                                                                20, // Set the font size
-                                                          ),
-                                                        ),
-                                                      ),
                                                       CupertinoActionSheetAction(
                                                         onPressed: () {
                                                           Navigator.pop(
@@ -749,206 +694,6 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                         ],
                                       ),
                                     ),
-                                    // ),
-                                    // Row(
-                                    //   mainAxisSize: MainAxisSize.max,
-                                    //   children: [
-                                    //     Builder(
-                                    //       builder: (context) => InkWell(
-                                    //         splashColor: Colors.transparent,
-                                    //         focusColor: Colors.transparent,
-                                    //         hoverColor: Colors.transparent,
-                                    //         highlightColor: Colors.transparent,
-                                    // onTap: () async {
-                                    //   // Show the Cupertino action sheet when the user taps
-                                    //   showCupertinoModalPopup(
-                                    //     context: context,
-                                    //     builder:
-                                    //         (BuildContext context) {
-                                    //       return CupertinoActionSheet(
-                                    //         actions: <Widget>[
-                                    //           CupertinoActionSheetAction(
-                                    //             onPressed: () async {
-                                    //               Navigator.pop(
-                                    //                   context);
-                                    //               await showModalBottomSheet(
-                                    //                 isScrollControlled:
-                                    //                     true,
-                                    //                 backgroundColor:
-                                    //                     Colors
-                                    //                         .transparent,
-                                    //                 context: context,
-                                    //                 builder: (context) {
-                                    //                   return SizedBox(
-                                    //                     height:
-                                    //                         610.0, // Lock the height to 610 pixels
-                                    //                     child: Padding(
-                                    //                       padding:
-                                    //                           EdgeInsets
-                                    //                               .only(
-                                    //                         bottom: MediaQuery.of(
-                                    //                                 context)
-                                    //                             .viewInsets
-                                    //                             .bottom, // Add padding for the keyboard
-                                    //                       ),
-                                    //                       child:
-                                    //                           SingleChildScrollView(
-                                    //                         child:
-                                    //                             RedigerAntall2Widget(
-                                    //                           id: matvare
-                                    //                               .matId,
-                                    //                           antall: matvare
-                                    //                               .antall
-                                    //                               .toString(),
-                                    //                           kg: matvare
-                                    //                               .kg,
-                                    //                         ),
-                                    //                       ),
-                                    //                     ),
-                                    //                   );
-                                    //                 },
-                                    //               ).then((value) =>
-                                    //                   safeSetState(
-                                    //                       () {}));
-                                    //             },
-                                    //             child: const Text(
-                                    //               'Juster antall',
-                                    //               style: TextStyle(
-                                    //                 fontSize:
-                                    //                     20, // Set the font size
-                                    //               ),
-                                    //             ),
-                                    //           ),
-                                    //           CupertinoActionSheetAction(
-                                    //             onPressed: () {
-                                    //               Navigator.pop(
-                                    //                   context);
-                                    //               context.pushNamed(
-                                    //                 'LeggUtMatvare',
-                                    //                 queryParameters: {
-                                    //                   'rediger':
-                                    //                       serializeParam(
-                                    //                     true,
-                                    //                     ParamType.bool,
-                                    //                   ),
-                                    //                   'matinfo':
-                                    //                       serializeParam(
-                                    //                     matvare
-                                    //                         .toJson(),
-                                    //                     ParamType.JSON,
-                                    //                   ),
-                                    //                 }.withoutNulls,
-                                    //               );
-                                    //             },
-                                    //             child: const Text(
-                                    //               'Rediger annonse',
-                                    //               style: TextStyle(
-                                    //                 fontSize: 20,
-                                    //               ),
-                                    //             ),
-                                    //           ),
-                                    //         ],
-                                    //         cancelButton:
-                                    //             CupertinoActionSheetAction(
-                                    //           onPressed: () {
-                                    //             Navigator.pop(
-                                    //                 context); // Close the action sheet
-                                    //           },
-                                    //           isDefaultAction: true,
-                                    //           child: const Text(
-                                    //             'Avbryt',
-                                    //             style: TextStyle(
-                                    //               fontSize:
-                                    //                   18, // Set the font size for the cancel button
-                                    //               fontWeight: FontWeight
-                                    //                   .bold, // Make the text bold
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       );
-                                    //     },
-                                    //   );
-                                    //         },
-                                    //         child: Material(
-                                    //           color: Colors.transparent,
-                                    //           elevation: 4.0,
-                                    //           shape: RoundedRectangleBorder(
-                                    //             borderRadius:
-                                    //                 BorderRadius.circular(24.0),
-                                    //           ),
-                                    //           child: SafeArea(
-                                    //             child: Container(
-                                    //               width: 130.0,
-                                    //               height: 40.0,
-                                    //               constraints:
-                                    //                   const BoxConstraints(
-                                    //                 maxWidth: 174.0,
-                                    //               ),
-                                    //               decoration: BoxDecoration(
-                                    //                 gradient: LinearGradient(
-                                    //                   colors: [
-                                    //                     const Color(0xFF10835F),
-                                    //                     FlutterFlowTheme.of(
-                                    //                             context)
-                                    //                         .alternate
-                                    //                   ],
-                                    //                   stops: const [0.0, 1.0],
-                                    //                   begin:
-                                    //                       const AlignmentDirectional(
-                                    //                           0.64, -1.0),
-                                    //                   end:
-                                    //                       const AlignmentDirectional(
-                                    //                           -0.64, 1.0),
-                                    //                 ),
-                                    //                 borderRadius:
-                                    //                     BorderRadius.circular(
-                                    //                         24.0),
-                                    //               ),
-                                    //               child: Padding(
-                                    //                 padding:
-                                    //                     const EdgeInsetsDirectional
-                                    //                         .fromSTEB(10.0, 0.0,
-                                    //                         10.0, 0.0),
-                                    //                 child: Row(
-                                    //                   mainAxisSize:
-                                    //                       MainAxisSize.max,
-                                    //                   mainAxisAlignment:
-                                    //                       MainAxisAlignment
-                                    //                           .center,
-                                    //                   children: [
-                                    //                     Expanded(
-                                    //                       child: Text(
-                                    //                         'Rediger',
-                                    //                         textAlign: TextAlign
-                                    //                             .center,
-                                    //                         style: FlutterFlowTheme
-                                    //                                 .of(context)
-                                    //                             .bodyMedium
-                                    //                             .override(
-                                    //                               fontFamily:
-                                    //                                   'Open Sans',
-                                    //                               color: Colors
-                                    //                                   .white,
-                                    //                               fontSize:
-                                    //                                   17.0,
-                                    //                               letterSpacing:
-                                    //                                   0.0,
-                                    //                               fontWeight:
-                                    //                                   FontWeight
-                                    //                                       .bold,
-                                    //                             ),
-                                    //                       ),
-                                    //                     ),
-                                    //                   ],
-                                    //                 ),
-                                    //               ),
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //     ),
-                                    //   ],
-                                    // ),
                                   ],
                                 ),
                               ),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -22,6 +24,58 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => InnstillingerModel());
+  }
+
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
   }
 
   @override
@@ -51,7 +105,13 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.safePop();
+                try {
+                  context.safePop();
+                } on SocketException {
+                  showErrorToast(context, 'Ingen internettforbindelse');
+                } catch (e) {
+                  showErrorToast(context, 'En feil oppstod');
+                }
               },
               child: Icon(
                 Icons.arrow_back_ios,
@@ -112,7 +172,14 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          context.pushNamed('ProfilRediger');
+                          try {
+                            context.pushNamed('ProfilRediger');
+                          } on SocketException {
+                            showErrorToast(
+                                context, 'Ingen internettforbindelse');
+                          } catch (e) {
+                            showErrorToast(context, 'En feil oppstod');
+                          }
                         },
                         child: Container(
                           width: double.infinity,
@@ -140,7 +207,14 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('ProfilRediger');
+                                try {
+                                  context.pushNamed('ProfilRediger');
+                                } on SocketException {
+                                  showErrorToast(
+                                      context, 'Ingen internettforbindelse');
+                                } catch (e) {
+                                  showErrorToast(context, 'En feil oppstod');
+                                }
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -196,7 +270,14 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          context.pushNamed('Utbetalingsinfo1');
+                          try {
+                            context.pushNamed('Utbetalingsinfo1');
+                          } on SocketException {
+                            showErrorToast(
+                                context, 'Ingen internettforbindelse');
+                          } catch (e) {
+                            showErrorToast(context, 'En feil oppstod');
+                          }
                         },
                         child: Container(
                           width: double.infinity,
@@ -297,7 +378,14 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          context.pushNamed('RegistrerBonde');
+                          try {
+                            context.pushNamed('RegistrerBonde');
+                          } on SocketException {
+                            showErrorToast(
+                                context, 'Ingen internettforbindelse');
+                          } catch (e) {
+                            showErrorToast(context, 'En feil oppstod');
+                          }
                         },
                         child: Container(
                           width: double.infinity,
@@ -369,7 +457,14 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          context.pushNamed('SolgteMatvarer');
+                          try {
+                            context.pushNamed('SolgteMatvarer');
+                          } on SocketException {
+                            showErrorToast(
+                                context, 'Ingen internettforbindelse');
+                          } catch (e) {
+                            showErrorToast(context, 'En feil oppstod');
+                          }
                         },
                         child: Container(
                           width: double.infinity,
@@ -503,18 +598,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                         focusColor: Colors.transparent,
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
-                        onTap: () async {
-                          context.pushNamed(
-                            'Hjem2',
-                            extra: <String, dynamic>{
-                              kTransitionInfoKey: const TransitionInfo(
-                                hasTransition: true,
-                                transitionType: PageTransitionType.fade,
-                                duration: Duration(milliseconds: 0),
-                              ),
-                            },
-                          );
-                        },
+                        onTap: () async {},
                         child: Container(
                           width: double.infinity,
                           height: 60.0,
@@ -583,9 +667,16 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                             0.0, 40.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            FFAppState().login = false;
-                            FFAppState().startet = false;
-                            context.pushNamed('registrer');
+                            try {
+                              FFAppState().login = false;
+                              FFAppState().startet = false;
+                              context.pushNamed('registrer');
+                            } on SocketException {
+                              showErrorToast(
+                                  context, 'Ingen internettforbindelse');
+                            } catch (e) {
+                              showErrorToast(context, 'En feil oppstod');
+                            }
                           },
                           text: 'Logg ut',
                           options: FFButtonOptions(

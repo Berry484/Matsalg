@@ -5,16 +5,11 @@ import 'hjem_widget.dart' show HjemWidget;
 import 'package:flutter/material.dart';
 
 class HjemModel extends FlutterFlowModel<HjemWidget> {
-  ///  State fields for stateful widgets in this page.
-
-  // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
-  // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
-  // Model for HomeNavBar component.
   late HomeNavBarModel homeNavBarModel;
 
   @override

@@ -1,11 +1,11 @@
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
-import 'package:mat_salg/app_main/bonde_gard/salg/godkjentebud/godkjentebud_widget.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/kjop/godkjentebud/godkjentebud_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/budInfo/budInfo_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '/app_main/bonde_gard/salg/salg_bruker_info/salg_bruker_info_widget.dart';
+import '../salg_bruker_info/salg_bruker_info_widget.dart';
 import '/app_main/vanlig_bruker/custom_nav_bar_user/kjop_nav_bar/kjop_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';

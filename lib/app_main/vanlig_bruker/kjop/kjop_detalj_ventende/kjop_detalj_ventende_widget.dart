@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -15,7 +17,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart'
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'kjop_detalj_ventende_model.dart';
 export 'kjop_detalj_ventende_model.dart';
 
@@ -46,6 +47,58 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
     matvare = Matvarer.fromJson1(widget.matinfo);
   }
 
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -73,7 +126,13 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.safePop();
+                try {
+                  context.safePop();
+                } on SocketException {
+                  showErrorToast(context, 'Ingen internettforbindelse');
+                } catch (e) {
+                  showErrorToast(context, 'En feil oppstod');
+                }
               },
               child: Icon(
                 Icons.arrow_back_ios,
@@ -102,27 +161,34 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 5, 0, 0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  context.pushNamed(
-                                    'BrukerPage',
-                                    queryParameters: {
-                                      'username': serializeParam(
-                                        matvare.username,
-                                        ParamType.String,
-                                      ),
-                                      'bruker': serializeParam(
-                                        null,
-                                        ParamType.JSON,
-                                      ),
-                                    },
-                                  );
+                                  try {
+                                    context.pushNamed(
+                                      'BrukerPage',
+                                      queryParameters: {
+                                        'username': serializeParam(
+                                          matvare.username,
+                                          ParamType.String,
+                                        ),
+                                        'bruker': serializeParam(
+                                          null,
+                                          ParamType.JSON,
+                                        ),
+                                      },
+                                    );
+                                  } on SocketException {
+                                    showErrorToast(
+                                        context, 'Ingen internettforbindelse');
+                                  } catch (e) {
+                                    showErrorToast(context, 'En feil oppstod');
+                                  }
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -133,14 +199,13 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 15),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10, 0, 0, 15),
                                           child: Container(
                                             width: 44,
                                             height: 44,
                                             clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
                                             child: Image.network(
@@ -161,9 +226,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  5, 0, 0, 13),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(5, 0, 0, 13),
                                           child: Text(
                                             matvare.username ?? '',
                                             style: FlutterFlowTheme.of(context)
@@ -179,8 +243,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 8, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 8, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
@@ -205,43 +270,55 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onDoubleTap: () async {
-                                        _model.liker = !(_model.liker ?? true);
-                                        HapticFeedback.mediumImpact();
-                                        apiLike.deleteLike(
-                                            Securestorage.authToken,
-                                            matvare.matId);
-                                        safeSetState(() {});
-                                        if (_model.liker == true) {
-                                          apiLike.sendLike(
+                                        try {
+                                          _model.liker =
+                                              !(_model.liker ?? true);
+                                          HapticFeedback.mediumImpact();
+                                          apiLike.deleteLike(
                                               Securestorage.authToken,
                                               matvare.matId);
-                                          showAlignedDialog(
-                                            barrierColor: Colors.transparent,
-                                            context: context,
-                                            isGlobal: false,
-                                            avoidOverflow: false,
-                                            targetAnchor:
-                                                const AlignmentDirectional(
-                                                        0.0, 0.0)
-                                                    .resolve(Directionality.of(
-                                                        context)),
-                                            followerAnchor:
-                                                const AlignmentDirectional(
-                                                        0.0, 0.0)
-                                                    .resolve(Directionality.of(
-                                                        context)),
-                                            builder: (dialogContext) {
-                                              return Material(
-                                                color: Colors.transparent,
-                                                child: GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          dialogContext)
-                                                      .unfocus(),
-                                                  child: const LikeIkonWidget(),
-                                                ),
-                                              );
-                                            },
-                                          );
+                                          safeSetState(() {});
+                                          if (_model.liker == true) {
+                                            apiLike.sendLike(
+                                                Securestorage.authToken,
+                                                matvare.matId);
+                                            showAlignedDialog(
+                                              barrierColor: Colors.transparent,
+                                              context: context,
+                                              isGlobal: false,
+                                              avoidOverflow: false,
+                                              targetAnchor:
+                                                  const AlignmentDirectional(
+                                                          0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              followerAnchor:
+                                                  const AlignmentDirectional(
+                                                          0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              builder: (dialogContext) {
+                                                return Material(
+                                                  color: Colors.transparent,
+                                                  child: GestureDetector(
+                                                    onTap: () => FocusScope.of(
+                                                            dialogContext)
+                                                        .unfocus(),
+                                                    child:
+                                                        const LikeIkonWidget(),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }
+                                        } on SocketException {
+                                          showErrorToast(context,
+                                              'Ingen internettforbindelse');
+                                        } catch (e) {
+                                          showErrorToast(
+                                              context, 'En feil oppstod');
                                         }
                                       },
                                       child: Container(
@@ -256,9 +333,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                10, 0, 10, 40),
+                                                            10, 0, 10, 40),
                                                     child: PageView(
                                                       controller: _model
                                                               .pageViewController ??=
@@ -511,13 +588,13 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                   ),
                                                   Align(
                                                     alignment:
-                                                        AlignmentDirectional(
+                                                        const AlignmentDirectional(
                                                             0, 1),
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  16, 0, 0, 16),
+                                                              16, 0, 0, 16),
                                                       child: smooth_page_indicator
                                                           .SmoothPageIndicator(
                                                         controller: _model
@@ -530,16 +607,28 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                             Axis.horizontal,
                                                         onDotClicked:
                                                             (i) async {
-                                                          await _model
-                                                              .pageViewController!
-                                                              .animateToPage(
-                                                            i,
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    500),
-                                                            curve: Curves.ease,
-                                                          );
-                                                          safeSetState(() {});
+                                                          try {
+                                                            await _model
+                                                                .pageViewController!
+                                                                .animateToPage(
+                                                              i,
+                                                              duration:
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          500),
+                                                              curve:
+                                                                  Curves.ease,
+                                                            );
+                                                            safeSetState(() {});
+                                                          } on SocketException {
+                                                            showErrorToast(
+                                                                context,
+                                                                'Ingen internettforbindelse');
+                                                          } catch (e) {
+                                                            showErrorToast(
+                                                                context,
+                                                                'En feil oppstod');
+                                                          }
                                                         },
                                                         effect: smooth_page_indicator
                                                             .ExpandingDotsEffect(
@@ -548,8 +637,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           radius: 16,
                                                           dotWidth: 10,
                                                           dotHeight: 8,
-                                                          dotColor:
-                                                              Color(0x64616161),
+                                                          dotColor: const Color(
+                                                              0x64616161),
                                                           activeDotColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
@@ -575,13 +664,14 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     10, 0, 10, 30),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -593,17 +683,25 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       children: [
                                         ToggleIcon(
                                           onPressed: () async {
-                                            // Toggle the current like state
-                                            safeSetState(() =>
-                                                _model.liker = !_model.liker!);
-                                            if (_model.liker!) {
-                                              apiLike.sendLike(
-                                                  Securestorage.authToken,
-                                                  matvare.matId);
-                                            } else {
-                                              apiLike.deleteLike(
-                                                  Securestorage.authToken,
-                                                  matvare.matId);
+                                            try {
+                                              // Toggle the current like state
+                                              safeSetState(() => _model.liker =
+                                                  !_model.liker!);
+                                              if (_model.liker!) {
+                                                apiLike.sendLike(
+                                                    Securestorage.authToken,
+                                                    matvare.matId);
+                                              } else {
+                                                apiLike.deleteLike(
+                                                    Securestorage.authToken,
+                                                    matvare.matId);
+                                              }
+                                            } on SocketException {
+                                              showErrorToast(context,
+                                                  'Ingen internettforbindelse');
+                                            } catch (e) {
+                                              showErrorToast(
+                                                  context, 'En feil oppstod');
                                             }
                                           },
                                           value: _model.liker!,
@@ -629,61 +727,72 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              double startLat =
-                                                  matvare.lat ?? 59.9138688;
-                                              double startLng =
-                                                  matvare.lng ?? 10.7522454;
-                                              if (matvare.bonde == true) {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  enableDrag: false,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(context)
-                                                              .unfocus(),
-                                                      child: Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child:
-                                                            KartPopUpBondegardWidget(
-                                                          startLat: startLat,
-                                                          startLng: startLng,
+                                              try {
+                                                double startLat =
+                                                    matvare.lat ?? 59.9138688;
+                                                double startLng =
+                                                    matvare.lng ?? 10.7522454;
+                                                if (matvare.bonde == true) {
+                                                  await showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    enableDrag: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return GestureDetector(
+                                                        onTap: () =>
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child:
+                                                              KartPopUpBondegardWidget(
+                                                            startLat: startLat,
+                                                            startLng: startLng,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) =>
-                                                    safeSetState(() {}));
-                                              } else {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  enableDrag: false,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(context)
-                                                              .unfocus(),
-                                                      child: Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child: KartPopUpWidget(
-                                                          startLat: startLat,
-                                                          startLng: startLng,
+                                                      );
+                                                    },
+                                                  ).then((value) =>
+                                                      safeSetState(() {}));
+                                                } else {
+                                                  await showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    enableDrag: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return GestureDetector(
+                                                        onTap: () =>
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child:
+                                                              KartPopUpWidget(
+                                                            startLat: startLat,
+                                                            startLng: startLng,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) =>
-                                                    safeSetState(() {}));
+                                                      );
+                                                    },
+                                                  ).then((value) =>
+                                                      safeSetState(() {}));
+                                                }
+                                              } on SocketException {
+                                                showErrorToast(context,
+                                                    'Ingen internettforbindelse');
+                                              } catch (e) {
+                                                showErrorToast(
+                                                    context, 'En feil oppstod');
                                               }
                                             },
                                             child: Icon(
@@ -698,8 +807,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 10, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 10, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -722,7 +832,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 child: Container(
                                                   width: 100,
                                                   height: 40,
-                                                  constraints: BoxConstraints(
+                                                  constraints:
+                                                      const BoxConstraints(
                                                     maxWidth: 174,
                                                   ),
                                                   decoration: BoxDecoration(
@@ -735,9 +846,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                   ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                10, 0, 10, 0),
+                                                            10, 0, 10, 0),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -781,15 +892,16 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 0, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 8),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 8),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -818,9 +930,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             ],
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 5, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 0, 5, 0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -849,9 +960,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 if (matvare.kg == true)
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                0, 0, 10, 0),
+                                                            0, 0, 10, 0),
                                                     child: Text(
                                                       '/kg',
                                                       textAlign:
@@ -875,9 +986,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 if (matvare.kg != true)
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                0, 0, 10, 0),
+                                                            0, 0, 10, 0),
                                                     child: Text(
                                                       '/stk',
                                                       textAlign:
@@ -905,8 +1016,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 15, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 15, 0, 0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -923,8 +1035,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 10, 0, 5),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 10, 0, 5),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -996,17 +1109,17 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                     Container(
                                       width: 332,
                                       height: 235,
-                                      decoration: BoxDecoration(),
-                                      alignment: AlignmentDirectional(-1, 0),
+                                      decoration: const BoxDecoration(),
+                                      alignment:
+                                          const AlignmentDirectional(-1, 0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 15, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 15, 0, 0),
                                             child: Text(
                                               'Beskrivelse',
                                               style: FlutterFlowTheme.of(
@@ -1024,9 +1137,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 10, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 10, 0, 0),
                                             child: Text(
                                               matvare.description ?? '',
                                               textAlign: TextAlign.start,
@@ -1051,7 +1163,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                             ],
                           ),
                         ),
-                      ].addToEnd(SizedBox(height: 150)),
+                      ].addToEnd(const SizedBox(height: 150)),
                     ),
                   ),
                 ),

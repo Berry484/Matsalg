@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
-import 'package:mat_salg/app_main/bonde_gard/salg/godkjent_ikon/godkjent_ikon_widget.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -50,6 +51,58 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
     ordreInfo = widget.ordre;
   }
 
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   @override
   void dispose() {
     _model.maybeDispose();
@@ -65,7 +118,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             blurRadius: 4,
             color: Color(0x25090F13),
             offset: Offset(
@@ -74,7 +127,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
             ),
           )
         ],
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
           topLeft: Radius.circular(12),
@@ -82,19 +135,19 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(15, 4, 5, 16),
+        padding: const EdgeInsetsDirectional.fromSTEB(15, 4, 5, 16),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                     child: FlutterFlowIconButton(
                       borderColor: Colors.transparent,
                       borderRadius: 30,
@@ -106,7 +159,13 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                         size: 26,
                       ),
                       onPressed: () async {
-                        Navigator.pop(context);
+                        try {
+                          Navigator.pop(context);
+                        } on SocketException {
+                          showErrorToast(context, 'Ingen internettforbindelse');
+                        } catch (e) {
+                          showErrorToast(context, 'En feil oppstod');
+                        }
                       },
                     ),
                   ),
@@ -133,18 +192,24 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                     shape: BoxShape.rectangle,
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                     child: InkWell(
                       onTap: () async {
-                        context.pushNamed(
-                          'KjopDetaljVentende',
-                          queryParameters: {
-                            'matinfo': serializeParam(
-                              matvare,
-                              ParamType.JSON,
-                            ),
-                          },
-                        );
+                        try {
+                          context.pushNamed(
+                            'KjopDetaljVentende',
+                            queryParameters: {
+                              'matinfo': serializeParam(
+                                matvare,
+                                ParamType.JSON,
+                              ),
+                            },
+                          );
+                        } on SocketException {
+                          showErrorToast(context, 'Ingen internettforbindelse');
+                        } catch (e) {
+                          showErrorToast(context, 'En feil oppstod');
+                        }
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -156,8 +221,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(4, 3, 1, 1),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    4, 3, 1, 1),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(13),
                                   child: Image.network(
@@ -178,16 +243,17 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 0, 4, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    8, 0, 4, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 10, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 10, 0, 0),
                                       child: Text(
                                         matvare.name ?? '',
                                         style: FlutterFlowTheme.of(context)
@@ -202,8 +268,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     ),
                                     if (ordreInfo.godkjent != true)
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 6),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 0, 6),
                                         child: Text(
                                           'Venter svar fra selgeren',
                                           style: FlutterFlowTheme.of(context)
@@ -221,8 +287,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                       ),
                                     if (ordreInfo.godkjent == true)
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 6),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 0, 6),
                                         child: Text(
                                           'Budet er godkjent, kontakt selgeren',
                                           style: FlutterFlowTheme.of(context)
@@ -244,8 +310,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                             ],
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 12, 4, 0),
                             child: Text(
                               '${ordreInfo.pris} Kr',
                               textAlign: TextAlign.end,
@@ -273,9 +339,9 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
-                  alignment: AlignmentDirectional(-1, 1),
+                  alignment: const AlignmentDirectional(-1, 1),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
                     child: Text(
                       'Informasjon',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -289,14 +355,15 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 10),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                         child: Text(
                           '${matvare.price} Kr',
                           textAlign: TextAlign.end,
@@ -313,7 +380,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                       ),
                       if (matvare.kg == true)
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                           child: Text(
                             '/kg',
                             textAlign: TextAlign.end,
@@ -331,7 +399,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                         ),
                       if (matvare.kg != true)
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                           child: Text(
                             '/stk',
                             textAlign: TextAlign.end,
@@ -353,8 +422,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 12, 4, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10, 12, 4, 0),
                             child: Text(
                               '(${ordreInfo.antall}',
                               textAlign: TextAlign.end,
@@ -372,8 +441,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           ),
                           if (matvare.kg == true)
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 12, 0, 0),
                               child: Text(
                                 'Kg)',
                                 textAlign: TextAlign.end,
@@ -391,8 +460,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                             ),
                           if (matvare.kg != true)
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 12, 0, 0),
                               child: Text(
                                 'Stk)',
                                 textAlign: TextAlign.end,
@@ -420,9 +489,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
               children: [
                 if (ordreInfo.godkjent != true)
                   Align(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 50, 5, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 50, 5, 0),
                       child: FFButtonWidget(
                         onPressed: () {},
                         text: 'Melding',
@@ -434,9 +504,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                         options: FFButtonOptions(
                           width: 203,
                           height: 40,
-                          padding: EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
                           iconPadding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           color: FlutterFlowTheme.of(context).alternate,
                           textStyle:
                               FlutterFlowTheme.of(context).titleSmall.override(
@@ -447,7 +518,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     fontWeight: FontWeight.bold,
                                   ),
                           elevation: 1,
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,
                           ),
@@ -458,62 +529,71 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                   ),
                 if (ordreInfo.godkjent != true)
                   Align(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 5, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 5, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          showCupertinoDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CupertinoAlertDialog(
-                                title: Text("Bekreftelse"),
-                                content: Text(
-                                    "Er du sikker på at du ønsker å trekke budet ditt?"),
-                                actions: [
-                                  CupertinoDialogAction(
-                                    onPressed: () {
-                                      if (_bekreftIsLoading) {
-                                        return;
-                                      }
-                                      _bekreftIsLoading = true;
-                                      Navigator.of(context).pop();
-                                      _bekreftIsLoading = false;
-                                    },
-                                    isDefaultAction: true,
-                                    child: const Text(
-                                      "Nei, avbryt",
-                                      style: TextStyle(
-                                          color: Colors
-                                              .red), // Red text for 'No' button
-                                    ),
-                                  ),
-                                  CupertinoDialogAction(
-                                    onPressed: () async {
-                                      if (_trekkIsLoading) {
-                                        return;
-                                      }
-                                      _trekkIsLoading = true;
-                                      String? token = Securestorage.authToken;
-                                      if (token != null) {
-                                        final response = await ApiKjop().trekk(
-                                            id: ordreInfo.id,
-                                            trekt: true,
-                                            token: token);
-                                        if (response.statusCode == 200) {
-                                          HapticFeedback.mediumImpact();
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
+                          try {
+                            showCupertinoDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CupertinoAlertDialog(
+                                  title: const Text("Bekreftelse"),
+                                  content: const Text(
+                                      "Er du sikker på at du ønsker å trekke budet ditt?"),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      onPressed: () {
+                                        if (_bekreftIsLoading) {
+                                          return;
                                         }
-                                        _trekkIsLoading = false;
-                                      }
-                                    },
-                                    child: Text("Ja, bekreft"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                                        _bekreftIsLoading = true;
+                                        Navigator.of(context).pop();
+                                        _bekreftIsLoading = false;
+                                      },
+                                      isDefaultAction: true,
+                                      child: const Text(
+                                        "Nei, avbryt",
+                                        style: TextStyle(
+                                            color: Colors
+                                                .red), // Red text for 'No' button
+                                      ),
+                                    ),
+                                    CupertinoDialogAction(
+                                      onPressed: () async {
+                                        if (_trekkIsLoading) {
+                                          return;
+                                        }
+                                        _trekkIsLoading = true;
+                                        String? token = Securestorage.authToken;
+                                        if (token != null) {
+                                          final response = await ApiKjop()
+                                              .trekk(
+                                                  id: ordreInfo.id,
+                                                  trekt: true,
+                                                  token: token);
+                                          if (response.statusCode == 200) {
+                                            HapticFeedback.mediumImpact();
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          }
+                                          _trekkIsLoading = false;
+                                        }
+                                      },
+                                      child: const Text("Ja, bekreft"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } on SocketException {
+                            showErrorToast(
+                                context, 'Ingen internettforbindelse');
+                          } catch (e) {
+                            showErrorToast(context, 'En feil oppstod');
+                          }
                         },
                         text: 'Trekk bud',
                         icon: FaIcon(
@@ -524,9 +604,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                         options: FFButtonOptions(
                           width: 203,
                           height: 40,
-                          padding: EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
                           iconPadding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           color: FlutterFlowTheme.of(context).error,
                           textStyle:
                               FlutterFlowTheme.of(context).titleSmall.override(
@@ -537,7 +618,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     fontWeight: FontWeight.bold,
                                   ),
                           elevation: 1,
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,
                           ),
@@ -548,12 +629,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                   ),
                 if (ordreInfo.godkjent == true)
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Align(
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: const AlignmentDirectional(0, 0),
                           child: FFButtonWidget(
                             onPressed: () {},
                             text: 'Melding',
@@ -565,10 +646,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                             options: FFButtonOptions(
                               width: 203,
                               height: 40,
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
-                              iconPadding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  11, 0, 0, 0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
@@ -581,7 +662,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     fontWeight: FontWeight.bold,
                                   ),
                               elevation: 3,
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.transparent,
                                 width: 1,
                               ),
@@ -590,18 +671,18 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: const AlignmentDirectional(0, 0),
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 12, 0, 0),
                             child: FFButtonWidget(
                               onPressed: () {
                                 showCupertinoDialog(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return CupertinoAlertDialog(
-                                      title: Text("Bekreftelse"),
-                                      content: Text(
+                                      title: const Text("Bekreftelse"),
+                                      content: const Text(
                                           "Bekrefter du at du har mottatt matvaren?"),
                                       actions: [
                                         CupertinoDialogAction(
@@ -619,39 +700,49 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                         ),
                                         CupertinoDialogAction(
                                           onPressed: () async {
-                                            if (_bekreftIsLoading) {
-                                              return;
-                                            }
-                                            _bekreftIsLoading = true;
-                                            String? token =
-                                                Securestorage.authToken;
-                                            if (token != null) {
-                                              final response = await ApiKjop()
-                                                  .hentMat(
-                                                      id: ordreInfo.id,
-                                                      hentet: true,
-                                                      token: token);
-                                              if (response.statusCode == 200) {
-                                                _bekreftIsLoading = false;
-                                                HapticFeedback.mediumImpact();
-                                                context.pushNamed(
-                                                  'LeggIgjenRating',
-                                                  queryParameters: {
-                                                    'kjop': serializeParam(
-                                                      true,
-                                                      ParamType.bool,
-                                                    ),
-                                                    'username': serializeParam(
-                                                      matvare.username,
-                                                      ParamType.String,
-                                                    ),
-                                                  },
-                                                );
+                                            try {
+                                              if (_bekreftIsLoading) {
+                                                return;
                                               }
-                                              _bekreftIsLoading = false;
+                                              _bekreftIsLoading = true;
+                                              String? token =
+                                                  Securestorage.authToken;
+                                              if (token != null) {
+                                                final response = await ApiKjop()
+                                                    .hentMat(
+                                                        id: ordreInfo.id,
+                                                        hentet: true,
+                                                        token: token);
+                                                if (response.statusCode ==
+                                                    200) {
+                                                  _bekreftIsLoading = false;
+                                                  HapticFeedback.mediumImpact();
+                                                  context.pushNamed(
+                                                    'LeggIgjenRating',
+                                                    queryParameters: {
+                                                      'kjop': serializeParam(
+                                                        true,
+                                                        ParamType.bool,
+                                                      ),
+                                                      'username':
+                                                          serializeParam(
+                                                        matvare.username,
+                                                        ParamType.String,
+                                                      ),
+                                                    },
+                                                  );
+                                                }
+                                                _bekreftIsLoading = false;
+                                              }
+                                            } on SocketException {
+                                              showErrorToast(context,
+                                                  'Ingen internettforbindelse');
+                                            } catch (e) {
+                                              showErrorToast(
+                                                  context, 'En feil oppstod');
                                             }
                                           },
-                                          child: Text("Ja, bekreft"),
+                                          child: const Text("Ja, bekreft"),
                                         ),
                                       ],
                                     );
@@ -667,10 +758,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               options: FFButtonOptions(
                                 width: 203,
                                 height: 40,
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    11, 0, 0, 0),
                                 iconPadding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 0),
                                 color: FlutterFlowTheme.of(context).alternate,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
@@ -683,7 +775,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                 elevation: 3,
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),

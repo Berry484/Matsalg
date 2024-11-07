@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -30,7 +32,6 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
   List<UserInfoRating>? _kjopratings = [];
   List<UserInfoRating>? _selgratings = [];
   bool _ratingisLoading = true;
-  bool _empty = false;
   double ratingVerdi = 5.0;
   int ratingantall = 0;
   bool ingenRatings = false;
@@ -51,55 +52,119 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
     )..addListener(() => safeSetState(() {}));
   }
 
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   Future<void> getRatingStats() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      if (widget.mine != true && widget.username != null) {
-        _ratingStats = await ApiRating.ratingSummary(token, widget.username);
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
       } else {
-        _ratingStats = await ApiRating.mineRatingSummary(token);
-      }
-      setState(() {
-        ratingVerdi = _ratingStats!.averageValue ?? 5.0;
-        ratingantall = _ratingStats!.totalCount ?? 0;
-        if (ratingantall == 0) {
-          ingenRatings = true;
+        if (widget.mine != true && widget.username != null) {
+          _ratingStats = await ApiRating.ratingSummary(token, widget.username);
+        } else {
+          _ratingStats = await ApiRating.mineRatingSummary(token);
         }
-      });
+        setState(() {
+          ratingVerdi = _ratingStats!.averageValue ?? 5.0;
+          ratingantall = _ratingStats!.totalCount ?? 0;
+          if (ratingantall == 0) {
+            ingenRatings = true;
+          }
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> getAllRatings() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      if (widget.mine != true && widget.username != null) {
-        _ratings = await ApiRating.listRatings(token, widget.username);
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
       } else {
-        _ratings = await ApiRating.listMineRatings(token);
-      }
-
-      setState(() {
-        if (_ratings != null && _ratings!.isNotEmpty) {
-          _kjopratings =
-              _ratings!.where((rating) => rating.kjoper == false).toList();
-          _selgratings = _ratings!
-              .where((rating) => rating.kjoper == true || rating.kjoper == null)
-              .toList();
-
-          _ratingisLoading = false;
+        if (widget.mine != true && widget.username != null) {
+          _ratings = await ApiRating.listRatings(token, widget.username);
         } else {
-          _empty = true;
-          _ratingisLoading = false;
+          _ratings = await ApiRating.listMineRatings(token);
         }
-      });
+
+        setState(() {
+          if (_ratings != null && _ratings!.isNotEmpty) {
+            _kjopratings =
+                _ratings!.where((rating) => rating.kjoper == false).toList();
+            _selgratings = _ratings!
+                .where(
+                    (rating) => rating.kjoper == true || rating.kjoper == null)
+                .toList();
+
+            _ratingisLoading = false;
+          } else {
+            _ratingisLoading = false;
+          }
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -156,7 +221,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
           body: SafeArea(
             top: true,
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12, 10, 12, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 12, 0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -166,9 +231,10 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                     children: [
                       Container(
                         width: MediaQuery.sizeOf(context).width - 26,
-                        decoration: BoxDecoration(),
+                        decoration: const BoxDecoration(),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -181,7 +247,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                   borderRadius: BorderRadius.circular(13),
                                 ),
                                 child: Align(
-                                  alignment: AlignmentDirectional(0, 0),
+                                  alignment: const AlignmentDirectional(0, 0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -230,8 +296,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 0, 0),
                                 child: Container(
                                   width: MediaQuery.sizeOf(context).width - 165,
                                   height: 117,
@@ -241,17 +307,17 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                     borderRadius: BorderRadius.circular(13),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        15, 0, 0, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            15, 0, 0, 0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 7),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 0, 0, 7),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
@@ -263,8 +329,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                 size: 21,
                                               ),
                                               Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(5, 0, 0, 0),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(5, 0, 0, 0),
                                                 child: Text(
                                                   '${ratingantall.toString()} vurderinger',
                                                   style: FlutterFlowTheme.of(
@@ -283,9 +350,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 7, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 7, 0, 0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
@@ -297,8 +363,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                 size: 27,
                                               ),
                                               Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(5, 0, 0, 0),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(5, 0, 0, 0),
                                                 child: Text(
                                                   'Ble med i\ndesember 2024',
                                                   style: FlutterFlowTheme.of(
@@ -334,7 +401,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                       child: Column(
                         children: [
                           Align(
-                            alignment: Alignment(0, 0),
+                            alignment: const Alignment(0, 0),
                             child: Container(
                               height: 36.0,
                               padding: const EdgeInsets.all(4.0),
@@ -416,7 +483,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                           ),
                           Expanded(
                             child: TabBarView(
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               controller: _model.tabBarController,
                               children: [
                                 ListView.builder(
@@ -443,10 +510,12 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                               315,
                                           child: Align(
                                             alignment:
-                                                AlignmentDirectional(0, -1),
+                                                const AlignmentDirectional(
+                                                    0, -1),
                                             child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 110),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 0, 0, 110),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -472,9 +541,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 16, 0, 0),
+                                                              0, 16, 0, 0),
                                                       child: Text(
                                                         'Ingen vurderinger fra kjøpere',
                                                         textAlign:
@@ -583,8 +652,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                       }
                                       final ratings = _ratings![index];
                                       return Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10, 13, 10, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(10, 13, 10, 0),
                                         child: Material(
                                           color: Colors.transparent,
                                           elevation: 0,
@@ -604,10 +673,12 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                             ),
                                             child: Align(
                                               alignment:
-                                                  AlignmentDirectional(0, 0),
+                                                  const AlignmentDirectional(
+                                                      0, 0),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(9, 5, 9, 5),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(9, 5, 9, 5),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -624,9 +695,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      1, 1, 1),
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  0, 1, 1, 1),
                                                           child: ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
@@ -659,22 +730,22 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(5,
-                                                                      0, 0, 0),
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  5, 0, 0, 0),
                                                           child: Container(
                                                             width: 142,
                                                             height: 103,
                                                             decoration:
-                                                                BoxDecoration(),
+                                                                const BoxDecoration(),
                                                             child: Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
+                                                                  const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          10),
+                                                                      0,
+                                                                      0,
+                                                                      0,
+                                                                      10),
                                                               child: Column(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -685,7 +756,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                 children: [
                                                                   Align(
                                                                     alignment:
-                                                                        AlignmentDirectional(
+                                                                        const AlignmentDirectional(
                                                                             -1,
                                                                             1),
                                                                     child: Text(
@@ -711,7 +782,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                   ),
                                                                   Align(
                                                                     alignment:
-                                                                        AlignmentDirectional(
+                                                                        const AlignmentDirectional(
                                                                             -1,
                                                                             1),
                                                                     child: Text(
@@ -748,9 +819,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 0, 5, 0),
+                                                              0, 0, 5, 0),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -763,18 +834,14 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
+                                                                const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        3),
+                                                                    0, 0, 0, 3),
                                                             child:
                                                                 RatingBarIndicator(
-                                                              itemBuilder:
-                                                                  (context,
-                                                                          index) =>
-                                                                      FaIcon(
+                                                              itemBuilder: (context,
+                                                                      index) =>
+                                                                  const FaIcon(
                                                                 FontAwesomeIcons
                                                                     .solidStar,
                                                                 color: Color(
@@ -795,12 +862,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
+                                                                const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        5),
+                                                                    0, 0, 0, 5),
                                                             child: Text(
                                                               timeago.format(
                                                                   ratings.time,
@@ -859,10 +923,12 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                               315,
                                           child: Align(
                                             alignment:
-                                                AlignmentDirectional(0, -1),
+                                                const AlignmentDirectional(
+                                                    0, -1),
                                             child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 110),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 0, 0, 110),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -888,9 +954,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 16, 0, 0),
+                                                              0, 16, 0, 0),
                                                       child: Text(
                                                         'Ingen vurderinger fra kjøpere',
                                                         textAlign:
@@ -1000,8 +1066,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                       final selgerRatings =
                                           _selgratings![index];
                                       return Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10, 13, 10, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(10, 13, 10, 0),
                                         child: Material(
                                           color: Colors.transparent,
                                           elevation: 0,
@@ -1021,10 +1087,12 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                             ),
                                             child: Align(
                                               alignment:
-                                                  AlignmentDirectional(0, 0),
+                                                  const AlignmentDirectional(
+                                                      0, 0),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(9, 5, 9, 5),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(9, 5, 9, 5),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -1041,9 +1109,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      1, 1, 1),
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  0, 1, 1, 1),
                                                           child: ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
@@ -1076,22 +1144,22 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(5,
-                                                                      0, 0, 0),
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  5, 0, 0, 0),
                                                           child: Container(
                                                             width: 142,
                                                             height: 103,
                                                             decoration:
-                                                                BoxDecoration(),
+                                                                const BoxDecoration(),
                                                             child: Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
+                                                                  const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          10),
+                                                                      0,
+                                                                      0,
+                                                                      0,
+                                                                      10),
                                                               child: Column(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -1102,7 +1170,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                 children: [
                                                                   Align(
                                                                     alignment:
-                                                                        AlignmentDirectional(
+                                                                        const AlignmentDirectional(
                                                                             -1,
                                                                             1),
                                                                     child: Text(
@@ -1128,7 +1196,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                   ),
                                                                   Align(
                                                                     alignment:
-                                                                        AlignmentDirectional(
+                                                                        const AlignmentDirectional(
                                                                             -1,
                                                                             1),
                                                                     child: Text(
@@ -1162,9 +1230,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 0, 5, 0),
+                                                              0, 0, 5, 0),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -1177,18 +1245,14 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
+                                                                const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        3),
+                                                                    0, 0, 0, 3),
                                                             child:
                                                                 RatingBarIndicator(
-                                                              itemBuilder:
-                                                                  (context,
-                                                                          index) =>
-                                                                      FaIcon(
+                                                              itemBuilder: (context,
+                                                                      index) =>
+                                                                  const FaIcon(
                                                                 FontAwesomeIcons
                                                                     .solidStar,
                                                                 color: Color(
@@ -1210,12 +1274,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
+                                                                const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        5),
+                                                                    0, 0, 0, 5),
                                                             child: Text(
                                                               timeago.format(
                                                                   selgerRatings
@@ -1275,10 +1336,12 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                               315,
                                           child: Align(
                                             alignment:
-                                                AlignmentDirectional(0, -1),
+                                                const AlignmentDirectional(
+                                                    0, -1),
                                             child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 110),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 0, 0, 110),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -1304,9 +1367,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 16, 0, 0),
+                                                              0, 16, 0, 0),
                                                       child: Text(
                                                         'Ingen vurderinger fra selgere',
                                                         textAlign:
@@ -1416,8 +1479,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                       final kjoperRatings =
                                           _kjopratings![index];
                                       return Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10, 13, 10, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(10, 13, 10, 0),
                                         child: Material(
                                           color: Colors.transparent,
                                           elevation: 0,
@@ -1437,10 +1500,12 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                             ),
                                             child: Align(
                                               alignment:
-                                                  AlignmentDirectional(0, 0),
+                                                  const AlignmentDirectional(
+                                                      0, 0),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(9, 5, 9, 5),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(9, 5, 9, 5),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -1457,9 +1522,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      1, 1, 1),
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  0, 1, 1, 1),
                                                           child: ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
@@ -1492,22 +1557,22 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(5,
-                                                                      0, 0, 0),
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  5, 0, 0, 0),
                                                           child: Container(
                                                             width: 142,
                                                             height: 103,
                                                             decoration:
-                                                                BoxDecoration(),
+                                                                const BoxDecoration(),
                                                             child: Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
+                                                                  const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          10),
+                                                                      0,
+                                                                      0,
+                                                                      0,
+                                                                      10),
                                                               child: Column(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -1518,7 +1583,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                 children: [
                                                                   Align(
                                                                     alignment:
-                                                                        AlignmentDirectional(
+                                                                        const AlignmentDirectional(
                                                                             -1,
                                                                             1),
                                                                     child: Text(
@@ -1544,7 +1609,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                   ),
                                                                   Align(
                                                                     alignment:
-                                                                        AlignmentDirectional(
+                                                                        const AlignmentDirectional(
                                                                             -1,
                                                                             1),
                                                                     child: Text(
@@ -1578,9 +1643,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 0, 5, 0),
+                                                              0, 0, 5, 0),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -1593,12 +1658,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
+                                                                const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        3),
+                                                                    0, 0, 0, 3),
                                                             child:
                                                                 RatingBarIndicator(
                                                               itemBuilder: (context,
@@ -1625,12 +1687,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
+                                                                const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        5),
+                                                                    0, 0, 0, 5),
                                                             child: Text(
                                                               timeago.format(
                                                                   kjoperRatings

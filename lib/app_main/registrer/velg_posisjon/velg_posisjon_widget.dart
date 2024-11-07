@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
 
@@ -53,6 +56,58 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
         FFAppState().brukerLat ?? 0, FFAppState().brukerLng ?? 0)!;
   }
 
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -82,16 +137,22 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context.goNamed(
-                    'Hjem',
-                    extra: <String, dynamic>{
-                      kTransitionInfoKey: const TransitionInfo(
-                        hasTransition: true,
-                        transitionType: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 0),
-                      ),
-                    },
-                  );
+                  try {
+                    context.goNamed(
+                      'Hjem',
+                      extra: <String, dynamic>{
+                        kTransitionInfoKey: const TransitionInfo(
+                          hasTransition: true,
+                          transitionType: PageTransitionType.fade,
+                          duration: Duration(milliseconds: 0),
+                        ),
+                      },
+                    );
+                  } on SocketException {
+                    showErrorToast(context, 'Ingen internettforbindelse');
+                  } catch (e) {
+                    showErrorToast(context, 'En feil oppstod');
+                  }
                 },
                 child: Icon(
                   Icons.arrow_back_ios,
@@ -268,69 +329,77 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    LatLng? location;
+                                    try {
+                                      LatLng? location;
 
-                                    // Await the result of getCurrentUserLocation
-                                    location = await getCurrentUserLocation(
-                                        defaultLocation:
-                                            const LatLng(0.0, 0.0));
+                                      // Await the result of getCurrentUserLocation
+                                      location = await getCurrentUserLocation(
+                                          defaultLocation:
+                                              const LatLng(0.0, 0.0));
 
-                                    // Check if the location was retrieved
-                                    if (location != null) {
+                                      // Check if the location was retrieved
+
                                       selectedLocation = location;
-                                    }
-                                    if (selectedLocation != null) {
-                                      location = selectedLocation;
-                                      FFAppState().brukerLat =
-                                          location?.latitude;
-                                      FFAppState().brukerLng =
-                                          location?.longitude;
-                                      String? token =
-                                          await Securestorage().readToken();
-                                      if (token == null) {
-                                        FFAppState().login = false;
-                                        context.pushNamed('registrer');
-                                        return;
-                                      } else {
-                                        final apiUserSQL = ApiUserSQL();
-                                        final response = await apiUserSQL
-                                            .updatePosisjon(token: token);
-                                      }
-                                    }
 
-                                    // If location was not retrieved, exit
-                                    if (location == null) {
-                                      return;
-                                    }
-                                    if (widget.endrepos == false) {
-                                      context.pushNamed(
-                                        'OpprettProfil',
-                                        queryParameters: {
-                                          'bonde': serializeParam(
-                                            widget.bonde,
-                                            ParamType.bool,
-                                          ),
-                                          'email': serializeParam(
-                                            widget.email,
-                                            ParamType.String,
-                                          ),
-                                          'phone': serializeParam(
-                                            widget.phone,
-                                            ParamType.String,
-                                          ),
-                                          'password': serializeParam(
-                                            widget.password,
-                                            ParamType.String,
-                                          ),
-                                          'posisjon': serializeParam(
-                                            location,
-                                            ParamType.LatLng,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    } else {
-                                      HapticFeedback.mediumImpact();
-                                      context.goNamed('Hjem');
+                                      if (selectedLocation != null) {
+                                        location = selectedLocation;
+                                        FFAppState().brukerLat =
+                                            location?.latitude;
+                                        FFAppState().brukerLng =
+                                            location?.longitude;
+                                        String? token =
+                                            await Securestorage().readToken();
+                                        if (token == null) {
+                                          FFAppState().login = false;
+                                          context.pushNamed('registrer');
+                                          return;
+                                        } else {
+                                          final apiUserSQL = ApiUserSQL();
+                                          await apiUserSQL.updatePosisjon(
+                                              token: token);
+                                        }
+                                      }
+
+                                      // If location was not retrieved, exit
+                                      if (location == null) {
+                                        return;
+                                      }
+                                      if (widget.endrepos == false) {
+                                        context.pushNamed(
+                                          'OpprettProfil',
+                                          queryParameters: {
+                                            'bonde': serializeParam(
+                                              widget.bonde,
+                                              ParamType.bool,
+                                            ),
+                                            'email': serializeParam(
+                                              widget.email,
+                                              ParamType.String,
+                                            ),
+                                            'phone': serializeParam(
+                                              widget.phone,
+                                              ParamType.String,
+                                            ),
+                                            'password': serializeParam(
+                                              widget.password,
+                                              ParamType.String,
+                                            ),
+                                            'posisjon': serializeParam(
+                                              location,
+                                              ParamType.LatLng,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      } else {
+                                        HapticFeedback.mediumImpact();
+                                        context.goNamed('Hjem');
+                                      }
+                                    } on SocketException {
+                                      showErrorToast(context,
+                                          'Ingen internettforbindelse');
+                                    } catch (e) {
+                                      showErrorToast(
+                                          context, 'En feil oppstod');
                                     }
                                   },
                                   child: Row(
@@ -375,57 +444,65 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                     0.0, 0.0, 0.0, 55.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    LatLng? location;
-                                    if (currentUserLocationValue != null) {
-                                      selectedLocation = location;
-                                    }
-                                    if (selectedLocation != null) {
-                                      location = selectedLocation;
-                                      FFAppState().brukerLat =
-                                          location?.latitude;
-                                      FFAppState().brukerLng =
-                                          location?.longitude;
-                                      String? token =
-                                          await Securestorage().readToken();
-                                      if (token == null) {
-                                        FFAppState().login = false;
-                                        context.pushNamed('registrer');
-                                        return;
-                                      } else {
-                                        final apiUserSQL = ApiUserSQL();
-                                        final response = await apiUserSQL
-                                            .updatePosisjon(token: token);
+                                    try {
+                                      LatLng? location;
+                                      if (currentUserLocationValue != null) {
+                                        selectedLocation = location;
                                       }
-                                    }
-                                    if (widget.endrepos == false) {
-                                      context.pushNamed(
-                                        'OpprettProfil',
-                                        queryParameters: {
-                                          'bonde': serializeParam(
-                                            widget.bonde,
-                                            ParamType.bool,
-                                          ),
-                                          'email': serializeParam(
-                                            widget.email,
-                                            ParamType.String,
-                                          ),
-                                          'phone': serializeParam(
-                                            widget.phone,
-                                            ParamType.String,
-                                          ),
-                                          'password': serializeParam(
-                                            widget.password,
-                                            ParamType.String,
-                                          ),
-                                          'posisjon': serializeParam(
-                                            location,
-                                            ParamType.LatLng,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    } else {
-                                      HapticFeedback.mediumImpact();
-                                      context.pushNamed('Hjem');
+                                      if (selectedLocation != null) {
+                                        location = selectedLocation;
+                                        FFAppState().brukerLat =
+                                            location?.latitude;
+                                        FFAppState().brukerLng =
+                                            location?.longitude;
+                                        String? token =
+                                            await Securestorage().readToken();
+                                        if (token == null) {
+                                          FFAppState().login = false;
+                                          context.pushNamed('registrer');
+                                          return;
+                                        } else {
+                                          final apiUserSQL = ApiUserSQL();
+                                          await apiUserSQL.updatePosisjon(
+                                              token: token);
+                                        }
+                                      }
+                                      if (widget.endrepos == false) {
+                                        context.pushNamed(
+                                          'OpprettProfil',
+                                          queryParameters: {
+                                            'bonde': serializeParam(
+                                              widget.bonde,
+                                              ParamType.bool,
+                                            ),
+                                            'email': serializeParam(
+                                              widget.email,
+                                              ParamType.String,
+                                            ),
+                                            'phone': serializeParam(
+                                              widget.phone,
+                                              ParamType.String,
+                                            ),
+                                            'password': serializeParam(
+                                              widget.password,
+                                              ParamType.String,
+                                            ),
+                                            'posisjon': serializeParam(
+                                              location,
+                                              ParamType.LatLng,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      } else {
+                                        HapticFeedback.mediumImpact();
+                                        context.pushNamed('Hjem');
+                                      }
+                                    } on SocketException {
+                                      showErrorToast(context,
+                                          'Ingen internettforbindelse');
+                                    } catch (e) {
+                                      showErrorToast(
+                                          context, 'En feil oppstod');
                                     }
                                   },
                                   text: 'Velg denne posisjonen',

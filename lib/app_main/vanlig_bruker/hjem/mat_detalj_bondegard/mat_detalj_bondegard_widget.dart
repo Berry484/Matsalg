@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
@@ -58,21 +59,81 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
     matvare = Matvarer.fromJson1(widget.matvare);
   }
 
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  // ignore: deprecated_member_use
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   Future<void> getAllFoods() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _nyematvarer = await ApiGetAllFoods.getAllFoods(token);
-      setState(() {
-        if (_nyematvarer != null && _nyematvarer!.isEmpty) {
-          return;
-        } else {
-          _isloading = false;
-        }
-      });
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        _nyematvarer = await ApiGetAllFoods.getAllFoods(token);
+        setState(() {
+          if (_nyematvarer != null && _nyematvarer!.isNotEmpty) {
+            _isloading = false;
+            return;
+          } else {
+            _isloading = true;
+          }
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -95,31 +156,43 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
   }
 
   Future<void> sjekkFolger() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      brukerFolger = await ApiFolg.sjekkFolger(token, matvare.username);
-      if (brukerFolger == true) {
-        _model.folges = true;
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        brukerFolger = await ApiFolg.sjekkFolger(token, matvare.username);
+        if (brukerFolger == true) {
+          _model.folges = true;
+        }
+        setState(() {});
       }
-      setState(() {});
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> getChecklike() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _model.liker = await ApiCheckLiked.getChecklike(token, matvare.matId);
-      setState(() {
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
         return;
-      });
+      } else {
+        _model.liker = await ApiCheckLiked.getChecklike(token, matvare.matId);
+        setState(() {
+          return;
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -626,8 +699,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           radius: 16.0,
                                                           dotWidth: 10.0,
                                                           dotHeight: 8.0,
-                                                          dotColor:
-                                                              Color(0x64616161),
+                                                          dotColor: const Color(
+                                                              0x64616161),
                                                           activeDotColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
@@ -700,9 +773,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10, 0, 0, 0),
                                           child: FaIcon(
                                             FontAwesomeIcons.comment,
                                             color: FlutterFlowTheme.of(context)
@@ -790,8 +862,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 10, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 10, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -838,7 +911,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 child: Container(
                                                   width: 85,
                                                   height: 40,
-                                                  constraints: BoxConstraints(
+                                                  constraints:
+                                                      const BoxConstraints(
                                                     maxWidth: 174,
                                                   ),
                                                   decoration: BoxDecoration(
@@ -851,9 +925,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                10, 0, 10, 0),
+                                                            10, 0, 10, 0),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -1290,7 +1364,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                 return Stack(
                                   children: [
                                     Align(
-                                      alignment: AlignmentDirectional(0, -1),
+                                      alignment:
+                                          const AlignmentDirectional(0, -1),
                                       child: InkWell(
                                         splashColor: Colors.transparent,
                                         focusColor: Colors.transparent,
@@ -1334,13 +1409,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               children: [
                                                 Align(
                                                   alignment:
-                                                      AlignmentDirectional(
+                                                      const AlignmentDirectional(
                                                           0, 0),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                3, 0, 3, 0),
+                                                            3, 0, 3, 0),
                                                     child: ClipRRect(
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -1368,21 +1443,22 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(5, 0, 5, 0),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(5, 0, 5, 0),
                                                   child: Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
                                                     children: [
                                                       Align(
                                                         alignment:
-                                                            AlignmentDirectional(
+                                                            const AlignmentDirectional(
                                                                 -1, 0),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(7,
-                                                                      0, 0, 0),
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  7, 0, 0, 0),
                                                           child: AutoSizeText(
                                                             nyematvarer.name ??
                                                                 '',
@@ -1409,8 +1485,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 0, 4),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(0, 0, 0, 4),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.min,
@@ -1423,16 +1500,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       Flexible(
                                                         child: Align(
                                                           alignment:
-                                                              AlignmentDirectional(
+                                                              const AlignmentDirectional(
                                                                   0, 0),
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
+                                                                const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        5,
-                                                                        0),
+                                                                    5, 0, 5, 0),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -1445,8 +1519,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       .end,
                                                               children: [
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           0,
                                                                           5,
                                                                           0,
@@ -1457,7 +1532,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                             .max,
                                                                     children: [
                                                                       Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             7,
                                                                             0,
                                                                             0,
@@ -1521,12 +1597,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                           .max,
                                                                   children: [
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional
+                                                                      padding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              0,
-                                                                              0,
-                                                                              7,
-                                                                              0),
+                                                                          0,
+                                                                          0,
+                                                                          7,
+                                                                          0),
                                                                       child:
                                                                           Text(
                                                                         '(3Km)',

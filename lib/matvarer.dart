@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Matvarer {
   final int? matId;
   final String? name;

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/Bonder.dart';
@@ -64,135 +66,235 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
     )..addListener(() => safeSetState(() {}));
   }
 
-  Future<void> _checkUser() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      // Fetch user info only if bruker is null
-      if (widget.bruker != 1) {
-        _brukerinfo = await ApiGetUser.checkUser(token, widget.username);
-        if (_brukerinfo != null && _brukerinfo!.isNotEmpty) {
-          bruker = _brukerinfo![0]; // Get the first Bonder object
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
 
-          _isLoading = false;
-        } else {
-          // Fallback values
-          bruker = Bonder(
-            username: '',
-            firstname: '',
-            lastname: '',
-            profilepic: '', // Default image
-            email: '',
-            bio: '',
-            phoneNumber: '',
-            lat: null,
-            lng: null,
-            bonde: null,
-            gardsnavn: '',
-          );
-        }
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
+  Future<void> _checkUser() async {
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
       } else {
-        // Initialize bruker from passed parameter
-        bruker = Bonder.fromJson(widget.bruker);
-        _isLoading = false;
+        // Fetch user info only if bruker is null
+        if (widget.bruker != 1) {
+          _brukerinfo = await ApiGetUser.checkUser(token, widget.username);
+          if (_brukerinfo != null && _brukerinfo!.isNotEmpty) {
+            bruker = _brukerinfo![0]; // Get the first Bonder object
+
+            _isLoading = false;
+          } else {
+            // Fallback values
+            bruker = Bonder(
+              username: '',
+              firstname: '',
+              lastname: '',
+              profilepic: '', // Default image
+              email: '',
+              bio: '',
+              phoneNumber: '',
+              lat: null,
+              lng: null,
+              bonde: null,
+              gardsnavn: '',
+            );
+          }
+        } else {
+          // Initialize bruker from passed parameter
+          bruker = Bonder.fromJson(widget.bruker);
+          _isLoading = false;
+        }
+        setState(() {
+          _isLoading = false; // Update loading state after data is fetched
+        });
       }
-      setState(() {
-        _isLoading = false; // Update loading state after data is fetched
-      });
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> getRatingStats() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _ratingStats = await ApiRating.ratingSummary(token, widget.username);
-      setState(() {
-        ratingVerdi = _ratingStats!.averageValue ?? 5.0;
-        ratingantall = _ratingStats!.totalCount ?? 0;
-        if (ratingantall == 0) {
-          ingenRatings = true;
-        }
-      });
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        _ratingStats = await ApiRating.ratingSummary(token, widget.username);
+        setState(() {
+          ratingVerdi = _ratingStats!.averageValue ?? 5.0;
+          ratingantall = _ratingStats!.totalCount ?? 0;
+          if (ratingantall == 0) {
+            ingenRatings = true;
+          }
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> sjekkFolger() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      brukerFolger = await ApiFolg.sjekkFolger(token, widget.username);
-      if (brukerFolger == true) {
-        _model.folger = true;
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        brukerFolger = await ApiFolg.sjekkFolger(token, widget.username);
+        if (brukerFolger == true) {
+          _model.folger = true;
+        }
+        setState(() {});
       }
-      setState(() {});
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> unFolg() async {
-    await apiFolg.unfolgBruker(Securestorage.authToken, bruker?.username);
-    safeSetState(() {
-      tellFolgere();
-    });
+    try {
+      await apiFolg.unfolgBruker(Securestorage.authToken, bruker?.username);
+      safeSetState(() {
+        tellFolgere();
+      });
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
+    }
   }
 
   Future<void> folgBruker() async {
-    await apiFolg.folgbruker(Securestorage.authToken, bruker?.username);
-    safeSetState(() {
-      tellFolgere();
-    });
+    try {
+      await apiFolg.folgbruker(Securestorage.authToken, bruker?.username);
+      safeSetState(() {
+        tellFolgere();
+      });
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
+    }
   }
 
   Future<void> getUserFood() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _matvarer = await ApiGetUserFood.getUserFood(token, widget.username);
-      setState(() {
-        if (_matvarer != null && _matvarer!.isNotEmpty) {
-          _matisLoading = false;
-          return;
-        } else {
-          _empty = true;
-          _matisLoading = false;
-        }
-      });
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        _matvarer = await ApiGetUserFood.getUserFood(token, widget.username);
+        setState(() {
+          if (_matvarer != null && _matvarer!.isNotEmpty) {
+            _matisLoading = false;
+            return;
+          } else {
+            _empty = true;
+            _matisLoading = false;
+          }
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> tellFolger() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      folger = await ApiFolg.tellFolger(token, widget.username);
-      setState(() {});
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        folger = await ApiFolg.tellFolger(token, widget.username);
+        setState(() {});
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> tellFolgere() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      folgere = await ApiFolg.tellFolgere(token, widget.username);
-      setState(() {});
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        folgere = await ApiFolg.tellFolgere(token, widget.username);
+        setState(() {});
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -332,8 +434,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       0),
                                                           imageUrl: _isLoading
                                                               ? ''
-                                                              : '${ApiConstants.baseUrl}${bruker?.profilepic}' ??
-                                                                  '',
+                                                              : '${ApiConstants.baseUrl}${bruker?.profilepic}',
                                                           fit: BoxFit.cover,
                                                           errorWidget: (context,
                                                                   error,
@@ -784,7 +885,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 size: 16,
                                                                               ),
                                                                               Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                                                                                 child: Text(
                                                                                   ratingVerdi.toString(),
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -796,12 +897,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 ),
                                                                               ),
                                                                               Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                                                                                 child: Text(
                                                                                   ' (${ratingantall.toString()})',
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Open Sans',
-                                                                                        color: Color(0xB0262C2D),
+                                                                                        color: const Color(0xB0262C2D),
                                                                                         fontSize: 14,
                                                                                         letterSpacing: 0.0,
                                                                                         fontWeight: FontWeight.w500,
@@ -1206,7 +1307,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                   children: [
                                                     Align(
                                                       alignment:
-                                                          AlignmentDirectional(
+                                                          const AlignmentDirectional(
                                                               0, -1),
                                                       child: InkWell(
                                                         splashColor:
@@ -1269,12 +1370,13 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                               children: [
                                                                 Align(
                                                                   alignment:
-                                                                      AlignmentDirectional(
+                                                                      const AlignmentDirectional(
                                                                           0, 0),
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             3,
                                                                             0,
                                                                             3,
@@ -1314,8 +1416,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           5,
                                                                           0,
                                                                           5,
@@ -1326,12 +1429,13 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                             .max,
                                                                     children: [
                                                                       Align(
-                                                                        alignment: AlignmentDirectional(
+                                                                        alignment: const AlignmentDirectional(
                                                                             -1,
                                                                             0),
                                                                         child:
                                                                             Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               7,
                                                                               0,
                                                                               0,
@@ -1357,8 +1461,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           0,
                                                                           0,
                                                                           0,
@@ -1377,12 +1482,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       Flexible(
                                                                         child:
                                                                             Align(
-                                                                          alignment: AlignmentDirectional(
+                                                                          alignment: const AlignmentDirectional(
                                                                               0,
                                                                               0),
                                                                           child:
                                                                               Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
                                                                                 5,
                                                                                 0,
                                                                                 5,
@@ -1394,12 +1499,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               crossAxisAlignment: CrossAxisAlignment.end,
                                                                               children: [
                                                                                 Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                                                                   child: Row(
                                                                                     mainAxisSize: MainAxisSize.max,
                                                                                     children: [
                                                                                       Padding(
-                                                                                        padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                         child: Text(
                                                                                           '${matvarer.price} Kr',
                                                                                           textAlign: TextAlign.end,
@@ -1443,7 +1548,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   mainAxisSize: MainAxisSize.max,
                                                                                   children: [
                                                                                     Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                       child: Text(
                                                                                         '(3Km)',
                                                                                         textAlign: TextAlign.start,

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
 
@@ -45,6 +48,58 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
     selectedLocation = widget.currentLocation ??
         functions.doubletillatlon(59.913868, 10.752245);
+  }
+
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
   }
 
   @override
@@ -105,12 +160,19 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                // Unfocus the text field to ensure the keyboard is dismissed
-                                FocusScope.of(context).unfocus();
-                                Navigator.pop(
-                                    context,
-                                    widget.currentLocation ??
-                                        const LatLng(0, 0));
+                                try {
+                                  // Unfocus the text field to ensure the keyboard is dismissed
+                                  FocusScope.of(context).unfocus();
+                                  Navigator.pop(
+                                      context,
+                                      widget.currentLocation ??
+                                          const LatLng(0, 0));
+                                } on SocketException {
+                                  showErrorToast(
+                                      context, 'Ingen internettforbindelse');
+                                } catch (e) {
+                                  showErrorToast(context, 'En feil oppstod');
+                                }
                               },
                               child: Text(
                                 'Avbryt',
@@ -281,14 +343,16 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                   0.0, 0.0, 0.0, 25.0),
                               child: GestureDetector(
                                 onTap: () async {
-                                  LatLng? location;
+                                  try {
+                                    LatLng? location;
 
-                                  // Attempt to get the current user's location
-                                  location = await getCurrentUserLocation(
-                                      defaultLocation: const LatLng(0.0, 0.0));
+                                    // Attempt to get the current user's location
+                                    location = await getCurrentUserLocation(
+                                        defaultLocation:
+                                            const LatLng(0.0, 0.0));
 
-                                  // Check if location is successfully retrieved
-                                  if (location != null) {
+                                    // Check if location is successfully retrieved
+
                                     selectedLocation = location;
                                     FFAppState().brukerLat = location.latitude;
                                     FFAppState().brukerLng = location.longitude;
@@ -307,9 +371,11 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                       await apiUserSQL.updatePosisjon(
                                           token: token);
                                     }
-                                  } else {
-                                    // If no location was retrieved, exit
-                                    return;
+                                  } on SocketException {
+                                    showErrorToast(
+                                        context, 'Ingen internettforbindelse');
+                                  } catch (e) {
+                                    showErrorToast(context, 'En feil oppstod');
                                   }
                                 },
                                 child: Row(

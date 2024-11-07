@@ -3,8 +3,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../avbryt_ikon/avbryt_ikon_model.dart';
-export '../avbryt_ikon/avbryt_ikon_model.dart';
+import 'avbryt_ikon_model.dart';
+export 'avbryt_ikon_model.dart';
 
 class AvbrytIkonWidget extends StatefulWidget {
   const AvbrytIkonWidget({super.key});

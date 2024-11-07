@@ -106,7 +106,6 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                         scrollDirection: Axis.vertical,
                         itemCount: removeme1.length,
                         itemBuilder: (context, removeme1Index) {
-                          final removeme1Item = removeme1[removeme1Index];
                           return Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 1.0, 0.0, 0.0),

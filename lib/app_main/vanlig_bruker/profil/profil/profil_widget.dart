@@ -1,17 +1,15 @@
+import 'dart:io';
+
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '/app_main/tom_place_holders/ingen_favoritt/ingen_favoritt_widget.dart';
-import '/app_main/tom_place_holders/ingen_vare_lagt_ut/ingen_vare_lagt_ut_widget.dart';
 import '/app_main/vanlig_bruker/custom_nav_bar_user/profil_nav_bar/profil_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:math' as math;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'profil_model.dart';
@@ -35,9 +33,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
   List<Matvarer>? _likesmatvarer;
   UserInfoStats? _ratingStats;
   bool _isloading = true;
-  bool _isempty = true;
   bool _likesisloading = true;
-  bool _likesisempty = true;
   double ratingVerdi = 5.0;
   int ratingantall = 0;
   bool ingenRatings = false;
@@ -62,31 +58,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
 
     _model = createModel(context, () => ProfilModel());
 
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      try {} catch (e) {
-        // Check if the widget is still mounted
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Oopps, noe gikk galt'),
-              content: const Text(
-                  'Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      }
-    });
-
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -94,95 +65,179 @@ class _ProfilWidgetState extends State<ProfilWidget>
     )..addListener(() => safeSetState(() {}));
   }
 
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   Future<void> getMyFoods() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _matvarer = await ApiGetMyFoods.getMyFoods(token);
-      setState(() {
-        if (_matvarer != null && _matvarer!.isEmpty) {
-          _isempty = true;
-          return;
-        }
-        _isloading = false;
-        _isempty = false;
-      });
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        _matvarer = await ApiGetMyFoods.getMyFoods(token);
+        setState(() {
+          if (_matvarer != null && _matvarer!.isEmpty) {
+            return;
+          }
+          _isloading = false;
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> updateUserStats() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      await apicalls.updateUserStats(token);
-      setState(() {});
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        await apicalls.updateUserStats(token);
+        setState(() {});
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> getRatingStats() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _ratingStats = await ApiRating.mineRatingSummary(token);
-      setState(() {
-        ratingVerdi = _ratingStats!.averageValue ?? 5.0;
-        ratingantall = _ratingStats!.totalCount ?? 0;
-        if (ratingantall == 0) {
-          ingenRatings = true;
-        }
-      });
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        _ratingStats = await ApiRating.mineRatingSummary(token);
+        setState(() {
+          ratingVerdi = _ratingStats!.averageValue ?? 5.0;
+          ratingantall = _ratingStats!.totalCount ?? 0;
+          if (ratingantall == 0) {
+            ingenRatings = true;
+          }
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> getAllLikes() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _likesmatvarer = await ApiGetAllLikes.getAllLikes(token);
-      setState(() {
-        if (_likesmatvarer != null && _likesmatvarer!.isEmpty) {
-          _likesisempty = true;
-          return;
-        }
-        _likesisloading = false;
-        _likesisempty = false;
-      });
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        _likesmatvarer = await ApiGetAllLikes.getAllLikes(token);
+        setState(() {
+          if (_likesmatvarer != null && _likesmatvarer!.isEmpty) {
+            return;
+          }
+          _likesisloading = false;
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> tellMineFolger() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      folger = await ApiFolg.tellMineFolger(token);
-      setState(() {});
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        folger = await ApiFolg.tellMineFolger(token);
+        setState(() {});
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
   Future<void> tellMineFolgere() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      folgere = await ApiFolg.tellMineFolgere(token);
-      setState(() {});
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        folgere = await ApiFolg.tellMineFolgere(token);
+        setState(() {});
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -220,9 +275,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                         Stack(
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(0, 0),
+                              alignment: const AlignmentDirectional(0, 0),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 10, 0, 17),
                                 child: SafeArea(
                                   child: Container(
@@ -235,12 +290,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                           FlutterFlowTheme.of(context).primary,
                                     ),
                                     child: Stack(
-                                      alignment: AlignmentDirectional(0, 0),
+                                      alignment:
+                                          const AlignmentDirectional(0, 0),
                                       children: [
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 10, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10, 0, 10, 0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -248,10 +303,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             children: [
                                               Align(
                                                 alignment:
-                                                    AlignmentDirectional(1, 0),
+                                                    const AlignmentDirectional(
+                                                        1, 0),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 20, 0),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0, 0, 20, 0),
                                                   child: InkWell(
                                                     splashColor:
                                                         Colors.transparent,
@@ -262,8 +320,16 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                     highlightColor:
                                                         Colors.transparent,
                                                     onTap: () async {
-                                                      context.pushNamed(
-                                                          'innstillinger');
+                                                      try {
+                                                        context.pushNamed(
+                                                            'innstillinger');
+                                                      } on SocketException {
+                                                        showErrorToast(context,
+                                                            'Ingen internettforbindelse');
+                                                      } catch (e) {
+                                                        showErrorToast(context,
+                                                            'En feil oppstod');
+                                                      }
                                                     },
                                                     child: FaIcon(
                                                       FontAwesomeIcons.cog,
@@ -280,7 +346,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                           ),
                                         ),
                                         Align(
-                                          alignment: AlignmentDirectional(0, 0),
+                                          alignment:
+                                              const AlignmentDirectional(0, 0),
                                           child: Text(
                                             'Profil',
                                             style: FlutterFlowTheme.of(context)
@@ -303,8 +370,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 55, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 55, 0, 0),
                               child: SingleChildScrollView(
                                 primary: false,
                                 child: Column(
@@ -317,9 +384,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                       scrollDirection: Axis.vertical,
                                       children: [
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 30, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 30, 0, 0),
                                           child: SingleChildScrollView(
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
@@ -328,13 +394,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                               children: [
                                                 Align(
                                                   alignment:
-                                                      AlignmentDirectional(
+                                                      const AlignmentDirectional(
                                                           0, 0),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                24, 0, 0, 5),
+                                                            24, 0, 0, 5),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -348,14 +414,14 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           clipBehavior:
                                                               Clip.antiAlias,
                                                           decoration:
-                                                              BoxDecoration(
+                                                              const BoxDecoration(
                                                             shape:
                                                                 BoxShape.circle,
                                                           ),
                                                           child:
                                                               CachedNetworkImage(
                                                             fadeInDuration:
-                                                                Duration(
+                                                                const Duration(
                                                                     milliseconds:
                                                                         0),
                                                             fadeOutDuration:
@@ -453,7 +519,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                           ),
                                                                         ),
                                                                         Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               5,
                                                                               0,
                                                                               0,
@@ -476,17 +543,23 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               hoverColor: Colors.transparent,
                                                                               highlightColor: Colors.transparent,
                                                                               onTap: () async {
-                                                                                if (folgere != '0') {
-                                                                                  context.pushNamed(
-                                                                                    'Folgere',
-                                                                                    queryParameters: {
-                                                                                      'username': serializeParam(FFAppState().brukernavn, ParamType.String),
-                                                                                      'folger': serializeParam(
-                                                                                        'Følgere',
-                                                                                        ParamType.String,
-                                                                                      ),
-                                                                                    }.withoutNulls,
-                                                                                  );
+                                                                                try {
+                                                                                  if (folgere != '0') {
+                                                                                    context.pushNamed(
+                                                                                      'Folgere',
+                                                                                      queryParameters: {
+                                                                                        'username': serializeParam(FFAppState().brukernavn, ParamType.String),
+                                                                                        'folger': serializeParam(
+                                                                                          'Følgere',
+                                                                                          ParamType.String,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  }
+                                                                                } on SocketException {
+                                                                                  showErrorToast(context, 'Ingen internettforbindelse');
+                                                                                } catch (e) {
+                                                                                  showErrorToast(context, 'En feil oppstod');
                                                                                 }
                                                                               },
                                                                               child: Column(
@@ -543,17 +616,23 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               hoverColor: Colors.transparent,
                                                                               highlightColor: Colors.transparent,
                                                                               onTap: () async {
-                                                                                if (folger != '0') {
-                                                                                  context.pushNamed(
-                                                                                    'Folgere',
-                                                                                    queryParameters: {
-                                                                                      'username': serializeParam(FFAppState().brukernavn, ParamType.String),
-                                                                                      'folger': serializeParam(
-                                                                                        'Følger',
-                                                                                        ParamType.String,
-                                                                                      ),
-                                                                                    }.withoutNulls,
-                                                                                  );
+                                                                                try {
+                                                                                  if (folger != '0') {
+                                                                                    context.pushNamed(
+                                                                                      'Folgere',
+                                                                                      queryParameters: {
+                                                                                        'username': serializeParam(FFAppState().brukernavn, ParamType.String),
+                                                                                        'folger': serializeParam(
+                                                                                          'Følger',
+                                                                                          ParamType.String,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  }
+                                                                                } on SocketException {
+                                                                                  showErrorToast(context, 'Ingen internettforbindelse');
+                                                                                } catch (e) {
+                                                                                  showErrorToast(context, 'En feil oppstod');
                                                                                 }
                                                                               },
                                                                               child: Column(
@@ -592,24 +671,24 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
+                                                                    const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0,
-                                                                            10,
-                                                                            0,
-                                                                            0),
+                                                                        0,
+                                                                        10,
+                                                                        0,
+                                                                        0),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
                                                                           .max,
                                                                   children: [
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional
+                                                                      padding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              9,
-                                                                              0,
-                                                                              0,
-                                                                              0),
+                                                                          9,
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                                       child:
                                                                           InkWell(
                                                                         splashColor:
@@ -622,16 +701,23 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                             Colors.transparent,
                                                                         onTap:
                                                                             () async {
-                                                                          context
-                                                                              .pushNamed(
-                                                                            'BrukerRating',
-                                                                            queryParameters: {
-                                                                              'mine': serializeParam(
-                                                                                true,
-                                                                                ParamType.bool,
-                                                                              ),
-                                                                            },
-                                                                          );
+                                                                          try {
+                                                                            context.pushNamed(
+                                                                              'BrukerRating',
+                                                                              queryParameters: {
+                                                                                'mine': serializeParam(
+                                                                                  true,
+                                                                                  ParamType.bool,
+                                                                                ),
+                                                                              },
+                                                                            );
+                                                                          } on SocketException {
+                                                                            showErrorToast(context,
+                                                                                'Ingen internettforbindelse');
+                                                                          } catch (e) {
+                                                                            showErrorToast(context,
+                                                                                'En feil oppstod');
+                                                                          }
                                                                         },
                                                                         child:
                                                                             Container(
@@ -647,13 +733,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 BorderRadius.circular(8),
                                                                             border:
                                                                                 Border.all(
-                                                                              color: Color(0x4A57636C),
+                                                                              color: const Color(0x4A57636C),
                                                                               width: 1.3,
                                                                             ),
                                                                           ),
                                                                           child:
                                                                               Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
                                                                                 0,
                                                                                 1,
                                                                                 0,
@@ -666,7 +752,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               children: [
                                                                                 if (ingenRatings == true)
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                                                                                     child: Text(
                                                                                       'Ingen vurderinger',
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -685,7 +771,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                   ),
                                                                                 if (ingenRatings != true && ratingantall != 0)
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                                                                                     child: Text(
                                                                                       ratingVerdi.toString(),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -698,12 +784,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                   ),
                                                                                 if (ingenRatings != true && ratingantall != 0)
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                                                                                     child: Text(
                                                                                       ' (${ratingantall.toString()})',
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',
-                                                                                            color: Color(0xB0262C2D),
+                                                                                            color: const Color(0xB0262C2D),
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,
                                                                                             fontWeight: FontWeight.w500,
@@ -719,73 +805,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                   ],
                                                                 ),
                                                               ),
-
-                                                              // Row(
-                                                              //   mainAxisSize:
-                                                              //       MainAxisSize
-                                                              //           .max,
-                                                              //   children: [
-                                                              //     Padding(
-                                                              //       padding: EdgeInsetsDirectional
-                                                              //           .fromSTEB(
-                                                              //               5,
-                                                              //               7,
-                                                              //               0,
-                                                              //               0),
-                                                              //       child:
-                                                              //           FFButtonWidget(
-                                                              //         onPressed:
-                                                              //             () async {
-                                                              //           context.pushNamed(
-                                                              //               'BrukerRating');
-                                                              //         },
-                                                              //         text:
-                                                              //             '4.3 (15)',
-                                                              //         icon:
-                                                              //             FaIcon(
-                                                              //           FontAwesomeIcons
-                                                              //               .solidStar,
-                                                              //           color: FlutterFlowTheme.of(context)
-                                                              //               .alternate,
-                                                              //           size:
-                                                              //               17,
-                                                              //         ),
-                                                              //         options:
-                                                              //             FFButtonOptions(
-                                                              //           width:
-                                                              //               225,
-                                                              //           height:
-                                                              //               30,
-                                                              //           padding: EdgeInsetsDirectional.fromSTEB(
-                                                              //               16,
-                                                              //               0,
-                                                              //               16,
-                                                              //               0),
-                                                              //           iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                              //               0,
-                                                              //               0,
-                                                              //               0,
-                                                              //               0),
-                                                              //           color: FlutterFlowTheme.of(context)
-                                                              //               .primary,
-                                                              //           textStyle: FlutterFlowTheme.of(context)
-                                                              //               .titleSmall
-                                                              //               .override(
-                                                              //                 fontFamily: 'Open Sans',
-                                                              //                 color: FlutterFlowTheme.of(context).alternate,
-                                                              //                 fontSize: 15,
-                                                              //                 letterSpacing: 0.0,
-                                                              //                 fontWeight: FontWeight.w600,
-                                                              //               ),
-                                                              //           elevation:
-                                                              //               1,
-                                                              //           borderRadius:
-                                                              //               BorderRadius.circular(8),
-                                                              //         ),
-                                                              //       ),
-                                                              //     ),
-                                                              //   ],
-                                                              // ),
                                                             ],
                                                           ),
                                                         ),
@@ -794,17 +813,18 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 5, 0, 0),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(0, 5, 0, 0),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.min,
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(24, 0,
-                                                                    0, 0),
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                24, 0, 0, 0),
                                                         child: Text(
                                                           '${FFAppState().firstname} ${FFAppState().lastname}',
                                                           style: FlutterFlowTheme
@@ -826,10 +846,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(24, 4, 40, 0),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          24, 4, 40, 0),
                                                   child: Container(
-                                                    constraints: BoxConstraints(
+                                                    constraints:
+                                                        const BoxConstraints(
                                                       maxHeight: 90,
                                                     ),
                                                     decoration: BoxDecoration(
@@ -864,14 +887,15 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                0, 30, 0, 0),
+                                                            0, 30, 0, 0),
                                                     child: Column(
                                                       children: [
                                                         Align(
                                                           alignment:
-                                                              Alignment(0, 0),
+                                                              const Alignment(
+                                                                  0, 0),
                                                           child: TabBar(
                                                             labelColor:
                                                                 FlutterFlowTheme.of(
@@ -902,7 +926,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                           0.0,
                                                                     ),
                                                             indicatorColor:
-                                                                Color(
+                                                                const Color(
                                                                     0x00F6F6F6),
                                                             indicatorWeight: 1,
                                                             tabs: [
@@ -922,7 +946,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                             .secondaryText,
                                                                     size: 25,
                                                                   ),
-                                                                  Tab(
+                                                                  const Tab(
                                                                     text: '',
                                                                   ),
                                                                 ],
@@ -943,7 +967,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                             .secondaryText,
                                                                     size: 25,
                                                                   ),
-                                                                  Tab(
+                                                                  const Tab(
                                                                     text: '',
                                                                   ),
                                                                 ],
@@ -1064,7 +1088,15 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             .fromSTEB(5, 15, 5, 0),
                                         child: RefreshIndicator(
                                           onRefresh: () async {
-                                            await getMyFoods();
+                                            try {
+                                              await getMyFoods();
+                                            } on SocketException {
+                                              showErrorToast(context,
+                                                  'Ingen internettforbindelse');
+                                            } catch (e) {
+                                              showErrorToast(
+                                                  context, 'En feil oppstod');
+                                            }
                                           },
                                           child: GridView.builder(
                                             padding: const EdgeInsets.fromLTRB(
@@ -1170,7 +1202,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                     children: [
                                                       Align(
                                                         alignment:
-                                                            AlignmentDirectional(
+                                                            const AlignmentDirectional(
                                                                 0, -1),
                                                         child: InkWell(
                                                           splashColor: Colors
@@ -1182,18 +1214,28 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           highlightColor: Colors
                                                               .transparent,
                                                           onTap: () async {
-                                                            context.pushNamed(
-                                                              'MinMatvareDetalj',
-                                                              queryParameters: {
-                                                                'matvare':
-                                                                    serializeParam(
-                                                                  matvare
-                                                                      .toJson(), // Convert to JSON before passing
-                                                                  ParamType
-                                                                      .JSON,
-                                                                ),
-                                                              },
-                                                            );
+                                                            try {
+                                                              context.pushNamed(
+                                                                'MinMatvareDetalj',
+                                                                queryParameters: {
+                                                                  'matvare':
+                                                                      serializeParam(
+                                                                    matvare
+                                                                        .toJson(), // Convert to JSON before passing
+                                                                    ParamType
+                                                                        .JSON,
+                                                                  ),
+                                                                },
+                                                              );
+                                                            } on SocketException {
+                                                              showErrorToast(
+                                                                  context,
+                                                                  'Ingen internettforbindelse');
+                                                            } catch (e) {
+                                                              showErrorToast(
+                                                                  context,
+                                                                  'En feil oppstod');
+                                                            }
                                                           },
                                                           child: Material(
                                                             color: Colors
@@ -1234,17 +1276,17 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 children: [
                                                                   Align(
                                                                     alignment:
-                                                                        AlignmentDirectional(
+                                                                        const AlignmentDirectional(
                                                                             0,
                                                                             0),
                                                                     child:
                                                                         Padding(
-                                                                      padding: EdgeInsetsDirectional
+                                                                      padding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              3,
-                                                                              0,
-                                                                              3,
-                                                                              0),
+                                                                          3,
+                                                                          0,
+                                                                          3,
+                                                                          0),
                                                                       child:
                                                                           ClipRRect(
                                                                         borderRadius:
@@ -1273,8 +1315,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     ),
                                                                   ),
                                                                   Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             5,
                                                                             0,
                                                                             5,
@@ -1286,12 +1329,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               .max,
                                                                       children: [
                                                                         Align(
-                                                                          alignment: AlignmentDirectional(
+                                                                          alignment: const AlignmentDirectional(
                                                                               -1,
                                                                               0),
                                                                           child:
                                                                               Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
                                                                                 7,
                                                                                 0,
                                                                                 0,
@@ -1314,8 +1357,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     ),
                                                                   ),
                                                                   Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -1335,22 +1379,22 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                           child:
                                                                               Align(
                                                                             alignment:
-                                                                                AlignmentDirectional(0, 0),
+                                                                                const AlignmentDirectional(0, 0),
                                                                             child:
                                                                                 Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                                                                     child: Row(
                                                                                       mainAxisSize: MainAxisSize.max,
                                                                                       children: [
                                                                                         Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                          padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                           child: Text(
                                                                                             '${matvare.price} Kr',
                                                                                             textAlign: TextAlign.end,
@@ -1394,7 +1438,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     mainAxisSize: MainAxisSize.max,
                                                                                     children: [
                                                                                       Padding(
-                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                         child: Text(
                                                                                           '(3Km)',
                                                                                           textAlign: TextAlign.start,
@@ -1426,16 +1470,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       if (matvare.kjopt == true)
                                                         Align(
                                                           alignment:
-                                                              AlignmentDirectional(
+                                                              const AlignmentDirectional(
                                                                   0, -1),
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
+                                                                const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        3,
-                                                                        0,
-                                                                        3,
-                                                                        0),
+                                                                    3, 0, 3, 0),
                                                             child: Material(
                                                               color: Colors
                                                                   .transparent,
@@ -1451,7 +1492,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 height: 230,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0xA7FFFFFF),
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1460,13 +1501,14 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 ),
                                                                 child: Align(
                                                                   alignment:
-                                                                      AlignmentDirectional(
+                                                                      const AlignmentDirectional(
                                                                           1,
                                                                           -1),
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             0,
                                                                             15,
                                                                             15,
@@ -1550,21 +1592,29 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                     if (FFAppState().liked &&
                                         _model.tabBarCurrentIndex == 1)
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            5, 15, 5, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 15, 5, 0),
                                         child: RefreshIndicator(
                                           onRefresh: () async {
-                                            getAllLikes();
+                                            try {
+                                              getAllLikes();
+                                            } on SocketException {
+                                              showErrorToast(context,
+                                                  'Ingen internettforbindelse');
+                                            } catch (e) {
+                                              showErrorToast(
+                                                  context, 'En feil oppstod');
+                                            }
                                           },
                                           child: GridView.builder(
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                               0,
                                               0,
                                               0,
                                               70,
                                             ),
                                             gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,
                                               childAspectRatio: 0.64,
                                             ),
@@ -1657,7 +1707,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                 children: [
                                                   Align(
                                                     alignment:
-                                                        AlignmentDirectional(
+                                                        const AlignmentDirectional(
                                                             0, -1),
                                                     child: InkWell(
                                                       splashColor:
@@ -1669,17 +1719,27 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
-                                                        context.pushNamed(
-                                                          'MatDetaljBondegard',
-                                                          queryParameters: {
-                                                            'matvare':
-                                                                serializeParam(
-                                                              likesmatvare
-                                                                  .toJson(), // Convert to JSON before passing
-                                                              ParamType.JSON,
-                                                            ),
-                                                          },
-                                                        );
+                                                        try {
+                                                          context.pushNamed(
+                                                            'MatDetaljBondegard',
+                                                            queryParameters: {
+                                                              'matvare':
+                                                                  serializeParam(
+                                                                likesmatvare
+                                                                    .toJson(), // Convert to JSON before passing
+                                                                ParamType.JSON,
+                                                              ),
+                                                            },
+                                                          );
+                                                        } on SocketException {
+                                                          showErrorToast(
+                                                              context,
+                                                              'Ingen internettforbindelse');
+                                                        } catch (e) {
+                                                          showErrorToast(
+                                                              context,
+                                                              'En feil oppstod');
+                                                        }
                                                       },
                                                       child: Material(
                                                         color:
@@ -1718,11 +1778,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                             children: [
                                                               Align(
                                                                 alignment:
-                                                                    AlignmentDirectional(
+                                                                    const AlignmentDirectional(
                                                                         0, 0),
                                                                 child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
                                                                           3,
                                                                           0,
                                                                           3,
@@ -1763,12 +1824,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
+                                                                    const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            5,
-                                                                            0,
-                                                                            5,
-                                                                            0),
+                                                                        5,
+                                                                        0,
+                                                                        5,
+                                                                        0),
                                                                 child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -1776,12 +1837,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                   children: [
                                                                     Align(
                                                                       alignment:
-                                                                          AlignmentDirectional(
+                                                                          const AlignmentDirectional(
                                                                               -1,
                                                                               0),
                                                                       child:
                                                                           Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             7,
                                                                             0,
                                                                             0,
@@ -1810,12 +1872,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
+                                                                    const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            4),
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        4),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -1830,12 +1892,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     Flexible(
                                                                       child:
                                                                           Align(
-                                                                        alignment: AlignmentDirectional(
+                                                                        alignment: const AlignmentDirectional(
                                                                             0,
                                                                             0),
                                                                         child:
                                                                             Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
                                                                               5,
                                                                               0,
                                                                               5,
@@ -1850,12 +1913,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 CrossAxisAlignment.end,
                                                                             children: [
                                                                               Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                                                                 child: Row(
                                                                                   mainAxisSize: MainAxisSize.max,
                                                                                   children: [
                                                                                     Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                       child: Text(
                                                                                         '${likesmatvare.price} Kr',
                                                                                         textAlign: TextAlign.end,
@@ -1899,7 +1962,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                     child: Text(
                                                                                       '(3Km)',
                                                                                       textAlign: TextAlign.start,
@@ -1947,7 +2010,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                 wrapWithModel(
                   model: _model.profilNavBarModel,
                   updateCallback: () => safeSetState(() {}),
-                  child: ProfilNavBarWidget(),
+                  child: const ProfilNavBarWidget(),
                 ),
               ],
             ),

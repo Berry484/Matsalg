@@ -3,8 +3,6 @@ export '/app_main/registrer/registrer/registrer_widget.dart'
     show RegistrerWidget;
 export '/app_main/vanlig_bruker/kjop/mine_kjop/mine_kjop_widget.dart'
     show MineKjopWidget;
-export '/app_main/vanlig_bruker/hjem/mat_detalj/mat_detalj_widget.dart'
-    show MatDetaljWidget;
 export '/app_main/vanlig_bruker/hjem/godkjentbetaling/godkjentbetaling_widget.dart'
     show GodkjentbetalingWidget;
 export '/app_main/vanlig_bruker/profil/profil/profil_widget.dart'
@@ -13,8 +11,6 @@ export '/app_main/vanlig_bruker/profil/profil_rediger/profil_rediger_widget.dart
     show ProfilRedigerWidget;
 export '/app_main/vanlig_bruker/legg_ut/legg_ut_matvare/legg_ut_matvare_widget.dart'
     show LeggUtMatvareWidget;
-export '/app_main/vanlig_bruker/kjop/kjop_detalj_godkjent/kjop_detalj_godkjent_widget.dart'
-    show KjopDetaljGodkjentWidget;
 export '/app_main/vanlig_bruker/legg_ut/bruker_lagt_ut_info/bruker_lagt_ut_info_widget.dart'
     show BrukerLagtUtInfoWidget;
 export '/app_main/chat/chat_main/chat_main_widget.dart' show ChatMainWidget;
@@ -33,14 +29,6 @@ export '/app_main/registrer/bruker_onboarding/bruker_onboarding_widget.dart'
     show BrukerOnboardingWidget;
 export '/app_main/vanlig_bruker/hjem/bonde_gard_page/bonde_gard_page_widget.dart'
     show BondeGardPageWidget;
-export '/app_main/bonde_gard/hjem/hjem2/hjem2_widget.dart' show Hjem2Widget;
-export '/app_main/bonde_gard/hjem/min_mat_detalj2/min_mat_detalj2_widget.dart'
-    show MinMatDetalj2Widget;
-export '/app_main/bonde_gard/salg/salg/salg_widget.dart' show SalgWidget;
-export '/app_main/bonde_gard/profil/profil2/profil2_widget.dart'
-    show Profil2Widget;
-export '/app_main/vanlig_bruker/kjop/bekreftet_hentet/bekreftet_hentet_widget.dart'
-    show BekreftetHentetWidget;
 export '/app_main/vanlig_bruker/kjop/legg_igjen_rating/legg_igjen_rating_widget.dart'
     show LeggIgjenRatingWidget;
 export '/app_main/registrer/velg_posisjon/velg_posisjon_widget.dart'
@@ -51,17 +39,12 @@ export '/app_main/vanlig_bruker/hjem/folgere/folgere_widget.dart'
     show FolgereWidget;
 export '/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart'
     show BrukerRatingWidget;
-export '/app_main/bonde_gard/profil/salgs_historikk2/salgs_historikk2_widget.dart'
-    show SalgsHistorikk2Widget;
 export '/app_main/registrer/bekreft_o_t_p/bekreft_o_t_p_widget.dart'
     show BekreftOTPWidget;
 export '/app_main/registrer/opprett_profil/opprett_profil_widget.dart'
     show OpprettProfilWidget;
 export '/app_main/registrer/bonde_onboarding/bonde_onboarding_widget.dart'
     show BondeOnboardingWidget;
-export '/app_main/bonde_gard/se/se/se_widget.dart' show SeWidget;
-export '/app_main/bonde_gard/chat/bonde_chat/bonde_chat_widget.dart'
-    show BondeChatWidget;
 export '/app_main/vanlig_bruker/kjop/kjop_detalj_ventende/kjop_detalj_ventende_widget.dart'
     show KjopDetaljVentendeWidget;
 export '/app_main/vanlig_bruker/hjem/betaling/betaling_widget.dart'
@@ -70,9 +53,5 @@ export '/app_main/vanlig_bruker/profil/innstillinger/innstillinger_widget.dart'
     show InnstillingerWidget;
 export '/app_main/vanlig_bruker/profil/utbetalingsinfo1/utbetalingsinfo1_widget.dart'
     show Utbetalingsinfo1Widget;
-export '/app_main/vanlig_bruker/legg_ut/mat_post_info/mat_post_info_widget.dart'
-    show MatPostInfoWidget;
-export '/app_main/bonde_gard/salg/godkjentbud_info/godkjentbud_info_widget.dart'
-    show GodkjentbudInfoWidget;
 export '/app_main/vanlig_bruker/legg_ut/bonde_lagt_ut_info/bonde_lagt_ut_info_widget.dart'
     show BondeLagtUtInfoWidget;

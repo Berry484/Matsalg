@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -20,7 +21,6 @@ import 'package:provider/provider.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'legg_ut_matvare_model.dart';
 export 'legg_ut_matvare_model.dart';
 
@@ -140,16 +140,74 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     }
   }
 
-  void updateSelectedLatLng(LatLng? newLatLng) {
-    setState(() {
-      selectedLatLng = null;
-    });
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
 
-    Timer(const Duration(milliseconds: 100), () {
-      setState(() {
-        selectedLatLng = newLatLng;
-      });
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
     });
+  }
+
+  void updateSelectedLatLng(LatLng? newLatLng) {
+    try {
+      setState(() {
+        selectedLatLng = null;
+      });
+
+      Timer(const Duration(milliseconds: 100), () {
+        setState(() {
+          selectedLatLng = newLatLng;
+        });
+      });
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
+    }
   }
 
   @override
@@ -176,9 +234,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                 IconThemeData(color: FlutterFlowTheme.of(context).primaryText),
             automaticallyImplyLeading: true,
             leading: Align(
-              alignment: AlignmentDirectional(0, 0),
+              alignment: const AlignmentDirectional(0, 0),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(9, 0, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(9, 0, 0, 0),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -345,63 +403,70 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         size: 30.0,
                                                       ),
                                                       onPressed: () async {
-                                                        final selectedMedia =
-                                                            await selectMediaWithSourceBottomSheet(
-                                                          context: context,
-                                                          maxWidth: 500.00,
-                                                          maxHeight: 500.00,
-                                                          allowPhoto: true,
-                                                        );
-                                                        if (selectedMedia !=
-                                                                null &&
-                                                            selectedMedia.every((m) =>
-                                                                validateFileFormat(
-                                                                    m.storagePath,
-                                                                    context))) {
-                                                          safeSetState(() =>
-                                                              _model.isDataUploading1 =
-                                                                  true);
-                                                          var selectedUploadedFiles =
-                                                              <FFUploadedFile>[];
+                                                        try {
+                                                          final selectedMedia =
+                                                              await selectMediaWithSourceBottomSheet(
+                                                            context: context,
+                                                            maxWidth: 500.00,
+                                                            maxHeight: 500.00,
+                                                            allowPhoto: true,
+                                                          );
+                                                          if (selectedMedia !=
+                                                                  null &&
+                                                              selectedMedia.every((m) =>
+                                                                  validateFileFormat(
+                                                                      m.storagePath,
+                                                                      context))) {
+                                                            safeSetState(() =>
+                                                                _model.isDataUploading1 =
+                                                                    true);
+                                                            var selectedUploadedFiles =
+                                                                <FFUploadedFile>[];
 
-                                                          try {
-                                                            selectedUploadedFiles =
+                                                            try {
+                                                              selectedUploadedFiles =
+                                                                  selectedMedia
+                                                                      .map((m) =>
+                                                                          FFUploadedFile(
+                                                                            name:
+                                                                                m.storagePath.split('/').last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                          ))
+                                                                      .toList();
+                                                            } finally {
+                                                              _model.isDataUploading1 =
+                                                                  false;
+                                                            }
+                                                            if (selectedUploadedFiles
+                                                                    .length ==
                                                                 selectedMedia
-                                                                    .map((m) =>
-                                                                        FFUploadedFile(
-                                                                          name: m
-                                                                              .storagePath
-                                                                              .split('/')
-                                                                              .last,
-                                                                          bytes:
-                                                                              m.bytes,
-                                                                          height: m
-                                                                              .dimensions
-                                                                              ?.height,
-                                                                          width: m
-                                                                              .dimensions
-                                                                              ?.width,
-                                                                          blurHash:
-                                                                              m.blurHash,
-                                                                        ))
-                                                                    .toList();
-                                                          } finally {
-                                                            _model.isDataUploading1 =
-                                                                false;
+                                                                    .length) {
+                                                              safeSetState(() {
+                                                                _model.uploadedLocalFile1 =
+                                                                    selectedUploadedFiles
+                                                                        .first;
+                                                              });
+                                                            } else {
+                                                              safeSetState(
+                                                                  () {});
+                                                              return;
+                                                            }
                                                           }
-                                                          if (selectedUploadedFiles
-                                                                  .length ==
-                                                              selectedMedia
-                                                                  .length) {
-                                                            safeSetState(() {
-                                                              _model.uploadedLocalFile1 =
-                                                                  selectedUploadedFiles
-                                                                      .first;
-                                                            });
-                                                          } else {
-                                                            safeSetState(() {});
-                                                            return;
-                                                          }
+                                                        } on SocketException {
+                                                          showErrorToast(
+                                                              context,
+                                                              'Ingen internettforbindelse');
+                                                        } catch (e) {
+                                                          showErrorToast(
+                                                              context,
+                                                              'En feil oppstod');
                                                         }
                                                       },
                                                     ),
@@ -470,10 +535,20 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              matvare.imgUrls![
-                                                                  0] = '';
-                                                              safeSetState(
-                                                                  () {});
+                                                              try {
+                                                                matvare.imgUrls![
+                                                                    0] = '';
+                                                                safeSetState(
+                                                                    () {});
+                                                              } on SocketException {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
                                                             },
                                                           ),
                                                         ),
@@ -537,14 +612,25 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              safeSetState(() {
-                                                                _model.isDataUploading1 =
-                                                                    false;
-                                                                _model.uploadedLocalFile1 =
-                                                                    FFUploadedFile(
-                                                                        bytes: Uint8List.fromList(
-                                                                            []));
-                                                              });
+                                                              try {
+                                                                safeSetState(
+                                                                    () {
+                                                                  _model.isDataUploading1 =
+                                                                      false;
+                                                                  _model.uploadedLocalFile1 =
+                                                                      FFUploadedFile(
+                                                                          bytes:
+                                                                              Uint8List.fromList([]));
+                                                                });
+                                                              } on SocketException {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
                                                             },
                                                           ),
                                                         ),
@@ -608,10 +694,20 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              matvare.imgUrls![
-                                                                  1] = '';
-                                                              safeSetState(
-                                                                  () {});
+                                                              try {
+                                                                matvare.imgUrls![
+                                                                    1] = '';
+                                                                safeSetState(
+                                                                    () {});
+                                                              } on SocketException {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
                                                             },
                                                           ),
                                                         ),
@@ -669,14 +765,25 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              safeSetState(() {
-                                                                _model.isDataUploading2 =
-                                                                    false;
-                                                                _model.uploadedLocalFile2 =
-                                                                    FFUploadedFile(
-                                                                        bytes: Uint8List.fromList(
-                                                                            []));
-                                                              });
+                                                              try {
+                                                                safeSetState(
+                                                                    () {
+                                                                  _model.isDataUploading2 =
+                                                                      false;
+                                                                  _model.uploadedLocalFile2 =
+                                                                      FFUploadedFile(
+                                                                          bytes:
+                                                                              Uint8List.fromList([]));
+                                                                });
+                                                              } on SocketException {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
                                                             },
                                                           ),
                                                         ),
@@ -715,63 +822,70 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         size: 30.0,
                                                       ),
                                                       onPressed: () async {
-                                                        final selectedMedia =
-                                                            await selectMediaWithSourceBottomSheet(
-                                                          context: context,
-                                                          maxWidth: 500.00,
-                                                          maxHeight: 500.00,
-                                                          allowPhoto: true,
-                                                        );
-                                                        if (selectedMedia !=
-                                                                null &&
-                                                            selectedMedia.every((m) =>
-                                                                validateFileFormat(
-                                                                    m.storagePath,
-                                                                    context))) {
-                                                          safeSetState(() =>
-                                                              _model.isDataUploading2 =
-                                                                  true);
-                                                          var selectedUploadedFiles =
-                                                              <FFUploadedFile>[];
+                                                        try {
+                                                          final selectedMedia =
+                                                              await selectMediaWithSourceBottomSheet(
+                                                            context: context,
+                                                            maxWidth: 500.00,
+                                                            maxHeight: 500.00,
+                                                            allowPhoto: true,
+                                                          );
+                                                          if (selectedMedia !=
+                                                                  null &&
+                                                              selectedMedia.every((m) =>
+                                                                  validateFileFormat(
+                                                                      m.storagePath,
+                                                                      context))) {
+                                                            safeSetState(() =>
+                                                                _model.isDataUploading2 =
+                                                                    true);
+                                                            var selectedUploadedFiles =
+                                                                <FFUploadedFile>[];
 
-                                                          try {
-                                                            selectedUploadedFiles =
+                                                            try {
+                                                              selectedUploadedFiles =
+                                                                  selectedMedia
+                                                                      .map((m) =>
+                                                                          FFUploadedFile(
+                                                                            name:
+                                                                                m.storagePath.split('/').last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                          ))
+                                                                      .toList();
+                                                            } finally {
+                                                              _model.isDataUploading2 =
+                                                                  false;
+                                                            }
+                                                            if (selectedUploadedFiles
+                                                                    .length ==
                                                                 selectedMedia
-                                                                    .map((m) =>
-                                                                        FFUploadedFile(
-                                                                          name: m
-                                                                              .storagePath
-                                                                              .split('/')
-                                                                              .last,
-                                                                          bytes:
-                                                                              m.bytes,
-                                                                          height: m
-                                                                              .dimensions
-                                                                              ?.height,
-                                                                          width: m
-                                                                              .dimensions
-                                                                              ?.width,
-                                                                          blurHash:
-                                                                              m.blurHash,
-                                                                        ))
-                                                                    .toList();
-                                                          } finally {
-                                                            _model.isDataUploading2 =
-                                                                false;
+                                                                    .length) {
+                                                              safeSetState(() {
+                                                                _model.uploadedLocalFile2 =
+                                                                    selectedUploadedFiles
+                                                                        .first;
+                                                              });
+                                                            } else {
+                                                              safeSetState(
+                                                                  () {});
+                                                              return;
+                                                            }
                                                           }
-                                                          if (selectedUploadedFiles
-                                                                  .length ==
-                                                              selectedMedia
-                                                                  .length) {
-                                                            safeSetState(() {
-                                                              _model.uploadedLocalFile2 =
-                                                                  selectedUploadedFiles
-                                                                      .first;
-                                                            });
-                                                          } else {
-                                                            safeSetState(() {});
-                                                            return;
-                                                          }
+                                                        } on SocketException {
+                                                          showErrorToast(
+                                                              context,
+                                                              'Ingen internettforbindelse');
+                                                        } catch (e) {
+                                                          showErrorToast(
+                                                              context,
+                                                              'En feil oppstod');
                                                         }
                                                       },
                                                     ),
@@ -833,10 +947,20 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              matvare.imgUrls![
-                                                                  2] = '';
-                                                              safeSetState(
-                                                                  () {});
+                                                              try {
+                                                                matvare.imgUrls![
+                                                                    2] = '';
+                                                                safeSetState(
+                                                                    () {});
+                                                              } on SocketException {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
                                                             },
                                                           ),
                                                         ),
@@ -894,14 +1018,25 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              safeSetState(() {
-                                                                _model.isDataUploading3 =
-                                                                    false;
-                                                                _model.uploadedLocalFile3 =
-                                                                    FFUploadedFile(
-                                                                        bytes: Uint8List.fromList(
-                                                                            []));
-                                                              });
+                                                              try {
+                                                                safeSetState(
+                                                                    () {
+                                                                  _model.isDataUploading3 =
+                                                                      false;
+                                                                  _model.uploadedLocalFile3 =
+                                                                      FFUploadedFile(
+                                                                          bytes:
+                                                                              Uint8List.fromList([]));
+                                                                });
+                                                              } on SocketException {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
                                                             },
                                                           ),
                                                         ),
@@ -940,63 +1075,70 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         size: 30.0,
                                                       ),
                                                       onPressed: () async {
-                                                        final selectedMedia =
-                                                            await selectMediaWithSourceBottomSheet(
-                                                          context: context,
-                                                          maxWidth: 500.00,
-                                                          maxHeight: 500.00,
-                                                          allowPhoto: true,
-                                                        );
-                                                        if (selectedMedia !=
-                                                                null &&
-                                                            selectedMedia.every((m) =>
-                                                                validateFileFormat(
-                                                                    m.storagePath,
-                                                                    context))) {
-                                                          safeSetState(() =>
-                                                              _model.isDataUploading3 =
-                                                                  true);
-                                                          var selectedUploadedFiles =
-                                                              <FFUploadedFile>[];
+                                                        try {
+                                                          final selectedMedia =
+                                                              await selectMediaWithSourceBottomSheet(
+                                                            context: context,
+                                                            maxWidth: 500.00,
+                                                            maxHeight: 500.00,
+                                                            allowPhoto: true,
+                                                          );
+                                                          if (selectedMedia !=
+                                                                  null &&
+                                                              selectedMedia.every((m) =>
+                                                                  validateFileFormat(
+                                                                      m.storagePath,
+                                                                      context))) {
+                                                            safeSetState(() =>
+                                                                _model.isDataUploading3 =
+                                                                    true);
+                                                            var selectedUploadedFiles =
+                                                                <FFUploadedFile>[];
 
-                                                          try {
-                                                            selectedUploadedFiles =
+                                                            try {
+                                                              selectedUploadedFiles =
+                                                                  selectedMedia
+                                                                      .map((m) =>
+                                                                          FFUploadedFile(
+                                                                            name:
+                                                                                m.storagePath.split('/').last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                          ))
+                                                                      .toList();
+                                                            } finally {
+                                                              _model.isDataUploading3 =
+                                                                  false;
+                                                            }
+                                                            if (selectedUploadedFiles
+                                                                    .length ==
                                                                 selectedMedia
-                                                                    .map((m) =>
-                                                                        FFUploadedFile(
-                                                                          name: m
-                                                                              .storagePath
-                                                                              .split('/')
-                                                                              .last,
-                                                                          bytes:
-                                                                              m.bytes,
-                                                                          height: m
-                                                                              .dimensions
-                                                                              ?.height,
-                                                                          width: m
-                                                                              .dimensions
-                                                                              ?.width,
-                                                                          blurHash:
-                                                                              m.blurHash,
-                                                                        ))
-                                                                    .toList();
-                                                          } finally {
-                                                            _model.isDataUploading3 =
-                                                                false;
+                                                                    .length) {
+                                                              safeSetState(() {
+                                                                _model.uploadedLocalFile3 =
+                                                                    selectedUploadedFiles
+                                                                        .first;
+                                                              });
+                                                            } else {
+                                                              safeSetState(
+                                                                  () {});
+                                                              return;
+                                                            }
                                                           }
-                                                          if (selectedUploadedFiles
-                                                                  .length ==
-                                                              selectedMedia
-                                                                  .length) {
-                                                            safeSetState(() {
-                                                              _model.uploadedLocalFile3 =
-                                                                  selectedUploadedFiles
-                                                                      .first;
-                                                            });
-                                                          } else {
-                                                            safeSetState(() {});
-                                                            return;
-                                                          }
+                                                        } on SocketException {
+                                                          showErrorToast(
+                                                              context,
+                                                              'Ingen internettforbindelse');
+                                                        } catch (e) {
+                                                          showErrorToast(
+                                                              context,
+                                                              'En feil oppstod');
                                                         }
                                                       },
                                                     ),
@@ -1058,10 +1200,20 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              matvare.imgUrls![
-                                                                  3] = '';
-                                                              safeSetState(
-                                                                  () {});
+                                                              try {
+                                                                matvare.imgUrls![
+                                                                    3] = '';
+                                                                safeSetState(
+                                                                    () {});
+                                                              } on SocketException {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
                                                             },
                                                           ),
                                                         ),
@@ -1119,14 +1271,25 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              safeSetState(() {
-                                                                _model.isDataUploading4 =
-                                                                    false;
-                                                                _model.uploadedLocalFile4 =
-                                                                    FFUploadedFile(
-                                                                        bytes: Uint8List.fromList(
-                                                                            []));
-                                                              });
+                                                              try {
+                                                                safeSetState(
+                                                                    () {
+                                                                  _model.isDataUploading4 =
+                                                                      false;
+                                                                  _model.uploadedLocalFile4 =
+                                                                      FFUploadedFile(
+                                                                          bytes:
+                                                                              Uint8List.fromList([]));
+                                                                });
+                                                              } on SocketException {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
                                                             },
                                                           ),
                                                         ),
@@ -1165,63 +1328,70 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         size: 30.0,
                                                       ),
                                                       onPressed: () async {
-                                                        final selectedMedia =
-                                                            await selectMediaWithSourceBottomSheet(
-                                                          context: context,
-                                                          maxWidth: 500.00,
-                                                          maxHeight: 500.00,
-                                                          allowPhoto: true,
-                                                        );
-                                                        if (selectedMedia !=
-                                                                null &&
-                                                            selectedMedia.every((m) =>
-                                                                validateFileFormat(
-                                                                    m.storagePath,
-                                                                    context))) {
-                                                          safeSetState(() =>
-                                                              _model.isDataUploading4 =
-                                                                  true);
-                                                          var selectedUploadedFiles =
-                                                              <FFUploadedFile>[];
+                                                        try {
+                                                          final selectedMedia =
+                                                              await selectMediaWithSourceBottomSheet(
+                                                            context: context,
+                                                            maxWidth: 500.00,
+                                                            maxHeight: 500.00,
+                                                            allowPhoto: true,
+                                                          );
+                                                          if (selectedMedia !=
+                                                                  null &&
+                                                              selectedMedia.every((m) =>
+                                                                  validateFileFormat(
+                                                                      m.storagePath,
+                                                                      context))) {
+                                                            safeSetState(() =>
+                                                                _model.isDataUploading4 =
+                                                                    true);
+                                                            var selectedUploadedFiles =
+                                                                <FFUploadedFile>[];
 
-                                                          try {
-                                                            selectedUploadedFiles =
+                                                            try {
+                                                              selectedUploadedFiles =
+                                                                  selectedMedia
+                                                                      .map((m) =>
+                                                                          FFUploadedFile(
+                                                                            name:
+                                                                                m.storagePath.split('/').last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                          ))
+                                                                      .toList();
+                                                            } finally {
+                                                              _model.isDataUploading4 =
+                                                                  false;
+                                                            }
+                                                            if (selectedUploadedFiles
+                                                                    .length ==
                                                                 selectedMedia
-                                                                    .map((m) =>
-                                                                        FFUploadedFile(
-                                                                          name: m
-                                                                              .storagePath
-                                                                              .split('/')
-                                                                              .last,
-                                                                          bytes:
-                                                                              m.bytes,
-                                                                          height: m
-                                                                              .dimensions
-                                                                              ?.height,
-                                                                          width: m
-                                                                              .dimensions
-                                                                              ?.width,
-                                                                          blurHash:
-                                                                              m.blurHash,
-                                                                        ))
-                                                                    .toList();
-                                                          } finally {
-                                                            _model.isDataUploading4 =
-                                                                false;
+                                                                    .length) {
+                                                              safeSetState(() {
+                                                                _model.uploadedLocalFile4 =
+                                                                    selectedUploadedFiles
+                                                                        .first;
+                                                              });
+                                                            } else {
+                                                              safeSetState(
+                                                                  () {});
+                                                              return;
+                                                            }
                                                           }
-                                                          if (selectedUploadedFiles
-                                                                  .length ==
-                                                              selectedMedia
-                                                                  .length) {
-                                                            safeSetState(() {
-                                                              _model.uploadedLocalFile4 =
-                                                                  selectedUploadedFiles
-                                                                      .first;
-                                                            });
-                                                          } else {
-                                                            safeSetState(() {});
-                                                            return;
-                                                          }
+                                                        } on SocketException {
+                                                          showErrorToast(
+                                                              context,
+                                                              'Ingen internettforbindelse');
+                                                        } catch (e) {
+                                                          showErrorToast(
+                                                              context,
+                                                              'En feil oppstod');
                                                         }
                                                       },
                                                     ),
@@ -1283,10 +1453,20 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              matvare.imgUrls![
-                                                                  4] = '';
-                                                              safeSetState(
-                                                                  () {});
+                                                              try {
+                                                                matvare.imgUrls![
+                                                                    4] = '';
+                                                                safeSetState(
+                                                                    () {});
+                                                              } on SocketException {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
                                                             },
                                                           ),
                                                         ),
@@ -1344,14 +1524,25 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              safeSetState(() {
-                                                                _model.isDataUploading5 =
-                                                                    false;
-                                                                _model.uploadedLocalFile5 =
-                                                                    FFUploadedFile(
-                                                                        bytes: Uint8List.fromList(
-                                                                            []));
-                                                              });
+                                                              try {
+                                                                safeSetState(
+                                                                    () {
+                                                                  _model.isDataUploading5 =
+                                                                      false;
+                                                                  _model.uploadedLocalFile5 =
+                                                                      FFUploadedFile(
+                                                                          bytes:
+                                                                              Uint8List.fromList([]));
+                                                                });
+                                                              } on SocketException {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
                                                             },
                                                           ),
                                                         ),
@@ -1390,63 +1581,70 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         size: 30.0,
                                                       ),
                                                       onPressed: () async {
-                                                        final selectedMedia =
-                                                            await selectMediaWithSourceBottomSheet(
-                                                          context: context,
-                                                          maxWidth: 500.00,
-                                                          maxHeight: 500.00,
-                                                          allowPhoto: true,
-                                                        );
-                                                        if (selectedMedia !=
-                                                                null &&
-                                                            selectedMedia.every((m) =>
-                                                                validateFileFormat(
-                                                                    m.storagePath,
-                                                                    context))) {
-                                                          safeSetState(() =>
-                                                              _model.isDataUploading5 =
-                                                                  true);
-                                                          var selectedUploadedFiles =
-                                                              <FFUploadedFile>[];
+                                                        try {
+                                                          final selectedMedia =
+                                                              await selectMediaWithSourceBottomSheet(
+                                                            context: context,
+                                                            maxWidth: 500.00,
+                                                            maxHeight: 500.00,
+                                                            allowPhoto: true,
+                                                          );
+                                                          if (selectedMedia !=
+                                                                  null &&
+                                                              selectedMedia.every((m) =>
+                                                                  validateFileFormat(
+                                                                      m.storagePath,
+                                                                      context))) {
+                                                            safeSetState(() =>
+                                                                _model.isDataUploading5 =
+                                                                    true);
+                                                            var selectedUploadedFiles =
+                                                                <FFUploadedFile>[];
 
-                                                          try {
-                                                            selectedUploadedFiles =
+                                                            try {
+                                                              selectedUploadedFiles =
+                                                                  selectedMedia
+                                                                      .map((m) =>
+                                                                          FFUploadedFile(
+                                                                            name:
+                                                                                m.storagePath.split('/').last,
+                                                                            bytes:
+                                                                                m.bytes,
+                                                                            height:
+                                                                                m.dimensions?.height,
+                                                                            width:
+                                                                                m.dimensions?.width,
+                                                                            blurHash:
+                                                                                m.blurHash,
+                                                                          ))
+                                                                      .toList();
+                                                            } finally {
+                                                              _model.isDataUploading5 =
+                                                                  false;
+                                                            }
+                                                            if (selectedUploadedFiles
+                                                                    .length ==
                                                                 selectedMedia
-                                                                    .map((m) =>
-                                                                        FFUploadedFile(
-                                                                          name: m
-                                                                              .storagePath
-                                                                              .split('/')
-                                                                              .last,
-                                                                          bytes:
-                                                                              m.bytes,
-                                                                          height: m
-                                                                              .dimensions
-                                                                              ?.height,
-                                                                          width: m
-                                                                              .dimensions
-                                                                              ?.width,
-                                                                          blurHash:
-                                                                              m.blurHash,
-                                                                        ))
-                                                                    .toList();
-                                                          } finally {
-                                                            _model.isDataUploading5 =
-                                                                false;
+                                                                    .length) {
+                                                              safeSetState(() {
+                                                                _model.uploadedLocalFile5 =
+                                                                    selectedUploadedFiles
+                                                                        .first;
+                                                              });
+                                                            } else {
+                                                              safeSetState(
+                                                                  () {});
+                                                              return;
+                                                            }
                                                           }
-                                                          if (selectedUploadedFiles
-                                                                  .length ==
-                                                              selectedMedia
-                                                                  .length) {
-                                                            safeSetState(() {
-                                                              _model.uploadedLocalFile5 =
-                                                                  selectedUploadedFiles
-                                                                      .first;
-                                                            });
-                                                          } else {
-                                                            safeSetState(() {});
-                                                            return;
-                                                          }
+                                                        } on SocketException {
+                                                          showErrorToast(
+                                                              context,
+                                                              'Ingen internettforbindelse');
+                                                        } catch (e) {
+                                                          showErrorToast(
+                                                              context,
+                                                              'En feil oppstod');
                                                         }
                                                       },
                                                     ),
@@ -1633,10 +1831,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                           // ),
                                           Align(
                                             alignment:
-                                                AlignmentDirectional(-1, 0),
+                                                const AlignmentDirectional(
+                                                    -1, 0),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 20, 35),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 20, 35),
                                               child:
                                                   FlutterFlowDropDown<String>(
                                                 controller: _model
@@ -1686,8 +1886,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         .secondary,
                                                 borderWidth: 1,
                                                 borderRadius: 8,
-                                                margin: EdgeInsetsDirectional
-                                                    .fromSTEB(12, 0, 12, 0),
+                                                margin:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(12, 0, 12, 0),
                                                 hidesUnderline: true,
                                                 isOverButton: false,
                                                 isSearchable: false,
@@ -1961,28 +2162,36 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     controller:
                                                         _model.tabBarController,
                                                     onTap: (i) async {
-                                                      [
-                                                        () async {
-                                                          safeSetState(() {
-                                                            _model
-                                                                .produktPrisKgTextController
-                                                                ?.clear();
-                                                            _model
-                                                                .antallStkTextController
-                                                                ?.clear();
-                                                          });
-                                                        },
-                                                        () async {
-                                                          safeSetState(() {
-                                                            _model
-                                                                .produktPrisSTKTextController
-                                                                ?.clear();
-                                                            _model
-                                                                .antallStkTextController
-                                                                ?.clear();
-                                                          });
-                                                        }
-                                                      ][i]();
+                                                      try {
+                                                        [
+                                                          () async {
+                                                            safeSetState(() {
+                                                              _model
+                                                                  .produktPrisKgTextController
+                                                                  ?.clear();
+                                                              _model
+                                                                  .antallStkTextController
+                                                                  ?.clear();
+                                                            });
+                                                          },
+                                                          () async {
+                                                            safeSetState(() {
+                                                              _model
+                                                                  .produktPrisSTKTextController
+                                                                  ?.clear();
+                                                              _model
+                                                                  .antallStkTextController
+                                                                  ?.clear();
+                                                            });
+                                                          }
+                                                        ][i]();
+                                                      } on SocketException {
+                                                        showErrorToast(context,
+                                                            'Ingen internettforbindelse');
+                                                      } catch (e) {
+                                                        showErrorToast(context,
+                                                            'En feil oppstod');
+                                                      }
                                                     },
                                                   ),
                                                 ),
@@ -2830,50 +3039,60 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           0.0, 24.0, 0.0, 80.0),
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
-                                                      FocusScope.of(context)
-                                                          .requestFocus(
-                                                              FocusNode());
+                                                      try {
+                                                        FocusScope.of(context)
+                                                            .requestFocus(
+                                                                FocusNode());
 
-                                                      // Capture the returned LatLng from the modal bottom sheet
-                                                      selectedLatLng =
-                                                          await showModalBottomSheet<
-                                                              LatLng>(
-                                                        isScrollControlled:
-                                                            true,
-                                                        backgroundColor:
-                                                            Colors.transparent,
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return GestureDetector(
-                                                            onTap: () =>
-                                                                FocusScope.of(
-                                                                        context)
-                                                                    .unfocus(),
-                                                            child: Padding(
-                                                              padding: MediaQuery
-                                                                  .viewInsetsOf(
-                                                                      context),
-                                                              child:
-                                                                  VelgPosWidget(
-                                                                currentLocation:
-                                                                    currentselectedLatLng,
+                                                        // Capture the returned LatLng from the modal bottom sheet
+                                                        selectedLatLng =
+                                                            await showModalBottomSheet<
+                                                                LatLng>(
+                                                          isScrollControlled:
+                                                              true,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return GestureDetector(
+                                                              onTap: () =>
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    VelgPosWidget(
+                                                                  currentLocation:
+                                                                      currentselectedLatLng,
+                                                                ),
                                                               ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-                                                      setState(() {
-                                                        if (selectedLatLng ==
-                                                            const LatLng(
-                                                                0, 0)) {
-                                                          selectedLatLng = null;
-                                                        } else {
-                                                          currentselectedLatLng =
-                                                              selectedLatLng;
-                                                          updateSelectedLatLng(
-                                                              selectedLatLng);
-                                                        }
-                                                      });
+                                                            );
+                                                          },
+                                                        );
+                                                        setState(() {
+                                                          if (selectedLatLng ==
+                                                              const LatLng(
+                                                                  0, 0)) {
+                                                            selectedLatLng =
+                                                                null;
+                                                          } else {
+                                                            currentselectedLatLng =
+                                                                selectedLatLng;
+                                                            updateSelectedLatLng(
+                                                                selectedLatLng);
+                                                          }
+                                                        });
+                                                      } on SocketException {
+                                                        showErrorToast(context,
+                                                            'Ingen internettforbindelse');
+                                                      } catch (e) {
+                                                        showErrorToast(context,
+                                                            'En feil oppstod');
+                                                      }
                                                     },
                                                     text: 'Velg posisjon',
                                                     options: FFButtonOptions(
@@ -2924,8 +3143,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               ),
                                               if (selectedLatLng != null)
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(30, 0, 30, 80),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          30, 0, 30, 80),
                                                   child: Stack(
                                                     children: [
                                                       // The map widget wrapped in a Container for consistent sizing
@@ -2943,11 +3164,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     500, // Using the same size
                                                                 height: 200,
                                                                 center: selectedLatLng ??
-                                                                    LatLng(
+                                                                    const LatLng(
                                                                         58.940090,
                                                                         11.634092),
                                                                 matsted: selectedLatLng ??
-                                                                    LatLng(
+                                                                    const LatLng(
                                                                         58.940090,
                                                                         11.634092),
                                                               )
@@ -2957,7 +3178,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     500, // Using the same size
                                                                 height: 200,
                                                                 center: selectedLatLng ??
-                                                                    LatLng(
+                                                                    const LatLng(
                                                                         58.940090,
                                                                         11.634092),
                                                               ),
@@ -2993,8 +3214,16 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         0.0, 24.0, 0.0, 50.0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
-                                                    context.pushNamed(
-                                                        'Utbetalingsinfo1');
+                                                    try {
+                                                      context.pushNamed(
+                                                          'Utbetalingsinfo1');
+                                                    } on SocketException {
+                                                      showErrorToast(context,
+                                                          'Ingen internettforbindelse');
+                                                    } catch (e) {
+                                                      showErrorToast(context,
+                                                          'En feil oppstod');
+                                                    }
                                                   },
                                                   text:
                                                       'Legg til utbetalingsinformasjon',
@@ -3062,176 +3291,176 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         0.0, 70.0, 0.0, 0.0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
-                                                    if (_model.formKey
-                                                                .currentState ==
-                                                            null ||
-                                                        !_model.formKey
-                                                            .currentState!
-                                                            .validate()) {
-                                                      return;
-                                                    }
-                                                    if (_oppdaterLoading) {
-                                                      return;
-                                                    }
-                                                    if ((_model.uploadedLocalFile1.bytes ?? []).isEmpty &&
-                                                        (_model.uploadedLocalFile2
-                                                                    .bytes ??
-                                                                [])
-                                                            .isEmpty &&
-                                                        (_model.uploadedLocalFile3
-                                                                    .bytes ??
-                                                                [])
-                                                            .isEmpty &&
-                                                        (_model.uploadedLocalFile4
-                                                                    .bytes ??
-                                                                [])
-                                                            .isEmpty &&
-                                                        (_model.uploadedLocalFile5
-                                                                    .bytes ??
-                                                                [])
-                                                            .isEmpty) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return CupertinoAlertDialog(
-                                                            title: const Text(
-                                                                'Bilde mangler'),
-                                                            content: const Text(
-                                                                'Last opp minst 1 bilde.'),
-                                                            actions: [
-                                                              CupertinoDialogAction(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child:
-                                                                    const Text(
-                                                                        'Ok'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      return;
-                                                    }
-
-                                                    if (_model.dropDownValue ==
-                                                        null) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return CupertinoAlertDialog(
-                                                            title: const Text(
-                                                                'Mangler kategori'),
-                                                            content: const Text(
-                                                                'Velg minst 1 kategori.'),
-                                                            actions: [
-                                                              CupertinoDialogAction(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child:
-                                                                    const Text(
-                                                                        'Ok'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      return;
-                                                    }
-
-                                                    if (_model.tabBarCurrentIndex ==
-                                                            0 &&
-                                                        _model
-                                                            .produktPrisSTKTextController
-                                                            .text
-                                                            .isEmpty) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return CupertinoAlertDialog(
-                                                            title: const Text(
-                                                                'Velg pris'),
-                                                            content: const Text(
-                                                                'Velg en pris på matvaren'),
-                                                            actions: [
-                                                              CupertinoDialogAction(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child:
-                                                                    const Text(
-                                                                        'Ok'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      return;
-                                                    }
-
-                                                    if (_model.tabBarCurrentIndex !=
-                                                            0 &&
-                                                        _model
-                                                            .produktPrisKgTextController
-                                                            .text
-                                                            .isEmpty) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return CupertinoAlertDialog(
-                                                            title: const Text(
-                                                                'Velg pris'),
-                                                            content: const Text(
-                                                                'Velg en pris på matvaren'),
-                                                            actions: [
-                                                              CupertinoDialogAction(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child:
-                                                                    const Text(
-                                                                        'Ok'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      return null;
-                                                    }
-
-                                                    if (selectedLatLng ==
-                                                        null) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return CupertinoAlertDialog(
-                                                            title: const Text(
-                                                                'Velg posisjon'),
-                                                            content: const Text(
-                                                                'Mangler posisjon'),
-                                                            actions: [
-                                                              CupertinoDialogAction(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child:
-                                                                    const Text(
-                                                                        'Ok'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      return null;
-                                                    }
-
                                                     try {
+                                                      if (_model.formKey
+                                                                  .currentState ==
+                                                              null ||
+                                                          !_model.formKey
+                                                              .currentState!
+                                                              .validate()) {
+                                                        return;
+                                                      }
+                                                      if (_oppdaterLoading) {
+                                                        return;
+                                                      }
+                                                      if ((_model.uploadedLocalFile1.bytes ?? []).isEmpty &&
+                                                          (_model.uploadedLocalFile2
+                                                                      .bytes ??
+                                                                  [])
+                                                              .isEmpty &&
+                                                          (_model.uploadedLocalFile3
+                                                                      .bytes ??
+                                                                  [])
+                                                              .isEmpty &&
+                                                          (_model.uploadedLocalFile4
+                                                                      .bytes ??
+                                                                  [])
+                                                              .isEmpty &&
+                                                          (_model.uploadedLocalFile5
+                                                                      .bytes ??
+                                                                  [])
+                                                              .isEmpty) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return CupertinoAlertDialog(
+                                                              title: const Text(
+                                                                  'Bilde mangler'),
+                                                              content: const Text(
+                                                                  'Last opp minst 1 bilde.'),
+                                                              actions: [
+                                                                CupertinoDialogAction(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext),
+                                                                  child:
+                                                                      const Text(
+                                                                          'Ok'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+                                                        return;
+                                                      }
+
+                                                      if (_model
+                                                              .dropDownValue ==
+                                                          null) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return CupertinoAlertDialog(
+                                                              title: const Text(
+                                                                  'Mangler kategori'),
+                                                              content: const Text(
+                                                                  'Velg minst 1 kategori.'),
+                                                              actions: [
+                                                                CupertinoDialogAction(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext),
+                                                                  child:
+                                                                      const Text(
+                                                                          'Ok'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+                                                        return;
+                                                      }
+
+                                                      if (_model.tabBarCurrentIndex ==
+                                                              0 &&
+                                                          _model
+                                                              .produktPrisSTKTextController
+                                                              .text
+                                                              .isEmpty) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return CupertinoAlertDialog(
+                                                              title: const Text(
+                                                                  'Velg pris'),
+                                                              content: const Text(
+                                                                  'Velg en pris på matvaren'),
+                                                              actions: [
+                                                                CupertinoDialogAction(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext),
+                                                                  child:
+                                                                      const Text(
+                                                                          'Ok'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+                                                        return;
+                                                      }
+
+                                                      if (_model.tabBarCurrentIndex !=
+                                                              0 &&
+                                                          _model
+                                                              .produktPrisKgTextController
+                                                              .text
+                                                              .isEmpty) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return CupertinoAlertDialog(
+                                                              title: const Text(
+                                                                  'Velg pris'),
+                                                              content: const Text(
+                                                                  'Velg en pris på matvaren'),
+                                                              actions: [
+                                                                CupertinoDialogAction(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext),
+                                                                  child:
+                                                                      const Text(
+                                                                          'Ok'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+                                                        return null;
+                                                      }
+
+                                                      if (selectedLatLng ==
+                                                          null) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return CupertinoAlertDialog(
+                                                              title: const Text(
+                                                                  'Velg posisjon'),
+                                                              content: const Text(
+                                                                  'Mangler posisjon'),
+                                                              actions: [
+                                                                CupertinoDialogAction(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext),
+                                                                  child:
+                                                                      const Text(
+                                                                          'Ok'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+                                                        return null;
+                                                      }
                                                       _oppdaterLoading = true;
                                                       final token =
                                                           await securestorage
@@ -3375,31 +3604,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           throw (Exception);
                                                         }
                                                       }
+                                                    } on SocketException {
+                                                      showErrorToast(context,
+                                                          'Ingen internettforbindelse');
                                                     } catch (e) {
-                                                      _oppdaterLoading = false;
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return AlertDialog(
-                                                            title: const Text(
-                                                                'Oops, noe gikk galt'),
-                                                            content: const Text(
-                                                                'Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
-                                                            actions: <Widget>[
-                                                              TextButton(
-                                                                child:
-                                                                    Text('OK'),
-                                                                onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop(); // Close the dialog
-                                                                },
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
+                                                      showErrorToast(context,
+                                                          'En feil oppstod');
                                                     }
                                                   },
                                                   text: 'Publiser',
@@ -3463,183 +3673,66 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             0.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
-                                                        if (_model.formKey
-                                                                    .currentState ==
-                                                                null ||
-                                                            !_model.formKey
-                                                                .currentState!
-                                                                .validate()) {
-                                                          return;
-                                                        }
-                                                        if (_leggUtLoading ==
-                                                            true) {
-                                                          return;
-                                                        }
-                                                        if (_model.tabBarCurrentIndex ==
-                                                                0 &&
-                                                            _model
-                                                                .produktPrisSTKTextController
-                                                                .text
-                                                                .isEmpty) {
-                                                          await showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (alertDialogContext) {
-                                                              return CupertinoAlertDialog(
-                                                                title: const Text(
-                                                                    'Velg pris'),
-                                                                content: const Text(
-                                                                    'Velg en pris på matvaren'),
-                                                                actions: [
-                                                                  CupertinoDialogAction(
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
-                                                                            alertDialogContext),
-                                                                    child:
-                                                                        const Text(
-                                                                            'Ok'),
-                                                                  ),
-                                                                ],
-                                                              );
-                                                            },
-                                                          );
-                                                          return;
-                                                        }
-
-                                                        if (_model.tabBarCurrentIndex !=
-                                                                0 &&
-                                                            _model
-                                                                .produktPrisKgTextController
-                                                                .text
-                                                                .isEmpty) {
-                                                          await showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (alertDialogContext) {
-                                                              return CupertinoAlertDialog(
-                                                                title: const Text(
-                                                                    'Velg pris'),
-                                                                content: const Text(
-                                                                    'Velg en pris på matvaren'),
-                                                                actions: [
-                                                                  CupertinoDialogAction(
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
-                                                                            alertDialogContext),
-                                                                    child:
-                                                                        const Text(
-                                                                            'Ok'),
-                                                                  ),
-                                                                ],
-                                                              );
-                                                            },
-                                                          );
-                                                          return null;
-                                                        }
-
-                                                        if (selectedLatLng ==
-                                                            null) {
-                                                          await showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (alertDialogContext) {
-                                                              return CupertinoAlertDialog(
-                                                                title: const Text(
-                                                                    'Velg posisjon'),
-                                                                content: const Text(
-                                                                    'Mangler posisjon'),
-                                                                actions: [
-                                                                  CupertinoDialogAction(
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
-                                                                            alertDialogContext),
-                                                                    child:
-                                                                        const Text(
-                                                                            'Ok'),
-                                                                  ),
-                                                                ],
-                                                              );
-                                                            },
-                                                          );
-                                                          return null;
-                                                        }
-                                                        _leggUtLoading = true;
-                                                        String? token =
-                                                            await Securestorage()
-                                                                .readToken();
-                                                        if (token == null) {
-                                                          FFAppState().login =
-                                                              false;
-                                                          context.pushNamed(
-                                                              'registrer');
-                                                          return;
-                                                        } else {
-                                                          final List<Uint8List?>
-                                                              filesData = [
-                                                            _model
-                                                                .uploadedLocalFile1
-                                                                .bytes,
-                                                            _model
-                                                                .uploadedLocalFile2
-                                                                .bytes,
-                                                            _model
-                                                                .uploadedLocalFile3
-                                                                .bytes,
-                                                            _model
-                                                                .uploadedLocalFile4
-                                                                .bytes,
-                                                            _model
-                                                                .uploadedLocalFile5
-                                                                .bytes,
-                                                          ];
-
-                                                          final List<Uint8List>
-                                                              filteredFilesData =
-                                                              filesData
-                                                                  .where((file) =>
-                                                                      file !=
-                                                                          null &&
-                                                                      file
-                                                                          .isNotEmpty)
-                                                                  .cast<
-                                                                      Uint8List>()
-                                                                  .toList();
-
-                                                          final filelinks =
-                                                              await apiMultiplePics
-                                                                  .uploadPictures(
-                                                                      token:
-                                                                          token,
-                                                                      filesData:
-                                                                          filteredFilesData);
-                                                          final List<String>
-                                                              combinedLinks = [
-                                                            ...matvare.imgUrls!
-                                                                .where((url) =>
-                                                                    url.isNotEmpty) // Filters out both null and empty strings
-                                                          ];
-
-                                                          if (filelinks !=
-                                                                  null &&
-                                                              filelinks
-                                                                  .isNotEmpty) {
-                                                            combinedLinks
-                                                                .addAll(
-                                                                    filelinks);
+                                                        try {
+                                                          if (_model.formKey
+                                                                      .currentState ==
+                                                                  null ||
+                                                              !_model.formKey
+                                                                  .currentState!
+                                                                  .validate()) {
+                                                            return;
                                                           }
-
-                                                          if (combinedLinks
-                                                              .isEmpty) {
+                                                          if (_leggUtLoading ==
+                                                              true) {
+                                                            return;
+                                                          }
+                                                          if (_model.tabBarCurrentIndex ==
+                                                                  0 &&
+                                                              _model
+                                                                  .produktPrisSTKTextController
+                                                                  .text
+                                                                  .isEmpty) {
                                                             await showDialog(
                                                               context: context,
                                                               builder:
                                                                   (alertDialogContext) {
                                                                 return CupertinoAlertDialog(
                                                                   title: const Text(
-                                                                      'Mangler bilder'),
+                                                                      'Velg pris'),
                                                                   content:
                                                                       const Text(
-                                                                          'Last opp minst 1 bilde'),
+                                                                          'Velg en pris på matvaren'),
+                                                                  actions: [
+                                                                    CupertinoDialogAction(
+                                                                      onPressed:
+                                                                          () =>
+                                                                              Navigator.pop(alertDialogContext),
+                                                                      child: const Text(
+                                                                          'Ok'),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            );
+                                                            return;
+                                                          }
+
+                                                          if (_model.tabBarCurrentIndex !=
+                                                                  0 &&
+                                                              _model
+                                                                  .produktPrisKgTextController
+                                                                  .text
+                                                                  .isEmpty) {
+                                                            await showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (alertDialogContext) {
+                                                                return CupertinoAlertDialog(
+                                                                  title: const Text(
+                                                                      'Velg pris'),
+                                                                  content:
+                                                                      const Text(
+                                                                          'Velg en pris på matvaren'),
                                                                   actions: [
                                                                     CupertinoDialogAction(
                                                                       onPressed:
@@ -3654,91 +3747,223 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             );
                                                             return null;
                                                           }
-                                                          String pris;
-                                                          bool kg;
-                                                          if (_model
-                                                              .produktPrisSTKTextController
-                                                              .text
-                                                              .isNotEmpty) {
-                                                            pris = _model
-                                                                .produktPrisSTKTextController
-                                                                .text;
-                                                            kg =
-                                                                false; // KG is disabled if STK is set
-                                                          } else if (_model
-                                                              .produktPrisKgTextController
-                                                              .text
-                                                              .isNotEmpty) {
-                                                            // If STK is not set, use KG and set KG to true
-                                                            pris = _model
-                                                                .produktPrisKgTextController
-                                                                .text;
-                                                            kg =
-                                                                true; // KG is enabled if STK is not set
-                                                          } else {
-                                                            // If neither is set, you can set a default value (empty string in this case)
-                                                            pris = '';
-                                                            kg =
-                                                                true; // By default, KG is enabled if STK is not set
-                                                          }
-                                                          ApiUpdateFood
-                                                              apiUpdateFood =
-                                                              ApiUpdateFood();
-                                                          final response =
-                                                              await apiUpdateFood
-                                                                  .updateFood(
-                                                            token: token,
-                                                            id: matvare.matId,
-                                                            name: _model
-                                                                .produktNavnTextController
-                                                                .text,
-                                                            imgUrl:
-                                                                combinedLinks,
-                                                            description: _model
-                                                                .produktBeskrivelseTextController
-                                                                .text,
-                                                            price: pris,
-                                                            kategorier: _model
-                                                                .dropDownValueController
-                                                                ?.value,
-                                                            posisjon:
-                                                                selectedLatLng,
-                                                            antall: _model
-                                                                .antallStkTextController
-                                                                .text,
-                                                            betaling: _model
-                                                                .checkboxValue,
-                                                            kg: kg,
-                                                          );
 
-                                                          if (response
-                                                                  .statusCode ==
-                                                              200) {
-                                                            setState(() {});
-                                                            _leggUtLoading =
-                                                                false;
-                                                            context.goNamed(
-                                                              'Hjem',
-                                                              extra: <String,
-                                                                  dynamic>{
-                                                                kTransitionInfoKey:
-                                                                    const TransitionInfo(
-                                                                  hasTransition:
-                                                                      true,
-                                                                  transitionType:
-                                                                      PageTransitionType
-                                                                          .fade,
-                                                                  duration: Duration(
-                                                                      milliseconds:
-                                                                          0),
-                                                                ),
+                                                          if (selectedLatLng ==
+                                                              null) {
+                                                            await showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (alertDialogContext) {
+                                                                return CupertinoAlertDialog(
+                                                                  title: const Text(
+                                                                      'Velg posisjon'),
+                                                                  content:
+                                                                      const Text(
+                                                                          'Mangler posisjon'),
+                                                                  actions: [
+                                                                    CupertinoDialogAction(
+                                                                      onPressed:
+                                                                          () =>
+                                                                              Navigator.pop(alertDialogContext),
+                                                                      child: const Text(
+                                                                          'Ok'),
+                                                                    ),
+                                                                  ],
+                                                                );
                                                               },
                                                             );
-                                                          } else {
-                                                            _leggUtLoading =
-                                                                false;
+                                                            return null;
                                                           }
-                                                          setState(() {});
+                                                          _leggUtLoading = true;
+                                                          String? token =
+                                                              await Securestorage()
+                                                                  .readToken();
+                                                          if (token == null) {
+                                                            FFAppState().login =
+                                                                false;
+                                                            context.pushNamed(
+                                                                'registrer');
+                                                            return;
+                                                          } else {
+                                                            final List<
+                                                                    Uint8List?>
+                                                                filesData = [
+                                                              _model
+                                                                  .uploadedLocalFile1
+                                                                  .bytes,
+                                                              _model
+                                                                  .uploadedLocalFile2
+                                                                  .bytes,
+                                                              _model
+                                                                  .uploadedLocalFile3
+                                                                  .bytes,
+                                                              _model
+                                                                  .uploadedLocalFile4
+                                                                  .bytes,
+                                                              _model
+                                                                  .uploadedLocalFile5
+                                                                  .bytes,
+                                                            ];
+
+                                                            final List<
+                                                                    Uint8List>
+                                                                filteredFilesData =
+                                                                filesData
+                                                                    .where((file) =>
+                                                                        file !=
+                                                                            null &&
+                                                                        file
+                                                                            .isNotEmpty)
+                                                                    .cast<
+                                                                        Uint8List>()
+                                                                    .toList();
+
+                                                            final filelinks =
+                                                                await apiMultiplePics
+                                                                    .uploadPictures(
+                                                                        token:
+                                                                            token,
+                                                                        filesData:
+                                                                            filteredFilesData);
+                                                            final List<String>
+                                                                combinedLinks =
+                                                                [
+                                                              ...matvare
+                                                                  .imgUrls!
+                                                                  .where((url) =>
+                                                                      url.isNotEmpty) // Filters out both null and empty strings
+                                                            ];
+
+                                                            if (filelinks !=
+                                                                    null &&
+                                                                filelinks
+                                                                    .isNotEmpty) {
+                                                              combinedLinks
+                                                                  .addAll(
+                                                                      filelinks);
+                                                            }
+
+                                                            if (combinedLinks
+                                                                .isEmpty) {
+                                                              await showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return CupertinoAlertDialog(
+                                                                    title: const Text(
+                                                                        'Mangler bilder'),
+                                                                    content:
+                                                                        const Text(
+                                                                            'Last opp minst 1 bilde'),
+                                                                    actions: [
+                                                                      CupertinoDialogAction(
+                                                                        onPressed:
+                                                                            () =>
+                                                                                Navigator.pop(alertDialogContext),
+                                                                        child: const Text(
+                                                                            'Ok'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
+                                                              return null;
+                                                            }
+                                                            String pris;
+                                                            bool kg;
+                                                            if (_model
+                                                                .produktPrisSTKTextController
+                                                                .text
+                                                                .isNotEmpty) {
+                                                              pris = _model
+                                                                  .produktPrisSTKTextController
+                                                                  .text;
+                                                              kg =
+                                                                  false; // KG is disabled if STK is set
+                                                            } else if (_model
+                                                                .produktPrisKgTextController
+                                                                .text
+                                                                .isNotEmpty) {
+                                                              // If STK is not set, use KG and set KG to true
+                                                              pris = _model
+                                                                  .produktPrisKgTextController
+                                                                  .text;
+                                                              kg =
+                                                                  true; // KG is enabled if STK is not set
+                                                            } else {
+                                                              // If neither is set, you can set a default value (empty string in this case)
+                                                              pris = '';
+                                                              kg =
+                                                                  true; // By default, KG is enabled if STK is not set
+                                                            }
+                                                            ApiUpdateFood
+                                                                apiUpdateFood =
+                                                                ApiUpdateFood();
+                                                            final response =
+                                                                await apiUpdateFood
+                                                                    .updateFood(
+                                                              token: token,
+                                                              id: matvare.matId,
+                                                              name: _model
+                                                                  .produktNavnTextController
+                                                                  .text,
+                                                              imgUrl:
+                                                                  combinedLinks,
+                                                              description: _model
+                                                                  .produktBeskrivelseTextController
+                                                                  .text,
+                                                              price: pris,
+                                                              kategorier: _model
+                                                                  .dropDownValueController
+                                                                  ?.value,
+                                                              posisjon:
+                                                                  selectedLatLng,
+                                                              antall: _model
+                                                                  .antallStkTextController
+                                                                  .text,
+                                                              betaling: _model
+                                                                  .checkboxValue,
+                                                              kg: kg,
+                                                            );
+
+                                                            if (response
+                                                                    .statusCode ==
+                                                                200) {
+                                                              setState(() {});
+                                                              _leggUtLoading =
+                                                                  false;
+                                                              context.goNamed(
+                                                                'Hjem',
+                                                                extra: <String,
+                                                                    dynamic>{
+                                                                  kTransitionInfoKey:
+                                                                      const TransitionInfo(
+                                                                    hasTransition:
+                                                                        true,
+                                                                    transitionType:
+                                                                        PageTransitionType
+                                                                            .fade,
+                                                                    duration: Duration(
+                                                                        milliseconds:
+                                                                            0),
+                                                                  ),
+                                                                },
+                                                              );
+                                                            } else {
+                                                              _leggUtLoading =
+                                                                  false;
+                                                            }
+                                                            setState(() {});
+                                                          }
+                                                        } on SocketException {
+                                                          showErrorToast(
+                                                              context,
+                                                              'Ingen internettforbindelse');
+                                                        } catch (e) {
+                                                          showErrorToast(
+                                                              context,
+                                                              'En feil oppstod');
                                                         }
                                                       },
                                                       text: 'Oppdater',
