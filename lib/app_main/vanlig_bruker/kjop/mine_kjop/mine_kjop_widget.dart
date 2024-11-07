@@ -302,78 +302,78 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                       physics: NeverScrollableScrollPhysics(),
                                       controller: _model.tabBarController,
                                       children: [
-                                        if (_model.tabBarCurrentIndex == 0)
-                                          if (_allEmpty == true)
-                                            Container(
-                                              width: MediaQuery.sizeOf(context)
-                                                  .width,
-                                              height: MediaQuery.sizeOf(context)
-                                                      .height -
-                                                  315,
-                                              child: Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, -1),
-                                                child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 0, 0, 110),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  70, 0, 0, 0),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                            child: Image.asset(
-                                                              'assets/images/In_no_time-rafiki.png',
-                                                              width: 276,
-                                                              height: 215,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      16, 0, 0),
-                                                          child: Text(
-                                                            'Ingen handler enda',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .headlineSmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize: 20,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )),
-                                              ),
-                                            ),
+                                        // if (_model.tabBarCurrentIndex == 0)
+                                        //   if (_allEmpty == true)
+                                        //     Container(
+                                        //       width: MediaQuery.sizeOf(context)
+                                        //           .width,
+                                        //       height: MediaQuery.sizeOf(context)
+                                        //               .height -
+                                        //           315,
+                                        //       child: Align(
+                                        //         alignment:
+                                        //             AlignmentDirectional(0, -1),
+                                        //         child: Padding(
+                                        //             padding:
+                                        //                 EdgeInsetsDirectional
+                                        //                     .fromSTEB(
+                                        //                         0, 0, 0, 110),
+                                        //             child: Column(
+                                        //               mainAxisSize:
+                                        //                   MainAxisSize.max,
+                                        //               mainAxisAlignment:
+                                        //                   MainAxisAlignment
+                                        //                       .center,
+                                        //               children: [
+                                        //                 Padding(
+                                        //                   padding:
+                                        //                       const EdgeInsetsDirectional
+                                        //                           .fromSTEB(
+                                        //                           70, 0, 0, 0),
+                                        //                   child: ClipRRect(
+                                        //                     borderRadius:
+                                        //                         BorderRadius
+                                        //                             .circular(
+                                        //                                 8),
+                                        //                     child: Image.asset(
+                                        //                       'assets/images/In_no_time-rafiki.png',
+                                        //                       width: 276,
+                                        //                       height: 215,
+                                        //                       fit: BoxFit.cover,
+                                        //                     ),
+                                        //                   ),
+                                        //                 ),
+                                        //                 Padding(
+                                        //                   padding:
+                                        //                       EdgeInsetsDirectional
+                                        //                           .fromSTEB(0,
+                                        //                               16, 0, 0),
+                                        //                   child: Text(
+                                        //                     'Ingen handler enda',
+                                        //                     textAlign: TextAlign
+                                        //                         .center,
+                                        //                     style: FlutterFlowTheme
+                                        //                             .of(context)
+                                        //                         .headlineSmall
+                                        //                         .override(
+                                        //                           fontFamily:
+                                        //                               'Open Sans',
+                                        //                           color: FlutterFlowTheme.of(
+                                        //                                   context)
+                                        //                               .primaryText,
+                                        //                           fontSize: 20,
+                                        //                           letterSpacing:
+                                        //                               0.0,
+                                        //                           fontWeight:
+                                        //                               FontWeight
+                                        //                                   .w600,
+                                        //                         ),
+                                        //                   ),
+                                        //                 ),
+                                        //               ],
+                                        //             )),
+                                        //       ),
+                                        //     ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -389,8 +389,99 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             scrollDirection: Axis.vertical,
                                             itemCount: _isloading
                                                 ? 1
-                                                : _alleInfo?.length ?? 1,
+                                                : (_alleInfo?.length ?? 0) == 0
+                                                    ? 1
+                                                    : _alleInfo!.length,
                                             itemBuilder: (context, index) {
+                                              if (_allEmpty == true &&
+                                                  ((FFAppState().harSolgt ==
+                                                          true &&
+                                                      FFAppState().harKjopt ==
+                                                          true))) {
+                                                return Container(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                          .width,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height -
+                                                          315,
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0, -1),
+                                                    child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(0, 0,
+                                                                    0, 110),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      70,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/In_no_time-rafiki.png',
+                                                                  width: 276,
+                                                                  height: 215,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          16,
+                                                                          0,
+                                                                          0),
+                                                              child: Text(
+                                                                'Ingen handler enda',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .headlineSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          20,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )),
+                                                  ),
+                                                );
+                                              }
                                               if (FFAppState().harSolgt !=
                                                       true &&
                                                   FFAppState().harKjopt !=
@@ -451,7 +542,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           0,
                                                                           0),
                                                               child: Text(
-                                                                'Du kan se mat du har kjøpt eller solgt her',
+                                                                'Ingen kjøp eller salg',
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,
@@ -1112,78 +1203,78 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             },
                                           ),
                                         ),
-                                        if (_model.tabBarCurrentIndex == 1)
-                                          if (_salgEmpty == true)
-                                            Container(
-                                              width: MediaQuery.sizeOf(context)
-                                                  .width,
-                                              height: MediaQuery.sizeOf(context)
-                                                      .height -
-                                                  315,
-                                              child: Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, -1),
-                                                child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 0, 0, 110),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  70, 0, 0, 0),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                            child: Image.asset(
-                                                              'assets/images/In_no_time-rafiki.png',
-                                                              width: 276,
-                                                              height: 215,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      16, 0, 0),
-                                                          child: Text(
-                                                            'Ingen pågående kjøp',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .headlineSmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize: 20,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )),
-                                              ),
-                                            ),
+                                        // if (_model.tabBarCurrentIndex == 1)
+                                        //   if (_kjopEmpty != true)
+                                        //     Container(
+                                        //       width: MediaQuery.sizeOf(context)
+                                        //           .width,
+                                        //       height: MediaQuery.sizeOf(context)
+                                        //               .height -
+                                        //           315,
+                                        //       child: Align(
+                                        //         alignment:
+                                        //             AlignmentDirectional(0, -1),
+                                        //         child: Padding(
+                                        //             padding:
+                                        //                 EdgeInsetsDirectional
+                                        //                     .fromSTEB(
+                                        //                         0, 0, 0, 110),
+                                        //             child: Column(
+                                        //               mainAxisSize:
+                                        //                   MainAxisSize.max,
+                                        //               mainAxisAlignment:
+                                        //                   MainAxisAlignment
+                                        //                       .center,
+                                        //               children: [
+                                        //                 Padding(
+                                        //                   padding:
+                                        //                       const EdgeInsetsDirectional
+                                        //                           .fromSTEB(
+                                        //                           70, 0, 0, 0),
+                                        //                   child: ClipRRect(
+                                        //                     borderRadius:
+                                        //                         BorderRadius
+                                        //                             .circular(
+                                        //                                 8),
+                                        //                     child: Image.asset(
+                                        //                       'assets/images/In_no_time-rafiki.png',
+                                        //                       width: 276,
+                                        //                       height: 215,
+                                        //                       fit: BoxFit.cover,
+                                        //                     ),
+                                        //                   ),
+                                        //                 ),
+                                        //                 Padding(
+                                        //                   padding:
+                                        //                       EdgeInsetsDirectional
+                                        //                           .fromSTEB(0,
+                                        //                               16, 0, 0),
+                                        //                   child: Text(
+                                        //                     'Ingen pågående kjøp',
+                                        //                     textAlign: TextAlign
+                                        //                         .center,
+                                        //                     style: FlutterFlowTheme
+                                        //                             .of(context)
+                                        //                         .headlineSmall
+                                        //                         .override(
+                                        //                           fontFamily:
+                                        //                               'Open Sans',
+                                        //                           color: FlutterFlowTheme.of(
+                                        //                                   context)
+                                        //                               .primaryText,
+                                        //                           fontSize: 20,
+                                        //                           letterSpacing:
+                                        //                               0.0,
+                                        //                           fontWeight:
+                                        //                               FontWeight
+                                        //                                   .w600,
+                                        //                         ),
+                                        //                   ),
+                                        //                 ),
+                                        //               ],
+                                        //             )),
+                                        //       ),
+                                        //     ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -1199,8 +1290,95 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             scrollDirection: Axis.vertical,
                                             itemCount: _isKjopLoading
                                                 ? 1
-                                                : _ordreInfo?.length ?? 1,
+                                                : (_ordreInfo?.length ?? 0) == 0
+                                                    ? 1
+                                                    : _ordreInfo!.length,
                                             itemBuilder: (context, index) {
+                                              if (_kjopEmpty == true) {
+                                                return Container(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                          .width,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height -
+                                                          315,
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0, -1),
+                                                    child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(0, 0,
+                                                                    0, 110),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      70,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/In_no_time-rafiki.png',
+                                                                  width: 276,
+                                                                  height: 215,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          16,
+                                                                          0,
+                                                                          0),
+                                                              child: Text(
+                                                                'Ingen pågående kjøp',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .headlineSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          20,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )),
+                                                  ),
+                                                );
+                                              }
                                               if (FFAppState().harKjopt !=
                                                   true) {
                                                 return Container(
@@ -1821,78 +1999,78 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             },
                                           ),
                                         ),
-                                        if (_model.tabBarCurrentIndex == 2)
-                                          if (_kjopEmpty == true)
-                                            Container(
-                                              width: MediaQuery.sizeOf(context)
-                                                  .width,
-                                              height: MediaQuery.sizeOf(context)
-                                                      .height -
-                                                  315,
-                                              child: Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, -1),
-                                                child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 0, 0, 110),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  70, 0, 0, 0),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                            child: Image.asset(
-                                                              'assets/images/In_no_time-rafiki.png',
-                                                              width: 276,
-                                                              height: 215,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      16, 0, 0),
-                                                          child: Text(
-                                                            'Ingen pågående salg',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .headlineSmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize: 20,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )),
-                                              ),
-                                            ),
+                                        // if (_model.tabBarCurrentIndex == 2)
+                                        //   if (_salgEmpty != true)
+                                        //     Container(
+                                        //       width: MediaQuery.sizeOf(context)
+                                        //           .width,
+                                        //       height: MediaQuery.sizeOf(context)
+                                        //               .height -
+                                        //           315,
+                                        //       child: Align(
+                                        //         alignment:
+                                        //             AlignmentDirectional(0, -1),
+                                        //         child: Padding(
+                                        //             padding:
+                                        //                 EdgeInsetsDirectional
+                                        //                     .fromSTEB(
+                                        //                         0, 0, 0, 110),
+                                        //             child: Column(
+                                        //               mainAxisSize:
+                                        //                   MainAxisSize.max,
+                                        //               mainAxisAlignment:
+                                        //                   MainAxisAlignment
+                                        //                       .center,
+                                        //               children: [
+                                        //                 Padding(
+                                        //                   padding:
+                                        //                       const EdgeInsetsDirectional
+                                        //                           .fromSTEB(
+                                        //                           70, 0, 0, 0),
+                                        //                   child: ClipRRect(
+                                        //                     borderRadius:
+                                        //                         BorderRadius
+                                        //                             .circular(
+                                        //                                 8),
+                                        //                     child: Image.asset(
+                                        //                       'assets/images/In_no_time-rafiki.png',
+                                        //                       width: 276,
+                                        //                       height: 215,
+                                        //                       fit: BoxFit.cover,
+                                        //                     ),
+                                        //                   ),
+                                        //                 ),
+                                        //                 Padding(
+                                        //                   padding:
+                                        //                       EdgeInsetsDirectional
+                                        //                           .fromSTEB(0,
+                                        //                               16, 0, 0),
+                                        //                   child: Text(
+                                        //                     'Ingen pågående salg',
+                                        //                     textAlign: TextAlign
+                                        //                         .center,
+                                        //                     style: FlutterFlowTheme
+                                        //                             .of(context)
+                                        //                         .headlineSmall
+                                        //                         .override(
+                                        //                           fontFamily:
+                                        //                               'Open Sans',
+                                        //                           color: FlutterFlowTheme.of(
+                                        //                                   context)
+                                        //                               .primaryText,
+                                        //                           fontSize: 20,
+                                        //                           letterSpacing:
+                                        //                               0.0,
+                                        //                           fontWeight:
+                                        //                               FontWeight
+                                        //                                   .w600,
+                                        //                         ),
+                                        //                   ),
+                                        //                 ),
+                                        //               ],
+                                        //             )),
+                                        //       ),
+                                        //     ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -1908,8 +2086,95 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             scrollDirection: Axis.vertical,
                                             itemCount: _salgisLoading
                                                 ? 1
-                                                : _salgInfo?.length ?? 1,
+                                                : (_salgInfo?.length ?? 0) == 0
+                                                    ? 1
+                                                    : _salgInfo!.length,
                                             itemBuilder: (context, index) {
+                                              if (_salgEmpty == true) {
+                                                return Container(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                          .width,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height -
+                                                          315,
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0, -1),
+                                                    child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(0, 0,
+                                                                    0, 110),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      70,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/In_no_time-rafiki.png',
+                                                                  width: 276,
+                                                                  height: 215,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          16,
+                                                                          0,
+                                                                          0),
+                                                              child: Text(
+                                                                'Ingen pågående salg',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .headlineSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          20,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )),
+                                                  ),
+                                                );
+                                              }
                                               if (FFAppState().harSolgt !=
                                                   true) {
                                                 return Container(
