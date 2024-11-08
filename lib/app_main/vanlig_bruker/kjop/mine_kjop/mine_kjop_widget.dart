@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
@@ -48,8 +51,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
     super.initState();
     _model = createModel(context, () => MineKjopModel());
     getAll();
-    getKjop();
-    getSalg();
     updateUserStats();
     _model.tabBarController = TabController(
       vsync: this,
@@ -58,78 +59,120 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
     )..addListener(() => safeSetState(() {}));
   }
 
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   Future<void> getAll() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _alleInfo = await ApiKjop.getAll(token);
-      setState(() {
-        if (_alleInfo != null && _alleInfo!.isNotEmpty) {
-          _isloading = false;
-          _allEmpty = false;
-          return;
-        } else {
-          _allEmpty = true;
-          _isloading = false;
-        }
-      });
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        _alleInfo = await ApiKjop.getAll(token);
+
+        setState(() {
+          if (_alleInfo != null && _alleInfo!.isNotEmpty) {
+            _isloading = false;
+            _allEmpty = false;
+
+            _ordreInfo = _alleInfo!
+                .where((order) => order.kjopte == true && _isActive(order))
+                .toList();
+            _kjopEmpty = _ordreInfo!.isEmpty;
+
+            _salgInfo = _alleInfo!
+                .where((order) => order.kjopte == false && _isActive(order))
+                .toList();
+            _salgEmpty = _salgInfo!.isEmpty;
+
+            _isloading = false;
+            _salgisLoading = false;
+            _isKjopLoading = false;
+          } else {
+            _allEmpty = true;
+          }
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
-  Future<void> getKjop() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _ordreInfo = await ApiKjop.getKjop(token);
-      setState(() {
-        if (_ordreInfo != null && _ordreInfo!.isNotEmpty) {
-          _isKjopLoading = false;
-          _kjopEmpty = false;
-          return;
-        } else {
-          _kjopEmpty = true;
-          _isKjopLoading = false;
-        }
-      });
-    }
-  }
-
-  Future<void> getSalg() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      _salgInfo = await ApiKjop.getSalg(token);
-      setState(() {
-        if (_salgInfo != null && _salgInfo!.isNotEmpty) {
-          _salgisLoading = false;
-          _salgEmpty = false;
-          return;
-        } else {
-          _salgEmpty = true;
-          _salgisLoading = false;
-        }
-      });
-    }
+// Helper function to determine if the order is active
+  bool _isActive(OrdreInfo order) {
+    return !(order.hentet == true ||
+        order.trekt == true ||
+        order.avvist == true);
   }
 
   Future<void> updateUserStats() async {
-    String? token = await Securestorage().readToken();
-    if (token == null) {
-      FFAppState().login = false;
-      context.pushNamed('registrer');
-      return;
-    } else {
-      await apicalls.updateUserStats(token);
-      setState(() {});
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        await apicalls.updateUserStats(token);
+        setState(() {});
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -557,8 +600,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                             ).then((value) =>
                                                                 setState(() {
                                                                   getAll();
-                                                                  getKjop();
-                                                                  getSalg();
                                                                 }));
                                                             return;
                                                           }
@@ -606,8 +647,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                             ).then((value) =>
                                                                 setState(() {
                                                                   getAll();
-                                                                  getSalg();
-                                                                  getKjop();
                                                                 }));
                                                             return;
                                                           }
@@ -650,8 +689,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                           ).then((value) =>
                                                               setState(() {
                                                                 getAll();
-                                                                getSalg();
-                                                                getKjop();
                                                               }));
                                                           return;
                                                         }
@@ -802,11 +839,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 6),
                                                                             child:
                                                                                 Text(
-                                                                              alleInfo.kjoper == FFAppState().brukernavn.toLowerCase() ? 'Du trakk budet' : 'Kjøperen trakk budet',
+                                                                              alleInfo.kjopte == true ? 'Du trakk budet' : 'Kjøperen trakk budet',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -827,11 +864,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 6),
                                                                             child:
                                                                                 Text(
-                                                                              alleInfo.kjoper == FFAppState().brukernavn.toLowerCase() ? 'Venter svar fra selgeren' : 'Vurder kjøperen',
+                                                                              alleInfo.kjopte == true ? 'Venter svar fra selgeren' : 'Vurder kjøperen',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -847,11 +884,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 6),
                                                                             child:
                                                                                 Text(
-                                                                              alleInfo.kjoper == FFAppState().brukernavn.toLowerCase() ? 'Selgeren avslo budet' : 'Du avslo budet',
+                                                                              alleInfo.kjopte == true ? 'Selgeren avslo budet' : 'Du avslo budet',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -869,11 +906,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 6),
                                                                             child:
                                                                                 Text(
-                                                                              alleInfo.kjoper == FFAppState().brukernavn.toLowerCase() ? 'Budet er godkjent, kontakt selgeren' : 'Budet er godkjent, kontakt kjøperen',
+                                                                              alleInfo.kjopte == true ? 'Budet er godkjent, kontakt selgeren' : 'Budet er godkjent, kontakt kjøperen',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -889,11 +926,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 6),
                                                                             child:
                                                                                 Text(
-                                                                              alleInfo.kjoper == FFAppState().brukernavn.toLowerCase() ? 'Kjøpet er fullført' : 'Salget er fullført',
+                                                                              alleInfo.kjopte == true ? 'Kjøpet er fullført' : 'Salget er fullført',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1361,8 +1398,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                           ).then((value) =>
                                                               setState(() {
                                                                 getAll();
-                                                                getKjop();
-                                                                getSalg();
                                                               }));
                                                         }
                                                       },
@@ -1516,7 +1551,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1538,7 +1573,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1558,7 +1593,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1583,7 +1618,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1603,7 +1638,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1999,8 +2034,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                           ).then((value) =>
                                                               setState(() {
                                                                 getAll();
-                                                                getSalg();
-                                                                getKjop();
                                                               }));
                                                         }
 
@@ -2037,8 +2070,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                           ).then((value) =>
                                                               setState(() {
                                                                 getAll();
-                                                                getSalg();
-                                                                getKjop();
                                                               }));
                                                         }
                                                       },
@@ -2192,7 +2223,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -2217,7 +2248,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -2237,7 +2268,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -2259,7 +2290,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -2279,7 +2310,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),

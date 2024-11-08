@@ -219,7 +219,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                             'BrukerPage',
                             queryParameters: {
                               'username': serializeParam(
-                                salgInfo.kjoper == FFAppState().brukernavn
+                                salgInfo.kjopte == true
                                     ? salgInfo.selger
                                     : salgInfo.kjoper,
                                 ParamType.String,
@@ -251,7 +251,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(200),
                                   child: Image.network(
-                                    '${ApiConstants.baseUrl}${salgInfo.kjoper == FFAppState().brukernavn ? matvare.profilepic : salgInfo.kjoperProfilePic}',
+                                    '${ApiConstants.baseUrl}${salgInfo.kjopte == true ? matvare.profilepic : salgInfo.kjoperProfilePic}',
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
@@ -271,7 +271,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     9, 0, 0, 0),
                                 child: Text(
-                                  salgInfo.kjoper == FFAppState().brukernavn
+                                  salgInfo.kjopte == true
                                       ? salgInfo.selger
                                       : salgInfo.kjoper,
                                   textAlign: TextAlign.start,
