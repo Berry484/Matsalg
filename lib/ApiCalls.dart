@@ -1478,22 +1478,11 @@ class OrdreInfo {
 class ApiUpdateFood {
   static const String baseUrl = ApiConstants.baseUrl; // Your base URL
 
-  Future<http.Response> updateAntall({
-    required String? antall,
+  Future<http.Response> slettMatvare({
     required int? id,
     String? token, // Add token parameter
   }) async {
-    // Convert the String antall to double
-    double? antallAsDouble;
-    if (antall != null) {
-      try {
-        antallAsDouble = double.parse(antall);
-      } catch (e) {
-        return http.Response("", 400); // Return bad request if parsing fails
-      }
-    }
-
-    final Map<String, dynamic> requestBody = {"antall": antallAsDouble};
+    final Map<String, dynamic> requestBody = {"slettet": true};
 
     // Convert the Map to JSON
     final String jsonBody = jsonEncode(requestBody);
