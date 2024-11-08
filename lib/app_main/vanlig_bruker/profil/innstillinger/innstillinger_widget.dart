@@ -582,10 +582,9 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                       ),
                     ),
                     Align(
-                      alignment: const AlignmentDirectional(0.0, 0.0),
+                      alignment: AlignmentDirectional(0, 0),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 40.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             try {
@@ -601,12 +600,11 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                           },
                           text: 'Logg ut',
                           options: FFButtonOptions(
-                            width: 170.0,
-                            height: 40.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
+                            width: 200,
+                            height: 40,
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                            iconPadding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                             color: FlutterFlowTheme.of(context).primary,
                             textStyle: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -614,16 +612,16 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                   fontFamily: 'Open Sans',
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 16.0,
+                                  fontSize: 16,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
-                            elevation: 2.0,
+                            elevation: 0,
                             borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 0.5,
+                              color: Color(0x5957636C),
+                              width: 1.5,
                             ),
-                            borderRadius: BorderRadius.circular(14.0),
+                            borderRadius: BorderRadius.circular(38),
                           ),
                         ),
                       ),
