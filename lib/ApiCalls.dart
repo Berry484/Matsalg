@@ -1504,6 +1504,33 @@ class ApiUpdateFood {
     return response; // Return the response
   }
 
+  Future<http.Response> merkSolgt({
+    required int? id,
+    required bool solgt,
+    String? token, // Add token parameter
+  }) async {
+    final Map<String, dynamic> requestBody = {"kjopt": solgt, "antall": 0};
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(requestBody);
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null)
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    final response = await http.put(
+      Uri.parse(
+          '$baseUrl/rrh/send/matvarer/$id'), // Endpoint for updating user info
+      headers: headers,
+      body: jsonBody,
+    );
+
+    return response; // Return the response
+  }
+
   Future<http.Response> updateFood({
     String? token,
     required int? id,

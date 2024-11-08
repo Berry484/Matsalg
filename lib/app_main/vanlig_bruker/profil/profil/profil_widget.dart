@@ -7,7 +7,6 @@ import 'package:shimmer/shimmer.dart';
 import '/app_main/vanlig_bruker/custom_nav_bar_user/profil_nav_bar/profil_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'dart:math' as math;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -1191,9 +1190,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   ),
                                                 );
                                               }
-                                              // if (_isempty) {
-                                              //   return IngenVareLagtUtWidget();
-                                              // }
 
                                               final matvare = _matvarer![index];
                                               return Stack(
@@ -1285,7 +1281,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                           .fromSTEB(
                                                                           3,
                                                                           0,
-                                                                          3,
+                                                                          0,
                                                                           0),
                                                                       child:
                                                                           ClipRRect(
@@ -1467,72 +1463,37 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           ),
                                                         ),
                                                       ),
+                                                      // Sale banner
                                                       if (matvare.kjopt == true)
-                                                        Align(
-                                                          alignment:
-                                                              const AlignmentDirectional(
-                                                                  0, -1),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    3, 0, 3, 0),
-                                                            child: Material(
+                                                        Positioned(
+                                                          top:
+                                                              15, // Slight offset from the top edge
+                                                          right:
+                                                              -29, // Fine-tune the positioning (shift it to the right edge)
+                                                          child:
+                                                              Transform.rotate(
+                                                            angle:
+                                                                0.600, // 45-degree angle (approx.)
+                                                            child: Container(
+                                                              width:
+                                                                  140, // Adjusted width to avoid overflow after rotation
+                                                              height: 23,
                                                               color: Colors
-                                                                  .transparent,
-                                                              elevation: 0.3,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            16),
-                                                              ),
-                                                              child: Container(
-                                                                height: 230,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: const Color(
-                                                                      0xA7FFFFFF),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              16),
-                                                                ),
-                                                                child: Align(
-                                                                  alignment:
-                                                                      const AlignmentDirectional(
-                                                                          1,
-                                                                          -1),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            15,
-                                                                            15,
-                                                                            0),
-                                                                    child: Transform
-                                                                        .rotate(
-                                                                      angle: 27 *
-                                                                          (math.pi /
-                                                                              180),
-                                                                      child:
-                                                                          Text(
-                                                                        'Solgt',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: 'Open Sans',
-                                                                              color: FlutterFlowTheme.of(context).alternate,
-                                                                              fontSize: 21,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.bold,
-                                                                            ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
+                                                                  .redAccent,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: const Text(
+                                                                'Utsolgt',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      14, // Font size adjusted to fit the banner
                                                                 ),
                                                               ),
                                                             ),

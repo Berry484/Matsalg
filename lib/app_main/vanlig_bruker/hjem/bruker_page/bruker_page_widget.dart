@@ -1371,7 +1371,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           .fromSTEB(
                                                                           3,
                                                                           0,
-                                                                          3,
+                                                                          0,
                                                                           0),
                                                                   child:
                                                                       ClipRRect(
@@ -1576,6 +1576,38 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                       ),
                                                     ),
                                                   ),
+                                                  if (matvarer.kjopt == true)
+                                                    Positioned(
+                                                      top:
+                                                          15, // Slight offset from the top edge
+                                                      right:
+                                                          -29, // Fine-tune the positioning (shift it to the right edge)
+                                                      child: Transform.rotate(
+                                                        angle:
+                                                            0.600, // 45-degree angle (approx.)
+                                                        child: Container(
+                                                          width:
+                                                              140, // Adjusted width to avoid overflow after rotation
+                                                          height: 23,
+                                                          color:
+                                                              Colors.redAccent,
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: const Text(
+                                                            'Utsolgt',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize:
+                                                                  14, // Font size adjusted to fit the banner
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
                                                 ],
                                               );
                                             },
