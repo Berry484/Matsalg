@@ -88,7 +88,7 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               },
               child: Text(
                 'Bildebibliotek (Bilde)',
-                style: TextStyle(fontSize: 18), // Set the font size here
+                style: TextStyle(fontSize: 19), // Set the font size here
               ),
             ),
             CupertinoActionSheetAction(
@@ -97,7 +97,7 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               },
               child: Text(
                 'Bildebibliotek (Video)',
-                style: TextStyle(fontSize: 18), // Set the font size here
+                style: TextStyle(fontSize: 19), // Set the font size here
               ),
             ),
           ] else if (allowPhoto) ...[
@@ -107,7 +107,7 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               },
               child: Text(
                 'Bildebibliotek',
-                style: TextStyle(fontSize: 18), // Set the font size here
+                style: TextStyle(fontSize: 19), // Set the font size here
               ),
             ),
           ] else if (allowVideo) ...[
@@ -117,7 +117,7 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               },
               child: Text(
                 'Bildebibliotek',
-                style: TextStyle(fontSize: 18), // Set the font size here
+                style: TextStyle(fontSize: 19), // Set the font size here
               ),
             ),
           ],
@@ -128,7 +128,7 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               },
               child: Text(
                 'Kamera',
-                style: TextStyle(fontSize: 18), // Set the font size here
+                style: TextStyle(fontSize: 19), // Set the font size here
               ),
             ),
           ],
@@ -140,7 +140,7 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
           isDefaultAction: true,
           child: Text(
             'Avbryt',
-            style: TextStyle(fontSize: 18), // Set the font size here
+            style: TextStyle(fontSize: 19), // Set the font size here
           ),
         ),
       );
