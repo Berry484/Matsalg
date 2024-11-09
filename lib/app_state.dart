@@ -42,6 +42,9 @@ class FFAppState extends ChangeNotifier {
       _brukernavn = prefs.getString('ff_brukernavn') ?? _brukernavn;
     });
     _safeInit(() {
+      _email = prefs.getString('ff_email') ?? _email;
+    });
+    _safeInit(() {
       _firstname = prefs.getString('ff_firstname') ?? _firstname;
     });
     _safeInit(() {
@@ -129,6 +132,13 @@ class FFAppState extends ChangeNotifier {
   set brukernavn(String value) {
     _brukernavn = value;
     prefs.setString('ff_brukernavn', value);
+  }
+
+  String _email = " ";
+  String get email => _email;
+  set email(String value) {
+    _email = value;
+    prefs.setString('ff_email', value);
   }
 
   String _firstname = " ";

@@ -1,12 +1,17 @@
-import '/app_main/vanlig_bruker/profil/slett_bruker/slett_bruker_widget.dart';
+import 'dart:io';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'profil_rediger_model.dart';
 export 'profil_rediger_model.dart';
 
@@ -19,6 +24,10 @@ class ProfilRedigerWidget extends StatefulWidget {
 
 class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
   late ProfilRedigerModel _model;
+  ApiUserSQL apiUserSQL = ApiUserSQL();
+  ApiMultiplePics apiMultiplePics = ApiMultiplePics();
+
+  bool _isLoading = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -27,14 +36,72 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
     super.initState();
     _model = createModel(context, () => ProfilRedigerModel());
 
-    _model.tlfNummerTextController ??= TextEditingController();
-    _model.tlfNummerFocusNode ??= FocusNode();
+    _model.brukernavnTextController ??= TextEditingController();
+    _model.brukernavnFocusNode ??= FocusNode();
 
-    _model.navnTextController ??= TextEditingController();
-    _model.navnFocusNode ??= FocusNode();
+    _model.fornavnTextController ??= TextEditingController();
+    _model.fornavnFocusNode ??= FocusNode();
+
+    _model.etternavnTextController ??= TextEditingController();
+    _model.etternavnFocusNode ??= FocusNode();
 
     _model.emailTextController ??= TextEditingController();
     _model.emailFocusNode ??= FocusNode();
+
+    _model.bioTextController ??= TextEditingController();
+    _model.bioFocusNode ??= FocusNode();
+
+    _model.brukernavnTextController.text = FFAppState().brukernavn;
+    _model.emailTextController.text = FFAppState().email;
+    _model.fornavnTextController.text = FFAppState().firstname;
+    _model.etternavnTextController.text = FFAppState().lastname;
+    _model.bioTextController.text = FFAppState().bio;
+  }
+
+  void showErrorToast(BuildContext context, String message) {
+    Overlay.of(context);
+    OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -52,9 +119,9 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
+            backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: true,
@@ -69,7 +136,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
               child: Icon(
                 Icons.arrow_back_ios,
                 color: FlutterFlowTheme.of(context).alternate,
-                size: 28.0,
+                size: 28,
               ),
             ),
             title: Text(
@@ -78,14 +145,14 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Montserrat',
                     color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 20.0,
+                    fontSize: 20,
                     letterSpacing: 0.0,
                     fontWeight: FontWeight.w600,
                   ),
             ),
-            actions: const [],
+            actions: [],
             centerTitle: true,
-            elevation: 0.0,
+            elevation: 0,
           ),
           body: SafeArea(
             top: true,
@@ -107,7 +174,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(16, 50, 16, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -117,215 +184,171 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 1.0),
+                              alignment: const AlignmentDirectional(1, -1),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  final selectedMedia =
-                                      await selectMediaWithSourceBottomSheet(
-                                    context: context,
-                                    maxWidth: 120.00,
-                                    maxHeight: 120.00,
-                                    allowPhoto: true,
-                                    textColor: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    pickerFontFamily: 'Open Sans',
-                                  );
-                                  if (selectedMedia != null &&
-                                      selectedMedia.every((m) =>
-                                          validateFileFormat(
-                                              m.storagePath, context))) {
-                                    safeSetState(
-                                        () => _model.isDataUploading = true);
-                                    var selectedUploadedFiles =
-                                        <FFUploadedFile>[];
+                                  try {
+                                    final selectedMedia =
+                                        await selectMediaWithSourceBottomSheet(
+                                      context: context,
+                                      maxWidth: 500.00,
+                                      maxHeight: 500.00,
+                                      allowPhoto: true,
+                                    );
+                                    if (selectedMedia != null &&
+                                        selectedMedia.every((m) =>
+                                            validateFileFormat(
+                                                m.storagePath, context))) {
+                                      safeSetState(
+                                          () => _model.isDataUploading = true);
+                                      var selectedUploadedFiles =
+                                          <FFUploadedFile>[];
 
-                                    try {
-                                      selectedUploadedFiles = selectedMedia
-                                          .map((m) => FFUploadedFile(
-                                                name: m.storagePath
-                                                    .split('/')
-                                                    .last,
-                                                bytes: m.bytes,
-                                                height: m.dimensions?.height,
-                                                width: m.dimensions?.width,
-                                                blurHash: m.blurHash,
-                                              ))
-                                          .toList();
-                                    } finally {
-                                      _model.isDataUploading = false;
+                                      try {
+                                        selectedUploadedFiles = selectedMedia
+                                            .map((m) => FFUploadedFile(
+                                                  name: m.storagePath
+                                                      .split('/')
+                                                      .last,
+                                                  bytes: m.bytes,
+                                                  height: m.dimensions?.height,
+                                                  width: m.dimensions?.width,
+                                                  blurHash: m.blurHash,
+                                                ))
+                                            .toList();
+                                      } finally {
+                                        _model.isDataUploading = false;
+                                      }
+                                      if (selectedUploadedFiles.length ==
+                                          selectedMedia.length) {
+                                        safeSetState(() {
+                                          _model.uploadedLocalFile =
+                                              selectedUploadedFiles.first;
+                                        });
+                                      } else {
+                                        safeSetState(() {});
+                                        return;
+                                      }
                                     }
-                                    if (selectedUploadedFiles.length ==
-                                        selectedMedia.length) {
-                                      safeSetState(() {
-                                        _model.uploadedLocalFile =
-                                            selectedUploadedFiles.first;
-                                      });
-                                    } else {
-                                      safeSetState(() {});
-                                      return;
-                                    }
+                                  } on SocketException {
+                                    showErrorToast(
+                                        context, 'Ingen internettforbindelse');
+                                  } catch (e) {
+                                    showErrorToast(context, 'En feil oppstod');
                                   }
                                 },
-                                child: SizedBox(
-                                  height: 160.0,
+                                child: Container(
+                                  height: 122,
                                   child: Stack(
-                                    alignment: const AlignmentDirectional(0.0, 1.0),
+                                    alignment:
+                                        const AlignmentDirectional(1, -1),
                                     children: [
-                                      Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 1.0),
-                                        child: Text(
-                                          'Rediger profilbilde',
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Open Sans',
-                                                fontSize: 17.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, -0.5),
-                                        child: Container(
-                                          width: 100.0,
-                                          height: 100.0,
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: CachedNetworkImage(
-                                            fadeInDuration:
-                                                const Duration(milliseconds: 0),
-                                            fadeOutDuration:
-                                                const Duration(milliseconds: 0),
-                                            imageUrl:
-                                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/backup-jdlmhw/assets/hq722nopc44s/istockphoto-1409329028-612x612.jpg',
-                                            fit: BoxFit.cover,
-                                            errorWidget:
-                                                (context, error, stackTrace) =>
-                                                    Image.asset(
-                                              'assets/images/error_image.jpg',
+                                      if (_model
+                                          .uploadedLocalFile.bytes!.isEmpty)
+                                        Align(
+                                          alignment: const AlignmentDirectional(
+                                              0, -0.5),
+                                          child: Container(
+                                            width: 100,
+                                            height: 100,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Image.network(
+                                              '${ApiConstants.baseUrl}${FFAppState().profilepic}',
                                               fit: BoxFit.cover,
+                                              width: 100,
+                                              height: 100,
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  Image.asset(
+                                                'assets/images/profile_pic.png',
+                                                width: 100,
+                                                height: 100,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
+                                      if (_model
+                                          .uploadedLocalFile.bytes!.isNotEmpty)
+                                        Align(
+                                          alignment: const AlignmentDirectional(
+                                              0, -0.5),
+                                          child: Container(
+                                            width: 100,
+                                            height: 100,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Image.memory(
+                                              _model.uploadedLocalFile.bytes ??
+                                                  Uint8List.fromList([]),
+                                              width: 100,
+                                              height: 100,
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  Image.asset(
+                                                'assets/images/profile_pic.png',
+                                                width: 100,
+                                                height: 100,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      if ((_model.uploadedLocalFile.bytes
+                                              ?.isNotEmpty ??
+                                          false))
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 5, 0, 0),
+                                          child: FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 100,
+                                            buttonSize: 29,
+                                            fillColor: const Color(0xB3262C2D),
+                                            icon: FaIcon(
+                                              FontAwesomeIcons.times,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              safeSetState(() {
+                                                _model.isDataUploading = false;
+                                                _model.uploadedLocalFile =
+                                                    FFUploadedFile(
+                                                        bytes:
+                                                            Uint8List.fromList(
+                                                                []));
+                                              });
+                                            },
+                                          ),
+                                        ),
                                     ],
                                   ),
                                 ),
                               ),
                             ),
                           ]
-                              .addToStart(const SizedBox(width: 15.0))
-                              .addToEnd(const SizedBox(width: 15.0)),
+                              .addToStart(const SizedBox(width: 15))
+                              .addToEnd(const SizedBox(width: 15)),
                         ),
                       ],
                     ),
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width * 0.9,
-                      height: 45.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primary,
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(20.0),
-                          bottomRight: Radius.circular(20.0),
-                          topLeft: Radius.circular(20.0),
-                          topRight: Radius.circular(20.0),
-                        ),
-                        border: Border.all(
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                15.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              '+47',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  4.0, 0.0, 8.0, 0.0),
-                              child: TextFormField(
-                                controller: _model.tlfNummerTextController,
-                                focusNode: _model.tlfNummerFocusNode,
-                                autofocus: true,
-                                textInputAction: TextInputAction.done,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  focusedErrorBorder: InputBorder.none,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                                maxLength: 8,
-                                maxLengthEnforcement:
-                                    MaxLengthEnforcement.enforced,
-                                buildCounter: (context,
-                                        {required currentLength,
-                                        required isFocused,
-                                        maxLength}) =>
-                                    null,
-                                keyboardType: TextInputType.phone,
-                                validator: _model
-                                    .tlfNummerTextControllerValidator
-                                    .asValidator(context),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp('[0-9]'))
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                        const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,15 +359,92 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: SizedBox(
-                                  width: 0.0,
+                                    0, 40, 0, 0),
+                                child: TextFormField(
+                                  controller: _model.brukernavnTextController,
+                                  focusNode: _model.brukernavnFocusNode,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Brukernavn',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 16,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  validator: _model
+                                      .brukernavnTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 16, 5, 0),
+                                child: Container(
+                                  width: 0,
                                   child: TextFormField(
-                                    controller: _model.navnTextController,
-                                    focusNode: _model.navnFocusNode,
+                                    controller: _model.fornavnTextController,
+                                    focusNode: _model.fornavnFocusNode,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Fullt navn',
+                                      labelText: 'Fornavn',
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
@@ -358,44 +458,39 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                             letterSpacing: 0.0,
                                           ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          width: 1.0,
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
-                                          width: 1.0,
+                                          width: 1,
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
-                                          width: 1.0,
+                                          width: 1,
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
-                                          width: 1.0,
+                                          width: 1,
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
                                       filled: true,
-                                      fillColor:
-                                          FlutterFlowTheme.of(context).primary,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondary,
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -403,11 +498,86 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           fontFamily: 'Open Sans',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
-                                          fontSize: 16.0,
+                                          fontSize: 16,
                                           letterSpacing: 0.0,
                                         ),
                                     validator: _model
-                                        .navnTextControllerValidator
+                                        .fornavnTextControllerValidator
+                                        .asValidator(context),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 16, 0, 0),
+                                child: Container(
+                                  width: 0,
+                                  child: TextFormField(
+                                    controller: _model.etternavnTextController,
+                                    focusNode: _model.etternavnFocusNode,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Etternavn',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondary,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 16,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    validator: _model
+                                        .etternavnTextControllerValidator
                                         .asValidator(context),
                                   ),
                                 ),
@@ -421,7 +591,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
+                                    0, 16, 0, 0),
                                 child: TextFormField(
                                   controller: _model.emailTextController,
                                   focusNode: _model.emailFocusNode,
@@ -441,40 +611,39 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           letterSpacing: 0.0,
                                         ),
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        width: 1.0,
+                                      borderSide: const BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        width: 1.0,
+                                            .secondary,
+                                        width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
                                             FlutterFlowTheme.of(context).error,
-                                        width: 1.0,
+                                        width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
                                             FlutterFlowTheme.of(context).error,
-                                        width: 1.0,
+                                        width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
                                     filled: true,
                                     fillColor:
-                                        FlutterFlowTheme.of(context).primary,
+                                        FlutterFlowTheme.of(context).secondary,
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -482,7 +651,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                         fontFamily: 'Open Sans',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
-                                        fontSize: 16.0,
+                                        fontSize: 16,
                                         letterSpacing: 0.0,
                                       ),
                                   validator: _model.emailTextControllerValidator
@@ -497,95 +666,181 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 40),
+                    child: TextFormField(
+                      controller: _model.bioTextController,
+                      focusNode: _model.bioFocusNode,
+                      textCapitalization: TextCapitalization.sentences,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelStyle:
+                            FlutterFlowTheme.of(context).labelMedium.override(
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 12,
+                                  letterSpacing: 0.0,
+                                ),
+                        hintText: 'Bio',
+                        hintStyle:
+                            FlutterFlowTheme.of(context).labelMedium.override(
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 13,
+                                  letterSpacing: 0.0,
+                                ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primary,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        filled: true,
+                        fillColor: FlutterFlowTheme.of(context).secondary,
+                        contentPadding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Open Sans',
+                            fontSize: 15,
+                            letterSpacing: 0.0,
+                          ),
+                      textAlign: TextAlign.start,
+                      maxLines: 3,
+                      maxLength: 200,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      validator: _model.bioTextControllerValidator
+                          .asValidator(context),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        try {
+                          if (_isLoading) {
+                            return;
+                          }
+                          String? token = await Securestorage().readToken();
+                          if (token == null) {
+                            FFAppState().login = false;
+                            context.pushNamed('registrer');
+                            return;
+                          } else {
+                            String? filelink;
+
+                            // Check if a file is selected and ready to upload
+                            if (_model.uploadedLocalFile.bytes?.isNotEmpty ??
+                                false) {
+                              final List<Uint8List?> filesData = [
+                                _model.uploadedLocalFile.bytes
+                              ];
+
+                              // Upload file and retrieve the list of links
+                              final List<String>? fileLinks =
+                                  await apiMultiplePics.uploadPictures(
+                                      token: token, filesData: filesData);
+
+                              // Set filelink to the first link if available
+                              if (fileLinks!.isNotEmpty) {
+                                filelink = fileLinks.first;
+                              }
+                            }
+
+                            // Only include profilepic in updateUserInfo if filelink is non-null
+                            final response = await apiUserSQL.updateUserInfo(
+                              token: token,
+                              username: _model.brukernavnTextController.text,
+                              firstname: _model.fornavnTextController.text,
+                              lastname: _model.etternavnTextController.text,
+                              email: _model.emailTextController.text,
+                              bio: _model.bioTextController.text,
+                              profilepic:
+                                  filelink, // Null if no file was uploaded
+                            );
+                            if (response.statusCode == 200) {
+                              final decodedResponse = jsonDecode(response.body);
+                              // Update local app state with server response
+                              FFAppState().brukernavn =
+                                  decodedResponse['username'] ?? '';
+                              FFAppState().email =
+                                  decodedResponse['email'] ?? '';
+                              FFAppState().firstname =
+                                  decodedResponse['firstname'] ?? '';
+                              FFAppState().lastname =
+                                  decodedResponse['lastname'] ?? '';
+                              FFAppState().bio = decodedResponse['bio'] ?? '';
+                              FFAppState().profilepic =
+                                  decodedResponse['profilepic'] ?? '';
+
+                              _isLoading = false;
+                              setState(() {});
+                              Navigator.pop(context);
+                              context.pushNamed('Profil');
+                              return;
+                            } else if (response.statusCode == 401) {
+                              _isLoading = false;
+                              FFAppState().login = false;
+                              context.pushNamed('registrer');
+                              return;
+                            }
+                          }
+                        } on SocketException {
+                          _isLoading = false;
+                          showErrorToast(context, 'Ingen internettforbindelse');
+                        } catch (e) {
+                          _isLoading = false;
+                          showErrorToast(context, 'En feil oppstod');
+                        }
+                        _isLoading = false;
                         context.pushNamed('Profil');
                       },
-                      text: 'Lagre endringer',
-                      icon: const FaIcon(
-                        FontAwesomeIcons.check,
-                        size: 20.0,
-                      ),
+                      text: 'Lagre',
                       options: FFButtonOptions(
-                        width: 200.0,
-                        height: 40.0,
+                        width: 150,
+                        height: 40,
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         color: FlutterFlowTheme.of(context).alternate,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Open Sans',
                                   color: FlutterFlowTheme.of(context).primary,
-                                  fontSize: 16.0,
+                                  fontSize: 17,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
-                        elevation: 4.0,
+                        elevation: 0,
                         borderSide: const BorderSide(
                           color: Colors.transparent,
-                          width: 1.0,
+                          width: 1,
                         ),
-                        borderRadius: BorderRadius.circular(24.0),
+                        borderRadius: BorderRadius.circular(24),
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return GestureDetector(
-                                onTap: () => FocusScope.of(context).unfocus(),
-                                child: Padding(
-                                  padding: MediaQuery.viewInsetsOf(context),
-                                  child: const SlettBrukerWidget(),
-                                ),
-                              );
-                            },
-                          ).then((value) => safeSetState(() {}));
-                        },
-                        text: 'Slett bruker',
-                        icon: const Icon(
-                          Icons.delete_sharp,
-                          size: 20.0,
-                        ),
-                        options: FFButtonOptions(
-                          width: 200.0,
-                          height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: const Color(0xFFE13234),
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                          elevation: 3.0,
-                          borderRadius: BorderRadius.circular(38.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 200.0,
-                    decoration: const BoxDecoration(),
-                  ),
-                ],
+                ].addToEnd(const SizedBox(height: 170)),
               ),
             ),
           ),

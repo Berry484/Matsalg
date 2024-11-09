@@ -221,6 +221,49 @@ class ApiUserSQL {
     return response; // Return the response
   }
 
+  Future<http.Response> updateUserInfo({
+    required String username,
+    required String bio,
+    required String firstname,
+    required String lastname,
+    required String email,
+    String? profilepic,
+    String? token,
+  }) async {
+    // Create the user info data as a Map
+    final Map<String, dynamic> userInfoData = {
+      "username": username,
+      "firstname": firstname,
+      "lastname": lastname,
+      "email": email,
+      "bio": bio,
+    };
+
+    // Only add profilepic if it's not null
+    if (profilepic != null) {
+      userInfoData["profilepic"] = profilepic;
+    }
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(userInfoData);
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    // Send the POST request
+    final response = await http.post(
+      Uri.parse(
+          '$baseUrl/rrh/brukere'), // Endpoint for creating or updating user info
+      headers: headers,
+      body: jsonBody,
+    );
+
+    return response; // Return the response
+  }
+
   Future<http.Response> updatePosisjon({
     String? token, // Add token parameter
   }) async {
@@ -454,7 +497,6 @@ class ApiMultiplePics {
 
       // Get the response body as a string
       var responseString = await http.Response.fromStream(response);
-
       // Check if the request was successful (status code 200)
       if (response.statusCode == 200) {
         // Parse the response body as a List<dynamic>
@@ -464,7 +506,6 @@ class ApiMultiplePics {
         List<String> fileLinks = responseJson.map((file) {
           return file['fileLink'] as String;
         }).toList();
-
         return fileLinks; // Return the list of file links
       } else {
         return null; // Or handle the error as needed

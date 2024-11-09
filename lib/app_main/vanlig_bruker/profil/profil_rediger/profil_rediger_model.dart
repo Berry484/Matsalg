@@ -9,31 +9,45 @@ class ProfilRedigerModel extends FlutterFlowModel<ProfilRedigerWidget> {
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
-  // State field(s) for TlfNummer widget.
-  FocusNode? tlfNummerFocusNode;
-  TextEditingController? tlfNummerTextController;
-  String? Function(BuildContext, String?)? tlfNummerTextControllerValidator;
-  // State field(s) for Navn widget.
-  FocusNode? navnFocusNode;
-  TextEditingController? navnTextController;
-  String? Function(BuildContext, String?)? navnTextControllerValidator;
-  // State field(s) for Email widget.
+  // State field(s) for brukernavn widget.
+  FocusNode? brukernavnFocusNode;
+  TextEditingController? brukernavnTextController;
+  String? Function(BuildContext, String?)? brukernavnTextControllerValidator;
+  // State field(s) for fornavn widget.
+  FocusNode? fornavnFocusNode;
+  TextEditingController? fornavnTextController;
+  String? Function(BuildContext, String?)? fornavnTextControllerValidator;
+  // State field(s) for etternavn widget.
+  FocusNode? etternavnFocusNode;
+  TextEditingController? etternavnTextController;
+  String? Function(BuildContext, String?)? etternavnTextControllerValidator;
+  // State field(s) for email widget.
   FocusNode? emailFocusNode;
   TextEditingController? emailTextController;
   String? Function(BuildContext, String?)? emailTextControllerValidator;
+  // State field(s) for bio widget.
+  FocusNode? bioFocusNode;
+  TextEditingController? bioTextController;
+  String? Function(BuildContext, String?)? bioTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    tlfNummerFocusNode?.dispose();
-    tlfNummerTextController?.dispose();
+    brukernavnFocusNode?.dispose();
+    brukernavnTextController?.dispose();
 
-    navnFocusNode?.dispose();
-    navnTextController?.dispose();
+    fornavnFocusNode?.dispose();
+    fornavnTextController?.dispose();
+
+    etternavnFocusNode?.dispose();
+    etternavnTextController?.dispose();
 
     emailFocusNode?.dispose();
     emailTextController?.dispose();
+
+    bioFocusNode?.dispose();
+    bioTextController?.dispose();
   }
 }

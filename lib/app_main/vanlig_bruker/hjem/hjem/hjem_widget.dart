@@ -236,6 +236,7 @@ class _HjemWidgetState extends State<HjemWidget> {
           FFAppState().brukerLat = decodedResponse['lat'] ?? 59.9138688;
           FFAppState().brukerLng = decodedResponse['lng'] ?? 10.7522454;
           FFAppState().brukernavn = decodedResponse['brukernavn'] ?? '';
+          FFAppState().email = decodedResponse['email'] ?? '';
           FFAppState().firstname = decodedResponse['firstname'] ?? '';
           FFAppState().lastname = decodedResponse['lastname'] ?? '';
           FFAppState().brukernavn = decodedResponse['username'] ?? '';
