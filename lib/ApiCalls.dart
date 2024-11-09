@@ -232,7 +232,6 @@ class ApiUserSQL {
   }) async {
     // Create the user info data as a Map
     final Map<String, dynamic> userInfoData = {
-      "username": username,
       "firstname": firstname,
       "lastname": lastname,
       "email": email,

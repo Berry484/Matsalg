@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -26,6 +27,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
   late ProfilRedigerModel _model;
   ApiUserSQL apiUserSQL = ApiUserSQL();
   ApiMultiplePics apiMultiplePics = ApiMultiplePics();
+  ApiCalls apiCalls = ApiCalls();
 
   bool _isLoading = false;
 
@@ -114,7 +116,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -348,88 +350,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+                        const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 16),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 40, 0, 0),
-                                child: TextFormField(
-                                  controller: _model.brukernavnTextController,
-                                  focusNode: _model.brukernavnFocusNode,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Brukernavn',
-                                    labelStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondary,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    filled: true,
-                                    fillColor:
-                                        FlutterFlowTheme.of(context).secondary,
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 16,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  validator: _model
-                                      .brukernavnTextControllerValidator
-                                      .asValidator(context),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -739,6 +664,36 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                         try {
                           if (_isLoading) {
                             return;
+                          }
+                          if (_model.emailTextController.text !=
+                              FFAppState().email) {
+                            final response = await apiCalls.checkEmailTaken(
+                                _model.emailTextController.text);
+                            if (response.statusCode != 200) {
+                              showCupertinoDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CupertinoAlertDialog(
+                                    title: const Text('E-posten er opptatt'),
+                                    content: const Text(
+                                        'Denne e-posten er allerede i bruk av en annen bruker.'),
+                                    actions: <Widget>[
+                                      CupertinoDialogAction(
+                                        onPressed: () async {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          'Ok',
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              _isLoading = false;
+                              return;
+                            }
                           }
                           String? token = await Securestorage().readToken();
                           if (token == null) {
