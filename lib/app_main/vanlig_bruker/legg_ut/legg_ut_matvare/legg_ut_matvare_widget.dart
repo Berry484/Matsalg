@@ -3933,23 +3933,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               setState(() {});
                                                               _leggUtLoading =
                                                                   false;
-                                                              context.goNamed(
-                                                                'Hjem',
-                                                                extra: <String,
-                                                                    dynamic>{
-                                                                  kTransitionInfoKey:
-                                                                      const TransitionInfo(
-                                                                    hasTransition:
-                                                                        true,
-                                                                    transitionType:
-                                                                        PageTransitionType
-                                                                            .fade,
-                                                                    duration: Duration(
-                                                                        milliseconds:
-                                                                            0),
-                                                                  ),
-                                                                },
-                                                              );
+                                                              setState(() {});
+                                                              Navigator.pop(
+                                                                  context);
+                                                              context.pushNamed(
+                                                                  'Profil');
                                                             } else {
                                                               _leggUtLoading =
                                                                   false;

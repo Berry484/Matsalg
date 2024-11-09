@@ -27,7 +27,7 @@ export '/app_main/registrer/registrer_bonde/registrer_bonde_widget.dart'
     show RegistrerBondeWidget;
 export '/app_main/registrer/bruker_onboarding/bruker_onboarding_widget.dart'
     show BrukerOnboardingWidget;
-export '/app_main/vanlig_bruker/hjem/bonde_gard_page/bonde_gard_page_widget.dart'
+export 'app_main/vanlig_bruker/hjem/kategori/bonde_gard_page_widget.dart'
     show BondeGardPageWidget;
 export '/app_main/vanlig_bruker/kjop/legg_igjen_rating/legg_igjen_rating_widget.dart'
     show LeggIgjenRatingWidget;

@@ -669,9 +669,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                     (BuildContext context) {
                                                   return CupertinoActionSheet(
                                                     actions: <Widget>[
-                                                      // First action: Rediger annonse (Edit Ad)
                                                       CupertinoActionSheetAction(
                                                         onPressed: () {
+                                                          setState(() {});
                                                           Navigator.pop(
                                                               context);
                                                           context.pushNamed(
