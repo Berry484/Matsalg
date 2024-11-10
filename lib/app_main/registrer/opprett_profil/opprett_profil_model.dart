@@ -39,10 +39,6 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
       return 'Ugyldig fornavn';
     }
 
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
-    }
-
     return null;
   }
 
@@ -53,10 +49,6 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
   String? _etternavnTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Ugyldig etternavn';
-    }
-
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
     }
 
     return null;
@@ -88,7 +80,7 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
     }
 
     if (val.length < 7) {
-      return 'Requires at least 7 characters.';
+      return 'Krever minst 7 tegn';
     }
 
     return null;

@@ -78,7 +78,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -946,7 +946,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                             color: Colors.transparent,
                             width: 1,
                           ),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(15),
                         ),
                       ),
                     ),

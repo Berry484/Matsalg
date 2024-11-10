@@ -64,8 +64,8 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
       height: 292,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             blurRadius: 4,
             color: Color(0x25090F13),
             offset: Offset(
@@ -344,6 +344,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                 final response = await apiCalls.checkPhoneTaken(
                                     _model.telefonnummerTextController.text);
                                 if (response.statusCode == 200) {
+                                  Navigator.pop(context);
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
@@ -418,7 +419,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                 color: Color(0x5957636C),
                                 width: 1.5,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                           ),
                         ),

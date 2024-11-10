@@ -429,7 +429,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 color: Color(0x5957636C),
                                 width: 1.5,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                           ),
                         ),
