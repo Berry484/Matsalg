@@ -293,18 +293,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'OpprettProfil',
           path: '/opprettProfil',
           builder: (context, params) => OpprettProfilWidget(
-            bonde: params.getParam(
-              'bonde',
-              ParamType.bool,
-            ),
-            email: params.getParam(
-              'email',
-              ParamType.String,
-            ),
-            password: params.getParam(
-              'password',
-              ParamType.String,
-            ),
             phone: params.getParam(
               'phone',
               ParamType.String,

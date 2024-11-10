@@ -2118,7 +2118,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     labelColor:
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .alternate,
+                                                            .primaryText,
                                                     unselectedLabelColor:
                                                         FlutterFlowTheme.of(
                                                                 context)

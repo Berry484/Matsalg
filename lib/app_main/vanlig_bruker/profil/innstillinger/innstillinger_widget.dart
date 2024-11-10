@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -588,9 +590,48 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                         child: FFButtonWidget(
                           onPressed: () async {
                             try {
-                              FFAppState().login = false;
-                              FFAppState().startet = false;
-                              context.pushNamed('registrer');
+                              showCupertinoDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CupertinoAlertDialog(
+                                    title: const Text('Logg ut?'),
+                                    actions: <Widget>[
+                                      CupertinoDialogAction(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          'Nei, avbryt',
+                                          style: TextStyle(
+                                              color: Colors
+                                                  .blue), // Blue for 'Nei'
+                                        ),
+                                      ),
+                                      CupertinoDialogAction(
+                                        onPressed: () async {
+                                          try {
+                                            FFAppState().login = false;
+                                            FFAppState().startet = false;
+                                            context.pushNamed('registrer');
+                                          } on SocketException {
+                                            showErrorToast(context,
+                                                'Ingen internettforbindelse');
+                                          } catch (e) {
+                                            showErrorToast(
+                                                context, 'En feil oppstod');
+                                          }
+                                        },
+                                        child: const Text(
+                                          'Ja, logg ut',
+                                          style: TextStyle(
+                                              color:
+                                                  Colors.red), // Red for 'Ja'
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             } on SocketException {
                               showErrorToast(
                                   context, 'Ingen internettforbindelse');

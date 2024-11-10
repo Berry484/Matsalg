@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'registrer_widget.dart' show RegistrerWidget;
+import 'velg_ny_widget.dart' show VelgNyWidget;
 import 'package:flutter/material.dart';
 
-class RegistrerModel extends FlutterFlowModel<RegistrerWidget> {
+class VelgNyModel extends FlutterFlowModel<VelgNyWidget> {
   @override
   void initState(BuildContext context) {}
 

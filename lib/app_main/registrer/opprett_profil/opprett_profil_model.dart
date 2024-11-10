@@ -20,8 +20,12 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
       return 'Brukernavn  opptatt eller ugyldig';
     }
 
+    if (val.length < 4) {
+      return 'Brukernavnet må minst være 4 tegn';
+    }
+
     if (!RegExp(kTextValidatorUsernameRegex).hasMatch(val)) {
-      return 'Brukernavn ugyldig';
+      return 'Brukernavnet er ugyldig';
     }
     return null;
   }
@@ -32,12 +36,13 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
   String? Function(BuildContext, String?)? fornavnTextControllerValidator;
   String? _fornavnTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
-    }
-
-    if (!RegExp(kTextValidatorUsernameRegex).hasMatch(val)) {
       return 'Ugyldig fornavn';
     }
+
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
+    }
+
     return null;
   }
 
@@ -47,26 +52,56 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
   String? Function(BuildContext, String?)? etternavnTextControllerValidator;
   String? _etternavnTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Felt må fylles ut';
+      return 'Ugyldig etternavn';
     }
 
-    if (!RegExp(kTextValidatorUsernameRegex).hasMatch(val)) {
-      return 'Ugyldig etternavn';
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
     }
 
     return null;
   }
 
-  // State field(s) for Bio widget.
-  FocusNode? bioFocusNode;
-  TextEditingController? bioTextController;
-  String? Function(BuildContext, String?)? bioTextControllerValidator;
+  // State field(s) for email widget.
+  FocusNode? emailFocusNode;
+  TextEditingController? emailTextController;
+  String? Function(BuildContext, String?)? emailTextControllerValidator;
+  String? _emailTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'E-post  opptatt eller ugyldig';
+    }
+
+    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+      return 'E-post adressen er ugyldig';
+    }
+    return null;
+  }
+
+  // State field(s) for Passord widget.
+  FocusNode? passordFocusNode;
+  TextEditingController? passordTextController;
+  late bool passordVisibility;
+  String? Function(BuildContext, String?)? passordTextControllerValidator;
+  String? _passordTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Passordet må minst være 7 tegn';
+    }
+
+    if (val.length < 7) {
+      return 'Requires at least 7 characters.';
+    }
+
+    return null;
+  }
 
   @override
   void initState(BuildContext context) {
     brukernavnTextControllerValidator = _brukernavnTextControllerValidator;
     fornavnTextControllerValidator = _fornavnTextControllerValidator;
     etternavnTextControllerValidator = _etternavnTextControllerValidator;
+    emailTextControllerValidator = _emailTextControllerValidator;
+    passordVisibility = false;
+    passordTextControllerValidator = _passordTextControllerValidator;
   }
 
   @override
@@ -80,7 +115,10 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
     etternavnFocusNode?.dispose();
     etternavnTextController?.dispose();
 
-    bioFocusNode?.dispose();
-    bioTextController?.dispose();
+    emailFocusNode?.dispose();
+    emailTextController?.dispose();
+
+    passordFocusNode?.dispose();
+    passordTextController?.dispose();
   }
 }
