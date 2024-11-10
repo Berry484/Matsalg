@@ -897,7 +897,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                             }
                             if (response.statusCode == 200) {
                               _isloading = false;
-                              context.goNamed('BrukerOnboarding');
+                              context.goNamed('Hjem');
                             }
                           } catch (e) {
                             _isloading = false;
