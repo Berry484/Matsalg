@@ -160,38 +160,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const SolgteMatvarerWidget(),
         ),
         FFRoute(
-          name: 'BekreftTLF',
-          path: '/bekreftTLF',
-          builder: (context, params) => BekreftTLFWidget(
-            bonde: params.getParam(
-              'bonde',
-              ParamType.bool,
-            ),
-            email: params.getParam(
-              'email',
-              ParamType.String,
-            ),
-            password: params.getParam(
-              'password',
-              ParamType.String,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: 'RegistrerBonde',
-          path: '/registrerBonde',
-          builder: (context, params) => RegistrerBondeWidget(
-            email: params.getParam(
-              'email',
-              ParamType.String,
-            ),
-            password: params.getParam(
-              'password',
-              ParamType.String,
-            ),
-          ),
-        ),
-        FFRoute(
           name: 'BrukerOnboarding',
           path: '/brukerOnboarding',
           builder: (context, params) => const BrukerOnboardingWidget(),
@@ -268,28 +236,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'BekreftOTP',
-          path: '/bekreftOTP',
-          builder: (context, params) => BekreftOTPWidget(
-            bonde: params.getParam(
-              'bonde',
-              ParamType.bool,
-            ),
-            email: params.getParam(
-              'email',
-              ParamType.String,
-            ),
-            password: params.getParam(
-              'password',
-              ParamType.String,
-            ),
-            phone: params.getParam(
-              'phone',
-              ParamType.String,
-            ),
-          ),
-        ),
-        FFRoute(
           name: 'OpprettProfil',
           path: '/opprettProfil',
           builder: (context, params) => OpprettProfilWidget(
@@ -302,11 +248,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.LatLng,
             ),
           ),
-        ),
-        FFRoute(
-          name: 'BondeOnboarding',
-          path: '/bondeOnboarding',
-          builder: (context, params) => const BondeOnboardingWidget(),
         ),
         FFRoute(
           name: 'KjopDetaljVentende',

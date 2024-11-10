@@ -57,7 +57,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.asset(
@@ -72,16 +72,16 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
               ),
               Expanded(
                 child: Align(
-                  alignment: AlignmentDirectional(0, 1),
+                  alignment: const AlignmentDirectional(0, 1),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 50),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 50),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(40, 0, 40, 20),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              40, 0, 40, 20),
                           child: FFButtonWidget(
                             onPressed: () async {
                               await showModalBottomSheet(
@@ -95,7 +95,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                         FocusScope.of(context).unfocus(),
                                     child: Padding(
                                       padding: MediaQuery.viewInsetsOf(context),
-                                      child: VelgNyWidget(),
+                                      child: const VelgNyWidget(),
                                     ),
                                   );
                                 },
@@ -105,10 +105,10 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 45,
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                              iconPadding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16, 0, 16, 0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
                               color: FlutterFlowTheme.of(context).alternate,
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
@@ -125,24 +125,24 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(40, 0, 40, 20),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              40, 0, 40, 20),
                           child: FFButtonWidget(
                             onPressed: () {
                               print('Button pressed ...');
                             },
                             text: 'Fortsett med apple',
-                            icon: FaIcon(
+                            icon: const FaIcon(
                               FontAwesomeIcons.apple,
                               size: 20,
                             ),
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 45,
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                              iconPadding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16, 0, 16, 0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
                               color: Colors.black,
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
@@ -159,23 +159,24 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(40, 0, 40, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              40, 0, 40, 0),
                           child: FFButtonWidget(
                             onPressed: () {
                               print('Button pressed ...');
                             },
                             text: 'Fortsett med facebook',
-                            icon: FaIcon(
+                            icon: const FaIcon(
                               FontAwesomeIcons.facebook,
                               size: 20,
                             ),
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 45,
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                              iconPadding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16, 0, 16, 0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
@@ -187,7 +188,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                     fontWeight: FontWeight.bold,
                                   ),
                               elevation: 0,
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x5957636C),
                                 width: 1.5,
                               ),

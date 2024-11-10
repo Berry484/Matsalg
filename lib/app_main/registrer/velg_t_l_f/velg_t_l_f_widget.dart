@@ -313,6 +313,12 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   textAlign: TextAlign.start,
+                                  maxLength: 8,
+                                  buildCounter: (context,
+                                          {required currentLength,
+                                          required isFocused,
+                                          maxLength}) =>
+                                      null,
                                   keyboardType: TextInputType.phone,
                                   validator: _model
                                       .telefonnummerTextControllerValidator

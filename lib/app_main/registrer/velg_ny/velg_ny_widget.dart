@@ -3,7 +3,6 @@ import '/app_main/registrer/velg_t_l_f/velg_t_l_f_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'velg_ny_model.dart';
 export 'velg_ny_model.dart';
@@ -165,11 +164,11 @@ class _VelgNyWidgetState extends State<VelgNyWidget> {
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 0, 0, 15),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.userPlus,
+                                      child: Icon(
+                                        Icons.person_add_alt,
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
-                                        size: 55,
+                                        size: 70,
                                       ),
                                     ),
                                     Text(
@@ -217,11 +216,11 @@ class _VelgNyWidgetState extends State<VelgNyWidget> {
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 0, 0, 15),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.signInAlt,
+                                      child: Icon(
+                                        Icons.login,
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
-                                        size: 55,
+                                        size: 70,
                                       ),
                                     ),
                                     Text(

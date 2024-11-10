@@ -21,10 +21,6 @@ export '/app_main/vanlig_bruker/hjem/mat_detalj_bondegard/mat_detalj_bondegard_w
     show MatDetaljBondegardWidget;
 export '/app_main/vanlig_bruker/profil/solgte_matvarer/solgte_matvarer_widget.dart'
     show SolgteMatvarerWidget;
-export '/app_main/registrer/bekreft_t_l_f/bekreft_t_l_f_widget.dart'
-    show BekreftTLFWidget;
-export '/app_main/registrer/registrer_bonde/registrer_bonde_widget.dart'
-    show RegistrerBondeWidget;
 export '/app_main/registrer/bruker_onboarding/bruker_onboarding_widget.dart'
     show BrukerOnboardingWidget;
 export 'app_main/vanlig_bruker/hjem/kategori/bonde_gard_page_widget.dart'
@@ -39,12 +35,8 @@ export '/app_main/vanlig_bruker/hjem/folgere/folgere_widget.dart'
     show FolgereWidget;
 export '/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart'
     show BrukerRatingWidget;
-export '/app_main/registrer/bekreft_o_t_p/bekreft_o_t_p_widget.dart'
-    show BekreftOTPWidget;
 export '/app_main/registrer/opprett_profil/opprett_profil_widget.dart'
     show OpprettProfilWidget;
-export '/app_main/registrer/bonde_onboarding/bonde_onboarding_widget.dart'
-    show BondeOnboardingWidget;
 export '/app_main/vanlig_bruker/kjop/kjop_detalj_ventende/kjop_detalj_ventende_widget.dart'
     show KjopDetaljVentendeWidget;
 export '/app_main/vanlig_bruker/hjem/betaling/betaling_widget.dart'
