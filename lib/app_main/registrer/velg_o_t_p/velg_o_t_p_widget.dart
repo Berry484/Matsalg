@@ -303,9 +303,9 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                   .override(
                                     fontFamily: 'Open Sans',
                                     color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 17,
+                                    fontSize: 18,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w600,
                                   ),
                               elevation: 0,
                               borderSide: const BorderSide(

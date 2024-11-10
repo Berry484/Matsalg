@@ -160,6 +160,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
             if (widget.mine != true) {
               _ratingisLoading = true;
             }
+            _ratingisLoading = false;
           }
         });
       }
@@ -565,7 +566,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .bold,
+                                                                          .w600,
                                                                 ),
                                                       ),
                                                     ),
@@ -978,7 +979,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .bold,
+                                                                          .w600,
                                                                 ),
                                                       ),
                                                     ),
@@ -1391,7 +1392,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .bold,
+                                                                          .w600,
                                                                 ),
                                                       ),
                                                     ),

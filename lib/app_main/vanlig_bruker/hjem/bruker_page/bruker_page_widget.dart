@@ -1115,6 +1115,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                             ),
                                                     indicatorColor:
                                                         const Color(0x00F6F6F6),
+                                                    dividerColor:
+                                                        const Color.fromARGB(
+                                                            10, 0, 0, 0),
                                                     indicatorWeight: 1,
                                                     tabs: [
                                                       Row(

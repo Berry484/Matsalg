@@ -2,9 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/SecureStorage.dart';
-
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -346,30 +343,15 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                   try {
                                     LatLng? location;
 
-                                    // Attempt to get the current user's location
                                     location = await getCurrentUserLocation(
                                         defaultLocation:
                                             const LatLng(0.0, 0.0));
 
-                                    // Check if location is successfully retrieved
-
                                     selectedLocation = location;
-                                    FFAppState().brukerLat = location.latitude;
-                                    FFAppState().brukerLng = location.longitude;
-
-                                    // Retrieve the token
-                                    String? token =
-                                        await Securestorage().readToken();
-
-                                    // If no token is found, redirect to registration
-                                    if (token == null) {
-                                      FFAppState().login = false;
-                                      context.pushNamed('registrer');
-                                      return;
-                                    } else {
-                                      final apiUserSQL = ApiUserSQL();
-                                      await apiUserSQL.updatePosisjon(
-                                          token: token);
+                                    if (location != const LatLng(0.0, 0.0)) {
+                                      HapticFeedback.heavyImpact();
+                                      FocusScope.of(context).unfocus();
+                                      Navigator.pop(context, location);
                                     }
                                   } on SocketException {
                                     showErrorToast(
@@ -389,7 +371,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                           .alternate,
                                       size: 25.0,
                                     ),
-                                    SizedBox(width: 8.0),
+                                    const SizedBox(width: 8.0),
                                     Text(
                                       'Bruk min nåværende posisjon',
                                       style: FlutterFlowTheme.of(context)

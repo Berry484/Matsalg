@@ -1133,8 +1133,8 @@ class ApiKjop {
 
   Future<http.Response> kjopMat({
     required int matId,
-    required int price,
-    required int antall,
+    required double price,
+    required double antall,
     required String token,
   }) async {
     // Base URL for the API

@@ -925,8 +925,16 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                           0.0,
                                                                     ),
                                                             indicatorColor:
-                                                                const Color(
-                                                                    0x00F6F6F6),
+                                                                const Color
+                                                                    .fromARGB(
+                                                                    0, 0, 0, 0),
+                                                            dividerColor:
+                                                                const Color
+                                                                    .fromARGB(
+                                                                    10,
+                                                                    0,
+                                                                    0,
+                                                                    0),
                                                             indicatorWeight: 1,
                                                             tabs: [
                                                               Row(
@@ -1534,7 +1542,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                 ),
                                                 const SizedBox(height: 16),
                                                 Text(
-                                                  'Du kan se mat du har likt her. Bare du kan se disse',
+                                                  'Du kan se mat du har likt her.',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyLarge

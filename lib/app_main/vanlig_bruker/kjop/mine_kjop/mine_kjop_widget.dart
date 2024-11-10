@@ -140,6 +140,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
             _salgisLoading = false;
             _isKjopLoading = false;
           } else {
+            _kjopEmpty = true;
+            _salgEmpty = true;
             _allEmpty = true;
           }
         });

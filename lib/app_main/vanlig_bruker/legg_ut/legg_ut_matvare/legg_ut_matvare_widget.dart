@@ -1795,40 +1795,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   .asValidator(context),
                                             ),
                                           ),
-                                          // const Divider(
-                                          //   thickness: 1.0,
-                                          //   indent: 30.0,
-                                          //   endIndent: 30.0,
-                                          //   color: Color(0x62757575),
-                                          // ),
-                                          // Align(
-                                          //   alignment:
-                                          //       const AlignmentDirectional(
-                                          //           -1.0, 0.0),
-                                          //   child: Padding(
-                                          //     padding:
-                                          //         const EdgeInsetsDirectional
-                                          //             .fromSTEB(
-                                          //             20.0, 50.0, 0.0, 10.0),
-                                          //     child: Text(
-                                          //       'Velg Kategori',
-                                          //       style: FlutterFlowTheme.of(
-                                          //               context)
-                                          //           .bodyMedium
-                                          //           .override(
-                                          //             fontFamily: 'Open Sans',
-                                          //             color:
-                                          //                 FlutterFlowTheme.of(
-                                          //                         context)
-                                          //                     .primaryText,
-                                          //             fontSize: 17.0,
-                                          //             letterSpacing: 0.0,
-                                          //             fontWeight:
-                                          //                 FontWeight.bold,
-                                          //           ),
-                                          //     ),
-                                          //   ),
-                                          // ),
                                           Align(
                                             alignment:
                                                 const AlignmentDirectional(
@@ -2854,51 +2820,33 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   required isFocused,
                                                                   maxLength}) =>
                                                               null,
-                                                          keyboardType: _model
-                                                                      .tabBarController!
-                                                                      .index !=
-                                                                  0
-                                                              ? const TextInputType
+                                                          keyboardType:
+                                                              const TextInputType
                                                                   .numberWithOptions(
                                                                   decimal:
-                                                                      true) // Decimal keyboard
-                                                              : TextInputType
-                                                                  .number, // Regular number keyboard (no decimal)
-
+                                                                      true),
                                                           validator: _model
                                                               .antallStkTextControllerValidator
                                                               .asValidator(
                                                                   context),
                                                           inputFormatters: [
-                                                            _model.tabBarController!
-                                                                        .index !=
-                                                                    0
-                                                                ? DecimalInputFormatter() // Custom formatter for numbers and one dot
-                                                                : FilteringTextInputFormatter
-                                                                    .allow(RegExp(
-                                                                        r'[0-9]')),
+                                                            FilteringTextInputFormatter
+                                                                .allow(RegExp(
+                                                                    r'^[0-9]*[.,]?[0-9]*$')), // Allows numbers and a single dot or comma
                                                             TextInputFormatter
                                                                 .withFunction(
                                                                     (oldValue,
                                                                         newValue) {
-                                                              // Check if newValue contains a comma and replace with dot
-                                                              if (newValue.text
-                                                                  .contains(
-                                                                      ',')) {
-                                                                // Replace comma with dot
-                                                                return TextEditingValue(
-                                                                  text: newValue
-                                                                      .text
-                                                                      .replaceAll(
-                                                                          ',',
-                                                                          '.'), // Replace comma with dot
-                                                                  selection: TextSelection.collapsed(
-                                                                      offset: newValue
-                                                                          .selection
-                                                                          .end),
-                                                                );
-                                                              }
-                                                              return newValue; // Otherwise return the unmodified value
+                                                              // Replace comma with dot immediately for consistent parsing
+                                                              return TextEditingValue(
+                                                                text: newValue
+                                                                    .text
+                                                                    .replaceAll(
+                                                                        ',',
+                                                                        '.'),
+                                                                selection: newValue
+                                                                    .selection,
+                                                              );
                                                             }),
                                                           ],
                                                         ),

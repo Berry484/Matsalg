@@ -165,7 +165,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                   0, 16, 0, 0),
                               child: Container(
                                 width: 70,
-                                height: 50,
+                                height: 55,
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(0),
@@ -416,9 +416,9 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                   .override(
                                     fontFamily: 'Open Sans',
                                     color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 17,
+                                    fontSize: 18,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w600,
                                   ),
                               elevation: 0,
                               borderSide: const BorderSide(

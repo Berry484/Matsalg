@@ -167,7 +167,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                   .labelMedium
                                   .override(
                                     fontFamily: 'Open Sans',
-                                    fontSize: 14,
+                                    fontSize: 15,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -235,7 +235,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                   .labelMedium
                                   .override(
                                     fontFamily: 'Open Sans',
-                                    fontSize: 14,
+                                    fontSize: 15,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -318,7 +318,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                               _isloading = true;
                               try {
                                 FFAppState().startet = false;
-                                final token = await apiGetToken.getAuthToken(
+                                String? token = await apiGetToken.getAuthToken(
                                     username: _model.emailTextController.text,
                                     phoneNumber:
                                         _model.emailTextController.text,
@@ -326,9 +326,11 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                         _model.passordTextController.text);
 
                                 if (token != null) {
-                                  secureStorage.writeToken(token);
+                                  await secureStorage.writeToken(token);
+
                                   final response = await apiCalls
                                       .checkUserInfo(Securestorage.authToken);
+
                                   if (response.statusCode == 200) {
                                     final decodedResponse =
                                         jsonDecode(response.body);
@@ -338,13 +340,12 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                         decodedResponse['firstname'] ?? '';
                                     FFAppState().lastname =
                                         decodedResponse['lastname'] ?? '';
-                                    FFAppState().brukernavn =
-                                        decodedResponse['brukernavn'] ?? '';
                                     FFAppState().bio =
                                         decodedResponse['bio'] ?? '';
                                     FFAppState().profilepic =
                                         decodedResponse['profile_picture'] ??
                                             '';
+
                                     _isloading = false;
                                     context.pushNamed('Hjem');
                                     FFAppState().login = true;
@@ -408,7 +409,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                             },
                             text: 'Logg inn',
                             options: FFButtonOptions(
-                              width: 150,
+                              width: double.infinity,
                               height: 40,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
@@ -441,7 +442,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     color: Colors.black,
                                     fontSize: 15,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w600,
                                   ),
                         ),
                       ],

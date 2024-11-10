@@ -348,14 +348,13 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                           },
                                           text: 'Følger',
                                           options: FFButtonOptions(
-                                            width: 80.0,
-                                            height: 35.0,
+                                            width: 80,
+                                            height: 35,
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                                .fromSTEB(16, 0, 16, 0),
                                             iconPadding:
                                                 const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
+                                                    .fromSTEB(0, 0, 0, 0),
                                             color: FlutterFlowTheme.of(context)
                                                 .primary,
                                             textStyle: FlutterFlowTheme.of(
@@ -365,14 +364,18 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                   fontFamily: 'Open Sans',
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .alternate,
-                                                  fontSize: 15.0,
+                                                      .primaryText,
+                                                  fontSize: 15,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
-                                            elevation: 3.0,
+                                            elevation: 0,
+                                            borderSide: const BorderSide(
+                                              color: Color(0x5957636C),
+                                              width: 0.8,
+                                            ),
                                             borderRadius:
-                                                BorderRadius.circular(8.0),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                       if (brukere.following != true)
@@ -413,11 +416,11 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primary,
-                                                  fontSize: 15.0,
+                                                  fontSize: 15,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
-                                            elevation: 3.0,
+                                            elevation: 0.0,
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                           ),
