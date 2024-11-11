@@ -72,7 +72,6 @@ class _BetalingWidgetState extends State<BetalingWidget> {
 
     matvare = Matvarer.fromJson1(widget.matinfo);
     matpris = matvare.price ?? 1;
-    print(matvare.price);
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -743,7 +742,11 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0, 10, 20, 0),
                                     child: Text(
-                                      '${matvare.price} Kr',
+                                      '${(_selectedValue * matpris).toStringAsFixed(
+                                        ((_selectedValue * matpris) % 1 == 0)
+                                            ? 0
+                                            : 0,
+                                      )} Kr',
                                       textAlign: TextAlign.start,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
