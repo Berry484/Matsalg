@@ -1202,8 +1202,15 @@ class ApiKjop {
             kjoper: orderData['kjoper'], // Username of the buyer
             selger: orderData['selger'], // Username of the seller
             matId: orderData['matId'], // Corrected to 'matId'
-            antall: orderData['antall'], // Quantity ordered
-            pris: orderData['pris'], // Ensure this is a double
+            antall: (orderData['antall'] % 1 == 0)
+                ? orderData['antall']
+                    .toInt()
+                    .toDouble() // Converts to int, then back to double
+                : double.parse(orderData['antall'].toStringAsFixed(1)),
+
+            pris: (orderData['pris'] % 1 == 0)
+                ? orderData['pris'].toInt().toDouble()
+                : double.parse(orderData['pris'].toStringAsFixed(2)),
             time: DateTime.parse(orderData['time']), // Convert to DateTime
             godkjenttid: orderData['godkjenttid'] != null
                 ? DateTime.parse(orderData['godkjenttid'])
@@ -1485,8 +1492,8 @@ class OrdreInfo {
   final String kjoper;
   final String selger;
   final int matId;
-  final int antall;
-  final int pris; // Ensure this is a double
+  final double antall;
+  final double pris; // Ensure this is a double
   final DateTime time;
   final DateTime? godkjenttid;
   final bool? hentet;
@@ -1583,6 +1590,7 @@ class ApiUpdateFood {
     bool? betaling,
     bool? kg,
     String? antall,
+    bool? kjopt,
   }) async {
     final Map<String, dynamic> requestBody = {
       "name": name,
@@ -1594,7 +1602,7 @@ class ApiUpdateFood {
       "lng": posisjon?.longitude,
       "betaling": betaling,
       "antall": antall,
-      "kjopt": false,
+      "kjopt": kjopt,
       "slettet": false,
       "kg": kg,
     };

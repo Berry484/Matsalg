@@ -183,7 +183,7 @@ class _SolgteMatvarerWidgetState extends State<SolgteMatvarerWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).alternate,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 28.0,
               ),
             ),

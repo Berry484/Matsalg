@@ -536,17 +536,17 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                     },
                                                     effect: smooth_page_indicator
                                                         .ExpandingDotsEffect(
-                                                      expansionFactor: 3.0,
-                                                      spacing: 8.0,
-                                                      radius: 16.0,
-                                                      dotWidth: 10.0,
-                                                      dotHeight: 8.0,
+                                                      expansionFactor: 3,
+                                                      spacing: 8,
+                                                      radius: 16,
+                                                      dotWidth: 10,
+                                                      dotHeight: 8,
                                                       dotColor: const Color(
-                                                          0xCC616161),
+                                                          0x64616161),
                                                       activeDotColor:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .alternate,
+                                                              .secondaryText,
                                                       paintStyle:
                                                           PaintingStyle.fill,
                                                     ),
@@ -1144,9 +1144,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                       'Open Sans',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .alternate,
+                                                                      .primaryText,
                                                                   fontSize:
-                                                                      22.0,
+                                                                      20.0,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -1177,7 +1177,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                           context)
                                                                       .secondaryText,
                                                                   fontSize:
-                                                                      22.0,
+                                                                      20.0,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -1209,7 +1209,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                           context)
                                                                       .secondaryText,
                                                                   fontSize:
-                                                                      22.0,
+                                                                      20.0,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:

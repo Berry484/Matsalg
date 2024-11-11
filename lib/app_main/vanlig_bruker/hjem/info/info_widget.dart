@@ -108,10 +108,11 @@ class _InfoWidgetState extends State<InfoWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context).alternate,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w700,
                                 ),
                           ),
                           Padding(
@@ -152,10 +153,11 @@ class _InfoWidgetState extends State<InfoWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context).alternate,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w700,
                                 ),
                           ),
                           Padding(
@@ -196,10 +198,11 @@ class _InfoWidgetState extends State<InfoWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context).alternate,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w700,
                                 ),
                           ),
                           Padding(

@@ -319,7 +319,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                                     'Open Sans',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .alternate,
+                                                                    .primaryText,
                                                                 fontSize: 18,
                                                                 letterSpacing:
                                                                     0.0,
@@ -552,11 +552,20 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                   .antallStkTextControllerValidator
                                                   .asValidator(context),
                                               onTap: () {
+// Define the function outside the onTap callback to avoid multiple declarations
                                                 List<double> getPickerValues() {
                                                   List<double> values = [];
+                                                  double step = matvare.kg ==
+                                                          true
+                                                      ? 0.1
+                                                      : 1.0; // Choose step size based on matvare.kg
+
+                                                  double antall =
+                                                      matvare.antall ?? 0.0;
+
                                                   for (double i = 0.0;
-                                                      i <= 10.0;
-                                                      i += 0.1) {
+                                                      i <= antall;
+                                                      i += step) {
                                                     values.add(i);
                                                   }
                                                   return values;
@@ -603,12 +612,14 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                                       .lightImpact();
                                                                 });
                                                               },
-                                                              children: getPickerValues()
-                                                                  .map((value) => Center(
-                                                                      child: Text(
-                                                                          value.toStringAsFixed(
-                                                                              1))))
-                                                                  .toList(),
+                                                              children:
+                                                                  getPickerValues()
+                                                                      .map((value) =>
+                                                                          Center(
+                                                                            child:
+                                                                                Text(value.toStringAsFixed(1)),
+                                                                          ))
+                                                                      .toList(),
                                                             ),
                                                           ),
                                                         ],
@@ -795,15 +806,14 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 10, 20, 0),
                                       child: Text(
-                                        ((_selectedValue * matpris * 0.05 + 2)
-                                            .toStringAsFixed(
+                                        '${(_selectedValue * matpris * 0.05 + 2).toStringAsFixed(
                                           ((_selectedValue * matpris * 0.05 +
                                                           2) %
                                                       1 ==
                                                   0)
                                               ? 0
                                               : 2,
-                                        )),
+                                        )} Kr',
                                         textAlign: TextAlign.start,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -918,8 +928,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 if (matvare.matId != null &&
                                     _model.antallStkTextController.text
                                         .isNotEmpty) {
-                                  double? antall = _selectedValue;
-                                  double pris = antall * matpris;
+                                  double antall = _selectedValue;
+                                  double pris =
+                                      _selectedValue * matpris * 1.05 + 2;
                                   int matId = matvare.matId ?? 0;
                                   if (matvare.matId != null) {
                                     String? token =

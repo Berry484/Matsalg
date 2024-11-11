@@ -65,6 +65,7 @@ class DecimalInputFormatter extends TextInputFormatter {
 class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     with TickerProviderStateMixin {
   late LeggUtMatvareModel _model;
+  double _selectedValue = 0.0;
   final FocusNode _hiddenFocusNode = FocusNode();
   late Matvarer matvare;
 
@@ -114,6 +115,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     if (widget.matinfo != null) {
       matvare = Matvarer.fromJson1(widget.matinfo);
 
+      if (matvare.antall != null) {
+        _selectedValue = matvare.antall!;
+      }
       while (matvare.imgUrls!.length <= 4) {
         matvare.imgUrls?.add(''); // Add empty string placeholders
       }
@@ -2692,6 +2696,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               TextCapitalization
                                                                   .none,
                                                           obscureText: false,
+                                                          readOnly:
+                                                              true, // Disable the keyboard
                                                           decoration:
                                                               InputDecoration(
                                                             labelText: 'Antall',
@@ -2829,26 +2835,86 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               .antallStkTextControllerValidator
                                                               .asValidator(
                                                                   context),
-                                                          inputFormatters: [
-                                                            FilteringTextInputFormatter
-                                                                .allow(RegExp(
-                                                                    r'^[0-9]*[.,]?[0-9]*$')), // Allows numbers and a single dot or comma
-                                                            TextInputFormatter
-                                                                .withFunction(
-                                                                    (oldValue,
-                                                                        newValue) {
-                                                              // Replace comma with dot immediately for consistent parsing
-                                                              return TextEditingValue(
-                                                                text: newValue
-                                                                    .text
-                                                                    .replaceAll(
-                                                                        ',',
-                                                                        '.'),
-                                                                selection: newValue
-                                                                    .selection,
-                                                              );
-                                                            }),
-                                                          ],
+                                                          onTap: () {
+                                                            List<double>
+                                                                getPickerValues() {
+                                                              List<double>
+                                                                  values = [];
+                                                              double step;
+
+                                                              step = _model
+                                                                          .tabBarController
+                                                                          ?.index ==
+                                                                      0
+                                                                  ? 1.0
+                                                                  : 0.1;
+                                                              for (double i =
+                                                                      0.0;
+                                                                  i <= 50;
+                                                                  i += step) {
+                                                                values.add(i);
+                                                              }
+
+                                                              return values;
+                                                            }
+
+                                                            showCupertinoModalPopup(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return CupertinoActionSheet(
+                                                                  title: Text(
+                                                                      'Velg antall'),
+                                                                  message:
+                                                                      Column(
+                                                                    children: [
+                                                                      Container(
+                                                                        height:
+                                                                            200, // Set a fixed height for the picker
+                                                                        child:
+                                                                            CupertinoPicker(
+                                                                          itemExtent:
+                                                                              32.0, // Height of each item
+                                                                          scrollController:
+                                                                              FixedExtentScrollController(
+                                                                            initialItem:
+                                                                                getPickerValues().indexOf(_selectedValue), // Set initial value
+                                                                          ),
+                                                                          onSelectedItemChanged:
+                                                                              (index) {
+                                                                            setState(() {
+                                                                              _selectedValue = getPickerValues()[index];
+                                                                              // Update the TextFormField value with the selected value
+                                                                              _model.antallStkTextController.text = _selectedValue.toStringAsFixed(1);
+
+                                                                              // Trigger light haptic feedback on each tick/value change
+                                                                              HapticFeedback.lightImpact();
+                                                                            });
+                                                                          },
+                                                                          children: getPickerValues()
+                                                                              .map((value) => Center(
+                                                                                    child: Text(value.toStringAsFixed(1)),
+                                                                                  ))
+                                                                              .toList(),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  cancelButton:
+                                                                      CupertinoActionSheetAction(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: Text(
+                                                                        'Velg'),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            );
+                                                          },
                                                         ),
                                                       ),
                                                     ),
@@ -3409,6 +3475,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         );
                                                         return null;
                                                       }
+
                                                       _oppdaterLoading = true;
                                                       final token =
                                                           await securestorage
@@ -3485,6 +3552,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           kg =
                                                               true; // By default, KG is enabled if STK is not set
                                                         }
+                                                        _selectedValue = double
+                                                            .parse(_selectedValue
+                                                                .toStringAsFixed(
+                                                                    2));
                                                         if (filelinks != null &&
                                                             filelinks
                                                                 .isNotEmpty) {
@@ -3505,9 +3576,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 ?.value,
                                                             posisjon:
                                                                 selectedLatLng,
-                                                            antall: _model
-                                                                .antallStkTextController
-                                                                .text,
+                                                            antall:
+                                                                _selectedValue
+                                                                    .toString(),
                                                             betaling: _model
                                                                 .checkboxValue,
                                                             kg: kg,
@@ -3845,6 +3916,18 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               kg =
                                                                   true; // By default, KG is enabled if STK is not set
                                                             }
+                                                            bool? kjopt;
+                                                            _selectedValue =
+                                                                double.parse(
+                                                                    _selectedValue
+                                                                        .toStringAsFixed(
+                                                                            2));
+                                                            if (_selectedValue ==
+                                                                0.0) {
+                                                              kjopt = true;
+                                                            } else {
+                                                              kjopt = false;
+                                                            }
                                                             ApiUpdateFood
                                                                 apiUpdateFood =
                                                                 ApiUpdateFood();
@@ -3867,12 +3950,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   ?.value,
                                                               posisjon:
                                                                   selectedLatLng,
-                                                              antall: _model
-                                                                  .antallStkTextController
-                                                                  .text,
+                                                              antall:
+                                                                  _selectedValue
+                                                                      .toString(),
                                                               betaling: _model
                                                                   .checkboxValue,
                                                               kg: kg,
+                                                              kjopt: kjopt,
                                                             );
 
                                                             if (response

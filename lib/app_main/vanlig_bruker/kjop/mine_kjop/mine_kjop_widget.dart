@@ -690,6 +690,90 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                               }));
                                                           return;
                                                         }
+
+                                                        if (alleInfo.kjopte !=
+                                                            true) {
+                                                          if (alleInfo.godkjent !=
+                                                                  true &&
+                                                              alleInfo.trekt !=
+                                                                  true &&
+                                                              alleInfo.avvist !=
+                                                                  true) {
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              useSafeArea: true,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return GestureDetector(
+                                                                  onTap: () =>
+                                                                      FocusScope.of(
+                                                                              context)
+                                                                          .unfocus(),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        SalgBrukerInfoWidget(
+                                                                      info: alleInfo
+                                                                          .foodDetails,
+                                                                      ordre:
+                                                                          alleInfo,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                setState(() {
+                                                                  getAll();
+                                                                }));
+                                                          }
+
+                                                          if (alleInfo
+                                                                  .godkjent ==
+                                                              true) {
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              useSafeArea: true,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return GestureDetector(
+                                                                  onTap: () =>
+                                                                      FocusScope.of(
+                                                                              context)
+                                                                          .unfocus(),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        GodkjentebudWidget(
+                                                                      info: alleInfo
+                                                                          .foodDetails,
+                                                                      ordre:
+                                                                          alleInfo,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                setState(() {
+                                                                  getAll();
+                                                                }));
+                                                          }
+                                                        }
                                                       },
                                                       child: Material(
                                                         color:
@@ -907,13 +991,14 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 6),
                                                                             child:
                                                                                 Text(
-                                                                              alleInfo.kjopte == true ? 'Budet er godkjent, kontakt selgeren' : 'Budet er godkjent, kontakt kjøperen',
+                                                                              alleInfo.kjopte == true ? 'Budet er godkjent,\nkontakt selgeren' : 'Budet er godkjent, kontakt kjøperen',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
+                                                                                    lineHeight: 1.2,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -981,7 +1066,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              '+${alleInfo.pris} Kr',
+                                                                              '+${alleInfo.pris == alleInfo.pris.toInt() ? alleInfo.pris.toInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
@@ -1034,7 +1119,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                     ),
                                                                                     // The actual text
                                                                                     Text(
-                                                                                      '${alleInfo.pris} Kr',
+                                                                                      '${alleInfo.pris == alleInfo.pris.toInt() ? alleInfo.pris.toInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',
@@ -1572,13 +1657,14 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 6),
                                                                             child:
                                                                                 Text(
-                                                                              'Budet er godkjent, kontakt selgeren',
+                                                                              'Budet er godkjent,\nkontakt selgeren',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
+                                                                                    lineHeight: 1.2,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -1691,7 +1777,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              '${ordreInfo.pris} Kr',
+                                                                              '+${ordreInfo.pris == ordreInfo.pris.toInt() ? ordreInfo.pris.toInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
@@ -1744,7 +1830,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                     ),
                                                                                     // The actual text
                                                                                     Text(
-                                                                                      '${ordreInfo.pris} Kr',
+                                                                                      '${ordreInfo.pris == ordreInfo.pris.toInt() ? ordreInfo.pris.toInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',
@@ -2291,13 +2377,14 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 6),
                                                                             child:
                                                                                 Text(
-                                                                              'Budet er godkjent, kontakt kjøperen',
+                                                                              'Budet er godkjent,\nkontakt kjøperen',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
+                                                                                    lineHeight: 1.2,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -2365,7 +2452,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              '+${salgInfo.pris} Kr',
+                                                                              '+${salgInfo.pris == salgInfo.pris.toInt() ? salgInfo.pris.toInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
@@ -2418,7 +2505,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                     ),
                                                                                     // The actual text
                                                                                     Text(
-                                                                                      '${salgInfo.pris} Kr',
+                                                                                      '${salgInfo.pris == salgInfo.pris.toInt() ? salgInfo.pris.toInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',

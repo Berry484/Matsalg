@@ -155,7 +155,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                       buttonSize: 44,
                       icon: FaIcon(
                         FontAwesomeIcons.times,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: FlutterFlowTheme.of(context).secondaryText,
                         size: 26,
                       ),
                       onPressed: () async {
@@ -288,9 +288,9 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     if (ordreInfo.godkjent == true)
                                       Padding(
                                         padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 0, 6),
+                                            .fromSTEB(0, 0, 0, 4),
                                         child: Text(
-                                          'Budet er godkjent, kontakt selgeren',
+                                          'Budet er godkjent,\nkontakt selgeren',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -301,6 +301,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                 fontSize: 13,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
+                                                lineHeight: 1.2,
                                               ),
                                         ),
                                       ),
@@ -319,9 +320,9 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Open Sans',
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    fontSize: 21,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontSize: 19,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -389,8 +390,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
                                   fontSize: 16,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
@@ -408,8 +409,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
                                   fontSize: 16,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
@@ -419,13 +420,25 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          const Align(
+                            alignment: AlignmentDirectional(0, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(8, 14, 8, 0),
+                              child: FaIcon(
+                                FontAwesomeIcons.solidCircle,
+                                color: Color.fromARGB(92, 87, 99, 108),
+                                size: 6,
+                              ),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                10, 12, 4, 0),
+                                0, 12, 4, 0),
                             child: Text(
-                              '(${ordreInfo.antall}',
+                              '${ordreInfo.antall}',
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -444,7 +457,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 12, 0, 0),
                               child: Text(
-                                'Kg)',
+                                'Kg',
                                 textAlign: TextAlign.end,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
@@ -463,7 +476,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 12, 0, 0),
                               child: Text(
-                                'Stk)',
+                                'Stk',
                                 textAlign: TextAlign.end,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
@@ -496,13 +509,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                       child: FFButtonWidget(
                         onPressed: () {},
                         text: 'Melding',
-                        icon: Icon(
-                          Icons.chat,
-                          color: FlutterFlowTheme.of(context).primary,
-                          size: 23,
-                        ),
                         options: FFButtonOptions(
-                          width: 203,
+                          width: 200,
                           height: 40,
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
@@ -513,11 +521,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Open Sans',
                                     color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 18,
+                                    fontSize: 19,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
-                          elevation: 1,
+                          elevation: 0,
                           borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,
@@ -602,7 +610,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           size: 23,
                         ),
                         options: FFButtonOptions(
-                          width: 203,
+                          width: 200,
                           height: 40,
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
@@ -617,7 +625,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
-                          elevation: 1,
+                          elevation: 0,
                           borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,
@@ -638,13 +646,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           child: FFButtonWidget(
                             onPressed: () {},
                             text: 'Melding',
-                            icon: Icon(
-                              Icons.chat,
-                              color: FlutterFlowTheme.of(context).alternate,
-                              size: 23,
-                            ),
                             options: FFButtonOptions(
-                              width: 203,
+                              width: 200,
                               height: 40,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   11, 0, 0, 0),
@@ -655,16 +658,16 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                   .titleSmall
                                   .override(
                                     fontFamily: 'Open Sans',
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
                                     fontSize: 18,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
-                              elevation: 3,
+                              elevation: 0,
                               borderSide: const BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
+                                color: Color(0x5957636C),
+                                width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(14),
                             ),
@@ -774,7 +777,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                elevation: 3,
+                                elevation: 0,
                                 borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,

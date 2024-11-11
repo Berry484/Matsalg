@@ -913,7 +913,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
                                                                                     child: Row(
                                                                                       mainAxisSize: MainAxisSize.max,
                                                                                       children: [
@@ -925,9 +925,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
                                                                                                   color: FlutterFlowTheme.of(context).alternate,
-                                                                                                  fontSize: 15,
+                                                                                                  fontSize: 14,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontWeight: FontWeight.w600,
                                                                                                 ),
                                                                                           ),
                                                                                         ),
@@ -938,7 +938,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 15,
+                                                                                                  fontSize: 14,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontWeight: FontWeight.w600,
                                                                                                 ),
@@ -950,7 +950,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 15,
+                                                                                                  fontSize: 14,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontWeight: FontWeight.w600,
                                                                                                 ),

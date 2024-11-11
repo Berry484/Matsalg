@@ -1389,11 +1389,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                mainAxisAlignment: MainAxisAlignment.start,
                                                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
                                                                                     child: Row(
                                                                                       mainAxisSize: MainAxisSize.max,
                                                                                       children: [
@@ -1405,9 +1405,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
                                                                                                   color: FlutterFlowTheme.of(context).alternate,
-                                                                                                  fontSize: 15,
+                                                                                                  fontSize: 14,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontWeight: FontWeight.w600,
                                                                                                 ),
                                                                                           ),
                                                                                         ),
@@ -1418,7 +1418,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 15,
+                                                                                                  fontSize: 14,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontWeight: FontWeight.w600,
                                                                                                 ),
@@ -1430,32 +1430,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 15,
+                                                                                                  fontSize: 14,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontWeight: FontWeight.w600,
                                                                                                 ),
                                                                                           ),
                                                                                       ],
                                                                                     ),
-                                                                                  ),
-                                                                                  Row(
-                                                                                    mainAxisSize: MainAxisSize.max,
-                                                                                    children: [
-                                                                                      Padding(
-                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
-                                                                                        child: Text(
-                                                                                          '(3Km)',
-                                                                                          textAlign: TextAlign.start,
-                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                fontFamily: 'Open Sans',
-                                                                                                color: FlutterFlowTheme.of(context).primaryText,
-                                                                                                fontSize: 14,
-                                                                                                letterSpacing: 0.0,
-                                                                                                fontWeight: FontWeight.w600,
-                                                                                              ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ],
                                                                                   ),
                                                                                 ],
                                                                               ),

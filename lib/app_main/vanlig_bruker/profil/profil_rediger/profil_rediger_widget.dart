@@ -137,7 +137,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).alternate,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 28,
               ),
             ),

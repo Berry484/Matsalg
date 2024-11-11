@@ -228,7 +228,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).alternate,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 28.0,
               ),
             ),
@@ -1149,11 +1149,11 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .alternate,
-                                                        fontSize: 22.0,
+                                                                .primaryText,
+                                                        fontSize: 20.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
-                                                            FontWeight.bold,
+                                                            FontWeight.w700,
                                                       ),
                                                 ),
                                                 if (matvare.kg == true)
@@ -1175,7 +1175,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                             color: FlutterFlowTheme
                                                                     .of(context)
                                                                 .secondaryText,
-                                                            fontSize: 22.0,
+                                                            fontSize: 20.0,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -1201,7 +1201,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                             color: FlutterFlowTheme
                                                                     .of(context)
                                                                 .secondaryText,
-                                                            fontSize: 22.0,
+                                                            fontSize: 20.0,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -1668,9 +1668,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                               .override(
                                                                                 fontFamily: 'Open Sans',
                                                                                 color: FlutterFlowTheme.of(context).alternate,
-                                                                                fontSize: 15,
+                                                                                fontSize: 14,
                                                                                 letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.bold,
+                                                                                fontWeight: FontWeight.w600,
                                                                               ),
                                                                         ),
                                                                       ),
@@ -1686,7 +1686,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                               .override(
                                                                                 fontFamily: 'Open Sans',
                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                fontSize: 15,
+                                                                                fontSize: 14,
                                                                                 letterSpacing: 0.0,
                                                                                 fontWeight: FontWeight.w600,
                                                                               ),
@@ -1703,7 +1703,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                               .override(
                                                                                 fontFamily: 'Open Sans',
                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                fontSize: 15,
+                                                                                fontSize: 14,
                                                                                 letterSpacing: 0.0,
                                                                                 fontWeight: FontWeight.w600,
                                                                               ),
