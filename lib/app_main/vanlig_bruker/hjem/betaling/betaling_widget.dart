@@ -472,7 +472,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
-                                                          fontSize: 16,
+                                                          fontSize: 17,
                                                           letterSpacing: 0.0,
                                                         ),
                                                 hintStyle:
@@ -481,6 +481,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                         .override(
                                                           fontFamily:
                                                               'Open Sans',
+                                                          fontSize: 17,
                                                           letterSpacing: 0.0,
                                                         ),
                                                 enabledBorder:
@@ -529,18 +530,18 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .secondary,
                                               ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Open Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 16,
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Open Sans',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w600,
+                                                    letterSpacing: 0.0,
+                                                  ),
                                               maxLength: 5,
                                               maxLengthEnforcement:
                                                   MaxLengthEnforcement.enforced,
@@ -865,7 +866,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           fontFamily: 'Open Sans',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
-                                          fontSize: 20,
+                                          fontSize: 19,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -890,7 +891,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           fontFamily: 'Open Sans',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
-                                          fontSize: 23,
+                                          fontSize: 22,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -907,7 +908,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                             fontFamily: 'Open Sans',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            fontSize: 23,
+                                            fontSize: 22,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -979,7 +980,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                             text: 'Gi bud',
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 45,
+                              height: 48,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(

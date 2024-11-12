@@ -109,7 +109,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: 500,
-      height: 580,
+      height: 510,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
         boxShadow: const [
@@ -150,7 +150,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       buttonSize: 44,
                       icon: FaIcon(
                         FontAwesomeIcons.times,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: FlutterFlowTheme.of(context).secondaryText,
                         size: 26,
                       ),
                       onPressed: () async {
@@ -294,246 +294,98 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 ),
               ),
             ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: const AlignmentDirectional(-1, 1),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
-                    child: Text(
-                      'Matvare',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Open Sans',
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            fontSize: 14,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 7, 4, 0),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: const AlignmentDirectional(-1, 1),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
                       child: Text(
-                        matvare.name ?? '',
-                        textAlign: TextAlign.end,
+                        'Matvare',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Open Sans',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 21,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              fontSize: 14,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
-                      child: Text(
-                        '${salgInfo.pris} Kr',
-                        textAlign: TextAlign.end,
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Open Sans',
-                              color: FlutterFlowTheme.of(context).alternate,
-                              fontSize: 21,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
-                Align(
-                  alignment: const AlignmentDirectional(-1, 1),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
-                    child: Text(
-                      'Informasjon',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Open Sans',
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            fontSize: 14,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 10),
-                  child: Row(
+                  Row(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 12, 4, 0),
+                            const EdgeInsetsDirectional.fromSTEB(5, 0, 4, 0),
                         child: Text(
-                          '${matvare.price} Kr',
+                          matvare.name ?? '',
                           textAlign: TextAlign.end,
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
                                 fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context).alternate,
-                                fontSize: 16,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 21,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                        child: Text(
+                          '${salgInfo.pris} Kr',
+                          textAlign: TextAlign.end,
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Open Sans',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 19,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
                       ),
-                      if (matvare.kg == true)
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                          child: Text(
-                            '/kg',
-                            textAlign: TextAlign.end,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  fontSize: 16,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ),
-                      if (matvare.kg != true)
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                          child: Text(
-                            '/stk',
-                            textAlign: TextAlign.end,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  fontSize: 16,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                10, 12, 4, 0),
-                            child: Text(
-                              '(${salgInfo.antall}',
-                              textAlign: TextAlign.end,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 15,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ),
-                          if (matvare.kg == true)
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 12, 0, 0),
-                              child: Text(
-                                'Kg)',
-                                textAlign: TextAlign.end,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 15,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                              ),
-                            ),
-                          if (matvare.kg != true)
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 12, 0, 0),
-                              child: Text(
-                                'Stk)',
-                                textAlign: TextAlign.end,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 15,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                              ),
-                            ),
-                        ],
-                      ),
                     ],
                   ),
-                ),
-                if (salgInfo.godkjent == true)
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Align(
-                        alignment: const AlignmentDirectional(-1, 1),
-                        child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
-                          child: Text(
-                            'Godkjent tid',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  fontSize: 14,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ),
+                  Align(
+                    alignment: const AlignmentDirectional(-1, 1),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
+                      child: Text(
+                        'Informasjon',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Open Sans',
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              fontSize: 14,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
-                    ],
+                    ),
                   ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(5, 12, 0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            '${salgInfo.godkjenttid != null ? DateFormat("HH:mm  EEEE", "nb_NO").format(salgInfo.godkjenttid!.toLocal()) : ""}',
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 2, 0, 10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          child: Text(
+                            '${matvare.price} Kr',
                             textAlign: TextAlign.end,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -543,33 +395,205 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                       FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.bold,
                                 ),
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        if (matvare.kg == true)
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 0),
+                            child: Text(
+                              '/kg',
+                              textAlign: TextAlign.end,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 16,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ),
+                        if (matvare.kg != true)
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 0),
+                            child: Text(
+                              '/stk',
+                              textAlign: TextAlign.end,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 16,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Align(
+                              alignment: AlignmentDirectional(0, 0),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                                child: FaIcon(
+                                  FontAwesomeIcons.solidCircle,
+                                  color: Color.fromARGB(92, 87, 99, 108),
+                                  size: 6,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 4, 0),
+                              child: Text(
+                                '${salgInfo.antall}',
+                                textAlign: TextAlign.end,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 15,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ),
+                            if (matvare.kg == true)
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 0, 0),
+                                child: Text(
+                                  'Kg',
+                                  textAlign: TextAlign.end,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 15,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                              ),
+                            if (matvare.kg != true)
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 0, 0),
+                                child: Text(
+                                  'Stk',
+                                  textAlign: TextAlign.end,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 15,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  if (salgInfo.godkjent == true)
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: const AlignmentDirectional(-1, 1),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                5, 15, 0, 0),
+                            child: Text(
+                              'Godkjent tid',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 14,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 2, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              '${salgInfo.godkjenttid != null ? DateFormat("HH:mm  EEEE", "nb_NO").format(salgInfo.godkjenttid!.toLocal()) : ""}',
+                              textAlign: TextAlign.end,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontSize: 16,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             Column(
               mainAxisSize: MainAxisSize.max,
               children: [
+                Container(
+                  width: 10,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                  ),
+                ),
                 Align(
                   alignment: const AlignmentDirectional(0, 0),
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 25, 5, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 35),
                     child: FFButtonWidget(
                       onPressed: () {},
                       text: 'Melding',
-                      icon: Icon(
-                        Icons.chat,
-                        color: FlutterFlowTheme.of(context).primary,
-                        size: 23,
-                      ),
                       options: FFButtonOptions(
-                        width: 203,
+                        width: 190,
                         height: 40,
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
@@ -584,7 +608,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
-                        elevation: 3,
+                        elevation: 0,
                         borderSide: const BorderSide(
                           color: Colors.transparent,
                           width: 1,
@@ -594,18 +618,18 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     ),
                   ),
                 ),
-                if (salgInfo.hentet != true && salgInfo.godkjent == true)
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                    child: Text(
-                      'Husk å be kjøperen bekrefte at \nmatvaren er mottatt',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Open Sans',
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-                  ),
+                // if (salgInfo.hentet != true && salgInfo.godkjent == true)
+                //   Padding(
+                //     padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 40),
+                //     child: Text(
+                //       'Husk å be kjøperen bekrefte at \nmatvaren er mottatt',
+                //       style: FlutterFlowTheme.of(context).bodyMedium.override(
+                //             fontFamily: 'Open Sans',
+                //             letterSpacing: 0.0,
+                //             fontWeight: FontWeight.w500,
+                //           ),
+                //     ),
+                //   ),
               ],
             ),
           ],

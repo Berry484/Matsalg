@@ -55,7 +55,7 @@ class _MyOsmKartState extends State<MyOsmKart> {
             widget.center.latitude, widget.center.longitude),
         interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
         zoom: zoomLevel,
-        minZoom: 8,
+        minZoom: 5.5,
         maxZoom: 18,
       ),
       children: [

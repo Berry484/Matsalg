@@ -228,7 +228,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).primaryText,
+                color: FlutterFlowTheme.of(context).secondaryText,
                 size: 28.0,
               ),
             ),
@@ -334,7 +334,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         color: FlutterFlowTheme.of(context)
-                                            .alternate,
+                                            .secondaryText,
                                         size: 24.0,
                                       ),
                                     ),
@@ -411,8 +411,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                             .fromSTEB(
                                                             0.0, 0.0, 0.0, 40.0)
                                                         : const EdgeInsetsDirectional
-                                                            .fromSTEB(10.0, 0.0,
-                                                            10.0, 40.0),
+                                                            .fromSTEB(0.0, 0.0,
+                                                            0.0, 40.0),
                                                     child: PageView(
                                                       controller: _model
                                                               .pageViewController ??=
@@ -1214,10 +1214,83 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         ],
                                       ),
                                     ),
+                                    Container(
+                                      width: 332.0,
+                                      decoration: const BoxDecoration(),
+                                      alignment: const AlignmentDirectional(
+                                          -1.0, -1.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 15.0, 0.0, 0.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0.0, 0.0, 0.0, 0.0),
+                                                  child: Text.rich(
+                                                    TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                          text:
+                                                              '${matvare.username} ',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Open Sans',
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold, // Set bold weight here
+                                                              ),
+                                                        ),
+                                                        TextSpan(
+                                                          text:
+                                                              '${matvare.description}',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Open Sans',
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600, // Keep the original weight here
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    textAlign: TextAlign.start,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 15.0, 0.0, 0.0),
+                                              0.0, 30.0, 0.0, 0.0),
                                       child: Text(
                                         'Informasjon',
                                         style: FlutterFlowTheme.of(context)
@@ -1236,7 +1309,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 10.0, 0.0, 5.0),
+                                              0.0, 2.0, 0.0, 5.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -1244,117 +1317,58 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text(
-                                                (calculateDistance(
-                                                            FFAppState()
-                                                                    .brukerLat ??
-                                                                0.0,
-                                                            FFAppState()
-                                                                    .brukerLng ??
-                                                                0.0,
-                                                            matvare.lat ?? 0.0,
-                                                            matvare.lng ??
-                                                                0.0) <
-                                                        1)
-                                                    ? '>1 Km'
-                                                    : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                              Icon(
-                                                Icons.place,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                size: 19.0,
-                                              ),
-                                            ],
+                                          Text(
+                                            '${matvare.price}Kr',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleMedium
+                                                .override(
+                                                  fontFamily: 'Open Sans',
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 15.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Antall',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ),
-                                    Text(
-                                      '${matvare.antall ?? 0} ${matvare.kg == true ? 'Kg' : 'stk'}',
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                    Container(
-                                      width: 332.0,
-                                      decoration: const BoxDecoration(),
-                                      alignment: const AlignmentDirectional(
-                                          -1.0, -1.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 15.0, 0.0, 0.0),
+                                                .fromSTEB(0, 0, 5, 0),
                                             child: Text(
-                                              'Beskrivelse',
+                                              matvare.kg == true
+                                                  ? '/Kg'
+                                                  : '/Stk',
+                                              textAlign: TextAlign.start,
                                               style: FlutterFlowTheme.of(
                                                       context)
-                                                  .bodySmall
+                                                  .titleMedium
                                                   .override(
                                                     fontFamily: 'Open Sans',
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.0,
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                             ),
                                           ),
+                                          SizedBox(
+                                            height: 12,
+                                            child: VerticalDivider(
+                                              thickness: 1.4,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                            ),
+                                          ),
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 10.0, 0.0, 0.0),
+                                                .fromSTEB(5, 0, 5, 0),
                                             child: Text(
-                                              matvare.description ?? '',
+                                              '${matvare.antall ?? 0} ${matvare.kg == true ? 'Kg' : 'stk'}',
                                               textAlign: TextAlign.start,
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .titleSmall
+                                                      .titleMedium
                                                       .override(
                                                         fontFamily: 'Open Sans',
                                                         fontSize: 14.0,
@@ -1362,6 +1376,51 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 12,
+                                            child: VerticalDivider(
+                                              thickness: 1.4,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(5, 0, 0, 0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  (calculateDistance(
+                                                              FFAppState()
+                                                                      .brukerLat ??
+                                                                  0.0,
+                                                              FFAppState()
+                                                                      .brukerLng ??
+                                                                  0.0,
+                                                              matvare.lat ??
+                                                                  0.0,
+                                                              matvare.lng ??
+                                                                  0.0) <
+                                                          1)
+                                                      ? '<1 Km'
+                                                      : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)}Km',
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleMedium
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -1643,7 +1702,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       const EdgeInsetsDirectional
                                                                           .fromSTEB(
                                                                           0,
-                                                                          5,
+                                                                          0,
                                                                           0,
                                                                           0),
                                                                   child: Row(
@@ -1667,10 +1726,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                               .titleLarge
                                                                               .override(
                                                                                 fontFamily: 'Open Sans',
-                                                                                color: FlutterFlowTheme.of(context).alternate,
+                                                                                color: FlutterFlowTheme.of(context).secondaryText,
                                                                                 fontSize: 14,
                                                                                 letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w600,
+                                                                                fontWeight: FontWeight.bold,
                                                                               ),
                                                                         ),
                                                                       ),
@@ -1688,7 +1747,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
                                                                                 fontSize: 14,
                                                                                 letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w600,
+                                                                                fontWeight: FontWeight.bold,
                                                                               ),
                                                                         ),
                                                                       if (nyematvarer
@@ -1705,7 +1764,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
                                                                                 fontSize: 14,
                                                                                 letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w600,
+                                                                                fontWeight: FontWeight.bold,
                                                                               ),
                                                                         ),
                                                                     ],
@@ -1725,17 +1784,21 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                           0),
                                                                       child:
                                                                           Text(
-                                                                        '(3Km)',
+                                                                        // Directly calculate the distance using the provided latitude and longitude
+                                                                        (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, nyematvarer.lat ?? 0.0, nyematvarer.lng ?? 0.0) <
+                                                                                1)
+                                                                            ? '<1 Km'
+                                                                            : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, nyematvarer.lat ?? 0.0, nyematvarer.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                         textAlign:
                                                                             TextAlign.start,
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Open Sans',
-                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                              color: FlutterFlowTheme.of(context).secondaryText,
                                                                               fontSize: 14,
                                                                               letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.w600,
+                                                                              fontWeight: FontWeight.bold,
                                                                             ),
                                                                       ),
                                                                     ),

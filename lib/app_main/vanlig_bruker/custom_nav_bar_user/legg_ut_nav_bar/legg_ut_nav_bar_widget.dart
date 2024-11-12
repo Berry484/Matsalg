@@ -43,9 +43,9 @@ class _LeggUtNavBarWidgetState extends State<LeggUtNavBarWidget> {
     return SafeArea(
       child: Container(
         width: double.infinity,
-        height: 90.0,
+        height: 68.0,
         decoration: const BoxDecoration(
-          color: Color(0x00EEEEEE),
+          color: Colors.transparent,
         ),
         child: Stack(
           children: [
@@ -66,13 +66,13 @@ class _LeggUtNavBarWidgetState extends State<LeggUtNavBarWidget> {
                   ),
                   child: Container(
                     width: double.infinity,
-                    height: 80.0,
+                    height: 68.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       boxShadow: const [
                         BoxShadow(
                           blurRadius: 10.0,
-                          color: Color(0x1A57636C),
+                          color: Colors.transparent,
                           offset: Offset(
                             0.0,
                             -10.0,

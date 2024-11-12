@@ -41,7 +41,7 @@ class _MyOsmKartBedriftState extends State<MyOsmKartBedrift> {
               widget.center.latitude, widget.center.longitude),
           interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
           zoom: 12.5,
-          minZoom: 6,
+          minZoom: 5.5,
           maxZoom: 18),
       children: [
         TileLayer(

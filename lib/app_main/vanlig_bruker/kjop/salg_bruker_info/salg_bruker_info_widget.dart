@@ -115,11 +115,11 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: 500,
-      height: 525,
+      height: 500,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             blurRadius: 4,
             color: Color(0x25090F13),
             offset: Offset(
@@ -156,7 +156,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                       buttonSize: 44,
                       icon: FaIcon(
                         FontAwesomeIcons.times,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: FlutterFlowTheme.of(context).secondaryText,
                         size: 26,
                       ),
                       onPressed: () async {
@@ -281,12 +281,16 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                       .override(
                                         fontFamily: 'Open Sans',
                                         color: FlutterFlowTheme.of(context)
-                                            .alternate,
+                                            .primaryText,
                                         fontSize: 16,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                  elevation: 1,
+                                  elevation: 0,
+                                  borderSide: const BorderSide(
+                                    color: Color(0x5957636C),
+                                    width: 1.0,
+                                  ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
@@ -297,7 +301,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 32, 5, 10),
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 32, 5, 10),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -323,8 +327,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               .bodyMedium
                               .override(
                                 fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context).alternate,
-                                fontSize: 21,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 19,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -359,7 +363,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 10),
+                              const EdgeInsetsDirectional.fromSTEB(5, 2, 0, 10),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -367,7 +371,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 12, 4, 0),
+                                    0, 0, 0, 0),
                                 child: Text(
                                   '${matvare.price} Kr',
                                   textAlign: TextAlign.end,
@@ -386,7 +390,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               if (matvare.kg == true)
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 12, 0, 0),
+                                      0, 0, 0, 0),
                                   child: Text(
                                     '/kg',
                                     textAlign: TextAlign.end,
@@ -405,7 +409,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               if (matvare.kg != true)
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 12, 0, 0),
+                                      0, 0, 0, 0),
                                   child: Text(
                                     '/stk',
                                     textAlign: TextAlign.end,
@@ -424,14 +428,26 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  const Align(
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 8, 0),
+                                      child: FaIcon(
+                                        FontAwesomeIcons.solidCircle,
+                                        color: Color.fromARGB(92, 87, 99, 108),
+                                        size: 6,
+                                      ),
+                                    ),
+                                  ),
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            10, 12, 4, 0),
+                                            0, 0, 4, 0),
                                     child: Text(
-                                      '(${salgInfo.antall}',
+                                      '${salgInfo.antall}',
                                       textAlign: TextAlign.end,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -449,9 +465,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0, 12, 0, 0),
+                                              0, 0, 0, 0),
                                       child: Text(
-                                        'Kg)',
+                                        'Kg',
                                         textAlign: TextAlign.end,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -470,9 +486,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0, 12, 0, 0),
+                                              0, 0, 0, 0),
                                       child: Text(
-                                        'Stk)',
+                                        'Stk',
                                         textAlign: TextAlign.end,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -498,126 +514,16 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        try {
-                          showCupertinoDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CupertinoAlertDialog(
-                                title: const Text("Bekreftelse"),
-                                content: const Text(
-                                    "Er du sikker på at du ønsker å avslå budet?"),
-                                actions: [
-                                  CupertinoDialogAction(
-                                    onPressed: () {
-                                      godkjennIsLoading = false;
-                                      Navigator.of(context)
-                                          .pop(); // Close the dialog
-                                    },
-                                    isDefaultAction: true,
-                                    child: const Text(
-                                      "Nei, avbryt",
-                                      style: TextStyle(
-                                          color: Colors
-                                              .red), // Red text for 'No' button
-                                    ),
-                                  ),
-                                  CupertinoDialogAction(
-                                    onPressed: () async {
-                                      if (godkjennIsLoading) {
-                                        return;
-                                      }
-                                      godkjennIsLoading = true;
-                                      String? token = Securestorage.authToken;
-                                      if (token != null) {
-                                        final response = await ApiKjop().avvis(
-                                            id: salgInfo.id,
-                                            avvist: true,
-                                            godkjent: false,
-                                            token: token);
-                                        // Perform action for 'Yes'
-                                        if (response.statusCode == 200) {
-                                          godkjennIsLoading = false;
-                                          Navigator.of(context).pop();
-                                          Navigator.pop(context);
-                                          HapticFeedback.mediumImpact();
-                                          showDialog(
-                                            barrierColor: Colors.transparent,
-                                            context: context,
-                                            builder: (dialogContext) {
-                                              return Dialog(
-                                                elevation: 0,
-                                                insetPadding: EdgeInsets.zero,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                            0, 0)
-                                                        .resolve(
-                                                            Directionality.of(
-                                                                context)),
-                                                child: const AvbrytIkonWidget(),
-                                              );
-                                            },
-                                          );
-                                        }
-                                        godkjennIsLoading = false;
-                                      }
-                                    },
-                                    child: const Text("Ja, avslå"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        } on SocketException {
-                          showErrorToast(context, 'Ingen internettforbindelse');
-                        } catch (e) {
-                          showErrorToast(context, 'En feil oppstod');
-                        }
-                      },
-                      text: 'Avslå',
-                      icon: const FaIcon(
-                        FontAwesomeIcons.times,
-                        size: 23,
-                      ),
-                      options: FFButtonOptions(
-                        width: 160,
-                        height: 40,
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        color: FlutterFlowTheme.of(context).error,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  fontSize: 16,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                        elevation: 3,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                    ),
-                  ),
-                  Builder(
-                    builder: (context) => Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 40),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           try {
@@ -627,10 +533,11 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 return CupertinoAlertDialog(
                                   title: const Text("Bekreftelse"),
                                   content: const Text(
-                                      "Er du sikker på at du ønsker å godta budet?"),
+                                      "Er du sikker på at du ønsker å avslå budet?"),
                                   actions: [
                                     CupertinoDialogAction(
                                       onPressed: () {
+                                        godkjennIsLoading = false;
                                         Navigator.of(context)
                                             .pop(); // Close the dialog
                                       },
@@ -651,15 +558,15 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                         String? token = Securestorage.authToken;
                                         if (token != null) {
                                           final response = await ApiKjop()
-                                              .svarBud(
+                                              .avvis(
                                                   id: salgInfo.id,
-                                                  godkjent: true,
+                                                  avvist: true,
+                                                  godkjent: false,
                                                   token: token);
                                           // Perform action for 'Yes'
                                           if (response.statusCode == 200) {
                                             godkjennIsLoading = false;
-                                            Navigator.of(context)
-                                                .pop(); // Close the dialog
+                                            Navigator.of(context).pop();
                                             Navigator.pop(context);
                                             HapticFeedback.mediumImpact();
                                             showDialog(
@@ -678,7 +585,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                                               Directionality.of(
                                                                   context)),
                                                   child:
-                                                      const GodkjentIkonWidget(),
+                                                      const AvbrytIkonWidget(),
                                                 );
                                               },
                                             );
@@ -686,7 +593,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                           godkjennIsLoading = false;
                                         }
                                       },
-                                      child: const Text("Ja, godta"),
+                                      child: const Text("Ja, avslå"),
                                     ),
                                   ],
                                 );
@@ -699,29 +606,24 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                             showErrorToast(context, 'En feil oppstod');
                           }
                         },
-                        text: 'Godkjenn',
-                        icon: FaIcon(
-                          FontAwesomeIcons.check,
-                          color: FlutterFlowTheme.of(context).primary,
-                          size: 23,
-                        ),
+                        text: 'Avslå',
                         options: FFButtonOptions(
-                          width: 160,
+                          width: 145,
                           height: 40,
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
                           iconPadding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: FlutterFlowTheme.of(context).error,
                           textStyle:
                               FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Open Sans',
                                     color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 16,
+                                    fontSize: 17,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
-                          elevation: 3,
+                          elevation: 0,
                           borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,
@@ -730,8 +632,124 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    Builder(
+                      builder: (context) => Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            try {
+                              showCupertinoDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CupertinoAlertDialog(
+                                    title: const Text("Bekreftelse"),
+                                    content: const Text(
+                                        "Er du sikker på at du ønsker å godta budet?"),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                        isDefaultAction: true,
+                                        child: const Text(
+                                          "Nei, avbryt",
+                                          style: TextStyle(
+                                              color: Colors
+                                                  .red), // Red text for 'No' button
+                                        ),
+                                      ),
+                                      CupertinoDialogAction(
+                                        onPressed: () async {
+                                          if (godkjennIsLoading) {
+                                            return;
+                                          }
+                                          godkjennIsLoading = true;
+                                          String? token =
+                                              Securestorage.authToken;
+                                          if (token != null) {
+                                            final response = await ApiKjop()
+                                                .svarBud(
+                                                    id: salgInfo.id,
+                                                    godkjent: true,
+                                                    token: token);
+                                            // Perform action for 'Yes'
+                                            if (response.statusCode == 200) {
+                                              godkjennIsLoading = false;
+                                              Navigator.of(context)
+                                                  .pop(); // Close the dialog
+                                              Navigator.pop(context);
+                                              HapticFeedback.mediumImpact();
+                                              showDialog(
+                                                barrierColor:
+                                                    Colors.transparent,
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                                0, 0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child:
+                                                        const GodkjentIkonWidget(),
+                                                  );
+                                                },
+                                              );
+                                            }
+                                            godkjennIsLoading = false;
+                                          }
+                                        },
+                                        child: const Text("Ja, godta"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            } on SocketException {
+                              showErrorToast(
+                                  context, 'Ingen internettforbindelse');
+                            } catch (e) {
+                              showErrorToast(context, 'En feil oppstod');
+                            }
+                          },
+                          text: 'Godkjenn',
+                          options: FFButtonOptions(
+                            width: 145,
+                            height: 40,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                11, 0, 0, 0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 0),
+                            color: FlutterFlowTheme.of(context).alternate,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  fontSize: 17,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                            elevation: 0,
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/matvarer.dart';
@@ -114,6 +115,24 @@ class _ProfilWidgetState extends State<ProfilWidget>
     Future.delayed(const Duration(seconds: 3), () {
       overlayEntry.remove();
     });
+  }
+
+  // Haversine formula to calculate distance between two lat/lng points
+  double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
+    const earthRadius = 6371.0; // Earth's radius in kilometers
+    double dLat = _degreesToRadians(lat2 - lat1);
+    double dLng = _degreesToRadians(lng2 - lng1);
+    double a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(_degreesToRadians(lat1)) *
+            cos(_degreesToRadians(lat2)) *
+            sin(dLng / 2) *
+            sin(dLng / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    return earthRadius * c;
+  }
+
+  double _degreesToRadians(double degrees) {
+    return degrees * pi / 180;
   }
 
   Future<void> getMyFoods() async {
@@ -1034,7 +1053,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   Icons.add,
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primaryText,
+                                                      .secondaryText,
                                                   size: 53,
                                                 ),
                                                 const SizedBox(height: 16),
@@ -1065,7 +1084,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primaryText,
+                                                              .secondaryText,
                                                       size: 20,
                                                     ),
                                                     Text(
@@ -1389,11 +1408,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
-                                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                                                                     child: Row(
                                                                                       mainAxisSize: MainAxisSize.max,
                                                                                       children: [
@@ -1404,10 +1423,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             textAlign: TextAlign.end,
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
-                                                                                                  color: FlutterFlowTheme.of(context).alternate,
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
+                                                                                                  fontWeight: FontWeight.bold,
                                                                                                 ),
                                                                                           ),
                                                                                         ),
@@ -1420,7 +1439,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
+                                                                                                  fontWeight: FontWeight.bold,
                                                                                                 ),
                                                                                           ),
                                                                                         if (matvare.kg != true)
@@ -1432,11 +1451,31 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
+                                                                                                  fontWeight: FontWeight.bold,
                                                                                                 ),
                                                                                           ),
                                                                                       ],
                                                                                     ),
+                                                                                  ),
+                                                                                  Row(
+                                                                                    mainAxisSize: MainAxisSize.max,
+                                                                                    children: [
+                                                                                      Padding(
+                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                                        child: Text(
+                                                                                          // Directly calculate the distance using the provided latitude and longitude
+                                                                                          (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Open Sans',
+                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                fontSize: 14,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
                                                                                   ),
                                                                                 ],
                                                                               ),
@@ -1518,7 +1557,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   FontAwesomeIcons.heart,
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primaryText,
+                                                      .secondaryText,
                                                   size: 50,
                                                 ),
                                                 const SizedBox(height: 16),
@@ -1863,7 +1902,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 CrossAxisAlignment.end,
                                                                             children: [
                                                                               Padding(
-                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                                                                 child: Row(
                                                                                   mainAxisSize: MainAxisSize.max,
                                                                                   children: [
@@ -1874,8 +1913,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         textAlign: TextAlign.end,
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                               fontFamily: 'Open Sans',
-                                                                                              color: FlutterFlowTheme.of(context).alternate,
-                                                                                              fontSize: 15,
+                                                                                              color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                              fontSize: 14,
                                                                                               letterSpacing: 0.0,
                                                                                               fontWeight: FontWeight.bold,
                                                                                             ),
@@ -1888,9 +1927,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                               fontFamily: 'Open Sans',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                              fontSize: 15,
+                                                                                              fontSize: 14,
                                                                                               letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.w600,
+                                                                                              fontWeight: FontWeight.bold,
                                                                                             ),
                                                                                       ),
                                                                                     if (likesmatvare.kg != true)
@@ -1900,9 +1939,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                               fontFamily: 'Open Sans',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                              fontSize: 15,
+                                                                                              fontSize: 14,
                                                                                               letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.w600,
+                                                                                              fontWeight: FontWeight.bold,
                                                                                             ),
                                                                                       ),
                                                                                   ],
@@ -1914,14 +1953,15 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                   Padding(
                                                                                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                     child: Text(
-                                                                                      '(3Km)',
+                                                                                      // Directly calculate the distance using the provided latitude and longitude
+                                                                                      (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',
-                                                                                            color: FlutterFlowTheme.of(context).primaryText,
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.w600,
+                                                                                            fontWeight: FontWeight.bold,
                                                                                           ),
                                                                                     ),
                                                                                   ),

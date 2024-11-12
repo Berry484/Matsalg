@@ -410,7 +410,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                             text: 'Logg inn',
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 40,
+                              height: 45,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(

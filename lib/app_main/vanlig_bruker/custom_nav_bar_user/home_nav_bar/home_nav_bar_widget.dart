@@ -43,9 +43,9 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
     return SafeArea(
       child: Container(
         width: double.infinity,
-        height: 90.0,
+        height: 68.0,
         decoration: const BoxDecoration(
-          color: Color(0x00EEEEEE),
+          color: Colors.transparent,
         ),
         child: Stack(
           children: [
@@ -60,19 +60,19 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(0.0),
                       bottomRight: Radius.circular(0.0),
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
+                      topLeft: Radius.circular(0.0),
+                      topRight: Radius.circular(0.0),
                     ),
                   ),
                   child: Container(
                     width: double.infinity,
-                    height: 80.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primary,
-                      boxShadow: const [
+                    height: 68.0,
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                      boxShadow: [
                         BoxShadow(
                           blurRadius: 10.0,
-                          color: Color(0x1A57636C),
+                          color: Color.fromARGB(0, 87, 99, 108),
                           offset: Offset(
                             0.0,
                             -10.0,
@@ -80,11 +80,11 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
                           spreadRadius: 0.1,
                         )
                       ],
-                      borderRadius: const BorderRadius.only(
+                      borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(0.0),
                         bottomRight: Radius.circular(0.0),
-                        topLeft: Radius.circular(20.0),
-                        topRight: Radius.circular(20.0),
+                        topLeft: Radius.circular(0.0),
+                        topRight: Radius.circular(0.0),
                       ),
                     ),
                   ),
