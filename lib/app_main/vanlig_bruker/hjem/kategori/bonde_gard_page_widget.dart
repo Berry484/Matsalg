@@ -361,7 +361,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).alternate,
+                color: FlutterFlowTheme.of(context).secondaryText,
                 size: 28,
               ),
             ),
@@ -913,7 +913,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                                                                     child: Row(
                                                                                       mainAxisSize: MainAxisSize.max,
                                                                                       children: [
@@ -924,10 +924,10 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                             textAlign: TextAlign.end,
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Open Sans',
-                                                                                                  color: FlutterFlowTheme.of(context).alternate,
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
+                                                                                                  fontWeight: FontWeight.bold,
                                                                                                 ),
                                                                                           ),
                                                                                         ),
@@ -940,7 +940,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
+                                                                                                  fontWeight: FontWeight.bold,
                                                                                                 ),
                                                                                           ),
                                                                                         if (matvare.kg != true)
@@ -952,7 +952,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
+                                                                                                  fontWeight: FontWeight.bold,
                                                                                                 ),
                                                                                           ),
                                                                                       ],
@@ -964,14 +964,15 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                       Padding(
                                                                                         padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                         child: Text(
-                                                                                          (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '>1 Km' : '(${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km)',
+                                                                                          // Directly calculate the distance using the provided latitude and longitude
+                                                                                          (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                                           textAlign: TextAlign.start,
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                 fontFamily: 'Open Sans',
-                                                                                                color: FlutterFlowTheme.of(context).primaryText,
+                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                 fontSize: 14,
                                                                                                 letterSpacing: 0.0,
-                                                                                                fontWeight: FontWeight.w600,
+                                                                                                fontWeight: FontWeight.bold,
                                                                                               ),
                                                                                         ),
                                                                                       ),
