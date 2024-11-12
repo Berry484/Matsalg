@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:decimal/decimal.dart';
 import 'package:http/http.dart' as http;
 import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -1133,8 +1134,8 @@ class ApiKjop {
 
   Future<http.Response> kjopMat({
     required int matId,
-    required double price,
-    required double antall,
+    required Decimal price,
+    required Decimal antall,
     required String token,
   }) async {
     // Base URL for the API
@@ -1202,15 +1203,17 @@ class ApiKjop {
             kjoper: orderData['kjoper'], // Username of the buyer
             selger: orderData['selger'], // Username of the seller
             matId: orderData['matId'], // Corrected to 'matId'
+            // Parse antall and ensure it has exactly 2 decimal places
             antall: (orderData['antall'] % 1 == 0)
-                ? orderData['antall']
+                ? Decimal.parse(orderData['antall']
                     .toInt()
-                    .toDouble() // Converts to int, then back to double
-                : double.parse(orderData['antall'].toStringAsFixed(1)),
+                    .toStringAsFixed(2)) // Converts int to 2 decimal places
+                : Decimal.parse(orderData['antall'].toStringAsFixed(2)),
 
+            // Parse pris and ensure it has exactly 2 decimal places
             pris: (orderData['pris'] % 1 == 0)
-                ? orderData['pris'].toInt().toDouble()
-                : double.parse(orderData['pris'].toStringAsFixed(2)),
+                ? Decimal.parse(orderData['pris'].toInt().toStringAsFixed(2))
+                : Decimal.parse(orderData['pris'].toStringAsFixed(2)),
             time: DateTime.parse(orderData['time']), // Convert to DateTime
             godkjenttid: orderData['godkjenttid'] != null
                 ? DateTime.parse(orderData['godkjenttid'])
@@ -1492,8 +1495,8 @@ class OrdreInfo {
   final String kjoper;
   final String selger;
   final int matId;
-  final double antall;
-  final double pris; // Ensure this is a double
+  final Decimal antall;
+  final Decimal pris; // Ensure this is a double
   final DateTime time;
   final DateTime? godkjenttid;
   final bool? hentet;

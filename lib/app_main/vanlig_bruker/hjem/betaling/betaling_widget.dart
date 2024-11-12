@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
@@ -552,7 +553,6 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                   .antallStkTextControllerValidator
                                                   .asValidator(context),
                                               onTap: () {
-// Define the function outside the onTap callback to avoid multiple declarations
                                                 List<double> getPickerValues() {
                                                   List<double> values = [];
                                                   double step = matvare.kg ==
@@ -563,9 +563,16 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                   double antall =
                                                       matvare.antall ?? 0.0;
 
+                                                  // Add values from 0.0 up to and including antall
                                                   for (double i = 0.0;
-                                                      i <= antall;
+                                                      i <= antall + step / 2;
                                                       i += step) {
+                                                    if ((i - antall).abs() <
+                                                        0.0000001) {
+                                                      values.add(
+                                                          antall); // Add antall exactly if i is very close to antall
+                                                      break; // Break out of the loop to avoid adding further values
+                                                    }
                                                     values.add(i);
                                                   }
                                                   return values;
@@ -928,9 +935,11 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 if (matvare.matId != null &&
                                     _model.antallStkTextController.text
                                         .isNotEmpty) {
-                                  double antall = _selectedValue;
-                                  double pris =
-                                      _selectedValue * matpris * 1.05 + 2;
+                                  Decimal antall =
+                                      Decimal.parse(_selectedValue.toString());
+                                  Decimal pris = Decimal.parse(
+                                      (_selectedValue * matpris * 1.05 + 2)
+                                          .toString());
                                   int matId = matvare.matId ?? 0;
                                   if (matvare.matId != null) {
                                     String? token =

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:decimal/decimal.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -1066,7 +1067,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              '+${alleInfo.pris == alleInfo.pris.toInt() ? alleInfo.pris.toInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
+                                                                              '+${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
@@ -1119,7 +1120,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                     ),
                                                                                     // The actual text
                                                                                     Text(
-                                                                                      '${alleInfo.pris == alleInfo.pris.toInt() ? alleInfo.pris.toInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                      '${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',
@@ -1777,7 +1778,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              '+${ordreInfo.pris == ordreInfo.pris.toInt() ? ordreInfo.pris.toInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
+                                                                              '+${ordreInfo.pris.remainder(Decimal.one) == Decimal.zero ? ordreInfo.pris.toBigInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
@@ -1830,7 +1831,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                     ),
                                                                                     // The actual text
                                                                                     Text(
-                                                                                      '${ordreInfo.pris == ordreInfo.pris.toInt() ? ordreInfo.pris.toInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                      '${ordreInfo.pris.remainder(Decimal.one) == Decimal.zero ? ordreInfo.pris.toBigInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',
@@ -2452,7 +2453,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              '+${salgInfo.pris == salgInfo.pris.toInt() ? salgInfo.pris.toInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
+                                                                              '+${salgInfo.pris.remainder(Decimal.one) == Decimal.zero ? salgInfo.pris.toBigInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
@@ -2505,7 +2506,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                     ),
                                                                                     // The actual text
                                                                                     Text(
-                                                                                      '${salgInfo.pris == salgInfo.pris.toInt() ? salgInfo.pris.toInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                      '${salgInfo.pris.remainder(Decimal.one) == Decimal.zero ? salgInfo.pris.toBigInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Open Sans',
