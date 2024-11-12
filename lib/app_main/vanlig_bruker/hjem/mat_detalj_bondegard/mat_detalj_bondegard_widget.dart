@@ -1251,7 +1251,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                               .override(
                                                                 fontFamily:
                                                                     'Open Sans',
-                                                                fontSize: 14.0,
+                                                                fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -1268,7 +1268,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                               .override(
                                                                 fontFamily:
                                                                     'Open Sans',
-                                                                fontSize: 14.0,
+                                                                fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -1300,7 +1300,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
-                                              fontSize: 14.0,
+                                              fontSize: 15.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -1326,7 +1326,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   fontFamily: 'Open Sans',
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
+                                                  color: const Color.fromARGB(
+                                                      211, 87, 99, 108),
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                           ),
                                           Padding(
@@ -1344,10 +1346,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     fontFamily: 'Open Sans',
                                                     fontSize: 14.0,
                                                     letterSpacing: 0.0,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    fontWeight: FontWeight.w600,
+                                                    color: const Color.fromARGB(
+                                                        211, 87, 99, 108),
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                             ),
                                           ),
@@ -1366,16 +1367,17 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             child: Text(
                                               '${matvare.antall ?? 0} ${matvare.kg == true ? 'Kg' : 'stk'}',
                                               textAlign: TextAlign.start,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily: 'Open Sans',
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleMedium
+                                                  .override(
+                                                    fontFamily: 'Open Sans',
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: const Color.fromARGB(
+                                                        211, 87, 99, 108),
+                                                  ),
                                             ),
                                           ),
                                           SizedBox(
@@ -1416,8 +1418,11 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         fontFamily: 'Open Sans',
                                                         fontSize: 14.0,
                                                         letterSpacing: 0.0,
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            211, 87, 99, 108),
                                                         fontWeight:
-                                                            FontWeight.w600,
+                                                            FontWeight.bold,
                                                       ),
                                                 ),
                                               ],

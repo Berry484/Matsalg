@@ -513,7 +513,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               mainAxisAlignment: MainAxisAlignment.center,
                                                                               children: [
                                                                                 Text(
-                                                                                  '43',
+                                                                                  _matvarer?.length.toString() ?? '',
                                                                                   textAlign: TextAlign.center,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Open Sans',

@@ -1230,7 +1230,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                               .override(
                                                                 fontFamily:
                                                                     'Open Sans',
-                                                                fontSize: 14.0,
+                                                                fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -1247,7 +1247,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                               .override(
                                                                 fontFamily:
                                                                     'Open Sans',
-                                                                fontSize: 14.0,
+                                                                fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -1279,7 +1279,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
-                                              fontSize: 14.0,
+                                              fontSize: 15.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -1305,7 +1305,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                   fontFamily: 'Open Sans',
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
+                                                  color: const Color.fromARGB(
+                                                      211, 87, 99, 108),
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                           ),
                                           Padding(
@@ -1323,10 +1325,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                     fontFamily: 'Open Sans',
                                                     fontSize: 14.0,
                                                     letterSpacing: 0.0,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    fontWeight: FontWeight.w600,
+                                                    color: const Color.fromARGB(
+                                                        211, 87, 99, 108),
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                             ),
                                           ),
@@ -1341,20 +1342,21 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                           ),
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5, 0, 0, 0),
+                                                .fromSTEB(5, 0, 5, 0),
                                             child: Text(
                                               '${matvare.antall ?? 0} ${matvare.kg == true ? 'Kg' : 'stk'}',
                                               textAlign: TextAlign.start,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily: 'Open Sans',
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleMedium
+                                                  .override(
+                                                    fontFamily: 'Open Sans',
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: const Color.fromARGB(
+                                                        211, 87, 99, 108),
+                                                  ),
                                             ),
                                           ),
                                         ],
