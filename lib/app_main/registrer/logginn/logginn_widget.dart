@@ -161,6 +161,11 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                             controller: _model.emailTextController,
                             focusNode: _model.emailFocusNode,
                             obscureText: false,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) {
+                              FocusScope.of(context).requestFocus(_model
+                                  .passordFocusNode); // Move focus to next field
+                            },
                             decoration: InputDecoration(
                               labelText: 'E-post eller telefonnummer',
                               labelStyle: FlutterFlowTheme.of(context)
@@ -227,8 +232,108 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                           child: TextFormField(
                             controller: _model.passordTextController,
                             focusNode: _model.passordFocusNode,
-                            textInputAction: TextInputAction.done,
+                            textInputAction: TextInputAction.go,
                             obscureText: !_model.passordVisibility,
+                            onFieldSubmitted: (_) async {
+                              if (_isloading) {
+                                return;
+                              }
+                              if (_model.formKey.currentState == null ||
+                                  !_model.formKey.currentState!.validate()) {
+                                return;
+                              }
+                              _isloading = true;
+                              try {
+                                FFAppState().startet = false;
+                                String? token = await apiGetToken.getAuthToken(
+                                    username: _model.emailTextController.text,
+                                    phoneNumber:
+                                        _model.emailTextController.text,
+                                    password:
+                                        _model.passordTextController.text);
+
+                                if (token != null) {
+                                  await secureStorage.writeToken(token);
+
+                                  final response = await apiCalls
+                                      .checkUserInfo(Securestorage.authToken);
+
+                                  if (response.statusCode == 200) {
+                                    final decodedResponse =
+                                        jsonDecode(response.body);
+                                    FFAppState().brukernavn =
+                                        decodedResponse['brukernavn'] ?? '';
+                                    FFAppState().firstname =
+                                        decodedResponse['firstname'] ?? '';
+                                    FFAppState().lastname =
+                                        decodedResponse['lastname'] ?? '';
+                                    FFAppState().bio =
+                                        decodedResponse['bio'] ?? '';
+                                    FFAppState().profilepic =
+                                        decodedResponse['profile_picture'] ??
+                                            '';
+
+                                    _isloading = false;
+                                    context.pushNamed('Hjem');
+                                    FFAppState().login = true;
+                                    return;
+                                  }
+
+                                  _isloading = false;
+                                  return;
+                                } else {
+                                  _isloading = false;
+                                  showCupertinoDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CupertinoAlertDialog(
+                                        title: const Text(
+                                            'Feil innlogging eller passord'),
+                                        actions: <Widget>[
+                                          CupertinoDialogAction(
+                                            onPressed: () async {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text(
+                                              'Ok',
+                                              style:
+                                                  TextStyle(color: Colors.blue),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  _isloading = false;
+                                  _model.passordTextController!.clear();
+                                  return;
+                                }
+                              } catch (e) {
+                                _isloading = false;
+                                showCupertinoDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return CupertinoAlertDialog(
+                                      title: const Text('Oopps. Noe gikk galt'),
+                                      content: const Text(
+                                          'Sjekk internettforbindelsen din og prøv igjen.\nHvis problemet vedvarer, vennligst kontakt oss for hjelp.'),
+                                      actions: <Widget>[
+                                        CupertinoDialogAction(
+                                          onPressed: () async {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text(
+                                            'Ok',
+                                            style:
+                                                TextStyle(color: Colors.blue),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } // Move focus to next field
+                            },
                             decoration: InputDecoration(
                               labelText: 'Passord',
                               labelStyle: FlutterFlowTheme.of(context)

@@ -14,6 +14,7 @@ class Matvarer {
   final double? antall;
   final String? profilepic;
   final bool? kjopt;
+  final DateTime? updatetime; // Add updatetime here
 
   Matvarer({
     this.matId,
@@ -31,16 +32,22 @@ class Matvarer {
     this.antall,
     this.profilepic,
     this.kjopt,
+    this.updatetime, // Add updatetime to constructor
   });
+
   factory Matvarer.fromJson1(Map<String, dynamic>? json) {
+    DateTime? parsedTime;
+    if (json?['updatetime'] != null) {
+      parsedTime = DateTime.tryParse(json?['updatetime']);
+    }
+
     return Matvarer(
       matId: json?['matId'] as int?,
-      name: json?['name'] as String? ?? "", // Set default empty string if null
+      name: json?['name'] as String? ?? "", // Default empty string if null
       imgUrls: (json?['imgUrl'] != null && json?['imgUrl'] is List)
           ? List<String>.from(json?['imgUrl']?.whereType<String>() ?? [])
           : [],
-      description: json?['description'] as String? ??
-          "", // Set default empty string if null
+      description: json?['description'] as String? ?? "",
       price: json?['price'] as int?,
       kategorier: (json?['kategorier'] != null && json?['kategorier'] is List)
           ? List<String>.from(json?['kategorier'])
@@ -49,17 +56,21 @@ class Matvarer {
       lng: json?['lng'] as double?,
       betaling: json?['betaling'] as bool?,
       kg: json?['kg'] as bool?,
-      username: json?['username'] as String? ??
-          "", // Set default empty string if null
+      username: json?['username'] as String? ?? "",
       bonde: json?['bonde'] as bool?,
       antall: json?['antall'] as double?,
-      profilepic: json?['profilepic'] as String? ??
-          "", // Set default empty string if null
+      profilepic: json?['profilepic'] as String? ?? "",
       kjopt: json?['kjopt'] as bool?,
+      updatetime: parsedTime, // Parse updatetime if available
     );
   }
 
   factory Matvarer.fromJson(Map<String, dynamic> json) {
+    DateTime? parsedTime;
+    if (json['updatetime'] != null) {
+      parsedTime = DateTime.tryParse(json['updatetime']);
+    }
+
     return Matvarer(
       matId: json['matId'] as int?,
       name: json['name'] as String? ?? "",
@@ -75,13 +86,12 @@ class Matvarer {
       lng: json['lng'] as double?,
       betaling: json['betaling'] as bool?,
       kg: json['kg'] as bool?,
-      username:
-          json['username'] as String? ?? "", // Set default empty string if null
+      username: json['username'] as String? ?? "",
       bonde: json['bonde'] as bool?,
       antall: json['antall'] as double?,
-      profilepic: json['user']['profilepic'] as String? ??
-          "", // Set default empty string if null
+      profilepic: json['user']?['profilepic'] as String? ?? "",
       kjopt: json['kjopt'] as bool?,
+      updatetime: parsedTime, // Parse updatetime if available
     );
   }
 
@@ -110,6 +120,8 @@ class Matvarer {
       'antall': antall,
       'profilepic': profilepic,
       'kjopt': kjopt,
+      'updatetime': updatetime
+          ?.toIso8601String(), // Convert DateTime to ISO string for JSON
     };
   }
 
@@ -130,7 +142,8 @@ class Matvarer {
         'bonde: $bonde, '
         'antall: $antall, '
         'profilepic: $profilepic, '
-        'kjopt: $kjopt'
+        'kjopt: $kjopt, '
+        'updatetime: $updatetime'
         '}';
   }
 }

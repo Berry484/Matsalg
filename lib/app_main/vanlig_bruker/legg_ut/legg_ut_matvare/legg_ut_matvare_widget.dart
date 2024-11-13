@@ -3133,7 +3133,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     'Open Sans',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .alternate,
+                                                                    .primaryText,
                                                                 fontSize: 18.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -3141,12 +3141,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     FontWeight
                                                                         .bold,
                                                               ),
-                                                      elevation: 2.0,
+                                                      elevation: 0.0,
                                                       borderSide:
                                                           const BorderSide(
                                                         color:
-                                                            Colors.transparent,
-                                                        width: 1.0,
+                                                            Color(0x5957636C),
+                                                        width: 1.4,
                                                       ),
                                                       borderRadius:
                                                           BorderRadius.circular(

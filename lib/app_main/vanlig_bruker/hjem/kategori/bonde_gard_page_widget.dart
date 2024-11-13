@@ -639,7 +639,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                               gridDelegate:
                                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount: 2,
-                                                childAspectRatio: 0.64,
+                                                childAspectRatio: 0.68,
                                               ),
                                               primary: false,
                                               shrinkWrap: true,
@@ -692,35 +692,35 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                         10.0),
                                                           ),
                                                         ),
-                                                        const SizedBox(
-                                                            height: 8.0),
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    left: 10.0),
-                                                            child: Container(
-                                                              width: 38,
-                                                              height: 15,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: const Color
-                                                                    .fromARGB(
-                                                                    127,
-                                                                    255,
-                                                                    255,
-                                                                    255),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
+                                                        // const SizedBox(
+                                                        //     height: 8.0),
+                                                        // Align(
+                                                        //   alignment: Alignment
+                                                        //       .centerLeft,
+                                                        //   child: Padding(
+                                                        //     padding:
+                                                        //         const EdgeInsets
+                                                        //             .only(
+                                                        //             left: 10.0),
+                                                        //     child: Container(
+                                                        //       width: 38,
+                                                        //       height: 15,
+                                                        //       decoration:
+                                                        //           BoxDecoration(
+                                                        //         color: const Color
+                                                        //             .fromARGB(
+                                                        //             127,
+                                                        //             255,
+                                                        //             255,
+                                                        //             255),
+                                                        //         borderRadius:
+                                                        //             BorderRadius
+                                                        //                 .circular(
+                                                        //                     10.0),
+                                                        //       ),
+                                                        //     ),
+                                                        //   ),
+                                                        // )
                                                       ],
                                                     ),
                                                   );

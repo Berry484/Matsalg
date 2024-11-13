@@ -661,6 +661,7 @@ class ApiGetUser {
             jsonDecode(utf8.decode(response.bodyBytes));
 
         // If the response is not a list, wrap it in a list before passing to fromSnapshot
+
         if (jsonResponse is Map<String, dynamic>) {
           return Bonder.bonderFromSnapshot(
               [jsonResponse]); // Wrap single object in a list
@@ -1217,7 +1218,10 @@ class ApiKjop {
             time: DateTime.parse(orderData['time']), // Convert to DateTime
             godkjenttid: orderData['godkjenttid'] != null
                 ? DateTime.parse(orderData['godkjenttid'])
-                : null, // Parse if exists
+                : null,
+            updatetime: orderData['updatetime'] != null
+                ? DateTime.parse(orderData['updatetime'])
+                : null,
             hentet: orderData['hentet'], // Status of whether picked up
             godkjent: orderData['godkjent'], // Approval status
             trekt: orderData['trekt'], // Approval status
@@ -1499,6 +1503,7 @@ class OrdreInfo {
   final Decimal pris; // Ensure this is a double
   final DateTime time;
   final DateTime? godkjenttid;
+  final DateTime? updatetime;
   final bool? hentet;
   final bool? godkjent;
   final bool? trekt;
@@ -1516,6 +1521,7 @@ class OrdreInfo {
       required this.pris,
       required this.time,
       this.godkjenttid,
+      required this.updatetime,
       required this.hentet,
       required this.godkjent,
       required this.trekt,

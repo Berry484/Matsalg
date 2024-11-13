@@ -268,10 +268,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         matvare.username,
                                         ParamType.String,
                                       ),
-                                      'bruker': serializeParam(
-                                        null,
-                                        ParamType.JSON,
-                                      ),
                                     },
                                   );
                                 },
@@ -431,7 +427,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8.0),
+                                                                            0.0),
                                                                 child: Image
                                                                     .network(
                                                                   '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
@@ -479,7 +475,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              8.0),
+                                                                              0.0),
                                                                   child: Image
                                                                       .network(
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
@@ -528,7 +524,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              8.0),
+                                                                              0.0),
                                                                   child: Image
                                                                       .network(
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
@@ -575,7 +571,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              8.0),
+                                                                              0.0),
                                                                   child: Image
                                                                       .network(
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
@@ -624,7 +620,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              8.0),
+                                                                              0.0),
                                                                   child: Image
                                                                       .network(
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
@@ -1244,7 +1240,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       children: [
                                                         TextSpan(
                                                           text:
-                                                              '${matvare.username} ',
+                                                              '${matvare.username}  ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .titleSmall
@@ -1434,7 +1430,35 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 50.0, 0.0, 20.0),
+                                              0.0, 40.0, 0.0, 20.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            'Sist endret ${matvare.updatetime != null ? DateFormat("d. MMM", "nb_NO").format(matvare.updatetime!.toLocal()) : ""}',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Open Sans',
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.0,
+                                                  color: const Color.fromARGB(
+                                                      236, 47, 51, 54),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 70.0, 0.0, 20.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -1468,7 +1492,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 10.0, 0.0),
+                              5.0, 0.0, 5.0, 0.0),
                           child: RefreshIndicator(
                             onRefresh: () async {
                               await getAllFoods();
@@ -1483,7 +1507,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                childAspectRatio: 0.64,
+                                childAspectRatio: 0.68,
                               ),
                               primary: false,
                               shrinkWrap: true,
@@ -1521,24 +1545,24 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 BorderRadius.circular(10.0),
                                           ),
                                         ),
-                                        const SizedBox(height: 8.0),
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10.0),
-                                            child: Container(
-                                              width: 38,
-                                              height: 15,
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    127, 255, 255, 255),
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
-                                            ),
-                                          ),
-                                        )
+                                        // const SizedBox(height: 8.0),
+                                        // Align(
+                                        //   alignment: Alignment.centerLeft,
+                                        //   child: Padding(
+                                        //     padding: const EdgeInsets.only(
+                                        //         left: 10.0),
+                                        //     child: Container(
+                                        //       width: 38,
+                                        //       height: 15,
+                                        //       decoration: BoxDecoration(
+                                        //         color: const Color.fromARGB(
+                                        //             127, 255, 255, 255),
+                                        //         borderRadius:
+                                        //             BorderRadius.circular(10.0),
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // )
                                       ],
                                     ),
                                   );

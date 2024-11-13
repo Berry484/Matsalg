@@ -10,6 +10,7 @@ class Bonder {
   final double? lng;
   final bool? bonde;
   final String? gardsnavn;
+  final DateTime? time;
 
   Bonder({
     this.username,
@@ -23,22 +24,32 @@ class Bonder {
     this.lng,
     this.bonde,
     this.gardsnavn,
+    this.time,
   });
 
-  // Factory constructor to create Bonder object from JSON
   factory Bonder.fromJson(Map<String, dynamic>? json) {
+    if (json == null || json.isEmpty) {
+      throw const FormatException('Empty or null response');
+    }
+
+    DateTime? parsedTime;
+    if (json['time'] != null) {
+      parsedTime = DateTime.tryParse(json['time']);
+    }
+
     return Bonder(
-      username: json?['username'] as String?,
-      firstname: json?['firstname'] as String?,
-      lastname: json?['lastname'] as String?,
-      profilepic: json?['profilepic'] as String?,
-      email: json?['email'] as String?,
-      bio: json?['bio'] as String?, // Added bio field
-      phoneNumber: json?['phoneNumber'] as String?, // Matched "phoneNumber"
-      lat: json?['lat'] as double?,
-      lng: json?['lng'] as double?,
-      bonde: json?['bonde'] as bool?,
-      gardsnavn: json?['gardsnavn'] as String?,
+      username: json['username'] as String?,
+      firstname: json['firstname'] as String?,
+      lastname: json['lastname'] as String?,
+      profilepic: json['profilepic'] as String?,
+      email: json['email'] as String?,
+      bio: json['bio'] as String?,
+      phoneNumber: json['phoneNumber'] as String?,
+      lat: json['lat'] as double?,
+      lng: json['lng'] as double?,
+      bonde: json['bonde'] as bool?,
+      gardsnavn: json['gardsnavn'] as String?,
+      time: parsedTime, // Use the parsed time here
     );
   }
 
@@ -63,6 +74,7 @@ class Bonder {
       'lng': lng,
       'bonde': bonde,
       'gardsnavn': gardsnavn,
+      'time': time?.toIso8601String(), // Convert time to ISO string
     };
   }
 
@@ -79,7 +91,8 @@ class Bonder {
         'lat: $lat, '
         'lng: $lng, '
         'bonde: $bonde, '
-        'gardsnavn: $gardsnavn'
+        'gardsnavn: $gardsnavn, '
+        'time: $time'
         '}';
   }
 }

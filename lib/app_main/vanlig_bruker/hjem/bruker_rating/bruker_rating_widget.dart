@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:shimmer/shimmer.dart';
@@ -31,6 +32,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
   UserInfoStats? _ratingStats;
   List<UserInfoRating>? _kjopratings = [];
   List<UserInfoRating>? _selgratings = [];
+  List<Bonder>? _brukerinfo;
+  Bonder? bruker;
+  String? username;
   bool _ratingisLoading = true;
   double ratingVerdi = 5.0;
   int ratingantall = 0;
@@ -42,6 +46,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
     super.initState();
     _model = createModel(context, () => BrukerRatingModel());
     getRatingStats();
+    _checkUser();
     getAllRatings();
     timeago.setLocaleMessages('nb_NO', timeago.NbNoMessages());
 
@@ -102,6 +107,49 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
     Future.delayed(const Duration(seconds: 3), () {
       overlayEntry.remove();
     });
+  }
+
+  Future<void> _checkUser() async {
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        if (widget.mine != true) {
+          username = widget.username;
+        }
+        if (widget.mine == true) {
+          username = FFAppState().brukernavn;
+        }
+        _brukerinfo = await ApiGetUser.checkUser(token, username);
+        if (_brukerinfo != null && _brukerinfo!.isNotEmpty) {
+          bruker = _brukerinfo![0];
+        } else {
+          // Fallback values
+          bruker = Bonder(
+            username: '',
+            firstname: '',
+            lastname: '',
+            profilepic: '', // Default image
+            email: '',
+            bio: '',
+            phoneNumber: '',
+            lat: null,
+            lng: null,
+            bonde: null,
+            gardsnavn: '',
+          );
+        }
+
+        setState(() {});
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
+    }
   }
 
   Future<void> getRatingStats() async {
@@ -370,7 +418,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(5, 0, 0, 0),
                                                 child: Text(
-                                                  'Ble med i\ndesember 2024',
+                                                  'Ble med i\n${bruker?.time != null ? DateFormat("MMMM yyyy", "nb_NO").format(bruker!.time!.toLocal()) : ""}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium

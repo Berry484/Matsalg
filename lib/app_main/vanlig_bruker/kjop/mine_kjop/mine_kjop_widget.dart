@@ -787,7 +787,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   .circular(24),
                                                         ),
                                                         child: Container(
-                                                          height: 107,
+                                                          height: 95,
                                                           decoration:
                                                               BoxDecoration(
                                                             borderRadius:
@@ -848,6 +848,38 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                       ),
                                                                     ),
                                                                     if (alleInfo
+                                                                            .kjopte !=
+                                                                        true)
+                                                                      Positioned(
+                                                                        top:
+                                                                            6, // Adjust vertical position as needed
+                                                                        left:
+                                                                            0, // Adjust horizontal position as needed
+                                                                        child:
+                                                                            ClipOval(
+                                                                          child:
+                                                                              Image.network(
+                                                                            '${ApiConstants.baseUrl}${alleInfo.kjoperProfilePic}',
+                                                                            width:
+                                                                                25,
+                                                                            height:
+                                                                                25,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            errorBuilder: (BuildContext context,
+                                                                                Object error,
+                                                                                StackTrace? stackTrace) {
+                                                                              return Image.asset(
+                                                                                'assets/images/profile_pic.png', // Replace with a local asset as a fallback
+                                                                                width: 25,
+                                                                                height: 25,
+                                                                                fit: BoxFit.cover,
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    if (alleInfo
                                                                             .hentet ==
                                                                         true)
                                                                       Align(
@@ -904,15 +936,29 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               0,
                                                                               0),
                                                                           child:
+                                                                              Row(
+                                                                            children: [
                                                                               Text(
-                                                                            alleInfo.foodDetails.name ??
-                                                                                '',
-                                                                            style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                  fontFamily: 'Open Sans',
-                                                                                  fontSize: 20,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                ),
+                                                                                alleInfo.kjopte == true ? alleInfo.foodDetails.name ?? '' : alleInfo.kjoper,
+                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontSize: 18,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                    ),
+                                                                              ),
+                                                                              const SizedBox(width: 8), // Optional spacing between text and time
+                                                                              Text(
+                                                                                alleInfo.updatetime != null ? (DateFormat("d. MMM", "nb_NO").format(alleInfo.updatetime!.toLocal())) : "",
+                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontSize: 13,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      color: Colors.grey, // Set a different color here
+                                                                                    ),
+                                                                              ),
+                                                                            ],
                                                                           ),
                                                                         ),
                                                                         if (alleInfo.trekt ==
@@ -996,10 +1042,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Open Sans',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 13,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
-                                                                                    lineHeight: 1.2,
+                                                                                    lineHeight: 1.1,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -1153,78 +1199,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             },
                                           ),
                                         ),
-                                        // if (_model.tabBarCurrentIndex == 1)
-                                        //   if (_kjopEmpty != true)
-                                        //     Container(
-                                        //       width: MediaQuery.sizeOf(context)
-                                        //           .width,
-                                        //       height: MediaQuery.sizeOf(context)
-                                        //               .height -
-                                        //           315,
-                                        //       child: Align(
-                                        //         alignment:
-                                        //             AlignmentDirectional(0, -1),
-                                        //         child: Padding(
-                                        //             padding:
-                                        //                 EdgeInsetsDirectional
-                                        //                     .fromSTEB(
-                                        //                         0, 0, 0, 110),
-                                        //             child: Column(
-                                        //               mainAxisSize:
-                                        //                   MainAxisSize.max,
-                                        //               mainAxisAlignment:
-                                        //                   MainAxisAlignment
-                                        //                       .center,
-                                        //               children: [
-                                        //                 Padding(
-                                        //                   padding:
-                                        //                       const EdgeInsetsDirectional
-                                        //                           .fromSTEB(
-                                        //                           70, 0, 0, 0),
-                                        //                   child: ClipRRect(
-                                        //                     borderRadius:
-                                        //                         BorderRadius
-                                        //                             .circular(
-                                        //                                 8),
-                                        //                     child: Image.asset(
-                                        //                       'assets/images/In_no_time-rafiki.png',
-                                        //                       width: 276,
-                                        //                       height: 215,
-                                        //                       fit: BoxFit.cover,
-                                        //                     ),
-                                        //                   ),
-                                        //                 ),
-                                        //                 Padding(
-                                        //                   padding:
-                                        //                       EdgeInsetsDirectional
-                                        //                           .fromSTEB(0,
-                                        //                               16, 0, 0),
-                                        //                   child: Text(
-                                        //                     'Ingen pågående kjøp',
-                                        //                     textAlign: TextAlign
-                                        //                         .center,
-                                        //                     style: FlutterFlowTheme
-                                        //                             .of(context)
-                                        //                         .headlineSmall
-                                        //                         .override(
-                                        //                           fontFamily:
-                                        //                               'Open Sans',
-                                        //                           color: FlutterFlowTheme.of(
-                                        //                                   context)
-                                        //                               .primaryText,
-                                        //                           fontSize: 20,
-                                        //                           letterSpacing:
-                                        //                               0.0,
-                                        //                           fontWeight:
-                                        //                               FontWeight
-                                        //                                   .w600,
-                                        //                         ),
-                                        //                   ),
-                                        //                 ),
-                                        //               ],
-                                        //             )),
-                                        //       ),
-                                        //     ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(0, 20, 0, 0),
@@ -1615,15 +1589,29 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               0,
                                                                               0),
                                                                           child:
+                                                                              Row(
+                                                                            children: [
                                                                               Text(
-                                                                            ordreInfo.foodDetails.name ??
-                                                                                '',
-                                                                            style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                  fontFamily: 'Open Sans',
-                                                                                  fontSize: 20,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                ),
+                                                                                ordreInfo.foodDetails.name ?? '',
+                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontSize: 18,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                    ),
+                                                                              ),
+                                                                              const SizedBox(width: 8),
+                                                                              Text(
+                                                                                ordreInfo.updatetime != null ? (DateFormat("d. MMM", "nb_NO").format(ordreInfo.updatetime!.toLocal())) : "",
+                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontSize: 13,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      color: Colors.grey,
+                                                                                    ),
+                                                                              ),
+                                                                            ],
                                                                           ),
                                                                         ),
                                                                         if (ordreInfo.avvist ==
@@ -2233,6 +2221,35 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         ),
                                                                       ),
                                                                     ),
+                                                                    Positioned(
+                                                                      top:
+                                                                          6, // Adjust vertical position as needed
+                                                                      left:
+                                                                          0, // Adjust horizontal position as needed
+                                                                      child:
+                                                                          ClipOval(
+                                                                        child: Image
+                                                                            .network(
+                                                                          '${ApiConstants.baseUrl}${salgInfo.kjoperProfilePic}',
+                                                                          width:
+                                                                              25,
+                                                                          height:
+                                                                              25,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          errorBuilder: (BuildContext context,
+                                                                              Object error,
+                                                                              StackTrace? stackTrace) {
+                                                                            return Image.asset(
+                                                                              'assets/images/profile_pic.png',
+                                                                              width: 25,
+                                                                              height: 25,
+                                                                              fit: BoxFit.cover,
+                                                                            );
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
                                                                     if (salgInfo
                                                                             .hentet ==
                                                                         true)
@@ -2290,15 +2307,29 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               0,
                                                                               0),
                                                                           child:
+                                                                              Row(
+                                                                            children: [
                                                                               Text(
-                                                                            salgInfo.foodDetails.name ??
-                                                                                '',
-                                                                            style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                  fontFamily: 'Open Sans',
-                                                                                  fontSize: 20,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                ),
+                                                                                salgInfo.kjoper,
+                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontSize: 18,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                    ),
+                                                                              ),
+                                                                              const SizedBox(width: 8), // Optional spacing between text and time
+                                                                              Text(
+                                                                                salgInfo.updatetime != null ? (DateFormat("d. MMM", "nb_NO").format(salgInfo.updatetime!.toLocal())) : "",
+                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontSize: 13,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      color: Colors.grey, // Set a different color here
+                                                                                    ),
+                                                                              ),
+                                                                            ],
                                                                           ),
                                                                         ),
                                                                         if (salgInfo.trekt ==

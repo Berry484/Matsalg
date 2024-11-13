@@ -269,7 +269,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8.0),
+                                                                        0.0),
                                                             child:
                                                                 Image.network(
                                                               '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
@@ -311,7 +311,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          8.0),
+                                                                          0.0),
                                                               child:
                                                                   Image.network(
                                                                 '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
@@ -354,7 +354,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          8.0),
+                                                                          0.0),
                                                               child:
                                                                   Image.network(
                                                                 '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
@@ -396,7 +396,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          8.0),
+                                                                          0.0),
                                                               child:
                                                                   Image.network(
                                                                 '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
@@ -439,7 +439,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          8.0),
+                                                                          0.0),
                                                               child:
                                                                   Image.network(
                                                                 '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
@@ -1358,6 +1358,34 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                         211, 87, 99, 108),
                                                   ),
                                             ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 40.0, 0.0, 20.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            'Sist endret ${matvare.updatetime != null ? DateFormat("d. MMM", "nb_NO").format(matvare.updatetime!.toLocal()) : ""}',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Open Sans',
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.0,
+                                                  color: const Color.fromARGB(
+                                                      236, 47, 51, 54),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                           ),
                                         ],
                                       ),

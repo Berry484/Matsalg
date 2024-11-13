@@ -1269,7 +1269,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                     if (_model.tabBarCurrentIndex == 0)
                                       Padding(
                                         padding: const EdgeInsetsDirectional
-                                            .fromSTEB(5, 15, 5, 0),
+                                            .fromSTEB(5, 15, 5, 70),
                                         child: RefreshIndicator(
                                           onRefresh: () async {},
                                           child: GridView.builder(
@@ -1282,7 +1282,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                             gridDelegate:
                                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,
-                                              childAspectRatio: 0.64,
+                                              childAspectRatio: 0.68,
                                             ),
                                             primary: false,
                                             shrinkWrap: true,
@@ -1332,35 +1332,35 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       10.0),
                                                         ),
                                                       ),
-                                                      const SizedBox(
-                                                          height: 8.0),
-                                                      Align(
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  left: 10.0),
-                                                          child: Container(
-                                                            width: 38,
-                                                            height: 15,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  127,
-                                                                  255,
-                                                                  255,
-                                                                  255),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10.0),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      )
+                                                      // const SizedBox(
+                                                      //     height: 8.0),
+                                                      // Align(
+                                                      //   alignment: Alignment
+                                                      //       .centerLeft,
+                                                      //   child: Padding(
+                                                      //     padding:
+                                                      //         const EdgeInsets
+                                                      //             .only(
+                                                      //             left: 10.0),
+                                                      //     child: Container(
+                                                      //       width: 38,
+                                                      //       height: 15,
+                                                      //       decoration:
+                                                      //           BoxDecoration(
+                                                      //         color: const Color
+                                                      //             .fromARGB(
+                                                      //             127,
+                                                      //             255,
+                                                      //             255,
+                                                      //             255),
+                                                      //         borderRadius:
+                                                      //             BorderRadius
+                                                      //                 .circular(
+                                                      //                     10.0),
+                                                      //       ),
+                                                      //     ),
+                                                      //   ),
+                                                      // )
                                                     ],
                                                   ),
                                                 );

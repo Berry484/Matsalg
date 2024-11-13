@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -101,6 +102,24 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
     Future.delayed(const Duration(seconds: 3), () {
       overlayEntry.remove();
     });
+  }
+
+  // Haversine formula to calculate distance between two lat/lng points
+  double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
+    const earthRadius = 6371.0; // Earth's radius in kilometers
+    double dLat = _degreesToRadians(lat2 - lat1);
+    double dLng = _degreesToRadians(lng2 - lng1);
+    double a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(_degreesToRadians(lat1)) *
+            cos(_degreesToRadians(lat2)) *
+            sin(dLng / 2) *
+            sin(dLng / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    return earthRadius * c;
+  }
+
+  double _degreesToRadians(double degrees) {
+    return degrees * pi / 180;
   }
 
   @override
@@ -253,16 +272,16 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0, 10, 0, 0),
+                                              0, 0, 0, 0),
                                       child: Text(
                                         matvare.name ?? '',
                                         style: FlutterFlowTheme.of(context)
                                             .headlineSmall
                                             .override(
                                               fontFamily: 'Open Sans',
-                                              fontSize: 20,
+                                              fontSize: 18,
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w500,
+                                              fontWeight: FontWeight.w600,
                                             ),
                                       ),
                                     ),
@@ -358,142 +377,100 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 10),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        5.0, 2.0, 0.0, 5.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        Text(
+                          '${matvare.price}Kr',
+                          textAlign: TextAlign.start,
+                          style: FlutterFlowTheme.of(context)
+                              .titleMedium
+                              .override(
+                                fontFamily: 'Open Sans',
+                                fontSize: 14.0,
+                                letterSpacing: 0.0,
+                                color: const Color.fromARGB(211, 87, 99, 108),
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Text(
-                            '${matvare.price} Kr',
-                            textAlign: TextAlign.end,
+                            matvare.kg == true ? '/Kg' : '/Stk',
+                            textAlign: TextAlign.start,
                             style: FlutterFlowTheme.of(context)
-                                .bodyMedium
+                                .titleMedium
                                 .override(
                                   fontFamily: 'Open Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 16,
+                                  fontSize: 14.0,
                                   letterSpacing: 0.0,
+                                  color: const Color.fromARGB(211, 87, 99, 108),
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
                         ),
-                        if (matvare.kg == true)
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 12, 0, 0),
-                            child: Text(
-                              '/kg',
-                              textAlign: TextAlign.end,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    fontSize: 16,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
+                        SizedBox(
+                          height: 12,
+                          child: VerticalDivider(
+                            thickness: 1.4,
+                            color: FlutterFlowTheme.of(context).secondaryText,
                           ),
-                        if (matvare.kg != true)
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 12, 0, 0),
-                            child: Text(
-                              '/stk',
-                              textAlign: TextAlign.end,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    fontSize: 16,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Align(
-                              alignment: AlignmentDirectional(0, 0),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 14, 8, 0),
-                                child: FaIcon(
-                                  FontAwesomeIcons.solidCircle,
-                                  color: Color.fromARGB(92, 87, 99, 108),
-                                  size: 6,
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                          child: Text(
+                            '${matvare.antall ?? 0} ${matvare.kg == true ? 'Kg' : 'stk'}',
+                            textAlign: TextAlign.start,
+                            style: FlutterFlowTheme.of(context)
+                                .titleMedium
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color.fromARGB(211, 87, 99, 108),
                                 ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 12, 4, 0),
-                              child: Text(
-                                '${ordreInfo.antall}',
-                                textAlign: TextAlign.end,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 12,
+                          child: VerticalDivider(
+                            thickness: 1.4,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                ordreInfo.updatetime != null
+                                    ? (DateFormat("HH:mm  d. MMM", "nb_NO")
+                                        .format(
+                                            ordreInfo.updatetime!.toLocal()))
+                                    : "",
+                                textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                    .titleMedium
                                     .override(
                                       fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 15,
+                                      fontSize: 14.0,
                                       letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
+                                      color: const Color.fromARGB(
+                                          211, 87, 99, 108),
+                                      fontWeight: FontWeight.bold,
                                     ),
                               ),
-                            ),
-                            if (matvare.kg == true)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 12, 0, 0),
-                                child: Text(
-                                  'Kg',
-                                  textAlign: TextAlign.end,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 15,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                            if (matvare.kg != true)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 12, 0, 0),
-                                child: Text(
-                                  'Stk',
-                                  textAlign: TextAlign.end,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 15,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),

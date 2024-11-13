@@ -177,10 +177,6 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                           matvare.username,
                                           ParamType.String,
                                         ),
-                                        'bruker': serializeParam(
-                                          null,
-                                          ParamType.JSON,
-                                        ),
                                       },
                                     );
                                   } on SocketException {
@@ -354,7 +350,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8),
+                                                                            0),
                                                                 child: Image
                                                                     .network(
                                                                   '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
@@ -402,7 +398,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              8),
+                                                                              0),
                                                                   child: Image
                                                                       .network(
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
@@ -451,7 +447,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              8),
+                                                                              0),
                                                                   child: Image
                                                                       .network(
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
@@ -498,7 +494,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              8),
+                                                                              0),
                                                                   child: Image
                                                                       .network(
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
@@ -547,7 +543,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              8),
+                                                                              0),
                                                                   child: Image
                                                                       .network(
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
