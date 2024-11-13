@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:decimal/decimal.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/godkjentebud/godkjentebud_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/budInfo/budInfo_widget.dart';
+import 'package:mat_salg/flutter_flow/flutter_flow_widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../salg_bruker_info/salg_bruker_info_widget.dart';
@@ -44,6 +46,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
   bool _kjopEmpty = false;
   bool _salgEmpty = false;
   bool _allEmpty = false;
+  bool _showMore = false;
   final Securestorage securestorage = Securestorage();
   final ApiCalls apicalls = ApiCalls();
 
@@ -359,7 +362,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                 ? 1
                                                 : (_alleInfo?.length ?? 0) == 0
                                                     ? 1
-                                                    : _alleInfo!.length,
+                                                    : _showMore
+                                                        ? _alleInfo!
+                                                            .length // Show all items when _showMore is true
+                                                        : 5,
                                             itemBuilder: (context, index) {
                                               if (_allEmpty == true) {
                                                 return Container(
@@ -544,6 +550,145 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                               }
                                               final alleInfo =
                                                   _alleInfo![index];
+                                              if (index == 4 && !_showMore) {
+                                                // This is where we show the "Show More" button
+                                                return Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 16.0),
+                                                  child: Center(
+                                                    child: FFButtonWidget(
+                                                      onPressed: () async {
+                                                        safeSetState(() {
+                                                          HapticFeedback
+                                                              .lightImpact();
+                                                          _showMore = true;
+                                                        });
+                                                      },
+                                                      text: 'Se mer',
+                                                      icon: const FaIcon(
+                                                        FontAwesomeIcons
+                                                            .chevronDown,
+                                                        size: 19,
+                                                      ),
+                                                      options: FFButtonOptions(
+                                                        width: 140,
+                                                        height: 30,
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                16, 0, 16, 0),
+                                                        iconPadding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 0, 0, 0),
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontSize: 15,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                        elevation: 0,
+                                                        borderSide:
+                                                            const BorderSide(
+                                                          color:
+                                                              Color(0x5957636C),
+                                                          width: 1.5,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              if (index ==
+                                                      _alleInfo!.length - 1 &&
+                                                  _showMore) {
+                                                // This is where we show the "Show More" button
+                                                return Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 16.0),
+                                                  child: Center(
+                                                    child: FFButtonWidget(
+                                                      onPressed: () async {
+                                                        safeSetState(() {
+                                                          HapticFeedback
+                                                              .lightImpact();
+                                                          _showMore = false;
+                                                        });
+                                                      },
+                                                      text: 'Se mindre',
+                                                      icon: const FaIcon(
+                                                        FontAwesomeIcons
+                                                            .chevronUp,
+                                                        size: 19,
+                                                      ),
+                                                      options: FFButtonOptions(
+                                                        width: 140,
+                                                        height: 30,
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                16, 0, 16, 0),
+                                                        iconPadding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 0, 0, 0),
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontSize: 15,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                        elevation: 0,
+                                                        borderSide:
+                                                            const BorderSide(
+                                                          color:
+                                                              Color(0x5957636C),
+                                                          width: 1.5,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+
                                               return Stack(
                                                 children: [
                                                   Padding(
