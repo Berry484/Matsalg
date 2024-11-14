@@ -239,10 +239,6 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                     : salgInfo.kjoper,
                                 ParamType.String,
                               ),
-                              'bruker': serializeParam(
-                                null,
-                                ParamType.JSON,
-                              ),
                             },
                           );
                         } on SocketException {

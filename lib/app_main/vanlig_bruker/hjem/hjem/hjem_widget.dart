@@ -662,6 +662,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                         child: RefreshIndicator(
                                           onRefresh: () async {
                                             await handleSearch();
+                                            setState(() {});
                                           },
                                           child: ListView.builder(
                                             padding: const EdgeInsets.fromLTRB(
@@ -1798,6 +1799,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                         child: RefreshIndicator(
                                           onRefresh: () async {
                                             await getAllFoods();
+                                            setState(() {});
                                           },
                                           child: GridView.builder(
                                             padding: const EdgeInsets.fromLTRB(

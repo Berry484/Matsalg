@@ -1445,10 +1445,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Open Sans',
-                                                  fontSize: 14.0,
+                                                  fontSize: 13.0,
                                                   letterSpacing: 0.0,
                                                   color: const Color.fromARGB(
-                                                      236, 47, 51, 54),
+                                                      235, 17, 18, 19),
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ),

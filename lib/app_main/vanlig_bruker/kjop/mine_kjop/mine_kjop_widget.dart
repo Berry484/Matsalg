@@ -365,7 +365,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                     : _showMore
                                                         ? _alleInfo!
                                                             .length // Show all items when _showMore is true
-                                                        : 5,
+                                                        : (_alleInfo!.length < 5
+                                                            ? _alleInfo!.length
+                                                            : 5), // Show fewer items if length < 5, else show 5
                                             itemBuilder: (context, index) {
                                               if (_allEmpty == true) {
                                                 return Container(
@@ -621,7 +623,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                               if (index ==
                                                       _alleInfo!.length - 1 &&
                                                   _showMore) {
-                                                // This is where we show the "Show More" button
                                                 return Padding(
                                                   padding: const EdgeInsets
                                                       .symmetric(
