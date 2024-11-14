@@ -785,7 +785,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                   .fromSTEB(
                                                                   5, 0, 0, 0),
                                                           child: Container(
-                                                            width: 142,
+                                                            width: 135,
                                                             height: 103,
                                                             decoration:
                                                                 const BoxDecoration(),
@@ -1199,7 +1199,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                   .fromSTEB(
                                                                   5, 0, 0, 0),
                                                           child: Container(
-                                                            width: 142,
+                                                            width: 135,
                                                             height: 103,
                                                             decoration:
                                                                 const BoxDecoration(),
@@ -1612,7 +1612,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                   .fromSTEB(
                                                                   5, 0, 0, 0),
                                                           child: Container(
-                                                            width: 142,
+                                                            width: 135,
                                                             height: 103,
                                                             decoration:
                                                                 const BoxDecoration(),

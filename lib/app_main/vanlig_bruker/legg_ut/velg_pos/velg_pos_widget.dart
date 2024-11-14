@@ -264,68 +264,104 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  50.0, 40.0, 50.0, 20.0),
+                                  30.0, 40.0, 30.0, 20.0),
                               child: TextFormField(
                                 controller: _model.textController,
                                 focusNode: _model.textFieldFocusNode,
                                 autofocus: false,
-                                textInputAction: TextInputAction.done,
                                 obscureText: false,
+                                onTap: () {},
+                                onFieldSubmitted: (value) {
+                                  if (_model.textController.text.isNotEmpty) {
+                                    context.pushNamed(
+                                      'BondeGardPage',
+                                      queryParameters: {
+                                        'kategori': serializeParam(
+                                            'Søk', ParamType.String),
+                                        'query': serializeParam(
+                                            _model.textController.text,
+                                            ParamType.String),
+                                      }.withoutNulls,
+                                    );
+                                  }
+                                },
+                                textInputAction: TextInputAction.search,
                                 decoration: InputDecoration(
                                   isDense: true,
                                   alignLabelWithHint: false,
-                                  hintText: 'Søk...',
+                                  hintText: 'Søk etter en by',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
                                         fontFamily: 'Open Sans',
                                         color: const Color(0x8F101213),
-                                        fontSize: 12.0,
+                                        fontSize: 14.0,
                                         letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
+                                    borderSide: const BorderSide(
+                                      color: Color.fromARGB(0, 85, 85, 85),
                                       width: 1.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(13.0),
+                                    borderRadius: BorderRadius.circular(22.0),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
                                       color: Color(0x00000000),
                                       width: 1.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(13.0),
+                                    borderRadius: BorderRadius.circular(22.0),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: FlutterFlowTheme.of(context).error,
                                       width: 1.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(13.0),
+                                    borderRadius: BorderRadius.circular(22.0),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: FlutterFlowTheme.of(context).error,
                                       width: 1.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(13.0),
+                                    borderRadius: BorderRadius.circular(22.0),
                                   ),
                                   filled: true,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primary,
+                                      const Color.fromARGB(246, 243, 243, 243),
                                   prefixIcon: const Icon(
                                     Icons.search_outlined,
+                                    size: 20,
+                                  ),
+                                  suffixIcon: _model
+                                          .textController.text.isNotEmpty
+                                      ? IconButton(
+                                          icon: Icon(
+                                            FontAwesomeIcons.solidTimesCircle,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                          ),
+                                          onPressed: () {
+                                            _model.textController!.clear();
+                                            setState(() {});
+                                          },
+                                        )
+                                      : null,
+                                  contentPadding: const EdgeInsets.only(
+                                    top: 6.0,
+                                    bottom: 6.0,
+                                    left: 10.0,
+                                    right: 10.0,
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                    .bodyLarge
                                     .override(
                                       fontFamily: 'Open Sans',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
-                                      fontSize: 13.0,
+                                      fontSize: 15.0,
                                       letterSpacing: 0.0,
                                     ),
                                 textAlign: TextAlign.start,
@@ -365,11 +401,11 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Icon(
-                                      Icons.location_on,
+                                    FaIcon(
+                                      FontAwesomeIcons.locationArrow,
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
-                                      size: 25.0,
+                                      size: 19.0,
                                     ),
                                     const SizedBox(width: 8.0),
                                     Text(
@@ -410,7 +446,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                 },
                                 text: 'Velg denne posisjonen',
                                 options: FFButtonOptions(
-                                  width: 290.0,
+                                  width: 320,
                                   height: 50.0,
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 16.0, 0.0),
@@ -427,7 +463,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                  elevation: 3.0,
+                                  elevation: 0.0,
                                   borderRadius: BorderRadius.circular(24.0),
                                 ),
                               ),
