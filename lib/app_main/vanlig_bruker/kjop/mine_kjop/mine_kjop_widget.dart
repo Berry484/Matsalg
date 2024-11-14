@@ -1025,31 +1025,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                    if (alleInfo
-                                                                            .hentet ==
-                                                                        true)
-                                                                      Align(
-                                                                        alignment: const AlignmentDirectional(
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            Container(
-                                                                          width:
-                                                                              61,
-                                                                          height:
-                                                                              61,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color: const Color.fromARGB(
-                                                                                91,
-                                                                                135,
-                                                                                135,
-                                                                                135),
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(0),
-                                                                          ),
-                                                                        ),
-                                                                      ),
                                                                   ],
                                                                 ),
                                                                 Expanded(

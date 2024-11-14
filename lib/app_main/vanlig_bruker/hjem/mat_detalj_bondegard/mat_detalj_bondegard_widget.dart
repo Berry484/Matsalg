@@ -906,7 +906,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          if (matvare.kjopt == true)
+                                          if (matvare.kjopt == true ||
+                                              matvare.antall == null ||
+                                              matvare.antall == 0)
                                             InkWell(
                                               splashColor: Colors.transparent,
                                               focusColor: Colors.transparent,
@@ -981,7 +983,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 ),
                                               ),
                                             ),
-                                          if (matvare.kjopt != true)
+                                          if (matvare.kjopt != true &&
+                                              matvare.antall != null &&
+                                              matvare.antall != 0)
                                             InkWell(
                                               splashColor: Colors.transparent,
                                               focusColor: Colors.transparent,

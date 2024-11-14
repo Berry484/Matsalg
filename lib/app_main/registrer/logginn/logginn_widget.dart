@@ -512,7 +512,9 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 );
                               }
                             },
-                            text: 'Logg inn',
+                            text: _isloading
+                                ? '' // Change button text to "Loading..." when loading
+                                : 'Logg inn', // Normal text when not loading
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 45,
@@ -537,6 +539,11 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
+                            icon: _isloading
+                                ? CircularProgressIndicator(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                  )
+                                : null, // If not loading, no icon is shown
                           ),
                         ),
                         Text(

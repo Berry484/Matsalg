@@ -1227,6 +1227,7 @@ class ApiKjop {
             trekt: orderData['trekt'], // Approval status
             avvist: orderData['avvist'], // Approval status
             kjopte: orderData['kjopte'],
+            rated: orderData['rated'],
 
             kjoperProfilePic: orderData['user']['profilepic'] as String?,
             foodDetails: foodDetails, // Pass the Matvarer instance here
@@ -1385,6 +1386,40 @@ class ApiKjop {
     );
     return response; // Return the response
   }
+
+  Future<http.Response> giveRating({
+    required int id,
+    required String token,
+  }) async {
+    // Base URL for the API
+    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+
+    // Create the user data as a Map
+    final Map<String, dynamic> userData = {
+      "id": id,
+      "rated": true,
+    };
+
+    // Convert the Map to JSON
+    final String jsonBody = jsonEncode(userData);
+
+    // Prepare URL with encoded parameters
+    final uri = Uri.parse('$baseUrl/ordre/updaterated');
+
+    // Prepare headers
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token', // Add Bearer token if present
+    };
+
+    // Send the POST request
+    final response = await http.post(
+      uri, // Use the updated URI with query parameters
+      headers: headers,
+      body: jsonBody,
+    );
+    return response; // Return the response
+  }
 }
 
 class ApiGetFilterFood {
@@ -1511,6 +1546,7 @@ class OrdreInfo {
   final String? kjoperProfilePic;
   final Matvarer foodDetails; // Change this to Matvarer
   final bool? kjopte;
+  final bool? rated;
 
   OrdreInfo(
       {required this.id,
@@ -1528,7 +1564,8 @@ class OrdreInfo {
       required this.avvist,
       required this.kjoperProfilePic,
       required this.foodDetails, // Pass food details to the constructor
-      required this.kjopte});
+      required this.kjopte,
+      required this.rated});
 }
 
 class ApiUpdateFood {

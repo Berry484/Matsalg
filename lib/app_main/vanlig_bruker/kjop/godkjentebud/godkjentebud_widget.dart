@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -32,6 +34,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
   late GodkjentebudModel _model;
   late Matvarer matvare;
   late OrdreInfo salgInfo;
+  bool _bekreftIsLoading = false;
 
   @override
   void setState(VoidCallback callback) {
@@ -515,6 +518,91 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 ],
               ),
             ),
+            if (salgInfo.rated != true &&
+                salgInfo.kjopte != true &&
+                salgInfo.hentet == true)
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    width: 10,
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  Align(
+                    alignment: const AlignmentDirectional(0, 0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          try {
+                            if (_bekreftIsLoading) {
+                              return;
+                            }
+                            _bekreftIsLoading = true;
+                            String? token = Securestorage.authToken;
+                            if (token != null) {
+                              final response = await ApiKjop()
+                                  .giveRating(id: salgInfo.id, token: token);
+                              if (response.statusCode == 200) {
+                                _bekreftIsLoading = false;
+                                HapticFeedback.mediumImpact();
+                                context.pushNamed(
+                                  'LeggIgjenRating',
+                                  queryParameters: {
+                                    'kjop': serializeParam(
+                                      false,
+                                      ParamType.bool,
+                                    ),
+                                    'username': serializeParam(
+                                      salgInfo.kjoper,
+                                      ParamType.String,
+                                    ),
+                                  },
+                                );
+                              }
+                              _bekreftIsLoading = false;
+                            }
+                          } on SocketException {
+                            showErrorToast(
+                                context, 'Ingen internettforbindelse');
+                          } catch (e) {
+                            showErrorToast(context, 'En feil oppstod');
+                          }
+                        },
+                        text: 'Gi en rating',
+                        options: FFButtonOptions(
+                          width: 190,
+                          height: 40,
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
+                          iconPadding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: 'Open Sans',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 17,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                          elevation: 0,
+                          borderSide: const BorderSide(
+                            color: Color(0x5957636C),
+                            width: 0.8,
+                          ),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -528,7 +616,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 Align(
                   alignment: const AlignmentDirectional(0, 0),
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 35),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 35),
                     child: FFButtonWidget(
                       onPressed: () {},
                       text: 'Melding',

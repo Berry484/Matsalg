@@ -174,7 +174,7 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 80, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           try {
@@ -225,7 +225,7 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
-                          elevation: 5,
+                          elevation: 0,
                           borderRadius: BorderRadius.circular(14),
                         ),
                       ),
