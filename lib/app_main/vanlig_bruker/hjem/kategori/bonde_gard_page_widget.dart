@@ -40,6 +40,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
   int sorterVerdi = 1;
   final Securestorage securestorage = Securestorage();
   final ApiGetFilterFood apiGetFilterFood = ApiGetFilterFood();
+  final ScrollController _scrollController = ScrollController();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -48,6 +49,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
     super.initState();
     _model = createModel(context, () => BondeGardPageModel());
     getFilterFoods();
+    _scrollController.addListener(_onScroll);
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -55,6 +57,11 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
       _model.textController.text = widget.query;
     }
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
+  }
+
+  void _onScroll() {
+    FocusScope.of(context).requestFocus(FocusNode());
+    setState(() {});
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -384,630 +391,639 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
             top: true,
             child: Stack(
               children: [
-                SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Stack(
-                        alignment: const AlignmentDirectional(0, -1),
-                        children: [
-                          Align(
-                            alignment: const AlignmentDirectional(0, 0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 10, 0, 17),
-                              child: SafeArea(
-                                child: Container(
-                                  width: valueOrDefault<double>(
-                                    MediaQuery.sizeOf(context).width,
-                                    500.0,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(10, 0, 10, 0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: TextFormField(
-                                                controller:
-                                                    _model.textController,
-                                                focusNode:
-                                                    _model.textFieldFocusNode,
-                                                autofocus: false,
-                                                obscureText: false,
-                                                onChanged: (value) =>
-                                                    _runFilter(value),
-                                                textInputAction: TextInputAction
-                                                    .search, // Add this line to
-                                                decoration: InputDecoration(
-                                                  isDense: true,
-                                                  alignLabelWithHint: false,
-                                                  hintText: 'Søk',
-                                                  hintStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .labelMedium
+                NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification notification) {
+                    if (notification is ScrollStartNotification) {
+                      // Dismiss the keyboard when scrolling starts
+                      FocusScope.of(context).unfocus();
+                    }
+                    return false; // Return false to continue processing the notification
+                  },
+                  child: SingleChildScrollView(
+                    primary: false,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Stack(
+                          alignment: const AlignmentDirectional(0, -1),
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(0, 0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 10, 0, 17),
+                                child: SafeArea(
+                                  child: Container(
+                                    width: valueOrDefault<double>(
+                                      MediaQuery.sizeOf(context).width,
+                                      500.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10, 0, 10, 0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: TextFormField(
+                                                  controller:
+                                                      _model.textController,
+                                                  focusNode:
+                                                      _model.textFieldFocusNode,
+                                                  autofocus: false,
+                                                  obscureText: false,
+                                                  onChanged: (value) =>
+                                                      _runFilter(value),
+                                                  textInputAction: TextInputAction
+                                                      .search, // Add this line to
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    alignLabelWithHint: false,
+                                                    hintText: 'Søk',
+                                                    hintStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: const Color(
+                                                              0x8F101213),
+                                                          fontSize: 15.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                            0, 85, 85, 85),
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              13.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color:
+                                                            Color(0x00000000),
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              13.0),
+                                                    ),
+                                                    errorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              13.0),
+                                                    ),
+                                                    focusedErrorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              13.0),
+                                                    ),
+                                                    filled: true,
+                                                    fillColor:
+                                                        const Color.fromARGB(
+                                                            246, 243, 243, 243),
+                                                    prefixIcon: const Icon(
+                                                      Icons.search_outlined,
+                                                      size: 20,
+                                                    ),
+                                                    suffixIcon: _model
+                                                            .textController
+                                                            .text
+                                                            .isNotEmpty
+                                                        ? IconButton(
+                                                            icon: Icon(
+                                                              FontAwesomeIcons
+                                                                  .solidTimesCircle,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryText, // Set the desired color here
+                                                            ),
+                                                            onPressed: () {
+                                                              _model
+                                                                  .textController!
+                                                                  .clear();
+                                                              setState(() {
+                                                                _runFilter('');
+                                                              });
+                                                            },
+                                                          )
+                                                        : null,
+                                                    contentPadding:
+                                                        const EdgeInsets.only(
+                                                            top: 6.0,
+                                                            bottom: 6.0,
+                                                            left: 10.0,
+                                                            right: 10.0),
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyLarge
                                                       .override(
                                                         fontFamily: 'Open Sans',
-                                                        color: const Color(
-                                                            0x8F101213),
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
                                                         fontSize: 15.0,
                                                         letterSpacing: 0.0,
                                                       ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Color.fromARGB(
-                                                          0, 85, 85, 85),
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            13.0),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            13.0),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .error,
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            13.0),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .error,
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            13.0),
-                                                  ),
-                                                  filled: true,
-                                                  fillColor:
-                                                      const Color.fromARGB(
-                                                          246, 243, 243, 243),
-                                                  prefixIcon: const Icon(
-                                                    Icons.search_outlined,
-                                                    size: 20,
-                                                  ),
-                                                  suffixIcon: _model
-                                                          .textController
-                                                          .text
-                                                          .isNotEmpty
-                                                      ? IconButton(
-                                                          icon: Icon(
-                                                            FontAwesomeIcons
-                                                                .solidTimesCircle,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .secondaryText, // Set the desired color here
-                                                          ),
-                                                          onPressed: () {
-                                                            _model
-                                                                .textController!
-                                                                .clear();
-                                                            setState(() {
-                                                              _runFilter('');
-                                                            });
-                                                          },
-                                                        )
-                                                      : null,
-                                                  contentPadding:
-                                                      const EdgeInsets.only(
-                                                          top: 6.0,
-                                                          bottom: 6.0,
-                                                          left: 10.0,
-                                                          right: 10.0),
+                                                  textAlign: TextAlign.start,
+                                                  cursorColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primaryText,
+                                                  validator: _model
+                                                      .textControllerValidator
+                                                      .asValidator(context),
                                                 ),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyLarge
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      fontSize: 15.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                                textAlign: TextAlign.start,
-                                                cursorColor:
-                                                    FlutterFlowTheme.of(context)
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            if ((_matvarer == null || _matvarer!.isEmpty) &&
+                                _isloading == false)
+                              Container(
+                                width: MediaQuery.sizeOf(context).width,
+                                height: MediaQuery.sizeOf(context).height - 150,
+                                child: Align(
+                                  alignment: const AlignmentDirectional(0, -1),
+                                  child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 110),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: Image.asset(
+                                              'assets/images/Usability_testing-pana.png',
+                                              width: 290,
+                                              height: 250,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 16, 0, 0),
+                                            child: Text(
+                                              'Her var det tomt',
+                                              textAlign: TextAlign.center,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .headlineSmall
+                                                  .override(
+                                                    fontFamily: 'Open Sans',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
                                                         .primaryText,
-                                                validator: _model
-                                                    .textControllerValidator
-                                                    .asValidator(context),
+                                                    fontSize: 20,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              ),
+                            if (_empty != true)
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 60, 0, 0),
+                                child: SingleChildScrollView(
+                                  primary: false,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Stack(
+                                        alignment:
+                                            const AlignmentDirectional(0, 0.9),
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(5, 22, 5, 0),
+                                            child: RefreshIndicator(
+                                              onRefresh: () async {
+                                                await getFilterFoods();
+                                              },
+                                              child: GridView.builder(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  63.0,
+                                                ),
+                                                gridDelegate:
+                                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  childAspectRatio: 0.68,
+                                                ),
+                                                primary: false,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount: _isloading
+                                                    ? 1
+                                                    : _matvarer?.length ?? 0,
+                                                itemBuilder: (context, index) {
+                                                  if (_isloading) {
+                                                    return Shimmer.fromColors(
+                                                      baseColor:
+                                                          Colors.grey[300]!,
+                                                      highlightColor:
+                                                          Colors.grey[100]!,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .all(5.0),
+                                                            width: 200.0,
+                                                            height: 230.0,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: const Color
+                                                                  .fromARGB(
+                                                                  127,
+                                                                  255,
+                                                                  255,
+                                                                  255),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          16.0), // Rounded corners
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 8.0),
+                                                          Container(
+                                                            width: 200,
+                                                            height: 15,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: const Color
+                                                                  .fromARGB(
+                                                                  127,
+                                                                  255,
+                                                                  255,
+                                                                  255),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                            ),
+                                                          ),
+                                                          // const SizedBox(
+                                                          //     height: 8.0),
+                                                          // Align(
+                                                          //   alignment: Alignment
+                                                          //       .centerLeft,
+                                                          //   child: Padding(
+                                                          //     padding:
+                                                          //         const EdgeInsets
+                                                          //             .only(
+                                                          //             left: 10.0),
+                                                          //     child: Container(
+                                                          //       width: 38,
+                                                          //       height: 15,
+                                                          //       decoration:
+                                                          //           BoxDecoration(
+                                                          //         color: const Color
+                                                          //             .fromARGB(
+                                                          //             127,
+                                                          //             255,
+                                                          //             255,
+                                                          //             255),
+                                                          //         borderRadius:
+                                                          //             BorderRadius
+                                                          //                 .circular(
+                                                          //                     10.0),
+                                                          //       ),
+                                                          //     ),
+                                                          //   ),
+                                                          // )
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }
+                                                  final matvare =
+                                                      _matvarer![index];
+                                                  return Stack(children: [
+                                                    Stack(
+                                                      children: [
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0, -1),
+                                                          child: InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () async {
+                                                              FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      FocusNode());
+                                                              context.pushNamed(
+                                                                'MatDetaljBondegard',
+                                                                queryParameters: {
+                                                                  'matvare':
+                                                                      serializeParam(
+                                                                    matvare
+                                                                        .toJson(), // Convert to JSON before passing
+                                                                    ParamType
+                                                                        .JSON,
+                                                                  ),
+                                                                },
+                                                              );
+                                                            },
+                                                            child: Material(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              elevation: 0,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            16),
+                                                              ),
+                                                              child: Container(
+                                                                width: 235,
+                                                                height: 290,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              16),
+                                                                  border: Border
+                                                                      .all(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                  ),
+                                                                ),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Align(
+                                                                      alignment:
+                                                                          const AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            3,
+                                                                            0,
+                                                                            3,
+                                                                            0),
+                                                                        child:
+                                                                            ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(17),
+                                                                          child:
+                                                                              Image.network(
+                                                                            '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
+                                                                            width:
+                                                                                200,
+                                                                            height:
+                                                                                229,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            errorBuilder: (BuildContext context,
+                                                                                Object error,
+                                                                                StackTrace? stackTrace) {
+                                                                              return Image.asset(
+                                                                                'assets/images/error_image.jpg',
+                                                                                width: 200,
+                                                                                height: 229,
+                                                                                fit: BoxFit.cover,
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          5,
+                                                                          0,
+                                                                          5,
+                                                                          0),
+                                                                      child:
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children: [
+                                                                          Align(
+                                                                            alignment:
+                                                                                const AlignmentDirectional(-1, 0),
+                                                                            child:
+                                                                                Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                              child: AutoSizeText(
+                                                                                matvare.name ?? '',
+                                                                                textAlign: TextAlign.start,
+                                                                                minFontSize: 11,
+                                                                                style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontSize: 15,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.bold,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          0,
+                                                                          0,
+                                                                          0,
+                                                                          4),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.end,
+                                                                        children: [
+                                                                          Flexible(
+                                                                            child:
+                                                                                Align(
+                                                                              alignment: const AlignmentDirectional(0, 0),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                  children: [
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                                                                      child: Row(
+                                                                                        mainAxisSize: MainAxisSize.max,
+                                                                                        children: [
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                            child: Text(
+                                                                                              '${matvare.price} Kr',
+                                                                                              textAlign: TextAlign.end,
+                                                                                              style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                                    fontFamily: 'Open Sans',
+                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                    fontSize: 14,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.bold,
+                                                                                                  ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          if (matvare.kg == true)
+                                                                                            Text(
+                                                                                              '/kg',
+                                                                                              textAlign: TextAlign.end,
+                                                                                              style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                                    fontFamily: 'Open Sans',
+                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                    fontSize: 14,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.bold,
+                                                                                                  ),
+                                                                                            ),
+                                                                                          if (matvare.kg != true)
+                                                                                            Text(
+                                                                                              '/stk',
+                                                                                              textAlign: TextAlign.end,
+                                                                                              style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                                    fontFamily: 'Open Sans',
+                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                    fontSize: 14,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.bold,
+                                                                                                  ),
+                                                                                            ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                    Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      children: [
+                                                                                        Padding(
+                                                                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                                          child: Text(
+                                                                                            // Directly calculate the distance using the provided latitude and longitude
+                                                                                            (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
+                                                                                            textAlign: TextAlign.start,
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Open Sans',
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                  fontSize: 14,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ]);
+                                                },
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          if ((_matvarer == null || _matvarer!.isEmpty) &&
-                              _isloading == false)
-                            Container(
-                              width: MediaQuery.sizeOf(context).width,
-                              height: MediaQuery.sizeOf(context).height - 150,
-                              child: Align(
-                                alignment: const AlignmentDirectional(0, -1),
-                                child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 110),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Image.asset(
-                                            'assets/images/Usability_testing-pana.png',
-                                            width: 290,
-                                            height: 250,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 16, 0, 0),
-                                          child: Text(
-                                            'Her var det tomt',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .headlineSmall
-                                                .override(
-                                                  fontFamily: 'Open Sans',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  fontSize: 20,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                            ),
-                          if (_empty != true)
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 60, 0, 0),
-                              child: SingleChildScrollView(
-                                primary: false,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Stack(
-                                      alignment:
-                                          const AlignmentDirectional(0, 0.9),
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5, 22, 5, 0),
-                                          child: RefreshIndicator(
-                                            onRefresh: () async {
-                                              await getFilterFoods();
-                                            },
-                                            child: GridView.builder(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                0,
-                                                0,
-                                                0,
-                                                63.0,
-                                              ),
-                                              gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                childAspectRatio: 0.68,
-                                              ),
-                                              primary: false,
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.vertical,
-                                              itemCount: _isloading
-                                                  ? 1
-                                                  : _matvarer?.length ?? 0,
-                                              itemBuilder: (context, index) {
-                                                if (_isloading) {
-                                                  return Shimmer.fromColors(
-                                                    baseColor:
-                                                        Colors.grey[300]!,
-                                                    highlightColor:
-                                                        Colors.grey[100]!,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(5.0),
-                                                          width: 200.0,
-                                                          height: 230.0,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: const Color
-                                                                .fromARGB(127,
-                                                                255, 255, 255),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        16.0), // Rounded corners
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 8.0),
-                                                        Container(
-                                                          width: 200,
-                                                          height: 15,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: const Color
-                                                                .fromARGB(127,
-                                                                255, 255, 255),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                          ),
-                                                        ),
-                                                        // const SizedBox(
-                                                        //     height: 8.0),
-                                                        // Align(
-                                                        //   alignment: Alignment
-                                                        //       .centerLeft,
-                                                        //   child: Padding(
-                                                        //     padding:
-                                                        //         const EdgeInsets
-                                                        //             .only(
-                                                        //             left: 10.0),
-                                                        //     child: Container(
-                                                        //       width: 38,
-                                                        //       height: 15,
-                                                        //       decoration:
-                                                        //           BoxDecoration(
-                                                        //         color: const Color
-                                                        //             .fromARGB(
-                                                        //             127,
-                                                        //             255,
-                                                        //             255,
-                                                        //             255),
-                                                        //         borderRadius:
-                                                        //             BorderRadius
-                                                        //                 .circular(
-                                                        //                     10.0),
-                                                        //       ),
-                                                        //     ),
-                                                        //   ),
-                                                        // )
-                                                      ],
-                                                    ),
-                                                  );
-                                                }
-                                                final matvare =
-                                                    _matvarer![index];
-                                                return Stack(children: [
-                                                  Stack(
-                                                    children: [
-                                                      Align(
-                                                        alignment:
-                                                            const AlignmentDirectional(
-                                                                0, -1),
-                                                        child: InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .requestFocus(
-                                                                    FocusNode());
-                                                            context.pushNamed(
-                                                              'MatDetaljBondegard',
-                                                              queryParameters: {
-                                                                'matvare':
-                                                                    serializeParam(
-                                                                  matvare
-                                                                      .toJson(), // Convert to JSON before passing
-                                                                  ParamType
-                                                                      .JSON,
-                                                                ),
-                                                              },
-                                                            );
-                                                          },
-                                                          child: Material(
-                                                            color: Colors
-                                                                .transparent,
-                                                            elevation: 0,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16),
-                                                            ),
-                                                            child: Container(
-                                                              width: 235,
-                                                              height: 290,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            16),
-                                                                border:
-                                                                    Border.all(
-                                                                  color: Colors
-                                                                      .transparent,
-                                                                ),
-                                                              ),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .min,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Align(
-                                                                    alignment:
-                                                                        const AlignmentDirectional(
-                                                                            0,
-                                                                            0),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          3,
-                                                                          0,
-                                                                          3,
-                                                                          0),
-                                                                      child:
-                                                                          ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(17),
-                                                                        child: Image
-                                                                            .network(
-                                                                          '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
-                                                                          width:
-                                                                              200,
-                                                                          height:
-                                                                              229,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                          errorBuilder: (BuildContext context,
-                                                                              Object error,
-                                                                              StackTrace? stackTrace) {
-                                                                            return Image.asset(
-                                                                              'assets/images/error_image.jpg',
-                                                                              width: 200,
-                                                                              height: 229,
-                                                                              fit: BoxFit.cover,
-                                                                            );
-                                                                          },
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            5,
-                                                                            0,
-                                                                            5,
-                                                                            0),
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      children: [
-                                                                        Align(
-                                                                          alignment: const AlignmentDirectional(
-                                                                              -1,
-                                                                              0),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                7,
-                                                                                0,
-                                                                                0,
-                                                                                0),
-                                                                            child:
-                                                                                AutoSizeText(
-                                                                              matvare.name ?? '',
-                                                                              textAlign: TextAlign.start,
-                                                                              minFontSize: 11,
-                                                                              style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                    fontFamily: 'Open Sans',
-                                                                                    fontSize: 15,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            4),
-                                                                    child: Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .min,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .end,
-                                                                      children: [
-                                                                        Flexible(
-                                                                          child:
-                                                                              Align(
-                                                                            alignment:
-                                                                                const AlignmentDirectional(0, 0),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                                                                              child: Row(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                crossAxisAlignment: CrossAxisAlignment.end,
-                                                                                children: [
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                                                                    child: Row(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      children: [
-                                                                                        Padding(
-                                                                                          padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
-                                                                                          child: Text(
-                                                                                            '${matvare.price} Kr',
-                                                                                            textAlign: TextAlign.end,
-                                                                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Open Sans',
-                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 14,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                ),
-                                                                                          ),
-                                                                                        ),
-                                                                                        if (matvare.kg == true)
-                                                                                          Text(
-                                                                                            '/kg',
-                                                                                            textAlign: TextAlign.end,
-                                                                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Open Sans',
-                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 14,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                ),
-                                                                                          ),
-                                                                                        if (matvare.kg != true)
-                                                                                          Text(
-                                                                                            '/stk',
-                                                                                            textAlign: TextAlign.end,
-                                                                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Open Sans',
-                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 14,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                ),
-                                                                                          ),
-                                                                                      ],
-                                                                                    ),
-                                                                                  ),
-                                                                                  Row(
-                                                                                    mainAxisSize: MainAxisSize.max,
-                                                                                    children: [
-                                                                                      Padding(
-                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
-                                                                                        child: Text(
-                                                                                          // Directly calculate the distance using the provided latitude and longitude
-                                                                                          (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
-                                                                                          textAlign: TextAlign.start,
-                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                fontFamily: 'Open Sans',
-                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                fontSize: 14,
-                                                                                                letterSpacing: 0.0,
-                                                                                                fontWeight: FontWeight.bold,
-                                                                                              ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ]);
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ].addToEnd(const SizedBox(height: 100)),
+                          ],
+                        ),
+                      ].addToEnd(const SizedBox(height: 100)),
+                    ),
                   ),
                 ),
                 Align(
