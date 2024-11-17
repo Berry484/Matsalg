@@ -122,9 +122,6 @@ class WebSocketService {
         bool me = data['me'] ??
             false; // Flag indicating if the message was sent by the current user
 
-        // Log incoming message details
-        print("Received WebSocket message:");
-
         // Create a new Message object
         Message newMessage = Message(
           content: content,
@@ -132,7 +129,7 @@ class WebSocketService {
           read: false, // Assuming the message is unread initially
           me: me,
         );
-
+        print(_isFirstMessage);
         // Access FFAppState to update the conversations globally
         final appState = FFAppState();
 
@@ -162,31 +159,28 @@ class WebSocketService {
           }
           _isFirstMessage = false;
         } else {
-          // Normal message handling for new incoming messages
-          var conversation = appState.conversations
-              .where((conv) => conv.user == sender)
-              .toList()
-              .firstWhere(
-                (conv) => conv.user == sender,
-                orElse: () => Conversation(
-                  user: sender,
-                  profilePic: profilePic,
-                  messages: [
-                    newMessage
-                  ], // Start the conversation with the new message
-                ),
+          bool _empty = false;
+
+          var conversation = appState.conversations.firstWhere(
+            (conv) => conv.user == sender,
+            orElse: () {
+              // Set _empty to true to indicate a new conversation is being created
+              _empty = true;
+              return Conversation(
+                user: sender,
+                profilePic: profilePic,
+                messages: [newMessage],
               );
+            },
+          );
 
-          // Add the new message at the beginning (not the end) of the conversation
-          conversation.messages.insert(0, newMessage);
-
-          // Add the conversation to the app state if it's new
-          if (!appState.conversations.contains(conversation)) {
+          if (_empty) {
             appState.conversations.add(conversation);
           }
 
-          // markAllMessagesAsRead(sender);
-          // Notify listeners to update the UI
+          if (!_empty) {
+            conversation.messages.insert(0, newMessage);
+          }
           appState.notifyListeners();
           print("Notified listeners to update the UI");
         }

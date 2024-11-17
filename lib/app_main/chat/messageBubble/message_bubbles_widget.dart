@@ -11,12 +11,16 @@ class MessageBubblesWidget extends StatefulWidget {
     this.blueBubble,
     this.showDelivered,
     this.showTail,
+    this.showLest,
+    this.messageTime,
   });
 
   final String? mesageText;
   final bool? blueBubble;
   final bool? showDelivered;
   final bool? showTail;
+  final bool? showLest;
+  final String? messageTime;
 
   @override
   State<MessageBubblesWidget> createState() => _MessageBubblesWidgetState();
@@ -24,6 +28,7 @@ class MessageBubblesWidget extends StatefulWidget {
 
 class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
   late MessageBubblesModel _model;
+  late DateTime time; // Declare time as DateTime
 
   @override
   void setState(VoidCallback callback) {
@@ -34,6 +39,16 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
   @override
   void initState() {
     super.initState();
+    if (widget.messageTime != null) {
+      try {
+        // Attempt to parse the messageTime using DateTime.parse()
+        time = DateTime.parse(widget.messageTime ?? '');
+      } catch (e) {
+        // Handle parsing error (optional)
+        time = DateTime.now(); // Set to current time as fallback
+        print("Error parsing messageTime: $e");
+      }
+    }
     _model = createModel(context, () => MessageBubblesModel());
   }
 
@@ -51,6 +66,41 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
+          if (widget.messageTime != null)
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 6, 0, 10),
+                  child: RichText(
+                    text: TextSpan(
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            fontSize: 12,
+                            letterSpacing: 0.0,
+                          ),
+                      children: [
+                        TextSpan(
+                          text: DateFormat("HH:mm", "nb_NO").format(time),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const TextSpan(text: " "),
+                        TextSpan(
+                          text: DateFormat("d. MMM", "nb_NO").format(time),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           if (!widget.blueBubble!)
             Row(
               mainAxisSize: MainAxisSize.max,
@@ -81,6 +131,8 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                                 .override(
                                   fontFamily: 'Inter',
                                   letterSpacing: 0.0,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
                                 ),
                           ),
                         ),
@@ -132,6 +184,8 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                                   fontFamily: 'Inter',
                                   color: Colors.white,
                                   letterSpacing: 0.0,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
                                 ),
                           ),
                         ),
@@ -151,7 +205,7 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                 ),
               ],
             ),
-          if (widget.showDelivered ?? true)
+          if (widget.showDelivered == true)
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -159,7 +213,27 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 6, 0, 0),
                   child: Text(
-                    'Delivered',
+                    'Levert',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          fontSize: 12,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ),
+              ],
+            ),
+          if (widget.showLest == true)
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 6, 0, 0),
+                  child: Text(
+                    'Lest',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Inter',
                           color: FlutterFlowTheme.of(context).secondaryText,

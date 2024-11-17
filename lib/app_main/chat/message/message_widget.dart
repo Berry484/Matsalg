@@ -269,7 +269,6 @@ class _MessageWidgetState extends State<MessageWidget> {
               children: [
                 Column(
                   children: [
-                    // This will take up all available space above the input field
                     Expanded(
                       child: Padding(
                         padding:
@@ -279,14 +278,57 @@ class _MessageWidgetState extends State<MessageWidget> {
                           reverse: true,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          children: conversation.messages
-                              .map((message) => MessageBubblesWidget(
-                                    mesageText: message.content,
-                                    blueBubble: message.me == true,
-                                    showDelivered: false,
-                                    showTail: true,
-                                  ))
-                              .toList(),
+                          children: conversation.messages.map((message) {
+                            bool showDelivered = false;
+                            bool showLest = false;
+
+                            // Parse the message.time string into DateTime
+                            DateTime currentMessageDate = DateTime.parse(message
+                                .time); // Assuming message.time is in a parseable format
+
+                            // Find the most recent message on the same day
+                            DateTime? mostRecentTime;
+                            bool isMostRecent = false;
+
+                            // Find the most recent message for the current day
+                            for (var msg in conversation.messages) {
+                              DateTime msgDate = DateTime.parse(msg
+                                  .time); // Convert other message time string to DateTime
+                              if (msgDate.year == currentMessageDate.year &&
+                                  msgDate.month == currentMessageDate.month &&
+                                  msgDate.day == currentMessageDate.day) {
+                                if (mostRecentTime == null ||
+                                    msgDate.isAfter(mostRecentTime)) {
+                                  mostRecentTime = msgDate;
+                                  isMostRecent = msg == message;
+                                }
+                              }
+                            }
+
+                            // Check if this is the first message where message.me == true
+                            if (message.me == true &&
+                                conversation.messages.indexOf(message) ==
+                                    conversation.messages
+                                        .indexWhere((msg) => msg.me == true)) {
+                              // If message.read is true, set showLest to true, else showDelivered to true
+                              if (message.read == true) {
+                                showLest = true;
+                              } else {
+                                showDelivered = true;
+                              }
+                            }
+
+                            return MessageBubblesWidget(
+                              mesageText: message.content,
+                              blueBubble: message.me == true,
+                              showDelivered: showDelivered,
+                              showTail: true,
+                              showLest: showLest,
+                              messageTime: isMostRecent
+                                  ? message.time
+                                  : null, // Pass the string time if it's the most recent message for the day
+                            );
+                          }).toList(),
                         ),
                       ),
                     ),

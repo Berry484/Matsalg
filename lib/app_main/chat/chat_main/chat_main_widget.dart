@@ -17,6 +17,7 @@ class ChatMainWidget extends StatefulWidget {
 class _ChatMainWidgetState extends State<ChatMainWidget> {
   late ChatMainModel _model;
   late WebSocketService _webSocketService; // Declare WebSocketService
+  late Conversation conversation;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -24,16 +25,19 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
     super.initState();
     _model = createModel(context, () => ChatMainModel());
     _webSocketService = WebSocketService();
-    // _webSocketService.connect();
+    FFAppState().addListener(_onAppStateChanged);
     setState(() {});
   }
 
   @override
   void dispose() {
-    _webSocketService
-        .close(); // Close WebSocket connection when the widget is disposed
+    FFAppState().removeListener(_onAppStateChanged);
     _model.dispose();
     super.dispose();
+  }
+
+  void _onAppStateChanged() {
+    setState(() {});
   }
 
   @override

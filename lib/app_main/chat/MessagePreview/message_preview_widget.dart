@@ -65,7 +65,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
       padding: const EdgeInsetsDirectional.fromSTEB(0, 6, 0, 0),
       child: Container(
         width: double.infinity,
-        height: 70,
+        height: 75,
         decoration: const BoxDecoration(),
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
@@ -87,16 +87,16 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 12, 0),
                   child: Container(
-                    width: 50,
-                    height: 50,
+                    width: 55,
+                    height: 55,
                     clipBehavior: Clip.antiAlias,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.network(
                       '${ApiConstants.baseUrl}${widget.messageImage}',
-                      width: 50,
-                      height: 50,
+                      width: 55,
+                      height: 55,
                       fit: BoxFit.cover,
                       errorBuilder: (BuildContext context, Object error,
                           StackTrace? stackTrace) {
@@ -114,16 +114,16 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 12, 0),
                   child: Container(
-                    width: 50,
-                    height: 50,
+                    width: 55,
+                    height: 55,
                     clipBehavior: Clip.antiAlias,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.asset(
                       'assets/images/profile_pic.png',
-                      width: 50,
-                      height: 50,
+                      width: 55,
+                      height: 55,
                       fit: BoxFit.cover,
                       errorBuilder: (BuildContext context, Object error,
                           StackTrace? stackTrace) {
@@ -192,6 +192,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                                         .secondaryText,
                                                 fontSize: 14,
                                                 letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
                                               ),
                                         ),
                                         const Padding(
@@ -201,7 +202,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                           child: Icon(
                                             Icons.chevron_right_rounded,
                                             color: Color(0xFF357BF7),
-                                            size: 20,
+                                            size: 25,
                                           ),
                                         ),
                                       ],
