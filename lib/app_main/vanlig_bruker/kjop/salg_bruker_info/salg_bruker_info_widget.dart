@@ -38,6 +38,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
   late Matvarer matvare;
   late OrdreInfo salgInfo;
   bool godkjennIsLoading = false;
+  bool _messageIsLoading = false;
 
   @override
   void setState(VoidCallback callback) {
@@ -280,7 +281,63 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 5, 0),
                               child: FFButtonWidget(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  try {
+                                    // Prevent multiple submissions while loading
+                                    if (_messageIsLoading) return;
+                                    _messageIsLoading = true;
+
+                                    Conversation existingConversation =
+                                        FFAppState().conversations.firstWhere(
+                                      (conv) => conv.user == salgInfo.kjoper,
+                                      orElse: () {
+                                        // If no conversation is found, create a new one and add it to the list
+                                        final newConversation = Conversation(
+                                          user: salgInfo.kjoper,
+                                          profilePic:
+                                              salgInfo.kjoperProfilePic ?? '',
+                                          messages: [],
+                                        );
+
+                                        // Add the new conversation to the list
+                                        FFAppState()
+                                            .conversations
+                                            .add(newConversation);
+
+                                        // Return the new conversation
+                                        return newConversation;
+                                      },
+                                    );
+
+                                    // Step 3: Serialize the conversation object to JSON
+                                    String? serializedConversation =
+                                        serializeParam(
+                                      existingConversation
+                                          .toJson(), // Convert the conversation to JSON
+                                      ParamType.JSON,
+                                    );
+
+                                    // Step 4: Stop loading and navigate to message screen
+                                    _messageIsLoading = false;
+                                    if (serializedConversation != null) {
+                                      // Step 5: Navigate to 'message' screen with the conversation
+                                      context.pushNamed(
+                                        'message',
+                                        queryParameters: {
+                                          'conversation':
+                                              serializedConversation, // Pass the serialized conversation
+                                        },
+                                      );
+                                    }
+                                  } on SocketException {
+                                    _messageIsLoading = false;
+                                    showErrorToast(
+                                        context, 'Ingen internettforbindelse');
+                                  } catch (e) {
+                                    _messageIsLoading = false;
+                                    showErrorToast(context, 'En feil oppstod');
+                                  }
+                                },
                                 text: 'Melding',
                                 options: FFButtonOptions(
                                   height: 30,

@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/app_main/chat/message/message_model.dart';
 import 'package:mat_salg/app_main/chat/messageBubble/message_bubbles_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -20,6 +24,7 @@ class MessageWidget extends StatefulWidget {
 }
 
 class _MessageWidgetState extends State<MessageWidget> {
+  late WebSocketService _webSocketService; // Declare WebSocketService
   late Conversation conversation;
 
   late MessageModel _model;
@@ -34,6 +39,60 @@ class _MessageWidgetState extends State<MessageWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     FFAppState().addListener(_onAppStateChanged);
+    _webSocketService = WebSocketService();
+    _webSocketService.markAllMessagesAsRead(conversation.user);
+  }
+
+  void showErrorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  FontAwesomeIcons.solidTimesCircle,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
   }
 
   @override
@@ -45,7 +104,7 @@ class _MessageWidgetState extends State<MessageWidget> {
 
   void _onAppStateChanged() {
     setState(() {
-      // Here you can refresh the local conversation data or UI as needed
+      // _webSocketService.markAllMessagesAsRead(conversation.user);
       conversation = FFAppState().conversations.firstWhere(
             (conv) => conv.user == conversation.user,
             orElse: () =>
@@ -64,94 +123,135 @@ class _MessageWidgetState extends State<MessageWidget> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(85),
           child: SafeArea(
-            child: AppBar(
-              backgroundColor: FlutterFlowTheme.of(context).primary,
-              automaticallyImplyLeading: true,
-              scrolledUnderElevation: 0.0,
-              leading: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    context.pop();
-                  },
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Icon(
-                        Icons.arrow_back_ios,
-                        color: Color(0xFF357BF7),
-                        size: 28,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              actions: const [],
-              flexibleSpace: FlexibleSpaceBar(
-                title: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Container(
-                      width: 45,
-                      height: 45,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.network(
-                        '${ApiConstants.baseUrl}${conversation.profilePic}',
-                        width: 45,
-                        height: 45,
-                        fit: BoxFit.cover,
-                        errorBuilder: (BuildContext context, Object error,
-                            StackTrace? stackTrace) {
-                          return Image.asset(
-                            'assets/images/profile_pic.png',
-                            width: 45,
-                            height: 45,
-                            fit: BoxFit.cover,
-                          );
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 3, 0, 0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+              children: [
+                AppBar(
+                  backgroundColor: FlutterFlowTheme.of(context).primary,
+                  automaticallyImplyLeading: true,
+                  scrolledUnderElevation: 0.0,
+                  leading: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        try {
+                          if (conversation.messages.isEmpty) {
+                            // Access the global app state (FFAppState)
+                            final appState = FFAppState();
+
+                            // Remove the conversation from the list if it has no messages
+                            appState.conversations.removeWhere(
+                                (conv) => conv.user == conversation.user);
+
+                            // Notify listeners to update the UI (if necessary)
+                            appState.notifyListeners();
+                          }
+
+                          context.pop();
+                        } on SocketException {
+                          showErrorToast(context, 'Ingen internettforbindelse');
+                        } catch (e) {
+                          showErrorToast(context, 'En feil oppstod');
+                        }
+                      },
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.max,
                         children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                3, 0, 0, 0),
-                            child: Text(
-                              conversation.user,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    fontSize: 13,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ),
                           Icon(
-                            Icons.chevron_right_rounded,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 14,
+                            Icons.arrow_back_ios,
+                            color: Color(0xFF357BF7),
+                            size: 28,
                           ),
                         ],
                       ),
                     ),
-                  ],
+                  ),
+                  actions: const [],
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: GestureDetector(
+                      onTap: () {
+                        context.pushNamed(
+                          'BrukerPage',
+                          queryParameters: {
+                            'username': serializeParam(
+                              conversation.user.toLowerCase(),
+                              ParamType.String,
+                            ),
+                          },
+                        );
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            width: 45,
+                            height: 45,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: Image.network(
+                              '${ApiConstants.baseUrl}${conversation.profilePic}',
+                              width: 45,
+                              height: 45,
+                              fit: BoxFit.cover,
+                              errorBuilder: (BuildContext context, Object error,
+                                  StackTrace? stackTrace) {
+                                return Image.asset(
+                                  'assets/images/profile_pic.png',
+                                  width: 45,
+                                  height: 45,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 3, 0, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      3, 0, 0, 0),
+                                  child: Text(
+                                    conversation.user,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 13,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.chevron_right_rounded,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 14,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    centerTitle: true,
+                    expandedTitleScale: 1.0,
+                  ),
+                  elevation: 0,
                 ),
-                centerTitle: true,
-                expandedTitleScale: 1.0,
-              ),
-              elevation: 0,
+                // Bottom border container
+                Container(
+                    height: 0.3, // Thickness of the border
+                    color: FlutterFlowTheme.of(context).secondaryText),
+              ],
             ),
           ),
         ),
@@ -256,8 +356,10 @@ class _MessageWidgetState extends State<MessageWidget> {
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
@@ -302,22 +404,37 @@ class _MessageWidgetState extends State<MessageWidget> {
                                             ),
                                           ),
                                         ),
-                                        const Stack(
-                                          children: [
-                                            Align(
-                                              alignment:
-                                                  AlignmentDirectional(1, 0),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 6, 0),
-                                                child: Icon(
-                                                  Icons.send_rounded,
-                                                  color: Color(0xFF357BF7),
-                                                  size: 25,
+                                        GestureDetector(
+                                          onTap: () {
+                                            if (_model.textController!.text
+                                                .trim()
+                                                .isNotEmpty) {
+                                              _webSocketService.sendMessage(
+                                                conversation.user,
+                                                _model.textController!.text,
+                                              );
+                                              setState(() {
+                                                _model.textController!.clear();
+                                              });
+                                            }
+                                          },
+                                          child: const Stack(
+                                            children: [
+                                              Align(
+                                                alignment:
+                                                    AlignmentDirectional(1, 0),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 6, 0),
+                                                  child: Icon(
+                                                    Icons.send_rounded,
+                                                    color: Color(0xFF357BF7),
+                                                    size: 25,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),

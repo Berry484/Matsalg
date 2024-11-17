@@ -268,13 +268,13 @@ class Conversation {
 class Message {
   final String content;
   final String time;
-  final bool read;
+  bool read; // Changed to non-final to allow modification
   final bool me;
 
   Message({
     required this.content,
     required this.time,
-    required this.read,
+    this.read = false, // Default to false for unread messages
     required this.me,
   });
 
@@ -282,7 +282,7 @@ class Message {
     return Message(
       content: json['content'] as String? ?? "",
       time: json['time'] as String? ?? "",
-      read: json['read'] as bool? ?? false,
+      read: json['read'] as bool? ?? false, // Parse 'read' field from JSON
       me: json['me'] as bool? ?? false,
     );
   }

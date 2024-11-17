@@ -45,6 +45,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   double ratingVerdi = 5.0;
   int ratingantall = 0;
   bool ingenRatings = false;
+  bool _messageIsLoading = false;
   final Securestorage securestorage = Securestorage();
   final ApiFolg apiFolg = ApiFolg();
 
@@ -944,7 +945,74 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     child:
                                                                         FFButtonWidget(
                                                                       onPressed:
-                                                                          () {},
+                                                                          () async {
+                                                                        try {
+                                                                          // Prevent multiple submissions while loading
+                                                                          if (_messageIsLoading)
+                                                                            return;
+                                                                          _messageIsLoading =
+                                                                              true;
+
+                                                                          // Step 1: Validate username (non-nullable, so no need for null check)
+                                                                          if (widget.username !=
+                                                                              null) {
+                                                                            // Step 2: Check if there's already an existing conversation for the given username
+                                                                            Conversation
+                                                                                existingConversation =
+                                                                                FFAppState().conversations.firstWhere(
+                                                                              (conv) => conv.user == widget.username,
+                                                                              orElse: () {
+                                                                                // If no conversation is found, create a new one and add it to the list
+                                                                                final newConversation = Conversation(
+                                                                                  user: widget.username ?? '',
+                                                                                  profilePic: bruker?.profilepic ?? '',
+                                                                                  messages: [], // No messages initially
+                                                                                );
+
+                                                                                // Add the new conversation to the list
+                                                                                FFAppState().conversations.add(newConversation);
+
+                                                                                // Return the new conversation
+                                                                                return newConversation;
+                                                                              },
+                                                                            );
+
+                                                                            // Step 3: Serialize the conversation object to JSON
+                                                                            String?
+                                                                                serializedConversation =
+                                                                                serializeParam(
+                                                                              existingConversation.toJson(), // Convert the conversation to JSON
+                                                                              ParamType.JSON,
+                                                                            );
+
+                                                                            // Step 4: Stop loading and navigate to message screen
+                                                                            _messageIsLoading =
+                                                                                false;
+                                                                            if (serializedConversation !=
+                                                                                null) {
+                                                                              // Step 5: Navigate to 'message' screen with the conversation
+                                                                              context.pushNamed(
+                                                                                'message',
+                                                                                queryParameters: {
+                                                                                  'conversation': serializedConversation, // Pass the serialized conversation
+                                                                                },
+                                                                              );
+                                                                            }
+                                                                          }
+                                                                        } on SocketException {
+                                                                          _messageIsLoading =
+                                                                              false;
+                                                                          showErrorToast(
+                                                                              context,
+                                                                              'Ingen internettforbindelse');
+                                                                        } catch (e) {
+                                                                          _messageIsLoading =
+                                                                              false;
+                                                                          showErrorToast(
+                                                                              context,
+                                                                              'En feil oppstod');
+                                                                        }
+                                                                      },
                                                                       text: '',
                                                                       icon:
                                                                           Icon(

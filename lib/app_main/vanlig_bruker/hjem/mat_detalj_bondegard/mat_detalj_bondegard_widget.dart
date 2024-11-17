@@ -261,6 +261,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
+                                  setState(() {});
                                   context.pushNamed(
                                     'BrukerPage',
                                     queryParameters: {

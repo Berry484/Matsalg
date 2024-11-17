@@ -35,6 +35,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
   late Matvarer matvare;
   late OrdreInfo salgInfo;
   bool _bekreftIsLoading = false;
+  bool _messageIsLoading = false;
 
   @override
   void setState(VoidCallback callback) {
@@ -618,7 +619,66 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 35),
                     child: FFButtonWidget(
-                      onPressed: () {},
+                      onPressed: () async {
+                        try {
+                          // Prevent multiple submissions while loading
+                          if (_messageIsLoading) return;
+                          _messageIsLoading = true;
+
+                          Conversation existingConversation =
+                              FFAppState().conversations.firstWhere(
+                            (conv) =>
+                                conv.user ==
+                                (salgInfo.kjopte == false
+                                    ? salgInfo.kjoper
+                                    : salgInfo.selger),
+                            orElse: () {
+                              // If no conversation is found, create a new one and add it to the list
+                              final newConversation = Conversation(
+                                user: salgInfo.kjopte == false
+                                    ? salgInfo.kjoper
+                                    : salgInfo.selger,
+                                profilePic: salgInfo.kjopte == false
+                                    ? salgInfo.kjoperProfilePic ?? ''
+                                    : matvare.profilepic ?? '',
+                                messages: [],
+                              );
+
+                              // Add the new conversation to the list
+                              FFAppState().conversations.add(newConversation);
+
+                              // Return the new conversation
+                              return newConversation;
+                            },
+                          );
+
+                          // Step 3: Serialize the conversation object to JSON
+                          String? serializedConversation = serializeParam(
+                            existingConversation
+                                .toJson(), // Convert the conversation to JSON
+                            ParamType.JSON,
+                          );
+
+                          // Step 4: Stop loading and navigate to message screen
+                          _messageIsLoading = false;
+                          if (serializedConversation != null) {
+                            // Step 5: Navigate to 'message' screen with the conversation
+                            context.pushNamed(
+                              'message',
+                              queryParameters: {
+                                'conversation':
+                                    serializedConversation, // Pass the serialized conversation
+                              },
+                            );
+                          }
+                        } on SocketException {
+                          _messageIsLoading = false;
+                          showErrorToast(context, 'Ingen internettforbindelse');
+                        } catch (e) {
+                          _messageIsLoading = false;
+                          showErrorToast(context, 'En feil oppstod');
+                        }
+                      },
                       text: 'Melding',
                       options: FFButtonOptions(
                         width: 190,

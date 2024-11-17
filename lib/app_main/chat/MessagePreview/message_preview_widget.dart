@@ -39,7 +39,6 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
   @override
   void initState() {
     super.initState();
-
     // Parse the messageTime string into DateTime if it's not null
     try {
       // Attempt to parse the messageTime using DateTime.parse()
@@ -66,7 +65,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
       padding: const EdgeInsetsDirectional.fromSTEB(0, 6, 0, 0),
       child: Container(
         width: double.infinity,
-        height: 65,
+        height: 70,
         decoration: const BoxDecoration(),
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
@@ -83,32 +82,61 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                     shape: BoxShape.circle,
                   ),
                 ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 12, 0),
-                child: Container(
-                  width: 45,
-                  height: 45,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.network(
-                    '${ApiConstants.baseUrl}${widget.messageImage}',
-                    width: 45,
-                    height: 45,
-                    fit: BoxFit.cover,
-                    errorBuilder: (BuildContext context, Object error,
-                        StackTrace? stackTrace) {
-                      return Image.asset(
-                        'assets/images/profile_pic.png',
-                        width: 45,
-                        height: 45,
-                        fit: BoxFit.cover,
-                      );
-                    },
+              if (widget.messageImage != null &&
+                  widget.messageImage!.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 12, 0),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.network(
+                      '${ApiConstants.baseUrl}${widget.messageImage}',
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                      errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
+                        return Image.asset(
+                          'assets/images/profile_pic.png',
+                          width: 55,
+                          height: 55,
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
+              if (widget.messageImage == null || widget.messageImage!.isEmpty)
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 12, 0),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.asset(
+                      'assets/images/profile_pic.png',
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                      errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
+                        return Image.asset(
+                          'assets/images/profile_pic.png',
+                          width: 55,
+                          height: 55,
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
+                  ),
+                ),
               Expanded(
                 child: Stack(
                   children: [

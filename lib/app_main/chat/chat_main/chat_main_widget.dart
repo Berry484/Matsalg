@@ -109,11 +109,19 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                             messageContent: conversation.messages.isNotEmpty
                                 ? conversation.messages.first
                                     .content // Last message content
-                                : 'No messages yet',
+                                : 'Ingen meldinger enda',
                             messageImage: conversation.profilePic,
-                            isUnread: conversation.messages.first.me
-                                ? false
-                                : !conversation.messages.first.read,
+                            isUnread: !conversation.messages
+                                .firstWhere(
+                                  (message) => !message
+                                      .me, // Find the first message that was not sent by me
+                                  orElse: () => Message(
+                                      read: true,
+                                      content: '',
+                                      time: '',
+                                      me: false), // Return a default Message if no other user's message is found
+                                )
+                                .read,
                             messageTime:
                                 lastMessageTime, // Display last message time
                           ),
