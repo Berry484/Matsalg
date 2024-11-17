@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
@@ -56,6 +58,21 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _profilepic = prefs.getString('ff_profilepic') ?? _profilepic;
     });
+
+    // Initialize conversations list from shared preferences
+    await _safeInitAsync(_initializeConversations);
+  }
+
+  Future<void> _initializeConversations() async {
+    String? conversationsJson = prefs.getString('ff_conversations');
+    if (conversationsJson != null) {
+      List<dynamic> conversationsList = json.decode(conversationsJson);
+      _conversations = conversationsList
+          .map((conversation) => Conversation.fromJson(conversation))
+          .toList();
+    } else {
+      _conversations = [];
+    }
   }
 
   void update(VoidCallback callback) {
@@ -64,6 +81,32 @@ class FFAppState extends ChangeNotifier {
   }
 
   late SharedPreferences prefs;
+
+  List<Conversation> _conversations = [];
+  List<Conversation> get conversations => _conversations;
+  set conversations(List<Conversation> value) {
+    _conversations = value;
+    _saveConversationsToPrefs();
+    notifyListeners();
+  }
+
+  void addConversation(Conversation conversation) {
+    _conversations.add(conversation);
+    _saveConversationsToPrefs();
+    notifyListeners();
+  }
+
+  void removeConversation(Conversation conversation) {
+    _conversations.remove(conversation);
+    _saveConversationsToPrefs();
+    notifyListeners();
+  }
+
+  void _saveConversationsToPrefs() {
+    String conversationsJson =
+        json.encode(_conversations.map((e) => e.toJson()).toList());
+    prefs.setString('ff_conversations', conversationsJson);
+  }
 
   bool _login = false;
   bool get login => _login;
@@ -191,13 +234,76 @@ class FFAppState extends ChangeNotifier {
   }
 }
 
+// Example conversation model
+class Conversation {
+  final String user;
+  final String profilePic;
+  final List<Message> messages;
+
+  Conversation({
+    required this.user,
+    required this.profilePic,
+    required this.messages,
+  });
+
+  factory Conversation.fromJson(Map<String, dynamic> json) {
+    return Conversation(
+      user: json['user'] as String? ?? "",
+      profilePic: json['profile_picture'] as String? ?? "",
+      messages: (json['messages'] as List)
+          .map((messageJson) => Message.fromJson(messageJson))
+          .toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'user': user,
+      'profile_picture': profilePic,
+      'messages': messages.map((message) => message.toJson()).toList(),
+    };
+  }
+}
+
+class Message {
+  final String content;
+  final String time;
+  final bool read;
+  final bool me;
+
+  Message({
+    required this.content,
+    required this.time,
+    required this.read,
+    required this.me,
+  });
+
+  factory Message.fromJson(Map<String, dynamic> json) {
+    return Message(
+      content: json['content'] as String? ?? "",
+      time: json['time'] as String? ?? "",
+      read: json['read'] as bool? ?? false,
+      me: json['me'] as bool? ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'content': content,
+      'time': time,
+      'read': read,
+      'me': me,
+    };
+  }
+}
+
 void _safeInit(Function() initializeField) {
   try {
     initializeField();
   } catch (_) {}
 }
 
-Future _safeInitAsync(Function() initializeField) async {
+Future<void> _safeInitAsync(Function() initializeField) async {
   try {
     await initializeField();
   } catch (_) {}

@@ -1,0 +1,341 @@
+import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/app_main/chat/message/message_model.dart';
+import 'package:mat_salg/app_main/chat/messageBubble/message_bubbles_widget.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:ui';
+import 'package:easy_debounce/easy_debounce.dart';
+import 'package:flutter/material.dart';
+
+class MessageWidget extends StatefulWidget {
+  const MessageWidget({
+    super.key,
+    required this.conversation,
+  });
+
+  final dynamic conversation;
+
+  @override
+  State<MessageWidget> createState() => _MessageWidgetState();
+}
+
+class _MessageWidgetState extends State<MessageWidget> {
+  late Conversation conversation;
+
+  late MessageModel _model;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // Directly assign the passed conversation to the _conversation variable
+    conversation = Conversation.fromJson(widget.conversation);
+    _model = createModel(context, () => MessageModel());
+    _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
+    FFAppState().addListener(_onAppStateChanged);
+  }
+
+  @override
+  void dispose() {
+    FFAppState().removeListener(_onAppStateChanged);
+    _model.dispose();
+    super.dispose();
+  }
+
+  void _onAppStateChanged() {
+    setState(() {
+      // Here you can refresh the local conversation data or UI as needed
+      conversation = FFAppState().conversations.firstWhere(
+            (conv) => conv.user == conversation.user,
+            orElse: () =>
+                conversation, // Keeps current conversation if not updated
+          );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primary,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(85),
+          child: SafeArea(
+            child: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              automaticallyImplyLeading: true,
+              scrolledUnderElevation: 0.0,
+              leading: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.pop();
+                  },
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Icon(
+                        Icons.arrow_back_ios,
+                        color: Color(0xFF357BF7),
+                        size: 28,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              actions: const [],
+              flexibleSpace: FlexibleSpaceBar(
+                title: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      width: 45,
+                      height: 45,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.network(
+                        '${ApiConstants.baseUrl}${conversation.profilePic}',
+                        width: 45,
+                        height: 45,
+                        fit: BoxFit.cover,
+                        errorBuilder: (BuildContext context, Object error,
+                            StackTrace? stackTrace) {
+                          return Image.asset(
+                            'assets/images/profile_pic.png',
+                            width: 45,
+                            height: 45,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 3, 0, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                3, 0, 0, 0),
+                            child: Text(
+                              conversation.user,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    fontSize: 13,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.chevron_right_rounded,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            size: 14,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                centerTitle: true,
+                expandedTitleScale: 1.0,
+              ),
+              elevation: 0,
+            ),
+          ),
+        ),
+        body: SafeArea(
+          child: Container(
+            width: MediaQuery.sizeOf(context).width,
+            height: MediaQuery.sizeOf(context).height * 1,
+            child: Stack(
+              alignment: const AlignmentDirectional(0, 1),
+              children: [
+                Column(
+                  children: [
+                    // This will take up all available space above the input field
+                    Expanded(
+                      child: Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                        child: ListView(
+                          padding: EdgeInsets.zero,
+                          reverse: true,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          children: conversation.messages
+                              .map((message) => MessageBubblesWidget(
+                                    mesageText: message.content,
+                                    blueBubble: message.me == true,
+                                    showDelivered: false,
+                                    showTail: true,
+                                  ))
+                              .toList(),
+                        ),
+                      ),
+                    ),
+
+                    // This will push the input field to the bottom of the screen
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(0),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(
+                            sigmaX: 10,
+                            sigmaY: 10,
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            height: 50,
+                            decoration: const BoxDecoration(
+                              color: Color(0xB3FFFFFF),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16, 0, 16, 0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              const AlignmentDirectional(0, 0),
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
+                                            child: TextFormField(
+                                              controller: _model.textController,
+                                              focusNode:
+                                                  _model.textFieldFocusNode,
+                                              onChanged: (_) =>
+                                                  EasyDebounce.debounce(
+                                                '_model.textController',
+                                                const Duration(
+                                                    milliseconds: 200),
+                                                () => safeSetState(() {}),
+                                              ),
+                                              autofocus: false,
+                                              textCapitalization:
+                                                  TextCapitalization.sentences,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                isDense: true,
+                                                hintText: 'Melding',
+                                                hintStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodySmall
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                ),
+                                                filled: true,
+                                                fillColor:
+                                                    const Color(0x7FFFFFFF),
+                                                contentPadding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        14, 16, 24, 16),
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                        lineHeight: 1,
+                                                      ),
+                                              validator: _model
+                                                  .textControllerValidator
+                                                  .asValidator(context),
+                                            ),
+                                          ),
+                                        ),
+                                        const Stack(
+                                          children: [
+                                            Align(
+                                              alignment:
+                                                  AlignmentDirectional(1, 0),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 0, 6, 0),
+                                                child: Icon(
+                                                  Icons.send_rounded,
+                                                  color: Color(0xFF357BF7),
+                                                  size: 25,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

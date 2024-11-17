@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mat_salg/app_main/chat/message/message_widget.dart';
 import 'package:provider/provider.dart';
 
 import '/auth/custom_auth/custom_auth_user_provider.dart';
@@ -133,7 +134,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'ChatMain',
           path: '/chatMain',
-          builder: (context, params) => const ChatMainWidget(),
+          builder: (context, params) => ChatMainWidget(),
+        ),
+        FFRoute(
+          name: 'message',
+          path: '/message',
+          builder: (context, params) => MessageWidget(
+            conversation: params.getParam('conversation', ParamType.JSON),
+          ),
         ),
         FFRoute(
           name: 'Hjem',
