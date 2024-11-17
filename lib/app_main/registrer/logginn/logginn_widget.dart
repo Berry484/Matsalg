@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
-
+import 'package:mat_salg/api/web_socket.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -24,6 +24,7 @@ class LogginnWidget extends StatefulWidget {
 
 class _LogginnWidgetState extends State<LogginnWidget> {
   late LogginnModel _model;
+  late WebSocketService _webSocketService; // Declare WebSocketService
   final ApiCalls apiCalls = ApiCalls(); // Instantiate the ApiCalls class
   final ApiGetToken apiGetToken = ApiGetToken();
   final Securestorage secureStorage = Securestorage();
@@ -274,6 +275,13 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                             '';
 
                                     _isloading = false;
+                                    try {
+                                      _webSocketService = WebSocketService();
+                                      _webSocketService.connect();
+                                      setState(() {});
+                                    } catch (e) {
+                                      print("errror $e");
+                                    }
                                     context.pushNamed('Hjem');
                                     FFAppState().login = true;
                                     return;
@@ -450,7 +458,13 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     FFAppState().profilepic =
                                         decodedResponse['profile_picture'] ??
                                             '';
-
+                                    try {
+                                      _webSocketService = WebSocketService();
+                                      _webSocketService.connect();
+                                      setState(() {});
+                                    } catch (e) {
+                                      print("errror $e");
+                                    }
                                     _isloading = false;
                                     context.pushNamed('Hjem');
                                     FFAppState().login = true;

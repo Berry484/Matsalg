@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mat_salg/api/web_socket.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -18,6 +19,7 @@ class InnstillingerWidget extends StatefulWidget {
 }
 
 class _InnstillingerWidgetState extends State<InnstillingerWidget> {
+  late WebSocketService _webSocketService; // Declare WebSocketService
   late InnstillingerModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -25,6 +27,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
   @override
   void initState() {
     super.initState();
+    _webSocketService = WebSocketService();
     _model = createModel(context, () => InnstillingerModel());
   }
 
@@ -612,6 +615,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                           try {
                                             FFAppState().login = false;
                                             FFAppState().startet = false;
+                                            _webSocketService.close();
                                             context.pushNamed('registrer');
                                           } on SocketException {
                                             showErrorToast(context,

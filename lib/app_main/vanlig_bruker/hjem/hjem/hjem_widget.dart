@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/app_main/vanlig_bruker/custom_nav_bar_user/home_nav_bar/home_nav_bar_widget.dart';
@@ -28,7 +29,7 @@ class HjemWidget extends StatefulWidget {
 
 class _HjemWidgetState extends State<HjemWidget> {
   late HjemModel _model;
-
+  late WebSocketService _webSocketService; // Declare WebSocketService
   List<Matvarer>? _matvarer;
   List<UserInfoSearch>? _profiler;
   bool _isloading = true;
@@ -47,6 +48,8 @@ class _HjemWidgetState extends State<HjemWidget> {
   @override
   void initState() {
     super.initState();
+    _webSocketService = WebSocketService();
+    _webSocketService.connect();
     fetchData();
     getKommune();
     getAllFoods();

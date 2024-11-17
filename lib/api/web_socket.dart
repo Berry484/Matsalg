@@ -33,6 +33,7 @@ class WebSocketService {
     }
 
     try {
+      _isFirstMessage = true;
       String? token = await _getToken();
       if (token == null) {
         print('Token is null, cannot connect');
@@ -57,6 +58,9 @@ class WebSocketService {
         },
         onDone: () {
           print('WebSocket connection closed');
+          final appState = FFAppState();
+          appState.conversations.clear(); // Clear the conversations list
+          _isFirstMessage = true;
           _isConnected = false;
         },
       );
@@ -223,11 +227,9 @@ class WebSocketService {
     // Always add the new message to the conversation's messages list
     conversation.messages
         .insert(0, newMessage); // Insert the message at the beginning
-    print("Added message to conversation with $receiver.");
 
     // Save the updated conversation list to SharedPreferences
     appState.notifyListeners();
-    print("Notified listeners to update the UI after sending the message.");
 
     // Send the message over WebSocket to the server
     _sendMessageToServer(receiver, content);
@@ -237,7 +239,6 @@ class WebSocketService {
   void _sendMessageToServer(String receiver, String content) {
     // Check if WebSocket is connected
     if (!_isConnected) {
-      print("WebSocket is not connected, message cannot be sent.");
       return;
     }
 
@@ -252,7 +253,6 @@ class WebSocketService {
     // Send the message as a JSON string to the WebSocket server
     _socket.add(jsonEncode(
         message)); // Assuming `_webSocket` is your WebSocket instance
-    print("Message sent to server: $message");
   }
 
   void _sendMarkAsReadRequest(String sender) {
@@ -275,7 +275,6 @@ class WebSocketService {
   void markAllMessagesAsRead(String sender) {
     // Ensure sender is not empty before proceeding
     if (sender.isEmpty) {
-      print("Invalid sender. Cannot mark messages as read.");
       return;
     }
 
@@ -289,14 +288,6 @@ class WebSocketService {
             throw (Exception) // This will return null, but not actually create a new conversation
         );
 
-    // If conversation is null, no conversation exists, exit the method
-    if (conversation == null) {
-      print(
-          "No existing conversation found for sender: $sender. No action taken.");
-      return; // Simply exit and do nothing
-    }
-
-    // If the conversation exists, go through the messages and mark unread messages as read
     bool updated = false;
 
     // Iterate over all messages and mark those from 'me == false' as read
@@ -309,15 +300,8 @@ class WebSocketService {
     }
 
     if (updated) {
-      // Notify listeners to update the UI
-      appState.notifyListeners();
-      print('All unread messages from $sender marked as read.');
-
-      // Send the "mark as read" request to the server for this sender
       _sendMarkAsReadRequest(sender);
-    } else {
-      print('No unread messages found to mark as read for $sender.');
-    }
+    } else {}
   }
 
   // Fetch token from secure storage

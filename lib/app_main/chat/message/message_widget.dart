@@ -39,6 +39,10 @@ class _MessageWidgetState extends State<MessageWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     FFAppState().addListener(_onAppStateChanged);
+    markRead();
+  }
+
+  void markRead() {
     _webSocketService = WebSocketService();
     _webSocketService.markAllMessagesAsRead(conversation.user);
   }
@@ -104,6 +108,7 @@ class _MessageWidgetState extends State<MessageWidget> {
 
   void _onAppStateChanged() {
     setState(() {
+      markRead();
       // _webSocketService.markAllMessagesAsRead(conversation.user);
       conversation = FFAppState().conversations.firstWhere(
             (conv) => conv.user == conversation.user,
