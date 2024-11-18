@@ -28,7 +28,7 @@ class MessageBubblesWidget extends StatefulWidget {
 
 class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
   late MessageBubblesModel _model;
-  late DateTime time; // Declare time as DateTime
+  late DateTime? time; // Declare time as DateTime
 
   @override
   void setState(VoidCallback callback) {
@@ -48,6 +48,8 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
         time = DateTime.now(); // Set to current time as fallback
         print("Error parsing messageTime: $e");
       }
+    } else {
+      time = null;
     }
     _model = createModel(context, () => MessageBubblesModel());
   }
@@ -66,7 +68,7 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          if (widget.messageTime != null)
+          if (time != null)
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -83,14 +85,14 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                           ),
                       children: [
                         TextSpan(
-                          text: DateFormat("HH:mm", "nb_NO").format(time),
+                          text: DateFormat("HH:mm", "nb_NO").format(time!),
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         const TextSpan(text: " "),
                         TextSpan(
-                          text: DateFormat("d. MMM", "nb_NO").format(time),
+                          text: DateFormat("d. MMM", "nb_NO").format(time!),
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
                           ),
@@ -117,13 +119,17 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                     alignment: const AlignmentDirectional(-1, 1),
                     children: [
                       Container(
-                        width: MediaQuery.sizeOf(context).width * 0.6,
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.sizeOf(context).width *
+                              0.6, // Max width of 60% of the screen width
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFE9E9EB),
                           borderRadius: BorderRadius.circular(18),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              13, 12, 13, 12),
                           child: Text(
                             widget.mesageText!,
                             style: FlutterFlowTheme.of(context)
@@ -131,7 +137,7 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                                 .override(
                                   fontFamily: 'Inter',
                                   letterSpacing: 0.0,
-                                  fontSize: 14,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
@@ -169,13 +175,17 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                     alignment: const AlignmentDirectional(1, 1),
                     children: [
                       Container(
-                        width: MediaQuery.sizeOf(context).width * 0.6,
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.sizeOf(context).width *
+                              0.6, // Max width of 60% of the screen width
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF357BF7),
                           borderRadius: BorderRadius.circular(18),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              13, 12, 13, 12),
                           child: Text(
                             widget.mesageText!,
                             style: FlutterFlowTheme.of(context)
@@ -184,7 +194,7 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                                   fontFamily: 'Inter',
                                   color: Colors.white,
                                   letterSpacing: 0.0,
-                                  fontSize: 14,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),

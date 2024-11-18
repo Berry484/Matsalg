@@ -37,6 +37,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
   late KjopDetaljVentendeModel _model;
   late Matvarer matvare;
   ApiLike apiLike = ApiLike();
+  bool _messageIsLoading = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -816,7 +817,73 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
-                                            onTap: () async {},
+                                            onTap: () async {
+                                              try {
+                                                // Prevent multiple submissions while loading
+                                                if (_messageIsLoading) return;
+                                                _messageIsLoading = true;
+
+                                                Conversation
+                                                    existingConversation =
+                                                    FFAppState()
+                                                        .conversations
+                                                        .firstWhere(
+                                                  (conv) =>
+                                                      conv.user ==
+                                                      matvare.username,
+                                                  orElse: () {
+                                                    // If no conversation is found, create a new one and add it to the list
+                                                    final newConversation =
+                                                        Conversation(
+                                                      user: matvare.username ??
+                                                          '',
+                                                      profilePic:
+                                                          matvare.profilepic ??
+                                                              '',
+                                                      messages: [],
+                                                    );
+
+                                                    // Add the new conversation to the list
+                                                    FFAppState()
+                                                        .conversations
+                                                        .add(newConversation);
+
+                                                    // Return the new conversation
+                                                    return newConversation;
+                                                  },
+                                                );
+
+                                                // Step 3: Serialize the conversation object to JSON
+                                                String? serializedConversation =
+                                                    serializeParam(
+                                                  existingConversation
+                                                      .toJson(), // Convert the conversation to JSON
+                                                  ParamType.JSON,
+                                                );
+
+                                                // Step 4: Stop loading and navigate to message screen
+                                                _messageIsLoading = false;
+                                                if (serializedConversation !=
+                                                    null) {
+                                                  // Step 5: Navigate to 'message' screen with the conversation
+                                                  context.pushNamed(
+                                                    'message',
+                                                    queryParameters: {
+                                                      'conversation':
+                                                          serializedConversation, // Pass the serialized conversation
+                                                    },
+                                                  );
+                                                }
+                                              } on SocketException {
+                                                _messageIsLoading = false;
+                                                showErrorToast(context,
+                                                    'Ingen internettforbindelse');
+                                              } catch (e) {
+                                                _messageIsLoading = false;
+                                                showErrorToast(
+                                                    context, 'En feil oppstod');
+                                              }
+                                            },
                                             child: Material(
                                               color: Colors.transparent,
                                               elevation: 1,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'dart:io';
@@ -27,10 +28,10 @@ class WebSocketService {
 
   // Method to connect to WebSocket
   Future<void> connect() async {
-    if (_isConnected) {
-      print("WebSocket already connected.");
-      return;
-    }
+    // if (_isConnected) {
+    //   print("WebSocket already connected.");
+    //   return;
+    // }
 
     try {
       _isFirstMessage = true;
@@ -86,22 +87,19 @@ class WebSocketService {
               throw (Exception), // If no conversation exists, return null
         );
 
-        if (conversation != null) {
-          // Iterate over the messages in the conversation
-          for (var message in conversation.messages) {
-            // If the message is sent by 'me' (me == true), mark it as read
-            if (message.me) {
-              message.read = true; // Mark message as read
-            }
+        // Iterate over the messages in the conversation
+        for (var message in conversation.messages) {
+          // If the message is sent by 'me' (me == true), mark it as read
+          if (message.me) {
+            message.read = true; // Mark message as read
           }
-
-          // Notify listeners to update the UI
-          appState.notifyListeners();
-          print(
-              'Marked all messages sent by me as read for receiver: $receiver');
-        } else {
-          print('No conversation found for receiver: $receiver');
         }
+
+        // Notify listeners to update the UI
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          appState.notifyListeners();
+        });
+        print('Marked all messages sent by me as read for receiver: $receiver');
       }
 
       // Check if data is a Map (assumes the message is in JSON format)
@@ -112,30 +110,11 @@ class WebSocketService {
           return; // Ignore this message
         }
 
-        // Proceed with normal message handling if sender and content are present
-        String sender = data['sender'] ?? ''; // The sender of the message
-        String content = data['content'] ?? ''; // The content of the message
-        String profilePic =
-            data['profile_picture'] ?? ''; // The sender of the message
-        String time =
-            data['time'] ?? DateTime.now().toIso8601String(); // Timestamp
-        bool me = data['me'] ??
-            false; // Flag indicating if the message was sent by the current user
-
-        // Create a new Message object
-        Message newMessage = Message(
-          content: content,
-          time: time,
-          read: false, // Assuming the message is unread initially
-          me: me,
-        );
-        print(_isFirstMessage);
-        // Access FFAppState to update the conversations globally
-        final appState = FFAppState();
-
         // If this is the first message received after connection
         if (_isFirstMessage) {
           try {
+            final appState = FFAppState();
+            appState.conversations.clear();
             var data = jsonDecode(message); // Assuming message is JSON string.
 
             // Check if the response contains 'conversations' key
@@ -143,7 +122,6 @@ class WebSocketService {
               var conversationsList = data['conversations'] as List<dynamic>;
 
               // Clear previous conversations in FFAppState
-              appState.conversations.clear();
 
               // Parse and add new conversations to FFAppState
               for (var conversationJson in conversationsList) {
@@ -152,13 +130,38 @@ class WebSocketService {
               }
 
               // notifyListeners() to update the UI
-              appState.notifyListeners();
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                appState.notifyListeners();
+              });
+              // const Duration(seconds: 1000);
+              // appState.notifyListeners();
             }
+            _isFirstMessage = false;
+            return;
           } catch (e) {
             print('Error parsing message: $e');
           }
-          _isFirstMessage = false;
         } else {
+          // Proceed with normal message handling if sender and content are present
+          String sender = data['sender'] ?? ''; // The sender of the message
+          String content = data['content'] ?? ''; // The content of the message
+          String profilePic =
+              data['profile_picture'] ?? ''; // The sender of the message
+          String time =
+              data['time'] ?? DateTime.now().toIso8601String(); // Timestamp
+          bool me = data['me'] ??
+              false; // Flag indicating if the message was sent by the current user
+
+          // Create a new Message object
+          Message newMessage = Message(
+            content: content,
+            time: time,
+            read: false, // Assuming the message is unread initially
+            me: me,
+          );
+          // Access FFAppState to update the conversations globally
+          final appState = FFAppState();
+
           bool _empty = false;
 
           var conversation = appState.conversations.firstWhere(
@@ -181,7 +184,9 @@ class WebSocketService {
           if (!_empty) {
             conversation.messages.insert(0, newMessage);
           }
-          appState.notifyListeners();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            appState.notifyListeners();
+          });
           print("Notified listeners to update the UI");
         }
       }
@@ -223,7 +228,9 @@ class WebSocketService {
         .insert(0, newMessage); // Insert the message at the beginning
 
     // Save the updated conversation list to SharedPreferences
-    appState.notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      appState.notifyListeners();
+    });
 
     // Send the message over WebSocket to the server
     _sendMessageToServer(receiver, content);

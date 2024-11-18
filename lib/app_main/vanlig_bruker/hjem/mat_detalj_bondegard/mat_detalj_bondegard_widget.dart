@@ -45,6 +45,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
   final Securestorage securestorage = Securestorage();
   final ApiLike apiLike = ApiLike();
   bool? brukerFolger = false;
+  bool _messageIsLoading = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -809,14 +810,84 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             size: 30,
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10, 0, 0, 0),
-                                          child: FaIcon(
-                                            FontAwesomeIcons.comment,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 30,
+                                        GestureDetector(
+                                          onTap: () async {
+                                            try {
+                                              // Prevent multiple submissions while loading
+                                              if (_messageIsLoading) return;
+                                              _messageIsLoading = true;
+
+                                              Conversation
+                                                  existingConversation =
+                                                  FFAppState()
+                                                      .conversations
+                                                      .firstWhere(
+                                                (conv) =>
+                                                    conv.user ==
+                                                    matvare.username,
+                                                orElse: () {
+                                                  // If no conversation is found, create a new one and add it to the list
+                                                  final newConversation =
+                                                      Conversation(
+                                                    user:
+                                                        matvare.username ?? '',
+                                                    profilePic:
+                                                        matvare.profilepic ??
+                                                            '',
+                                                    messages: [],
+                                                  );
+
+                                                  // Add the new conversation to the list
+                                                  FFAppState()
+                                                      .conversations
+                                                      .add(newConversation);
+
+                                                  // Return the new conversation
+                                                  return newConversation;
+                                                },
+                                              );
+
+                                              // Step 3: Serialize the conversation object to JSON
+                                              String? serializedConversation =
+                                                  serializeParam(
+                                                existingConversation
+                                                    .toJson(), // Convert the conversation to JSON
+                                                ParamType.JSON,
+                                              );
+
+                                              // Step 4: Stop loading and navigate to message screen
+                                              _messageIsLoading = false;
+                                              if (serializedConversation !=
+                                                  null) {
+                                                // Step 5: Navigate to 'message' screen with the conversation
+                                                context.pushNamed(
+                                                  'message',
+                                                  queryParameters: {
+                                                    'conversation':
+                                                        serializedConversation, // Pass the serialized conversation
+                                                  },
+                                                );
+                                              }
+                                            } on SocketException {
+                                              _messageIsLoading = false;
+                                              showErrorToast(context,
+                                                  'Ingen internettforbindelse');
+                                            } catch (e) {
+                                              _messageIsLoading = false;
+                                              showErrorToast(
+                                                  context, 'En feil oppstod');
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(10, 0, 0, 0),
+                                            child: FaIcon(
+                                              FontAwesomeIcons.comment,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 30,
+                                            ),
                                           ),
                                         ),
                                         Padding(
@@ -1020,7 +1091,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               },
                                               child: Material(
                                                 color: Colors.transparent,
-                                                elevation: 1,
+                                                elevation: 0,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(14),
@@ -1069,7 +1140,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
-                                                                        17,
+                                                                        16,
                                                                     letterSpacing:
                                                                         0.0,
                                                                     fontWeight:

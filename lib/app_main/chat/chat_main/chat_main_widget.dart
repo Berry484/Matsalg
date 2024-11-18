@@ -26,6 +26,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
     _model = createModel(context, () => ChatMainModel());
     _webSocketService = WebSocketService();
     FFAppState().addListener(_onAppStateChanged);
+    _webSocketService.connect();
     setState(() {});
   }
 
@@ -79,9 +80,21 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                   child: ListView.builder(
                     padding: const EdgeInsets.fromLTRB(
                         0, 0, 0, 100), // Adjust padding as needed
-                    itemCount: FFAppState().conversations.length,
+                    itemCount: FFAppState().conversations.where((conversation) {
+                      // Check if the conversation is empty (no valid messages)
+                      return conversation.messages.isNotEmpty &&
+                          conversation.messages
+                              .any((msg) => msg.content.isNotEmpty);
+                    }).length,
                     itemBuilder: (context, index) {
-                      final conversation = FFAppState().conversations[index];
+                      final conversation = FFAppState()
+                          .conversations
+                          .where((conversation) =>
+                              conversation.messages.isNotEmpty &&
+                              conversation.messages
+                                  .any((msg) => msg.content.isNotEmpty))
+                          .toList()[index];
+
                       String lastMessageTime = '';
                       if (conversation.messages.isNotEmpty) {
                         lastMessageTime = conversation.messages.first.time;

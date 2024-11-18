@@ -146,8 +146,10 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
         setState(() {});
       }
     } on SocketException {
+      _ratingisLoading = true;
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      _ratingisLoading = true;
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -174,8 +176,10 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
         });
       }
     } on SocketException {
+      _ratingisLoading = true;
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      _ratingisLoading = true;
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -213,8 +217,10 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
         });
       }
     } on SocketException {
+      _ratingisLoading = true;
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      _ratingisLoading = true;
       showErrorToast(context, 'En feil oppstod');
     }
   }

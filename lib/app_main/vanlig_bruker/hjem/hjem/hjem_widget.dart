@@ -823,7 +823,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                   return Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(10.0, 5.0,
+                                                            .fromSTEB(5.0, 0.0,
                                                             10.0, 0.0),
                                                     child: InkWell(
                                                       splashColor:
@@ -913,9 +913,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               Image.network(
                                                                             '${ApiConstants.baseUrl}${profil.profilepic}',
                                                                             width:
-                                                                                50.0,
+                                                                                45.0,
                                                                             height:
-                                                                                50.0,
+                                                                                45.0,
                                                                             fit:
                                                                                 BoxFit.cover,
                                                                             errorBuilder: (BuildContext context,
@@ -923,8 +923,8 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                 StackTrace? stackTrace) {
                                                                               return Image.asset(
                                                                                 'assets/images/profile_pic.png',
-                                                                                width: 50.0,
-                                                                                height: 50.0,
+                                                                                width: 45.0,
+                                                                                height: 45.0,
                                                                                 fit: BoxFit.cover,
                                                                               );
                                                                             },

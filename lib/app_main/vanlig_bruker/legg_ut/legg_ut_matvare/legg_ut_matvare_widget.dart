@@ -285,7 +285,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
               children: [
                 Expanded(
                   child: SingleChildScrollView(
-                    primary: false,
+                    primary: true,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,

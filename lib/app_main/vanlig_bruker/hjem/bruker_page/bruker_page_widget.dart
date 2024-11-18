@@ -46,6 +46,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   int ratingantall = 0;
   bool ingenRatings = false;
   bool _messageIsLoading = false;
+  bool _folgerLoading = false;
   final Securestorage securestorage = Securestorage();
   final ApiFolg apiFolg = ApiFolg();
 
@@ -717,18 +718,19 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     FFButtonWidget(
                                                                       onPressed:
                                                                           () async {
+                                                                        if (_folgerLoading)
+                                                                          return;
+                                                                        _folgerLoading =
+                                                                            true;
                                                                         HapticFeedback
                                                                             .mediumImpact();
                                                                         _model.folger =
                                                                             false;
-                                                                        // apiFolg.unfolgBruker(
-                                                                        // Securestorage
-                                                                        //     .authToken,
-                                                                        // bruker
-                                                                        //     ?.username);
                                                                         safeSetState(
                                                                             () {});
                                                                         unFolg();
+                                                                        _folgerLoading =
+                                                                            false;
                                                                       },
                                                                       text:
                                                                           'Følger',
@@ -784,6 +786,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     FFButtonWidget(
                                                                       onPressed:
                                                                           () async {
+                                                                        if (_folgerLoading) {
+                                                                          return;
+                                                                        }
+                                                                        _folgerLoading =
+                                                                            true;
                                                                         HapticFeedback
                                                                             .mediumImpact();
                                                                         _model.folger =
@@ -791,6 +798,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                         safeSetState(
                                                                             () {});
                                                                         folgBruker();
+                                                                        _folgerLoading =
+                                                                            false;
                                                                       },
                                                                       text:
                                                                           'Følg',

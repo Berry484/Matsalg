@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/api/web_socket.dart';
@@ -346,144 +347,125 @@ class _MessageWidgetState extends State<MessageWidget> {
                           ),
                           child: Container(
                             width: double.infinity,
-                            height: 50,
                             decoration: const BoxDecoration(
                               color: Color(0xB3FFFFFF),
                             ),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16, 0, 16, 0),
+                                  16, 5, 16, 0),
                               child: Row(
-                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment
+                                    .end, // Align items to bottom
                                 children: [
                                   Expanded(
-                                    child: Stack(
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              const AlignmentDirectional(0, 0),
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(12, 0, 0, 0),
-                                            child: TextFormField(
-                                              controller: _model.textController,
-                                              focusNode:
-                                                  _model.textFieldFocusNode,
-                                              onChanged: (_) =>
-                                                  EasyDebounce.debounce(
-                                                '_model.textController',
-                                                const Duration(
-                                                    milliseconds: 200),
-                                                () => safeSetState(() {}),
-                                              ),
-                                              autofocus: false,
-                                              textCapitalization:
-                                                  TextCapitalization.sentences,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                hintText: 'Melding',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    const Color(0x7FFFFFFF),
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        14, 16, 24, 16),
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                        lineHeight: 1,
-                                                      ),
-                                              validator: _model
-                                                  .textControllerValidator
-                                                  .asValidator(context),
+                                    child: TextFormField(
+                                      controller: _model.textController,
+                                      focusNode: _model.textFieldFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.textController',
+                                        const Duration(milliseconds: 200),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      autofocus: false,
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
+                                      obscureText: false,
+                                      maxLines: 7, // Allow maximum of 7 lines
+                                      minLines: 1, // Start with 1 line
+                                      maxLength: 200,
+                                      textAlign: TextAlign.start,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        hintText: 'Melding',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
                                             ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            width: 1.0,
                                           ),
+                                          borderRadius:
+                                              BorderRadius.circular(24),
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            if (_model.textController!.text
-                                                .trim()
-                                                .isNotEmpty) {
-                                              _webSocketService.sendMessage(
-                                                conversation.user,
-                                                _model.textController!.text,
-                                              );
-                                              setState(() {
-                                                _model.textController!.clear();
-                                              });
-                                            }
-                                          },
-                                          child: const Stack(
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(1, 0),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 6, 0),
-                                                  child: Icon(
-                                                    Icons.send_rounded,
-                                                    color: Color(0xFF357BF7),
-                                                    size: 25,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            width: 1.0,
                                           ),
+                                          borderRadius:
+                                              BorderRadius.circular(24),
                                         ),
+                                        filled: true,
+                                        fillColor: const Color(0x7FFFFFFF),
+                                        counterText: '',
+                                        contentPadding:
+                                            const EdgeInsetsDirectional
+                                                .fromSTEB(14, 16, 24, 16),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                            lineHeight: 1,
+                                          ),
+                                      validator: _model.textControllerValidator
+                                          .asValidator(context),
+                                      inputFormatters: [
+                                        // Custom input formatter to limit lines in the text field
+                                        LengthLimitingTextInputFormatter(200),
+                                        // Add a formatter to restrict entering more lines
+                                        TextInputFormatter.withFunction(
+                                            (oldValue, newValue) {
+                                          final lineCount = '\n'
+                                                  .allMatches(newValue.text)
+                                                  .length +
+                                              1;
+                                          if (lineCount > 8) {
+                                            return oldValue;
+                                          }
+                                          return newValue;
+                                        }),
                                       ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            7, 0, 10, 8),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (_model.textController!.text
+                                            .trim()
+                                            .isNotEmpty) {
+                                          _webSocketService.sendMessage(
+                                            conversation.user,
+                                            _model.textController!.text,
+                                          );
+                                          setState(() {
+                                            _model.textController!.clear();
+                                          });
+                                        }
+                                      },
+                                      child: Align(
+                                        alignment: _model
+                                                .textController.text.isEmpty
+                                            ? Alignment
+                                                .center // Center if only one line
+                                            : Alignment
+                                                .bottomCenter, // Bottom when expanded
+                                        child: const FaIcon(
+                                          FontAwesomeIcons.arrowCircleUp,
+                                          color: Color(0xFF357BF7),
+                                          size: 29,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
