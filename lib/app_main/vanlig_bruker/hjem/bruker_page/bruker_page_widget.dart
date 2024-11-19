@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/Bonder.dart';
@@ -1025,8 +1026,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       text: '',
                                                                       icon:
                                                                           Icon(
-                                                                        Icons
-                                                                            .message,
+                                                                        CupertinoIcons
+                                                                            .chat_bubble,
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .primaryText,
                                                                         size:
@@ -1221,9 +1222,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          FaIcon(
-                                                            FontAwesomeIcons
-                                                                .thLarge,
+                                                          Icon(
+                                                            CupertinoIcons
+                                                                .square_grid_2x2,
                                                             color: _model
                                                                         .tabBarCurrentIndex ==
                                                                     0
@@ -1233,7 +1234,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                 : FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondaryText,
-                                                            size: 25,
+                                                            size: 32,
                                                           ),
                                                           const Tab(
                                                             text: '',
@@ -1257,7 +1258,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                 : FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondaryText,
-                                                            size: 25,
+                                                            size: 27,
                                                           ),
                                                           const Tab(
                                                             text: '',
@@ -1309,7 +1310,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                               CrossAxisAlignment.center,
                                           children: [
                                             Icon(
-                                              Icons.camera_alt_outlined,
+                                              CupertinoIcons
+                                                  .camera_on_rectangle,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
@@ -1330,7 +1332,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                       .bodyLarge
                                                       .override(
                                                         fontFamily: 'Open Sans',
-                                                        fontSize: 18,
+                                                        fontSize: 19,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.bold,

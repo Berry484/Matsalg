@@ -181,163 +181,142 @@ class _BetalingWidgetState extends State<BetalingWidget> {
             top: true,
             child: SingleChildScrollView(
               child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              12, 20, 12, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 30, 10, 20),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  child: Container(
-                                    height: 107,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 20, 12, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 30, 10, 20),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),
-                                      shape: BoxShape.rectangle,
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 1, 1, 1),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              child: Image.network(
-                                                '${ApiConstants.baseUrl}${matvare.imgUrls![0].toString()}',
-                                                width: 80,
-                                                height: 80,
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (BuildContext
-                                                        context,
-                                                    Object error,
-                                                    StackTrace? stackTrace) {
-                                                  return Image.asset(
-                                                    'assets/images/error_image.jpg', // Path to your local error image
-                                                    fit: BoxFit.cover,
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
+                                    child: Container(
+                                      height: 107,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        borderRadius: BorderRadius.circular(24),
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
-                                                      .fromSTEB(8, 0, 4, 0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
+                                                      .fromSTEB(0, 1, 1, 1),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                                child: Image.network(
+                                                  '${ApiConstants.baseUrl}${matvare.imgUrls![0].toString()}',
+                                                  width: 80,
+                                                  height: 80,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (BuildContext
+                                                          context,
+                                                      Object error,
+                                                      StackTrace? stackTrace) {
+                                                    return Image.asset(
+                                                      'assets/images/error_image.jpg', // Path to your local error image
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(8, 0, 4, 0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 10, 0, 0),
+                                                      child: Text(
+                                                        matvare.name ?? '',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .headlineSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  fontSize: 22,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          1, 1),
+                                                  child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                            0, 10, 0, 0),
-                                                    child: Text(
-                                                      matvare.name ?? '',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .headlineSmall
-                                                          .override(
-                                                            fontFamily:
-                                                                'Open Sans',
-                                                            fontSize: 22,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        1, 1),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0, 0, 0, 10),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                0, 12, 0, 0),
-                                                        child: Text(
-                                                          '${matvare.price} Kr',
-                                                          textAlign:
-                                                              TextAlign.end,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                fontSize: 18,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                      if (matvare.kg == true)
+                                                            0, 0, 0, 10),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                      children: [
                                                         Padding(
                                                           padding:
                                                               const EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                  0, 12, 4, 0),
+                                                                  0, 12, 0, 0),
                                                           child: Text(
-                                                            '/kg',
+                                                            '${matvare.price} Kr',
                                                             textAlign:
                                                                 TextAlign.end,
                                                             style: FlutterFlowTheme
@@ -348,443 +327,434 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                                       'Open Sans',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .secondaryText,
+                                                                      .primaryText,
                                                                   fontSize: 18,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
+                                                                          .bold,
                                                                 ),
                                                           ),
                                                         ),
-                                                      if (matvare.kg != true)
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  0, 12, 4, 0),
-                                                          child: Text(
-                                                            '/stk',
-                                                            textAlign:
-                                                                TextAlign.end,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontSize: 18,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const Divider(
-                                thickness: 1,
-                                indent: 30,
-                                endIndent: 30,
-                                color: Color(0x62757575),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 30, 0, 0),
-                                child: Text(
-                                  'Antall',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 22,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 10, 0, 0),
-                                child: Text(
-                                  'Skriv inn antallet du ønsker å kjøpe',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 13,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 0, 0, 30),
-                                child: Form(
-                                  key: _model.formKey,
-                                  autovalidateMode: AutovalidateMode.disabled,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 20, 0, 20),
-                                        child: Stack(
-                                          alignment: const AlignmentDirectional(
-                                              1, -0.3),
-                                          children: [
-                                            TextFormField(
-                                              controller: _model
-                                                  .antallStkTextController,
-                                              focusNode:
-                                                  _model.antallStkFocusNode,
-                                              obscureText: false,
-                                              readOnly:
-                                                  true, // Disable the keyboard
-                                              decoration: InputDecoration(
-                                                labelText: 'Antall',
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 17,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 17,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondary,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                              ),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Open Sans',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w600,
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                              maxLength: 5,
-                                              maxLengthEnforcement:
-                                                  MaxLengthEnforcement.enforced,
-                                              buildCounter: (context,
-                                                      {required currentLength,
-                                                      required isFocused,
-                                                      maxLength}) =>
-                                                  null,
-                                              validator: _model
-                                                  .antallStkTextControllerValidator
-                                                  .asValidator(context),
-                                              onTap: () {
-                                                List<double> getPickerValues() {
-                                                  List<double> values = [];
-                                                  double step = matvare.kg ==
-                                                          true
-                                                      ? 0.1
-                                                      : 1.0; // Choose step size based on matvare.kg
-
-                                                  double antall =
-                                                      matvare.antall ?? 0.0;
-
-                                                  // Add values from 0.0 up to and including antall
-                                                  for (double i = 0.0;
-                                                      i <= antall + step / 2;
-                                                      i += step) {
-                                                    if ((i - antall).abs() <
-                                                        0.0000001) {
-                                                      values.add(
-                                                          antall); // Add antall exactly if i is very close to antall
-                                                      break; // Break out of the loop to avoid adding further values
-                                                    }
-                                                    values.add(i);
-                                                  }
-                                                  return values;
-                                                }
-
-                                                showCupertinoModalPopup(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return CupertinoActionSheet(
-                                                      title:
-                                                          Text('Velg antall'),
-                                                      message: Column(
-                                                        children: [
-                                                          Container(
-                                                            height:
-                                                                200, // Set a fixed height for the picker
-                                                            child:
-                                                                CupertinoPicker(
-                                                              itemExtent:
-                                                                  32.0, // Height of each item
-                                                              scrollController:
-                                                                  FixedExtentScrollController(
-                                                                initialItem:
-                                                                    getPickerValues()
-                                                                        .indexOf(
-                                                                            _selectedValue), // Set initial value
-                                                              ),
-                                                              onSelectedItemChanged:
-                                                                  (index) {
-                                                                setState(() {
-                                                                  _selectedValue =
-                                                                      getPickerValues()[
-                                                                          index];
-                                                                  // Update the TextFormField value with the selected value
-                                                                  _model.antallStkTextController
-                                                                          .text =
-                                                                      _selectedValue
-                                                                          .toStringAsFixed(
-                                                                              1);
-
-                                                                  // Trigger light haptic feedback on each tick/value change
-                                                                  HapticFeedback
-                                                                      .lightImpact();
-                                                                });
-                                                              },
-                                                              children:
-                                                                  getPickerValues()
-                                                                      .map((value) =>
-                                                                          Center(
-                                                                            child:
-                                                                                Text(value.toStringAsFixed(1)),
-                                                                          ))
-                                                                      .toList(),
+                                                        if (matvare.kg == true)
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(0,
+                                                                    12, 4, 0),
+                                                            child: Text(
+                                                              '/kg',
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Open Sans',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    fontSize:
+                                                                        18,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
                                                             ),
                                                           ),
-                                                        ],
-                                                      ),
-                                                      cancelButton:
-                                                          CupertinoActionSheetAction(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: Text('Velg'),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              },
+                                                        if (matvare.kg != true)
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(0,
+                                                                    12, 4, 0),
+                                                            child: Text(
+                                                              '/stk',
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Open Sans',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    fontSize:
+                                                                        18,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            if (matvare.kg != true)
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        0.8, 0),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(0, 7, 0, 0),
-                                                  child: Text(
-                                                    'Stk',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 17,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ),
-                                            if (matvare.kg == true)
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        0.8, -0.19),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(0, 7, 0, 0),
-                                                  child: Text(
-                                                    'Kg',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 17,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ),
                                           ],
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const Divider(
-                                thickness: 1,
-                                indent: 30,
-                                endIndent: 30,
-                                color: Color(0x62757575),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 30, 0, 0),
-                                child: Text(
-                                  'Betaling',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 22,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
-                                    child: Text(
-                                      matvare.name ?? '',
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            fontSize: 14,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 20, 0),
-                                    child: Text(
-                                      '${(_selectedValue * matpris).toStringAsFixed(
-                                        ((_selectedValue * matpris) % 1 == 0)
-                                            ? 0
-                                            : 0,
-                                      )} Kr',
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            fontSize: 15,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
+                                ),
+                                const Divider(
+                                  thickness: 1,
+                                  indent: 30,
+                                  endIndent: 30,
+                                  color: Color(0x62757575),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 30, 0, 0),
+                                  child: Text(
+                                    'Antall',
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 22,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 10, 0, 0),
+                                  child: Text(
+                                    'Skriv inn antallet du ønsker å kjøpe',
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 13,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 30),
+                                  child: Form(
+                                    key: _model.formKey,
+                                    autovalidateMode: AutovalidateMode.disabled,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 20, 0, 20),
+                                          child: Stack(
+                                            alignment:
+                                                const AlignmentDirectional(
+                                                    1, -0.3),
+                                            children: [
+                                              TextFormField(
+                                                controller: _model
+                                                    .antallStkTextController,
+                                                focusNode:
+                                                    _model.antallStkFocusNode,
+                                                obscureText: false,
+                                                readOnly:
+                                                    true, // Disable the keyboard
+                                                decoration: InputDecoration(
+                                                  labelText: 'Antall',
+                                                  labelStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 17,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                  hintStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 17,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Colors.transparent,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondary,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Open Sans',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                                maxLength: 5,
+                                                maxLengthEnforcement:
+                                                    MaxLengthEnforcement
+                                                        .enforced,
+                                                buildCounter: (context,
+                                                        {required currentLength,
+                                                        required isFocused,
+                                                        maxLength}) =>
+                                                    null,
+                                                validator: _model
+                                                    .antallStkTextControllerValidator
+                                                    .asValidator(context),
+                                                onTap: () {
+                                                  List<double>
+                                                      getPickerValues() {
+                                                    List<double> values = [];
+                                                    double step = matvare.kg ==
+                                                            true
+                                                        ? 0.1
+                                                        : 1.0; // Choose step size based on matvare.kg
+
+                                                    double antall =
+                                                        matvare.antall ?? 0.0;
+
+                                                    // Add values from 0.0 up to and including antall
+                                                    for (double i = 0.0;
+                                                        i <= antall + step / 2;
+                                                        i += step) {
+                                                      if ((i - antall).abs() <
+                                                          0.0000001) {
+                                                        values.add(
+                                                            antall); // Add antall exactly if i is very close to antall
+                                                        break; // Break out of the loop to avoid adding further values
+                                                      }
+                                                      values.add(i);
+                                                    }
+                                                    return values;
+                                                  }
+
+                                                  showCupertinoModalPopup(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return CupertinoActionSheet(
+                                                        title:
+                                                            Text('Velg antall'),
+                                                        message: Column(
+                                                          children: [
+                                                            Container(
+                                                              height:
+                                                                  200, // Set a fixed height for the picker
+                                                              child:
+                                                                  CupertinoPicker(
+                                                                itemExtent:
+                                                                    32.0, // Height of each item
+                                                                scrollController:
+                                                                    FixedExtentScrollController(
+                                                                  initialItem:
+                                                                      getPickerValues()
+                                                                          .indexOf(
+                                                                              _selectedValue), // Set initial value
+                                                                ),
+                                                                onSelectedItemChanged:
+                                                                    (index) {
+                                                                  setState(() {
+                                                                    _selectedValue =
+                                                                        getPickerValues()[
+                                                                            index];
+                                                                    // Update the TextFormField value with the selected value
+                                                                    _model.antallStkTextController
+                                                                            .text =
+                                                                        _selectedValue
+                                                                            .toStringAsFixed(1);
+
+                                                                    // Trigger light haptic feedback on each tick/value change
+                                                                    HapticFeedback
+                                                                        .lightImpact();
+                                                                  });
+                                                                },
+                                                                children:
+                                                                    getPickerValues()
+                                                                        .map((value) =>
+                                                                            Center(
+                                                                              child: Text(value.toStringAsFixed(1)),
+                                                                            ))
+                                                                        .toList(),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        cancelButton:
+                                                            CupertinoActionSheetAction(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: Text('Velg'),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                              if (matvare.kg != true)
+                                                Align(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          0.8, 0),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 7, 0, 0),
+                                                    child: Text(
+                                                      'Stk',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            fontSize: 17,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              if (matvare.kg == true)
+                                                Align(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          0.8, -0.19),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 7, 0, 0),
+                                                    child: Text(
+                                                      'Kg',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            fontSize: 17,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
                                           ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 0, 0, 30),
-                                child: Row(
+                                ),
+                                const Divider(
+                                  thickness: 1,
+                                  indent: 30,
+                                  endIndent: 30,
+                                  color: Color(0x62757575),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 30, 0, 0),
+                                  child: Text(
+                                    'Betaling',
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 22,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                                Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -794,7 +764,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 10, 0, 0),
                                       child: Text(
-                                        'Kjøpsbeskyttelse',
+                                        matvare.name ?? '',
                                         textAlign: TextAlign.start,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -814,13 +784,10 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 10, 20, 0),
                                       child: Text(
-                                        '${(_selectedValue * matpris * 0.05 + 2).toStringAsFixed(
-                                          ((_selectedValue * matpris * 0.05 +
-                                                          2) %
-                                                      1 ==
-                                                  0)
+                                        '${(_selectedValue * matpris).toStringAsFixed(
+                                          ((_selectedValue * matpris) % 1 == 0)
                                               ? 0
-                                              : 2,
+                                              : 0,
                                         )} Kr',
                                         textAlign: TextAlign.start,
                                         style: FlutterFlowTheme.of(context)
@@ -838,70 +805,108 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     ),
                                   ],
                                 ),
-                              ),
-                              const Divider(
-                                thickness: 1,
-                                indent: 30,
-                                endIndent: 30,
-                                color: Color(0x62757575),
-                              ),
-                            ],
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 30),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 0, 0),
+                                        child: Text(
+                                          'Kjøpsbeskyttelse',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontSize: 14,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 20, 0),
+                                        child: Text(
+                                          '${(_selectedValue * matpris * 0.05 + 2).toStringAsFixed(
+                                            ((_selectedValue * matpris * 0.05 +
+                                                            2) %
+                                                        1 ==
+                                                    0)
+                                                ? 0
+                                                : 2,
+                                          )} Kr',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontSize: 15,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Divider(
+                                  thickness: 1,
+                                  indent: 30,
+                                  endIndent: 30,
+                                  color: Color(0x62757575),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              12, 30, 12, 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    'Totalt å betale',
-                                    style: FlutterFlowTheme.of(context)
-                                        .titleMedium
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          fontSize: 19,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    ((_selectedValue * matpris * 1.05 + 2)
-                                        .toStringAsFixed(
-                                      ((_selectedValue * matpris * 1.05 + 2) %
-                                                  1 ==
-                                              0)
-                                          ? 0
-                                          : 2,
-                                    )),
-                                    style: FlutterFlowTheme.of(context)
-                                        .displaySmall
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          fontSize: 22,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            5, 0, 0, 0),
-                                    child: Text(
-                                      'Kr',
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 30, 12, 16),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      'Totalt å betale',
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 19,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      ((_selectedValue * matpris * 1.05 + 2)
+                                          .toStringAsFixed(
+                                        ((_selectedValue * matpris * 1.05 + 2) %
+                                                    1 ==
+                                                0)
+                                            ? 0
+                                            : 2,
+                                      )),
                                       style: FlutterFlowTheme.of(context)
                                           .displaySmall
                                           .override(
@@ -913,113 +918,132 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              15, 43, 15, 0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              if (_isLoading == true) {
-                                return;
-                              }
-                              if (_model.formKey.currentState == null ||
-                                  !_model.formKey.currentState!.validate()) {
-                                return;
-                              }
-                              try {
-                                _isLoading = true;
-                                if (matvare.matId != null &&
-                                    _model.antallStkTextController.text
-                                        .isNotEmpty) {
-                                  Decimal antall =
-                                      Decimal.parse(_selectedValue.toString());
-                                  Decimal pris = Decimal.parse(
-                                      (_selectedValue * matpris * 1.05 + 2)
-                                          .toString());
-                                  int matId = matvare.matId ?? 0;
-                                  if (matvare.matId != null) {
-                                    String? token =
-                                        await Securestorage().readToken();
-                                    if (token == null) {
-                                      FFAppState().login = false;
-                                      context.pushNamed('registrer');
-                                      return;
-                                    } else {
-                                      if (matId != 0) {
-                                        final response = await ApiKjop()
-                                            .kjopMat(
-                                                matId: matId,
-                                                price: pris,
-                                                antall: antall,
-                                                token: token);
-                                        if (response.statusCode == 200) {
-                                          context.pushNamed('Godkjentbetaling');
-                                        }
-                                      } else {
-                                        _isLoading = false;
-                                        throw (Exception);
-                                      }
-                                    }
-                                  } else {
-                                    _isLoading = false;
-                                    throw (Exception);
-                                  }
-                                }
-                              } on SocketException {
-                                showErrorToast(
-                                    context, 'Ingen internettforbindelse');
-                              } catch (e) {
-                                showErrorToast(context, 'En feil oppstod');
-                              }
-                            },
-                            text: 'Gi bud',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 48,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16, 0, 16, 0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 0),
-                              color: FlutterFlowTheme.of(context).alternate,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                              elevation: 0,
-                              borderRadius: BorderRadius.circular(15),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              5, 0, 0, 0),
+                                      child: Text(
+                                        'Kr',
+                                        style: FlutterFlowTheme.of(context)
+                                            .displaySmall
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontSize: 22,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                          child: Text(
-                            'Ved å fullføre handelen godtar du våre vilkår',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Open Sans',
-                                  fontSize: 13,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                15, 43, 15, 0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                if (_isLoading == true) {
+                                  return;
+                                }
+                                if (_model.formKey.currentState == null ||
+                                    !_model.formKey.currentState!.validate()) {
+                                  return;
+                                }
+                                try {
+                                  _isLoading = true;
+                                  if (matvare.matId != null &&
+                                      _model.antallStkTextController.text
+                                          .isNotEmpty) {
+                                    Decimal antall = Decimal.parse(
+                                        _selectedValue.toString());
+                                    Decimal pris = Decimal.parse(
+                                        (_selectedValue * matpris * 1.05 + 2)
+                                            .toString());
+                                    int matId = matvare.matId ?? 0;
+                                    if (matvare.matId != null) {
+                                      String? token =
+                                          await Securestorage().readToken();
+                                      if (token == null) {
+                                        FFAppState().login = false;
+                                        context.pushNamed('registrer');
+                                        return;
+                                      } else {
+                                        if (matId != 0) {
+                                          final response = await ApiKjop()
+                                              .kjopMat(
+                                                  matId: matId,
+                                                  price: pris,
+                                                  antall: antall,
+                                                  token: token);
+                                          if (response.statusCode == 200) {
+                                            context
+                                                .pushNamed('Godkjentbetaling');
+                                          }
+                                        } else {
+                                          _isLoading = false;
+                                          throw (Exception);
+                                        }
+                                      }
+                                    } else {
+                                      _isLoading = false;
+                                      throw (Exception);
+                                    }
+                                  }
+                                } on SocketException {
+                                  showErrorToast(
+                                      context, 'Ingen internettforbindelse');
+                                } catch (e) {
+                                  showErrorToast(context, 'En feil oppstod');
+                                }
+                              },
+                              text: 'Gi bud',
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 48,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    16, 0, 16, 0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 0),
+                                color: FlutterFlowTheme.of(context).alternate,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      color: Colors.white,
+                                      fontSize: 17,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                elevation: 0,
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 0),
+                            child: Text(
+                              'Ved å fullføre handelen godtar du våre vilkår',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    fontSize: 13,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ].addToEnd(const SizedBox(height: 100)),
-              ),
+                  ]),
             ),
           ),
         ),

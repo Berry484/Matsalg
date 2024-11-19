@@ -234,7 +234,7 @@ class _InfoWidgetState extends State<InfoWidget> {
               alignment: const AlignmentDirectional(0.0, 0.0),
               child: Padding(
                 padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                    const EdgeInsetsDirectional.fromSTEB(15.0, 12.0, 15.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
                     Navigator.pop(context);
@@ -251,25 +251,24 @@ class _InfoWidgetState extends State<InfoWidget> {
                   },
                   text: 'Skjønner',
                   options: FFButtonOptions(
-                    width: 150.0,
-                    height: 40.0,
+                    width: double.infinity,
+                    height: 43.0,
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 0.0, 0.0, 0.0),
-                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
                         0.0, 0.0, 0.0, 0.0),
                     color: FlutterFlowTheme.of(context).alternate,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Open Sans',
                           color: FlutterFlowTheme.of(context).primary,
-                          fontSize: 19.0,
+                          fontSize: 18.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
-                    elevation: 2.0,
+                    elevation: 0.0,
                     borderSide: const BorderSide(
                       color: Colors.transparent,
                       width: 1.0,
                     ),
+                    borderRadius: BorderRadius.circular(24),
                   ),
                 ),
               ),

@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
+
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'chat_nav_bar_model.dart';
 export 'chat_nav_bar_model.dart';
@@ -43,9 +44,15 @@ class _ChatNavBarWidgetState extends State<ChatNavBarWidget> {
     return SafeArea(
       child: Container(
         width: double.infinity,
-        height: 68.0,
+        height: 61.0,
         decoration: const BoxDecoration(
           color: Colors.transparent,
+          border: Border(
+            top: BorderSide(
+              color: Color.fromARGB(30, 87, 99, 108),
+              width: 1.0, // Adjust width as needed for a thin line
+            ),
+          ),
         ),
         child: Stack(
           children: [
@@ -66,7 +73,7 @@ class _ChatNavBarWidgetState extends State<ChatNavBarWidget> {
                   ),
                   child: Container(
                     width: double.infinity,
-                    height: 68.0,
+                    height: 60.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primary,
                       boxShadow: const [
@@ -103,10 +110,10 @@ class _ChatNavBarWidgetState extends State<ChatNavBarWidget> {
                     borderRadius: 30.0,
                     borderWidth: 1.0,
                     buttonSize: 50.0,
-                    icon: const FaIcon(
-                      FontAwesomeIcons.home,
+                    icon: const Icon(
+                      CupertinoIcons.home,
                       color: Color(0xFF9299A1),
-                      size: 24.0,
+                      size: 30.0,
                     ),
                     onPressed: () async {
                       context.pushNamed(
@@ -126,10 +133,10 @@ class _ChatNavBarWidgetState extends State<ChatNavBarWidget> {
                     borderRadius: 30.0,
                     borderWidth: 1.0,
                     buttonSize: 50.0,
-                    icon: const FaIcon(
-                      FontAwesomeIcons.moneyBillTransfer,
+                    icon: const Icon(
+                      CupertinoIcons.bag_badge_plus,
                       color: Color(0xFF9299A1),
-                      size: 24.0,
+                      size: 30.0,
                     ),
                     onPressed: () async {
                       context.pushNamed(
@@ -149,10 +156,10 @@ class _ChatNavBarWidgetState extends State<ChatNavBarWidget> {
                     borderRadius: 30.0,
                     borderWidth: 1.0,
                     buttonSize: 50.0,
-                    icon: const FaIcon(
-                      FontAwesomeIcons.plus,
+                    icon: const Icon(
+                      CupertinoIcons.add,
                       color: Color(0xFF9299A1),
-                      size: 24.0,
+                      size: 30.0,
                     ),
                     onPressed: () async {
                       context.pushNamed(
@@ -172,10 +179,10 @@ class _ChatNavBarWidgetState extends State<ChatNavBarWidget> {
                     borderRadius: 30.0,
                     borderWidth: 1.0,
                     buttonSize: 50.0,
-                    icon: FaIcon(
-                      FontAwesomeIcons.solidComments,
+                    icon: Icon(
+                      CupertinoIcons.chat_bubble,
                       color: FlutterFlowTheme.of(context).alternate,
-                      size: 24.0,
+                      size: 30.0,
                     ),
                     onPressed: () {},
                   ),
@@ -185,7 +192,7 @@ class _ChatNavBarWidgetState extends State<ChatNavBarWidget> {
                     borderWidth: 1.0,
                     buttonSize: 50.0,
                     icon: const Icon(
-                      Icons.person,
+                      CupertinoIcons.person,
                       color: Color(0xFF9299A1),
                       size: 30.0,
                     ),

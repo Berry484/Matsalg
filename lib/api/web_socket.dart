@@ -227,20 +227,21 @@ class WebSocketService {
     conversation.messages
         .insert(0, newMessage); // Insert the message at the beginning
 
+    // Send the message over WebSocket to the server
+    _sendMessageToServer(receiver, content);
+
     // Save the updated conversation list to SharedPreferences
     WidgetsBinding.instance.addPostFrameCallback((_) {
       appState.notifyListeners();
     });
-
-    // Send the message over WebSocket to the server
-    _sendMessageToServer(receiver, content);
   }
 
 // Helper method to send the message via WebSocket
   void _sendMessageToServer(String receiver, String content) {
+    final appState = FFAppState();
     // Check if WebSocket is connected
     if (!_isConnected) {
-      return;
+      connect();
     }
 
     // Prepare the message object in the correct format
@@ -254,6 +255,11 @@ class WebSocketService {
     // Send the message as a JSON string to the WebSocket server
     _socket.add(jsonEncode(
         message)); // Assuming `_webSocket` is your WebSocket instance
+
+    // Save the updated conversation list to SharedPreferences
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      appState.notifyListeners();
+    });
   }
 
   void _sendMarkAsReadRequest(String sender) {
@@ -281,7 +287,6 @@ class WebSocketService {
 
     // Access FFAppState to update the conversations globally
     final appState = FFAppState();
-
     // Try to find the conversation with the sender (will not create a new one)
     var conversation = appState.conversations.firstWhere(
         (conv) => conv.user == sender,
@@ -290,7 +295,6 @@ class WebSocketService {
         );
 
     bool updated = false;
-
     // Iterate over all messages and mark those from 'me == false' as read
     for (var message in conversation.messages) {
       if (!message.me && !message.read) {
@@ -299,7 +303,6 @@ class WebSocketService {
             true; // Set flag to indicate we've updated at least one message
       }
     }
-
     if (updated) {
       _sendMarkAsReadRequest(sender);
     } else {}

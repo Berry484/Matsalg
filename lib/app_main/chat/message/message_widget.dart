@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_visible_for_testing_member
+
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -36,16 +38,19 @@ class _MessageWidgetState extends State<MessageWidget> {
     super.initState();
     // Directly assign the passed conversation to the _conversation variable
     conversation = Conversation.fromJson(widget.conversation);
+    markRead();
     _model = createModel(context, () => MessageModel());
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+    _webSocketService = WebSocketService();
     FFAppState().addListener(_onAppStateChanged);
-    markRead();
+    _webSocketService.connect();
   }
 
   void markRead() {
     _webSocketService = WebSocketService();
     _webSocketService.markAllMessagesAsRead(conversation.user);
+    return;
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -153,6 +158,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                 (conv) => conv.user == conversation.user);
 
                             // Notify listeners to update the UI (if necessary)
+                            // ignore: invalid_use_of_protected_member
                             appState.notifyListeners();
                           }
 
@@ -274,27 +280,24 @@ class _MessageWidgetState extends State<MessageWidget> {
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
-                        child: ListView(
+                        child: ListView.builder(
                           padding: EdgeInsets.zero,
                           reverse: true,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          children: conversation.messages.map((message) {
+                          itemCount: conversation.messages.length,
+                          itemBuilder: (context, index) {
+                            final message = conversation.messages[index];
                             bool showDelivered = false;
                             bool showLest = false;
 
-                            // Parse the message.time string into DateTime
-                            DateTime currentMessageDate = DateTime.parse(message
-                                .time); // Assuming message.time is in a parseable format
-
-                            // Find the most recent message on the same day
+                            DateTime currentMessageDate =
+                                DateTime.parse(message.time);
                             DateTime? mostRecentTime;
                             bool isMostRecent = false;
 
-                            // Find the most recent message for the current day
                             for (var msg in conversation.messages) {
-                              DateTime msgDate = DateTime.parse(msg
-                                  .time); // Convert other message time string to DateTime
+                              DateTime msgDate = DateTime.parse(msg.time);
                               if (msgDate.year == currentMessageDate.year &&
                                   msgDate.month == currentMessageDate.month &&
                                   msgDate.day == currentMessageDate.day) {
@@ -306,30 +309,24 @@ class _MessageWidgetState extends State<MessageWidget> {
                               }
                             }
 
-                            // Check if this is the first message where message.me == true
                             if (message.me == true &&
                                 conversation.messages.indexOf(message) ==
                                     conversation.messages
                                         .indexWhere((msg) => msg.me == true)) {
-                              // If message.read is true, set showLest to true, else showDelivered to true
-                              if (message.read == true) {
-                                showLest = true;
-                              } else {
-                                showDelivered = true;
-                              }
+                              showLest = message.read == true;
+                              showDelivered = !message.read;
                             }
 
                             return MessageBubblesWidget(
+                              key: ValueKey(message.time),
                               mesageText: message.content,
                               blueBubble: message.me == true,
                               showDelivered: showDelivered,
                               showTail: true,
                               showLest: showLest,
-                              messageTime: isMostRecent
-                                  ? message.time
-                                  : null, // Pass the string time if it's the most recent message for the day
+                              messageTime: isMostRecent ? message.time : null,
                             );
-                          }).toList(),
+                          },
                         ),
                       ),
                     ),
@@ -370,7 +367,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                       textCapitalization:
                                           TextCapitalization.sentences,
                                       obscureText: false,
-                                      maxLines: 7, // Allow maximum of 7 lines
+                                      maxLines: 8,
                                       minLines: 1, // Start with 1 line
                                       maxLength: 200,
                                       textAlign: TextAlign.start,
@@ -419,7 +416,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                           .asValidator(context),
                                       inputFormatters: [
                                         // Custom input formatter to limit lines in the text field
-                                        LengthLimitingTextInputFormatter(200),
+                                        LengthLimitingTextInputFormatter(400),
                                         // Add a formatter to restrict entering more lines
                                         TextInputFormatter.withFunction(
                                             (oldValue, newValue) {
@@ -427,7 +424,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                                   .allMatches(newValue.text)
                                                   .length +
                                               1;
-                                          if (lineCount > 8) {
+                                          if (lineCount > 10) {
                                             return oldValue;
                                           }
                                           return newValue;

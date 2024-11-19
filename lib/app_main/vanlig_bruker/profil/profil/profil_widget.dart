@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
@@ -961,16 +962,16 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     MainAxisAlignment
                                                                         .center,
                                                                 children: [
-                                                                  FaIcon(
-                                                                    FontAwesomeIcons
-                                                                        .bars,
+                                                                  Icon(
+                                                                    CupertinoIcons
+                                                                        .square_grid_2x2,
                                                                     color: _model.tabBarCurrentIndex ==
                                                                             0
                                                                         ? FlutterFlowTheme.of(context)
                                                                             .alternate
                                                                         : FlutterFlowTheme.of(context)
                                                                             .secondaryText,
-                                                                    size: 25,
+                                                                    size: 32,
                                                                   ),
                                                                   const Tab(
                                                                     text: '',
@@ -982,16 +983,16 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     MainAxisAlignment
                                                                         .center,
                                                                 children: [
-                                                                  FaIcon(
-                                                                    FontAwesomeIcons
-                                                                        .solidHeart,
+                                                                  Icon(
+                                                                    CupertinoIcons
+                                                                        .heart,
                                                                     color: _model.tabBarCurrentIndex ==
                                                                             1
                                                                         ? FlutterFlowTheme.of(context)
                                                                             .alternate
                                                                         : FlutterFlowTheme.of(context)
                                                                             .secondaryText,
-                                                                    size: 25,
+                                                                    size: 32,
                                                                   ),
                                                                   const Tab(
                                                                     text: '',
@@ -1554,7 +1555,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   CrossAxisAlignment.center,
                                               children: [
                                                 Icon(
-                                                  FontAwesomeIcons.heart,
+                                                  CupertinoIcons.heart,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .secondaryText,

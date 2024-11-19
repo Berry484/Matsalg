@@ -172,6 +172,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
           ratingantall = _ratingStats!.totalCount ?? 0;
           if (ratingantall == 0) {
             ingenRatings = true;
+            _ratingisLoading = false;
           }
         });
       }
@@ -212,7 +213,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
             if (widget.mine != true) {
               _ratingisLoading = true;
             }
-            _ratingisLoading = false;
+            _ratingisLoading = true;
           }
         });
       }

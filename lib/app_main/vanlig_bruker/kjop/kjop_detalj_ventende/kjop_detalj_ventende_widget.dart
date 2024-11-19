@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -320,12 +321,12 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       },
                                       child: Container(
                                         width: double.infinity,
-                                        height: 380,
+                                        height: 485,
                                         child: Stack(
                                           children: [
                                             Container(
                                               width: double.infinity,
-                                              height: 380,
+                                              height: 485,
                                               child: Stack(
                                                 children: [
                                                   Padding(
@@ -344,7 +345,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         Container(
                                                           width:
                                                               double.infinity,
-                                                          height: 380,
+                                                          height: 485,
                                                           child: Stack(
                                                             children: [
                                                               ClipRRect(
@@ -357,7 +358,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                   '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                                   width: double
                                                                       .infinity,
-                                                                  height: 380.0,
+                                                                  height: 485.0,
                                                                   fit: BoxFit
                                                                       .cover,
                                                                   alignment:
@@ -376,7 +377,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                       width: double
                                                                           .infinity,
                                                                       height:
-                                                                          380.0,
+                                                                          485.0,
                                                                       fit: BoxFit
                                                                           .cover,
                                                                     );
@@ -392,7 +393,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           Container(
                                                             width:
                                                                 double.infinity,
-                                                            height: 380,
+                                                            height: 485,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -406,7 +407,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                     width: double
                                                                         .infinity,
                                                                     height:
-                                                                        380.0,
+                                                                        485.0,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
@@ -425,7 +426,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            380.0,
+                                                                            485.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -441,7 +442,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           Container(
                                                             width:
                                                                 double.infinity,
-                                                            height: 380,
+                                                            height: 485,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -455,7 +456,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                     width: double
                                                                         .infinity,
                                                                     height:
-                                                                        380.0,
+                                                                        485.0,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
@@ -474,7 +475,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            380.0,
+                                                                            485.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -488,7 +489,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                 .length >
                                                             3)
                                                           Container(
-                                                            height: 380,
+                                                            height: 485,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -502,7 +503,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                     width: double
                                                                         .infinity,
                                                                     height:
-                                                                        380.0,
+                                                                        485.0,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
@@ -521,7 +522,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            380.0,
+                                                                            485.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -537,7 +538,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           Container(
                                                             width:
                                                                 double.infinity,
-                                                            height: 380,
+                                                            height: 485,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -551,7 +552,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                     width: double
                                                                         .infinity,
                                                                     height:
-                                                                        380.0,
+                                                                        485.0,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
@@ -570,7 +571,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            380.0,
+                                                                            485.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -702,22 +703,22 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             }
                                           },
                                           value: _model.liker!,
-                                          onIcon: FaIcon(
-                                            FontAwesomeIcons.solidHeart,
+                                          onIcon: Icon(
+                                            CupertinoIcons.heart_fill,
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
-                                            size: 30.0,
+                                            size: 34.0,
                                           ),
-                                          offIcon: FaIcon(
-                                            FontAwesomeIcons.heart,
+                                          offIcon: Icon(
+                                            CupertinoIcons.heart,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            size: 30,
+                                            size: 34,
                                           ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              .fromSTEB(3.0, 0.0, 0.0, 0.0),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -793,11 +794,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                               }
                                             },
                                             child: Icon(
-                                              Icons.location_on_outlined,
+                                              CupertinoIcons.map,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 36,
+                                              size: 32,
                                             ),
                                           ),
                                         ),
@@ -886,7 +887,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             },
                                             child: Material(
                                               color: Colors.transparent,
-                                              elevation: 1,
+                                              elevation: 0,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(14),

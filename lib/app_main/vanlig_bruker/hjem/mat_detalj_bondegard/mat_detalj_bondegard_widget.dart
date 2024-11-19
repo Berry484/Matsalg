@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -394,12 +395,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       },
                                       child: SizedBox(
                                         width: double.infinity,
-                                        height: 380.0,
+                                        height: 485.0,
                                         child: Stack(
                                           children: [
                                             SizedBox(
                                               width: double.infinity,
-                                              height: 380.0,
+                                              height: 485.0,
                                               child: Stack(
                                                 children: [
                                                   Padding(
@@ -422,7 +423,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         SizedBox(
                                                           width:
                                                               double.infinity,
-                                                          height: 380.0,
+                                                          height: 485.0,
                                                           child: Stack(
                                                             children: [
                                                               ClipRRect(
@@ -435,7 +436,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                                   width: double
                                                                       .infinity,
-                                                                  height: 380.0,
+                                                                  height: 485.0,
                                                                   fit: BoxFit
                                                                       .cover,
                                                                   alignment:
@@ -454,7 +455,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       width: double
                                                                           .infinity,
                                                                       height:
-                                                                          380.0,
+                                                                          485.0,
                                                                       fit: BoxFit
                                                                           .cover,
                                                                     );
@@ -470,7 +471,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           SizedBox(
                                                             width:
                                                                 double.infinity,
-                                                            height: 380.0,
+                                                            height: 485.0,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -484,7 +485,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                     width: double
                                                                         .infinity,
                                                                     height:
-                                                                        380.0,
+                                                                        485.0,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
@@ -503,7 +504,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            380.0,
+                                                                            485.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -519,7 +520,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           SizedBox(
                                                             width:
                                                                 double.infinity,
-                                                            height: 380.0,
+                                                            height: 485.0,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -533,7 +534,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                     width: double
                                                                         .infinity,
                                                                     height:
-                                                                        380.0,
+                                                                        485.0,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
@@ -552,7 +553,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            380.0,
+                                                                            485.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -566,7 +567,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                 .length >
                                                             3)
                                                           SizedBox(
-                                                            height: 380.0,
+                                                            height: 485.0,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -580,7 +581,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                     width: double
                                                                         .infinity,
                                                                     height:
-                                                                        380.0,
+                                                                        485.0,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
@@ -599,7 +600,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            380.0,
+                                                                            485.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -615,7 +616,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           SizedBox(
                                                             width:
                                                                 double.infinity,
-                                                            height: 380.0,
+                                                            height: 485.0,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -629,7 +630,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                     width: double
                                                                         .infinity,
                                                                     height:
-                                                                        380.0,
+                                                                        485.0,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
@@ -648,7 +649,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            380.0,
+                                                                            485.0,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                       );
@@ -772,7 +773,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 5.0, 10.0, 30.0),
+                                    10.0, 0.0, 0.0, 30.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -797,102 +798,22 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             }
                                           },
                                           value: _model.liker!,
-                                          onIcon: FaIcon(
-                                            FontAwesomeIcons.solidHeart,
+                                          onIcon: Icon(
+                                            CupertinoIcons.heart_fill,
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
-                                            size: 30.0,
+                                            size: 34.0,
                                           ),
-                                          offIcon: FaIcon(
-                                            FontAwesomeIcons.heart,
+                                          offIcon: Icon(
+                                            CupertinoIcons.heart,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            size: 30,
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            try {
-                                              // Prevent multiple submissions while loading
-                                              if (_messageIsLoading) return;
-                                              _messageIsLoading = true;
-
-                                              Conversation
-                                                  existingConversation =
-                                                  FFAppState()
-                                                      .conversations
-                                                      .firstWhere(
-                                                (conv) =>
-                                                    conv.user ==
-                                                    matvare.username,
-                                                orElse: () {
-                                                  // If no conversation is found, create a new one and add it to the list
-                                                  final newConversation =
-                                                      Conversation(
-                                                    user:
-                                                        matvare.username ?? '',
-                                                    profilePic:
-                                                        matvare.profilepic ??
-                                                            '',
-                                                    messages: [],
-                                                  );
-
-                                                  // Add the new conversation to the list
-                                                  FFAppState()
-                                                      .conversations
-                                                      .add(newConversation);
-
-                                                  // Return the new conversation
-                                                  return newConversation;
-                                                },
-                                              );
-
-                                              // Step 3: Serialize the conversation object to JSON
-                                              String? serializedConversation =
-                                                  serializeParam(
-                                                existingConversation
-                                                    .toJson(), // Convert the conversation to JSON
-                                                ParamType.JSON,
-                                              );
-
-                                              // Step 4: Stop loading and navigate to message screen
-                                              _messageIsLoading = false;
-                                              if (serializedConversation !=
-                                                  null) {
-                                                // Step 5: Navigate to 'message' screen with the conversation
-                                                context.pushNamed(
-                                                  'message',
-                                                  queryParameters: {
-                                                    'conversation':
-                                                        serializedConversation, // Pass the serialized conversation
-                                                  },
-                                                );
-                                              }
-                                            } on SocketException {
-                                              _messageIsLoading = false;
-                                              showErrorToast(context,
-                                                  'Ingen internettforbindelse');
-                                            } catch (e) {
-                                              _messageIsLoading = false;
-                                              showErrorToast(
-                                                  context, 'En feil oppstod');
-                                            }
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(10, 0, 0, 0),
-                                            child: FaIcon(
-                                              FontAwesomeIcons.comment,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              size: 30,
-                                            ),
+                                            size: 34,
                                           ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(15.0, 0.0, 0.0, 0.0),
+                                              .fromSTEB(3.0, 0.0, 0.0, 0.0),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -959,11 +880,96 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               }
                                             },
                                             child: Icon(
-                                              Icons.location_on_outlined,
+                                              CupertinoIcons.map,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 36,
+                                              size: 32,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(9.0, 0.0, 0.0, 0.0),
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              try {
+                                                // Prevent multiple submissions while loading
+                                                if (_messageIsLoading) return;
+                                                _messageIsLoading = true;
+
+                                                Conversation
+                                                    existingConversation =
+                                                    FFAppState()
+                                                        .conversations
+                                                        .firstWhere(
+                                                  (conv) =>
+                                                      conv.user ==
+                                                      matvare.username,
+                                                  orElse: () {
+                                                    // If no conversation is found, create a new one and add it to the list
+                                                    final newConversation =
+                                                        Conversation(
+                                                      user: matvare.username ??
+                                                          '',
+                                                      profilePic:
+                                                          matvare.profilepic ??
+                                                              '',
+                                                      messages: [],
+                                                    );
+
+                                                    // Add the new conversation to the list
+                                                    FFAppState()
+                                                        .conversations
+                                                        .add(newConversation);
+
+                                                    // Return the new conversation
+                                                    return newConversation;
+                                                  },
+                                                );
+
+                                                // Step 3: Serialize the conversation object to JSON
+                                                String? serializedConversation =
+                                                    serializeParam(
+                                                  existingConversation
+                                                      .toJson(), // Convert the conversation to JSON
+                                                  ParamType.JSON,
+                                                );
+
+                                                // Step 4: Stop loading and navigate to message screen
+                                                _messageIsLoading = false;
+                                                if (serializedConversation !=
+                                                    null) {
+                                                  // Step 5: Navigate to 'message' screen with the conversation
+                                                  context.pushNamed(
+                                                    'message',
+                                                    queryParameters: {
+                                                      'conversation':
+                                                          serializedConversation, // Pass the serialized conversation
+                                                    },
+                                                  );
+                                                }
+                                              } on SocketException {
+                                                _messageIsLoading = false;
+                                                showErrorToast(context,
+                                                    'Ingen internettforbindelse');
+                                              } catch (e) {
+                                                _messageIsLoading = false;
+                                                showErrorToast(
+                                                    context, 'En feil oppstod');
+                                              }
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(5, 0, 0, 0),
+                                              child: Icon(
+                                                CupertinoIcons.chat_bubble,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                size: 32,
+                                              ),
                                             ),
                                           ),
                                         ),

@@ -39,6 +39,7 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
   @override
   void initState() {
     super.initState();
+    time = null;
     if (widget.messageTime != null) {
       try {
         // Attempt to parse the messageTime using DateTime.parse()
@@ -48,8 +49,6 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
         time = DateTime.now(); // Set to current time as fallback
         print("Error parsing messageTime: $e");
       }
-    } else {
-      time = null;
     }
     _model = createModel(context, () => MessageBubblesModel());
   }

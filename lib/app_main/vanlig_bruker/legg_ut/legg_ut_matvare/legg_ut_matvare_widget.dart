@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/matvarer.dart';
 
@@ -64,6 +65,7 @@ class DecimalInputFormatter extends TextInputFormatter {
 
 class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     with TickerProviderStateMixin {
+  late ScrollController _scrollController;
   late LeggUtMatvareModel _model;
   double _selectedValue = 0.0;
   final FocusNode _hiddenFocusNode = FocusNode();
@@ -88,6 +90,16 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
 
   @override
   void initState() {
+    _scrollController = ScrollController();
+
+    // Add a listener to the scroll controller to monitor user scroll
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection !=
+          ScrollDirection.idle) {
+        // This means the user is scrolling (not idle)
+        FocusScope.of(context).requestFocus(FocusNode());
+      }
+    });
     super.initState();
     _model = createModel(context, () => LeggUtMatvareModel());
 
@@ -216,6 +228,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _model.dispose();
     _hiddenFocusNode.dispose();
     super.dispose();
@@ -240,24 +253,30 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
             leading: Align(
               alignment: const AlignmentDirectional(0, 0),
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(9, 0, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    context.safePop();
+                    try {
+                      context.safePop();
+                    } on SocketException {
+                      showErrorToast(context, 'Ingen internettforbindelse');
+                    } catch (e) {
+                      showErrorToast(context, 'En feil oppstod');
+                    }
                   },
-                  child: Text(
-                    'Avbryt',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Open Sans',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 14,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Icon(
+                        Icons.arrow_back_ios,
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        size: 28,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -285,7 +304,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
               children: [
                 Expanded(
                   child: SingleChildScrollView(
-                    primary: true,
+                    controller: _scrollController, // Set the controller here
+                    primary: false,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -293,14 +313,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                         Stack(
                           children: [
                             SingleChildScrollView(
-                              primary: false,
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Form(
                                     key: _model.formKey,
                                     autovalidateMode: AutovalidateMode.disabled,
-                                    child: SingleChildScrollView(
+                                    child: GestureDetector(
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -3302,7 +3321,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 padding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                        0.0, 70.0, 0.0, 0.0),
+                                                        25.0, 70.0, 25.0, 0.0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
                                                     try {
@@ -3632,12 +3651,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     }
                                                   },
                                                   text: 'Publiser',
-                                                  icon: const FaIcon(
-                                                    FontAwesomeIcons.check,
-                                                    size: 20.0,
-                                                  ),
                                                   options: FFButtonOptions(
-                                                    width: 220.0,
+                                                    width: double.infinity,
                                                     height: 45.0,
                                                     padding:
                                                         const EdgeInsetsDirectional
@@ -3688,8 +3703,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 80.0,
-                                                            0.0, 0.0),
+                                                            .fromSTEB(25.0,
+                                                            80.0, 25.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         try {
@@ -3988,7 +4003,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       },
                                                       text: 'Oppdater',
                                                       options: FFButtonOptions(
-                                                        width: 170.0,
+                                                        width: double.infinity,
                                                         height: 45.0,
                                                         padding:
                                                             const EdgeInsetsDirectional
@@ -4013,14 +4028,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           context)
                                                                       .secondary,
                                                                   fontSize:
-                                                                      18.0,
+                                                                      17.0,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
                                                                 ),
-                                                        elevation: 3.0,
+                                                        elevation: 0.0,
                                                         borderSide:
                                                             const BorderSide(
                                                           color: Colors
@@ -4037,7 +4052,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               ],
                                             ),
                                         ].addToEnd(
-                                            const SizedBox(height: 200.0)),
+                                            const SizedBox(height: 30.0)),
                                       ),
                                     ),
                                   ),

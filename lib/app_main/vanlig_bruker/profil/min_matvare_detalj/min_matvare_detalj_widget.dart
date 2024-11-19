@@ -236,12 +236,12 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                 Expanded(
                                   child: SizedBox(
                                     width: double.infinity,
-                                    height: 380.0,
+                                    height: 485.0,
                                     child: Stack(
                                       children: [
                                         SizedBox(
                                           width: double.infinity,
-                                          height: 380.0,
+                                          height: 485.0,
                                           child: Stack(
                                             children: [
                                               Padding(
@@ -262,7 +262,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                   children: [
                                                     SizedBox(
                                                       width: double.infinity,
-                                                      height: 380.0,
+                                                      height: 485.0,
                                                       child: Stack(
                                                         children: [
                                                           ClipRRect(
@@ -275,7 +275,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                               '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                               width: double
                                                                   .infinity,
-                                                              height: 380.0,
+                                                              height: 485.0,
                                                               fit: BoxFit.cover,
                                                               alignment:
                                                                   const Alignment(
@@ -304,7 +304,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                         1)
                                                       SizedBox(
                                                         width: double.infinity,
-                                                        height: 380.0,
+                                                        height: 485.0,
                                                         child: Stack(
                                                           children: [
                                                             ClipRRect(
@@ -317,7 +317,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                 '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
                                                                 width: double
                                                                     .infinity,
-                                                                height: 380.0,
+                                                                height: 485.0,
                                                                 fit: BoxFit
                                                                     .cover,
                                                                 alignment:
@@ -347,7 +347,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                         2)
                                                       SizedBox(
                                                         width: double.infinity,
-                                                        height: 380.0,
+                                                        height: 485.0,
                                                         child: Stack(
                                                           children: [
                                                             ClipRRect(
@@ -360,7 +360,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                 '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
                                                                 width: double
                                                                     .infinity,
-                                                                height: 380.0,
+                                                                height: 485.0,
                                                                 fit: BoxFit
                                                                     .cover,
                                                                 alignment:
@@ -389,7 +389,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                             .imgUrls!.length >
                                                         3)
                                                       SizedBox(
-                                                        height: 380.0,
+                                                        height: 485.0,
                                                         child: Stack(
                                                           children: [
                                                             ClipRRect(
@@ -402,7 +402,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                 '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
                                                                 width: double
                                                                     .infinity,
-                                                                height: 380.0,
+                                                                height: 485.0,
                                                                 fit: BoxFit
                                                                     .cover,
                                                                 alignment:
@@ -432,7 +432,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                         4)
                                                       SizedBox(
                                                         width: double.infinity,
-                                                        height: 380.0,
+                                                        height: 485.0,
                                                         child: Stack(
                                                           children: [
                                                             ClipRRect(
@@ -445,7 +445,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                 '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
                                                                 width: double
                                                                     .infinity,
-                                                                height: 380.0,
+                                                                height: 485.0,
                                                                 fit: BoxFit
                                                                     .cover,
                                                                 alignment:
@@ -591,18 +591,18 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {},
-                                            child: FaIcon(
-                                              FontAwesomeIcons.solidHeart,
+                                            child: Icon(
+                                              CupertinoIcons.heart_fill,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .alternate,
-                                              size: 30.0,
+                                              size: 34.0,
                                             ),
                                           ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(9.0, 0.0, 0.0, 0.0),
+                                              .fromSTEB(12.0, 0.0, 0.0, 0.0),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -639,11 +639,11 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                   safeSetState(() {}));
                                             },
                                             child: Icon(
-                                              Icons.location_on_outlined,
+                                              CupertinoIcons.map,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 36,
+                                              size: 32,
                                             ),
                                           ),
                                         ),
@@ -1002,7 +1002,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             },
                                             child: Material(
                                               color: Colors.transparent,
-                                              elevation: 1,
+                                              elevation: 0,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(14),
