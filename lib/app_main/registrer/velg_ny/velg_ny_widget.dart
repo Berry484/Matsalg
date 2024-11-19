@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import '/app_main/registrer/logginn/logginn_widget.dart';
 import '/app_main/registrer/velg_t_l_f/velg_t_l_f_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -160,15 +162,13 @@ class _VelgNyWidgetState extends State<VelgNyWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 0, 15),
+                                    const Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 15),
                                       child: Icon(
-                                        Icons.person_add_alt,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 70,
+                                        CupertinoIcons.person_add,
+                                        color: Color.fromARGB(255, 38, 38, 38),
+                                        size: 60,
                                       ),
                                     ),
                                     Text(
@@ -212,15 +212,14 @@ class _VelgNyWidgetState extends State<VelgNyWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Padding(
+                                    const Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 0, 0, 15),
                                       child: Icon(
-                                        Icons.login,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 70,
+                                        CupertinoIcons.square_arrow_right,
+                                        color: Color.fromARGB(255, 38, 38, 38),
+                                        size: 60,
                                       ),
                                     ),
                                     Text(
