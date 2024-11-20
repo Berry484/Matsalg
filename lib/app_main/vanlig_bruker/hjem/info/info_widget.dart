@@ -83,7 +83,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                         'Slik fungerer det',
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Open Sans',
+                              fontFamily: 'Nunito',
                               color: FlutterFlowTheme.of(context).primaryText,
                               fontSize: 24,
                               letterSpacing: 0.0,
@@ -107,7 +107,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: 'Nunito',
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16,
@@ -124,7 +124,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     fontSize: 15,
@@ -152,7 +152,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: 'Nunito',
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16,
@@ -169,7 +169,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     fontSize: 15,
@@ -197,7 +197,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: 'Nunito',
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16,
@@ -214,7 +214,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     fontSize: 15,
@@ -257,11 +257,11 @@ class _InfoWidgetState extends State<InfoWidget> {
                         0.0, 0.0, 0.0, 0.0),
                     color: FlutterFlowTheme.of(context).alternate,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Open Sans',
+                          fontFamily: 'Nunito',
                           color: FlutterFlowTheme.of(context).primary,
                           fontSize: 18.0,
                           letterSpacing: 0.0,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.bold,
                         ),
                     elevation: 0.0,
                     borderSide: const BorderSide(

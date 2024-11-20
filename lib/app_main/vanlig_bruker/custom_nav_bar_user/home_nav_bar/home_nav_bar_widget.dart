@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -111,7 +112,7 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
                     borderWidth: 1.0,
                     buttonSize: 50.0,
                     icon: Icon(
-                      CupertinoIcons.home,
+                      Ionicons.home_outline,
                       color: FlutterFlowTheme.of(context).alternate,
                       size: 30.0,
                     ),
@@ -125,9 +126,9 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
                     borderWidth: 1.0,
                     buttonSize: 50.0,
                     icon: const Icon(
-                      CupertinoIcons.bag_badge_plus,
+                      Ionicons.bag_check_outline,
                       color: Color(0xFF9299A1),
-                      size: 30.0,
+                      size: 31.0,
                     ),
                     onPressed: () async {
                       context.pushNamed(

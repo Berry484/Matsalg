@@ -182,6 +182,63 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
     }
   }
 
+// Helper method to build each profile outline with shimmer effect
+  Widget buildProfileOutline(BuildContext context, int opacity, Color baseColor,
+      Color highlightColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Row(
+        children: [
+          Shimmer.fromColors(
+            baseColor: baseColor,
+            highlightColor: highlightColor,
+            child: Container(
+              width: 65.0,
+              height: 65.0,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(opacity, 255, 255, 255),
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+            ),
+          ),
+          const SizedBox(width: 16.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Shimmer.fromColors(
+                  baseColor: baseColor,
+                  highlightColor: highlightColor,
+                  child: Container(
+                    width: 75.0,
+                    height: 13.0,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(opacity, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8.0),
+                Shimmer.fromColors(
+                  baseColor: baseColor,
+                  highlightColor: highlightColor,
+                  child: Container(
+                    width: 200,
+                    height: 13.0,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(opacity, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -314,8 +371,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                 FlutterFlowTheme.of(context)
                                                     .titleMedium
                                                     .override(
-                                                      fontFamily: 'Open Sans',
-                                                      fontSize: 14,
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -323,8 +380,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                 FlutterFlowTheme.of(context)
                                                     .titleMedium
                                                     .override(
-                                                      fontFamily: 'Open Sans',
-                                                      fontSize: 14,
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -383,74 +440,148 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                         const AlignmentDirectional(
                                                             0, -1),
                                                     child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                0, 0, 0, 110),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      70,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/In_no_time-rafiki.png',
-                                                                  width: 276,
-                                                                  height: 215,
-                                                                  fit: BoxFit
-                                                                      .cover,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 0, 0, 110),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Align(
+                                                            alignment:
+                                                                const AlignmentDirectional(
+                                                                    0, 1),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                // First Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  100,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              0.3), // Reduce opacity
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              0.3), // Reduce opacity
                                                                 ),
-                                                              ),
+
+                                                                // Second Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  80,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                ),
+
+                                                                // Third Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  50,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                ),
+
+                                                                // Fourth Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  38,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                ),
+
+                                                                const SizedBox(
+                                                                    height:
+                                                                        8.0),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          0,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                                  child: Text(
+                                                                    'Du har ingen handler ennå',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .headlineSmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Nunito',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontSize:
+                                                                              23,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w800,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0,
-                                                                      16,
-                                                                      0,
-                                                                      0),
-                                                              child: Text(
-                                                                'Ingen handler enda',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .headlineSmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          20,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 );
                                               }
@@ -571,7 +702,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                       icon: const FaIcon(
                                                         FontAwesomeIcons
                                                             .chevronDown,
-                                                        size: 19,
+                                                        size: 18,
                                                       ),
                                                       options: FFButtonOptions(
                                                         width: 140,
@@ -594,7 +725,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                 .titleSmall
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
@@ -663,7 +794,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                 .titleSmall
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
@@ -1062,7 +1193,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               Text(
                                                                                 alleInfo.kjopte == true ? alleInfo.foodDetails.name ?? '' : alleInfo.kjoper,
                                                                                 style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontFamily: 'Nunito',
                                                                                       fontSize: 18,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
@@ -1072,8 +1203,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               Text(
                                                                                 alleInfo.updatetime != null ? (DateFormat("d. MMM", "nb_NO").format(alleInfo.updatetime!.toLocal())) : "",
                                                                                 style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                      fontFamily: 'Open Sans',
-                                                                                      fontSize: 13,
+                                                                                      fontFamily: 'Nunito',
+                                                                                      fontSize: 14,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
                                                                                       color: Colors.grey, // Set a different color here
@@ -1094,9 +1225,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               alleInfo.kjopte == true ? 'Du trakk budet' : 'Kjøperen trakk budet',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1119,9 +1250,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               alleInfo.kjopte == true ? 'Venter svar fra selgeren' : 'Vurder kjøperen',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1139,9 +1270,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               alleInfo.kjopte == true ? 'Selgeren avslo budet' : 'Du avslo budet',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1161,9 +1292,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               alleInfo.kjopte == true ? 'Budet er godkjent,\nkontakt selgeren' : 'Budet er godkjent, kontakt kjøperen',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 13,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                     lineHeight: 1.1,
@@ -1182,9 +1313,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               alleInfo.kjopte == true ? 'Kjøpet er fullført' : 'Salget er fullført',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1237,11 +1368,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               '+${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).primary,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontWeight: FontWeight.bold,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -1290,11 +1421,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                       '${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontFamily: 'Nunito',
                                                                                             color: const Color(0xE0FFFFFF),
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.w600,
+                                                                                            fontWeight: FontWeight.bold,
                                                                                             // You can still keep the text decoration if you want, but the line through won't be white or thick.
                                                                                             decoration: TextDecoration.none,
                                                                                           ),
@@ -1352,74 +1483,148 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                         const AlignmentDirectional(
                                                             0, -1),
                                                     child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                0, 0, 0, 110),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      70,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/In_no_time-rafiki.png',
-                                                                  width: 276,
-                                                                  height: 215,
-                                                                  fit: BoxFit
-                                                                      .cover,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 0, 0, 110),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Align(
+                                                            alignment:
+                                                                const AlignmentDirectional(
+                                                                    0, 1),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                // First Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  100,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              0.3), // Reduce opacity
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              0.3), // Reduce opacity
                                                                 ),
-                                                              ),
+
+                                                                // Second Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  80,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                ),
+
+                                                                // Third Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  50,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                ),
+
+                                                                // Fourth Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  38,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                ),
+
+                                                                const SizedBox(
+                                                                    height:
+                                                                        8.0),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          0,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                                  child: Text(
+                                                                    'Ingen pågående kjøp',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .headlineSmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Nunito',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontSize:
+                                                                              23,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w800,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0,
-                                                                      16,
-                                                                      0,
-                                                                      0),
-                                                              child: Text(
-                                                                'Ingen pågående kjøp',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .headlineSmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          20,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 );
                                               }
@@ -1715,7 +1920,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               Text(
                                                                                 ordreInfo.foodDetails.name ?? '',
                                                                                 style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontFamily: 'Nunito',
                                                                                       fontSize: 18,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
@@ -1725,8 +1930,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               Text(
                                                                                 ordreInfo.updatetime != null ? (DateFormat("d. MMM", "nb_NO").format(ordreInfo.updatetime!.toLocal())) : "",
                                                                                 style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                      fontFamily: 'Open Sans',
-                                                                                      fontSize: 13,
+                                                                                      fontFamily: 'Nunito',
+                                                                                      fontSize: 14,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
                                                                                       color: Colors.grey,
@@ -1747,9 +1952,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               'Selgeren avslo budet',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1769,9 +1974,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               'Budet er godkjent,\nkontakt selgeren',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                     lineHeight: 1.2,
@@ -1790,9 +1995,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               'Du trakk budet',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1815,9 +2020,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               'Venter svar fra selgeren',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1835,9 +2040,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               'Kjøpet er fullført',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -1890,11 +2095,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               '+${ordreInfo.pris.remainder(Decimal.one) == Decimal.zero ? ordreInfo.pris.toBigInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).primary,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontWeight: FontWeight.bold,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -1943,11 +2148,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                       '${ordreInfo.pris.remainder(Decimal.one) == Decimal.zero ? ordreInfo.pris.toBigInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontFamily: 'Nunito',
                                                                                             color: const Color(0xE0FFFFFF),
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.w600,
+                                                                                            fontWeight: FontWeight.bold,
                                                                                             // You can still keep the text decoration if you want, but the line through won't be white or thick.
                                                                                             decoration: TextDecoration.none,
                                                                                           ),
@@ -2005,74 +2210,148 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                         const AlignmentDirectional(
                                                             0, -1),
                                                     child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                0, 0, 0, 110),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      70,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/In_no_time-rafiki.png',
-                                                                  width: 276,
-                                                                  height: 215,
-                                                                  fit: BoxFit
-                                                                      .cover,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 0, 0, 110),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Align(
+                                                            alignment:
+                                                                const AlignmentDirectional(
+                                                                    0, 1),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                // First Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  100,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              0.3), // Reduce opacity
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              0.3), // Reduce opacity
                                                                 ),
-                                                              ),
+
+                                                                // Second Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  80,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                ),
+
+                                                                // Third Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  50,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                ),
+
+                                                                // Fourth Profile Outline
+                                                                buildProfileOutline(
+                                                                  context,
+                                                                  38,
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                  Colors.grey[300]
+                                                                          ?.withOpacity(
+                                                                              1) ??
+                                                                      Colors
+                                                                          .grey
+                                                                          .withOpacity(
+                                                                              1),
+                                                                ),
+
+                                                                const SizedBox(
+                                                                    height:
+                                                                        8.0),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          0,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                                  child: Text(
+                                                                    'Ingen pågående salg',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .headlineSmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Nunito',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontSize:
+                                                                              23,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w800,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0,
-                                                                      16,
-                                                                      0,
-                                                                      0),
-                                                              child: Text(
-                                                                'Ingen pågående salg',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .headlineSmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          20,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 );
                                               }
@@ -2433,7 +2712,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               Text(
                                                                                 salgInfo.kjoper,
                                                                                 style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontFamily: 'Nunito',
                                                                                       fontSize: 18,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
@@ -2443,8 +2722,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               Text(
                                                                                 salgInfo.updatetime != null ? (DateFormat("d. MMM", "nb_NO").format(salgInfo.updatetime!.toLocal())) : "",
                                                                                 style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                      fontFamily: 'Open Sans',
-                                                                                      fontSize: 13,
+                                                                                      fontFamily: 'Nunito',
+                                                                                      fontSize: 14,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
                                                                                       color: Colors.grey, // Set a different color here
@@ -2465,9 +2744,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               'Kjøperen trakk budet',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -2490,9 +2769,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               'Vurder kjøperen',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -2510,9 +2789,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               'Du avslo budet',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -2532,9 +2811,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               'Budet er godkjent,\nkontakt kjøperen',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                     lineHeight: 1.2,
@@ -2553,9 +2832,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Text(
                                                                               'Kjøpet er fullført',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -2608,11 +2887,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               '+${salgInfo.pris.remainder(Decimal.one) == Decimal.zero ? salgInfo.pris.toBigInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).primary,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontWeight: FontWeight.bold,
                                                                                   ),
                                                                             ),
                                                                           ),
@@ -2661,11 +2940,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                       '${salgInfo.pris.remainder(Decimal.one) == Decimal.zero ? salgInfo.pris.toBigInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontFamily: 'Nunito',
                                                                                             color: const Color(0xE0FFFFFF),
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.w600,
+                                                                                            fontWeight: FontWeight.bold,
                                                                                             // You can still keep the text decoration if you want, but the line through won't be white or thick.
                                                                                             decoration: TextDecoration.none,
                                                                                           ),

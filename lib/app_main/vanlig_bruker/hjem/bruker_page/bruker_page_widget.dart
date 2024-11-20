@@ -356,7 +356,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
             title: Text(
               'Profil',
               style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Open Sans',
+                    fontFamily: 'Nunito',
                     color: FlutterFlowTheme.of(context).primaryText,
                     fontSize: 24,
                     letterSpacing: 0.0,
@@ -389,7 +389,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                     child: Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0, 10, 0, 17),
+                                              0, 10, 0, 10),
                                       child: SafeArea(
                                         child: Container(
                                           width: valueOrDefault<double>(
@@ -427,7 +427,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(
-                                                          24, 10, 0, 5),
+                                                          24, 0, 0, 5),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -528,7 +528,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 _matvarer?.length.toString() ?? '',
                                                                                 textAlign: TextAlign.center,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontFamily: 'Nunito',
                                                                                       fontSize: 16,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w600,
@@ -538,7 +538,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 'matvarer',
                                                                                 textAlign: TextAlign.center,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontFamily: 'Nunito',
                                                                                       color: FlutterFlowTheme.of(context).secondaryText,
                                                                                       fontSize: 12,
                                                                                       letterSpacing: 0.0,
@@ -599,7 +599,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   folgere ?? '',
                                                                                   textAlign: TextAlign.center,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Open Sans',
+                                                                                        fontFamily: 'Nunito',
                                                                                         fontSize: 16,
                                                                                         letterSpacing: 0.0,
                                                                                         fontWeight: FontWeight.w600,
@@ -609,7 +609,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   'følgere',
                                                                                   textAlign: TextAlign.center,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Open Sans',
+                                                                                        fontFamily: 'Nunito',
                                                                                         color: FlutterFlowTheme.of(context).secondaryText,
                                                                                         fontSize: 12,
                                                                                         letterSpacing: 0.0,
@@ -674,7 +674,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   folger ?? '',
                                                                                   textAlign: TextAlign.center,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Open Sans',
+                                                                                        fontFamily: 'Nunito',
                                                                                         fontSize: 16,
                                                                                         letterSpacing: 0.0,
                                                                                         fontWeight: FontWeight.w600,
@@ -684,7 +684,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   'følger',
                                                                                   textAlign: TextAlign.center,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Open Sans',
+                                                                                        fontFamily: 'Nunito',
                                                                                         color: FlutterFlowTheme.of(context).secondaryText,
                                                                                         fontSize: 12,
                                                                                         letterSpacing: 0.0,
@@ -758,7 +758,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                         textStyle: FlutterFlowTheme.of(context)
                                                                             .titleSmall
                                                                             .override(
-                                                                              fontFamily: 'Open Sans',
+                                                                              fontFamily: 'Nunito',
                                                                               color: FlutterFlowTheme.of(context).primaryText,
                                                                               fontSize: 14,
                                                                               letterSpacing: 0.0,
@@ -827,9 +827,10 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                         textStyle: FlutterFlowTheme.of(context)
                                                                             .titleSmall
                                                                             .override(
-                                                                              fontFamily: 'Open Sans',
+                                                                              fontFamily: 'Nunito',
                                                                               color: Colors.white,
                                                                               letterSpacing: 0.0,
+                                                                              fontSize: 15,
                                                                               fontWeight: FontWeight.bold,
                                                                             ),
                                                                         elevation:
@@ -919,7 +920,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 child: Text(
                                                                                   ratingVerdi.toString(),
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Open Sans',
+                                                                                        fontFamily: 'Nunito',
                                                                                         fontSize: 14,
                                                                                         letterSpacing: 0.0,
                                                                                         fontWeight: FontWeight.w600,
@@ -931,7 +932,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 child: Text(
                                                                                   ' (${ratingantall.toString()})',
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Open Sans',
+                                                                                        fontFamily: 'Nunito',
                                                                                         color: const Color(0xB0262C2D),
                                                                                         fontSize: 14,
                                                                                         letterSpacing: 0.0,
@@ -1056,7 +1057,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                         textStyle: FlutterFlowTheme.of(context)
                                                                             .titleSmall
                                                                             .override(
-                                                                              fontFamily: 'Open Sans',
+                                                                              fontFamily: 'Nunito',
                                                                               color: FlutterFlowTheme.of(context).alternate,
                                                                               fontSize: 1,
                                                                               letterSpacing: 0.0,
@@ -1118,13 +1119,13 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                 .headlineLarge
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
-                                                                  fontSize: 18,
+                                                                      'Nunito',
+                                                                  fontSize: 17,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
+                                                                          .bold,
                                                                 ),
                                                       ),
                                                     ),
@@ -1155,8 +1156,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                             context)
                                                         .labelMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           fontSize: 14,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -1177,7 +1177,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 30, 0, 0),
+                                                .fromSTEB(0, 20, 0, 0),
                                             child: Column(
                                               children: [
                                                 Align(
@@ -1196,8 +1196,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                             .of(context)
                                                         .titleMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           letterSpacing: 0.0,
                                                         ),
                                                     unselectedLabelStyle:
@@ -1206,7 +1205,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                             .titleMedium
                                                             .override(
                                                               fontFamily:
-                                                                  'Open Sans',
+                                                                  'Nunito',
                                                               letterSpacing:
                                                                   0.0,
                                                             ),
@@ -1331,7 +1330,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                           context)
                                                       .bodyLarge
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily: 'Nunito',
                                                         fontSize: 19,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
@@ -1348,7 +1347,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                     if (_model.tabBarCurrentIndex == 0)
                                       Padding(
                                         padding: const EdgeInsetsDirectional
-                                            .fromSTEB(5, 15, 5, 70),
+                                            .fromSTEB(5, 0, 5, 70),
                                         child: RefreshIndicator(
                                           onRefresh: () async {},
                                           child: GridView.builder(
@@ -1594,7 +1593,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .bodyLarge
                                                                               .override(
-                                                                                fontFamily: 'Open Sans',
+                                                                                fontFamily: 'Nunito',
                                                                                 fontSize: 15,
                                                                                 letterSpacing: 0.0,
                                                                                 fontWeight: FontWeight.bold,
@@ -1658,7 +1657,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                         '${matvarer.price} Kr',
                                                                                         textAlign: TextAlign.end,
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                              fontFamily: 'Open Sans',
+                                                                                              fontFamily: 'Nunito',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
                                                                                               fontSize: 14,
                                                                                               letterSpacing: 0.0,
@@ -1671,7 +1670,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                         '/kg',
                                                                                         textAlign: TextAlign.end,
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                              fontFamily: 'Open Sans',
+                                                                                              fontFamily: 'Nunito',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
                                                                                               fontSize: 14,
                                                                                               letterSpacing: 0.0,
@@ -1683,7 +1682,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                         '/stk',
                                                                                         textAlign: TextAlign.end,
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                              fontFamily: 'Open Sans',
+                                                                                              fontFamily: 'Nunito',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
                                                                                               fontSize: 14,
                                                                                               letterSpacing: 0.0,
@@ -1703,7 +1702,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                       (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvarer.lat ?? 0.0, matvarer.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvarer.lat ?? 0.0, matvarer.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontFamily: 'Nunito',
                                                                                             color: FlutterFlowTheme.of(context).secondaryText,
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,
@@ -1981,7 +1980,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     .headlineSmall
                                                                     .override(
                                                                       fontFamily:
-                                                                          'Open Sans',
+                                                                          'Nunito',
                                                                       fontSize:
                                                                           17,
                                                                       letterSpacing:
@@ -2053,7 +2052,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                       .bodyMedium
                                                                       .override(
                                                                         fontFamily:
-                                                                            'Open Sans',
+                                                                            'Nunito',
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .primaryText,
                                                                         fontSize:
@@ -2085,7 +2084,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                         .bodyMedium
                                                                         .override(
                                                                           fontFamily:
-                                                                              'Open Sans',
+                                                                              'Nunito',
                                                                           color:
                                                                               FlutterFlowTheme.of(context).secondaryText,
                                                                           fontSize:
@@ -2117,7 +2116,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                         .bodyMedium
                                                                         .override(
                                                                           fontFamily:
-                                                                              'Open Sans',
+                                                                              'Nunito',
                                                                           color:
                                                                               FlutterFlowTheme.of(context).secondaryText,
                                                                           fontSize:

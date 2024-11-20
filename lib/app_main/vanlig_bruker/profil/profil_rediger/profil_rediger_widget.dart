@@ -127,6 +127,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: true,
+            scrolledUnderElevation: 0.0,
             leading: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -154,7 +155,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
             ),
             actions: [],
             centerTitle: true,
-            elevation: 0,
+            elevation: 0.0,
           ),
           body: SafeArea(
             top: true,
@@ -601,14 +602,14 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                         labelStyle:
                             FlutterFlowTheme.of(context).labelMedium.override(
                                   fontFamily: 'Open Sans',
-                                  fontSize: 12,
+                                  fontSize: 13,
                                   letterSpacing: 0.0,
                                 ),
                         hintText: 'Bio',
                         hintStyle:
                             FlutterFlowTheme.of(context).labelMedium.override(
                                   fontFamily: 'Open Sans',
-                                  fontSize: 13,
+                                  fontSize: 15,
                                   letterSpacing: 0.0,
                                 ),
                         enabledBorder: OutlineInputBorder(
@@ -658,7 +659,8 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(20, 25, 20, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         try {
@@ -771,8 +773,8 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                       },
                       text: 'Lagre',
                       options: FFButtonOptions(
-                        width: 150,
-                        height: 40,
+                        width: double.infinity,
+                        height: 45,
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         iconPadding:
@@ -784,7 +786,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   color: FlutterFlowTheme.of(context).primary,
                                   fontSize: 17,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.bold,
                                 ),
                         elevation: 0,
                         borderSide: const BorderSide(

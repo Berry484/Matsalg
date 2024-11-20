@@ -111,7 +111,7 @@ class _VelgNyWidgetState extends State<VelgNyWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
-                                      fontFamily: 'Open Sans',
+                                      fontFamily: 'Nunito',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       fontSize: 27,
@@ -177,10 +177,10 @@ class _VelgNyWidgetState extends State<VelgNyWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            fontSize: 17,
+                                            fontSize: 18,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -228,10 +228,10 @@ class _VelgNyWidgetState extends State<VelgNyWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            fontSize: 17,
+                                            fontSize: 18,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.bold,
                                           ),

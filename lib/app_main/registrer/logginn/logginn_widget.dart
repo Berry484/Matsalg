@@ -123,12 +123,12 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     fontSize: 27,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.bold,
                                   ),
                             ),
                           ),
@@ -172,15 +172,15 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                               labelStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 15,
+                                    fontFamily: 'Nunito',
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
@@ -217,7 +217,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: 'Nunito',
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16,
@@ -347,15 +347,15 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                               labelStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 15,
+                                    fontFamily: 'Nunito',
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
@@ -406,7 +406,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: 'Nunito',
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16,
@@ -540,9 +540,9 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 16,
+                                    fontSize: 17,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -551,7 +551,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 color: Color(0x5957636C),
                                 width: 1.5,
                               ),
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(24),
                             ),
                             icon: _isloading
                                 ? CircularProgressIndicator(
@@ -564,9 +564,9 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                           'Har du glemt passordet?',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: Colors.black,
-                                    fontSize: 15,
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),

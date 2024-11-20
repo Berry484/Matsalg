@@ -113,11 +113,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 16,
+                                    fontSize: 17,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w800,
                                   ),
                               elevation: 0,
                               borderRadius: BorderRadius.circular(8),
@@ -147,11 +147,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: Colors.white,
-                                    fontSize: 16,
+                                    fontSize: 17,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w800,
                                   ),
                               elevation: 0,
                               borderRadius: BorderRadius.circular(8),
@@ -181,11 +181,11 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: Colors.black,
-                                    fontSize: 15,
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w800,
                                   ),
                               elevation: 0,
                               borderSide: const BorderSide(

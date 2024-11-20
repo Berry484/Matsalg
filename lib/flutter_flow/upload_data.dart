@@ -86,18 +86,24 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               onPressed: () {
                 Navigator.pop(context, MediaSource.photoGallery);
               },
-              child: Text(
+              child: const Text(
                 'Bildebibliotek (Bilde)',
-                style: TextStyle(fontSize: 19), // Set the font size here
+                style: TextStyle(
+                  fontSize: 19,
+                  color: CupertinoColors.systemBlue,
+                ),
               ),
             ),
             CupertinoActionSheetAction(
               onPressed: () {
                 Navigator.pop(context, MediaSource.videoGallery);
               },
-              child: Text(
+              child: const Text(
                 'Bildebibliotek (Video)',
-                style: TextStyle(fontSize: 19), // Set the font size here
+                style: TextStyle(
+                  fontSize: 19,
+                  color: CupertinoColors.systemBlue,
+                ),
               ),
             ),
           ] else if (allowPhoto) ...[
@@ -105,9 +111,12 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               onPressed: () {
                 Navigator.pop(context, MediaSource.photoGallery);
               },
-              child: Text(
+              child: const Text(
                 'Bildebibliotek',
-                style: TextStyle(fontSize: 19), // Set the font size here
+                style: TextStyle(
+                  fontSize: 19,
+                  color: CupertinoColors.systemBlue,
+                ),
               ),
             ),
           ] else if (allowVideo) ...[
@@ -115,9 +124,12 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               onPressed: () {
                 Navigator.pop(context, MediaSource.videoGallery);
               },
-              child: Text(
+              child: const Text(
                 'Bildebibliotek',
-                style: TextStyle(fontSize: 19), // Set the font size here
+                style: TextStyle(
+                  fontSize: 19,
+                  color: CupertinoColors.systemBlue,
+                ),
               ),
             ),
           ],
@@ -126,9 +138,12 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               onPressed: () {
                 Navigator.pop(context, MediaSource.camera);
               },
-              child: Text(
+              child: const Text(
                 'Kamera',
-                style: TextStyle(fontSize: 19), // Set the font size here
+                style: TextStyle(
+                  fontSize: 19,
+                  color: CupertinoColors.systemBlue,
+                ),
               ),
             ),
           ],
@@ -138,9 +153,12 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
             Navigator.pop(context);
           },
           isDefaultAction: true,
-          child: Text(
+          child: const Text(
             'Avbryt',
-            style: TextStyle(fontSize: 19), // Set the font size here
+            style: TextStyle(
+              fontSize: 19,
+              color: CupertinoColors.systemBlue,
+            ),
           ),
         ),
       );

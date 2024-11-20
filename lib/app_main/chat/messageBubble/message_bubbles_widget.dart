@@ -136,7 +136,7 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                                 .override(
                                   fontFamily: 'Inter',
                                   letterSpacing: 0.0,
-                                  fontSize: 15,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
@@ -193,7 +193,7 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                                   fontFamily: 'Inter',
                                   color: Colors.white,
                                   letterSpacing: 0.0,
-                                  fontSize: 15,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),

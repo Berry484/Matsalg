@@ -162,14 +162,14 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
               ),
             ),
             title: Text(
-              'Velg en posisjon',
+              'Velg posisjon',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Montserrat',
+                    fontFamily: 'Nunito',
                     color: FlutterFlowTheme.of(context).primaryText,
                     fontSize: 20.0,
                     letterSpacing: 0.0,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.bold,
                   ),
             ),
             actions: const [],
@@ -276,9 +276,9 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           color: const Color(0x8F101213),
-                                          fontSize: 14.0,
+                                          fontSize: 16.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -344,7 +344,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
                                       .override(
-                                        fontFamily: 'Open Sans',
+                                        fontFamily: 'Nunito',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                         fontSize: 15.0,
@@ -462,11 +462,11 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
-                                                fontFamily: 'Open Sans',
+                                                fontFamily: 'Nunito',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
-                                                fontSize: 16.0,
+                                                fontSize: 17.0,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -557,11 +557,11 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           color: Colors.white,
-                                          fontSize: 16.0,
+                                          fontSize: 17.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w800,
                                         ),
                                     elevation: 0.0,
                                     borderRadius: BorderRadius.circular(24.0),

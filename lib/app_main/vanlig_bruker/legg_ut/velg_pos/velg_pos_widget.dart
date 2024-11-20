@@ -177,8 +177,9 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                     .bodyMedium
                                     .override(
                                       fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context).info,
-                                      fontSize: 14,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 15,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.bold,
                                     ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
@@ -428,148 +429,222 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10, 0, 10, 0),
+                                              .fromSTEB(15, 0, 15, 0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Expanded(
-                                                child: TextFormField(
-                                                  controller:
-                                                      _model.textController,
-                                                  focusNode:
-                                                      _model.textFieldFocusNode,
-                                                  autofocus: false,
-                                                  obscureText: false,
-                                                  onChanged: (value) =>
-                                                      _runFilter(value),
-                                                  textInputAction: TextInputAction
-                                                      .search, // Add this line to
-                                                  decoration: InputDecoration(
-                                                    isDense: true,
-                                                    alignLabelWithHint: false,
-                                                    hintText: 'Søk',
-                                                    hintStyle: FlutterFlowTheme
-                                                            .of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: const Color(
-                                                              0x8F101213),
-                                                          fontSize: 15.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        color: Color.fromARGB(
-                                                            0, 85, 85, 85),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.0),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.0),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.0),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.0),
-                                                    ),
-                                                    filled: true,
-                                                    fillColor:
+                                                child: SizedBox(
+                                                  height:
+                                                      38.0, // Set the desired height here
+                                                  child:
+                                                      CupertinoSearchTextField(
+                                                    controller:
+                                                        _model.textController,
+                                                    focusNode: _model
+                                                        .textFieldFocusNode,
+                                                    autofocus: false,
+                                                    onChanged: (value) =>
+                                                        _runFilter(value),
+                                                    placeholder: 'Søk',
+                                                    placeholderStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .labelMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Open Sans',
+                                                              color: const Color(
+                                                                  0x8F101213),
+                                                              fontSize: 15.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
+                                                    backgroundColor:
                                                         const Color.fromARGB(
-                                                            246, 243, 243, 243),
+                                                            255, 238, 238, 238),
+                                                    prefixInsets:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            12, 6, 6, 6),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            24.0),
                                                     prefixIcon: const Icon(
                                                       Icons.search_outlined,
                                                       size: 20,
                                                     ),
-                                                    suffixIcon: _model
-                                                            .textController
-                                                            .text
-                                                            .isNotEmpty
-                                                        ? IconButton(
-                                                            icon: Icon(
-                                                              FontAwesomeIcons
-                                                                  .solidTimesCircle,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryText, // Set the desired color here
-                                                            ),
-                                                            onPressed: () {
-                                                              _model
-                                                                  .textController!
-                                                                  .clear();
-                                                              setState(() {
-                                                                _runFilter('');
-                                                              });
-                                                            },
-                                                          )
-                                                        : null,
-                                                    contentPadding:
-                                                        const EdgeInsets.only(
-                                                            top: 6.0,
-                                                            bottom: 6.0,
-                                                            left: 10.0,
-                                                            right: 10.0),
+                                                    suffixIcon: Icon(
+                                                      Icons.cancel,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                    ),
+                                                    onSuffixTap: () {
+                                                      _model.textController!
+                                                          .clear();
+                                                      setState(() {
+                                                        _runFilter('');
+                                                      });
+                                                    },
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 6.0,
+                                                        horizontal: 10.0),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 15.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
                                                   ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily: 'Open Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 15.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                  textAlign: TextAlign.start,
-                                                  cursorColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primaryText,
-                                                  validator: _model
-                                                      .textControllerValidator
-                                                      .asValidator(context),
                                                 ),
                                               ),
+                                              // Expanded(
+                                              //   child: TextFormField(
+                                              //     controller:
+                                              //         _model.textController,
+                                              //     focusNode:
+                                              //         _model.textFieldFocusNode,
+                                              //     autofocus: false,
+                                              //     obscureText: false,
+                                              //     onChanged: (value) =>
+                                              //         _runFilter(value),
+                                              //     textInputAction: TextInputAction
+                                              //         .search, // Add this line to
+                                              //     decoration: InputDecoration(
+                                              //       isDense: true,
+                                              //       alignLabelWithHint: false,
+                                              //       hintText: 'Søk',
+                                              //       hintStyle: FlutterFlowTheme
+                                              //               .of(context)
+                                              //           .labelMedium
+                                              //           .override(
+                                              //             fontFamily:
+                                              //                 'Open Sans',
+                                              //             color: const Color(
+                                              //                 0x8F101213),
+                                              //             fontSize: 15.0,
+                                              //             letterSpacing: 0.0,
+                                              //           ),
+                                              //       enabledBorder:
+                                              //           OutlineInputBorder(
+                                              //         borderSide:
+                                              //             const BorderSide(
+                                              //           color: Color.fromARGB(
+                                              //               0, 85, 85, 85),
+                                              //           width: 1.0,
+                                              //         ),
+                                              //         borderRadius:
+                                              //             BorderRadius.circular(
+                                              //                 13.0),
+                                              //       ),
+                                              //       focusedBorder:
+                                              //           OutlineInputBorder(
+                                              //         borderSide:
+                                              //             const BorderSide(
+                                              //           color:
+                                              //               Color(0x00000000),
+                                              //           width: 1.0,
+                                              //         ),
+                                              //         borderRadius:
+                                              //             BorderRadius.circular(
+                                              //                 13.0),
+                                              //       ),
+                                              //       errorBorder:
+                                              //           OutlineInputBorder(
+                                              //         borderSide: BorderSide(
+                                              //           color:
+                                              //               FlutterFlowTheme.of(
+                                              //                       context)
+                                              //                   .error,
+                                              //           width: 1.0,
+                                              //         ),
+                                              //         borderRadius:
+                                              //             BorderRadius.circular(
+                                              //                 13.0),
+                                              //       ),
+                                              //       focusedErrorBorder:
+                                              //           OutlineInputBorder(
+                                              //         borderSide: BorderSide(
+                                              //           color:
+                                              //               FlutterFlowTheme.of(
+                                              //                       context)
+                                              //                   .error,
+                                              //           width: 1.0,
+                                              //         ),
+                                              //         borderRadius:
+                                              //             BorderRadius.circular(
+                                              //                 13.0),
+                                              //       ),
+                                              //       filled: true,
+                                              //       fillColor:
+                                              //           const Color.fromARGB(
+                                              //               246, 243, 243, 243),
+                                              //       prefixIcon: const Icon(
+                                              //         Icons.search_outlined,
+                                              //         size: 20,
+                                              //       ),
+                                              //       suffixIcon: _model
+                                              //               .textController
+                                              //               .text
+                                              //               .isNotEmpty
+                                              //           ? IconButton(
+                                              //               icon: Icon(
+                                              //                 FontAwesomeIcons
+                                              //                     .solidTimesCircle,
+                                              //                 color: FlutterFlowTheme
+                                              //                         .of(context)
+                                              //                     .secondaryText, // Set the desired color here
+                                              //               ),
+                                              //               onPressed: () {
+                                              //                 _model
+                                              //                     .textController!
+                                              //                     .clear();
+                                              //                 setState(() {
+                                              //                   _runFilter('');
+                                              //                 });
+                                              //               },
+                                              //             )
+                                              //           : null,
+                                              //       contentPadding:
+                                              //           const EdgeInsets.only(
+                                              //               top: 6.0,
+                                              //               bottom: 6.0,
+                                              //               left: 10.0,
+                                              //               right: 10.0),
+                                              //     ),
+                                              //     style: FlutterFlowTheme.of(
+                                              //             context)
+                                              //         .bodyLarge
+                                              //         .override(
+                                              //           fontFamily: 'Open Sans',
+                                              //           color:
+                                              //               FlutterFlowTheme.of(
+                                              //                       context)
+                                              //                   .primaryText,
+                                              //           fontSize: 15.0,
+                                              //           letterSpacing: 0.0,
+                                              //         ),
+                                              //     textAlign: TextAlign.start,
+                                              //     cursorColor:
+                                              //         FlutterFlowTheme.of(
+                                              //                 context)
+                                              //             .primaryText,
+                                              //     validator: _model
+                                              //         .textControllerValidator
+                                              //         .asValidator(context),
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                         ),

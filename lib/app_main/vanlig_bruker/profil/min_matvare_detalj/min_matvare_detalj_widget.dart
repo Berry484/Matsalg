@@ -197,15 +197,15 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 0.0, 13.0),
+                                              .fromSTEB(8.0, 0.0, 0.0, 13.0),
                                           child: Text(
                                             matvare.username ??
                                                 FFAppState().brukernavn,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
-                                                  fontSize: 15.0,
+                                                  fontFamily: 'Nunito',
+                                                  fontSize: 16.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -650,8 +650,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 10, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 10, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -695,6 +696,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                           'Rediger annonse',
                                                           style: TextStyle(
                                                             fontSize: 19,
+                                                            color:
+                                                                CupertinoColors
+                                                                    .systemBlue,
                                                           ),
                                                         ),
                                                       ),
@@ -877,6 +881,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 19,
+                                                            color:
+                                                                CupertinoColors
+                                                                    .systemBlue,
                                                           ),
                                                         ),
                                                       ),
@@ -990,9 +997,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       child: const Text(
                                                         'Avbryt',
                                                         style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight: FontWeight
-                                                              .bold, // Make the text bold
+                                                          fontSize: 19,
+                                                          color: CupertinoColors
+                                                              .systemBlue,
                                                         ),
                                                       ),
                                                     ),
@@ -1011,7 +1018,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                 child: Container(
                                                   width: 100,
                                                   height: 40,
-                                                  constraints: BoxConstraints(
+                                                  constraints:
+                                                      const BoxConstraints(
                                                     maxWidth: 174,
                                                   ),
                                                   decoration: BoxDecoration(
@@ -1024,9 +1032,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                   ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                10, 0, 10, 0),
+                                                            10, 0, 10, 0),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -1044,7 +1052,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   color: Colors
                                                                       .white,
                                                                   fontSize: 16,
@@ -1097,8 +1105,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .headlineMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           fontSize: 19.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -1124,7 +1131,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                           context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily: 'Nunito',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1150,7 +1157,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                           .bodyMedium
                                                           .override(
                                                             fontFamily:
-                                                                'Open Sans',
+                                                                'Nunito',
                                                             color: FlutterFlowTheme
                                                                     .of(context)
                                                                 .secondaryText,
@@ -1176,7 +1183,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                           .bodyMedium
                                                           .override(
                                                             fontFamily:
-                                                                'Open Sans',
+                                                                'Nunito',
                                                             color: FlutterFlowTheme
                                                                     .of(context)
                                                                 .secondaryText,
@@ -1229,7 +1236,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                               .titleSmall
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -1246,7 +1253,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                               .titleSmall
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -1302,7 +1309,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .titleMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily: 'Nunito',
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   color: const Color.fromARGB(
@@ -1322,7 +1329,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       context)
                                                   .titleMedium
                                                   .override(
-                                                    fontFamily: 'Open Sans',
+                                                    fontFamily: 'Nunito',
                                                     fontSize: 14.0,
                                                     letterSpacing: 0.0,
                                                     color: const Color.fromARGB(
@@ -1350,7 +1357,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       context)
                                                   .titleMedium
                                                   .override(
-                                                    fontFamily: 'Open Sans',
+                                                    fontFamily: 'Nunito',
                                                     fontSize: 14.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.bold,
@@ -1379,7 +1386,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily: 'Nunito',
                                                   fontSize: 13.0,
                                                   letterSpacing: 0.0,
                                                   color: const Color.fromARGB(

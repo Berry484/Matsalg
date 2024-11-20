@@ -124,7 +124,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     fontSize: 27,
@@ -179,15 +179,15 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
-                                          fontSize: 15,
+                                          fontFamily: 'Nunito',
+                                          fontSize: 16,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
                                         ),
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           letterSpacing: 0.0,
                                         ),
                                     enabledBorder: OutlineInputBorder(
@@ -228,7 +228,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        fontFamily: 'Open Sans',
+                                        fontFamily: 'Nunito',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                         fontSize: 17,
@@ -256,15 +256,15 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
-                                          fontSize: 15,
+                                          fontFamily: 'Nunito',
+                                          fontSize: 16,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           letterSpacing: 0.0,
                                         ),
                                     enabledBorder: OutlineInputBorder(
@@ -306,7 +306,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        fontFamily: 'Open Sans',
+                                        fontFamily: 'Nunito',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                         fontSize: 16,
@@ -405,7 +405,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                             text: 'Send',
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 40,
+                              height: 43,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -414,11 +414,11 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 18,
+                                    fontSize: 19,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w700,
                                   ),
                               elevation: 0,
                               borderSide: const BorderSide(

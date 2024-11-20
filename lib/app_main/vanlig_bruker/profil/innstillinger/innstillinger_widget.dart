@@ -657,7 +657,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                   fontFamily: 'Open Sans',
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),

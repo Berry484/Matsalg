@@ -311,16 +311,16 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 0.0, 13.0),
+                                              .fromSTEB(8.0, 0.0, 0.0, 13.0),
                                           child: Text(
                                             matvare.username ?? '',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
-                                                  fontSize: 15.0,
+                                                  fontFamily: 'Nunito',
+                                                  fontSize: 16.0,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                           ),
                                         ),
@@ -996,14 +996,14 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               onTap: () async {},
                                               child: Material(
                                                 color: Colors.transparent,
-                                                elevation: 1,
+                                                elevation: 0,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(14),
                                                 ),
                                                 child: SafeArea(
                                                   child: Container(
-                                                    width: 110,
+                                                    width: 120,
                                                     height: 40,
                                                     constraints:
                                                         const BoxConstraints(
@@ -1032,7 +1032,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         children: [
                                                           Expanded(
                                                             child: Text(
-                                                              'Få varsel',
+                                                              'Få varsling',
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -1041,7 +1041,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   .bodyMedium
                                                                   .override(
                                                                     fontFamily:
-                                                                        'Open Sans',
+                                                                        'Nunito',
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
@@ -1142,7 +1142,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   .bodyMedium
                                                                   .override(
                                                                     fontFamily:
-                                                                        'Open Sans',
+                                                                        'Nunito',
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
@@ -1196,8 +1196,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .headlineMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           fontSize: 19.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -1223,7 +1222,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily: 'Nunito',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1249,7 +1248,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           .bodyMedium
                                                           .override(
                                                             fontFamily:
-                                                                'Open Sans',
+                                                                'Nunito',
                                                             color: FlutterFlowTheme
                                                                     .of(context)
                                                                 .secondaryText,
@@ -1275,7 +1274,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           .bodyMedium
                                                           .override(
                                                             fontFamily:
-                                                                'Open Sans',
+                                                                'Nunito',
                                                             color: FlutterFlowTheme
                                                                     .of(context)
                                                                 .secondaryText,
@@ -1328,7 +1327,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                               .titleSmall
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -1345,7 +1344,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                               .titleSmall
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -1401,7 +1400,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .titleMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily: 'Nunito',
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   color: const Color.fromARGB(
@@ -1421,7 +1420,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       context)
                                                   .titleMedium
                                                   .override(
-                                                    fontFamily: 'Open Sans',
+                                                    fontFamily: 'Nunito',
                                                     fontSize: 14.0,
                                                     letterSpacing: 0.0,
                                                     color: const Color.fromARGB(
@@ -1449,7 +1448,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       context)
                                                   .titleMedium
                                                   .override(
-                                                    fontFamily: 'Open Sans',
+                                                    fontFamily: 'Nunito',
                                                     fontSize: 14.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.bold,
@@ -1493,7 +1492,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           context)
                                                       .titleMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily: 'Nunito',
                                                         fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                         color: const Color
@@ -1526,7 +1525,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily: 'Nunito',
                                                   fontSize: 13.0,
                                                   letterSpacing: 0.0,
                                                   color: const Color.fromARGB(
@@ -1554,7 +1553,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily: 'Nunito',
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
@@ -1760,7 +1759,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                 .bodyLarge
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   fontSize: 15,
                                                                   letterSpacing:
                                                                       0.0,
@@ -1836,7 +1835,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .titleLarge
                                                                               .override(
-                                                                                fontFamily: 'Open Sans',
+                                                                                fontFamily: 'Nunito',
                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
                                                                                 fontSize: 14,
                                                                                 letterSpacing: 0.0,
@@ -1854,7 +1853,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .titleLarge
                                                                               .override(
-                                                                                fontFamily: 'Open Sans',
+                                                                                fontFamily: 'Nunito',
                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
                                                                                 fontSize: 14,
                                                                                 letterSpacing: 0.0,
@@ -1871,7 +1870,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .titleLarge
                                                                               .override(
-                                                                                fontFamily: 'Open Sans',
+                                                                                fontFamily: 'Nunito',
                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
                                                                                 fontSize: 14,
                                                                                 letterSpacing: 0.0,
@@ -1905,7 +1904,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
-                                                                              fontFamily: 'Open Sans',
+                                                                              fontFamily: 'Nunito',
                                                                               color: FlutterFlowTheme.of(context).secondaryText,
                                                                               fontSize: 14,
                                                                               letterSpacing: 0.0,

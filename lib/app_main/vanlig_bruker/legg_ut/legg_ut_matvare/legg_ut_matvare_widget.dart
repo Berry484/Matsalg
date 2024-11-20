@@ -189,7 +189,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w800,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -250,6 +250,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).primaryText),
             automaticallyImplyLeading: true,
+            scrolledUnderElevation: 0.0,
             leading: Align(
               alignment: const AlignmentDirectional(0, 0),
               child: Padding(
@@ -338,7 +339,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(
-                                                          0.0, 80.0, 0.0, 2.0),
+                                                          0.0, 80.0, 0.0, 32.0),
                                                   child: Text(
                                                     'Legg til bilde av matvaren',
                                                     textAlign: TextAlign.start,
@@ -346,39 +347,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             context)
                                                         .bodyMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 17.0,
+                                                          fontSize: 19.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0.0, 0.0, 0.0, 30.0),
-                                                  child: Text(
-                                                    'Last opp minst 1 bilde',
-                                                    textAlign: TextAlign.start,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 13.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
+                                                              FontWeight.w800,
                                                         ),
                                                   ),
                                                 ),
@@ -417,8 +393,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   context)
                                                               .secondary,
                                                       icon: Icon(
-                                                        Icons
-                                                            .photo_camera_outlined,
+                                                        CupertinoIcons.camera,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -836,8 +811,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   context)
                                                               .secondary,
                                                       icon: Icon(
-                                                        Icons
-                                                            .photo_camera_outlined,
+                                                        CupertinoIcons.camera,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1089,8 +1063,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   context)
                                                               .secondary,
                                                       icon: Icon(
-                                                        Icons
-                                                            .photo_camera_outlined,
+                                                        CupertinoIcons.camera,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1342,8 +1315,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   context)
                                                               .secondary,
                                                       icon: Icon(
-                                                        Icons
-                                                            .photo_camera_outlined,
+                                                        CupertinoIcons.camera,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1595,8 +1567,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   context)
                                                               .secondary,
                                                       icon: Icon(
-                                                        Icons
-                                                            .photo_camera_outlined,
+                                                        CupertinoIcons.camera,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1692,20 +1663,19 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       20.0, 50.0, 0.0, 10.0),
                                               child: Text(
                                                 'Hva skal du selge?',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .primaryText,
-                                                      fontSize: 17.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                                          fontSize: 18.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        ),
                                               ),
                                             ),
                                           ),
@@ -1727,9 +1697,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 15.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -1738,8 +1707,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           letterSpacing: 0.0,
                                                         ),
                                                 enabledBorder:
@@ -1800,7 +1768,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily: 'Nunito',
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -1850,9 +1818,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 14.0,
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 15.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -1902,20 +1869,19 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       20.0, 50.0, 0.0, 5.0),
                                               child: Text(
                                                 'Beskriv matvaren',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .primaryText,
-                                                      fontSize: 17.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                                          fontSize: 18.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        ),
                                               ),
                                             ),
                                           ),
@@ -1927,23 +1893,22 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               padding:
                                                   const EdgeInsetsDirectional
                                                       .fromSTEB(
-                                                      20.0, 0.0, 0.0, 10.0),
+                                                      20.0, 0.0, 20.0, 10.0),
                                               child: Text(
-                                                'Fortell litt om matvaren, hvor fersk er den, er maten fryst ned og mengde osv.',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                'Fortell litt om matvaren, hvor fersk er den, \ner maten fryst ned og mengde osv.',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .primaryText,
-                                                      fontSize: 13.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
+                                                          fontSize: 15.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
                                               ),
                                             ),
                                           ),
@@ -1964,8 +1929,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -1976,9 +1940,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 13.0,
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 15.0,
                                                           letterSpacing: 0.0,
                                                         ),
                                                 enabledBorder:
@@ -2039,7 +2002,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily: 'Nunito',
                                                         letterSpacing: 0.0,
                                                       ),
                                               textAlign: TextAlign.start,
@@ -2069,20 +2032,19 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       20.0, 30.0, 0.0, 10.0),
                                               child: Text(
                                                 'Pris',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .primaryText,
-                                                      fontSize: 17.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                                          fontSize: 18.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        ),
                                               ),
                                             ),
                                           ),
@@ -2116,9 +2078,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             .of(context)
                                                         .titleMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontSize: 17.0,
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 18.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -2129,7 +2090,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             .titleMedium
                                                             .override(
                                                               fontFamily:
-                                                                  'Open Sans',
+                                                                  'Nunito',
                                                               letterSpacing:
                                                                   0.0,
                                                             ),
@@ -2266,9 +2227,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           .bodyMedium
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Open Sans',
+                                                                                'Nunito',
                                                                             fontSize:
-                                                                                14.0,
+                                                                                15.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -2281,7 +2242,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           .labelMedium
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Open Sans',
+                                                                                'Nunito',
                                                                             letterSpacing:
                                                                                 0.0,
                                                                           ),
@@ -2350,7 +2311,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                         .bodyMedium
                                                                         .override(
                                                                           fontFamily:
-                                                                              'Open Sans',
+                                                                              'Nunito',
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
@@ -2396,7 +2357,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                         .bodyMedium
                                                                         .override(
                                                                           fontFamily:
-                                                                              'Open Sans',
+                                                                              'Nunito',
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
@@ -2475,7 +2436,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           labelStyle: FlutterFlowTheme.of(context)
                                                                               .bodyMedium
                                                                               .override(
-                                                                                fontFamily: 'Open Sans',
+                                                                                fontFamily: 'Nunito',
                                                                                 fontSize: 14.0,
                                                                                 letterSpacing: 0.0,
                                                                                 fontWeight: FontWeight.w600,
@@ -2485,7 +2446,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           hintStyle: FlutterFlowTheme.of(context)
                                                                               .labelMedium
                                                                               .override(
-                                                                                fontFamily: 'Open Sans',
+                                                                                fontFamily: 'Nunito',
                                                                                 letterSpacing: 0.0,
                                                                               ),
                                                                           enabledBorder:
@@ -2542,7 +2503,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
-                                                                              fontFamily: 'Open Sans',
+                                                                              fontFamily: 'Nunito',
                                                                               color: FlutterFlowTheme.of(context).primaryText,
                                                                               fontSize: 17.0,
                                                                               letterSpacing: 0.0,
@@ -2587,7 +2548,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .bodyMedium
                                                                               .override(
-                                                                                fontFamily: 'Open Sans',
+                                                                                fontFamily: 'Nunito',
                                                                                 color: FlutterFlowTheme.of(context).primaryText,
                                                                                 fontSize: 17.0,
                                                                                 letterSpacing: 0.0,
@@ -2633,15 +2594,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             context)
                                                         .bodyMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 17.0,
+                                                          fontSize: 18.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                              FontWeight.w800,
                                                         ),
                                                   ),
                                                 ),
@@ -2661,12 +2621,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             context)
                                                         .bodyMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 13.0,
+                                                          fontSize: 15.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -2726,9 +2685,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     .bodyMedium
                                                                     .override(
                                                                       fontFamily:
-                                                                          'Open Sans',
+                                                                          'Nunito',
                                                                       fontSize:
-                                                                          14.0,
+                                                                          15.0,
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight:
@@ -2745,7 +2704,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     .labelMedium
                                                                     .override(
                                                                       fontFamily:
-                                                                          'Open Sans',
+                                                                          'Nunito',
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight:
@@ -2825,7 +2784,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               .bodyMedium
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
@@ -2951,7 +2910,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               .bodyMedium
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
@@ -2978,7 +2937,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               .bodyMedium
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
@@ -3020,15 +2979,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             context)
                                                         .bodyMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 17.0,
+                                                          fontSize: 18.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                              FontWeight.w800,
                                                         ),
                                                   ),
                                                 ),
@@ -3048,12 +3006,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             context)
                                                         .bodyMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 13.0,
+                                                          fontSize: 15.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -3149,16 +3106,16 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               .titleMedium
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
-                                                                fontSize: 18.0,
+                                                                fontSize: 17.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .bold,
+                                                                        .w700,
                                                               ),
                                                       elevation: 0.0,
                                                       borderSide:
@@ -3283,15 +3240,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             .of(context)
                                                         .titleMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .alternate,
                                                           fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                              FontWeight.w800,
                                                         ),
                                                     elevation: 3.0,
                                                     borderSide:
@@ -3669,15 +3625,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             .of(context)
                                                         .titleMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondary,
                                                           fontSize: 17.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                              FontWeight.w800,
                                                         ),
                                                     elevation: 1.0,
                                                     borderSide:
@@ -4023,7 +3978,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 .titleMedium
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondary,
@@ -4033,7 +3988,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .bold,
+                                                                          .w800,
                                                                 ),
                                                         elevation: 0.0,
                                                         borderSide:

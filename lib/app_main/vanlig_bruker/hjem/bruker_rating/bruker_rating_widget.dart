@@ -315,7 +315,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily: 'Nunito',
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
@@ -329,7 +329,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily: 'Nunito',
                                               fontSize: 31,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.bold,
@@ -340,7 +340,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily: 'Nunito',
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
@@ -396,7 +396,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                           context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily: 'Nunito',
                                                         fontSize: 15,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
@@ -430,7 +430,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                           context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily: 'Nunito',
                                                         fontSize: 15,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
@@ -515,7 +515,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .titleMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -523,7 +523,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                         FlutterFlowTheme.of(context)
                                             .titleMedium
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily: 'Nunito',
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -612,7 +612,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                 .headlineSmall
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
@@ -828,7 +828,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                           .headlineSmall
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Open Sans',
+                                                                                'Nunito',
                                                                             fontSize:
                                                                                 16,
                                                                             letterSpacing:
@@ -856,7 +856,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                           .headlineSmall
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Open Sans',
+                                                                                'Nunito',
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).secondaryText,
                                                                             fontSize:
@@ -933,7 +933,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                   .bodyMedium
                                                                   .override(
                                                                     fontFamily:
-                                                                        'Open Sans',
+                                                                        'Nunito',
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -1025,7 +1025,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                 .headlineSmall
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
@@ -1242,7 +1242,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                           .headlineSmall
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Open Sans',
+                                                                                'Nunito',
                                                                             fontSize:
                                                                                 16,
                                                                             letterSpacing:
@@ -1267,7 +1267,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                           .headlineSmall
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Open Sans',
+                                                                                'Nunito',
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).secondaryText,
                                                                             fontSize:
@@ -1346,7 +1346,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                   .bodyMedium
                                                                   .override(
                                                                     fontFamily:
-                                                                        'Open Sans',
+                                                                        'Nunito',
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -1438,7 +1438,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                 .headlineSmall
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
@@ -1655,7 +1655,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                           .headlineSmall
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Open Sans',
+                                                                                'Nunito',
                                                                             fontSize:
                                                                                 16,
                                                                             letterSpacing:
@@ -1680,7 +1680,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                           .headlineSmall
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Open Sans',
+                                                                                'Nunito',
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).secondaryText,
                                                                             fontSize:
@@ -1759,7 +1759,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                   .bodyMedium
                                                                   .override(
                                                                     fontFamily:
-                                                                        'Open Sans',
+                                                                        'Nunito',
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,

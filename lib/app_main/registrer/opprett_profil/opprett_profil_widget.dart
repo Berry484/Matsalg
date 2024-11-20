@@ -109,10 +109,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
-                                      fontFamily: 'Open Sans',
+                                      fontFamily: 'Nunito',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
-                                      fontSize: 20,
+                                      fontSize: 22,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -137,7 +137,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                       maxWidth: 1000.00,
                                       maxHeight: 1000.00,
                                       allowPhoto: true,
-                                      pickerFontFamily: 'Open Sans',
+                                      pickerFontFamily: 'Nunito',
                                     );
                                     if (selectedMedia != null &&
                                         selectedMedia.every((m) =>
@@ -271,8 +271,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(2, 24, 2, 0),
                                                 child: Container(
-                                                  width: 120,
-                                                  height: 120,
+                                                  width: 140,
+                                                  height: 140,
                                                   clipBehavior: Clip.antiAlias,
                                                   decoration:
                                                       const BoxDecoration(
@@ -315,15 +315,15 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              fontFamily: 'Open Sans',
-                                              fontSize: 15,
+                                              fontFamily: 'Nunito',
+                                              fontSize: 16,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily: 'Nunito',
                                               letterSpacing: 0.0,
                                             ),
                                         enabledBorder: OutlineInputBorder(
@@ -369,7 +369,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                             fontSize: 16,
@@ -431,15 +431,15 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
-                                            fontSize: 15,
+                                            fontFamily: 'Nunito',
+                                            fontSize: 16,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily: 'Nunito',
                                             letterSpacing: 0.0,
                                           ),
                                       enabledBorder: OutlineInputBorder(
@@ -480,7 +480,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                           fontSize: 16,
@@ -507,15 +507,15 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
-                                            fontSize: 15,
+                                            fontFamily: 'Nunito',
+                                            fontSize: 16,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily: 'Nunito',
                                             letterSpacing: 0.0,
                                           ),
                                       enabledBorder: OutlineInputBorder(
@@ -556,7 +556,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                           fontSize: 16,
@@ -588,15 +588,15 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
-                                            fontSize: 15,
+                                            fontFamily: 'Nunito',
+                                            fontSize: 16,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily: 'Nunito',
                                             letterSpacing: 0.0,
                                           ),
                                       enabledBorder: OutlineInputBorder(
@@ -638,7 +638,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                           fontSize: 16,
@@ -692,15 +692,15 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
-                                            fontSize: 15,
+                                            fontFamily: 'Nunito',
+                                            fontSize: 16,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily: 'Nunito',
                                             letterSpacing: 0.0,
                                           ),
                                       enabledBorder: OutlineInputBorder(
@@ -756,7 +756,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                           fontSize: 16,
@@ -779,7 +779,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                     alignment: const AlignmentDirectional(0, 0.05),
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(20, 80, 20, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           if (_isloading == true) {
@@ -926,8 +926,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                         },
                         text: 'Ferdig',
                         options: FFButtonOptions(
-                          width: 200,
-                          height: 40,
+                          width: double.infinity,
+                          height: 45,
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           iconPadding:
@@ -935,18 +935,18 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                           color: FlutterFlowTheme.of(context).alternate,
                           textStyle:
                               FlutterFlowTheme.of(context).titleMedium.override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: Colors.white,
                                     fontSize: 19,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.bold,
                                   ),
                           elevation: 0,
                           borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,
                           ),
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(24),
                         ),
                       ),
                     ),

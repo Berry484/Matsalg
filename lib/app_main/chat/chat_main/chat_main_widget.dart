@@ -116,7 +116,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
             title: Align(
               alignment: const AlignmentDirectional(0, 0),
               child: Text(
-                'Mine samtaler',
+                'Meldinger',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Montserrat',
@@ -216,13 +216,13 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .headlineSmall
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily: 'Nunito',
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
-                                                  fontSize: 22,
+                                                  fontSize: 23,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
+                                                  fontWeight: FontWeight.w800,
                                                 ),
                                           ),
                                         ),

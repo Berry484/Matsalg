@@ -311,7 +311,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                             .headlineSmall
                                                             .override(
                                                               fontFamily:
-                                                                  'Open Sans',
+                                                                  'Nunito',
                                                               fontSize: 17.0,
                                                               letterSpacing:
                                                                   0.0,
@@ -361,7 +361,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                     context)
                                                 .titleSmall
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily: 'Nunito',
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
@@ -412,7 +412,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                     context)
                                                 .titleSmall
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily: 'Nunito',
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primary,

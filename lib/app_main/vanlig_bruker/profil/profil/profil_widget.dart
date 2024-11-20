@@ -350,13 +350,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                             'En feil oppstod');
                                                       }
                                                     },
-                                                    child: FaIcon(
-                                                      FontAwesomeIcons.cog,
+                                                    child: Icon(
+                                                      CupertinoIcons.gear,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .secondaryText,
-                                                      size: 24,
+                                                      size: 29,
                                                     ),
                                                   ),
                                                 ),
@@ -372,7 +372,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             style: FlutterFlowTheme.of(context)
                                                 .headlineMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily: 'Nunito',
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
@@ -517,7 +517,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                   _matvarer?.length.toString() ?? '',
                                                                                   textAlign: TextAlign.center,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Open Sans',
+                                                                                        fontFamily: 'Nunito',
                                                                                         fontSize: 16,
                                                                                         letterSpacing: 0.0,
                                                                                         fontWeight: FontWeight.w600,
@@ -527,7 +527,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                   'matvarer',
                                                                                   textAlign: TextAlign.center,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Open Sans',
+                                                                                        fontFamily: 'Nunito',
                                                                                         color: FlutterFlowTheme.of(context).secondaryText,
                                                                                         fontSize: 12,
                                                                                         letterSpacing: 0.0,
@@ -589,8 +589,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     folgere ?? '',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Open Sans',
-                                                                                          fontSize: 16,
+                                                                                          fontFamily: 'Nunito',
+                                                                                          fontSize: 17,
                                                                                           letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.w600,
                                                                                         ),
@@ -599,7 +599,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     'følgere',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Open Sans',
+                                                                                          fontFamily: 'Nunito',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
                                                                                           fontSize: 12,
                                                                                           letterSpacing: 0.0,
@@ -662,7 +662,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     folger ?? '',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Open Sans',
+                                                                                          fontFamily: 'Nunito',
                                                                                           fontSize: 16,
                                                                                           letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.w600,
@@ -672,7 +672,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     'følger',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Open Sans',
+                                                                                          fontFamily: 'Nunito',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
                                                                                           fontSize: 12,
                                                                                           letterSpacing: 0.0,
@@ -775,7 +775,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     child: Text(
                                                                                       'Ingen vurderinger',
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontFamily: 'Nunito',
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,
                                                                                             fontWeight: FontWeight.w600,
@@ -794,7 +794,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     child: Text(
                                                                                       ratingVerdi.toString(),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontFamily: 'Nunito',
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,
                                                                                             fontWeight: FontWeight.w600,
@@ -807,7 +807,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     child: Text(
                                                                                       ' (${ratingantall.toString()})',
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontFamily: 'Nunito',
                                                                                             color: const Color(0xB0262C2D),
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,
@@ -851,13 +851,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                               .headlineLarge
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 fontSize: 18,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
+                                                                        .bold,
                                                               ),
                                                         ),
                                                       ),
@@ -887,7 +887,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           .labelMedium
                                                           .override(
                                                             fontFamily:
-                                                                'Open Sans',
+                                                                'Nunito',
                                                             fontSize: 14,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
@@ -930,7 +930,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     .titleMedium
                                                                     .override(
                                                                       fontFamily:
-                                                                          'Open Sans',
+                                                                          'Nunito',
                                                                       letterSpacing:
                                                                           0.0,
                                                                     ),
@@ -940,7 +940,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     .titleMedium
                                                                     .override(
                                                                       fontFamily:
-                                                                          'Open Sans',
+                                                                          'Nunito',
                                                                       letterSpacing:
                                                                           0.0,
                                                                     ),
@@ -1051,7 +1051,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   CrossAxisAlignment.center,
                                               children: [
                                                 Icon(
-                                                  Icons.add,
+                                                  CupertinoIcons.add,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .secondaryText,
@@ -1067,13 +1067,13 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      'Trykk på',
+                                                      'Trykk på ',
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyLarge
                                                           .override(
                                                             fontFamily:
-                                                                'Open Sans',
+                                                                'Nunito',
                                                             fontSize: 16,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
@@ -1081,21 +1081,21 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           ),
                                                     ),
                                                     Icon(
-                                                      Icons.add,
+                                                      CupertinoIcons.add,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .secondaryText,
-                                                      size: 20,
+                                                              .primaryText,
+                                                      size: 22,
                                                     ),
                                                     Text(
-                                                      'for å lage din første annonse',
+                                                      ' for å lage din første annonse',
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyLarge
                                                           .override(
                                                             fontFamily:
-                                                                'Open Sans',
+                                                                'Nunito',
                                                             fontSize: 16,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
@@ -1369,7 +1369,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               textAlign: TextAlign.start,
                                                                               minFontSize: 11,
                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.bold,
@@ -1423,7 +1423,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             '${matvare.price} Kr',
                                                                                             textAlign: TextAlign.end,
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Open Sans',
+                                                                                                  fontFamily: 'Nunito',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
@@ -1436,7 +1436,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             '/kg',
                                                                                             textAlign: TextAlign.end,
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Open Sans',
+                                                                                                  fontFamily: 'Nunito',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
@@ -1448,7 +1448,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             '/stk',
                                                                                             textAlign: TextAlign.end,
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Open Sans',
+                                                                                                  fontFamily: 'Nunito',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
@@ -1468,7 +1468,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                           (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                                           textAlign: TextAlign.start,
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                fontFamily: 'Open Sans',
+                                                                                                fontFamily: 'Nunito',
                                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                 fontSize: 14,
                                                                                                 letterSpacing: 0.0,
@@ -1568,7 +1568,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           context)
                                                       .bodyLarge
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily: 'Nunito',
                                                         fontSize: 16,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
@@ -1849,7 +1849,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .bodyLarge
                                                                               .override(
-                                                                                fontFamily: 'Open Sans',
+                                                                                fontFamily: 'Nunito',
                                                                                 fontSize: 15,
                                                                                 letterSpacing: 0.0,
                                                                                 fontWeight: FontWeight.bold,
@@ -1913,7 +1913,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         '${likesmatvare.price} Kr',
                                                                                         textAlign: TextAlign.end,
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                              fontFamily: 'Open Sans',
+                                                                                              fontFamily: 'Nunito',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
                                                                                               fontSize: 14,
                                                                                               letterSpacing: 0.0,
@@ -1926,7 +1926,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         '/kg',
                                                                                         textAlign: TextAlign.end,
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                              fontFamily: 'Open Sans',
+                                                                                              fontFamily: 'Nunito',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
                                                                                               fontSize: 14,
                                                                                               letterSpacing: 0.0,
@@ -1938,7 +1938,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         '/stk',
                                                                                         textAlign: TextAlign.end,
                                                                                         style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                              fontFamily: 'Open Sans',
+                                                                                              fontFamily: 'Nunito',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
                                                                                               fontSize: 14,
                                                                                               letterSpacing: 0.0,
@@ -1958,7 +1958,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                       (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontFamily: 'Nunito',
                                                                                             color: FlutterFlowTheme.of(context).secondaryText,
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,

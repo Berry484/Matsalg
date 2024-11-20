@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/matvarer.dart';
@@ -415,7 +416,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .alternate,
@@ -425,7 +426,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .bold,
+                                                                          .w800,
                                                                 ),
                                                       ),
                                                       Icon(
@@ -435,7 +436,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .alternate,
-                                                        size: 24.0,
+                                                        size: 25.0,
                                                       ),
                                                     ],
                                                   ),
@@ -452,186 +453,104 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       .spaceBetween,
                                               children: [
                                                 Expanded(
-                                                  child: TextFormField(
-                                                    controller:
-                                                        _model.textController,
-                                                    focusNode: _model
-                                                        .textFieldFocusNode,
-                                                    autofocus: false,
-                                                    obscureText: false,
-                                                    onTap: () {
-                                                      setState(() {
-                                                        searching = true;
-                                                      });
-                                                    },
-
-                                                    onChanged: (text) {
-                                                      setState(() {
-                                                        _profilisloading = true;
-                                                      });
-                                                      if (_debounce?.isActive ??
-                                                          false)
-                                                        _debounce!.cancel();
-                                                      _debounce = Timer(
-                                                          const Duration(
-                                                              milliseconds:
-                                                                  500), () {
-                                                        handleSearch();
-                                                      });
-                                                    },
-                                                    onFieldSubmitted: (value) {
-                                                      if (_model.textController
-                                                          .text.isNotEmpty) {
-                                                        // When the search button is pressed
-                                                        context.pushNamed(
-                                                          'BondeGardPage',
-                                                          queryParameters: {
-                                                            'kategori':
-                                                                serializeParam(
-                                                              'Søk',
-                                                              ParamType.String,
-                                                            ),
-                                                            'query': serializeParam(
-                                                                _model
-                                                                    .textController
-                                                                    .text,
-                                                                ParamType
-                                                                    .String)
-                                                          }.withoutNulls,
-                                                        );
-                                                      }
-                                                    },
-                                                    textInputAction: TextInputAction
-                                                        .search, // Add this line to
-                                                    decoration: InputDecoration(
-                                                      isDense: true,
-                                                      alignLabelWithHint: false,
-                                                      hintText: 'Søk',
-                                                      hintStyle:
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground, // or choose the correct background color
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              13.0),
+                                                    ),
+                                                    child:
+                                                        CupertinoSearchTextField(
+                                                      controller:
+                                                          _model.textController,
+                                                      focusNode: _model
+                                                          .textFieldFocusNode,
+                                                      autofocus: false,
+                                                      onChanged: (text) {
+                                                        setState(() {
+                                                          _profilisloading =
+                                                              true;
+                                                        });
+                                                        if (_debounce
+                                                                ?.isActive ??
+                                                            false)
+                                                          _debounce!.cancel();
+                                                        _debounce = Timer(
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    500), () {
+                                                          handleSearch();
+                                                        });
+                                                      },
+                                                      backgroundColor:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              238,
+                                                              238,
+                                                              238),
+                                                      prefixInsets:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              12, 6, 6, 6),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              24.0),
+                                                      onSubmitted: (value) {
+                                                        if (_model
+                                                            .textController
+                                                            .text
+                                                            .isNotEmpty) {
+                                                          // When the search button is pressed
+                                                          context.pushNamed(
+                                                            'BondeGardPage',
+                                                            queryParameters: {
+                                                              'kategori':
+                                                                  serializeParam(
+                                                                      'Søk',
+                                                                      ParamType
+                                                                          .String),
+                                                              'query': serializeParam(
+                                                                  _model
+                                                                      .textController
+                                                                      .text,
+                                                                  ParamType
+                                                                      .String),
+                                                            }.withoutNulls,
+                                                          );
+                                                        }
+                                                      },
+                                                      placeholder: 'Søk',
+                                                      prefixIcon: Icon(
+                                                        CupertinoIcons.search,
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .primaryText, // match text color from theme
+                                                        size: 20,
+                                                      ),
+                                                      style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .labelMedium
+                                                              .bodyLarge
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
-                                                                color: const Color(
-                                                                    0x8F101213),
+                                                                    'Nunito',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText, // matching text color from theme
                                                                 fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                          color: Color.fromARGB(
-                                                              0, 85, 85, 85),
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(13.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(13.0),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(13.0),
-                                                      ),
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(13.0),
-                                                      ),
-                                                      filled: true,
-                                                      fillColor:
-                                                          const Color.fromARGB(
-                                                              246,
-                                                              243,
-                                                              243,
-                                                              243),
-                                                      prefixIcon: const Icon(
-                                                        Icons.search_outlined,
-                                                        size: 20,
-                                                      ),
-                                                      suffixIcon: _model
-                                                              .textController
-                                                              .text
-                                                              .isNotEmpty
-                                                          ? IconButton(
-                                                              icon: Icon(
-                                                                FontAwesomeIcons
-                                                                    .solidTimesCircle,
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText, // Set the desired color here
-                                                              ),
-                                                              onPressed: () {
-                                                                _model
-                                                                    .textController!
-                                                                    .clear();
-                                                                setState(() {
-                                                                  _profiler =
-                                                                      null;
-                                                                  _profilisloading =
-                                                                      false;
-                                                                });
-                                                              },
-                                                            )
-                                                          : null,
-                                                      contentPadding:
-                                                          const EdgeInsets.only(
-                                                              top: 6.0,
-                                                              bottom: 6.0,
-                                                              left: 10.0,
-                                                              right: 10.0),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          searching =
+                                                              true; // Set searching to true when tapped
+                                                        });
+                                                      },
                                                     ),
-
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 15.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                    textAlign: TextAlign.start,
-                                                    cursorColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryText,
-                                                    validator: _model
-                                                        .textControllerValidator
-                                                        .asValidator(context),
                                                   ),
                                                 ),
                                                 if (searching == true)
@@ -662,7 +581,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
@@ -961,7 +880,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                     profil.username,
                                                                                     textAlign: TextAlign.start,
                                                                                     style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                          fontFamily: 'Open Sans',
+                                                                                          fontFamily: 'Nunito',
                                                                                           fontSize: 17.0,
                                                                                           letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.w600,
@@ -1139,7 +1058,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                 Text(
                                                                               'Følger',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).primaryText,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
@@ -1243,7 +1162,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                 Text(
                                                                               'Gårder',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).primaryText,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
@@ -1339,7 +1258,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                 Text(
                                                                               'Grønt',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).primaryText,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
@@ -1431,7 +1350,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               Text(
                                                                             'Kjøtt & \nmeieri',
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Open Sans',
+                                                                                  fontFamily: 'Nunito',
                                                                                   color: FlutterFlowTheme.of(context).primaryText,
                                                                                   fontSize: 14,
                                                                                   letterSpacing: 0.0,
@@ -1526,7 +1445,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                 Text(
                                                                               'Bakverk',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).primaryText,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
@@ -1622,7 +1541,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                 Text(
                                                                               'Sjømat',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     color: FlutterFlowTheme.of(context).primaryText,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
@@ -1721,7 +1640,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               child: Text(
                                                                                 'Drikke',
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Open Sans',
+                                                                                      fontFamily: 'Nunito',
                                                                                       color: FlutterFlowTheme.of(context).primaryText,
                                                                                       fontSize: 14,
                                                                                       letterSpacing: 0.0,
@@ -1791,12 +1710,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                     .bodyMedium
                                                                     .override(
                                                                       fontFamily:
-                                                                          'Open Sans',
+                                                                          'Nunito',
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
                                                                           .primaryText,
                                                                       fontSize:
-                                                                          20.0,
+                                                                          21.0,
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight:
@@ -1815,6 +1734,71 @@ class _HjemWidgetState extends State<HjemWidget> {
                                             ),
                                           ],
                                         ),
+                                        if ((_matvarer == null ||
+                                                _matvarer!.isEmpty) &&
+                                            _isloading == false)
+                                          Container(
+                                            width: MediaQuery.sizeOf(context)
+                                                .width,
+                                            height: 500,
+                                            child: Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0, -1),
+                                              child: Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0, 0, 0, 110),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        child: Image.asset(
+                                                          'assets/images/Usability_testing-pana.png',
+                                                          width: 290,
+                                                          height: 250,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 16, 0, 0),
+                                                        child: Text(
+                                                          'Her var det tomt',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .headlineSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 20,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )),
+                                            ),
+                                          ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(5.0, 13.0, 5.0, 0.0),
@@ -2064,7 +2048,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               textAlign: TextAlign.start,
                                                                               minFontSize: 11,
                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: 'Nunito',
                                                                                     fontSize: 15,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w700,
@@ -2118,7 +2102,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                             '${matvare.price} Kr',
                                                                                             textAlign: TextAlign.end,
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Open Sans',
+                                                                                                  fontFamily: 'Nunito',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
@@ -2131,7 +2115,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                             '/kg',
                                                                                             textAlign: TextAlign.end,
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Open Sans',
+                                                                                                  fontFamily: 'Nunito',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
@@ -2143,7 +2127,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                             '/stk',
                                                                                             textAlign: TextAlign.end,
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Open Sans',
+                                                                                                  fontFamily: 'Nunito',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
                                                                                                   letterSpacing: 0.0,
@@ -2163,7 +2147,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                           (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                                           textAlign: TextAlign.start,
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                fontFamily: 'Open Sans',
+                                                                                                fontFamily: 'Nunito',
                                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                 fontSize: 14,
                                                                                                 letterSpacing: 0.0,

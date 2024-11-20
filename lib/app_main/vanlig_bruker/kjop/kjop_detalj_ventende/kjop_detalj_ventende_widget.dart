@@ -225,16 +225,16 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5, 0, 0, 13),
+                                              .fromSTEB(8, 0, 0, 13),
                                           child: Text(
                                             matvare.username ?? '',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
-                                                  fontSize: 15,
+                                                  fontFamily: 'Nunito',
+                                                  fontSize: 16.0,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                           ),
                                         ),
@@ -930,7 +930,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Open Sans',
+                                                                      'Nunito',
                                                                   color: Colors
                                                                       .white,
                                                                   fontSize: 16,
@@ -983,8 +983,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .headlineMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Open Sans',
+                                                          fontFamily: 'Nunito',
                                                           fontSize: 19.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -1010,7 +1009,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily: 'Nunito',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1036,7 +1035,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           .bodyMedium
                                                           .override(
                                                             fontFamily:
-                                                                'Open Sans',
+                                                                'Nunito',
                                                             color: FlutterFlowTheme
                                                                     .of(context)
                                                                 .secondaryText,
@@ -1062,7 +1061,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           .bodyMedium
                                                           .override(
                                                             fontFamily:
-                                                                'Open Sans',
+                                                                'Nunito',
                                                             color: FlutterFlowTheme
                                                                     .of(context)
                                                                 .secondaryText,
@@ -1115,7 +1114,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               .titleSmall
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -1132,7 +1131,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               .titleSmall
                                                               .override(
                                                                 fontFamily:
-                                                                    'Open Sans',
+                                                                    'Nunito',
                                                                 fontSize: 15.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -1188,7 +1187,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .titleMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily: 'Nunito',
                                                   fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   color: const Color.fromARGB(
@@ -1208,7 +1207,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                       context)
                                                   .titleMedium
                                                   .override(
-                                                    fontFamily: 'Open Sans',
+                                                    fontFamily: 'Nunito',
                                                     fontSize: 14.0,
                                                     letterSpacing: 0.0,
                                                     color: const Color.fromARGB(
@@ -1236,7 +1235,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                       context)
                                                   .titleMedium
                                                   .override(
-                                                    fontFamily: 'Open Sans',
+                                                    fontFamily: 'Nunito',
                                                     fontSize: 14.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.bold,
