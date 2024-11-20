@@ -47,6 +47,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
     super.initState();
     _model = createModel(context, () => KjopDetaljVentendeModel());
     matvare = Matvarer.fromJson1(widget.matinfo);
+    getChecklike();
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -99,6 +100,26 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
     Future.delayed(const Duration(seconds: 3), () {
       overlayEntry.remove();
     });
+  }
+
+  Future<void> getChecklike() async {
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        _model.liker = await ApiCheckLiked.getChecklike(token, matvare.matId);
+        setState(() {
+          return;
+        });
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
+    }
   }
 
   @override
@@ -298,15 +319,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           Directionality.of(
                                                               context)),
                                               builder: (dialogContext) {
-                                                return Material(
+                                                return const Material(
                                                   color: Colors.transparent,
-                                                  child: GestureDetector(
-                                                    onTap: () => FocusScope.of(
-                                                            dialogContext)
-                                                        .unfocus(),
-                                                    child:
-                                                        const LikeIkonWidget(),
-                                                  ),
+                                                  child: LikeIkonWidget(),
                                                 );
                                               },
                                             );

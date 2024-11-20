@@ -354,43 +354,48 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onDoubleTap: () async {
-                                        _model.liker = !(_model.liker ?? true);
-                                        HapticFeedback.mediumImpact();
-                                        apiLike.deleteLike(
-                                            Securestorage.authToken,
-                                            matvare.matId);
-                                        safeSetState(() {});
-                                        if (_model.liker == true) {
-                                          apiLike.sendLike(
+                                        try {
+                                          _model.liker =
+                                              !(_model.liker ?? true);
+                                          HapticFeedback.mediumImpact();
+                                          apiLike.deleteLike(
                                               Securestorage.authToken,
                                               matvare.matId);
-                                          showAlignedDialog(
-                                            barrierColor: Colors.transparent,
-                                            context: context,
-                                            isGlobal: false,
-                                            avoidOverflow: false,
-                                            targetAnchor:
-                                                const AlignmentDirectional(
-                                                        0.0, 0.0)
-                                                    .resolve(Directionality.of(
-                                                        context)),
-                                            followerAnchor:
-                                                const AlignmentDirectional(
-                                                        0.0, 0.0)
-                                                    .resolve(Directionality.of(
-                                                        context)),
-                                            builder: (dialogContext) {
-                                              return Material(
-                                                color: Colors.transparent,
-                                                child: GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          dialogContext)
-                                                      .unfocus(),
-                                                  child: const LikeIkonWidget(),
-                                                ),
-                                              );
-                                            },
-                                          );
+                                          safeSetState(() {});
+                                          if (_model.liker == true) {
+                                            apiLike.sendLike(
+                                                Securestorage.authToken,
+                                                matvare.matId);
+                                            showAlignedDialog(
+                                              barrierColor: Colors.transparent,
+                                              context: context,
+                                              avoidOverflow: false,
+                                              targetAnchor:
+                                                  const AlignmentDirectional(
+                                                          0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              followerAnchor:
+                                                  const AlignmentDirectional(
+                                                          0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              builder: (dialogContext) {
+                                                return const Material(
+                                                  color: Colors.transparent,
+                                                  child: LikeIkonWidget(),
+                                                );
+                                              },
+                                            );
+                                          }
+                                        } on SocketException {
+                                          showErrorToast(context,
+                                              'Ingen internettforbindelse');
+                                        } catch (e) {
+                                          showErrorToast(
+                                              context, 'En feil oppstod');
                                         }
                                       },
                                       child: SizedBox(
@@ -1554,12 +1559,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Nunito',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  fontSize: 19.0,
+                                                  fontSize: 22,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
+                                                  fontWeight: FontWeight.w800,
                                                 ),
                                           ),
                                         ],

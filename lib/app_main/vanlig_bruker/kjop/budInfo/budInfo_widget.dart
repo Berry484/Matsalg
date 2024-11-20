@@ -644,11 +644,6 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                             }
                           },
                           text: 'Trekk bud',
-                          icon: FaIcon(
-                            FontAwesomeIcons.times,
-                            color: FlutterFlowTheme.of(context).primary,
-                            size: 23,
-                          ),
                           options: FFButtonOptions(
                             width: 200,
                             height: 40,
@@ -797,11 +792,6 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                   );
                                 },
                                 text: 'Bekreft hentet',
-                                icon: FaIcon(
-                                  FontAwesomeIcons.check,
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 23,
-                                ),
                                 options: FFButtonOptions(
                                   width: 203,
                                   height: 40,

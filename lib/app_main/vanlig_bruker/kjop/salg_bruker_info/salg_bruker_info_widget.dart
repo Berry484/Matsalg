@@ -353,7 +353,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                         fontFamily: 'Open Sans',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                       ),

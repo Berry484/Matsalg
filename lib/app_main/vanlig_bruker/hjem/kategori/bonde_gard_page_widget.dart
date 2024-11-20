@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
@@ -291,67 +292,123 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primary,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              FocusScope.of(context).requestFocus(FocusNode());
-              final selectedValue = await showModalBottomSheet<List<String>>(
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                context: context,
-                builder: (context) {
-                  return GestureDetector(
-                    onTap: () => FocusScope.of(context).unfocus(),
-                    child: Padding(
-                      padding: MediaQuery.viewInsetsOf(context),
-                      child: SorterWidget(
-                        sorterVerdi: sorterVerdi,
-                      ),
-                    ),
+          floatingActionButtonLocation: FloatingActionButtonLocation
+              .centerDocked, // Center the FAB at the bottom
+          floatingActionButton: Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+              child: GestureDetector(
+                onTap: () async {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  final selectedValue =
+                      await showModalBottomSheet<List<String>>(
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    context: context,
+                    builder: (context) {
+                      return GestureDetector(
+                        onTap: () => FocusScope.of(context).unfocus(),
+                        child: Padding(
+                          padding: MediaQuery.viewInsetsOf(context),
+                          child: SorterWidget(
+                            sorterVerdi: sorterVerdi,
+                          ),
+                        ),
+                      );
+                    },
                   );
-                },
-              );
-              if (selectedValue != null && selectedValue.isNotEmpty) {
-                final String selectedOption = selectedValue.first;
+                  if (selectedValue != null && selectedValue.isNotEmpty) {
+                    final String selectedOption = selectedValue.first;
 
-                safeSetState(() {
-                  // Create a copy of the original list for sorting
-                  List<Matvarer> sortedList = List.from(
-                      _matvarer ?? []); // Use ?? [] to avoid null issues
+                    safeSetState(() {
+                      // Create a copy of the original list for sorting
+                      List<Matvarer> sortedList = List.from(
+                          _matvarer ?? []); // Use ?? [] to avoid null issues
 
-                  if (selectedOption == 'Pris: lav til høy') {
-                    sorterVerdi = 2; // Set the sorting to low to high
-                    sortedList.sort((a, b) {
-                      return (a.price ?? double.infinity)
-                          .compareTo(b.price ?? double.infinity);
+                      if (selectedOption == 'Pris: lav til høy') {
+                        sorterVerdi = 2; // Set the sorting to low to high
+                        sortedList.sort((a, b) {
+                          return (a.price ?? double.infinity)
+                              .compareTo(b.price ?? double.infinity);
+                        });
+                      } else if (selectedOption == 'Pris: høy til lav') {
+                        sorterVerdi = 3; // Set the sorting to high to low
+                        sortedList.sort((a, b) {
+                          return (b.price ?? double.negativeInfinity)
+                              .compareTo(a.price ?? double.negativeInfinity);
+                        });
+                      } else {
+                        // Assuming this is for "Best Match"
+                        sorterVerdi = 1; // Reset to best match sorting
+                        _runFilter(_model.textController
+                            .text); // Run filter to get best matches
+                        return; // Exit early to avoid setting _matvarer below
+                      }
+
+                      // Update _matvarer to the sorted list
+                      _matvarer = sortedList;
+
+                      // Refresh the UI
+                      setState(() {});
                     });
-                  } else if (selectedOption == 'Pris: høy til lav') {
-                    sorterVerdi = 3; // Set the sorting to high to low
-                    sortedList.sort((a, b) {
-                      return (b.price ?? double.negativeInfinity)
-                          .compareTo(a.price ?? double.negativeInfinity);
-                    });
-                  } else {
-                    // Assuming this is for "Best Match"
-                    sorterVerdi = 1; // Reset to best match sorting
-                    _runFilter(_model
-                        .textController.text); // Run filter to get best matches
-                    return; // Exit early to avoid setting _matvarer below
                   }
-
-                  // Update _matvarer to the sorted list
-                  _matvarer = sortedList;
-
-                  // Refresh the UI
-                  setState(() {});
-                });
-              }
-            },
-            backgroundColor: FlutterFlowTheme.of(context).primary,
-            elevation: 8,
-            child: FaIcon(
-              FontAwesomeIcons.sortAmountDown,
-              color: FlutterFlowTheme.of(context).alternate,
-              size: 25,
+                },
+                child: Material(
+                  color: Colors.transparent,
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Container(
+                      width: 125,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primary,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 3, 0),
+                              child: Icon(
+                                CupertinoIcons.arrow_up_arrow_down,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 24,
+                              ),
+                            ),
+                            const VerticalDivider(
+                              thickness: 1,
+                              indent: 15,
+                              endIndent: 15,
+                              color: Color(0x2657636C),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  3, 0, 0, 0),
+                              child: Icon(
+                                Ionicons.options_outline,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 26,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+                ),
+              ),
+              // backgroundColor: FlutterFlowTheme.of(context).primary,
+              // elevation: 8,
+              // child: Icon(
+              //   CupertinoIcons.sort_down,
+              //   color: FlutterFlowTheme.of(context).alternate,
+              //   size: 33,
             ),
           ),
           appBar: AppBar(
