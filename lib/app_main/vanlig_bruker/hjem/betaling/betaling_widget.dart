@@ -57,6 +57,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
   bool _isLoading = false;
   int matpris = 1;
   double _selectedValue = 0.0;
+  int kjopsBeskyttelse = 2;
 
   late Matvarer matvare;
   final Securestorage securestorage = Securestorage();
@@ -73,6 +74,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
 
     matvare = Matvarer.fromJson1(widget.matinfo);
     matpris = matvare.price ?? 1;
+
+    kjopsBeskyttelse = ((_selectedValue * matpris * 0.05 + 2).round());
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -148,6 +151,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: true,
+            scrolledUnderElevation: 0.0,
             leading: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -179,6 +183,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
           ),
           body: SafeArea(
             top: true,
+            bottom: false,
             child: SingleChildScrollView(
               child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -634,7 +639,10 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                                             .text =
                                                                         _selectedValue
                                                                             .toStringAsFixed(1);
-
+                                                                    kjopsBeskyttelse =
+                                                                        ((_selectedValue * matpris * 0.05 +
+                                                                                2)
+                                                                            .round());
                                                                     // Trigger light haptic feedback on each tick/value change
                                                                     HapticFeedback
                                                                         .lightImpact();
@@ -791,11 +799,11 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 10, 20, 0),
                                       child: Text(
-                                        '${(_selectedValue * matpris).toStringAsFixed(
+                                        '${((_selectedValue * matpris).toStringAsFixed(
                                           ((_selectedValue * matpris) % 1 == 0)
                                               ? 0
-                                              : 0,
-                                        )} Kr',
+                                              : 2,
+                                        ))} Kr',
                                         textAlign: TextAlign.start,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -843,14 +851,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(0, 10, 20, 0),
                                         child: Text(
-                                          '${(_selectedValue * matpris * 0.05 + 2).toStringAsFixed(
-                                            ((_selectedValue * matpris * 0.05 +
-                                                            2) %
-                                                        1 ==
-                                                    0)
-                                                ? 0
-                                                : 2,
-                                          )} Kr',
+                                          '${kjopsBeskyttelse.toString()} Kr',
                                           textAlign: TextAlign.start,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
@@ -906,9 +907,11 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      ((_selectedValue * matpris * 1.05 + 2)
+                                      ((_selectedValue * matpris +
+                                              kjopsBeskyttelse)
                                           .toStringAsFixed(
-                                        ((_selectedValue * matpris * 1.05 + 2) %
+                                        ((_selectedValue * matpris +
+                                                        kjopsBeskyttelse) %
                                                     1 ==
                                                 0)
                                             ? 0
@@ -961,6 +964,35 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     !_model.formKey.currentState!.validate()) {
                                   return;
                                 }
+                                if (_selectedValue * matpris +
+                                        kjopsBeskyttelse <=
+                                    30) {
+                                  showCupertinoDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CupertinoAlertDialog(
+                                        title: const Text(
+                                            'Du må handle for minst 30 kr'),
+                                        actions: <Widget>[
+                                          CupertinoDialogAction(
+                                            onPressed: () {
+                                              _isLoading = false;
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text(
+                                              'Okei',
+                                              style: TextStyle(
+                                                  color: Colors
+                                                      .blue), // Blue for 'Nei'
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  _isLoading = false;
+                                  return;
+                                }
                                 try {
                                   _isLoading = true;
                                   if (matvare.matId != null &&
@@ -969,7 +1001,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     Decimal antall = Decimal.parse(
                                         _selectedValue.toString());
                                     Decimal pris = Decimal.parse(
-                                        (_selectedValue * matpris * 1.05 + 2)
+                                        (_selectedValue * matpris +
+                                                kjopsBeskyttelse)
                                             .toString());
                                     int matId = matvare.matId ?? 0;
                                     if (matvare.matId != null) {

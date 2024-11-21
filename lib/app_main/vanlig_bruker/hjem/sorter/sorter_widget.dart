@@ -86,8 +86,8 @@ class _SorterWidgetState extends State<SorterWidget> {
           Divider(
             height: 22,
             thickness: 3,
-            indent: 200,
-            endIndent: 200,
+            indent: 185,
+            endIndent: 185,
             color: FlutterFlowTheme.of(context).secondaryText,
           ),
           Stack(
@@ -103,20 +103,20 @@ class _SorterWidgetState extends State<SorterWidget> {
                       'Sorter etter',
                       textAlign: TextAlign.start,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Open Sans',
+                            fontFamily: 'Nunito',
                             color: FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 22,
+                            fontSize: 20,
                             letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.bold,
                           ),
                     ),
                   ],
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(1, -1),
+                alignment: const AlignmentDirectional(1, -1),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 6, 12, 15),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 6, 17, 15),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -128,10 +128,10 @@ class _SorterWidgetState extends State<SorterWidget> {
                     child: Text(
                       'Lukk',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Open Sans',
-                            fontSize: 16,
+                            fontFamily: 'Nunito',
+                            fontSize: 17,
                             letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.bold,
                           ),
                     ),
                   ),
@@ -166,17 +166,17 @@ class _SorterWidgetState extends State<SorterWidget> {
                   checkboxBorderColor:
                       FlutterFlowTheme.of(context).secondaryText,
                   textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Open Sans',
+                        fontFamily: 'Nunito',
                         fontSize: 18,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.bold,
                       ),
                   unselectedTextStyle:
                       FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Open Sans',
+                            fontFamily: 'Nunito',
                             fontSize: 18,
                             letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.bold,
                           ),
                   itemPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 14),
                   checkboxBorderRadius: BorderRadius.circular(24),

@@ -909,7 +909,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                               ),
                                               child: SafeArea(
                                                 child: Container(
-                                                  width: 100,
+                                                  width: 120,
                                                   height: 40,
                                                   constraints:
                                                       const BoxConstraints(
@@ -948,7 +948,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                       'Nunito',
                                                                   color: Colors
                                                                       .white,
-                                                                  fontSize: 16,
+                                                                  fontSize: 17,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:

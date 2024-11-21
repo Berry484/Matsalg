@@ -257,7 +257,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).alternate,
+                color: FlutterFlowTheme.of(context).secondaryText,
                 size: 28,
               ),
             ),
@@ -621,7 +621,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
+                                                                          .bold,
                                                                 ),
                                                       ),
                                                     ),
@@ -971,8 +971,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                             ? 1
                                             : _selgratings!.length,
                                     itemBuilder: (context, index) {
-                                      if (_selgratings!.isEmpty &&
-                                          _ratingisLoading == false) {
+                                      if ((_selgratings!.isEmpty &&
+                                              _ratingisLoading == false) ||
+                                          ingenRatings == true) {
                                         return Container(
                                           width:
                                               MediaQuery.sizeOf(context).width,
@@ -1034,7 +1035,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
+                                                                          .bold,
                                                                 ),
                                                       ),
                                                     ),
@@ -1384,8 +1385,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                             ? 1
                                             : _kjopratings!.length,
                                     itemBuilder: (context, index) {
-                                      if (_kjopratings!.isEmpty &&
-                                          _ratingisLoading == false) {
+                                      if ((_kjopratings!.isEmpty &&
+                                              _ratingisLoading == false) ||
+                                          ingenRatings == true) {
                                         return Container(
                                           width:
                                               MediaQuery.sizeOf(context).width,
@@ -1447,7 +1449,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
+                                                                          .bold,
                                                                 ),
                                                       ),
                                                     ),

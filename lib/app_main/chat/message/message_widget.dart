@@ -438,16 +438,24 @@ class _MessageWidgetState extends State<MessageWidget> {
                                             7, 0, 10, 8),
                                     child: GestureDetector(
                                       onTap: () {
-                                        if (_model.textController!.text
-                                            .trim()
-                                            .isNotEmpty) {
-                                          _webSocketService.sendMessage(
-                                            conversation.user,
-                                            _model.textController!.text,
-                                          );
-                                          setState(() {
-                                            _model.textController!.clear();
-                                          });
+                                        try {
+                                          if (_model.textController!.text
+                                              .trim()
+                                              .isNotEmpty) {
+                                            _webSocketService.sendMessage(
+                                              conversation.user,
+                                              _model.textController!.text,
+                                            );
+                                            setState(() {
+                                              _model.textController!.clear();
+                                            });
+                                          }
+                                        } on SocketException {
+                                          showErrorToast(context,
+                                              'Ingen internettforbindelse');
+                                        } catch (e) {
+                                          showErrorToast(
+                                              context, 'En feil oppstod');
                                         }
                                       },
                                       child: Align(

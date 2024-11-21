@@ -505,6 +505,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                             .text
                                                             .isNotEmpty) {
                                                           // When the search button is pressed
+                                                          FocusScope.of(context)
+                                                              .requestFocus(
+                                                                  FocusNode());
                                                           context.pushNamed(
                                                             'BondeGardPage',
                                                             queryParameters: {
@@ -606,138 +609,293 @@ class _HjemWidgetState extends State<HjemWidget> {
                                 ),
                               ),
                               if (searching == true)
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 70.0, 0.0, 80.0),
-                                  child: SingleChildScrollView(
-                                    primary: false,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 5.0, 170.0),
-                                          child: RefreshIndicator(
-                                            onRefresh: () async {
-                                              await handleSearch();
-                                              setState(() {});
-                                            },
-                                            child: ListView.builder(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                0,
-                                                0.0,
-                                                0,
-                                                0,
-                                              ),
-                                              primary: false,
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.vertical,
-                                              itemCount: _profilisloading
-                                                  ? 10
-                                                  : _profiler?.length ?? 0,
-                                              itemBuilder: (context, index) {
-                                                if (_profilisloading) {
-                                                  return Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        vertical: 8.0,
-                                                        horizontal: 16.0),
-                                                    child: Row(
+                                if (_model.textController.text.isNotEmpty)
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 70.0, 0.0, 80.0),
+                                    child: SingleChildScrollView(
+                                      primary: false,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(20, 0, 15, 30),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                if (_model.textController.text
+                                                    .isNotEmpty) {
+                                                  // When the search button is pressed
+                                                  FocusScope.of(context)
+                                                      .requestFocus(
+                                                          FocusNode());
+                                                  context.pushNamed(
+                                                    'BondeGardPage',
+                                                    queryParameters: {
+                                                      'kategori':
+                                                          serializeParam('Søk',
+                                                              ParamType.String),
+                                                      'query': serializeParam(
+                                                          _model.textController
+                                                              .text,
+                                                          ParamType.String),
+                                                    }.withoutNulls,
+                                                  );
+                                                }
+                                              },
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: 62,
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.transparent,
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
                                                       children: [
-                                                        Shimmer.fromColors(
-                                                          baseColor:
-                                                              Colors.grey[300]!,
-                                                          highlightColor:
-                                                              Colors.grey[100]!,
-                                                          child: Container(
-                                                            width: 50.0,
-                                                            height: 50.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  127,
-                                                                  255,
-                                                                  255,
-                                                                  255),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          100.0),
-                                                            ),
-                                                          ),
+                                                        Icon(
+                                                          CupertinoIcons.search,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          size: 28,
                                                         ),
-                                                        const SizedBox(
-                                                            width: 16.0),
-                                                        Expanded(
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  15, 0, 0, 0),
                                                           child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment
                                                                     .start,
                                                             children: [
-                                                              Shimmer
-                                                                  .fromColors(
-                                                                baseColor:
-                                                                    Colors.grey[
-                                                                        300]!,
-                                                                highlightColor:
-                                                                    Colors.grey[
-                                                                        100]!,
-                                                                child:
-                                                                    Container(
-                                                                  width:
-                                                                      75.0, // Narrower width for second line
-                                                                  height: 13.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: const Color
-                                                                        .fromARGB(
-                                                                        127,
-                                                                        255,
-                                                                        255,
-                                                                        255),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
-                                                                  ),
-                                                                ),
+                                                              Text(
+                                                                'Søk etter \"${_model.textController.text}\"',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          16,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
                                                               ),
-                                                              const SizedBox(
-                                                                  height: 8.0),
-                                                              Shimmer
-                                                                  .fromColors(
-                                                                baseColor:
-                                                                    Colors.grey[
-                                                                        300]!,
-                                                                highlightColor:
-                                                                    Colors.grey[
-                                                                        100]!,
-                                                                child:
-                                                                    Container(
-                                                                  width: 120,
-                                                                  height: 13.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: const Color
-                                                                        .fromARGB(
-                                                                        127,
-                                                                        255,
-                                                                        255,
-                                                                        255),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
-                                                                  ),
-                                                                ),
+                                                              Text(
+                                                                'Blant hele matsalg.no',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                      fontSize:
+                                                                          15,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
                                                               ),
                                                             ],
                                                           ),
                                                         ),
                                                       ],
                                                     ),
-                                                  );
-                                                } else {
+                                                    Icon(
+                                                      CupertinoIcons
+                                                          .chevron_forward,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 23,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          if (_profiler != null)
+                                            if (_profiler!.isNotEmpty &&
+                                                _profilisloading != true)
+                                              Align(
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        -1, 0),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          15, 0, 0, 10),
+                                                  child: Text(
+                                                    'Folk',
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 21,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(5.0, 0.0, 5.0, 170.0),
+                                            child: RefreshIndicator(
+                                              onRefresh: () async {
+                                                await handleSearch();
+                                                setState(() {});
+                                              },
+                                              child: ListView.builder(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                  0,
+                                                  0.0,
+                                                  0,
+                                                  0,
+                                                ),
+                                                primary: false,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount: _profilisloading
+                                                    ? 10
+                                                    : _profiler?.length ?? 0,
+                                                itemBuilder: (context, index) {
+                                                  if (_profilisloading) {
+                                                    return Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 8.0,
+                                                          horizontal: 16.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Shimmer.fromColors(
+                                                            baseColor: Colors
+                                                                .grey[300]!,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .grey[100]!,
+                                                            child: Container(
+                                                              width: 50.0,
+                                                              height: 50.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: const Color
+                                                                    .fromARGB(
+                                                                    127,
+                                                                    255,
+                                                                    255,
+                                                                    255),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            100.0),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 16.0),
+                                                          Expanded(
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Shimmer
+                                                                    .fromColors(
+                                                                  baseColor:
+                                                                      Colors.grey[
+                                                                          300]!,
+                                                                  highlightColor:
+                                                                      Colors.grey[
+                                                                          100]!,
+                                                                  child:
+                                                                      Container(
+                                                                    width:
+                                                                        75.0, // Narrower width for second line
+                                                                    height:
+                                                                        13.0,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: const Color
+                                                                          .fromARGB(
+                                                                          127,
+                                                                          255,
+                                                                          255,
+                                                                          255),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                    height:
+                                                                        8.0),
+                                                                Shimmer
+                                                                    .fromColors(
+                                                                  baseColor:
+                                                                      Colors.grey[
+                                                                          300]!,
+                                                                  highlightColor:
+                                                                      Colors.grey[
+                                                                          100]!,
+                                                                  child:
+                                                                      Container(
+                                                                    width: 120,
+                                                                    height:
+                                                                        13.0,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: const Color
+                                                                          .fromARGB(
+                                                                          127,
+                                                                          255,
+                                                                          255,
+                                                                          255),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }
                                                   final profil =
                                                       _profiler![index];
                                                   return Padding(
@@ -917,15 +1075,14 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                       ),
                                                     ),
                                                   );
-                                                }
-                                              },
+                                                },
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
                               if (searching != true)
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(

@@ -286,11 +286,12 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
+          resizeToAvoidBottomInset: false,
           backgroundColor: FlutterFlowTheme.of(context).primary,
           floatingActionButtonLocation: FloatingActionButtonLocation
               .centerDocked, // Center the FAB at the bottom
@@ -305,6 +306,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                       await showModalBottomSheet<List<String>>(
                     isScrollControlled: true,
                     backgroundColor: Colors.transparent,
+                    barrierColor: const Color.fromARGB(25, 0, 0, 0),
                     context: context,
                     builder: (context) {
                       return GestureDetector(
@@ -356,7 +358,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                 },
                 child: Material(
                   color: Colors.transparent,
-                  elevation: 3,
+                  elevation: 4,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
@@ -380,7 +382,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                               child: Icon(
                                 CupertinoIcons.arrow_up_arrow_down,
                                 color: FlutterFlowTheme.of(context).primaryText,
-                                size: 24,
+                                size: 22,
                               ),
                             ),
                             const VerticalDivider(
@@ -395,7 +397,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                               child: Icon(
                                 Ionicons.options_outline,
                                 color: FlutterFlowTheme.of(context).primaryText,
-                                size: 26,
+                                size: 24,
                               ),
                             ),
                           ],
@@ -403,43 +405,89 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                       )),
                 ),
               ),
-              // backgroundColor: FlutterFlowTheme.of(context).primary,
-              // elevation: 8,
-              // child: Icon(
-              //   CupertinoIcons.sort_down,
-              //   color: FlutterFlowTheme.of(context).alternate,
-              //   size: 33,
             ),
           ),
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
-            iconTheme:
-                IconThemeData(color: FlutterFlowTheme.of(context).alternate),
-            automaticallyImplyLeading: false,
-            leading: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.safePop();
-              },
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).secondaryText,
-                size: 28,
-              ),
+            iconTheme: IconThemeData(
+              color: FlutterFlowTheme.of(context).alternate,
             ),
-            title: Text(
-              widget.kategori ?? '',
-              textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Montserrat',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 20.0,
-                    letterSpacing: 0.0,
-                    fontWeight: FontWeight.w600,
+            automaticallyImplyLeading: false,
+            scrolledUnderElevation: 0.0,
+            title: Row(
+              mainAxisSize: MainAxisSize
+                  .min, // Ensure Row does not try to fill unbounded width
+              children: [
+                InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.safePop();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 0.0),
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 24,
+                    ),
                   ),
+                ),
+                const SizedBox(width: 8.0),
+                Flexible(
+                  fit: FlexFit
+                      .loose, // FlexFit.loose to avoid taking infinite space
+                  child: SizedBox(
+                    height: 38.0,
+                    child: CupertinoSearchTextField(
+                      controller: _model.textController,
+                      focusNode: _model.textFieldFocusNode,
+                      autofocus: false,
+                      onChanged: (value) => _runFilter(value),
+                      placeholder: widget.kategori?.toLowerCase() != 'søk'
+                          ? (widget.kategori == 'følger'
+                              ? 'Søk innen brukere du følger'
+                              : 'Søk innen ${widget.kategori}')
+                          : 'Søk',
+                      placeholderStyle:
+                          FlutterFlowTheme.of(context).labelMedium.override(
+                                fontFamily: 'Open Sans',
+                                color: const Color(0x8F101213),
+                                fontSize: 16.0,
+                                letterSpacing: 0.0,
+                              ),
+                      backgroundColor: const Color.fromARGB(255, 238, 238, 238),
+                      prefixInsets:
+                          const EdgeInsetsDirectional.fromSTEB(12, 6, 6, 6),
+                      borderRadius: BorderRadius.circular(24.0),
+                      prefixIcon: const Icon(
+                        Icons.search_outlined,
+                        size: 20,
+                      ),
+                      suffixIcon: Icon(
+                        Icons.cancel,
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                      ),
+                      onSuffixTap: () {
+                        _model.textController!.clear();
+                        setState(() {
+                          _runFilter('');
+                        });
+                      },
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6.0, horizontal: 10.0),
+                      style: FlutterFlowTheme.of(context).bodyLarge.override(
+                            fontFamily: 'Open Sans',
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            fontSize: 15.0,
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             actions: const [],
             centerTitle: true,
@@ -466,251 +514,115 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                         Stack(
                           alignment: const AlignmentDirectional(0, -1),
                           children: [
-                            Align(
-                              alignment: const AlignmentDirectional(0, 0),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 10, 0, 17),
-                                child: SafeArea(
-                                  child: Container(
-                                    width: valueOrDefault<double>(
-                                      MediaQuery.sizeOf(context).width,
-                                      500.0,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(15, 0, 15, 0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: SizedBox(
-                                                  height:
-                                                      38.0, // Set the desired height here
-                                                  child:
-                                                      CupertinoSearchTextField(
-                                                    controller:
-                                                        _model.textController,
-                                                    focusNode: _model
-                                                        .textFieldFocusNode,
-                                                    autofocus: false,
-                                                    onChanged: (value) =>
-                                                        _runFilter(value),
-                                                    placeholder: 'Søk',
-                                                    placeholderStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .labelMedium
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Open Sans',
-                                                              color: const Color(
-                                                                  0x8F101213),
-                                                              fontSize: 15.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                            ),
-                                                    backgroundColor:
-                                                        const Color.fromARGB(
-                                                            255, 238, 238, 238),
-                                                    prefixInsets:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            12, 6, 6, 6),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            24.0),
-                                                    prefixIcon: const Icon(
-                                                      Icons.search_outlined,
-                                                      size: 20,
-                                                    ),
-                                                    suffixIcon: Icon(
-                                                      Icons.cancel,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
-                                                    ),
-                                                    onSuffixTap: () {
-                                                      _model.textController!
-                                                          .clear();
-                                                      setState(() {
-                                                        _runFilter('');
-                                                      });
-                                                    },
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        vertical: 6.0,
-                                                        horizontal: 10.0),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 15.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ),
-                                              // Expanded(
-                                              //   child: TextFormField(
-                                              //     controller:
-                                              //         _model.textController,
-                                              //     focusNode:
-                                              //         _model.textFieldFocusNode,
-                                              //     autofocus: false,
-                                              //     obscureText: false,
-                                              //     onChanged: (value) =>
-                                              //         _runFilter(value),
-                                              //     textInputAction: TextInputAction
-                                              //         .search, // Add this line to
-                                              //     decoration: InputDecoration(
-                                              //       isDense: true,
-                                              //       alignLabelWithHint: false,
-                                              //       hintText: 'Søk',
-                                              //       hintStyle: FlutterFlowTheme
-                                              //               .of(context)
-                                              //           .labelMedium
-                                              //           .override(
-                                              //             fontFamily:
-                                              //                 'Open Sans',
-                                              //             color: const Color(
-                                              //                 0x8F101213),
-                                              //             fontSize: 15.0,
-                                              //             letterSpacing: 0.0,
-                                              //           ),
-                                              //       enabledBorder:
-                                              //           OutlineInputBorder(
-                                              //         borderSide:
-                                              //             const BorderSide(
-                                              //           color: Color.fromARGB(
-                                              //               0, 85, 85, 85),
-                                              //           width: 1.0,
-                                              //         ),
-                                              //         borderRadius:
-                                              //             BorderRadius.circular(
-                                              //                 13.0),
-                                              //       ),
-                                              //       focusedBorder:
-                                              //           OutlineInputBorder(
-                                              //         borderSide:
-                                              //             const BorderSide(
-                                              //           color:
-                                              //               Color(0x00000000),
-                                              //           width: 1.0,
-                                              //         ),
-                                              //         borderRadius:
-                                              //             BorderRadius.circular(
-                                              //                 13.0),
-                                              //       ),
-                                              //       errorBorder:
-                                              //           OutlineInputBorder(
-                                              //         borderSide: BorderSide(
-                                              //           color:
-                                              //               FlutterFlowTheme.of(
-                                              //                       context)
-                                              //                   .error,
-                                              //           width: 1.0,
-                                              //         ),
-                                              //         borderRadius:
-                                              //             BorderRadius.circular(
-                                              //                 13.0),
-                                              //       ),
-                                              //       focusedErrorBorder:
-                                              //           OutlineInputBorder(
-                                              //         borderSide: BorderSide(
-                                              //           color:
-                                              //               FlutterFlowTheme.of(
-                                              //                       context)
-                                              //                   .error,
-                                              //           width: 1.0,
-                                              //         ),
-                                              //         borderRadius:
-                                              //             BorderRadius.circular(
-                                              //                 13.0),
-                                              //       ),
-                                              //       filled: true,
-                                              //       fillColor:
-                                              //           const Color.fromARGB(
-                                              //               246, 243, 243, 243),
-                                              //       prefixIcon: const Icon(
-                                              //         Icons.search_outlined,
-                                              //         size: 20,
-                                              //       ),
-                                              //       suffixIcon: _model
-                                              //               .textController
-                                              //               .text
-                                              //               .isNotEmpty
-                                              //           ? IconButton(
-                                              //               icon: Icon(
-                                              //                 FontAwesomeIcons
-                                              //                     .solidTimesCircle,
-                                              //                 color: FlutterFlowTheme
-                                              //                         .of(context)
-                                              //                     .secondaryText, // Set the desired color here
-                                              //               ),
-                                              //               onPressed: () {
-                                              //                 _model
-                                              //                     .textController!
-                                              //                     .clear();
-                                              //                 setState(() {
-                                              //                   _runFilter('');
-                                              //                 });
-                                              //               },
-                                              //             )
-                                              //           : null,
-                                              //       contentPadding:
-                                              //           const EdgeInsets.only(
-                                              //               top: 6.0,
-                                              //               bottom: 6.0,
-                                              //               left: 10.0,
-                                              //               right: 10.0),
-                                              //     ),
-                                              //     style: FlutterFlowTheme.of(
-                                              //             context)
-                                              //         .bodyLarge
-                                              //         .override(
-                                              //           fontFamily: 'Open Sans',
-                                              //           color:
-                                              //               FlutterFlowTheme.of(
-                                              //                       context)
-                                              //                   .primaryText,
-                                              //           fontSize: 15.0,
-                                              //           letterSpacing: 0.0,
-                                              //         ),
-                                              //     textAlign: TextAlign.start,
-                                              //     cursorColor:
-                                              //         FlutterFlowTheme.of(
-                                              //                 context)
-                                              //             .primaryText,
-                                              //     validator: _model
-                                              //         .textControllerValidator
-                                              //         .asValidator(context),
-                                              //   ),
-                                              // ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // Align(
+                            //   alignment: const AlignmentDirectional(0, 0),
+                            //   child: Padding(
+                            //     padding: const EdgeInsetsDirectional.fromSTEB(
+                            //         0, 10, 0, 17),
+                            //     child: SafeArea(
+                            //       child: Container(
+                            //         width: valueOrDefault<double>(
+                            //           MediaQuery.sizeOf(context).width,
+                            //           500.0,
+                            //         ),
+                            //         decoration: BoxDecoration(
+                            //           color:
+                            //               FlutterFlowTheme.of(context).primary,
+                            //         ),
+                            //         child: Column(
+                            //           mainAxisSize: MainAxisSize.max,
+                            //           children: [
+                            //             Padding(
+                            //               padding: const EdgeInsetsDirectional
+                            //                   .fromSTEB(15, 0, 15, 0),
+                            //               child: Row(
+                            //                 mainAxisSize: MainAxisSize.max,
+                            //                 mainAxisAlignment:
+                            //                     MainAxisAlignment.spaceBetween,
+                            //                 children: [
+                            //                   Expanded(
+                            //                     child: SizedBox(
+                            //                       height:
+                            //                           38.0, // Set the desired height here
+                            //                       child:
+                            //                           CupertinoSearchTextField(
+                            //                         controller:
+                            //                             _model.textController,
+                            //                         focusNode: _model
+                            //                             .textFieldFocusNode,
+                            //                         autofocus: false,
+                            //                         onChanged: (value) =>
+                            //                             _runFilter(value),
+                            //                         placeholder: 'Søk',
+                            //                         placeholderStyle:
+                            //                             FlutterFlowTheme.of(
+                            //                                     context)
+                            //                                 .labelMedium
+                            //                                 .override(
+                            //                                   fontFamily:
+                            //                                       'Open Sans',
+                            //                                   color: const Color(
+                            //                                       0x8F101213),
+                            //                                   fontSize: 15.0,
+                            //                                   letterSpacing:
+                            //                                       0.0,
+                            //                                 ),
+                            //                         backgroundColor:
+                            //                             const Color.fromARGB(
+                            //                                 255, 238, 238, 238),
+                            //                         prefixInsets:
+                            //                             const EdgeInsetsDirectional
+                            //                                 .fromSTEB(
+                            //                                 12, 6, 6, 6),
+                            //                         borderRadius:
+                            //                             BorderRadius.circular(
+                            //                                 24.0),
+                            //                         prefixIcon: const Icon(
+                            //                           Icons.search_outlined,
+                            //                           size: 20,
+                            //                         ),
+                            //                         suffixIcon: Icon(
+                            //                           Icons.cancel,
+                            //                           color:
+                            //                               FlutterFlowTheme.of(
+                            //                                       context)
+                            //                                   .secondaryText,
+                            //                         ),
+                            //                         onSuffixTap: () {
+                            //                           _model.textController!
+                            //                               .clear();
+                            //                           setState(() {
+                            //                             _runFilter('');
+                            //                           });
+                            //                         },
+                            //                         padding: const EdgeInsets
+                            //                             .symmetric(
+                            //                             vertical: 6.0,
+                            //                             horizontal: 10.0),
+                            //                         style: FlutterFlowTheme.of(
+                            //                                 context)
+                            //                             .bodyLarge
+                            //                             .override(
+                            //                               fontFamily:
+                            //                                   'Open Sans',
+                            //                               color: FlutterFlowTheme
+                            //                                       .of(context)
+                            //                                   .primaryText,
+                            //                               fontSize: 15.0,
+                            //                               letterSpacing: 0.0,
+                            //                             ),
+                            //                       ),
+                            //                     ),
+                            //                   ),
+                            //                 ],
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                             if ((_matvarer == null || _matvarer!.isEmpty) &&
                                 _isloading == false)
                               Container(
@@ -764,7 +676,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                             if (_empty != true)
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 60, 0, 0),
+                                    0, 20, 0, 0),
                                 child: SingleChildScrollView(
                                   primary: false,
                                   child: Column(
@@ -776,7 +688,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5, 22, 5, 0),
+                                                .fromSTEB(5, 0, 5, 0),
                                             child: RefreshIndicator(
                                               onRefresh: () async {
                                                 await getFilterFoods();

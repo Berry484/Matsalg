@@ -117,6 +117,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: true,
+            scrolledUnderElevation: 0.0,
             leading: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,

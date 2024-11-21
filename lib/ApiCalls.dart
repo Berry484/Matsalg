@@ -661,7 +661,6 @@ class ApiGetUser {
             jsonDecode(utf8.decode(response.bodyBytes));
 
         // If the response is not a list, wrap it in a list before passing to fromSnapshot
-
         if (jsonResponse is Map<String, dynamic>) {
           return Bonder.bonderFromSnapshot(
               [jsonResponse]); // Wrap single object in a list

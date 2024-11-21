@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -735,7 +736,9 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   filelink, // Null if no file was uploaded
                             );
                             if (response.statusCode == 200) {
-                              final decodedResponse = jsonDecode(response.body);
+                              final decodedBody =
+                                  utf8.decode(response.bodyBytes);
+                              final decodedResponse = jsonDecode(decodedBody);
                               // Update local app state with server response
                               FFAppState().brukernavn =
                                   decodedResponse['username'] ?? '';

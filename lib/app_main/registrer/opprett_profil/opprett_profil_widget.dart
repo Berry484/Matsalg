@@ -86,6 +86,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           body: SafeArea(
             top: true,
+            bottom: false,
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,

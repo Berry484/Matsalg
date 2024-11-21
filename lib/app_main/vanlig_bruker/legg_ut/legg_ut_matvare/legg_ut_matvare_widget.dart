@@ -299,6 +299,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
           ),
           body: SafeArea(
             top: true,
+            bottom: false,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
