@@ -75,20 +75,11 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
     return null; // No validation errors.
   }
 
-  // State field(s) for TabBar widget.
-  TabController? tabBarController;
-  int get tabBarCurrentIndex =>
-      tabBarController != null ? tabBarController!.index : 0;
-
   // State field(s) for ProduktPrisSTK widget.
   FocusNode? produktPrisSTKFocusNode;
   TextEditingController? produktPrisSTKTextController;
   String? Function(BuildContext, String?)?
       produktPrisSTKTextControllerValidator;
-  // State field(s) for ProduktPrisKg widget.
-  FocusNode? produktPrisKgFocusNode;
-  TextEditingController? produktPrisKgTextController;
-  String? Function(BuildContext, String?)? produktPrisKgTextControllerValidator;
   // State field(s) for AntallStk widget.
   FocusNode? antallStkFocusNode;
   TextEditingController? antallStkTextController;
@@ -135,12 +126,8 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
     produktBeskrivelseFocusNode?.dispose();
     produktBeskrivelseTextController?.dispose();
 
-    tabBarController?.dispose();
     produktPrisSTKFocusNode?.dispose();
     produktPrisSTKTextController?.dispose();
-
-    produktPrisKgFocusNode?.dispose();
-    produktPrisKgTextController?.dispose();
 
     antallStkFocusNode?.dispose();
     antallStkTextController?.dispose();
