@@ -21,7 +21,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
-import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'legg_ut_matvare_model.dart';
 export 'legg_ut_matvare_model.dart';
 
@@ -78,6 +77,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
   final ApiMultiplePics apiMultiplePics = ApiMultiplePics();
   bool _leggUtLoading = false;
   bool _oppdaterLoading = false;
+  String? kommune;
 
   LatLng? selectedLatLng;
   LatLng? currentselectedLatLng =
@@ -115,7 +115,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     _model.antallStkTextController ??= TextEditingController();
     _model.antallStkFocusNode ??= FocusNode();
     _model.dropDownValueController ??= FormFieldController<String>(null);
-
     if (widget.matinfo != null) {
       matvare = Matvarer.fromJson1(widget.matinfo);
 
@@ -134,9 +133,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
         _model.antallStkTextController.text = matvare.antall.toString();
       }
       _model.produktPrisSTKTextController.text = matvare.price.toString();
-
+      leggutgetKommune(matvare.lat ?? 0, matvare.lng ?? 0);
       selectedLatLng = LatLng(matvare.lat ?? 0, matvare.lng ?? 0);
     } else {
+      if (FFAppState().kommune != '') {
+        kommune = FFAppState().kommune;
+      }
+      getKommune();
       matvare = Matvarer.fromJson1({'imgUrl': []});
       while (matvare.imgUrls!.length <= 4) {
         matvare.imgUrls?.add('');
@@ -194,6 +197,67 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     Future.delayed(const Duration(seconds: 3), () {
       overlayEntry.remove();
     });
+  }
+
+  Future<void> getKommune() async {
+    try {
+      String? token = await Securestorage().readToken();
+
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        String? response = await apiCalls.getKommune(token);
+
+        if (response.isNotEmpty) {
+          // Convert the response to lowercase and then capitalize the first letter
+          String formattedResponse =
+              response[0].toUpperCase() + response.substring(1).toLowerCase();
+
+          FFAppState().kommune = formattedResponse;
+          kommune = formattedResponse;
+          setState(() {});
+        }
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
+    }
+  }
+
+  Future<void> leggutgetKommune(double lat, double lng) async {
+    try {
+      if (lat == 0 || lng == 0) {
+        return;
+      }
+      String? token = await Securestorage().readToken();
+
+      if (token == null) {
+        FFAppState().login = false;
+        context.pushNamed('registrer');
+        return;
+      } else {
+        String? response = await apiCalls.leggutgetKommune(token, lat, lng);
+
+        if (response.isNotEmpty) {
+          // Convert the response to lowercase and then capitalize the first letter
+          String formattedResponse =
+              response[0].toUpperCase() + response.substring(1).toLowerCase();
+
+          FFAppState().kommune = formattedResponse;
+          setState(() {
+            print(formattedResponse);
+            kommune = formattedResponse;
+          });
+        }
+      }
+    } on SocketException {
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      showErrorToast(context, 'En feil oppstod');
+    }
   }
 
   void updateSelectedLatLng(LatLng? newLatLng) {
@@ -1714,19 +1778,22 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 labelText: 'Tittel',
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 17.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                        ),
+                                                labelStyle: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Nunito',
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              113,
+                                                              113,
+                                                              113,
+                                                              1.0),
+                                                      fontSize: 17.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
                                                 hintStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -1835,15 +1902,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                   borderRadius:
                                                       BorderRadius.circular(8),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black
-                                                          .withOpacity(0.1),
-                                                      blurRadius: 6,
-                                                      offset:
-                                                          const Offset(0, 2),
-                                                    ),
-                                                  ],
                                                 ),
                                                 child: Padding(
                                                   padding:
@@ -1884,9 +1942,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .override(
                                                                     fontFamily:
                                                                         'Nunito',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
+                                                                    color: const Color
+                                                                        .fromRGBO(
+                                                                        113,
+                                                                        113,
+                                                                        113,
+                                                                        1.0),
                                                                     fontSize:
                                                                         17.0,
                                                                     letterSpacing:
@@ -1999,19 +2060,22 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               FontWeight.w600,
                                                         ),
                                                 hintText: 'Beskrivelse',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 17.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                        ),
+                                                hintStyle: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Nunito',
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              113,
+                                                              113,
+                                                              113,
+                                                              1.0),
+                                                      fontSize: 17.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
@@ -2154,9 +2218,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Nunito',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
+                                                                color: const Color
+                                                                    .fromRGBO(
+                                                                    113,
+                                                                    113,
+                                                                    113,
+                                                                    1.0),
                                                                 fontSize: 17.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -2415,9 +2482,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     .override(
                                                                       fontFamily:
                                                                           'Nunito',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryText,
+                                                                      color: const Color
+                                                                          .fromRGBO(
+                                                                          113,
+                                                                          113,
+                                                                          113,
+                                                                          1.0),
                                                                       fontSize:
                                                                           17.0,
                                                                       letterSpacing:
@@ -2755,14 +2825,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        0.0, 0.05),
+                                                        -1, 0),
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(
-                                                          0.0, 24.0, 0.0, 16.0),
-                                                  child: FFButtonWidget(
-                                                    onPressed: () async {
+                                                          20, 0, 20, 16),
+                                                  child: GestureDetector(
+                                                    onTap: () async {
                                                       try {
                                                         FocusScope.of(context)
                                                             .requestFocus(
@@ -2804,6 +2874,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             selectedLatLng =
                                                                 null;
                                                           } else {
+                                                            leggutgetKommune(
+                                                                selectedLatLng
+                                                                        ?.latitude ??
+                                                                    0,
+                                                                selectedLatLng
+                                                                        ?.longitude ??
+                                                                    0);
                                                             currentselectedLatLng =
                                                                 selectedLatLng;
                                                             updateSelectedLatLng(
@@ -2818,120 +2895,160 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             'En feil oppstod');
                                                       }
                                                     },
-                                                    text: 'Velg posisjon',
-                                                    options: FFButtonOptions(
-                                                      width: 270.0,
-                                                      height: 40.0,
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(0.0,
-                                                              0.0, 0.0, 0.0),
-                                                      iconPadding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(0.0,
-                                                              0.0, 0.0, 0.0),
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                fontSize: 17.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                              ),
-                                                      elevation: 0.0,
-                                                      borderSide:
-                                                          const BorderSide(
+                                                    child: Container(
+                                                      width: MediaQuery.sizeOf(
+                                                              context)
+                                                          .width,
+                                                      height: 60,
+                                                      decoration: BoxDecoration(
                                                         color:
-                                                            Color(0x5957636C),
-                                                        width: 1.4,
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                        border: Border.all(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondary,
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              24.0),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                12, 0, 12, 0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Icon(
+                                                                  CupertinoIcons
+                                                                      .placemark,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  size: 25,
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          15,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                                  child: Text(
+                                                                    kommune !=
+                                                                            null
+                                                                        ? '$kommune'
+                                                                        : 'Velg posisjon',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Nunito',
+                                                                          color: const Color
+                                                                              .fromRGBO(
+                                                                              113,
+                                                                              113,
+                                                                              113,
+                                                                              1.0),
+                                                                          fontSize:
+                                                                              17.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w700,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Icon(
+                                                              CupertinoIcons
+                                                                  .chevron_forward,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryText,
+                                                              size: 22,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                              if (selectedLatLng != null)
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          30, 0, 30, 16),
-                                                  child: Stack(
-                                                    children: [
-                                                      // The map widget wrapped in a Container for consistent sizing
-                                                      Container(
-                                                        width:
-                                                            500, // Set this to the desired width
-                                                        height:
-                                                            200, // Set this to the desired height
-                                                        child: FFAppState()
-                                                                    .bonde ==
-                                                                true
-                                                            ? custom_widgets
-                                                                .MyOsmKartBedrift(
-                                                                width:
-                                                                    500, // Using the same size
-                                                                height: 200,
-                                                                center: selectedLatLng ??
-                                                                    const LatLng(
-                                                                        58.940090,
-                                                                        11.634092),
-                                                                matsted: selectedLatLng ??
-                                                                    const LatLng(
-                                                                        58.940090,
-                                                                        11.634092),
-                                                              )
-                                                            : custom_widgets
-                                                                .MyOsmKart(
-                                                                width:
-                                                                    500, // Using the same size
-                                                                height: 200,
-                                                                center: selectedLatLng ??
-                                                                    const LatLng(
-                                                                        58.940090,
-                                                                        11.634092),
-                                                              ),
-                                                      ),
+                                              // if (selectedLatLng != null)
+                                              //   Padding(
+                                              //     padding:
+                                              //         const EdgeInsetsDirectional
+                                              //             .fromSTEB(
+                                              //             30, 0, 30, 16),
+                                              //     child: Stack(
+                                              //       children: [
+                                              //         // The map widget wrapped in a Container for consistent sizing
+                                              //         Container(
+                                              //           width:
+                                              //               500, // Set this to the desired width
+                                              //           height:
+                                              //               200, // Set this to the desired height
+                                              //           child: FFAppState()
+                                              //                       .bonde ==
+                                              //                   true
+                                              //               ? custom_widgets
+                                              //                   .MyOsmKartBedrift(
+                                              //                   width:
+                                              //                       500, // Using the same size
+                                              //                   height: 200,
+                                              //                   center: selectedLatLng ??
+                                              //                       const LatLng(
+                                              //                           58.940090,
+                                              //                           11.634092),
+                                              //                   matsted: selectedLatLng ??
+                                              //                       const LatLng(
+                                              //                           58.940090,
+                                              //                           11.634092),
+                                              //                 )
+                                              //               : custom_widgets
+                                              //                   .MyOsmKart(
+                                              //                   width:
+                                              //                       500, // Using the same size
+                                              //                   height: 200,
+                                              //                   center: selectedLatLng ??
+                                              //                       const LatLng(
+                                              //                           58.940090,
+                                              //                           11.634092),
+                                              //                 ),
+                                              //         ),
 
-                                                      // Overlay to disable interactions
-                                                      Positioned.fill(
-                                                        child: GestureDetector(
-                                                          onTap:
-                                                              () {}, // Consuming tap interactions
-                                                          onPanUpdate:
-                                                              (_) {}, // Consuming drag interactions
-                                                          child: Container(
-                                                            color: Colors
-                                                                .transparent, // Keeps the overlay invisible
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
+                                              //         // Overlay to disable interactions
+                                              //         Positioned.fill(
+                                              //           child: GestureDetector(
+                                              //             onTap:
+                                              //                 () {}, // Consuming tap interactions
+                                              //             onPanUpdate:
+                                              //                 (_) {}, // Consuming drag interactions
+                                              //             child: Container(
+                                              //               color: Colors
+                                              //                   .transparent, // Keeps the overlay invisible
+                                              //             ),
+                                              //           ),
+                                              //         ),
+                                              //       ],
+                                              //     ),
+                                              //   ),
                                             ],
-                                          ),
-                                          const Divider(
-                                            thickness: 1.2,
-                                            indent: 30,
-                                            endIndent: 30,
-                                            color: Color.fromRGBO(
-                                                234, 234, 234, 0.898),
                                           ),
                                           if (_model.checkboxValue == true)
                                             Align(
@@ -2990,7 +3107,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           fontWeight:
                                                               FontWeight.w800,
                                                         ),
-                                                    elevation: 3.0,
+                                                    elevation: 0.0,
                                                     borderSide:
                                                         const BorderSide(
                                                       color: Colors.transparent,
@@ -3316,7 +3433,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           fontWeight:
                                                               FontWeight.w800,
                                                         ),
-                                                    elevation: 1.0,
+                                                    elevation: 0.0,
                                                     borderSide:
                                                         const BorderSide(
                                                       color: Colors.transparent,

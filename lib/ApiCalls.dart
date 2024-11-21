@@ -107,7 +107,41 @@ class ApiCalls {
         final jsonResponse = json.decode(response.body);
 
         // Extract the first "adresser" element and get the "kommunenavn"
-        final kommunenavn = jsonResponse['adresser'][0]['kommunenavn'];
+        final kommunenavn = jsonResponse['adresser'][0]['poststed'];
+
+        return kommunenavn ?? 'Norge';
+      } else {
+        return 'Norge';
+      }
+    } on TimeoutException {
+      return 'Norge';
+    } catch (e) {
+      return 'Norge';
+    }
+  }
+
+  Future<String> leggutgetKommune(
+      String? token, double brukerLat, double brukerLng) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      final response = await http
+          .get(
+            Uri.parse(
+                'https://ws.geonorge.no/adresser/v1/punktsok?lat=${brukerLat}&lon=${brukerLng}&radius=9999999999999&treffPerSide=1&side=1'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
+
+      if (response.statusCode == 200) {
+        // Parse the JSON response
+        final jsonResponse = json.decode(response.body);
+
+        // Extract the first "adresser" element and get the "kommunenavn"
+        final kommunenavn = jsonResponse['adresser'][0]['poststed'];
 
         return kommunenavn ?? 'Norge';
       } else {
