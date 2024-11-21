@@ -1116,8 +1116,13 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             ],
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 0.0, 5.0, 0.0),
+                                            padding: matvare.kg == true
+                                                ? const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                    0.0, 0.0, 5.0, 0.0)
+                                                : const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                    0.0, 0.0, 10.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -1151,32 +1156,6 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                             10.0, 0.0),
                                                     child: Text(
                                                       '/kg',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .secondaryText,
-                                                            fontSize: 20.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                if (matvare.kg != true)
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                            10.0, 0.0),
-                                                    child: Text(
-                                                      '/stk',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: FlutterFlowTheme
@@ -1322,9 +1301,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 0, 5, 0),
                                             child: Text(
-                                              matvare.kg == true
-                                                  ? '/Kg'
-                                                  : '/Stk',
+                                              matvare.kg == true ? '/Kg' : '',
                                               textAlign: TextAlign.start,
                                               style: FlutterFlowTheme.of(
                                                       context)

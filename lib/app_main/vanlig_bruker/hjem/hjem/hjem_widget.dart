@@ -306,6 +306,222 @@ class _HjemWidgetState extends State<HjemWidget> {
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primary,
+          appBar: AppBar(
+            toolbarHeight: 95,
+            backgroundColor: FlutterFlowTheme.of(context).primary,
+            iconTheme: IconThemeData(
+              color: FlutterFlowTheme.of(context).alternate,
+            ),
+            automaticallyImplyLeading: false,
+            scrolledUnderElevation: 0.0,
+            title: Align(
+              alignment: const AlignmentDirectional(0.0, 0.0),
+              child: Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                child: SafeArea(
+                  child: Container(
+                    width: valueOrDefault<double>(
+                      MediaQuery.sizeOf(context).width,
+                      500.0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primary,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        if (searching != true)
+                          Align(
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 10.0),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.goNamed(
+                                    'VelgPosisjon',
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: const TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType:
+                                            PageTransitionType.bottomToTop,
+                                        duration: Duration(milliseconds: 200),
+                                      ),
+                                    },
+                                    queryParameters: {
+                                      'bonde': serializeParam(
+                                        false,
+                                        ParamType.bool,
+                                      ),
+                                      'endrepos': serializeParam(
+                                        true,
+                                        ParamType.bool,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      CupertinoIcons.placemark_fill,
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      size: 19.0,
+                                    ),
+                                    Text(
+                                      FFAppState().kommune,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Nunito',
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                    ),
+                                    Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      size: 24.0,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground, // or choose the correct background color
+                                    borderRadius: BorderRadius.circular(13.0),
+                                  ),
+                                  child: CupertinoSearchTextField(
+                                    controller: _model.textController,
+                                    focusNode: _model.textFieldFocusNode,
+                                    autofocus: false,
+                                    onChanged: (text) {
+                                      setState(() {
+                                        _profilisloading = true;
+                                      });
+                                      if (_debounce?.isActive ?? false)
+                                        _debounce!.cancel();
+                                      _debounce = Timer(
+                                          const Duration(milliseconds: 500),
+                                          () {
+                                        handleSearch();
+                                      });
+                                    },
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 238, 238, 238),
+                                    prefixInsets:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 6, 6, 6),
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    onSubmitted: (value) {
+                                      if (_model
+                                          .textController.text.isNotEmpty) {
+                                        // When the search button is pressed
+                                        FocusScope.of(context)
+                                            .requestFocus(FocusNode());
+                                        context.pushNamed(
+                                          'BondeGardPage',
+                                          queryParameters: {
+                                            'kategori': serializeParam(
+                                                'Søk', ParamType.String),
+                                            'query': serializeParam(
+                                                _model.textController.text,
+                                                ParamType.String),
+                                          }.withoutNulls,
+                                        );
+                                      }
+                                    },
+                                    placeholder: 'Søk',
+                                    prefixIcon: Icon(
+                                      CupertinoIcons.search,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText, // match text color from theme
+                                      size: 20,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText, // matching text color from theme
+                                          fontSize: 15.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    onTap: () {
+                                      setState(() {
+                                        searching =
+                                            true; // Set searching to true when tapped
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              if (searching == true)
+                                GestureDetector(
+                                  onTap: () async {
+                                    _model.textController!.clear();
+                                    setState(() {
+                                      searching = false;
+                                      _profiler = null;
+                                      _profilisloading = false;
+                                    });
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left:
+                                            10.0), // 10 pixels of left padding
+                                    child: Text(
+                                      'Avbryt',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Nunito',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 16,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ),
+                                )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            actions: const [],
+            centerTitle: true,
+            elevation: 0.0,
+          ),
           body: SafeArea(
             top: true,
             child: Column(
@@ -329,291 +545,12 @@ class _HjemWidgetState extends State<HjemWidget> {
                         children: [
                           Stack(
                             children: [
-                              Align(
-                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 17.0),
-                                  child: SafeArea(
-                                    child: Container(
-                                      width: valueOrDefault<double>(
-                                        MediaQuery.sizeOf(context).width,
-                                        500.0,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          if (searching != true)
-                                            Align(
-                                              alignment:
-                                                  const AlignmentDirectional(
-                                                      -1.0, 0.0),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        10.0, 0.0, 10.0, 10.0),
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    context.goNamed(
-                                                      'VelgPosisjon',
-                                                      extra: <String, dynamic>{
-                                                        kTransitionInfoKey:
-                                                            const TransitionInfo(
-                                                          hasTransition: true,
-                                                          transitionType:
-                                                              PageTransitionType
-                                                                  .bottomToTop,
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  200),
-                                                        ),
-                                                      },
-                                                      queryParameters: {
-                                                        'bonde': serializeParam(
-                                                          false,
-                                                          ParamType.bool,
-                                                        ),
-                                                        'endrepos':
-                                                            serializeParam(
-                                                          true,
-                                                          ParamType.bool,
-                                                        ),
-                                                      }.withoutNulls,
-                                                    );
-                                                  },
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Icon(
-                                                        CupertinoIcons
-                                                            .placemark_fill,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        size: 19.0,
-                                                      ),
-                                                      Text(
-                                                        FFAppState().kommune,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w800,
-                                                                ),
-                                                      ),
-                                                      Icon(
-                                                        Icons
-                                                            .keyboard_arrow_down,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        size: 24.0,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(15.0, 0.0, 15.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground, // or choose the correct background color
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.0),
-                                                    ),
-                                                    child:
-                                                        CupertinoSearchTextField(
-                                                      controller:
-                                                          _model.textController,
-                                                      focusNode: _model
-                                                          .textFieldFocusNode,
-                                                      autofocus: false,
-                                                      onChanged: (text) {
-                                                        setState(() {
-                                                          _profilisloading =
-                                                              true;
-                                                        });
-                                                        if (_debounce
-                                                                ?.isActive ??
-                                                            false)
-                                                          _debounce!.cancel();
-                                                        _debounce = Timer(
-                                                            const Duration(
-                                                                milliseconds:
-                                                                    500), () {
-                                                          handleSearch();
-                                                        });
-                                                      },
-                                                      backgroundColor:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              238,
-                                                              238,
-                                                              238),
-                                                      prefixInsets:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              12, 6, 6, 6),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              24.0),
-                                                      onSubmitted: (value) {
-                                                        if (_model
-                                                            .textController
-                                                            .text
-                                                            .isNotEmpty) {
-                                                          // When the search button is pressed
-                                                          FocusScope.of(context)
-                                                              .requestFocus(
-                                                                  FocusNode());
-                                                          context.pushNamed(
-                                                            'BondeGardPage',
-                                                            queryParameters: {
-                                                              'kategori':
-                                                                  serializeParam(
-                                                                      'Søk',
-                                                                      ParamType
-                                                                          .String),
-                                                              'query': serializeParam(
-                                                                  _model
-                                                                      .textController
-                                                                      .text,
-                                                                  ParamType
-                                                                      .String),
-                                                            }.withoutNulls,
-                                                          );
-                                                        }
-                                                      },
-                                                      placeholder: 'Søk',
-                                                      prefixIcon: Icon(
-                                                        CupertinoIcons.search,
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .primaryText, // match text color from theme
-                                                        size: 20,
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyLarge
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText, // matching text color from theme
-                                                                fontSize: 15.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                      onTap: () {
-                                                        setState(() {
-                                                          searching =
-                                                              true; // Set searching to true when tapped
-                                                        });
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
-                                                if (searching == true)
-                                                  GestureDetector(
-                                                    onTap: () async {
-                                                      _model.textController!
-                                                          .clear();
-                                                      setState(() {
-                                                        searching = false;
-                                                        _profiler = null;
-                                                        _profilisloading =
-                                                            false;
-                                                      });
-                                                      FocusScope.of(context)
-                                                          .requestFocus(
-                                                              FocusNode());
-                                                    },
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                          .only(
-                                                          left:
-                                                              10.0), // 10 pixels of left padding
-                                                      child: Text(
-                                                        'Avbryt',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize: 16,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
                               if (searching == true)
                                 if (_model.textController.text.isNotEmpty)
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 70.0, 0.0, 80.0),
+                                            0.0, 0.0, 0.0, 80.0),
                                     child: SingleChildScrollView(
                                       primary: false,
                                       child: Column(
@@ -1086,7 +1023,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                               if (searching != true)
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 105.0, 0.0, 0.0),
+                                      0.0, 5.0, 0.0, 0.0),
                                   child: SingleChildScrollView(
                                     primary: false,
                                     child: Column(
@@ -2955,18 +2892,6 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                         if (matvare.kg == true)
                                                                                           Text(
                                                                                             '/kg',
-                                                                                            textAlign: TextAlign.end,
-                                                                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Nunito',
-                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 14,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                ),
-                                                                                          ),
-                                                                                        if (matvare.kg != true)
-                                                                                          Text(
-                                                                                            '/stk',
                                                                                             textAlign: TextAlign.end,
                                                                                             style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                   fontFamily: 'Nunito',

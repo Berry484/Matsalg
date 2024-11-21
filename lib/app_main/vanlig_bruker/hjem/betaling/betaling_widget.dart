@@ -413,10 +413,10 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                   ),
                                 ),
                                 const Divider(
-                                  thickness: 1,
-                                  indent: 30,
-                                  endIndent: 30,
-                                  color: Color(0x62757575),
+                                  thickness: 1.2,
+                                  indent: 15,
+                                  endIndent: 15,
+                                  color: Color.fromRGBO(234, 234, 234, 1.0),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
@@ -584,7 +584,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                     List<double> values = [];
                                                     double step = matvare.kg ==
                                                             true
-                                                        ? 0.1
+                                                        ? 0.5
                                                         : 1.0; // Choose step size based on matvare.kg
 
                                                     double antall =
@@ -746,10 +746,10 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                   ),
                                 ),
                                 const Divider(
-                                  thickness: 1,
-                                  indent: 30,
-                                  endIndent: 30,
-                                  color: Color(0x62757575),
+                                  thickness: 1.2,
+                                  indent: 15,
+                                  endIndent: 15,
+                                  color: Color.fromRGBO(234, 234, 234, 1.0),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
@@ -870,10 +870,10 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                   ),
                                 ),
                                 const Divider(
-                                  thickness: 1,
-                                  indent: 30,
-                                  endIndent: 30,
-                                  color: Color(0x62757575),
+                                  thickness: 1.2,
+                                  indent: 15,
+                                  endIndent: 15,
+                                  color: Color.fromRGBO(234, 234, 234, 1.0),
                                 ),
                               ],
                             ),

@@ -1211,8 +1211,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             ],
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 0.0, 5.0, 0.0),
+                                            padding: matvare.kg == true
+                                                ? const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                    0.0, 0.0, 5.0, 0.0)
+                                                : const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                    0.0, 0.0, 10.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -1246,32 +1251,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                             10.0, 0.0),
                                                     child: Text(
                                                       '/kg',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .secondaryText,
-                                                            fontSize: 20.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                if (matvare.kg != true)
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                            10.0, 0.0),
-                                                    child: Text(
-                                                      '/stk',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: FlutterFlowTheme
@@ -1417,9 +1396,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 0, 5, 0),
                                             child: Text(
-                                              matvare.kg == true
-                                                  ? '/Kg'
-                                                  : '/Stk',
+                                              matvare.kg == true ? '/Kg' : '',
                                               textAlign: TextAlign.start,
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -1850,23 +1827,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                           true)
                                                                         Text(
                                                                           '/kg',
-                                                                          textAlign:
-                                                                              TextAlign.end,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .titleLarge
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                fontSize: 14,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ),
-                                                                        ),
-                                                                      if (nyematvarer
-                                                                              .kg !=
-                                                                          true)
-                                                                        Text(
-                                                                          '/stk',
                                                                           textAlign:
                                                                               TextAlign.end,
                                                                           style: FlutterFlowTheme.of(context)

@@ -413,7 +413,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Text(
-                            matvare.kg == true ? '/Kg' : '/Stk',
+                            matvare.kg == true ? '/Kg' : '',
                             textAlign: TextAlign.start,
                             style: FlutterFlowTheme.of(context)
                                 .titleMedium

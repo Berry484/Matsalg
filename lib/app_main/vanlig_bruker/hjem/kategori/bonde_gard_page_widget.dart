@@ -1002,18 +1002,6 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                                     fontWeight: FontWeight.bold,
                                                                                                   ),
                                                                                             ),
-                                                                                          if (matvare.kg != true)
-                                                                                            Text(
-                                                                                              '/stk',
-                                                                                              textAlign: TextAlign.end,
-                                                                                              style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                    fontFamily: 'Open Sans',
-                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                    fontSize: 14,
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FontWeight.bold,
-                                                                                                  ),
-                                                                                            ),
                                                                                         ],
                                                                                       ),
                                                                                     ),
