@@ -7,8 +7,6 @@ import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/matvarer.dart';
-
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -137,56 +135,77 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
       height: 500,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
-        boxShadow: [
-          const BoxShadow(
-            blurRadius: 4,
-            color: Color(0x25090F13),
-            offset: Offset(
-              0.0,
-              2,
-            ),
-          )
-        ],
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
-          topLeft: Radius.circular(12),
-          topRight: Radius.circular(12),
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(15, 4, 5, 16),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 16),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Divider(
+                    height: 22,
+                    thickness: 4,
+                    indent: 168,
+                    endIndent: 168,
+                    color: Color.fromRGBO(197, 197, 199, 1),
+                  ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-                    child: FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 44,
-                      icon: FaIcon(
-                        FontAwesomeIcons.times,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 26,
-                      ),
-                      onPressed: () async {
-                        try {
-                          Navigator.pop(context);
-                        } on SocketException {
-                          showErrorToast(context, 'Ingen internettforbindelse');
-                        } catch (e) {
-                          showErrorToast(context, 'En feil oppstod');
-                        }
-                      },
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Align(
+                          alignment: const AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 0),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                try {
+                                  Navigator.pop(context);
+                                } on SocketException {
+                                  showErrorToast(
+                                      context, 'Ingen internettforbindelse');
+                                } catch (e) {
+                                  showErrorToast(context, 'En feil oppstod');
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 15, 0),
+                                child: Text(
+                                  'Lukk',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        fontSize: 17,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -247,15 +266,15 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                   borderRadius: BorderRadius.circular(13),
                                   child: Image.network(
                                     '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
-                                    width: 70,
-                                    height: 70,
+                                    width: 64,
+                                    height: 64,
                                     fit: BoxFit.cover,
                                     errorBuilder: (BuildContext context,
                                         Object error, StackTrace? stackTrace) {
                                       return Image.asset(
                                         'assets/images/error_image.jpg',
-                                        width: 70,
-                                        height: 70,
+                                        width: 64,
+                                        height: 64,
                                         fit: BoxFit.cover,
                                       );
                                     },
@@ -279,10 +298,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .headlineSmall
                                             .override(
-                                              fontFamily: 'Open Sans',
-                                              fontSize: 18,
+                                              fontFamily: 'Nunito',
+                                              fontSize: 19,
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight: FontWeight.w700,
                                             ),
                                       ),
                                     ),
@@ -295,11 +314,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
-                                                fontFamily: 'Open Sans',
+                                                fontFamily: 'Nunito',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
-                                                fontSize: 13,
+                                                fontSize: 14,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -314,11 +333,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
-                                                fontFamily: 'Open Sans',
+                                                fontFamily: 'Nunito',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
-                                                fontSize: 13,
+                                                fontSize: 14,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                                 lineHeight: 1.2,
@@ -332,14 +351,14 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 12, 4, 0),
+                                0, 12, 10, 0),
                             child: Text(
                               '${ordreInfo.pris} Kr',
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     fontSize: 19,
@@ -368,11 +387,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                       child: Text(
                         'Informasjon',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Open Sans',
+                              fontFamily: 'Nunito',
                               color: FlutterFlowTheme.of(context).secondaryText,
-                              fontSize: 14,
+                              fontSize: 15,
                               letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.bold,
                             ),
                       ),
                     ),
@@ -391,7 +410,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           style: FlutterFlowTheme.of(context)
                               .titleMedium
                               .override(
-                                fontFamily: 'Open Sans',
+                                fontFamily: 'Nunito',
                                 fontSize: 14.0,
                                 letterSpacing: 0.0,
                                 color: const Color.fromARGB(211, 87, 99, 108),
@@ -407,7 +426,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .titleMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: 'Nunito',
                                   fontSize: 14.0,
                                   letterSpacing: 0.0,
                                   color: const Color.fromARGB(211, 87, 99, 108),
@@ -426,12 +445,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                           child: Text(
-                            '${matvare.antall ?? 0} ${matvare.kg == true ? 'Kg' : 'stk'}',
+                            '${ordreInfo.antall.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
                             textAlign: TextAlign.start,
                             style: FlutterFlowTheme.of(context)
                                 .titleMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: 'Nunito',
                                   fontSize: 14.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
@@ -462,7 +481,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .titleMedium
                                     .override(
-                                      fontFamily: 'Open Sans',
+                                      fontFamily: 'Nunito',
                                       fontSize: 14.0,
                                       letterSpacing: 0.0,
                                       color: const Color.fromARGB(
@@ -489,7 +508,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                       alignment: const AlignmentDirectional(0, 0),
                       child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 50, 5, 0),
+                            const EdgeInsetsDirectional.fromSTEB(16, 50, 16, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             try {
@@ -548,8 +567,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           },
                           text: 'Melding',
                           options: FFButtonOptions(
-                            width: 200,
-                            height: 40,
+                            width: double.infinity,
+                            height: 43,
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 11, 0, 0, 0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -558,11 +577,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: 'Nunito',
                                   color: FlutterFlowTheme.of(context).primary,
-                                  fontSize: 19,
+                                  fontSize: 16,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w800,
                                 ),
                             elevation: 0,
                             borderSide: const BorderSide(
@@ -579,7 +598,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                       alignment: const AlignmentDirectional(0, 0),
                       child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 15, 5, 0),
+                            const EdgeInsetsDirectional.fromSTEB(16, 15, 16, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             try {
@@ -645,26 +664,26 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           },
                           text: 'Trekk bud',
                           options: FFButtonOptions(
-                            width: 200,
-                            height: 40,
+                            width: double.infinity,
+                            height: 45,
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 11, 0, 0, 0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, 0),
-                            color: FlutterFlowTheme.of(context).error,
+                            color: FlutterFlowTheme.of(context).primary,
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  fontSize: 18,
+                                  fontFamily: 'Nunito',
+                                  color: FlutterFlowTheme.of(context).error,
+                                  fontSize: 16,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w800,
                                 ),
                             elevation: 0,
                             borderSide: const BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
+                              color: Color(0x5957636C),
+                              width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(14),
                           ),
@@ -674,7 +693,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                   if (ordreInfo.godkjent == true)
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(16, 50, 16, 0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -684,28 +703,28 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               onPressed: () {},
                               text: 'Melding',
                               options: FFButtonOptions(
-                                width: 200,
-                                height: 40,
+                                width: double.infinity,
+                                height: 43,
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     11, 0, 0, 0),
                                 iconPadding:
                                     const EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 0),
-                                color: FlutterFlowTheme.of(context).primary,
+                                color: FlutterFlowTheme.of(context).alternate,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 18,
+                                      fontFamily: 'Nunito',
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      fontSize: 16,
                                       letterSpacing: 0.0,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w800,
                                     ),
                                 elevation: 0,
                                 borderSide: const BorderSide(
-                                  color: Color(0x5957636C),
-                                  width: 1.0,
+                                  color: Colors.transparent,
+                                  width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(14),
                               ),
@@ -793,28 +812,28 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 },
                                 text: 'Bekreft hentet',
                                 options: FFButtonOptions(
-                                  width: 203,
-                                  height: 40,
+                                  width: double.infinity,
+                                  height: 45,
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       11, 0, 0, 0),
                                   iconPadding:
                                       const EdgeInsetsDirectional.fromSTEB(
                                           0, 0, 0, 0),
-                                  color: FlutterFlowTheme.of(context).alternate,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
-                                        fontFamily: 'Open Sans',
+                                        fontFamily: 'Nunito',
                                         color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        fontSize: 17,
+                                            .primaryText,
+                                        fontSize: 16,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                   elevation: 0,
                                   borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                    color: Color(0x5957636C),
+                                    width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(14),
                                 ),

@@ -851,6 +851,13 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                               backgroundColor:
                                                                   Colors
                                                                       .transparent,
+                                                              barrierColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      60,
+                                                                      17,
+                                                                      0,
+                                                                      0),
                                                               useSafeArea: true,
                                                               context: context,
                                                               builder:
@@ -896,6 +903,13 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                               backgroundColor:
                                                                   Colors
                                                                       .transparent,
+                                                              barrierColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      60,
+                                                                      17,
+                                                                      0,
+                                                                      0),
                                                               useSafeArea: true,
                                                               context: context,
                                                               builder:
@@ -940,6 +954,13 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                             backgroundColor:
                                                                 Colors
                                                                     .transparent,
+                                                            barrierColor:
+                                                                const Color
+                                                                    .fromARGB(
+                                                                    60,
+                                                                    17,
+                                                                    0,
+                                                                    0),
                                                             useSafeArea: true,
                                                             context: context,
                                                             builder: (context) {
@@ -983,6 +1004,13 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                               backgroundColor:
                                                                   Colors
                                                                       .transparent,
+                                                              barrierColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      60,
+                                                                      17,
+                                                                      0,
+                                                                      0),
                                                               useSafeArea: true,
                                                               context: context,
                                                               builder:
@@ -1022,6 +1050,13 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                               backgroundColor:
                                                                   Colors
                                                                       .transparent,
+                                                              barrierColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      60,
+                                                                      17,
+                                                                      0,
+                                                                      0),
                                                               useSafeArea: true,
                                                               context: context,
                                                               builder:
@@ -1759,6 +1794,13 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                             backgroundColor:
                                                                 Colors
                                                                     .transparent,
+                                                            barrierColor:
+                                                                const Color
+                                                                    .fromARGB(
+                                                                    60,
+                                                                    17,
+                                                                    0,
+                                                                    0),
                                                             useSafeArea: true,
                                                             context: context,
                                                             builder: (context) {
@@ -2486,6 +2528,13 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                             backgroundColor:
                                                                 Colors
                                                                     .transparent,
+                                                            barrierColor:
+                                                                const Color
+                                                                    .fromARGB(
+                                                                    60,
+                                                                    17,
+                                                                    0,
+                                                                    0),
                                                             useSafeArea: true,
                                                             context: context,
                                                             builder: (context) {
@@ -2522,6 +2571,13 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                             backgroundColor:
                                                                 Colors
                                                                     .transparent,
+                                                            barrierColor:
+                                                                const Color
+                                                                    .fromARGB(
+                                                                    60,
+                                                                    17,
+                                                                    0,
+                                                                    0),
                                                             useSafeArea: true,
                                                             context: context,
                                                             builder: (context) {

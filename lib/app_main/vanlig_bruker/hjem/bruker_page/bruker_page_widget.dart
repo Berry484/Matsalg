@@ -1677,18 +1677,18 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                               fontWeight: FontWeight.bold,
                                                                                             ),
                                                                                       ),
-                                                                                    if (matvarer.kg != true)
-                                                                                      Text(
-                                                                                        '/stk',
-                                                                                        textAlign: TextAlign.end,
-                                                                                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                              fontFamily: 'Nunito',
-                                                                                              color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                              fontSize: 14,
-                                                                                              letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.bold,
-                                                                                            ),
-                                                                                      ),
+                                                                                    // if (matvarer.kg != true)
+                                                                                    //   Text(
+                                                                                    //     '/stk',
+                                                                                    //     textAlign: TextAlign.end,
+                                                                                    //     style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                    //           fontFamily: 'Nunito',
+                                                                                    //           color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    //           fontSize: 14,
+                                                                                    //           letterSpacing: 0.0,
+                                                                                    //           fontWeight: FontWeight.bold,
+                                                                                    //         ),
+                                                                                    //   ),
                                                                                   ],
                                                                                 ),
                                                                               ),
@@ -2096,38 +2096,38 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                         ),
                                                                   ),
                                                                 ),
-                                                              if (matvarer.kg !=
-                                                                  true)
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0,
-                                                                          12,
-                                                                          4,
-                                                                          0),
-                                                                  child: Text(
-                                                                    '/stk',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .end,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Nunito',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).secondaryText,
-                                                                          fontSize:
-                                                                              16,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                        ),
-                                                                  ),
-                                                                ),
+                                                              // if (matvarer.kg !=
+                                                              //     true)
+                                                              //   Padding(
+                                                              //     padding:
+                                                              //         const EdgeInsetsDirectional
+                                                              //             .fromSTEB(
+                                                              //             0,
+                                                              //             12,
+                                                              //             4,
+                                                              //             0),
+                                                              //     child: Text(
+                                                              //       '/stk',
+                                                              //       textAlign:
+                                                              //           TextAlign
+                                                              //               .end,
+                                                              //       style: FlutterFlowTheme.of(
+                                                              //               context)
+                                                              //           .bodyMedium
+                                                              //           .override(
+                                                              //             fontFamily:
+                                                              //                 'Nunito',
+                                                              //             color:
+                                                              //                 FlutterFlowTheme.of(context).secondaryText,
+                                                              //             fontSize:
+                                                              //                 16,
+                                                              //             letterSpacing:
+                                                              //                 0.0,
+                                                              //             fontWeight:
+                                                              //                 FontWeight.w600,
+                                                              //           ),
+                                                              //     ),
+                                                              //   ),
                                                             ],
                                                           ),
                                                         ),

@@ -515,196 +515,214 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                         ),
                                   ),
                                 ),
-                                Align(
-                                  alignment:
-                                      const AlignmentDirectional(0.0, 0.0),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 16.0),
-                                    child: TextFormField(
-                                      controller:
-                                          _model.antallStkTextController,
-                                      focusNode: _model.antallStkFocusNode,
-                                      onChanged: (_) => EasyDebounce.debounce(
-                                        '_model.antallStkTextController',
-                                        const Duration(milliseconds: 300),
-                                        () => safeSetState(() {}),
-                                      ),
-                                      textCapitalization:
-                                          TextCapitalization.none,
-                                      obscureText: false,
-                                      readOnly: true, // Disable the keyboard
-                                      decoration: InputDecoration(
-                                        labelText: 'Antall',
-                                        labelStyle: FlutterFlowTheme.of(context)
+                                Form(
+                                  key: _model.formKey,
+                                  autovalidateMode: AutovalidateMode.disabled,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(0.0, 0.0),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 12.0, 0.0, 16.0),
+                                      child: TextFormField(
+                                        controller:
+                                            _model.antallStkTextController,
+                                        focusNode: _model.antallStkFocusNode,
+                                        onChanged: (_) => EasyDebounce.debounce(
+                                          '_model.antallStkTextController',
+                                          const Duration(milliseconds: 300),
+                                          () => safeSetState(() {}),
+                                        ),
+                                        textCapitalization:
+                                            TextCapitalization.none,
+                                        obscureText: false,
+                                        readOnly: true, // Disable the keyboard
+                                        decoration: InputDecoration(
+                                          labelText: 'Antall',
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Nunito',
+                                                    color: const Color.fromRGBO(
+                                                        113, 113, 113, 1.0),
+                                                    fontSize: 17.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                          alignLabelWithHint: false,
+                                          hintText: 'Skriv inn antall',
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Nunito',
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          filled: true,
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                          contentPadding:
+                                              const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                  20.0, 15.0, 0.0, 24.0),
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Nunito',
-                                              color: const Color.fromRGBO(
-                                                  113, 113, 113, 1.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
                                               fontSize: 17.0,
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w700,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                        alignLabelWithHint: false,
-                                        hintText: 'Skriv inn antall',
-                                        hintStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .override(
-                                              fontFamily: 'Nunito',
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondary,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .error,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .error,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        filled: true,
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .secondary,
-                                        contentPadding:
-                                            const EdgeInsetsDirectional
-                                                .fromSTEB(
-                                                20.0, 15.0, 0.0, 24.0),
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Nunito',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 17.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                      maxLength: 5,
-                                      maxLengthEnforcement:
-                                          MaxLengthEnforcement.enforced,
-                                      buildCounter: (context,
-                                              {required currentLength,
-                                              required isFocused,
-                                              maxLength}) =>
-                                          null,
-                                      keyboardType:
-                                          const TextInputType.numberWithOptions(
-                                              decimal: true),
-                                      validator: _model
-                                          .antallStkTextControllerValidator
-                                          .asValidator(context),
-                                      onTap: () {
-                                        List<double> getPickerValues() {
-                                          List<double> values = [];
-                                          double step;
+                                        maxLength: 5,
+                                        maxLengthEnforcement:
+                                            MaxLengthEnforcement.enforced,
+                                        buildCounter: (context,
+                                                {required currentLength,
+                                                required isFocused,
+                                                maxLength}) =>
+                                            null,
+                                        keyboardType: const TextInputType
+                                            .numberWithOptions(decimal: true),
+                                        validator: _model
+                                            .antallStkTextControllerValidator
+                                            .asValidator(context),
+                                        onTap: () {
+                                          List<double> getPickerValues() {
+                                            List<double> values = [];
+                                            double step;
 
-                                          step = 1.0;
-                                          for (double i = 1.0;
-                                              i <= 50;
-                                              i += step) {
-                                            values.add(i);
+                                            step = 1.0;
+                                            for (double i = 1.0;
+                                                i <= 50;
+                                                i += step) {
+                                              values.add(i);
+                                            }
+
+                                            return values;
                                           }
 
-                                          return values;
-                                        }
+                                          showCupertinoModalPopup(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CupertinoActionSheet(
+                                                title:
+                                                    const Text('Velg antall'),
+                                                message: Column(
+                                                  children: [
+                                                    Container(
+                                                      height:
+                                                          200, // Set a fixed height for the picker
+                                                      child: CupertinoPicker(
+                                                        itemExtent:
+                                                            32.0, // Height of each item
+                                                        scrollController:
+                                                            FixedExtentScrollController(
+                                                          initialItem:
+                                                              getPickerValues()
+                                                                  .indexOf(
+                                                                      _selectedValue), // Set initial value
+                                                        ),
+                                                        onSelectedItemChanged:
+                                                            (index) {
+                                                          setState(() {
+                                                            _selectedValue =
+                                                                getPickerValues()[
+                                                                    index];
+                                                            // Update the TextFormField value with the selected value
+                                                            _model.antallStkTextController
+                                                                    .text =
+                                                                _selectedValue
+                                                                    .toStringAsFixed(
+                                                                        0);
 
-                                        showCupertinoModalPopup(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return CupertinoActionSheet(
-                                              title: const Text('Velg antall'),
-                                              message: Column(
-                                                children: [
-                                                  Container(
-                                                    height:
-                                                        200, // Set a fixed height for the picker
-                                                    child: CupertinoPicker(
-                                                      itemExtent:
-                                                          32.0, // Height of each item
-                                                      scrollController:
-                                                          FixedExtentScrollController(
-                                                        initialItem:
+                                                            kjopsBeskyttelse =
+                                                                (_selectedValue *
+                                                                            matpris *
+                                                                            0.05 +
+                                                                        2)
+                                                                    .round();
+                                                            // Trigger light haptic feedback on each tick/value change
+                                                            HapticFeedback
+                                                                .lightImpact();
+                                                          });
+                                                        },
+                                                        children:
                                                             getPickerValues()
-                                                                .indexOf(
-                                                                    _selectedValue), // Set initial value
+                                                                .map(
+                                                                    (value) =>
+                                                                        Center(
+                                                                          child:
+                                                                              Text(value.toStringAsFixed(0)),
+                                                                        ))
+                                                                .toList(),
                                                       ),
-                                                      onSelectedItemChanged:
-                                                          (index) {
-                                                        setState(() {
-                                                          _selectedValue =
-                                                              getPickerValues()[
-                                                                  index];
-                                                          // Update the TextFormField value with the selected value
-                                                          _model.antallStkTextController
-                                                                  .text =
-                                                              _selectedValue
-                                                                  .toStringAsFixed(
-                                                                      0);
-
-                                                          // Trigger light haptic feedback on each tick/value change
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                        });
-                                                      },
-                                                      children:
-                                                          getPickerValues()
-                                                              .map(
-                                                                  (value) =>
-                                                                      Center(
-                                                                        child: Text(
-                                                                            value.toStringAsFixed(0)),
-                                                                      ))
-                                                              .toList(),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                              cancelButton:
-                                                  CupertinoActionSheetAction(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: const Text('Velg',
-                                                    style: TextStyle(
-                                                      fontSize: 19,
-                                                      color: CupertinoColors
-                                                          .systemBlue,
-                                                    )),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
+                                                  ],
+                                                ),
+                                                cancelButton:
+                                                    CupertinoActionSheetAction(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text('Velg',
+                                                      style: TextStyle(
+                                                        fontSize: 19,
+                                                        color: CupertinoColors
+                                                            .systemBlue,
+                                                      )),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -925,6 +943,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 }
                                 if (_model.formKey.currentState == null ||
                                     !_model.formKey.currentState!.validate()) {
+                                  print(_model.antallStkTextController.text);
                                   return;
                                 }
                                 if (_selectedValue * matpris +
