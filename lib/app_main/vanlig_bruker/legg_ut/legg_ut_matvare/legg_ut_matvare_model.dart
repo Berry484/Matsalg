@@ -1,6 +1,5 @@
 import '/app_main/vanlig_bruker/custom_nav_bar_user/legg_ut_nav_bar/legg_ut_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'legg_ut_matvare_widget.dart' show LeggUtMatvareWidget;
 import 'package:flutter/material.dart';
 
@@ -47,11 +46,6 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
 
     return null;
   }
-
-// State field(s) for DropDown widget.
-  String? dropDownValue; // This will hold the selected value from the dropdown.
-  FormFieldController<String>?
-      dropDownValueController; // Changed to String for single selection.
 
 // State field(s) for ProduktBeskrivelse widget.
   FocusNode?

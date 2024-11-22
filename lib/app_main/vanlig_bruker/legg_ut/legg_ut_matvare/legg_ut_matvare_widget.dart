@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/legg_ut/velg_kategori/velg_kategori_widget.dart';
 import 'package:mat_salg/matvarer.dart';
 
 import '/app_main/vanlig_bruker/legg_ut/velg_pos/velg_pos_widget.dart';
@@ -12,7 +13,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -77,8 +77,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
   final ApiMultiplePics apiMultiplePics = ApiMultiplePics();
   bool _leggUtLoading = false;
   bool _oppdaterLoading = false;
+  bool isFocused = false;
   String? kommune;
-
+  String? kategori;
+  String? velgkategori;
   LatLng? selectedLatLng;
   LatLng? currentselectedLatLng =
       (FFAppState().brukerLat != null && FFAppState().brukerLng != null)
@@ -114,7 +116,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
 
     _model.antallStkTextController ??= TextEditingController();
     _model.antallStkFocusNode ??= FocusNode();
-    _model.dropDownValueController ??= FormFieldController<String>(null);
+
     if (widget.matinfo != null) {
       matvare = Matvarer.fromJson1(widget.matinfo);
 
@@ -125,7 +127,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
         matvare.imgUrls?.add(''); // Add empty string placeholders
       }
       _model.produktNavnTextController.text = matvare.name ?? '';
-      _model.dropDownValueController!.value = matvare.kategorier!.first;
+      kategori = matvare.kategorier!.first;
       _model.produktBeskrivelseTextController.text = matvare.description ?? '';
       if (matvare.antall.toString() == 'null') {
         _model.antallStkTextController.text = '0';
@@ -136,10 +138,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
       leggutgetKommune(matvare.lat ?? 0, matvare.lng ?? 0);
       selectedLatLng = LatLng(matvare.lat ?? 0, matvare.lng ?? 0);
     } else {
-      if (FFAppState().kommune != '') {
-        kommune = FFAppState().kommune;
-      }
-      getKommune();
       matvare = Matvarer.fromJson1({'imgUrl': []});
       while (matvare.imgUrls!.length <= 4) {
         matvare.imgUrls?.add('');
@@ -197,34 +195,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     Future.delayed(const Duration(seconds: 3), () {
       overlayEntry.remove();
     });
-  }
-
-  Future<void> getKommune() async {
-    try {
-      String? token = await Securestorage().readToken();
-
-      if (token == null) {
-        FFAppState().login = false;
-        context.pushNamed('registrer');
-        return;
-      } else {
-        String? response = await apiCalls.getKommune(token);
-
-        if (response.isNotEmpty) {
-          // Convert the response to lowercase and then capitalize the first letter
-          String formattedResponse =
-              response[0].toUpperCase() + response.substring(1).toLowerCase();
-
-          FFAppState().kommune = formattedResponse;
-          kommune = formattedResponse;
-          setState(() {});
-        }
-      }
-    } on SocketException {
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      showErrorToast(context, 'En feil oppstod');
-    }
   }
 
   Future<void> leggutgetKommune(double lat, double lng) async {
@@ -1877,77 +1847,117 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   .asValidator(context),
                                             ),
                                           ),
-                                          Align(
-                                            alignment:
-                                                const AlignmentDirectional(
-                                                    -1, 0),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              try {
+                                                FocusScope.of(context)
+                                                    .unfocus();
+                                                String? velgkategori =
+                                                    await showModalBottomSheet<
+                                                        String>(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  barrierColor:
+                                                      const Color.fromARGB(
+                                                          60, 17, 0, 0),
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () =>
+                                                          FocusScope.of(context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            VelgKategoriWidget(
+                                                                kategori:
+                                                                    kategori),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+
+                                                setState(() {
+                                                  if (velgkategori != null) {
+                                                    kategori = velgkategori;
+                                                    isFocused = true;
+                                                  }
+                                                });
+                                              } catch (e) {
+                                                showErrorToast(
+                                                    context, 'En feil oppstod');
+                                              }
+                                            },
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(20, 0, 20, 35),
-                                              child: Container(
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                        .width,
-                                                height: 60,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondary,
-                                                  border: Border.all(
-                                                    color: FlutterFlowTheme.of(
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 0, 20, 16),
+                                              child: Stack(
+                                                clipBehavior: Clip.none,
+                                                children: [
+                                                  Container(
+                                                    width: MediaQuery.sizeOf(
                                                             context)
-                                                        .secondary,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          12, 0, 12, 0),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Icon(
-                                                            CupertinoIcons
-                                                                .square_grid_2x2,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                            size: 25,
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    15,
-                                                                    0,
-                                                                    0,
-                                                                    0),
-                                                            child: Text(
-                                                              'Kategori',
+                                                        .width,
+                                                    height: 60,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondary,
+                                                      border: Border.all(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 12),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Icon(
+                                                              CupertinoIcons
+                                                                  .square_grid_2x2,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryText,
+                                                              size: 25,
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 15),
+                                                            Text(
+                                                              kategori ??
+                                                                  'kategori',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Nunito',
-                                                                    color: const Color
-                                                                        .fromRGBO(
-                                                                        113,
-                                                                        113,
-                                                                        113,
-                                                                        1.0),
+                                                                    color: kategori !=
+                                                                            null
+                                                                        ? FlutterFlowTheme.of(context)
+                                                                            .primaryText
+                                                                        : const Color
+                                                                            .fromRGBO(
+                                                                            113,
+                                                                            113,
+                                                                            113,
+                                                                            1.0),
                                                                     fontSize:
                                                                         17.0,
                                                                     letterSpacing:
@@ -1957,21 +1967,57 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                             .w700,
                                                                   ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Icon(
-                                                        CupertinoIcons
-                                                            .chevron_forward,
+                                                          ],
+                                                        ),
+                                                        Icon(
+                                                          CupertinoIcons
+                                                              .chevron_forward,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          size: 22,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  if (isFocused ||
+                                                      kategori != null)
+                                                    Positioned(
+                                                      top: -10,
+                                                      left: 18,
+                                                      child: Container(
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryText,
-                                                        size: 22,
+                                                                .secondary,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal:
+                                                                    4.0),
+                                                        child: Text(
+                                                          'kategori',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodySmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 13.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: const Color
+                                                                    .fromRGBO(
+                                                                    113,
+                                                                    113,
+                                                                    113,
+                                                                    1.0),
+                                                              ),
+                                                        ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
+                                                    ),
+                                                ],
                                               ),
                                             ),
                                           ),
@@ -2661,7 +2707,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                             setState(() {
                                                                               _selectedValue = getPickerValues()[index];
                                                                               // Update the TextFormField value with the selected value
-                                                                              _model.antallStkTextController.text = _selectedValue.toStringAsFixed(1);
+                                                                              _model.antallStkTextController.text = _selectedValue.toStringAsFixed(0);
 
                                                                               // Trigger light haptic feedback on each tick/value change
                                                                               HapticFeedback.lightImpact();
@@ -2669,7 +2715,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                           },
                                                                           children: getPickerValues()
                                                                               .map((value) => Center(
-                                                                                    child: Text(value.toStringAsFixed(1)),
+                                                                                    child: Text(value.toStringAsFixed(0)),
                                                                                   ))
                                                                               .toList(),
                                                                         ),
@@ -2847,6 +2893,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           backgroundColor:
                                                               Colors
                                                                   .transparent,
+                                                          barrierColor:
+                                                              const Color
+                                                                  .fromARGB(
+                                                                  60, 17, 0, 0),
                                                           context: context,
                                                           builder: (context) {
                                                             return GestureDetector(
@@ -2957,12 +3007,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                         .override(
                                                                           fontFamily:
                                                                               'Nunito',
-                                                                          color: const Color
-                                                                              .fromRGBO(
-                                                                              113,
-                                                                              113,
-                                                                              113,
-                                                                              1.0),
+                                                                          color: kommune != null
+                                                                              ? FlutterFlowTheme.of(context).primaryText
+                                                                              : const Color.fromRGBO(113, 113, 113, 1.0),
                                                                           fontSize:
                                                                               17.0,
                                                                           letterSpacing:
@@ -3186,9 +3233,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         return;
                                                       }
 
-                                                      if (_model
-                                                              .dropDownValue ==
-                                                          null) {
+                                                      if (kategori == null) {
                                                         await showDialog(
                                                           context: context,
                                                           builder:
@@ -3345,9 +3390,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 .produktBeskrivelseTextController
                                                                 .text,
                                                             price: pris,
-                                                            kategorier: _model
-                                                                .dropDownValueController
-                                                                ?.value,
+                                                            kategorier:
+                                                                kategori,
                                                             posisjon:
                                                                 selectedLatLng,
                                                             antall:
@@ -3408,7 +3452,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   text: 'Publiser',
                                                   options: FFButtonOptions(
                                                     width: double.infinity,
-                                                    height: 45.0,
+                                                    height: 50.0,
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(
@@ -3661,9 +3705,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   .produktBeskrivelseTextController
                                                                   .text,
                                                               price: pris,
-                                                              kategorier: _model
-                                                                  .dropDownValueController
-                                                                  ?.value,
+                                                              kategorier:
+                                                                  kategori,
                                                               posisjon:
                                                                   selectedLatLng,
                                                               antall:
@@ -3705,7 +3748,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       text: 'Oppdater',
                                                       options: FFButtonOptions(
                                                         width: double.infinity,
-                                                        height: 45.0,
+                                                        height: 50.0,
                                                         padding:
                                                             const EdgeInsetsDirectional
                                                                 .fromSTEB(0.0,

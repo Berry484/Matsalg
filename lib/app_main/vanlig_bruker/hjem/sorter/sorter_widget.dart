@@ -63,7 +63,7 @@ class _SorterWidgetState extends State<SorterWidget> {
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             blurRadius: 4,
             color: Color(0x25090F13),
             offset: Offset(
@@ -72,7 +72,7 @@ class _SorterWidgetState extends State<SorterWidget> {
             ),
           )
         ],
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
           topLeft: Radius.circular(12),
@@ -93,7 +93,7 @@ class _SorterWidgetState extends State<SorterWidget> {
           Stack(
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -140,7 +140,7 @@ class _SorterWidgetState extends State<SorterWidget> {
             ],
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(17, 27, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(17, 27, 0, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,7 +178,8 @@ class _SorterWidgetState extends State<SorterWidget> {
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.bold,
                           ),
-                  itemPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 14),
+                  itemPadding:
+                      const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 14),
                   checkboxBorderRadius: BorderRadius.circular(24),
                   initialized: _model.checkboxGroupValues != null,
                 ),
