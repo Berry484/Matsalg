@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:decimal/decimal.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
@@ -170,11 +171,11 @@ class _BetalingWidgetState extends State<BetalingWidget> {
               'Kjøp',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Montserrat',
+                    fontFamily: 'Nunito',
                     color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 20,
+                    fontSize: 18,
                     letterSpacing: 0.0,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w800,
                   ),
             ),
             actions: [],
@@ -197,7 +198,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                12, 20, 12, 0),
+                                18, 10, 12, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -205,7 +206,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 30, 10, 20),
+                                      0, 0, 10, 16),
                                   child: Material(
                                     color: Colors.transparent,
                                     elevation: 0,
@@ -221,7 +222,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8),
+                                        padding: const EdgeInsets.all(0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
@@ -234,8 +235,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                     BorderRadius.circular(6),
                                                 child: Image.network(
                                                   '${ApiConstants.baseUrl}${matvare.imgUrls![0].toString()}',
-                                                  width: 80,
-                                                  height: 80,
+                                                  width: 64,
+                                                  height: 64,
                                                   fit: BoxFit.cover,
                                                   errorBuilder: (BuildContext
                                                           context,
@@ -243,6 +244,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                       StackTrace? stackTrace) {
                                                     return Image.asset(
                                                       'assets/images/error_image.jpg', // Path to your local error image
+                                                      height: 64,
+                                                      width: 64,
                                                       fit: BoxFit.cover,
                                                     );
                                                   },
@@ -253,87 +256,65 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(8, 0, 4, 0),
-                                                child: Column(
+                                                        .fromSTEB(12, 0, 4, 0),
+                                                child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.start,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 10, 0, 0),
-                                                      child: Text(
-                                                        matvare.name ?? '',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .headlineSmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: 22,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          1, 1),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 0, 0, 10),
-                                                    child: Row(
+                                                    Column(
                                                       mainAxisSize:
-                                                          MainAxisSize.max,
+                                                          MainAxisSize.min,
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .center,
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
-                                                              .end,
+                                                              .start,
                                                       children: [
                                                         Padding(
                                                           padding:
                                                               const EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                  0, 12, 0, 0),
+                                                                  0, 0, 0, 0),
                                                           child: Text(
-                                                            '${matvare.price} Kr',
-                                                            textAlign:
-                                                                TextAlign.end,
+                                                            matvare.name ?? '',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyMedium
+                                                                .headlineSmall
                                                                 .override(
                                                                   fontFamily:
                                                                       'Nunito',
+                                                                  fontSize: 19,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  0, 3, 0, 0),
+                                                          child: Text(
+                                                            'Tilgjengelig: ${matvare.antall!.toStringAsFixed(0)} Stk',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .headlineSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 15,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .primaryText,
-                                                                  fontSize: 18,
+                                                                      .secondaryText,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -342,70 +323,150 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                                 ),
                                                           ),
                                                         ),
-                                                        if (matvare.kg == true)
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(0,
-                                                                    12, 4, 0),
-                                                            child: Text(
-                                                              '/kg',
-                                                              textAlign:
-                                                                  TextAlign.end,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
-                                                                    fontSize:
-                                                                        18,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                        if (matvare.kg != true)
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(0,
-                                                                    12, 4, 0),
-                                                            child: Text(
-                                                              '/stk',
-                                                              textAlign:
-                                                                  TextAlign.end,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
-                                                                    fontSize:
-                                                                        18,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
-                                                            ),
-                                                          ),
                                                       ],
                                                     ),
-                                                  ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 0, 0, 0),
+                                                      child: Text(
+                                                        '${matvare.price} Kr',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .headlineSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 18,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
+                                              ),
                                             ),
+                                            // Column(
+                                            //   mainAxisSize: MainAxisSize.max,
+                                            //   mainAxisAlignment:
+                                            //       MainAxisAlignment.center,
+                                            //   crossAxisAlignment:
+                                            //       CrossAxisAlignment.center,
+                                            //   children: [
+                                            //     Align(
+                                            //       alignment:
+                                            //           const AlignmentDirectional(
+                                            //               1, 1),
+                                            //       child: Padding(
+                                            //         padding:
+                                            //             const EdgeInsetsDirectional
+                                            //                 .fromSTEB(
+                                            //                 0, 0, 0, 10),
+                                            //         child: Row(
+                                            //           mainAxisSize:
+                                            //               MainAxisSize.max,
+                                            //           mainAxisAlignment:
+                                            //               MainAxisAlignment
+                                            //                   .center,
+                                            //           crossAxisAlignment:
+                                            //               CrossAxisAlignment
+                                            //                   .end,
+                                            //           children: [
+                                            //             Padding(
+                                            //               padding:
+                                            //                   const EdgeInsetsDirectional
+                                            //                       .fromSTEB(
+                                            //                       0, 0, 0, 0),
+                                            //               child: Text(
+                                            //                 '${matvare.price} Kr',
+                                            //                 style: FlutterFlowTheme
+                                            //                         .of(context)
+                                            //                     .bodyMedium
+                                            //                     .override(
+                                            //                       fontFamily:
+                                            //                           'Nunito',
+                                            //                       color: FlutterFlowTheme.of(
+                                            //                               context)
+                                            //                           .primaryText,
+                                            //                       fontSize: 18,
+                                            //                       letterSpacing:
+                                            //                           0.0,
+                                            //                       fontWeight:
+                                            //                           FontWeight
+                                            //                               .bold,
+                                            //                     ),
+                                            //               ),
+                                            //             ),
+                                            //             if (matvare.kg == true)
+                                            //               Padding(
+                                            //                 padding:
+                                            //                     const EdgeInsetsDirectional
+                                            //                         .fromSTEB(0,
+                                            //                         12, 4, 0),
+                                            //                 child: Text(
+                                            //                   '/kg',
+                                            //                   textAlign:
+                                            //                       TextAlign.end,
+                                            //                   style: FlutterFlowTheme
+                                            //                           .of(context)
+                                            //                       .bodyMedium
+                                            //                       .override(
+                                            //                         fontFamily:
+                                            //                             'Nunito',
+                                            //                         color: FlutterFlowTheme.of(
+                                            //                                 context)
+                                            //                             .secondaryText,
+                                            //                         fontSize:
+                                            //                             18,
+                                            //                         letterSpacing:
+                                            //                             0.0,
+                                            //                         fontWeight:
+                                            //                             FontWeight
+                                            //                                 .w600,
+                                            //                       ),
+                                            //                 ),
+                                            //               ),
+                                            //             // if (matvare.kg != true)
+                                            //             //   Padding(
+                                            //             //     padding:
+                                            //             //         const EdgeInsetsDirectional
+                                            //             //             .fromSTEB(0,
+                                            //             //             12, 4, 0),
+                                            //             //     child: Text(
+                                            //             //       '/stk',
+                                            //             //       textAlign:
+                                            //             //           TextAlign.end,
+                                            //             //       style: FlutterFlowTheme
+                                            //             //               .of(context)
+                                            //             //           .bodyMedium
+                                            //             //           .override(
+                                            //             //             fontFamily:
+                                            //             //                 'Nunito',
+                                            //             //             color: FlutterFlowTheme.of(
+                                            //             //                     context)
+                                            //             //                 .secondaryText,
+                                            //             //             fontSize:
+                                            //             //                 18,
+                                            //             //             letterSpacing:
+                                            //             //                 0.0,
+                                            //             //             fontWeight:
+                                            //             //                 FontWeight
+                                            //             //                     .w600,
+                                            //             //           ),
+                                            //             //     ),
+                                            //             //   ),
+                                            //           ],
+                                            //         ),
+                                            //       ),
+                                            //     ),
+                                            //   ],
+                                            // ),
                                           ],
                                         ),
                                       ),
@@ -420,7 +481,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 30, 0, 0),
+                                      0, 12, 0, 0),
                                   child: Text(
                                     'Antall',
                                     textAlign: TextAlign.start,
@@ -430,9 +491,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
-                                          fontSize: 22,
+                                          fontSize: 19.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w800,
                                         ),
                                   ),
                                 ),
@@ -454,294 +515,196 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                         ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 30),
-                                  child: Form(
-                                    key: _model.formKey,
-                                    autovalidateMode: AutovalidateMode.disabled,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 20, 0, 20),
-                                          child: Stack(
-                                            alignment:
-                                                const AlignmentDirectional(
-                                                    1, -0.3),
-                                            children: [
-                                              TextFormField(
-                                                controller: _model
-                                                    .antallStkTextController,
-                                                focusNode:
-                                                    _model.antallStkFocusNode,
-                                                obscureText: false,
-                                                readOnly:
-                                                    true, // Disable the keyboard
-                                                decoration: InputDecoration(
-                                                  labelText: 'Antall',
-                                                  labelStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        fontSize: 17,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                  hintStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        fontSize: 17,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Colors.transparent,
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondary,
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .error,
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .error,
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                  filled: true,
-                                                  fillColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .secondary,
-                                                ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                maxLength: 5,
-                                                maxLengthEnforcement:
-                                                    MaxLengthEnforcement
-                                                        .enforced,
-                                                buildCounter: (context,
-                                                        {required currentLength,
-                                                        required isFocused,
-                                                        maxLength}) =>
-                                                    null,
-                                                validator: _model
-                                                    .antallStkTextControllerValidator
-                                                    .asValidator(context),
-                                                onTap: () {
-                                                  List<double>
-                                                      getPickerValues() {
-                                                    List<double> values = [];
-                                                    double step = matvare.kg ==
-                                                            true
-                                                        ? 0.5
-                                                        : 1.0; // Choose step size based on matvare.kg
-
-                                                    double antall =
-                                                        matvare.antall ?? 0.0;
-
-                                                    // Add values from 0.0 up to and including antall
-                                                    for (double i = 0.0;
-                                                        i <= antall + step / 2;
-                                                        i += step) {
-                                                      if ((i - antall).abs() <
-                                                          0.0000001) {
-                                                        values.add(
-                                                            antall); // Add antall exactly if i is very close to antall
-                                                        break; // Break out of the loop to avoid adding further values
-                                                      }
-                                                      values.add(i);
-                                                    }
-                                                    return values;
-                                                  }
-
-                                                  showCupertinoModalPopup(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return CupertinoActionSheet(
-                                                        title: const Text(
-                                                            'Velg antall'),
-                                                        message: Column(
-                                                          children: [
-                                                            Container(
-                                                              height:
-                                                                  200, // Set a fixed height for the picker
-                                                              child:
-                                                                  CupertinoPicker(
-                                                                itemExtent:
-                                                                    32.0, // Height of each item
-                                                                scrollController:
-                                                                    FixedExtentScrollController(
-                                                                  initialItem:
-                                                                      getPickerValues()
-                                                                          .indexOf(
-                                                                              _selectedValue), // Set initial value
-                                                                ),
-                                                                onSelectedItemChanged:
-                                                                    (index) {
-                                                                  setState(() {
-                                                                    _selectedValue =
-                                                                        getPickerValues()[
-                                                                            index];
-                                                                    // Update the TextFormField value with the selected value
-                                                                    _model.antallStkTextController
-                                                                            .text =
-                                                                        _selectedValue
-                                                                            .toStringAsFixed(1);
-                                                                    kjopsBeskyttelse =
-                                                                        ((_selectedValue * matpris * 0.05 +
-                                                                                2)
-                                                                            .round());
-                                                                    // Trigger light haptic feedback on each tick/value change
-                                                                    HapticFeedback
-                                                                        .lightImpact();
-                                                                  });
-                                                                },
-                                                                children:
-                                                                    getPickerValues()
-                                                                        .map((value) =>
-                                                                            Center(
-                                                                              child: Text(value.toStringAsFixed(1)),
-                                                                            ))
-                                                                        .toList(),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        cancelButton:
-                                                            CupertinoActionSheetAction(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: const Text(
-                                                            'Velg',
-                                                            style: TextStyle(
-                                                              fontSize: 19,
-                                                              color:
-                                                                  CupertinoColors
-                                                                      .systemBlue,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                              if (matvare.kg != true)
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          0.8, 0),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 7, 0, 0),
-                                                    child: Text(
-                                                      'Stk',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                            fontSize: 17,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              if (matvare.kg == true)
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          0.8, -0.19),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 7, 0, 0),
-                                                    child: Text(
-                                                      'Kg',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                            fontSize: 17,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                ),
-                                            ],
+                                Align(
+                                  alignment:
+                                      const AlignmentDirectional(0.0, 0.0),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 12.0, 0.0, 16.0),
+                                    child: TextFormField(
+                                      controller:
+                                          _model.antallStkTextController,
+                                      focusNode: _model.antallStkFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.antallStkTextController',
+                                        const Duration(milliseconds: 300),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      textCapitalization:
+                                          TextCapitalization.none,
+                                      obscureText: false,
+                                      readOnly: true, // Disable the keyboard
+                                      decoration: InputDecoration(
+                                        labelText: 'Antall',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color: const Color.fromRGBO(
+                                                  113, 113, 113, 1.0),
+                                              fontSize: 17.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                        alignLabelWithHint: false,
+                                        hintText: 'Skriv inn antall',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
                                           ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                      ],
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondary,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        contentPadding:
+                                            const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                20.0, 15.0, 0.0, 24.0),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Nunito',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 17.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                      maxLength: 5,
+                                      maxLengthEnforcement:
+                                          MaxLengthEnforcement.enforced,
+                                      buildCounter: (context,
+                                              {required currentLength,
+                                              required isFocused,
+                                              maxLength}) =>
+                                          null,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              decimal: true),
+                                      validator: _model
+                                          .antallStkTextControllerValidator
+                                          .asValidator(context),
+                                      onTap: () {
+                                        List<double> getPickerValues() {
+                                          List<double> values = [];
+                                          double step;
+
+                                          step = 1.0;
+                                          for (double i = 1.0;
+                                              i <= 50;
+                                              i += step) {
+                                            values.add(i);
+                                          }
+
+                                          return values;
+                                        }
+
+                                        showCupertinoModalPopup(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return CupertinoActionSheet(
+                                              title: const Text('Velg antall'),
+                                              message: Column(
+                                                children: [
+                                                  Container(
+                                                    height:
+                                                        200, // Set a fixed height for the picker
+                                                    child: CupertinoPicker(
+                                                      itemExtent:
+                                                          32.0, // Height of each item
+                                                      scrollController:
+                                                          FixedExtentScrollController(
+                                                        initialItem:
+                                                            getPickerValues()
+                                                                .indexOf(
+                                                                    _selectedValue), // Set initial value
+                                                      ),
+                                                      onSelectedItemChanged:
+                                                          (index) {
+                                                        setState(() {
+                                                          _selectedValue =
+                                                              getPickerValues()[
+                                                                  index];
+                                                          // Update the TextFormField value with the selected value
+                                                          _model.antallStkTextController
+                                                                  .text =
+                                                              _selectedValue
+                                                                  .toStringAsFixed(
+                                                                      0);
+
+                                                          // Trigger light haptic feedback on each tick/value change
+                                                          HapticFeedback
+                                                              .lightImpact();
+                                                        });
+                                                      },
+                                                      children:
+                                                          getPickerValues()
+                                                              .map(
+                                                                  (value) =>
+                                                                      Center(
+                                                                        child: Text(
+                                                                            value.toStringAsFixed(0)),
+                                                                      ))
+                                                              .toList(),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              cancelButton:
+                                                  CupertinoActionSheetAction(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text('Velg',
+                                                    style: TextStyle(
+                                                      fontSize: 19,
+                                                      color: CupertinoColors
+                                                          .systemBlue,
+                                                    )),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
@@ -763,9 +726,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
-                                          fontSize: 22,
+                                          fontSize: 19.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w800,
                                         ),
                                   ),
                                 ),
@@ -788,7 +751,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
-                                              fontSize: 14,
+                                              fontSize: 15,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -841,7 +804,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
-                                                fontSize: 14,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -880,7 +843,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                12, 30, 12, 16),
+                                18, 30, 12, 16),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -891,14 +854,14 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     Text(
                                       'Totalt å betale',
                                       style: FlutterFlowTheme.of(context)
-                                          .titleMedium
+                                          .bodyMedium
                                           .override(
                                             fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            fontSize: 21,
+                                            fontSize: 20.0,
                                             letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w800,
                                           ),
                                     ),
                                   ],
@@ -923,9 +886,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                             fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            fontSize: 21,
+                                            fontSize: 20,
                                             letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w800,
                                           ),
                                     ),
                                     Padding(
@@ -941,9 +904,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              fontSize: 21,
+                                              fontSize: 20,
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w800,
                                             ),
                                       ),
                                     ),

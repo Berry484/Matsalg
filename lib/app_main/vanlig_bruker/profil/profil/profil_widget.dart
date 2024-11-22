@@ -370,15 +370,15 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                           child: Text(
                                             'Profil',
                                             style: FlutterFlowTheme.of(context)
-                                                .headlineMedium
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Nunito',
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
-                                                  fontSize: 27,
+                                                  fontSize: 20,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w800,
                                                 ),
                                           ),
                                         ),

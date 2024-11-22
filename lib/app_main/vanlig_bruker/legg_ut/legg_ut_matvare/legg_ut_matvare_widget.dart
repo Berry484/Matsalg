@@ -132,7 +132,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
       if (matvare.antall.toString() == 'null') {
         _model.antallStkTextController.text = '0';
       } else {
-        _model.antallStkTextController.text = matvare.antall.toString();
+        _model.antallStkTextController.text =
+            matvare.antall!.toStringAsFixed(0);
       }
       _model.produktPrisSTKTextController.text = matvare.price.toString();
       leggutgetKommune(matvare.lat ?? 0, matvare.lng ?? 0);
@@ -336,9 +337,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                   'Ny matvare',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Nunito',
-                        fontSize: 21,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        fontSize: 20,
                         letterSpacing: 0.0,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w800,
                       ),
                 ),
                 Padding(
@@ -1831,8 +1833,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       .override(
                                                         fontFamily: 'Nunito',
                                                         letterSpacing: 0.0,
+                                                        fontSize: 15,
                                                         fontWeight:
-                                                            FontWeight.w500,
+                                                            FontWeight.bold,
                                                       ),
                                               maxLength: 16,
                                               maxLengthEnforcement:
@@ -2181,6 +2184,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Nunito',
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.w600,
                                                         letterSpacing: 0.0,
                                                       ),
                                               textAlign: TextAlign.start,
@@ -2357,7 +2363,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           fontSize: 17.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                              FontWeight.bold,
                                                         ),
                                                     maxLength: 5,
                                                     maxLengthEnforcement:
@@ -2458,7 +2464,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           .fromSTEB(
                                                           20.0, 0.0, 0.0, 0.0),
                                                   child: Text(
-                                                    'Antallet justeres ned automatisk når noen kjøper',
+                                                    'Hvor mange pakker/stykk skal være tilgjengelig for kjøperen? Antallet justeres ned automatisk når noen kjøper',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
@@ -2479,7 +2485,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 padding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                        0.0, 50.0, 0.0, 20.0),
+                                                        0.0, 16.0, 0.0, 20.0),
                                                 child: Stack(
                                                   alignment:
                                                       const AlignmentDirectional(
@@ -2641,7 +2647,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                     0.0,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
+                                                                        .bold,
                                                               ),
                                                           maxLength: 5,
                                                           maxLengthEnforcement:

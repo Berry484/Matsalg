@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
@@ -163,13 +164,12 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
             ),
             title: Text(
               'Velg posisjon',
-              textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Nunito',
                     color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 20.0,
+                    fontSize: 18,
                     letterSpacing: 0.0,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w800,
                   ),
             ),
             actions: const [],
@@ -247,119 +247,83 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    30.0, 40.0, 30.0, 20.0),
-                                child: TextFormField(
-                                  controller: _model.textController,
-                                  focusNode: _model.textFieldFocusNode,
-                                  autofocus: false,
-                                  obscureText: false,
-                                  onTap: () {},
-                                  onFieldSubmitted: (value) {
-                                    if (_model.textController.text.isNotEmpty) {
-                                      context.pushNamed(
-                                        'BondeGardPage',
-                                        queryParameters: {
-                                          'kategori': serializeParam(
-                                              'Søk', ParamType.String),
-                                          'query': serializeParam(
-                                              _model.textController.text,
-                                              ParamType.String),
-                                        }.withoutNulls,
-                                      );
-                                    }
-                                  },
-                                  textInputAction: TextInputAction.search,
-                                  decoration: InputDecoration(
-                                    isDense: true,
-                                    alignLabelWithHint: false,
-                                    hintText: 'Søk etter en by',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Nunito',
-                                          color: const Color(0x8F101213),
-                                          fontSize: 16.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
+                                    20.0, 30.0, 20.0, 0.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground, // or choose the correct background color
+                                          borderRadius:
+                                              BorderRadius.circular(13.0),
                                         ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color.fromARGB(0, 85, 85, 85),
-                                        width: 1.0,
+                                        child: CupertinoSearchTextField(
+                                          controller: _model.textController,
+                                          focusNode: _model.textFieldFocusNode,
+                                          autofocus: false,
+                                          onChanged: (text) {
+                                            setState(() {});
+                                          },
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 238, 238, 238),
+                                          prefixInsets:
+                                              const EdgeInsetsDirectional
+                                                  .fromSTEB(12, 6, 6, 6),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                          onSubmitted: (value) {
+                                            if (_model.textController.text
+                                                .isNotEmpty) {
+                                              // When the search button is pressed
+                                              FocusScope.of(context)
+                                                  .requestFocus(FocusNode());
+                                              context.pushNamed(
+                                                'BondeGardPage',
+                                                queryParameters: {
+                                                  'kategori': serializeParam(
+                                                      'Søk', ParamType.String),
+                                                  'query': serializeParam(
+                                                      _model
+                                                          .textController.text,
+                                                      ParamType.String),
+                                                }.withoutNulls,
+                                              );
+                                            }
+                                          },
+                                          placeholder: 'Søk',
+                                          prefixIcon: Icon(
+                                            CupertinoIcons.search,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText, // match text color from theme
+                                            size: 21,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Nunito',
+                                                color: FlutterFlowTheme.of(
+                                                        context)
+                                                    .primaryText, // matching text color from theme
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 0.0,
+                                              ),
+                                          onTap: () {
+                                            setState(() {});
+                                          },
+                                        ),
                                       ),
-                                      borderRadius: BorderRadius.circular(22.0),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(22.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(22.0),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(22.0),
-                                    ),
-                                    filled: true,
-                                    fillColor: const Color.fromARGB(
-                                        246, 243, 243, 243),
-                                    prefixIcon: const Icon(
-                                      Icons.search_outlined,
-                                      size: 20,
-                                    ),
-                                    suffixIcon: _model
-                                            .textController.text.isNotEmpty
-                                        ? IconButton(
-                                            icon: Icon(
-                                              FontAwesomeIcons.solidTimesCircle,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                            ),
-                                            onPressed: () {
-                                              _model.textController!.clear();
-                                              setState(() {});
-                                            },
-                                          )
-                                        : null,
-                                    contentPadding: const EdgeInsets.only(
-                                      top: 6.0,
-                                      bottom: 6.0,
-                                      left: 10.0,
-                                      right: 10.0,
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
-                                      .override(
-                                        fontFamily: 'Nunito',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 15.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  textAlign: TextAlign.start,
-                                  cursorColor:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  validator: _model.textControllerValidator
-                                      .asValidator(context),
+                                  ],
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 15.0),
+                                    0.0, 30.0, 0.0, 30.0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
@@ -444,33 +408,25 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0.0, 0.0, 5.0, 10.0),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.locationArrow,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          size: 19.0,
-                                        ),
+                                      FaIcon(
+                                        FontAwesomeIcons.locationArrow,
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        size: 19.0,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0.0, 0.0, 0.0, 10.0),
-                                        child: Text(
-                                          ' Bruk min nåværende posisjon',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Nunito',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                fontSize: 17.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
+                                      const SizedBox(width: 8.0),
+                                      Text(
+                                        'Bruk min nåværende posisjon',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              fontSize: 17.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -478,7 +434,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 55.0),
+                                    20.0, 0.0, 20.0, 55.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     try {
@@ -542,9 +498,9 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                           context, 'En feil oppstod');
                                     }
                                   },
-                                  text: 'Velg denne posisjonen',
+                                  text: 'Velg posisjon',
                                   options: FFButtonOptions(
-                                    width: 320,
+                                    width: double.infinity,
                                     height: 50.0,
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -559,9 +515,9 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         .override(
                                           fontFamily: 'Nunito',
                                           color: Colors.white,
-                                          fontSize: 17.0,
+                                          fontSize: 16.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w800,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                     elevation: 0.0,
                                     borderRadius: BorderRadius.circular(24.0),

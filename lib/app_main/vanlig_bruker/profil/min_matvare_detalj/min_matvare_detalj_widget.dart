@@ -1181,7 +1181,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                       ),
                                     ),
                                     Container(
-                                      width: 332.0,
+                                      width:
+                                          332.0, // Maximum width for the container
                                       decoration: const BoxDecoration(),
                                       alignment: const AlignmentDirectional(
                                           -1.0, -1.0),
@@ -1198,55 +1199,66 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(
                                                           0.0, 0.0, 0.0, 0.0),
-                                                  child: Text.rich(
-                                                    TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                          text:
-                                                              '${matvare.username} ',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleSmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: 15.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold, // Set bold weight here
-                                                              ),
-                                                        ),
-                                                        TextSpan(
-                                                          text:
-                                                              '${matvare.description}',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleSmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: 15.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600, // Keep the original weight here
-                                                              ),
-                                                        ),
-                                                      ],
+                                                  child: Container(
+                                                    width:
+                                                        332.0, // Width constraint to enable wrapping
+                                                    child: Text.rich(
+                                                      TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text:
+                                                                '${matvare.username}  ',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .titleSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          ),
+                                                          TextSpan(
+                                                            text:
+                                                                '${matvare.description}',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .titleSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      softWrap:
+                                                          true, // Enable text wrapping
+                                                      overflow: TextOverflow
+                                                          .visible, // Allow the text to be visible when wrapped
                                                     ),
-                                                    textAlign: TextAlign.start,
                                                   ),
-                                                )
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -1329,7 +1341,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 0),
                                             child: Text(
-                                              '${matvare.antall ?? 0} ${matvare.kg == true ? 'Kg' : 'stk'}',
+                                              '${matvare.antall!.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
                                               textAlign: TextAlign.start,
                                               style: FlutterFlowTheme.of(
                                                       context)

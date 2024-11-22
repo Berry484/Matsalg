@@ -354,13 +354,13 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
             ),
             centerTitle: true,
             title: Text(
-              'Profil',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
+              '@${widget.username ?? 'Profil'}',
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Nunito',
                     color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 24,
+                    fontSize: 18,
                     letterSpacing: 0.0,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                   ),
             ),
           ),

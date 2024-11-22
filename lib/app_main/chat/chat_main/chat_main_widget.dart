@@ -119,11 +119,11 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                 'Meldinger',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Montserrat',
+                      fontFamily: 'Nunito',
                       color: FlutterFlowTheme.of(context).primaryText,
                       fontSize: 20,
                       letterSpacing: 0.0,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w800,
                     ),
               ),
             ),

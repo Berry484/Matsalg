@@ -139,11 +139,11 @@ class _FolgereWidgetState extends State<FolgereWidget> {
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
-            iconTheme:
-                IconThemeData(color: FlutterFlowTheme.of(context).alternate),
+            backgroundColor: FlutterFlowTheme.of(context).primary,
+            iconTheme: IconThemeData(
+                color: FlutterFlowTheme.of(context).secondaryText),
             automaticallyImplyLeading: true,
             leading: InkWell(
               splashColor: Colors.transparent,
@@ -155,7 +155,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios_rounded,
-                color: FlutterFlowTheme.of(context).alternate,
+                color: FlutterFlowTheme.of(context).secondaryText,
                 size: 28.0,
               ),
             ),
@@ -166,11 +166,11 @@ class _FolgereWidgetState extends State<FolgereWidget> {
               ),
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Montserrat',
+                    fontFamily: 'Nunito',
                     color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 20.0,
+                    fontSize: 18,
                     letterSpacing: 0.0,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w800,
                   ),
             ),
             actions: const [],
@@ -188,7 +188,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                   child: ListView.builder(
                     padding: const EdgeInsets.fromLTRB(
                       0,
-                      10.0,
+                      10,
                       0,
                       0,
                     ),
@@ -239,7 +239,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                             child: Container(
                               height: 80.0,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).secondary,
+                                color: FlutterFlowTheme.of(context).primary,
                                 borderRadius: BorderRadius.circular(13.0),
                                 shape: BoxShape.rectangle,
                               ),
@@ -251,7 +251,8 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -264,8 +265,8 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                   BorderRadius.circular(100.0),
                                               child: Image.network(
                                                 '${ApiConstants.baseUrl}${brukere.profilepic}',
-                                                width: 60.0,
-                                                height: 60.0,
+                                                width: 50.0,
+                                                height: 50.0,
                                                 fit: BoxFit.cover,
                                                 errorBuilder: (BuildContext
                                                         context,
@@ -273,8 +274,8 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                     StackTrace? stackTrace) {
                                                   return Image.asset(
                                                     'assets/images/profile_pic.png',
-                                                    width: 60.0,
-                                                    height: 60.0,
+                                                    width: 50.0,
+                                                    height: 50.0,
                                                     fit: BoxFit.cover,
                                                   );
                                                 },
@@ -283,7 +284,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                           ),
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5.0, 0.0, 0.0, 0.0),
+                                                .fromSTEB(8.0, 0.0, 0.0, 0.0),
                                             child: Container(
                                               width: 179.0,
                                               height: 103.0,
@@ -291,7 +292,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   Align(
                                                     alignment:
@@ -317,7 +318,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                                   0.0,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w600,
+                                                                      .bold,
                                                             ),
                                                       ),
                                                     ),
@@ -367,7 +368,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                       .primaryText,
                                                   fontSize: 15,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                             elevation: 0,
                                             borderSide: const BorderSide(
@@ -418,7 +419,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                       .primary,
                                                   fontSize: 15,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                             elevation: 0.0,
                                             borderRadius:
