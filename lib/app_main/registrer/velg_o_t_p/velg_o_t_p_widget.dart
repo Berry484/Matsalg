@@ -51,7 +51,7 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 292,
+      height: 250,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
         boxShadow: const [
@@ -100,9 +100,9 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 27,
+                                    fontSize: 19,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w800,
                                   ),
                             ),
                           ),
@@ -115,13 +115,12 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
             ),
             Expanded(
               child: Align(
-                alignment: const AlignmentDirectional(0, -1),
+                alignment: const AlignmentDirectional(0, 1),
                 child: Form(
                   key: _model.formKey,
                   autovalidateMode: AutovalidateMode.disabled,
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(25, 15, 25, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(25, 0, 25, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -131,21 +130,24 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    3, 16, 0, 0),
+                                    3, 0, 0, 0),
                                 child: TextFormField(
                                   controller: _model.emailTextController,
                                   focusNode: _model.emailFocusNode,
                                   textInputAction: TextInputAction.done,
+                                  autofocus: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: '6 siffer fra SMS',
                                     labelStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Nunito',
-                                          fontSize: 16,
+                                          color: const Color.fromRGBO(
+                                              113, 113, 113, 1.0),
+                                          fontSize: 17.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
@@ -192,15 +194,18 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                       .bodyMedium
                                       .override(
                                         fontFamily: 'Nunito',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 16,
                                         letterSpacing: 0.0,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                  textAlign: TextAlign.start,
                                   maxLength: 6,
                                   maxLengthEnforcement:
                                       MaxLengthEnforcement.enforced,
+                                  buildCounter: (context,
+                                          {required currentLength,
+                                          required isFocused,
+                                          maxLength}) =>
+                                      null,
                                   keyboardType: TextInputType.number,
                                   validator: _model.emailTextControllerValidator
                                       .asValidator(context),
@@ -211,7 +216,7 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 25, 0, 15),
+                              0, 12, 0, 35),
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (_isloading) {
@@ -292,7 +297,7 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                             text: 'Neste',
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 43,
+                              height: 50,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -303,7 +308,7 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                   .override(
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 19,
+                                    fontSize: 17,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -312,7 +317,7 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                 color: Color(0x5957636C),
                                 width: 1.5,
                               ),
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(14),
                             ),
                           ),
                         ),

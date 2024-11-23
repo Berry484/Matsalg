@@ -1832,10 +1832,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Nunito',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        fontSize: 16,
                                                         letterSpacing: 0.0,
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold,
                                                       ),
                                               maxLength: 16,
                                               maxLengthEnforcement:
@@ -3491,7 +3493,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            24.0),
+                                                            14.0),
                                                   ),
                                                 ),
                                               ),
@@ -3794,7 +3796,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(24.0),
+                                                                .circular(14.0),
                                                       ),
                                                     ),
                                                   ),

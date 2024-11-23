@@ -133,6 +133,17 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
               ),
             ),
             actions: const [],
+            title: Text(
+              matvare.name ?? '',
+              textAlign: TextAlign.center,
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Nunito',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 17,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w800,
+                  ),
+            ),
             centerTitle: true,
             elevation: 0.0,
           ),

@@ -36,7 +36,6 @@ class _LikeIkonWidgetState extends State<LikeIkonWidget>
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      HapticFeedback.heavyImpact();
       await Future.delayed(const Duration(milliseconds: 700));
       Navigator.pop(context);
     });

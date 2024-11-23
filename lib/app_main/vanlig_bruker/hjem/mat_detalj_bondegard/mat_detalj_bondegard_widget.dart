@@ -235,6 +235,17 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
               ),
             ),
             actions: const [],
+            title: Text(
+              matvare.name ?? '',
+              textAlign: TextAlign.center,
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Nunito',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 17,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w800,
+                  ),
+            ),
             centerTitle: true,
             elevation: 0.0,
           ),
@@ -357,12 +368,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         try {
                                           _model.liker =
                                               !(_model.liker ?? true);
-                                          HapticFeedback.mediumImpact();
+                                          HapticFeedback.lightImpact;
                                           apiLike.deleteLike(
                                               Securestorage.authToken,
                                               matvare.matId);
                                           safeSetState(() {});
                                           if (_model.liker == true) {
+                                            HapticFeedback.lightImpact;
                                             apiLike.sendLike(
                                                 Securestorage.authToken,
                                                 matvare.matId);
@@ -789,7 +801,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       children: [
                                         ToggleIcon(
                                           onPressed: () async {
-                                            // Toggle the current like state
+                                            HapticFeedback.lightImpact;
                                             safeSetState(() =>
                                                 _model.liker = !_model.liker!);
                                             if (_model.liker!) {
@@ -803,10 +815,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             }
                                           },
                                           value: _model.liker!,
-                                          onIcon: Icon(
+                                          onIcon: const Icon(
                                             CupertinoIcons.heart_fill,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
+                                            color: Color.fromARGB(
+                                                255, 255, 42, 56),
                                             size: 34.0,
                                           ),
                                           offIcon: Icon(

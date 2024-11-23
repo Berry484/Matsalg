@@ -61,7 +61,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 292,
+      height: 250,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
         boxShadow: const [
@@ -127,9 +127,9 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 27,
+                                    fontSize: 19,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w800,
                                   ),
                             ),
                           ),
@@ -147,7 +147,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
             ),
             Expanded(
               child: Align(
-                alignment: const AlignmentDirectional(0, -1),
+                alignment: const AlignmentDirectional(0, 1),
                 child: Form(
                   key: _model.formKey,
                   autovalidateMode: AutovalidateMode.disabled,
@@ -162,9 +162,9 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 16, 0, 0),
+                                  0, 0, 0, 0),
                               child: Container(
-                                width: 70,
+                                width: 60,
                                 height: 55,
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
@@ -195,7 +195,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                         color: Colors.transparent,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -203,7 +203,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                             .secondary,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -211,7 +211,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                             FlutterFlowTheme.of(context).error,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -219,7 +219,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                             FlutterFlowTheme.of(context).error,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     filled: true,
                                     fillColor:
@@ -245,7 +245,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10, 16, 0, 0),
+                                    10, 0, 0, 0),
                                 child: TextFormField(
                                   controller:
                                       _model.telefonnummerTextController,
@@ -254,12 +254,14 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                   decoration: InputDecoration(
                                     labelText: 'Telefonnummer',
                                     labelStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Nunito',
-                                          fontSize: 16,
+                                          color: const Color.fromRGBO(
+                                              113, 113, 113, 1.0),
+                                          fontSize: 17.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
@@ -272,7 +274,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                         color: Colors.transparent,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -280,7 +282,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                             .secondary,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -288,7 +290,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                             FlutterFlowTheme.of(context).error,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -296,7 +298,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                             FlutterFlowTheme.of(context).error,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     filled: true,
                                     fillColor:
@@ -307,10 +309,9 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                       .bodyMedium
                                       .override(
                                         fontFamily: 'Nunito',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 16,
                                         letterSpacing: 0.0,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                   textAlign: TextAlign.start,
                                   maxLength: 8,
@@ -335,7 +336,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 25, 0, 15),
+                              0, 12, 0, 35),
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (_isloading) {
@@ -405,7 +406,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                             text: 'Send',
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 43,
+                              height: 50,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -416,16 +417,16 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                   .override(
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 19,
+                                    fontSize: 17,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.bold,
                                   ),
                               elevation: 0,
                               borderSide: const BorderSide(
                                 color: Color(0x5957636C),
                                 width: 1.5,
                               ),
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(14),
                             ),
                           ),
                         ),

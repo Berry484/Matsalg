@@ -81,7 +81,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              40, 0, 40, 20),
+                              40, 0, 40, 12),
                           child: FFButtonWidget(
                             onPressed: () async {
                               await showModalBottomSheet(
@@ -117,16 +117,16 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                     color: FlutterFlowTheme.of(context).primary,
                                     fontSize: 17,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.bold,
                                   ),
                               elevation: 0,
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(14),
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              40, 0, 40, 20),
+                              40, 0, 40, 12),
                           child: FFButtonWidget(
                             onPressed: () {
                               print('Button pressed ...');
@@ -151,10 +151,10 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                     color: Colors.white,
                                     fontSize: 17,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.bold,
                                   ),
                               elevation: 0,
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(14),
                             ),
                           ),
                         ),
@@ -183,16 +183,16 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                   .override(
                                     fontFamily: 'Nunito',
                                     color: Colors.black,
-                                    fontSize: 16,
+                                    fontSize: 17,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.bold,
                                   ),
                               elevation: 0,
                               borderSide: const BorderSide(
                                 color: Color(0x5957636C),
                                 width: 1.5,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(14),
                             ),
                           ),
                         ),

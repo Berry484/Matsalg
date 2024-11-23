@@ -207,8 +207,8 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                       context, 'kjøtt');
                                                 },
                                                 child: Container(
-                                                  width: 100,
-                                                  height: 110,
+                                                  width: 133.3,
+                                                  height: 90,
                                                   decoration: BoxDecoration(
                                                     color: widget.kategori ==
                                                             'kjøtt'
@@ -291,8 +291,8 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                       context, 'grønt');
                                                 },
                                                 child: Container(
-                                                  width: 100,
-                                                  height: 110,
+                                                  width: 133.3,
+                                                  height: 90,
                                                   decoration: BoxDecoration(
                                                     color: widget.kategori ==
                                                             'grønt'
@@ -374,8 +374,8 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                       context, 'meieri');
                                                 },
                                                 child: Container(
-                                                  width: 100,
-                                                  height: 110,
+                                                  width: 133.3,
+                                                  height: 90,
                                                   decoration: BoxDecoration(
                                                     color: widget.kategori ==
                                                             'meieri'
@@ -471,8 +471,8 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                     context, 'bakverk');
                                               },
                                               child: Container(
-                                                width: 100,
-                                                height: 110,
+                                                width: 133.3,
+                                                height: 90,
                                                 decoration: BoxDecoration(
                                                   color: widget.kategori ==
                                                           'bakverk'
@@ -548,8 +548,8 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                     context, 'sjømat');
                                               },
                                               child: Container(
-                                                width: 100,
-                                                height: 110,
+                                                width: 133.3,
+                                                height: 90,
                                                 decoration: BoxDecoration(
                                                   color: widget.kategori ==
                                                           'sjømat'
@@ -624,8 +624,8 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                 Navigator.pop(context, 'annet');
                                               },
                                               child: Container(
-                                                width: 100,
-                                                height: 110,
+                                                width: 133.3,
+                                                height: 90,
                                                 decoration: BoxDecoration(
                                                   color: widget.kategori ==
                                                           'annet'

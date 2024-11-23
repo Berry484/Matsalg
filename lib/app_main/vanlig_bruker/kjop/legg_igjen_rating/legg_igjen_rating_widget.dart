@@ -211,7 +211,7 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                         text: 'Send',
                         options: FFButtonOptions(
                           width: double.infinity,
-                          height: 45,
+                          height: 50,
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               16, 0, 16, 0),
                           iconPadding:
@@ -226,7 +226,7 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                                     fontWeight: FontWeight.bold,
                                   ),
                           elevation: 0,
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(14),
                         ),
                       ),
                     ),

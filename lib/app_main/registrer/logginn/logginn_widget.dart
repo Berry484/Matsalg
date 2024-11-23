@@ -119,16 +119,16 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 0, 0, 0, 20),
                             child: Text(
                               'Logg inn',
-                              textAlign: TextAlign.start,
+                              textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 27,
+                                    fontSize: 19,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w800,
                                   ),
                             ),
                           ),
@@ -170,12 +170,14 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                             decoration: InputDecoration(
                               labelText: 'E-post eller telefonnummer',
                               labelStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Nunito',
-                                    fontSize: 16,
+                                    color: const Color.fromRGBO(
+                                        113, 113, 113, 1.0),
+                                    fontSize: 17.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w700,
                                   ),
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
@@ -218,10 +220,9 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Nunito',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 16,
                                   letterSpacing: 0.0,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
                                 ),
                             validator: _model.emailTextControllerValidator
                                 .asValidator(context),
@@ -345,12 +346,14 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                             decoration: InputDecoration(
                               labelText: 'Passord',
                               labelStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Nunito',
-                                    fontSize: 16,
+                                    color: const Color.fromRGBO(
+                                        113, 113, 113, 1.0),
+                                    fontSize: 17.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w700,
                                   ),
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
@@ -407,10 +410,9 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Nunito',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 16,
                                   letterSpacing: 0.0,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
                                 ),
                             validator: _model.passordTextControllerValidator
                                 .asValidator(context),
@@ -531,7 +533,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 : 'Logg inn', // Normal text when not loading
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 45,
+                              height: 50,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -551,7 +553,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 color: Color(0x5957636C),
                                 width: 1.5,
                               ),
-                              borderRadius: BorderRadius.circular(24),
+                              borderRadius: BorderRadius.circular(14),
                             ),
                             icon: _isloading
                                 ? CircularProgressIndicator(

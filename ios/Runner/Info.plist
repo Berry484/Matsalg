@@ -50,7 +50,8 @@
     <string>For å laste opp bilder eller videoer, trenger appen tilgang til kamerarullen din.</string>
 	<key>PermissionGroupNotification</key>
     <string>For å holde deg oppdatert, trenger appen tilgang til å sende deg varsler.</string>
-
+	<key>FLTEnableWideGamut</key>
+	<true/>
 
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

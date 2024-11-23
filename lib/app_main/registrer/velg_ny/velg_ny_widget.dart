@@ -107,16 +107,16 @@ class _VelgNyWidgetState extends State<VelgNyWidget> {
                                   0, 0, 0, 20),
                               child: Text(
                                 'Velg',
-                                textAlign: TextAlign.start,
+                                textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
                                       fontFamily: 'Nunito',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
-                                      fontSize: 27,
+                                      fontSize: 19,
                                       letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w800,
                                     ),
                               ),
                             ),
