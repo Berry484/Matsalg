@@ -1,21 +1,21 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
+import 'package:mat_salg/flutter_flow/flutter_flow_animations.dart';
 import 'package:mat_salg/matvarer.dart';
-
-import '/app_main/vanlig_bruker/hjem/like_ikon/like_ikon_widget.dart';
 import '/app_main/vanlig_bruker/kart/kart_pop_up_bondegard/kart_pop_up_bondegard_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'kjop_detalj_ventende_model.dart';
@@ -39,6 +39,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
   late Matvarer matvare;
   ApiLike apiLike = ApiLike();
   bool _messageIsLoading = false;
+  bool _showHeart = false;
+  final animationsMap = <String, AnimationInfo>{};
+  bool _isAnimating = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -48,6 +51,41 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
     _model = createModel(context, () => KjopDetaljVentendeModel());
     matvare = Matvarer.fromJson1(widget.matinfo);
     getChecklike();
+    // Adding the animation for the heart icon
+    animationsMap.addAll({
+      'iconOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ScaleEffect(
+            curve: Curves.bounceOut,
+            delay: 0.0.ms,
+            duration: 400.0.ms,
+            begin: const Offset(1.2, 1.2),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+    });
+  }
+
+  // Trigger animation manually when the liker value changes
+  void _triggerHeartAnimation() {
+    if (_isAnimating)
+      return; // Prevent triggering animation if it's already running
+
+    setState(() {
+      _isAnimating = true; // Set flag to indicate animation is running
+      _showHeart = true; // Show the heart icon
+    });
+
+    Timer(const Duration(seconds: 1, milliseconds: 500), () {
+      if (mounted) {
+        setState(() {
+          _showHeart = false; // Hide the heart icon
+          _isAnimating = false; // Reset the animation flag
+        });
+      }
+    });
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -301,42 +339,18 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       highlightColor: Colors.transparent,
                                       onDoubleTap: () async {
                                         try {
+                                          HapticFeedback.lightImpact();
                                           _model.liker =
                                               !(_model.liker ?? true);
-                                          HapticFeedback.lightImpact();
                                           apiLike.deleteLike(
                                               Securestorage.authToken,
                                               matvare.matId);
                                           safeSetState(() {});
                                           if (_model.liker == true) {
-                                            HapticFeedback.lightImpact();
+                                            _triggerHeartAnimation();
                                             apiLike.sendLike(
                                                 Securestorage.authToken,
                                                 matvare.matId);
-                                            showAlignedDialog(
-                                              barrierColor: Colors.transparent,
-                                              context: context,
-                                              isGlobal: false,
-                                              avoidOverflow: false,
-                                              targetAnchor:
-                                                  const AlignmentDirectional(
-                                                          0.0, 0.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              followerAnchor:
-                                                  const AlignmentDirectional(
-                                                          0.0, 0.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              builder: (dialogContext) {
-                                                return const Material(
-                                                  color: Colors.transparent,
-                                                  child: LikeIkonWidget(),
-                                                );
-                                              },
-                                            );
                                           }
                                         } on SocketException {
                                           showErrorToast(context,
@@ -678,6 +692,19 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 ],
                                               ),
                                             ),
+                                            if (_showHeart)
+                                              Align(
+                                                alignment: Alignment
+                                                    .center, // Center the heart icon
+                                                child: Icon(
+                                                  CupertinoIcons.heart_fill,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryBackground,
+                                                  size: 130.0,
+                                                ).animateOnPageLoad(animationsMap[
+                                                    'iconOnPageLoadAnimation']!),
+                                              ),
                                           ],
                                         ),
                                       ),
@@ -714,6 +741,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                               safeSetState(() => _model.liker =
                                                   !_model.liker!);
                                               if (_model.liker!) {
+                                                _triggerHeartAnimation();
                                                 apiLike.sendLike(
                                                     Securestorage.authToken,
                                                     matvare.matId);
