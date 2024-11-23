@@ -64,38 +64,40 @@ class _InfoWidgetState extends State<InfoWidget> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 16),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 16),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 30),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 30),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                       child: Text(
                         'Slik fungerer det',
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Nunito',
                               color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 24,
+                              fontSize: 20,
                               letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w800,
                             ),
                       ),
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -116,8 +118,8 @@ class _InfoWidgetState extends State<InfoWidget> {
                                 ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 0, 0, 0),
                             child: Text(
                               'Send en kjøpsforespørsel til brukeren.    ',
                               textAlign: TextAlign.start,
@@ -127,7 +129,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 15,
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -138,9 +140,10 @@ class _InfoWidgetState extends State<InfoWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -161,8 +164,8 @@ class _InfoWidgetState extends State<InfoWidget> {
                                 ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 0, 0, 0),
                             child: Text(
                               'Brukeren må godta forespørselen.           ',
                               textAlign: TextAlign.start,
@@ -172,7 +175,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 15,
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -183,9 +186,10 @@ class _InfoWidgetState extends State<InfoWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -206,8 +210,8 @@ class _InfoWidgetState extends State<InfoWidget> {
                                 ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 0, 0, 0),
                             child: Text(
                               'Avtal levering eller henting direkte med \nbrukeren via chatten.',
                               textAlign: TextAlign.start,
@@ -217,7 +221,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 15,
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -252,7 +256,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                   text: 'Skjønner',
                   options: FFButtonOptions(
                     width: double.infinity,
-                    height: 43.0,
+                    height: 45.0,
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         0.0, 0.0, 0.0, 0.0),
                     color: FlutterFlowTheme.of(context).alternate,
@@ -268,7 +272,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                       color: Colors.transparent,
                       width: 1.0,
                     ),
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                 ),
               ),

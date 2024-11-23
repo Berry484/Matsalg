@@ -60,7 +60,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
   bool isFocused = false;
   double _selectedValue = 0.0;
   int kjopsBeskyttelse = 2;
-  bool applePay = false;
+  bool applePay = true;
 
   late Matvarer matvare;
   final Securestorage securestorage = Securestorage();

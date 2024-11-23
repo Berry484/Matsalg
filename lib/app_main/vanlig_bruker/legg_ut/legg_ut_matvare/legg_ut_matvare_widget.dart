@@ -1854,7 +1854,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                             onTap: () async {
                                               try {
                                                 FocusScope.of(context)
-                                                    .unfocus();
+                                                    .requestFocus(FocusNode());
                                                 String? velgkategori =
                                                     await showModalBottomSheet<
                                                         String>(
