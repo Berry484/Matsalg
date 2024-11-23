@@ -218,6 +218,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
           ),
           body: SafeArea(
             top: true,
+            bottom: false,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -399,7 +400,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                   '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                                   width: double
                                                                       .infinity,
-                                                                  height: 485.0,
+                                                                  height: 525.0,
                                                                   fit: BoxFit
                                                                       .cover,
                                                                   alignment:
@@ -669,19 +670,17 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                 'En feil oppstod');
                                                           }
                                                         },
-                                                        effect: smooth_page_indicator
+                                                        effect: const smooth_page_indicator
                                                             .ExpandingDotsEffect(
-                                                          expansionFactor: 3,
-                                                          spacing: 8,
-                                                          radius: 16,
-                                                          dotWidth: 10,
-                                                          dotHeight: 8,
-                                                          dotColor: const Color(
-                                                              0x64616161),
+                                                          expansionFactor: 1.1,
+                                                          spacing: 8.0,
+                                                          radius: 16.0,
+                                                          dotWidth: 8.5,
+                                                          dotHeight: 8.5,
+                                                          dotColor:
+                                                              Color(0xFFE6E6E6),
                                                           activeDotColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .secondaryText,
+                                                              Color(0xFFB0B0B0),
                                                           paintStyle:
                                                               PaintingStyle
                                                                   .fill,
@@ -716,15 +715,15 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                           ],
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              5.0, 00.0, 15.0, .0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 30),
+                                    10.0, 0.0, 0.0, 8.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -866,7 +865,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 10, 0),
+                                              0, 0, 0, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -1129,7 +1128,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 15.0, 0.0, 0.0),
+                                                .fromSTEB(0.0, 0.0, 0.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:

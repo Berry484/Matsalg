@@ -276,6 +276,63 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
     return degrees * pi / 180;
   }
 
+// Helper method to build each profile outline with shimmer effect
+  Widget buildProfileOutline(BuildContext context, int opacity, Color baseColor,
+      Color highlightColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Row(
+        children: [
+          Shimmer.fromColors(
+            baseColor: baseColor,
+            highlightColor: highlightColor,
+            child: Container(
+              width: 65.0,
+              height: 65.0,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(opacity, 255, 255, 255),
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+            ),
+          ),
+          const SizedBox(width: 16.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Shimmer.fromColors(
+                  baseColor: baseColor,
+                  highlightColor: highlightColor,
+                  child: Container(
+                    width: 75.0,
+                    height: 13.0,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(opacity, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8.0),
+                Shimmer.fromColors(
+                  baseColor: baseColor,
+                  highlightColor: highlightColor,
+                  child: Container(
+                    width: 200,
+                    height: 13.0,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(opacity, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -527,117 +584,116 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                         Stack(
                           alignment: const AlignmentDirectional(0, -1),
                           children: [
-                            // Align(
-                            //   alignment: const AlignmentDirectional(0, 0),
-                            //   child: Padding(
-                            //     padding: const EdgeInsetsDirectional.fromSTEB(
-                            //         0, 10, 0, 17),
-                            //     child: SafeArea(
-                            //       child: Container(
-                            //         width: valueOrDefault<double>(
-                            //           MediaQuery.sizeOf(context).width,
-                            //           500.0,
-                            //         ),
-                            //         decoration: BoxDecoration(
-                            //           color:
-                            //               FlutterFlowTheme.of(context).primary,
-                            //         ),
-                            //         child: Column(
-                            //           mainAxisSize: MainAxisSize.max,
-                            //           children: [
-                            //             Padding(
-                            //               padding: const EdgeInsetsDirectional
-                            //                   .fromSTEB(15, 0, 15, 0),
-                            //               child: Row(
-                            //                 mainAxisSize: MainAxisSize.max,
-                            //                 mainAxisAlignment:
-                            //                     MainAxisAlignment.spaceBetween,
-                            //                 children: [
-                            //                   Expanded(
-                            //                     child: SizedBox(
-                            //                       height:
-                            //                           38.0, // Set the desired height here
-                            //                       child:
-                            //                           CupertinoSearchTextField(
-                            //                         controller:
-                            //                             _model.textController,
-                            //                         focusNode: _model
-                            //                             .textFieldFocusNode,
-                            //                         autofocus: false,
-                            //                         onChanged: (value) =>
-                            //                             _runFilter(value),
-                            //                         placeholder: 'Søk',
-                            //                         placeholderStyle:
-                            //                             FlutterFlowTheme.of(
-                            //                                     context)
-                            //                                 .labelMedium
-                            //                                 .override(
-                            //                                   fontFamily:
-                            //                                       'Open Sans',
-                            //                                   color: const Color(
-                            //                                       0x8F101213),
-                            //                                   fontSize: 15.0,
-                            //                                   letterSpacing:
-                            //                                       0.0,
-                            //                                 ),
-                            //                         backgroundColor:
-                            //                             const Color.fromARGB(
-                            //                                 255, 238, 238, 238),
-                            //                         prefixInsets:
-                            //                             const EdgeInsetsDirectional
-                            //                                 .fromSTEB(
-                            //                                 12, 6, 6, 6),
-                            //                         borderRadius:
-                            //                             BorderRadius.circular(
-                            //                                 24.0),
-                            //                         prefixIcon: const Icon(
-                            //                           Icons.search_outlined,
-                            //                           size: 20,
-                            //                         ),
-                            //                         suffixIcon: Icon(
-                            //                           Icons.cancel,
-                            //                           color:
-                            //                               FlutterFlowTheme.of(
-                            //                                       context)
-                            //                                   .secondaryText,
-                            //                         ),
-                            //                         onSuffixTap: () {
-                            //                           _model.textController!
-                            //                               .clear();
-                            //                           setState(() {
-                            //                             _runFilter('');
-                            //                           });
-                            //                         },
-                            //                         padding: const EdgeInsets
-                            //                             .symmetric(
-                            //                             vertical: 6.0,
-                            //                             horizontal: 10.0),
-                            //                         style: FlutterFlowTheme.of(
-                            //                                 context)
-                            //                             .bodyLarge
-                            //                             .override(
-                            //                               fontFamily:
-                            //                                   'Open Sans',
-                            //                               color: FlutterFlowTheme
-                            //                                       .of(context)
-                            //                                   .primaryText,
-                            //                               fontSize: 15.0,
-                            //                               letterSpacing: 0.0,
-                            //                             ),
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                 ],
-                            //               ),
-                            //             ),
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                             if ((_matvarer == null || _matvarer!.isEmpty) &&
-                                _isloading == false)
+                                (_isloading == false &&
+                                    widget.kategori == 'følger'))
+                              Container(
+                                width: MediaQuery.sizeOf(context).width,
+                                height: MediaQuery.sizeOf(context).height,
+                                child: Align(
+                                  alignment: const AlignmentDirectional(0, -1),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 0, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              const AlignmentDirectional(0, 1),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              // First Profile Outline
+                                              buildProfileOutline(
+                                                context,
+                                                100,
+                                                Colors.grey[300]
+                                                        ?.withOpacity(1) ??
+                                                    Colors.grey.withOpacity(
+                                                        0.3), // Reduce opacity
+                                                Colors.grey[300]
+                                                        ?.withOpacity(1) ??
+                                                    Colors.grey.withOpacity(
+                                                        0.3), // Reduce opacity
+                                              ),
+
+                                              // Second Profile Outline
+                                              buildProfileOutline(
+                                                context,
+                                                80,
+                                                Colors.grey[300]
+                                                        ?.withOpacity(1) ??
+                                                    Colors.grey.withOpacity(1),
+                                                Colors.grey[300]
+                                                        ?.withOpacity(1) ??
+                                                    Colors.grey.withOpacity(1),
+                                              ),
+
+                                              // Third Profile Outline
+                                              buildProfileOutline(
+                                                context,
+                                                50,
+                                                Colors.grey[300]
+                                                        ?.withOpacity(1) ??
+                                                    Colors.grey.withOpacity(1),
+                                                Colors.grey[300]
+                                                        ?.withOpacity(1) ??
+                                                    Colors.grey.withOpacity(1),
+                                              ),
+
+                                              // Fourth Profile Outline
+                                              buildProfileOutline(
+                                                context,
+                                                38,
+                                                Colors.grey[300]
+                                                        ?.withOpacity(1) ??
+                                                    Colors.grey.withOpacity(1),
+                                                Colors.grey[300]
+                                                        ?.withOpacity(1) ??
+                                                    Colors.grey.withOpacity(1),
+                                              ),
+
+                                              const SizedBox(height: 8.0),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 0, 0, 0),
+                                                child: Text(
+                                                  'Du kan se annonser fra folk du følger her',
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .headlineSmall
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        fontSize: 23,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w800,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            if ((_matvarer == null || _matvarer!.isEmpty) &&
+                                (_isloading == false &&
+                                    widget.kategori != 'følger'))
                               Container(
                                 width: MediaQuery.sizeOf(context).width,
                                 height: MediaQuery.sizeOf(context).height - 150,
@@ -664,7 +720,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                           ),
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 16, 0, 0),
+                                                .fromSTEB(0, 20, 0, 0),
                                             child: Text(
                                               'Her var det tomt',
                                               textAlign: TextAlign.center,
@@ -672,13 +728,13 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                       context)
                                                   .headlineSmall
                                                   .override(
-                                                    fontFamily: 'Open Sans',
+                                                    fontFamily: 'Nunito',
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .primaryText,
-                                                    fontSize: 20,
+                                                    fontSize: 23,
                                                     letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
+                                                    fontWeight: FontWeight.w700,
                                                   ),
                                             ),
                                           ),
@@ -776,35 +832,6 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                           10.0),
                                                             ),
                                                           ),
-                                                          // const SizedBox(
-                                                          //     height: 8.0),
-                                                          // Align(
-                                                          //   alignment: Alignment
-                                                          //       .centerLeft,
-                                                          //   child: Padding(
-                                                          //     padding:
-                                                          //         const EdgeInsets
-                                                          //             .only(
-                                                          //             left: 10.0),
-                                                          //     child: Container(
-                                                          //       width: 38,
-                                                          //       height: 15,
-                                                          //       decoration:
-                                                          //           BoxDecoration(
-                                                          //         color: const Color
-                                                          //             .fromARGB(
-                                                          //             127,
-                                                          //             255,
-                                                          //             255,
-                                                          //             255),
-                                                          //         borderRadius:
-                                                          //             BorderRadius
-                                                          //                 .circular(
-                                                          //                     10.0),
-                                                          //       ),
-                                                          //     ),
-                                                          //   ),
-                                                          // )
                                                         ],
                                                       ),
                                                     );

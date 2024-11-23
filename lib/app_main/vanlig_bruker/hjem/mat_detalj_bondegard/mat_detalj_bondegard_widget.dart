@@ -291,6 +291,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
           ),
           body: SafeArea(
             top: true,
+            bottom: false,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -430,12 +431,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       },
                                       child: SizedBox(
                                         width: double.infinity,
-                                        height: 485.0,
+                                        height: 525.0,
                                         child: Stack(
                                           children: [
                                             SizedBox(
                                               width: double.infinity,
-                                              height: 485.0,
+                                              height: 525.0,
                                               child: Stack(
                                                 children: [
                                                   Padding(
@@ -458,7 +459,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         SizedBox(
                                                           width:
                                                               double.infinity,
-                                                          height: 485.0,
+                                                          height: 525.0,
                                                           child: Stack(
                                                             children: [
                                                               ClipRRect(
@@ -471,7 +472,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                                   width: double
                                                                       .infinity,
-                                                                  height: 485.0,
+                                                                  height: 525.0,
                                                                   fit: BoxFit
                                                                       .cover,
                                                                   alignment:
@@ -506,7 +507,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           SizedBox(
                                                             width:
                                                                 double.infinity,
-                                                            height: 485.0,
+                                                            height: 525.0,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -555,7 +556,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           SizedBox(
                                                             width:
                                                                 double.infinity,
-                                                            height: 485.0,
+                                                            height: 525.0,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -602,7 +603,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                 .length >
                                                             3)
                                                           SizedBox(
-                                                            height: 485.0,
+                                                            height: 525.0,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -651,7 +652,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           SizedBox(
                                                             width:
                                                                 double.infinity,
-                                                            height: 485.0,
+                                                            height: 525.0,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -766,19 +767,17 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           );
                                                           safeSetState(() {});
                                                         },
-                                                        effect: smooth_page_indicator
+                                                        effect: const smooth_page_indicator
                                                             .ExpandingDotsEffect(
-                                                          expansionFactor: 3.0,
+                                                          expansionFactor: 1.1,
                                                           spacing: 8.0,
                                                           radius: 16.0,
-                                                          dotWidth: 10.0,
-                                                          dotHeight: 8.0,
-                                                          dotColor: const Color(
-                                                              0x64616161),
+                                                          dotWidth: 8.5,
+                                                          dotHeight: 8.5,
+                                                          dotColor:
+                                                              Color(0xFFE6E6E6),
                                                           activeDotColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .secondaryText,
+                                                              Color(0xFFB0B0B0),
                                                           paintStyle:
                                                               PaintingStyle
                                                                   .fill,
@@ -814,14 +813,14 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              5.0, 0.0, 0.0, 0.0),
+                              5.0, 00.0, 15.0, .0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 30.0),
+                                    10.0, 0.0, 0.0, 8.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -1030,7 +1029,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 10, 0),
+                                              0, 0, 0, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -1074,7 +1073,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                              10, 0, 10, 0),
+                                                              10, 0, 0, 0),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -1335,7 +1334,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 15.0, 0.0, 0.0),
+                                                .fromSTEB(0.0, 0.0, 0.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
