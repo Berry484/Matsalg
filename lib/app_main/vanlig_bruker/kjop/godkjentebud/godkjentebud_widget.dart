@@ -486,36 +486,6 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                         ),
-                        // Padding(
-                        //   padding:
-                        //       const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                        //   child: Row(
-                        //     mainAxisSize: MainAxisSize.min,
-                        //     children: [
-                        //       Text(
-                        //         (calculateDistance(
-                        //                     FFAppState().brukerLat ?? 0.0,
-                        //                     FFAppState().brukerLng ?? 0.0,
-                        //                     matvare.lat ?? 0.0,
-                        //                     matvare.lng ?? 0.0) <
-                        //                 1)
-                        //             ? '<1 Km'
-                        //             : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)}Km',
-                        //         textAlign: TextAlign.start,
-                        //         style: FlutterFlowTheme.of(context)
-                        //             .titleMedium
-                        //             .override(
-                        //               fontFamily: 'Nunito',
-                        //               fontSize: 14.0,
-                        //               letterSpacing: 0.0,
-                        //               color: const Color.fromARGB(
-                        //                   211, 87, 99, 108),
-                        //               fontWeight: FontWeight.bold,
-                        //             ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                         Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),

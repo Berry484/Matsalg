@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:decimal/decimal.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/betaling/velgBetalingsmetode/velg_betaling_widget.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mat_salg/matvarer.dart';
 
@@ -57,8 +57,10 @@ class _BetalingWidgetState extends State<BetalingWidget> {
   late BetalingModel _model;
   bool _isLoading = false;
   int matpris = 1;
+  bool isFocused = false;
   double _selectedValue = 0.0;
   int kjopsBeskyttelse = 2;
+  bool applePay = false;
 
   late Matvarer matvare;
   final Securestorage securestorage = Securestorage();
@@ -173,7 +175,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Nunito',
                     color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 18,
+                    fontSize: 17,
                     letterSpacing: 0.0,
                     fontWeight: FontWeight.w800,
                   ),
@@ -289,7 +291,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                                 .override(
                                                                   fontFamily:
                                                                       'Nunito',
-                                                                  fontSize: 19,
+                                                                  fontSize: 16,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -311,7 +313,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                                 .override(
                                                                   fontFamily:
                                                                       'Nunito',
-                                                                  fontSize: 15,
+                                                                  fontSize: 14,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryText,
@@ -339,7 +341,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                                 .override(
                                                                   fontFamily:
                                                                       'Nunito',
-                                                                  fontSize: 18,
+                                                                  fontSize: 15,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -352,121 +354,6 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                 ),
                                               ),
                                             ),
-                                            // Column(
-                                            //   mainAxisSize: MainAxisSize.max,
-                                            //   mainAxisAlignment:
-                                            //       MainAxisAlignment.center,
-                                            //   crossAxisAlignment:
-                                            //       CrossAxisAlignment.center,
-                                            //   children: [
-                                            //     Align(
-                                            //       alignment:
-                                            //           const AlignmentDirectional(
-                                            //               1, 1),
-                                            //       child: Padding(
-                                            //         padding:
-                                            //             const EdgeInsetsDirectional
-                                            //                 .fromSTEB(
-                                            //                 0, 0, 0, 10),
-                                            //         child: Row(
-                                            //           mainAxisSize:
-                                            //               MainAxisSize.max,
-                                            //           mainAxisAlignment:
-                                            //               MainAxisAlignment
-                                            //                   .center,
-                                            //           crossAxisAlignment:
-                                            //               CrossAxisAlignment
-                                            //                   .end,
-                                            //           children: [
-                                            //             Padding(
-                                            //               padding:
-                                            //                   const EdgeInsetsDirectional
-                                            //                       .fromSTEB(
-                                            //                       0, 0, 0, 0),
-                                            //               child: Text(
-                                            //                 '${matvare.price} Kr',
-                                            //                 style: FlutterFlowTheme
-                                            //                         .of(context)
-                                            //                     .bodyMedium
-                                            //                     .override(
-                                            //                       fontFamily:
-                                            //                           'Nunito',
-                                            //                       color: FlutterFlowTheme.of(
-                                            //                               context)
-                                            //                           .primaryText,
-                                            //                       fontSize: 18,
-                                            //                       letterSpacing:
-                                            //                           0.0,
-                                            //                       fontWeight:
-                                            //                           FontWeight
-                                            //                               .bold,
-                                            //                     ),
-                                            //               ),
-                                            //             ),
-                                            //             if (matvare.kg == true)
-                                            //               Padding(
-                                            //                 padding:
-                                            //                     const EdgeInsetsDirectional
-                                            //                         .fromSTEB(0,
-                                            //                         12, 4, 0),
-                                            //                 child: Text(
-                                            //                   '/kg',
-                                            //                   textAlign:
-                                            //                       TextAlign.end,
-                                            //                   style: FlutterFlowTheme
-                                            //                           .of(context)
-                                            //                       .bodyMedium
-                                            //                       .override(
-                                            //                         fontFamily:
-                                            //                             'Nunito',
-                                            //                         color: FlutterFlowTheme.of(
-                                            //                                 context)
-                                            //                             .secondaryText,
-                                            //                         fontSize:
-                                            //                             18,
-                                            //                         letterSpacing:
-                                            //                             0.0,
-                                            //                         fontWeight:
-                                            //                             FontWeight
-                                            //                                 .w600,
-                                            //                       ),
-                                            //                 ),
-                                            //               ),
-                                            //             // if (matvare.kg != true)
-                                            //             //   Padding(
-                                            //             //     padding:
-                                            //             //         const EdgeInsetsDirectional
-                                            //             //             .fromSTEB(0,
-                                            //             //             12, 4, 0),
-                                            //             //     child: Text(
-                                            //             //       '/stk',
-                                            //             //       textAlign:
-                                            //             //           TextAlign.end,
-                                            //             //       style: FlutterFlowTheme
-                                            //             //               .of(context)
-                                            //             //           .bodyMedium
-                                            //             //           .override(
-                                            //             //             fontFamily:
-                                            //             //                 'Nunito',
-                                            //             //             color: FlutterFlowTheme.of(
-                                            //             //                     context)
-                                            //             //                 .secondaryText,
-                                            //             //             fontSize:
-                                            //             //                 18,
-                                            //             //             letterSpacing:
-                                            //             //                 0.0,
-                                            //             //             fontWeight:
-                                            //             //                 FontWeight
-                                            //             //                     .w600,
-                                            //             //           ),
-                                            //             //     ),
-                                            //             //   ),
-                                            //           ],
-                                            //         ),
-                                            //       ),
-                                            //     ),
-                                            //   ],
-                                            // ),
                                           ],
                                         ),
                                       ),
@@ -639,8 +526,10 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                             double step;
 
                                             step = 1.0;
+                                            double antall =
+                                                matvare.antall as double;
                                             for (double i = 1.0;
-                                                i <= 50;
+                                                i <= antall;
                                                 i += step) {
                                               values.add(i);
                                             }
@@ -861,76 +750,248 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                18, 30, 12, 16),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                18, 30, 12, 20),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      'Totalt å betale',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Nunito',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 20.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w800,
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Text(
+                                          'Totalt å betale',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Nunito',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 20.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          ((_selectedValue * matpris +
+                                                  kjopsBeskyttelse)
+                                              .toStringAsFixed(
+                                            ((_selectedValue * matpris +
+                                                            kjopsBeskyttelse) %
+                                                        1 ==
+                                                    0)
+                                                ? 0
+                                                : 2,
+                                          )),
+                                          style: FlutterFlowTheme.of(context)
+                                              .displaySmall
+                                              .override(
+                                                fontFamily: 'Nunito',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 20,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(5, 0, 0, 0),
+                                          child: Text(
+                                            'Kr',
+                                            style: FlutterFlowTheme.of(context)
+                                                .displaySmall
+                                                .override(
+                                                  fontFamily: 'Nunito',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  fontSize: 20,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w800,
+                                                ),
                                           ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      ((_selectedValue * matpris +
-                                              kjopsBeskyttelse)
-                                          .toStringAsFixed(
-                                        ((_selectedValue * matpris +
-                                                        kjopsBeskyttelse) %
-                                                    1 ==
-                                                0)
-                                            ? 0
-                                            : 2,
-                                      )),
-                                      style: FlutterFlowTheme.of(context)
-                                          .displaySmall
-                                          .override(
-                                            fontFamily: 'Nunito',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 20,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              5, 0, 0, 0),
-                                      child: Text(
-                                        'Kr',
+                                Align(
+                                  alignment:
+                                      const AlignmentDirectional(-1.0, 0.0),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 12.0, 0.0, 16.0),
+                                    child: Text.rich(
+                                      TextSpan(
+                                        text: 'Vi gjør dine kjøp tryggere med ',
                                         style: FlutterFlowTheme.of(context)
-                                            .displaySmall
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Nunito',
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w800,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
                                             ),
+                                        children: [
+                                          TextSpan(
+                                            text: 'matsalg.no kjøpsbeskyttelse',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Nunito',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ],
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              try {
+                                FocusScope.of(context).unfocus();
+                                bool? velgBetal =
+                                    await showModalBottomSheet<bool?>(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  barrierColor:
+                                      const Color.fromARGB(60, 17, 0, 0),
+                                  context: context,
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () =>
+                                          FocusScope.of(context).unfocus(),
+                                      child: Padding(
+                                        padding:
+                                            MediaQuery.viewInsetsOf(context),
+                                        child: const VelgBetalingWidget(),
+                                      ),
+                                    );
+                                  },
+                                );
+
+                                setState(() {
+                                  if (velgBetal != null) {
+                                    applePay = true;
+                                    isFocused = true;
+                                  }
+                                });
+                              } catch (e) {
+                                showErrorToast(context, 'En feil oppstod');
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.sizeOf(context).width,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondary,
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.creditcard,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 25,
+                                            ),
+                                            const SizedBox(width: 15),
+                                            Text(
+                                              applePay == true
+                                                  ? 'Apple Pay'
+                                                  : 'Velg betalingsmetode ...',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Nunito',
+                                                    color: applePay == true
+                                                        ? Colors.black
+                                                        : const Color.fromRGBO(
+                                                            113, 113, 113, 1.0),
+                                                    fontSize: 17.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        Icon(
+                                          CupertinoIcons.chevron_forward,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 22,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (isFocused || applePay == true)
+                                    Positioned(
+                                      top: -10,
+                                      left: 18,
+                                      child: Container(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        child: Text(
+                                          'Betalingsmetode',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                fontFamily: 'Nunito',
+                                                fontSize: 13.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: const Color.fromRGBO(
+                                                    113, 113, 113, 1.0),
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
                           ),
                           Padding(

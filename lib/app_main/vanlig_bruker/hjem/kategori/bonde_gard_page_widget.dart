@@ -340,6 +340,19 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                           return (b.price ?? double.negativeInfinity)
                               .compareTo(a.price ?? double.negativeInfinity);
                         });
+                      } else if (selectedOption == 'Avstand: nærmest meg') {
+                        sorterVerdi = 4; // Set the sorting to high to low
+                        double brukerLat = FFAppState().brukerLat ?? 0.0;
+                        double brukerLng = FFAppState().brukerLng ?? 0.0;
+
+                        sortedList.sort((a, b) {
+                          double distanceA = calculateDistance(
+                              brukerLat, brukerLng, a.lat ?? 0.0, a.lng ?? 0.0);
+                          double distanceB = calculateDistance(
+                              brukerLat, brukerLng, b.lat ?? 0.0, b.lng ?? 0.0);
+
+                          return distanceA.compareTo(distanceB);
+                        });
                       } else {
                         // Assuming this is for "Best Match"
                         sorterVerdi = 1; // Reset to best match sorting

@@ -42,6 +42,9 @@ class _SorterWidgetState extends State<SorterWidget> {
     } else if (widget.sorterVerdi == 3) {
       _model.checkboxGroupValueController =
           FormFieldController<List<String>>(['Pris: høy til lav']);
+    } else if (widget.sorterVerdi == 4) {
+      _model.checkboxGroupValueController =
+          FormFieldController<List<String>>(['Avstand: nærmest meg']);
     } else {
       _model.checkboxGroupValueController =
           FormFieldController<List<String>>([]); // Fallback if invalid
@@ -62,8 +65,8 @@ class _SorterWidgetState extends State<SorterWidget> {
       height: 380,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             blurRadius: 4,
             color: Color(0x25090F13),
             offset: Offset(
@@ -75,8 +78,8 @@ class _SorterWidgetState extends State<SorterWidget> {
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
-          topLeft: Radius.circular(12),
-          topRight: Radius.circular(12),
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
       ),
       child: Column(
@@ -105,7 +108,7 @@ class _SorterWidgetState extends State<SorterWidget> {
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Nunito',
                             color: FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 20,
+                            fontSize: 18,
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -140,7 +143,7 @@ class _SorterWidgetState extends State<SorterWidget> {
             ],
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(17, 27, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(17, 0, 0, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,6 +153,7 @@ class _SorterWidgetState extends State<SorterWidget> {
                     'Mest relevant',
                     'Pris: lav til høy',
                     'Pris: høy til lav',
+                    'Avstand: nærmest meg',
                   ],
                   onChanged: (val) {
                     // Use post-frame callback to update state after the build is done
@@ -167,14 +171,14 @@ class _SorterWidgetState extends State<SorterWidget> {
                       FlutterFlowTheme.of(context).secondaryText,
                   textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Nunito',
-                        fontSize: 18,
+                        fontSize: 17,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.bold,
                       ),
                   unselectedTextStyle:
                       FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Nunito',
-                            fontSize: 18,
+                            fontSize: 17,
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.bold,
                           ),
