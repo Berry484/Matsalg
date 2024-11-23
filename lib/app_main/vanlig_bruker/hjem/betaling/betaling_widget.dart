@@ -346,7 +346,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
+                                                                          .bold,
                                                                 ),
                                                       ),
                                                     ),
@@ -930,13 +930,21 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                       children: [
                                         Row(
                                           children: [
-                                            Icon(
-                                              CupertinoIcons.creditcard,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              size: 25,
-                                            ),
+                                            applePay == true
+                                                ? FaIcon(
+                                                    FontAwesomeIcons.ccApplePay,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    size: 24,
+                                                  )
+                                                : Icon(
+                                                    CupertinoIcons.creditcard,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    size: 25,
+                                                  ),
                                             const SizedBox(width: 15),
                                             Text(
                                               applePay == true
@@ -1087,7 +1095,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                               text: 'Gi bud',
                               options: FFButtonOptions(
                                 width: double.infinity,
-                                height: 48,
+                                height: 50,
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     16, 0, 16, 0),
                                 iconPadding:
@@ -1104,7 +1112,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                 elevation: 0,
-                                borderRadius: BorderRadius.circular(24),
+                                borderRadius: BorderRadius.circular(14),
                               ),
                             ),
                           ),

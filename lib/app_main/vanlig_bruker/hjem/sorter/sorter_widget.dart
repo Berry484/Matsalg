@@ -171,14 +171,14 @@ class _SorterWidgetState extends State<SorterWidget> {
                       FlutterFlowTheme.of(context).secondaryText,
                   textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Nunito',
-                        fontSize: 17,
+                        fontSize: 16,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.bold,
                       ),
                   unselectedTextStyle:
                       FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Nunito',
-                            fontSize: 17,
+                            fontSize: 16,
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.bold,
                           ),
