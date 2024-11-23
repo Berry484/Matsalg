@@ -368,13 +368,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         try {
                                           _model.liker =
                                               !(_model.liker ?? true);
-                                          HapticFeedback.lightImpact;
+                                          HapticFeedback.lightImpact();
                                           apiLike.deleteLike(
                                               Securestorage.authToken,
                                               matvare.matId);
                                           safeSetState(() {});
                                           if (_model.liker == true) {
-                                            HapticFeedback.lightImpact;
+                                            HapticFeedback.lightImpact();
                                             apiLike.sendLike(
                                                 Securestorage.authToken,
                                                 matvare.matId);
@@ -801,7 +801,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       children: [
                                         ToggleIcon(
                                           onPressed: () async {
-                                            HapticFeedback.lightImpact;
+                                            HapticFeedback.lightImpact();
                                             safeSetState(() =>
                                                 _model.liker = !_model.liker!);
                                             if (_model.liker!) {
@@ -846,6 +846,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   isScrollControlled: true,
                                                   backgroundColor:
                                                       Colors.transparent,
+                                                  barrierColor:
+                                                      const Color.fromARGB(
+                                                          60, 17, 0, 0),
                                                   enableDrag: true,
                                                   isDismissible: true,
                                                   context: context,

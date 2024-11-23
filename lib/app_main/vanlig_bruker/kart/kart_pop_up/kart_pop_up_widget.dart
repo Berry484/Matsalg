@@ -101,10 +101,10 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 150.0, 0.0, 0.0),
+      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 0.0),
       child: Container(
-        width: 500.0,
-        height: 607.0,
+        width: 500,
+        height: double.infinity,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primary,
           borderRadius: const BorderRadius.only(
@@ -200,23 +200,25 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
                   ],
                 ),
               ),
-              Container(
-                width: 500.0,
-                height: 450.0,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                ),
-                child: SizedBox(
+              Flexible(
+                child: Container(
                   width: 500.0,
-                  height: 450.0,
-                  child: custom_widgets.MyOsmKart(
+                  height: MediaQuery.sizeOf(context).height,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                  ),
+                  child: SizedBox(
                     width: 500.0,
                     height: 450.0,
-                    center: functions.doubletillatlon(
-                        widget.startLat, widget.startLng)!,
+                    child: custom_widgets.MyOsmKart(
+                      width: 500.0,
+                      height: 450.0,
+                      center: functions.doubletillatlon(
+                          widget.startLat, widget.startLng)!,
+                    ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),

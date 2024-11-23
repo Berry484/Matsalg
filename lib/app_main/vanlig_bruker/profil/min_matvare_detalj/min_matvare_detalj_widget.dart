@@ -629,6 +629,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                 isScrollControlled: true,
                                                 backgroundColor:
                                                     Colors.transparent,
+                                                barrierColor:
+                                                    const Color.fromARGB(
+                                                        60, 17, 0, 0),
                                                 enableDrag: false,
                                                 context: context,
                                                 builder: (context) {
