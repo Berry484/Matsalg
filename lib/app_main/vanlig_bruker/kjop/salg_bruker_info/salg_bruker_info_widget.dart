@@ -174,10 +174,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                     color: Color.fromRGBO(197, 197, 199, 1),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                    padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 16),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Align(
                           alignment: const AlignmentDirectional(0, 0),
@@ -199,20 +199,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                   showErrorToast(context, 'En feil oppstod');
                                 }
                               },
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 0, 15, 0),
-                                child: Text(
-                                  'Lukk',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Nunito',
-                                        fontSize: 17,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
+                              child: Icon(
+                                CupertinoIcons.xmark,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 25,
                               ),
                             ),
                           ),
