@@ -279,7 +279,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     13, 0, 7, 0),
                                 child: Text(
-                                  salgInfo.selger,
+                                  salgInfo.kjoper,
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
                                       .override(
