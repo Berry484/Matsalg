@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -227,9 +228,9 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                         Align(
                           alignment: const AlignmentDirectional(0.0, -1.2),
                           child: Container(
-                            padding: const EdgeInsets.only(bottom: 220.0),
+                            padding: const EdgeInsets.only(bottom: 170.0),
                             width: 500.0,
-                            height: MediaQuery.sizeOf(context).height,
+                            height: MediaQuery.sizeOf(context).height + 170,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
@@ -287,91 +288,51 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      20.0, 30.0, 20.0, 0.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground, // or choose the correct background color
-                                            borderRadius:
-                                                BorderRadius.circular(13.0),
-                                          ),
-                                          child: CupertinoSearchTextField(
-                                            controller: _model.textController,
-                                            focusNode:
-                                                _model.textFieldFocusNode,
-                                            autofocus: false,
-                                            onChanged: (text) {
-                                              setState(() {});
-                                            },
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 238, 238, 238),
-                                            prefixInsets:
-                                                const EdgeInsetsDirectional
-                                                    .fromSTEB(12, 6, 6, 6),
-                                            borderRadius:
-                                                BorderRadius.circular(24.0),
-                                            onSubmitted: (value) {
-                                              if (_model.textController.text
-                                                  .isNotEmpty) {
-                                                // When the search button is pressed
-                                                FocusScope.of(context)
-                                                    .requestFocus(FocusNode());
-                                                context.pushNamed(
-                                                  'BondeGardPage',
-                                                  queryParameters: {
-                                                    'kategori': serializeParam(
-                                                        'Søk',
-                                                        ParamType.String),
-                                                    'query': serializeParam(
-                                                        _model.textController
-                                                            .text,
-                                                        ParamType.String),
-                                                  }.withoutNulls,
-                                                );
-                                              }
-                                            },
-                                            placeholder: 'Søk',
-                                            prefixIcon: Icon(
-                                              CupertinoIcons.search,
-                                              color: FlutterFlowTheme.of(
-                                                      context)
-                                                  .primaryText, // match text color from theme
-                                              size: 21,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText, // matching text color from theme
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                            onTap: () {
-                                              setState(() {});
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 30.0, 0.0, 30.0),
-                                  child: GestureDetector(
-                                    onTap: () async {
+                                      20.0, 40.0, 20.0, 12.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
                                       try {
                                         LatLng? location;
+                                        LocationPermission permission =
+                                            await Geolocator.checkPermission();
+
+                                        if (permission ==
+                                                LocationPermission.denied ||
+                                            permission ==
+                                                LocationPermission
+                                                    .deniedForever ||
+                                            permission ==
+                                                LocationPermission
+                                                    .unableToDetermine) {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CupertinoAlertDialog(
+                                                title: const Text(
+                                                    'Stedstjenester er deaktivert for MatSalg.no'),
+                                                content: const Text(
+                                                    'Aktiver stedstjenester for MatSalg.no i innstillinger for å bruke din nåværende posisjon.'),
+                                                actions: [
+                                                  CupertinoDialogAction(
+                                                    onPressed: () async {
+                                                      Navigator.of(context)
+                                                          .pop(); // Lukk dialogen
+                                                      // Åpne innstillinger for appen
+                                                      await Geolocator
+                                                          .openLocationSettings();
+                                                    },
+                                                    textStyle: const TextStyle(
+                                                        color: CupertinoColors
+                                                            .systemBlue),
+                                                    child: const Text(
+                                                        'Innstillinger'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          return; // Avslutt logikken i onPressed hvis tillatelsen er nektet
+                                        }
 
                                         location = await getCurrentUserLocation(
                                             defaultLocation:
@@ -384,6 +345,13 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                           FocusScope.of(context).unfocus();
                                           Navigator.pop(context, location);
                                         }
+
+                                        if (location ==
+                                            const LatLng(0.0, 0.0)) {
+                                          showErrorToast(context,
+                                              'Stedtjenester er deaktivert i innstillinger');
+                                          return;
+                                        }
                                       } on SocketException {
                                         showErrorToast(context,
                                             'Ingen internettforbindelse');
@@ -392,37 +360,99 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                             context, 'En feil oppstod');
                                       }
                                     },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        FaIcon(
-                                          FontAwesomeIcons.locationArrow,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          size: 19.0,
-                                        ),
-                                        const SizedBox(width: 8.0),
-                                        Text(
-                                          'Bruk min nåværende posisjon',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Open Sans',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                fontSize: 17.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                      ],
+                                    text: 'Bruk min nåværende posisjon',
+                                    icon: Icon(CupertinoIcons.location_fill,
+                                        size: 20,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText),
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 50.0,
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              11, 0, 0, 0),
+                                      iconPadding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 0),
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Nunito',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 16,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                      elevation: 0,
+                                      borderSide: const BorderSide(
+                                        color: Color(0x5957636C),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                   ),
                                 ),
+                                // Padding(
+                                //   padding: const EdgeInsetsDirectional.fromSTEB(
+                                //       0.0, 30.0, 0.0, 30.0),
+                                //   child: GestureDetector(
+                                //     onTap: () async {
+                                //       try {
+                                //         LatLng? location;
+
+                                //         location = await getCurrentUserLocation(
+                                //             defaultLocation:
+                                //                 const LatLng(0.0, 0.0));
+
+                                //         selectedLocation = location;
+                                //         if (location !=
+                                //             const LatLng(0.0, 0.0)) {
+                                //           HapticFeedback.heavyImpact();
+                                //           FocusScope.of(context).unfocus();
+                                //           Navigator.pop(context, location);
+                                //         }
+                                //       } on SocketException {
+                                //         showErrorToast(context,
+                                //             'Ingen internettforbindelse');
+                                //       } catch (e) {
+                                //         showErrorToast(
+                                //             context, 'En feil oppstod');
+                                //       }
+                                //     },
+                                //     child: Row(
+                                //       mainAxisSize: MainAxisSize.min,
+                                //       mainAxisAlignment:
+                                //           MainAxisAlignment.center,
+                                //       crossAxisAlignment:
+                                //           CrossAxisAlignment.end,
+                                //       children: [
+                                //         FaIcon(
+                                //           FontAwesomeIcons.locationArrow,
+                                //           color: FlutterFlowTheme.of(context)
+                                //               .alternate,
+                                //           size: 19.0,
+                                //         ),
+                                //         const SizedBox(width: 8.0),
+                                //         Text(
+                                //           'Bruk min nåværende posisjon',
+                                //           style: FlutterFlowTheme.of(context)
+                                //               .bodyMedium
+                                //               .override(
+                                //                 fontFamily: 'Open Sans',
+                                //                 color:
+                                //                     FlutterFlowTheme.of(context)
+                                //                         .alternate,
+                                //                 fontSize: 17.0,
+                                //                 fontWeight: FontWeight.bold,
+                                //               ),
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       20.0, 0.0, 20.0, 55.0),
@@ -466,7 +496,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                       elevation: 0.0,
-                                      borderRadius: BorderRadius.circular(24.0),
+                                      borderRadius: BorderRadius.circular(14.0),
                                     ),
                                   ),
                                 ),

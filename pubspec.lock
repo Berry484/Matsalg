@@ -526,7 +526,7 @@ packages:
     source: hosted
     version: "4.2.3"
   geolocator_web:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: geolocator_web
       sha256: "7a22f400d831f924a89d931ba126a10e6b8b437f31e6b9311320435f3e1571bd"
