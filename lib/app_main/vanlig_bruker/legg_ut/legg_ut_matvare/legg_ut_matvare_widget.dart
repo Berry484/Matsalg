@@ -1747,8 +1747,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   .produktNavnTextController,
                                               focusNode:
                                                   _model.produktNavnFocusNode,
-                                              textCapitalization:
-                                                  TextCapitalization.words,
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 labelText: 'Tittel',
@@ -1841,7 +1839,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         fontSize: 16,
                                                         letterSpacing: 0.0,
                                                       ),
-                                              maxLength: 16,
+                                              maxLength: 29,
                                               maxLengthEnforcement:
                                                   MaxLengthEnforcement.enforced,
                                               buildCounter: (context,
@@ -2196,13 +2194,27 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         letterSpacing: 0.0,
                                                       ),
                                               textAlign: TextAlign.start,
-                                              maxLines: 3,
-                                              maxLength: 200,
-                                              maxLengthEnforcement:
-                                                  MaxLengthEnforcement.enforced,
+                                              minLines: 3,
+                                              maxLines: 7,
                                               validator: _model
                                                   .produktBeskrivelseTextControllerValidator
                                                   .asValidator(context),
+                                              inputFormatters: [
+                                                LengthLimitingTextInputFormatter(
+                                                    200),
+                                                TextInputFormatter.withFunction(
+                                                    (oldValue, newValue) {
+                                                  final lineCount = '\n'
+                                                          .allMatches(
+                                                              newValue.text)
+                                                          .length +
+                                                      1;
+                                                  if (lineCount > 7) {
+                                                    return oldValue;
+                                                  }
+                                                  return newValue;
+                                                }),
+                                              ],
                                             ),
                                           ),
                                           const Divider(

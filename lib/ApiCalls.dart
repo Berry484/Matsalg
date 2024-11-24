@@ -1225,13 +1225,13 @@ class ApiKjop {
 
         // Map the dynamic data to OrdreInfo instances
         List<OrdreInfo> kjopOrders = data.map((orderData) {
-          // Check for foodDetails existence
-          if (orderData['foodDetails'] == null) {
+          // Check for matCopyDetails existence
+          if (orderData['matCopyDetails'] == null) {
             throw Exception(
                 'Food details not available for order ID: ${orderData['id']}');
           }
           Matvarer foodDetails = Matvarer.fromJson(
-              orderData['foodDetails']); // Use the new Matvarer.fromJson
+              orderData['matCopyDetails']); // Use the new Matvarer.fromJson
           return OrdreInfo(
             id: orderData['id'], // Unique ID of the order
             kjoper: orderData['kjoper'], // Username of the buyer

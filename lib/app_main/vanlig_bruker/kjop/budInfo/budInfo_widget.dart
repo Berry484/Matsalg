@@ -239,7 +239,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                             'KjopDetaljVentende',
                             queryParameters: {
                               'matinfo': serializeParam(
-                                matvare,
+                                ordreInfo.foodDetails,
                                 ParamType.JSON,
                               ),
                             },
@@ -377,120 +377,163 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Align(
-                    alignment: const AlignmentDirectional(-1, 1),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
-                      child: Text(
-                        'Informasjon',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Nunito',
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              fontSize: 15,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        5.0, 2.0, 0.0, 5.0),
+                        0.0, 16.0, 16.0, 5.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          '${matvare.price}Kr',
-                          textAlign: TextAlign.start,
-                          style: FlutterFlowTheme.of(context)
-                              .titleMedium
-                              .override(
-                                fontFamily: 'Nunito',
-                                fontSize: 14.0,
-                                letterSpacing: 0.0,
-                                color: const Color.fromARGB(211, 87, 99, 108),
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                          child: Text(
-                            matvare.kg == true ? '/Kg' : '',
-                            textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
-                                  fontFamily: 'Nunito',
-                                  fontSize: 14.0,
-                                  letterSpacing: 0.0,
-                                  color: const Color.fromARGB(211, 87, 99, 108),
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        Row(children: [
+                          const SizedBox(
+                            height: 40,
+                            child: VerticalDivider(
+                              thickness: 1,
+                              color: Color.fromARGB(48, 113, 113, 113),
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 12,
-                          child: VerticalDivider(
-                            thickness: 1.4,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                          child: Text(
-                            '${ordreInfo.antall.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
-                            textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
-                                  fontFamily: 'Nunito',
-                                  fontSize: 14.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: const Color.fromARGB(211, 87, 99, 108),
-                                ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 12,
-                          child: VerticalDivider(
-                            thickness: 1.4,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                ordreInfo.updatetime != null
-                                    ? (DateFormat("HH:mm  d. MMM", "nb_NO")
-                                        .format(
-                                            ordreInfo.updatetime!.toLocal()))
-                                    : "",
+                                'PRIS',
                                 textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.of(context)
                                     .titleMedium
                                     .override(
                                       fontFamily: 'Nunito',
-                                      fontSize: 14.0,
+                                      fontSize: 13.0,
                                       letterSpacing: 0.0,
                                       color: const Color.fromARGB(
-                                          211, 87, 99, 108),
+                                          255, 113, 113, 113),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              Text(
+                                '${matvare.price}Kr',
+                                textAlign: TextAlign.start,
+                                style: FlutterFlowTheme.of(context)
+                                    .titleMedium
+                                    .override(
+                                      fontFamily: 'Nunito',
+                                      fontSize: 13.0,
+                                      letterSpacing: 0.0,
+                                      color: const Color.fromARGB(
+                                          255, 113, 113, 113),
                                       fontWeight: FontWeight.bold,
                                     ),
                               ),
                             ],
                           ),
+                        ]),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              height: 40,
+                              child: VerticalDivider(
+                                thickness: 1,
+                                color: Color.fromARGB(48, 113, 113, 113),
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'ANTALL',
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        fontSize: 13.0,
+                                        letterSpacing: 0.0,
+                                        color: const Color.fromARGB(
+                                            255, 113, 113, 113),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 0),
+                                  child: Text(
+                                    '${ordreInfo.antall.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          fontSize: 13.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color.fromARGB(
+                                              255, 113, 113, 113),
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              height: 40,
+                              child: VerticalDivider(
+                                thickness: 1,
+                                color: Color.fromARGB(48, 113, 113, 113),
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'TID',
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        fontSize: 13.0,
+                                        letterSpacing: 0.0,
+                                        color: const Color.fromARGB(
+                                            255, 113, 113, 113),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 0, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        ordreInfo.updatetime != null
+                                            ? (DateFormat(
+                                                    "HH:mm  d. MMM", "nb_NO")
+                                                .format(ordreInfo.updatetime!
+                                                    .toLocal()))
+                                            : "",
+                                        textAlign: TextAlign.start,
+                                        style: FlutterFlowTheme.of(context)
+                                            .titleMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              fontSize: 13.0,
+                                              letterSpacing: 0.0,
+                                              color: const Color.fromARGB(
+                                                  255, 113, 113, 113),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -623,8 +666,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                         child: const Text(
                                           "Nei, avbryt",
                                           style: TextStyle(
-                                              color: Colors
-                                                  .red), // Red text for 'No' button
+                                            color: CupertinoColors.systemBlue,
+                                          ),
                                         ),
                                       ),
                                       CupertinoDialogAction(
@@ -649,7 +692,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                             _trekkIsLoading = false;
                                           }
                                         },
-                                        child: const Text("Ja, bekreft"),
+                                        child: const Text(
+                                          "Ja, bekreft",
+                                          style: TextStyle(color: Colors.red),
+                                        ),
                                       ),
                                     ],
                                   );
@@ -858,7 +904,13 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                     context, 'En feil oppstod');
                                               }
                                             },
-                                            child: const Text("Ja, bekreft"),
+                                            child: const Text(
+                                              "Ja, bekreft",
+                                              style: TextStyle(
+                                                color:
+                                                    CupertinoColors.systemBlue,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       );

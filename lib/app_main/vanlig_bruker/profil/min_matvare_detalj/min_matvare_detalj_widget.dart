@@ -36,6 +36,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
   bool _merSolgtIsLoading = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   ApiUpdateFood apiUpdateFood = ApiUpdateFood();
+  bool _isExpanded = false;
 
   @override
   void initState() {
@@ -1031,7 +1032,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                               ),
                                               child: SafeArea(
                                                 child: Container(
-                                                  width: 100,
+                                                  width: 110,
                                                   height: 40,
                                                   constraints:
                                                       const BoxConstraints(
@@ -1075,7 +1076,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .bold,
+                                                                          .w800,
                                                                 ),
                                                           ),
                                                         ),
@@ -1194,181 +1195,293 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      width:
-                                          332.0, // Maximum width for the container
-                                      decoration: const BoxDecoration(),
-                                      alignment: const AlignmentDirectional(
-                                          -1.0, -1.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0.0, 0.0, 0.0, 0.0),
-                                                  child: Container(
-                                                    width:
-                                                        332.0, // Width constraint to enable wrapping
-                                                    child: Text.rich(
-                                                      TextSpan(
-                                                        children: [
-                                                          TextSpan(
-                                                            text:
-                                                                '${matvare.username}  ',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .titleSmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize:
-                                                                      15.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                          ),
-                                                          TextSpan(
-                                                            text:
-                                                                '${matvare.description}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .titleSmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize:
-                                                                      15.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      softWrap:
-                                                          true, // Enable text wrapping
-                                                      overflow: TextOverflow
-                                                          .visible, // Allow the text to be visible when wrapped
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 30.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Informasjon',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 2.0, 0.0, 5.0),
+                                              0.0, 0.0, 0.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            '${matvare.price}Kr',
-                                            textAlign: TextAlign.start,
+                                          Container(
+                                            width:
+                                                332.0, // Width constraint to enable wrapping
+                                            child: Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text:
+                                                        '${matvare.username}  ',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 15.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: _isExpanded
+                                                        ? matvare
+                                                            .description // Full text if expanded
+                                                        : (matvare.description!
+                                                                        .length >
+                                                                    100 ||
+                                                                '\n'
+                                                                        .allMatches(matvare
+                                                                            .description!)
+                                                                        .length >=
+                                                                    2
+                                                            ? "${matvare.description!.substring(0, matvare.description!.length > 100 ? 100 : matvare.description!.indexOf('\n', matvare.description!.indexOf('\n') + 1) + 1)}..." // Truncate based on condition
+                                                            : matvare
+                                                                .description), // Use full text if it doesn't meet truncation conditions
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 15.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              textAlign: TextAlign.start,
+                                              softWrap:
+                                                  true, // Enable text wrapping
+                                              overflow: TextOverflow
+                                                  .visible, // Visible overflow when expanded
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    if (matvare.description != null &&
+                                        (matvare.description!.length > 100 ||
+                                            '\n'
+                                                    .allMatches(
+                                                        matvare.description!)
+                                                    .length >=
+                                                2))
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            _isExpanded =
+                                                !_isExpanded; // Toggle expand/collapse
+                                          });
+                                        },
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 4.0),
+                                          child: Text(
+                                            _isExpanded
+                                                ? 'Se mindre'
+                                                : 'Se mer', // Dynamic toggle text
                                             style: FlutterFlowTheme.of(context)
-                                                .titleMedium
+                                                .bodySmall
                                                 .override(
                                                   fontFamily: 'Nunito',
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.0,
-                                                  color: const Color.fromARGB(
-                                                      211, 87, 99, 108),
-                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13.0,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: const Color.fromRGBO(
+                                                      113, 113, 113, 1.0),
                                                 ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 0, 5, 0),
-                                            child: Text(
-                                              matvare.kg == true ? '/Kg' : '',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleMedium
-                                                  .override(
-                                                    fontFamily: 'Nunito',
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.0,
-                                                    color: const Color.fromARGB(
-                                                        211, 87, 99, 108),
-                                                    fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 16.0, 16.0, 5.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Row(children: [
+                                            const SizedBox(
+                                              height: 40,
+                                              child: VerticalDivider(
+                                                thickness: 1,
+                                                color: Color.fromARGB(
+                                                    48, 113, 113, 113),
+                                              ),
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'PRIS',
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.0,
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            255, 113, 113, 113),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ),
+                                                Text(
+                                                  '${matvare.price}Kr',
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.0,
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            255, 113, 113, 113),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ]),
+                                          Row(
+                                            children: [
+                                              const SizedBox(
+                                                height: 40,
+                                                child: VerticalDivider(
+                                                  thickness: 1,
+                                                  color: Color.fromARGB(
+                                                      48, 113, 113, 113),
+                                                ),
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'ANTALL',
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 13.0,
+                                                          letterSpacing: 0.0,
+                                                          color: const Color
+                                                              .fromARGB(255,
+                                                              113, 113, 113),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                   ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 12,
-                                            child: VerticalDivider(
-                                              thickness: 1.4,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5, 0, 5, 0),
-                                            child: Text(
-                                              '${matvare.antall!.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleMedium
-                                                  .override(
-                                                    fontFamily: 'Nunito',
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: const Color.fromARGB(
-                                                        211, 87, 99, 108),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 0, 0, 0),
+                                                    child: Text(
+                                                      '${matvare.antall!.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .titleMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: 13.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: const Color
+                                                                .fromARGB(255,
+                                                                113, 113, 113),
+                                                          ),
+                                                    ),
                                                   ),
-                                            ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              const SizedBox(
+                                                height: 40,
+                                                child: VerticalDivider(
+                                                  thickness: 1,
+                                                  color: Colors.transparent,
+                                                ),
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'AVSTAND',
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 13.0,
+                                                          letterSpacing: 0.0,
+                                                          color: Colors
+                                                              .transparent,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            5, 0, 0, 0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        Text(
+                                                          '1 Km',
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .titleMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                color: Colors
+                                                                    .transparent,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
@@ -1376,7 +1489,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 40.0, 0.0, 20.0),
+                                              0.0, 16.0, 0.0, 20.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -1394,7 +1507,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                   fontSize: 13.0,
                                                   letterSpacing: 0.0,
                                                   color: const Color.fromARGB(
-                                                      235, 17, 18, 19),
+                                                      255, 113, 113, 113),
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ),

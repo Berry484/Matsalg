@@ -683,7 +683,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                               }
                                               final alleInfo =
                                                   _alleInfo![index];
-                                              if (index == 4 && !_showMore) {
+                                              if ((index == 4 && !_showMore) &&
+                                                  _alleInfo!.length > 4) {
                                                 // This is where we show the "Show More" button
                                                 return Padding(
                                                   padding: const EdgeInsets
@@ -703,75 +704,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                         FontAwesomeIcons
                                                             .chevronDown,
                                                         size: 18,
-                                                      ),
-                                                      options: FFButtonOptions(
-                                                        width: 140,
-                                                        height: 30,
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                16, 0, 16, 0),
-                                                        iconPadding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                0, 0, 0, 0),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize: 15,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                        elevation: 0,
-                                                        borderSide:
-                                                            const BorderSide(
-                                                          color:
-                                                              Color(0x5957636C),
-                                                          width: 1.5,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                              if (index ==
-                                                      _alleInfo!.length - 1 &&
-                                                  _showMore) {
-                                                return Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 16.0),
-                                                  child: Center(
-                                                    child: FFButtonWidget(
-                                                      onPressed: () async {
-                                                        safeSetState(() {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          _showMore = false;
-                                                        });
-                                                      },
-                                                      text: 'Se mindre',
-                                                      icon: const FaIcon(
-                                                        FontAwesomeIcons
-                                                            .chevronUp,
-                                                        size: 19,
                                                       ),
                                                       options: FFButtonOptions(
                                                         width: 140,

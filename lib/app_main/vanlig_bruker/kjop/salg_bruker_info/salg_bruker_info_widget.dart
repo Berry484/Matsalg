@@ -428,38 +428,38 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                    child: Column(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 16.0, 16.0, 5.0),
+                    child: Row(
                       mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Align(
-                          alignment: const AlignmentDirectional(-1, 1),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                5, 15, 0, 0),
-                            child: Text(
-                              'Informasjon',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    fontSize: 15,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                        Row(children: [
+                          const SizedBox(
+                            height: 40,
+                            child: VerticalDivider(
+                              thickness: 1,
+                              color: Color.fromARGB(48, 113, 113, 113),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              5.0, 2.0, 0.0, 5.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                'PRIS',
+                                textAlign: TextAlign.start,
+                                style: FlutterFlowTheme.of(context)
+                                    .titleMedium
+                                    .override(
+                                      fontFamily: 'Nunito',
+                                      fontSize: 13.0,
+                                      letterSpacing: 0.0,
+                                      color: const Color.fromARGB(
+                                          255, 113, 113, 113),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
                               Text(
                                 '${matvare.price}Kr',
                                 textAlign: TextAlign.start,
@@ -467,95 +467,121 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                     .titleMedium
                                     .override(
                                       fontFamily: 'Nunito',
-                                      fontSize: 14.0,
+                                      fontSize: 13.0,
                                       letterSpacing: 0.0,
                                       color: const Color.fromARGB(
-                                          211, 87, 99, 108),
+                                          255, 113, 113, 113),
                                       fontWeight: FontWeight.bold,
                                     ),
                               ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 0, 5, 0),
-                                child: Text(
-                                  matvare.kg == true ? '/Kg' : '',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .titleMedium
-                                      .override(
-                                        fontFamily: 'Nunito',
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                        color: const Color.fromARGB(
-                                            211, 87, 99, 108),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 12,
-                                child: VerticalDivider(
-                                  thickness: 1.4,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5, 0, 5, 0),
-                                child: Text(
-                                  '${salgInfo.antall.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .titleMedium
-                                      .override(
-                                        fontFamily: 'Nunito',
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: const Color.fromARGB(
-                                            211, 87, 99, 108),
-                                      ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 12,
-                                child: VerticalDivider(
-                                  thickness: 1.4,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5, 0, 0, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      salgInfo.updatetime != null
-                                          ? (DateFormat(
-                                                  "HH:mm  d. MMM", "nb_NO")
-                                              .format(salgInfo.updatetime!
-                                                  .toLocal()))
-                                          : "",
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .override(
-                                            fontFamily: 'Nunito',
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            color: const Color.fromARGB(
-                                                211, 87, 99, 108),
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ],
                           ),
+                        ]),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              height: 40,
+                              child: VerticalDivider(
+                                thickness: 1,
+                                color: Color.fromARGB(48, 113, 113, 113),
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'ANTALL',
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        fontSize: 13.0,
+                                        letterSpacing: 0.0,
+                                        color: const Color.fromARGB(
+                                            255, 113, 113, 113),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 0),
+                                  child: Text(
+                                    '${salgInfo.antall.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          fontSize: 13.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color.fromARGB(
+                                              255, 113, 113, 113),
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              height: 40,
+                              child: VerticalDivider(
+                                thickness: 1,
+                                color: Color.fromARGB(48, 113, 113, 113),
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'TID',
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        fontSize: 13.0,
+                                        letterSpacing: 0.0,
+                                        color: const Color.fromARGB(
+                                            255, 113, 113, 113),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 0, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        salgInfo.updatetime != null
+                                            ? (DateFormat(
+                                                    "HH:mm  d. MMM", "nb_NO")
+                                                .format(salgInfo.updatetime!
+                                                    .toLocal()))
+                                            : "",
+                                        textAlign: TextAlign.start,
+                                        style: FlutterFlowTheme.of(context)
+                                            .titleMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              fontSize: 13.0,
+                                              letterSpacing: 0.0,
+                                              color: const Color.fromARGB(
+                                                  255, 113, 113, 113),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -594,8 +620,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                       child: const Text(
                                         "Nei, avbryt",
                                         style: TextStyle(
-                                            color: Colors
-                                                .red), // Red text for 'No' button
+                                          color: CupertinoColors.systemBlue,
+                                        ),
                                       ),
                                     ),
                                     CupertinoDialogAction(
@@ -642,7 +668,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                           godkjennIsLoading = false;
                                         }
                                       },
-                                      child: const Text("Ja, avslå"),
+                                      child: const Text(
+                                        "Ja, avslå",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
                                     ),
                                   ],
                                 );
@@ -660,7 +689,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                           width: 155,
                           height: 47,
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           iconPadding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           color: FlutterFlowTheme.of(context).primary,
@@ -705,8 +734,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                         child: const Text(
                                           "Nei, avbryt",
                                           style: TextStyle(
-                                              color: Colors
-                                                  .red), // Red text for 'No' button
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.w400),
                                         ),
                                       ),
                                       CupertinoDialogAction(
@@ -756,7 +785,12 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                             godkjennIsLoading = false;
                                           }
                                         },
-                                        child: const Text("Ja, godta"),
+                                        child: const Text(
+                                          "Ja, godta",
+                                          style: TextStyle(
+                                              color: CupertinoColors.systemBlue,
+                                              fontWeight: FontWeight.w600),
+                                        ),
                                       ),
                                     ],
                                   );
@@ -774,7 +808,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                             width: 155,
                             height: 47,
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                11, 0, 0, 0),
+                                0, 0, 0, 0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, 0),
                             color: FlutterFlowTheme.of(context).alternate,
