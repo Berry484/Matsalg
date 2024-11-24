@@ -75,7 +75,7 @@ class _ChooselocationState extends State<Chooselocation> {
               interactiveFlags:
                   InteractiveFlag.pinchZoom | InteractiveFlag.drag,
               zoom: zoomLevel,
-              minZoom: 6,
+              minZoom: 5,
               maxZoom: 18,
               onPositionChanged: (position, hasGesture) {
                 if (position.center != null) {
@@ -115,20 +115,20 @@ class _ChooselocationState extends State<Chooselocation> {
               ]),
             ],
           ),
-          // Dark overlay with transparent circle
-          IgnorePointer(
-            ignoring: true, // This allows touch events to pass through
-            child: CustomPaint(
-              size: Size(double.infinity, double.infinity),
-              painter: OverlayPainter(
-                center: currentCenter ??
-                    ChooselocationLatLng.LatLng(
-                        widget.center.latitude, widget.center.longitude),
-                zoom: zoomLevel,
-                circleRadius: _calculateCircleRadius(),
-              ),
-            ),
-          ),
+          // // Dark overlay with transparent circle
+          // IgnorePointer(
+          //   ignoring: true, // This allows touch events to pass through
+          //   child: CustomPaint(
+          //     size: Size(double.infinity, double.infinity),
+          //     painter: OverlayPainter(
+          //       center: currentCenter ??
+          //           ChooselocationLatLng.LatLng(
+          //               widget.center.latitude, widget.center.longitude),
+          //       zoom: zoomLevel,
+          //       circleRadius: _calculateCircleRadius(),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -147,60 +147,60 @@ class _ChooselocationState extends State<Chooselocation> {
   }
 }
 
-class OverlayPainter extends CustomPainter {
-  final ChooselocationLatLng.LatLng center;
-  final double zoom;
-  final double circleRadius;
+// class OverlayPainter extends CustomPainter {
+//   final ChooselocationLatLng.LatLng center;
+//   final double zoom;
+//   final double circleRadius;
 
-  OverlayPainter({
-    required this.center,
-    required this.zoom,
-    required this.circleRadius,
-  });
+//   OverlayPainter({
+//     required this.center,
+//     required this.zoom,
+//     required this.circleRadius,
+//   });
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint overlayPaint = Paint()
-      ..color = Colors.black.withOpacity(0.5) // Dark semi-transparent overlay
-      ..style = PaintingStyle.fill;
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     final Paint overlayPaint = Paint()
+//       ..color = Colors.black.withOpacity(0.5) // Dark semi-transparent overlay
+//       ..style = PaintingStyle.fill;
 
-    // Create a path that represents the entire screen area
-    Path screenPath = Path();
-    screenPath.addRect(Rect.fromLTWH(0, 0, size.width, size.height));
+//     // Create a path that represents the entire screen area
+//     Path screenPath = Path();
+//     screenPath.addRect(Rect.fromLTWH(0, 0, size.width, size.height));
 
-    // Create a path for the circle that will remain clear
-    Path circlePath = Path();
-    circlePath.addOval(Rect.fromCircle(
-      center: Offset(size.width / 2, size.height / 2),
-      radius: circleRadius,
-    ));
+//     // Create a path for the circle that will remain clear
+//     Path circlePath = Path();
+//     circlePath.addOval(Rect.fromCircle(
+//       center: Offset(size.width / 2, size.height / 2),
+//       radius: circleRadius,
+//     ));
 
-    // Subtract the circle from the screen to leave it clear
-    Path overlayPath = Path.combine(
-      PathOperation.difference,
-      screenPath,
-      circlePath,
-    );
+//     // Subtract the circle from the screen to leave it clear
+//     Path overlayPath = Path.combine(
+//       PathOperation.difference,
+//       screenPath,
+//       circlePath,
+//     );
 
-    // Draw the overlay, excluding the circle
-    canvas.drawPath(overlayPath, overlayPaint);
+//     // Draw the overlay, excluding the circle
+//     canvas.drawPath(overlayPath, overlayPaint);
 
-    // Optionally, draw a border around the circle (if needed)
-    final Paint borderPaint = Paint()
-      ..color = Colors.transparent
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
+//     // Optionally, draw a border around the circle (if needed)
+//     final Paint borderPaint = Paint()
+//       ..color = Colors.transparent
+//       ..style = PaintingStyle.stroke
+//       ..strokeWidth = 2;
 
-    // Draw the border around the transparent circle
-    canvas.drawCircle(
-      Offset(size.width / 2, size.height / 2),
-      circleRadius,
-      borderPaint,
-    );
-  }
+//     // Draw the border around the transparent circle
+//     canvas.drawCircle(
+//       Offset(size.width / 2, size.height / 2),
+//       circleRadius,
+//       borderPaint,
+//     );
+//   }
 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true; // Repaint every time to update the zoom and center
-  }
-}
+//   @override
+//   bool shouldRepaint(CustomPainter oldDelegate) {
+//     return true; // Repaint every time to update the zoom and center
+//   }
+// }
