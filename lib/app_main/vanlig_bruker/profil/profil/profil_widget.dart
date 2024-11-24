@@ -376,6 +376,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                 Expanded(
                   child: SingleChildScrollView(
                     primary: false,
+                    physics: AlwaysScrollableScrollPhysics(),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -1428,7 +1429,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               minFontSize: 11,
                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                     fontFamily: 'Nunito',
-                                                                                    fontSize: 15,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.bold,
                                                                                   ),
@@ -1896,7 +1897,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               .bodyLarge
                                                                               .override(
                                                                                 fontFamily: 'Nunito',
-                                                                                fontSize: 15,
+                                                                                fontSize: 14,
                                                                                 letterSpacing: 0.0,
                                                                                 fontWeight: FontWeight.bold,
                                                                               ),

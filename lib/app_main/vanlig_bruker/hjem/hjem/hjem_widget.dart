@@ -2799,7 +2799,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                               minFontSize: 11,
                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                     fontFamily: 'Nunito',
-                                                                                    fontSize: 15,
+                                                                                    fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w700,
                                                                                   ),

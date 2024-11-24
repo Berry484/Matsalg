@@ -1881,7 +1881,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                 .override(
                                                                   fontFamily:
                                                                       'Nunito',
-                                                                  fontSize: 15,
+                                                                  fontSize: 14,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:

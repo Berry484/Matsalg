@@ -974,7 +974,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                 minFontSize: 11,
                                                                                 style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                       fontFamily: 'Open Sans',
-                                                                                      fontSize: 15,
+                                                                                      fontSize: 14,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.bold,
                                                                                     ),

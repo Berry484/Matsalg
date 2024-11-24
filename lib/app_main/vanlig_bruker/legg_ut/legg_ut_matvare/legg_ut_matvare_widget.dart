@@ -1839,7 +1839,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         fontSize: 16,
                                                         letterSpacing: 0.0,
                                                       ),
-                                              maxLength: 29,
+                                              maxLength: 24,
                                               maxLengthEnforcement:
                                                   MaxLengthEnforcement.enforced,
                                               buildCounter: (context,
