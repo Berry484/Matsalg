@@ -587,7 +587,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                             if ((_matvarer == null || _matvarer!.isEmpty) &&
                                 (_isloading == false &&
                                     widget.kategori == 'følger'))
-                              Container(
+                              SizedBox(
                                 width: MediaQuery.sizeOf(context).width,
                                 height: MediaQuery.sizeOf(context).height,
                                 child: Align(
@@ -663,7 +663,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                               Padding(
                                                 padding:
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(0, 0, 0, 0),
+                                                        .fromSTEB(25, 0, 25, 0),
                                                 child: Text(
                                                   'Du kan se annonser fra folk du følger her',
                                                   textAlign: TextAlign.center,

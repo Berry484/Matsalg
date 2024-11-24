@@ -170,42 +170,42 @@ class FFAppState extends ChangeNotifier {
     _brukerLng = value;
   }
 
-  String _brukernavn = " ";
+  String _brukernavn = "";
   String get brukernavn => _brukernavn;
   set brukernavn(String value) {
     _brukernavn = value;
     prefs.setString('ff_brukernavn', value);
   }
 
-  String _email = " ";
+  String _email = "";
   String get email => _email;
   set email(String value) {
     _email = value;
     prefs.setString('ff_email', value);
   }
 
-  String _firstname = " ";
+  String _firstname = "";
   String get firstname => _firstname;
   set firstname(String value) {
     _firstname = value;
     prefs.setString('ff_firstname', value);
   }
 
-  String _lastname = " ";
+  String _lastname = "";
   String get lastname => _lastname;
   set lastname(String value) {
     _lastname = value;
     prefs.setString('ff_lastname', value);
   }
 
-  String _bio = " ";
+  String _bio = "";
   String get bio => _bio;
   set bio(String value) {
     _bio = value;
     prefs.setString('ff_bio', value);
   }
 
-  String _profilepic = " ";
+  String _profilepic = "";
   String get profilepic => _profilepic;
   set profilepic(String value) {
     _profilepic = value;

@@ -10,7 +10,6 @@ import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_animations.dart';
 import 'package:mat_salg/matvarer.dart';
-import '/app_main/vanlig_bruker/kart/kart_pop_up_bondegard/kart_pop_up_bondegard_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -728,6 +727,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -785,64 +785,33 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                     matvare.lat ?? 59.9138688;
                                                 double startLng =
                                                     matvare.lng ?? 10.7522454;
-                                                if (matvare.bonde == true) {
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    enableDrag: false,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return GestureDetector(
-                                                        onTap: () =>
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .unfocus(),
-                                                        child: Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child:
-                                                              KartPopUpBondegardWidget(
-                                                            startLat: startLat,
-                                                            startLng: startLng,
-                                                          ),
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  barrierColor:
+                                                      const Color.fromARGB(
+                                                          60, 17, 0, 0),
+                                                  enableDrag: true,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () =>
+                                                          FocusScope.of(context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child: KartPopUpWidget(
+                                                          startLat: startLat,
+                                                          startLng: startLng,
                                                         ),
-                                                      );
-                                                    },
-                                                  ).then((value) =>
-                                                      safeSetState(() {}));
-                                                } else {
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    barrierColor:
-                                                        const Color.fromARGB(
-                                                            60, 17, 0, 0),
-                                                    enableDrag: false,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return GestureDetector(
-                                                        onTap: () =>
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .unfocus(),
-                                                        child: Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child:
-                                                              KartPopUpWidget(
-                                                            startLat: startLat,
-                                                            startLng: startLng,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ).then((value) =>
-                                                      safeSetState(() {}));
-                                                }
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
                                               } on SocketException {
                                                 showErrorToast(context,
                                                     'Ingen internettforbindelse');

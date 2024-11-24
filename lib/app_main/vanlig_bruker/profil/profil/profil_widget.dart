@@ -38,6 +38,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
   double ratingVerdi = 5.0;
   int ratingantall = 0;
   bool ingenRatings = false;
+  bool _isExpanded = false;
   final ApiCalls apicalls = ApiCalls();
   final Securestorage securestorage = Securestorage();
   String? folger;
@@ -278,6 +279,94 @@ class _ProfilWidgetState extends State<ProfilWidget>
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primary,
+          appBar: AppBar(
+            backgroundColor: FlutterFlowTheme.of(context).primary,
+            // iconTheme:
+            //     IconThemeData(color: FlutterFlowTheme.of(context).primaryText),
+            automaticallyImplyLeading: false,
+            scrolledUnderElevation: 0.0,
+            title: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+              child: Align(
+                alignment: const AlignmentDirectional(0, 0),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  child: SafeArea(
+                    child: Container(
+                      width: valueOrDefault<double>(
+                        MediaQuery.sizeOf(context).width,
+                        500.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primary,
+                      ),
+                      child: Stack(
+                        alignment: const AlignmentDirectional(0, 0),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10, 0, 10, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Align(
+                                  alignment: const AlignmentDirectional(1, 0),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 20, 0),
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        try {
+                                          context.pushNamed('innstillinger');
+                                        } on SocketException {
+                                          showErrorToast(context,
+                                              'Ingen internettforbindelse');
+                                        } catch (e) {
+                                          showErrorToast(
+                                              context, 'En feil oppstod');
+                                        }
+                                      },
+                                      child: Icon(
+                                        CupertinoIcons.gear,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 29,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Align(
+                            alignment: const AlignmentDirectional(0, 0),
+                            child: Text(
+                              '@${FFAppState().brukernavn}',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Nunito',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontSize: 19,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            actions: const [],
+            centerTitle: true,
+            elevation: 0.0,
+          ),
           body: SafeArea(
             top: true,
             child: Column(
@@ -293,104 +382,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                       children: [
                         Stack(
                           children: [
-                            Align(
-                              alignment: const AlignmentDirectional(0, 0),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 10, 0, 17),
-                                child: SafeArea(
-                                  child: Container(
-                                    width: valueOrDefault<double>(
-                                      MediaQuery.sizeOf(context).width,
-                                      500.0,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                    ),
-                                    child: Stack(
-                                      alignment:
-                                          const AlignmentDirectional(0, 0),
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10, 0, 10, 0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        1, 0),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0, 0, 20, 0),
-                                                  child: InkWell(
-                                                    splashColor:
-                                                        Colors.transparent,
-                                                    focusColor:
-                                                        Colors.transparent,
-                                                    hoverColor:
-                                                        Colors.transparent,
-                                                    highlightColor:
-                                                        Colors.transparent,
-                                                    onTap: () async {
-                                                      try {
-                                                        context.pushNamed(
-                                                            'innstillinger');
-                                                      } on SocketException {
-                                                        showErrorToast(context,
-                                                            'Ingen internettforbindelse');
-                                                      } catch (e) {
-                                                        showErrorToast(context,
-                                                            'En feil oppstod');
-                                                      }
-                                                    },
-                                                    child: Icon(
-                                                      CupertinoIcons.gear,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
-                                                      size: 29,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              const AlignmentDirectional(0, 0),
-                                          child: Text(
-                                            'Profil',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  fontSize: 20,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 55, 0, 0),
+                                  0, 20, 0, 0),
                               child: SingleChildScrollView(
                                 primary: false,
                                 child: Column(
@@ -404,7 +398,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                       children: [
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 30, 0, 0),
+                                              .fromSTEB(0, 0, 0, 0),
                                           child: SingleChildScrollView(
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
@@ -868,37 +862,121 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(
-                                                          24, 4, 40, 0),
-                                                  child: Container(
-                                                    constraints:
-                                                        const BoxConstraints(
-                                                      maxHeight: 90,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                    ),
-                                                    child: Text(
-                                                      FFAppState().bio,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .labelMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            fontSize: 14,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
+                                                          24, 0, 40, 0),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      if (FFAppState()
+                                                          .bio
+                                                          .isEmpty) {
+                                                        context.pushNamed(
+                                                            'ProfilRediger');
+                                                      }
+                                                    },
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primary,
                                                           ),
+                                                          child: Text(
+                                                            FFAppState()
+                                                                    .bio
+                                                                    .isEmpty
+                                                                ? 'Trykk for å legge til bio...'
+                                                                : FFAppState()
+                                                                    .bio,
+                                                            maxLines: _isExpanded
+                                                                ? null
+                                                                : 2, // Expand or limit lines
+                                                            overflow: _isExpanded
+                                                                ? TextOverflow
+                                                                    .visible
+                                                                : TextOverflow
+                                                                    .ellipsis,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .labelMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: FFAppState()
+                                                                          .bio
+                                                                          .isEmpty
+                                                                      ? 15
+                                                                      : 14,
+                                                                  color: FFAppState()
+                                                                          .bio
+                                                                          .isEmpty
+                                                                      ? const Color
+                                                                          .fromRGBO(
+                                                                          113,
+                                                                          113,
+                                                                          113,
+                                                                          1.0)
+                                                                      : FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        if (FFAppState()
+                                                            .bio
+                                                            .isNotEmpty)
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                _isExpanded =
+                                                                    !_isExpanded; // Toggle expanded state
+                                                              });
+                                                            },
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      top: 2),
+                                                              child: Text(
+                                                                _isExpanded
+                                                                    ? 'Se mindre'
+                                                                    : 'Se mer',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodySmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
+                                                                      color: const Color
+                                                                          .fromRGBO(
+                                                                          113,
+                                                                          113,
+                                                                          113,
+                                                                          1.0),
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
                                                 Container(
                                                   width: double.infinity,
-                                                  height: 100,
+                                                  height: 90,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1074,10 +1152,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           .override(
                                                             fontFamily:
                                                                 'Nunito',
-                                                            fontSize: 16,
+                                                            fontSize: 17,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
-                                                                FontWeight.w600,
+                                                                FontWeight.bold,
                                                           ),
                                                     ),
                                                     Icon(
@@ -1086,7 +1164,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primaryText,
-                                                      size: 22,
+                                                      size: 23,
                                                     ),
                                                     Text(
                                                       ' for å lage din første annonse',
@@ -1096,10 +1174,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           .override(
                                                             fontFamily:
                                                                 'Nunito',
-                                                            fontSize: 16,
+                                                            fontSize: 17,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
-                                                                FontWeight.w600,
+                                                                FontWeight.bold,
                                                           ),
                                                     ),
                                                   ],
@@ -1185,35 +1263,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                       10.0),
                                                         ),
                                                       ),
-                                                      // const SizedBox(
-                                                      //     height: 8.0),
-                                                      // Align(
-                                                      //   alignment: Alignment
-                                                      //       .centerLeft,
-                                                      //   child: Padding(
-                                                      //     padding:
-                                                      //         const EdgeInsets
-                                                      //             .only(
-                                                      //             left: 10.0),
-                                                      //     child: Container(
-                                                      //       width: 38,
-                                                      //       height: 15,
-                                                      //       decoration:
-                                                      //           BoxDecoration(
-                                                      //         color: const Color
-                                                      //             .fromARGB(
-                                                      //             127,
-                                                      //             255,
-                                                      //             255,
-                                                      //             255),
-                                                      //         borderRadius:
-                                                      //             BorderRadius
-                                                      //                 .circular(
-                                                      //                     10.0),
-                                                      //       ),
-                                                      //     ),
-                                                      //   ),
-                                                      // ),
                                                     ],
                                                   ),
                                                 );
@@ -1557,10 +1606,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                       .bodyLarge
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        fontSize: 16,
+                                                        fontSize: 17,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
-                                                            FontWeight.w600,
+                                                            FontWeight.bold,
                                                       ),
                                                 ),
                                               ],

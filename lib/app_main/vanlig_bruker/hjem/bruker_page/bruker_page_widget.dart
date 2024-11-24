@@ -48,6 +48,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   bool ingenRatings = false;
   bool _messageIsLoading = false;
   bool _folgerLoading = false;
+  bool _isExpanded = false;
   final Securestorage securestorage = Securestorage();
   final ApiFolg apiFolg = ApiFolg();
 
@@ -1136,33 +1137,78 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                 padding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(24, 4, 40, 0),
-                                                child: Container(
-                                                  constraints: BoxConstraints(
-                                                    maxWidth: MediaQuery.sizeOf(
-                                                            context)
-                                                        .width,
-                                                    maxHeight: 90,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                  ),
-                                                  child: Text(
-                                                    _isLoading
-                                                        ? ''
-                                                        : bruker?.bio ?? '',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          fontSize: 14,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                  ),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                      ),
+                                                      child: Text(
+                                                        _isLoading
+                                                            ? ''
+                                                            : bruker?.bio ?? '',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 14,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                        maxLines: _isExpanded
+                                                            ? null
+                                                            : 2, // Show limited lines if not expanded
+                                                        overflow: _isExpanded
+                                                            ? TextOverflow
+                                                                .visible
+                                                            : TextOverflow
+                                                                .ellipsis,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          _isExpanded =
+                                                              !_isExpanded; // Toggle the expanded state
+                                                        });
+                                                      },
+                                                      child: Text(
+                                                        _isExpanded
+                                                            ? 'Se mindre'
+                                                            : 'Se mer',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodySmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 13,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  color: const Color
+                                                                      .fromRGBO(
+                                                                      113,
+                                                                      113,
+                                                                      113,
+                                                                      1.0),
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
@@ -2096,38 +2142,6 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                         ),
                                                                   ),
                                                                 ),
-                                                              // if (matvarer.kg !=
-                                                              //     true)
-                                                              //   Padding(
-                                                              //     padding:
-                                                              //         const EdgeInsetsDirectional
-                                                              //             .fromSTEB(
-                                                              //             0,
-                                                              //             12,
-                                                              //             4,
-                                                              //             0),
-                                                              //     child: Text(
-                                                              //       '/stk',
-                                                              //       textAlign:
-                                                              //           TextAlign
-                                                              //               .end,
-                                                              //       style: FlutterFlowTheme.of(
-                                                              //               context)
-                                                              //           .bodyMedium
-                                                              //           .override(
-                                                              //             fontFamily:
-                                                              //                 'Nunito',
-                                                              //             color:
-                                                              //                 FlutterFlowTheme.of(context).secondaryText,
-                                                              //             fontSize:
-                                                              //                 16,
-                                                              //             letterSpacing:
-                                                              //                 0.0,
-                                                              //             fontWeight:
-                                                              //                 FontWeight.w600,
-                                                              //           ),
-                                                              //     ),
-                                                              //   ),
                                                             ],
                                                           ),
                                                         ),

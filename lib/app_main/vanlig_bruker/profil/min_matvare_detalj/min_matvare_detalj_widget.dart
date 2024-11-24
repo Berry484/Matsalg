@@ -590,6 +590,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -631,7 +632,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                 barrierColor:
                                                     const Color.fromARGB(
                                                         60, 17, 0, 0),
-                                                enableDrag: false,
+                                                enableDrag: true,
                                                 context: context,
                                                 builder: (context) {
                                                   return GestureDetector(

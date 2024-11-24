@@ -657,8 +657,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                         },
                         text: 'Avslå',
                         options: FFButtonOptions(
-                          width: 145,
-                          height: 40,
+                          width: 155,
+                          height: 47,
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
                           iconPadding:
@@ -771,8 +771,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                           },
                           text: 'Godkjenn',
                           options: FFButtonOptions(
-                            width: 145,
-                            height: 40,
+                            width: 155,
+                            height: 47,
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 11, 0, 0, 0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(

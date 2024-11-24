@@ -568,7 +568,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           text: 'Melding',
                           options: FFButtonOptions(
                             width: double.infinity,
-                            height: 43,
+                            height: 47,
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 11, 0, 0, 0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -665,7 +665,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           text: 'Trekk bud',
                           options: FFButtonOptions(
                             width: double.infinity,
-                            height: 45,
+                            height: 47,
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 11, 0, 0, 0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -700,11 +700,66 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           Align(
                             alignment: const AlignmentDirectional(0, 0),
                             child: FFButtonWidget(
-                              onPressed: () {},
+                              onPressed: () async {
+                                try {
+                                  // Prevent multiple submissions while loading
+                                  if (_messageIsLoading) return;
+                                  _messageIsLoading = true;
+
+                                  Conversation existingConversation =
+                                      FFAppState().conversations.firstWhere(
+                                    (conv) => conv.user == ordreInfo.selger,
+                                    orElse: () {
+                                      // If no conversation is found, create a new one and add it to the list
+                                      final newConversation = Conversation(
+                                        user: ordreInfo.selger,
+                                        profilePic: matvare.profilepic ?? '',
+                                        messages: [],
+                                      );
+
+                                      // Add the new conversation to the list
+                                      FFAppState()
+                                          .conversations
+                                          .add(newConversation);
+
+                                      // Return the new conversation
+                                      return newConversation;
+                                    },
+                                  );
+
+                                  // Step 3: Serialize the conversation object to JSON
+                                  String? serializedConversation =
+                                      serializeParam(
+                                    existingConversation
+                                        .toJson(), // Convert the conversation to JSON
+                                    ParamType.JSON,
+                                  );
+
+                                  // Step 4: Stop loading and navigate to message screen
+                                  _messageIsLoading = false;
+                                  if (serializedConversation != null) {
+                                    // Step 5: Navigate to 'message' screen with the conversation
+                                    context.pushNamed(
+                                      'message',
+                                      queryParameters: {
+                                        'conversation':
+                                            serializedConversation, // Pass the serialized conversation
+                                      },
+                                    );
+                                  }
+                                } on SocketException {
+                                  _messageIsLoading = false;
+                                  showErrorToast(
+                                      context, 'Ingen internettforbindelse');
+                                } catch (e) {
+                                  _messageIsLoading = false;
+                                  showErrorToast(context, 'En feil oppstod');
+                                }
+                              },
                               text: 'Melding',
                               options: FFButtonOptions(
                                 width: double.infinity,
-                                height: 43,
+                                height: 47,
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     11, 0, 0, 0),
                                 iconPadding:
@@ -813,7 +868,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 text: 'Bekreft hentet',
                                 options: FFButtonOptions(
                                   width: double.infinity,
-                                  height: 45,
+                                  height: 47,
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       11, 0, 0, 0),
                                   iconPadding:

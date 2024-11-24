@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
@@ -147,11 +148,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
               'Rediger profil',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Montserrat',
+                    fontFamily: 'Nunito',
                     color: FlutterFlowTheme.of(context).primaryText,
                     fontSize: 20,
                     letterSpacing: 0.0,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w800,
                   ),
             ),
             actions: [],
@@ -373,10 +374,14 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     decoration: InputDecoration(
                                       labelText: 'Fornavn',
                                       labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                          .bodyMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily: 'Nunito',
+                                            color: const Color.fromRGBO(
+                                                113, 113, 113, 1.0),
+                                            fontSize: 17.0,
                                             letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w700,
                                           ),
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
@@ -389,7 +394,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           color: Colors.transparent,
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -397,7 +402,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                               .primary,
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -405,7 +410,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                               .error,
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -413,7 +418,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                               .error,
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
                                       filled: true,
                                       fillColor: FlutterFlowTheme.of(context)
@@ -422,7 +427,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                           fontSize: 16,
@@ -448,10 +453,14 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     decoration: InputDecoration(
                                       labelText: 'Etternavn',
                                       labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                          .bodyMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily: 'Nunito',
+                                            color: const Color.fromRGBO(
+                                                113, 113, 113, 1.0),
+                                            fontSize: 17.0,
                                             letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w700,
                                           ),
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
@@ -464,7 +473,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           color: Colors.transparent,
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -472,7 +481,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                               .primary,
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -480,7 +489,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                               .error,
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -488,7 +497,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                               .error,
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
                                       filled: true,
                                       fillColor: FlutterFlowTheme.of(context)
@@ -497,7 +506,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                           fontSize: 16,
@@ -526,10 +535,14 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   decoration: InputDecoration(
                                     labelText: 'E-post',
                                     labelStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
+                                        .bodyMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily: 'Nunito',
+                                          color: const Color.fromRGBO(
+                                              113, 113, 113, 1.0),
+                                          fontSize: 17.0,
                                           letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
@@ -542,7 +555,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                         color: Colors.transparent,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -550,7 +563,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                             .secondary,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -558,7 +571,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                             FlutterFlowTheme.of(context).error,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -566,7 +579,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                             FlutterFlowTheme.of(context).error,
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(14),
                                     ),
                                     filled: true,
                                     fillColor:
@@ -575,7 +588,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        fontFamily: 'Open Sans',
+                                        fontFamily: 'Nunito',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                         fontSize: 16,
@@ -597,6 +610,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                     child: TextFormField(
                       controller: _model.bioTextController,
                       focusNode: _model.bioFocusNode,
+                      onChanged: (_) => EasyDebounce.debounce(
+                        '_model.textController',
+                        const Duration(milliseconds: 200),
+                        () => safeSetState(() {}),
+                      ),
                       textCapitalization: TextCapitalization.sentences,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -607,12 +625,15 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   letterSpacing: 0.0,
                                 ),
                         hintText: 'Bio',
-                        hintStyle:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  fontFamily: 'Open Sans',
-                                  fontSize: 15,
-                                  letterSpacing: 0.0,
-                                ),
+                        hintStyle: FlutterFlowTheme.of(context)
+                            .bodyMedium
+                            .override(
+                              fontFamily: 'Nunito',
+                              color: const Color.fromRGBO(113, 113, 113, 1.0),
+                              fontSize: 16.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w700,
+                            ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                             color: Color(0x00000000),
@@ -647,16 +668,29 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                             const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                       ),
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Open Sans',
-                            fontSize: 15,
+                            fontFamily: 'Nunito',
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            fontSize: 16,
                             letterSpacing: 0.0,
                           ),
                       textAlign: TextAlign.start,
-                      maxLines: 3,
                       maxLength: 200,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      minLines: 3,
+                      maxLines: 7,
                       validator: _model.bioTextControllerValidator
                           .asValidator(context),
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(200),
+                        TextInputFormatter.withFunction((oldValue, newValue) {
+                          final lineCount =
+                              '\n'.allMatches(newValue.text).length + 1;
+                          if (lineCount > 7) {
+                            return oldValue;
+                          }
+                          return newValue;
+                        }),
+                      ],
                     ),
                   ),
                   Padding(
@@ -777,26 +811,26 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                       text: 'Lagre',
                       options: FFButtonOptions(
                         width: double.infinity,
-                        height: 45,
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        height: 50.0,
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
+                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).alternate,
                         textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  fontSize: 17,
+                            FlutterFlowTheme.of(context).titleMedium.override(
+                                  fontFamily: 'Nunito',
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  fontSize: 17.0,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w800,
                                 ),
-                        elevation: 0,
+                        elevation: 0.0,
                         borderSide: const BorderSide(
                           color: Colors.transparent,
-                          width: 1,
+                          width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(14.0),
                       ),
                     ),
                   ),

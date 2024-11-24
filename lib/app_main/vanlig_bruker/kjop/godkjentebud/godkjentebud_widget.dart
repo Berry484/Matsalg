@@ -535,7 +535,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                          const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 10),
                       child: FFButtonWidget(
                         onPressed: () async {
                           try {
@@ -575,8 +575,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         },
                         text: 'Gi en rating',
                         options: FFButtonOptions(
-                          width: 190,
-                          height: 40,
+                          width: double.infinity,
+                          height: 47,
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
                           iconPadding:
@@ -682,7 +682,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       text: 'Melding',
                       options: FFButtonOptions(
                         width: double.infinity,
-                        height: 43,
+                        height: 47,
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
                         iconPadding:

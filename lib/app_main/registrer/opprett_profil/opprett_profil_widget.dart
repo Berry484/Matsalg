@@ -1063,7 +1063,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                               );
                             }
                           },
-                          text: 'Ferdig',
+                          text: 'Fullfør',
                           options: FFButtonOptions(
                             width: double.infinity,
                             height: 50.0,
