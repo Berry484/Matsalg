@@ -931,45 +931,54 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           ),
                                                         ),
                                                         if (FFAppState()
-                                                            .bio
-                                                            .isNotEmpty)
-                                                          GestureDetector(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                _isExpanded =
-                                                                    !_isExpanded; // Toggle expanded state
-                                                              });
-                                                            },
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                      top: 2),
-                                                              child: Text(
-                                                                _isExpanded
-                                                                    ? 'Se mindre'
-                                                                    : 'Se mer',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Nunito',
-                                                                      fontSize:
-                                                                          13,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700,
-                                                                      color: const Color
-                                                                          .fromRGBO(
-                                                                          113,
-                                                                          113,
-                                                                          113,
-                                                                          1.0),
-                                                                    ),
+                                                                    .bio
+                                                                    .length >
+                                                                50 ||
+                                                            '\n'
+                                                                    .allMatches(
+                                                                        FFAppState()
+                                                                            .bio)
+                                                                    .length >=
+                                                                2)
+                                                          if (FFAppState()
+                                                              .bio
+                                                              .isNotEmpty)
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  _isExpanded =
+                                                                      !_isExpanded; // Toggle expanded state
+                                                                });
+                                                              },
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        top: 2),
+                                                                child: Text(
+                                                                  _isExpanded
+                                                                      ? 'Se mindre'
+                                                                      : 'Se mer',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodySmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        fontSize:
+                                                                            13,
+                                                                        fontWeight:
+                                                                            FontWeight.w700,
+                                                                        color: const Color
+                                                                            .fromRGBO(
+                                                                            113,
+                                                                            113,
+                                                                            113,
+                                                                            1.0),
+                                                                      ),
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
                                                       ],
                                                     ),
                                                   ),

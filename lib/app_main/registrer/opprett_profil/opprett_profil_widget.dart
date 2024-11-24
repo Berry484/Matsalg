@@ -364,6 +364,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(0, 16, 0, 0),
                                           child: TextFormField(
+                                            autovalidateMode: AutovalidateMode
+                                                .onUserInteraction,
                                             controller:
                                                 _model.brukernavnTextController,
                                             focusNode:
@@ -397,7 +399,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   width: 1,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(14),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -407,7 +409,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   width: 1,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(14),
                                               ),
                                               errorBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -417,7 +419,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   width: 1,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(14),
                                               ),
                                               focusedErrorBorder:
                                                   OutlineInputBorder(
@@ -428,7 +430,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   width: 1,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(14),
                                               ),
                                               filled: true,
                                               fillColor:
@@ -494,6 +496,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(0, 16, 10, 0),
                                         child: TextFormField(
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
                                           controller:
                                               _model.fornavnTextController,
                                           focusNode: _model.fornavnFocusNode,
@@ -525,7 +529,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -535,7 +539,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             errorBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -545,7 +549,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             focusedErrorBorder:
                                                 OutlineInputBorder(
@@ -556,7 +560,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             filled: true,
                                             fillColor:
@@ -585,6 +589,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(10, 16, 0, 0),
                                         child: TextFormField(
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
                                           controller:
                                               _model.etternavnTextController,
                                           focusNode: _model.etternavnFocusNode,
@@ -616,7 +622,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -626,7 +632,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             errorBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -636,7 +642,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             focusedErrorBorder:
                                                 OutlineInputBorder(
@@ -647,7 +653,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             filled: true,
                                             fillColor:
@@ -681,6 +687,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(0, 16, 0, 0),
                                         child: TextFormField(
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
                                           controller:
                                               _model.emailTextController,
                                           focusNode: _model.emailFocusNode,
@@ -712,7 +720,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -722,7 +730,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             errorBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -732,7 +740,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             focusedErrorBorder:
                                                 OutlineInputBorder(
@@ -743,7 +751,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             filled: true,
                                             fillColor:
@@ -801,6 +809,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(0, 16, 0, 0),
                                         child: TextFormField(
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
                                           controller:
                                               _model.passordTextController,
                                           focusNode: _model.passordFocusNode,
@@ -833,7 +843,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -843,7 +853,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             errorBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -853,7 +863,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             focusedErrorBorder:
                                                 OutlineInputBorder(
@@ -864,7 +874,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
                                             ),
                                             filled: true,
                                             fillColor:

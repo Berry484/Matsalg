@@ -71,10 +71,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => BetalingModel());
-
     _model.antallStkTextController ??= TextEditingController();
     _model.antallStkFocusNode ??= FocusNode();
-
     matvare = Matvarer.fromJson1(widget.matinfo);
     matpris = matvare.price ?? 1;
 
@@ -404,7 +402,8 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 ),
                                 Form(
                                   key: _model.formKey,
-                                  autovalidateMode: AutovalidateMode.disabled,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                   child: Align(
                                     alignment:
                                         const AlignmentDirectional(0.0, 0.0),

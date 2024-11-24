@@ -1133,84 +1133,98 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                   ],
                                                 ),
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(24, 4, 40, 0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
+                                              if ((bruker?.bio ?? '')
+                                                  .isNotEmpty)
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          24, 4, 40, 0),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                        ),
+                                                        child: Text(
+                                                          _isLoading
+                                                              ? ''
+                                                              : bruker?.bio ??
+                                                                  '',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 14,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                          maxLines: _isExpanded
+                                                              ? null
+                                                              : 2, // Show limited lines if not expanded
+                                                          overflow: _isExpanded
+                                                              ? TextOverflow
+                                                                  .visible
+                                                              : TextOverflow
+                                                                  .ellipsis,
+                                                        ),
                                                       ),
-                                                      child: Text(
-                                                        _isLoading
-                                                            ? ''
-                                                            : bruker?.bio ?? '',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: 14,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                        maxLines: _isExpanded
-                                                            ? null
-                                                            : 2, // Show limited lines if not expanded
-                                                        overflow: _isExpanded
-                                                            ? TextOverflow
-                                                                .visible
-                                                            : TextOverflow
-                                                                .ellipsis,
+                                                      if (FFAppState()
+                                                                  .bio
+                                                                  .length >
+                                                              50 ||
+                                                          '\n'
+                                                                  .allMatches(
+                                                                      FFAppState()
+                                                                          .bio)
+                                                                  .length >=
+                                                              2)
+                                                        const SizedBox(
+                                                            height: 2),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            _isExpanded =
+                                                                !_isExpanded; // Toggle the expanded state
+                                                          });
+                                                        },
+                                                        child: Text(
+                                                          _isExpanded
+                                                              ? 'Se mindre'
+                                                              : 'Se mer',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodySmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                color: const Color
+                                                                    .fromRGBO(
+                                                                    113,
+                                                                    113,
+                                                                    113,
+                                                                    1.0),
+                                                              ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                    const SizedBox(height: 2),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          _isExpanded =
-                                                              !_isExpanded; // Toggle the expanded state
-                                                        });
-                                                      },
-                                                      child: Text(
-                                                        _isExpanded
-                                                            ? 'Se mindre'
-                                                            : 'Se mer',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodySmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: 13,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color: const Color
-                                                                      .fromRGBO(
-                                                                      113,
-                                                                      113,
-                                                                      113,
-                                                                      1.0),
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
                                             ],
                                           ),
                                         ),

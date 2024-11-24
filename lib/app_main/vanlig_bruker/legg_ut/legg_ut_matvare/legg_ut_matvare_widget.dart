@@ -1741,6 +1741,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 .fromSTEB(
                                                 20.0, 0.0, 20.0, 16.0),
                                             child: TextFormField(
+                                              autovalidateMode: AutovalidateMode
+                                                  .onUserInteraction,
                                               controller: _model
                                                   .produktNavnTextController,
                                               focusNode:
@@ -2092,6 +2094,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 .fromSTEB(
                                                 20.0, 0.0, 20.0, 16.0),
                                             child: TextFormField(
+                                              autovalidateMode: AutovalidateMode
+                                                  .onUserInteraction,
                                               controller: _model
                                                   .produktBeskrivelseTextController,
                                               focusNode: _model
@@ -2506,6 +2510,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 20.0,
                                                                 16.0),
                                                         child: TextFormField(
+                                                          autovalidateMode:
+                                                              AutovalidateMode
+                                                                  .onUserInteraction,
                                                           controller: _model
                                                               .antallStkTextController,
                                                           focusNode: _model
