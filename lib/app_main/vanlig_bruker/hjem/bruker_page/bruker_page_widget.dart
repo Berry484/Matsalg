@@ -1323,10 +1323,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     0
                                                                 ? FlutterFlowTheme.of(
                                                                         context)
-                                                                    .alternate
-                                                                : FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
+                                                                    .primaryText
+                                                                : Colors.grey,
                                                             size: 32,
                                                           ),
                                                           const Tab(
@@ -1347,10 +1345,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     1
                                                                 ? FlutterFlowTheme.of(
                                                                         context)
-                                                                    .alternate
-                                                                : FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
+                                                                    .primaryText
+                                                                : Colors.grey,
                                                             size: 27,
                                                           ),
                                                           const Tab(

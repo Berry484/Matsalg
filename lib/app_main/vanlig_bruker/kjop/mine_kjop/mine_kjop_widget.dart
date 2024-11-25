@@ -1348,7 +1348,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              '+${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
+                                                                              (alleInfo.kjopte ?? false) ? '${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr' : '+${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Nunito',
@@ -2092,7 +2092,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              '+${ordreInfo.pris.remainder(Decimal.one) == Decimal.zero ? ordreInfo.pris.toBigInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
+                                                                              (ordreInfo.kjopte ?? false) ? '${ordreInfo.pris.remainder(Decimal.one) == Decimal.zero ? ordreInfo.pris.toBigInt() : ordreInfo.pris.toStringAsFixed(2)} Kr' : '+${ordreInfo.pris.remainder(Decimal.one) == Decimal.zero ? ordreInfo.pris.toBigInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Nunito',
@@ -2902,7 +2902,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              '+${salgInfo.pris.remainder(Decimal.one) == Decimal.zero ? salgInfo.pris.toBigInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
+                                                                              (salgInfo.kjopte ?? false) ? '${salgInfo.pris.remainder(Decimal.one) == Decimal.zero ? salgInfo.pris.toBigInt() : salgInfo.pris.toStringAsFixed(2)} Kr' : '+${salgInfo.pris.remainder(Decimal.one) == Decimal.zero ? salgInfo.pris.toBigInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Nunito',

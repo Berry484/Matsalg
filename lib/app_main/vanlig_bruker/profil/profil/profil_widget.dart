@@ -56,7 +56,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
     tellMineFolgere();
     updateUserStats();
     getRatingStats();
-
     _model = createModel(context, () => ProfilModel());
 
     _model.tabBarController = TabController(
@@ -1075,9 +1074,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     color: _model.tabBarCurrentIndex ==
                                                                             0
                                                                         ? FlutterFlowTheme.of(context)
-                                                                            .alternate
-                                                                        : FlutterFlowTheme.of(context)
-                                                                            .secondaryText,
+                                                                            .primaryText
+                                                                        : Colors
+                                                                            .grey,
                                                                     size: 32,
                                                                   ),
                                                                   const Tab(
@@ -1096,9 +1095,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                     color: _model.tabBarCurrentIndex ==
                                                                             1
                                                                         ? FlutterFlowTheme.of(context)
-                                                                            .alternate
-                                                                        : FlutterFlowTheme.of(context)
-                                                                            .secondaryText,
+                                                                            .primaryText
+                                                                        : Colors
+                                                                            .grey,
                                                                     size: 32,
                                                                   ),
                                                                   const Tab(
@@ -1140,8 +1139,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                       ],
                                     ),
                                     if (_model.tabBarCurrentIndex == 0)
-                                      if (FFAppState().lagtUt != true &&
-                                          _model.tabBarCurrentIndex == 0)
+                                      if ((FFAppState().lagtUt != true &&
+                                          _model.tabBarCurrentIndex == 0))
                                         Container(
                                           width:
                                               MediaQuery.sizeOf(context).width,

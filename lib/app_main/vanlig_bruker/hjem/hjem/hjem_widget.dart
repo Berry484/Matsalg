@@ -370,7 +370,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                     Icon(
                                       CupertinoIcons.placemark_fill,
                                       color: FlutterFlowTheme.of(context)
-                                          .alternate,
+                                          .primaryText,
                                       size: 19.0,
                                     ),
                                     Text(
@@ -380,16 +380,16 @@ class _HjemWidgetState extends State<HjemWidget> {
                                           .override(
                                             fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            fontSize: 16.0,
+                                                .primaryText,
+                                            fontSize: 15.0,
                                             letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w800,
+                                            fontWeight: FontWeight.w700,
                                           ),
                                     ),
                                     Icon(
                                       Icons.keyboard_arrow_down,
                                       color: FlutterFlowTheme.of(context)
-                                          .alternate,
+                                          .primaryText,
                                       size: 24.0,
                                     ),
                                   ],
@@ -499,7 +499,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                           .override(
                                             fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryText,
+                                                .alternate,
                                             fontSize: 16,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.bold,

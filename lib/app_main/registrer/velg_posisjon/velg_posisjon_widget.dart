@@ -163,13 +163,14 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
               ),
             ),
             title: Text(
-              'Velg posisjon',
+              textAlign: TextAlign.center,
+              'Velg posisjon for \nå se hva som er i nærheten',
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Nunito',
                     color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 18,
+                    fontSize: 17,
                     letterSpacing: 0.0,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                   ),
             ),
             actions: const [],
