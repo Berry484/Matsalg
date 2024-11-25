@@ -243,6 +243,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 ordreInfo.foodDetails,
                                 ParamType.JSON,
                               ),
+                              'orgMatinfo':
+                                  serializeParam(matvare, ParamType.JSON),
                             },
                           );
                         } on SocketException {

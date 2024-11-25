@@ -3,15 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
-import 'package:mat_salg/flutter_flow/flutter_flow_animations.dart';
 import 'package:mat_salg/matvarer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
@@ -36,11 +31,7 @@ class KjopDetaljVentendeWidget extends StatefulWidget {
 class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
   late KjopDetaljVentendeModel _model;
   late Matvarer matvare;
-  ApiLike apiLike = ApiLike();
   bool _messageIsLoading = false;
-  bool _showHeart = false;
-  final animationsMap = <String, AnimationInfo>{};
-  bool _isAnimating = false;
   bool _isExpanded = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -50,42 +41,6 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
     super.initState();
     _model = createModel(context, () => KjopDetaljVentendeModel());
     matvare = Matvarer.fromJson1(widget.matinfo);
-    getChecklike();
-    // Adding the animation for the heart icon
-    animationsMap.addAll({
-      'iconOnPageLoadAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          ScaleEffect(
-            curve: Curves.bounceOut,
-            delay: 0.0.ms,
-            duration: 400.0.ms,
-            begin: const Offset(1.2, 1.2),
-            end: const Offset(1.0, 1.0),
-          ),
-        ],
-      ),
-    });
-  }
-
-  // Trigger animation manually when the liker value changes
-  void _triggerHeartAnimation() {
-    if (_isAnimating)
-      return; // Prevent triggering animation if it's already running
-
-    setState(() {
-      _isAnimating = true; // Set flag to indicate animation is running
-      _showHeart = true; // Show the heart icon
-    });
-
-    Timer(const Duration(seconds: 1, milliseconds: 500), () {
-      if (mounted) {
-        setState(() {
-          _showHeart = false; // Hide the heart icon
-          _isAnimating = false; // Reset the animation flag
-        });
-      }
-    });
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -138,26 +93,6 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
     Future.delayed(const Duration(seconds: 3), () {
       overlayEntry.remove();
     });
-  }
-
-  Future<void> getChecklike() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        _model.liker = await ApiCheckLiked.getChecklike(token, matvare.matId);
-        setState(() {
-          return;
-        });
-      }
-    } on SocketException {
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      showErrorToast(context, 'En feil oppstod');
-    }
   }
 
   @override
@@ -338,29 +273,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
-                                      onDoubleTap: () async {
-                                        try {
-                                          HapticFeedback.lightImpact();
-                                          _model.liker =
-                                              !(_model.liker ?? true);
-                                          apiLike.deleteLike(
-                                              Securestorage.authToken,
-                                              matvare.matId);
-                                          safeSetState(() {});
-                                          if (_model.liker == true) {
-                                            _triggerHeartAnimation();
-                                            apiLike.sendLike(
-                                                Securestorage.authToken,
-                                                matvare.matId);
-                                          }
-                                        } on SocketException {
-                                          showErrorToast(context,
-                                              'Ingen internettforbindelse');
-                                        } catch (e) {
-                                          showErrorToast(
-                                              context, 'En feil oppstod');
-                                        }
-                                      },
+                                      onDoubleTap: () async {},
                                       child: Container(
                                         width: double.infinity,
                                         height: 485,
@@ -691,19 +604,6 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 ],
                                               ),
                                             ),
-                                            if (_showHeart)
-                                              Align(
-                                                alignment: Alignment
-                                                    .center, // Center the heart icon
-                                                child: Icon(
-                                                  CupertinoIcons.heart_fill,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
-                                                  size: 130.0,
-                                                ).animateOnPageLoad(animationsMap[
-                                                    'iconOnPageLoadAnimation']!),
-                                              ),
                                           ],
                                         ),
                                       ),
@@ -733,45 +633,6 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        ToggleIcon(
-                                          onPressed: () async {
-                                            try {
-                                              HapticFeedback.lightImpact();
-                                              // Toggle the current like state
-                                              safeSetState(() => _model.liker =
-                                                  !_model.liker!);
-                                              if (_model.liker!) {
-                                                _triggerHeartAnimation();
-                                                apiLike.sendLike(
-                                                    Securestorage.authToken,
-                                                    matvare.matId);
-                                              } else {
-                                                apiLike.deleteLike(
-                                                    Securestorage.authToken,
-                                                    matvare.matId);
-                                              }
-                                            } on SocketException {
-                                              showErrorToast(context,
-                                                  'Ingen internettforbindelse');
-                                            } catch (e) {
-                                              showErrorToast(
-                                                  context, 'En feil oppstod');
-                                            }
-                                          },
-                                          value: _model.liker!,
-                                          onIcon: const Icon(
-                                            CupertinoIcons.heart_fill,
-                                            color: Color.fromARGB(
-                                                1000, 1000, 0, 0),
-                                            size: 34.0,
-                                          ),
-                                          offIcon: Icon(
-                                            CupertinoIcons.heart,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 34,
-                                          ),
-                                        ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(3.0, 0.0, 0.0, 0.0),

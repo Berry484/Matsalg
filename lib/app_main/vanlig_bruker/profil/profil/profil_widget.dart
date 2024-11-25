@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart';
 import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -714,15 +715,35 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                         onTap:
                                                                             () async {
                                                                           try {
-                                                                            context.pushNamed(
-                                                                              'BrukerRating',
-                                                                              queryParameters: {
-                                                                                'mine': serializeParam(
-                                                                                  true,
-                                                                                  ParamType.bool,
-                                                                                ),
+                                                                            await showModalBottomSheet(
+                                                                              isScrollControlled: true,
+                                                                              backgroundColor: Colors.transparent,
+                                                                              barrierColor: const Color.fromARGB(60, 17, 0, 0),
+                                                                              useRootNavigator: true,
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                return GestureDetector(
+                                                                                  onTap: () => FocusScope.of(context).unfocus(),
+                                                                                  child: Padding(
+                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                    child: const BrukerRatingWidget(
+                                                                                      mine: true,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
                                                                               },
-                                                                            );
+                                                                            ).then((value) =>
+                                                                                setState(() {}));
+                                                                            return;
+                                                                            // context.pushNamed(
+                                                                            //   'BrukerRating',
+                                                                            //   queryParameters: {
+                                                                            //     'mine': serializeParam(
+                                                                            //       true,
+                                                                            //       ParamType.bool,
+                                                                            //     ),
+                                                                            //   },
+                                                                            // );
                                                                           } on SocketException {
                                                                             showErrorToast(context,
                                                                                 'Ingen internettforbindelse');

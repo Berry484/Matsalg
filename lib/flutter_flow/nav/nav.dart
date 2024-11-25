@@ -317,6 +317,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               final params = FFParameters(state);
               final matinfo = params.getParam<Map<String, dynamic>>(
                   'matinfo', ParamType.JSON);
+
               return KjopDetaljVentendeWidget(matinfo: matinfo);
             },
             parentNavigatorKey: _shellKey,
