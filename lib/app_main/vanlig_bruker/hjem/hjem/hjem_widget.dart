@@ -1120,7 +1120,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       Container(
                                                                     width: 90,
                                                                     height:
-                                                                        123.3,
+                                                                        103.14,
                                                                     decoration:
                                                                         BoxDecoration(
                                                                       color: const Color(
@@ -1144,7 +1144,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           size:
-                                                                              32,
+                                                                              29,
                                                                         ),
                                                                         Padding(
                                                                           padding: const EdgeInsetsDirectional
@@ -1159,9 +1159,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Nunito',
                                                                                   color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 15,
+                                                                                  fontSize: 14,
                                                                                   letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w800,
+                                                                                  fontWeight: FontWeight.w700,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1200,7 +1200,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       Container(
                                                                     width: 90,
                                                                     height:
-                                                                        123.3,
+                                                                        103.14,
                                                                     decoration:
                                                                         BoxDecoration(
                                                                       color: const Color(
@@ -1224,7 +1224,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           size:
-                                                                              32,
+                                                                              29,
                                                                         ),
                                                                         Padding(
                                                                           padding: const EdgeInsetsDirectional
@@ -1239,9 +1239,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Nunito',
                                                                                   color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 15,
+                                                                                  fontSize: 14,
                                                                                   letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w800,
+                                                                                  fontWeight: FontWeight.w700,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1280,7 +1280,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       Container(
                                                                     width: 90,
                                                                     height:
-                                                                        123.3,
+                                                                        103.14,
                                                                     decoration:
                                                                         BoxDecoration(
                                                                       color: const Color(
@@ -1304,7 +1304,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           size:
-                                                                              32,
+                                                                              29,
                                                                         ),
                                                                         Padding(
                                                                           padding: const EdgeInsetsDirectional
@@ -1319,9 +1319,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Nunito',
                                                                                   color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 15,
+                                                                                  fontSize: 14,
                                                                                   letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w800,
+                                                                                  fontWeight: FontWeight.w700,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1360,7 +1360,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       Container(
                                                                     width: 90,
                                                                     height:
-                                                                        123.3,
+                                                                        103.14,
                                                                     decoration:
                                                                         BoxDecoration(
                                                                       color: const Color(
@@ -1384,7 +1384,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           size:
-                                                                              32,
+                                                                              29,
                                                                         ),
                                                                         Padding(
                                                                           padding: const EdgeInsetsDirectional
@@ -1399,9 +1399,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Nunito',
                                                                                   color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 15,
+                                                                                  fontSize: 14,
                                                                                   letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w800,
+                                                                                  fontWeight: FontWeight.w700,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1440,7 +1440,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       Container(
                                                                     width: 90,
                                                                     height:
-                                                                        123.3,
+                                                                        103.14,
                                                                     decoration:
                                                                         BoxDecoration(
                                                                       color: const Color(
@@ -1464,7 +1464,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           size:
-                                                                              32,
+                                                                              29,
                                                                         ),
                                                                         Padding(
                                                                           padding: const EdgeInsetsDirectional
@@ -1479,9 +1479,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Nunito',
                                                                                   color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 15,
+                                                                                  fontSize: 14,
                                                                                   letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w800,
+                                                                                  fontWeight: FontWeight.w700,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1496,7 +1496,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                         .fromSTEB(
                                                                         8,
                                                                         0,
-                                                                        0,
+                                                                        8,
                                                                         0),
                                                                 child:
                                                                     GestureDetector(
@@ -1520,7 +1520,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                       Container(
                                                                     width: 90,
                                                                     height:
-                                                                        123.3,
+                                                                        103.14,
                                                                     decoration:
                                                                         BoxDecoration(
                                                                       color: const Color(
@@ -1544,7 +1544,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           size:
-                                                                              32,
+                                                                              29,
                                                                         ),
                                                                         Padding(
                                                                           padding: const EdgeInsetsDirectional
@@ -1559,89 +1559,9 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Nunito',
                                                                                   color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 15,
+                                                                                  fontSize: 14,
                                                                                   letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w800,
-                                                                                ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        8,
-                                                                        0,
-                                                                        10,
-                                                                        0),
-                                                                child:
-                                                                    GestureDetector(
-                                                                  onTap:
-                                                                      () async {
-                                                                    context
-                                                                        .pushNamed(
-                                                                      'BondeGardPage',
-                                                                      queryParameters:
-                                                                          {
-                                                                        'kategori':
-                                                                            serializeParam(
-                                                                          'drikke',
-                                                                          ParamType
-                                                                              .String,
-                                                                        ),
-                                                                      }.withoutNulls,
-                                                                    );
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 90,
-                                                                    height:
-                                                                        123.3,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      color: const Color(
-                                                                          0xFFF6F6F6),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              20),
-                                                                    ),
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .min,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Icon(
-                                                                          Ionicons
-                                                                              .help_circle_outline,
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primaryText,
-                                                                          size:
-                                                                              32,
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              0,
-                                                                              2,
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              Text(
-                                                                            'Annet',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Nunito',
-                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 15,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w800,
+                                                                                  fontWeight: FontWeight.w700,
                                                                                 ),
                                                                           ),
                                                                         ),
