@@ -129,10 +129,12 @@ class _MainWrapperState extends State<MainWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
       body: widget.child, // Main content (child widget)
 
       // Bottom Navigation Bar
+
       bottomNavigationBar: Stack(
         children: [
           // Bottom Navigation Bar
@@ -200,8 +202,8 @@ class _MainWrapperState extends State<MainWrapper> {
                               Ionicons.home_outline,
                               color: _selectedIndex == 0
                                   ? FlutterFlowTheme.of(context).alternate
-                                  : const Color(0xFF9299A1),
-                              size: 30.0,
+                                  : const Color(0xFF262626),
+                              size: 29.0,
                             ),
                             onPressed: () => _onItemTapped(0),
                           ),
@@ -214,8 +216,8 @@ class _MainWrapperState extends State<MainWrapper> {
                               Ionicons.bag_check_outline,
                               color: _selectedIndex == 1
                                   ? FlutterFlowTheme.of(context).alternate
-                                  : const Color(0xFF9299A1),
-                              size: 31.0,
+                                  : const Color(0xFF262626),
+                              size: 30.0,
                             ),
                             onPressed: () => _onItemTapped(1),
                           ),
@@ -228,8 +230,8 @@ class _MainWrapperState extends State<MainWrapper> {
                               CupertinoIcons.add,
                               color: _selectedIndex == 2
                                   ? FlutterFlowTheme.of(context).alternate
-                                  : const Color(0xFF9299A1),
-                              size: 30.0,
+                                  : const Color(0xFF262626),
+                              size: 29.0,
                             ),
                             onPressed: () => _onItemTapped(2),
                           ),
@@ -242,8 +244,8 @@ class _MainWrapperState extends State<MainWrapper> {
                               CupertinoIcons.chat_bubble,
                               color: _selectedIndex == 3
                                   ? FlutterFlowTheme.of(context).alternate
-                                  : const Color(0xFF9299A1),
-                              size: 30.0,
+                                  : const Color(0xFF262626),
+                              size: 29.0,
                             ),
                             onPressed: () => _onItemTapped(3),
                           ),
@@ -256,8 +258,8 @@ class _MainWrapperState extends State<MainWrapper> {
                               CupertinoIcons.person,
                               color: _selectedIndex == 4
                                   ? FlutterFlowTheme.of(context).alternate
-                                  : const Color(0xFF9299A1),
-                              size: 30.0,
+                                  : const Color(0xFF262626),
+                              size: 29.0,
                             ),
                             onPressed: () => _onItemTapped(4),
                           ),

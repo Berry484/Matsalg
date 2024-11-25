@@ -1510,7 +1510,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                         child: Text(
                                                                                           // Directly calculate the distance using the provided latitude and longitude
-                                                                                          (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
+                                                                                          (calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                                           textAlign: TextAlign.start,
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                 fontFamily: 'Nunito',
@@ -1988,7 +1988,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                     child: Text(
                                                                                       // Directly calculate the distance using the provided latitude and longitude
-                                                                                      (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0).toStringAsFixed(0)} Km',
+                                                                                      (calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Nunito',

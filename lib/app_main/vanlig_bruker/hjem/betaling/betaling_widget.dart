@@ -410,7 +410,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     child: Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 12.0, 0.0, 16.0),
+                                              0.0, 12.0, 16.0, 16.0),
                                       child: TextFormField(
                                         controller:
                                             _model.antallStkTextController,
@@ -493,7 +493,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           contentPadding:
                                               const EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                  20.0, 15.0, 0.0, 24.0),
+                                                  20.0, 30.0, 0.0, 0.0),
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -910,7 +910,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 children: [
                                   Container(
                                     width: MediaQuery.sizeOf(context).width,
-                                    height: 60,
+                                    height: 57,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondary,

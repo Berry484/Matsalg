@@ -400,8 +400,8 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                         });
                       } else if (selectedOption == 'Avstand: nærmest meg') {
                         sorterVerdi = 4; // Set the sorting to high to low
-                        double brukerLat = FFAppState().brukerLat ?? 0.0;
-                        double brukerLng = FFAppState().brukerLng ?? 0.0;
+                        double brukerLat = FFAppState().brukerLat;
+                        double brukerLng = FFAppState().brukerLng;
 
                         sortedList.sort((a, b) {
                           double distanceA = calculateDistance(
@@ -577,6 +577,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                     return false; // Return false to continue processing the notification
                   },
                   child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
                     primary: false,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -1053,7 +1054,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                                                                                           padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                           child: Text(
                                                                                             // Directly calculate the distance using the provided latitude and longitude
-                                                                                            (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
+                                                                                            (calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                                             textAlign: TextAlign.start,
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                   fontFamily: 'Open Sans',

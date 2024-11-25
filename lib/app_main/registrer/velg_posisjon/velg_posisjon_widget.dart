@@ -54,7 +54,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
     selectedLocation = functions.doubletillatlon(
-        FFAppState().brukerLat ?? 0, FFAppState().brukerLng ?? 0)!;
+        FFAppState().brukerLat, FFAppState().brukerLng)!;
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -205,11 +205,11 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                 width: 500.0,
                                 height: double.infinity,
                                 center: functions.doubletillatlon(
-                                    FFAppState().brukerLat ?? 59.9138688,
-                                    FFAppState().brukerLng ?? 10.7522454)!,
+                                    FFAppState().brukerLat,
+                                    FFAppState().brukerLng)!,
                                 matsted: functions.doubletillatlon(
-                                    FFAppState().brukerLat ?? 59.9138688,
-                                    FFAppState().brukerLng ?? 10.7522454)!,
+                                    FFAppState().brukerLat,
+                                    FFAppState().brukerLng)!,
                                 onLocationChanged: (newLocation) {
                                   setState(() {
                                     selectedLocation = newLocation;
@@ -319,9 +319,9 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                               const LatLng(0.0, 0.0)) {
                                         location = selectedLocation;
                                         FFAppState().brukerLat =
-                                            location?.latitude;
+                                            location!.latitude;
                                         FFAppState().brukerLng =
-                                            location?.longitude;
+                                            location.longitude;
                                         String? token =
                                             await Securestorage().readToken();
                                         if (token == null) {
@@ -336,8 +336,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                       }
 
                                       // If location was not retrieved, exit
-                                      if (location == null ||
-                                          location == const LatLng(0.0, 0.0)) {
+                                      if (location == const LatLng(0.0, 0.0)) {
                                         showErrorToast(context,
                                             'posisjonstjenester er skrudd av i innstillinger');
                                         return;
@@ -427,9 +426,9 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                       if (selectedLocation != null) {
                                         location = selectedLocation;
                                         FFAppState().brukerLat =
-                                            location?.latitude;
+                                            location!.latitude;
                                         FFAppState().brukerLng =
-                                            location?.longitude;
+                                            location.longitude;
                                         String? token =
                                             await Securestorage().readToken();
                                         if (token == null) {

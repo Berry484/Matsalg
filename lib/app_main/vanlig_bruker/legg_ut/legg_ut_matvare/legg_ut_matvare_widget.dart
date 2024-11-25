@@ -83,9 +83,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
   String? velgkategori;
   LatLng? selectedLatLng;
   LatLng? currentselectedLatLng =
-      (FFAppState().brukerLat != null && FFAppState().brukerLng != null)
-          ? LatLng(FFAppState().brukerLat!, FFAppState().brukerLng!)
-          : const LatLng(0, 0);
+      LatLng(FFAppState().brukerLat, FFAppState().brukerLng);
   bool test = true;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -310,7 +308,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: GestureDetector(
                     onTap: () async {
                       try {
@@ -1825,7 +1823,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 contentPadding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                        20.0, 15.0, 0.0, 24.0),
+                                                        20.0, 30.0, 0.0, 0.0),
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -1907,7 +1905,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     width: MediaQuery.sizeOf(
                                                             context)
                                                         .width,
-                                                    height: 60,
+                                                    height: 57,
                                                     decoration: BoxDecoration(
                                                       color:
                                                           FlutterFlowTheme.of(
@@ -2181,7 +2179,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                 contentPadding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                        20.0, 15.0, 0.0, 24.0),
+                                                        20.0, 30.0, 0.0, 0.0),
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -2368,7 +2366,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       contentPadding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(20.0,
-                                                              15.0, 0.0, 24.0),
+                                                              30.0, 0.0, 0.0),
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -2650,9 +2648,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 const EdgeInsetsDirectional
                                                                     .fromSTEB(
                                                                     20.0,
-                                                                    15.0,
+                                                                    30.0,
                                                                     0.0,
-                                                                    24.0),
+                                                                    0.0),
                                                           ),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
@@ -2976,7 +2974,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       width: MediaQuery.sizeOf(
                                                               context)
                                                           .width,
-                                                      height: 60,
+                                                      height: 57,
                                                       decoration: BoxDecoration(
                                                         color:
                                                             FlutterFlowTheme.of(

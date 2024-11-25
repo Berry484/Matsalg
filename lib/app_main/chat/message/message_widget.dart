@@ -185,7 +185,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                   flexibleSpace: FlexibleSpaceBar(
                     title: GestureDetector(
                       onTap: () {
-                        context.pushNamed(
+                        context.goNamed(
                           'BrukerPage',
                           queryParameters: {
                             'username': serializeParam(

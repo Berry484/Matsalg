@@ -167,16 +167,18 @@ class FFAppState extends ChangeNotifier {
     _brukersted = value;
   }
 
-  double? _brukerLat = 59.9138688;
-  double? get brukerLat => _brukerLat;
-  set brukerLat(double? value) {
+  double _brukerLat = 59.9138688;
+  double get brukerLat => _brukerLat;
+  set brukerLat(double value) {
     _brukerLat = value;
+    prefs.setDouble('ff_brukerLat', value);
   }
 
-  double? _brukerLng = 10.7522454;
-  double? get brukerLng => _brukerLng;
-  set brukerLng(double? value) {
+  double _brukerLng = 10.7522454;
+  double get brukerLng => _brukerLng;
+  set brukerLng(double value) {
     _brukerLng = value;
+    prefs.setDouble('ff_brukerLng', value);
   }
 
   String _brukernavn = "";

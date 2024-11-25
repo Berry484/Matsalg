@@ -198,7 +198,6 @@ class _HjemWidgetState extends State<HjemWidget> {
           // Convert the response to lowercase and then capitalize the first letter
           String formattedResponse =
               response[0].toUpperCase() + response.substring(1).toLowerCase();
-
           FFAppState().kommune = formattedResponse;
           setState(() {});
         }
@@ -2088,7 +2087,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                                                                         padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                         child: Text(
                                                                                           // Directly calculate the distance using the provided latitude and longitude
-                                                                                          (calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat ?? 0.0, FFAppState().brukerLng ?? 0.0, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
+                                                                                          (calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                                           textAlign: TextAlign.start,
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                 fontFamily: 'Nunito',

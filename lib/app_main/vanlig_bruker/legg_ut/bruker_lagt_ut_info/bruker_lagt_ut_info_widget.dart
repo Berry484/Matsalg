@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'bruker_lagt_ut_info_model.dart';
 export 'bruker_lagt_ut_info_model.dart';
@@ -84,7 +83,7 @@ class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
             top: true,
             child: Padding(
               padding:
-                  const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 150.0),
+                  const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 30.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -107,17 +106,15 @@ class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
                         Align(
                           alignment: const AlignmentDirectional(-0.06, 0.47),
                           child: Text(
-                            'Matvare Lagt Ut',
+                            'Matvare publisert',
                             textAlign: TextAlign.center,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 22.0,
+                                  fontFamily: 'Nunito',
+                                  fontSize: 24.0,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w600,
                                 ),
                           ).animateOnPageLoad(
                               animationsMap['textOnPageLoadAnimation']!),
@@ -127,38 +124,34 @@ class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 16.0, 0.0, 0.0),
+                        20.0, 16.0, 20.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        context.goNamed('Profil');
+                        context.pushNamed('Profil');
                       },
                       text: 'Ferdig',
-                      icon: const FaIcon(
-                        FontAwesomeIcons.check,
-                        size: 15.0,
-                      ),
                       options: FFButtonOptions(
-                        width: 270.0,
+                        width: double.infinity,
                         height: 50.0,
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 0.0, 0.0),
                         iconPadding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primary,
+                        color: FlutterFlowTheme.of(context).alternate,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  fontSize: 24.0,
+                                  fontFamily: 'Nunito',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  fontSize: 22.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
-                        elevation: 5.0,
+                        elevation: 0.0,
                         borderSide: const BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(24.0),
+                        borderRadius: BorderRadius.circular(14.0),
                       ),
                     ).animateOnPageLoad(
                         animationsMap['buttonOnPageLoadAnimation']!),

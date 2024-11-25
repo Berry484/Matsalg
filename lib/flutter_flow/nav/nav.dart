@@ -372,7 +372,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         name:
             'LeggUtMatvare', // Ensure this name matches the one used in `pushNamed`
         pageBuilder: (context, state) {
-          // Using custom transition animation
+          final params = FFParameters(state);
+          final rediger = params.getParam<bool>('rediger', ParamType.bool);
+          final matinfo = params.getParam<dynamic>('matinfo', ParamType.JSON);
+
           return CustomTransitionPage(
             transitionDuration: const Duration(milliseconds: 200),
             transitionsBuilder:
@@ -385,7 +388,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                 child: child,
               );
             },
-            child: const LeggUtMatvareWidget(),
+            child: LeggUtMatvareWidget(
+              rediger: rediger,
+              matinfo: matinfo,
+            ),
           );
         },
         parentNavigatorKey: _parentKey,

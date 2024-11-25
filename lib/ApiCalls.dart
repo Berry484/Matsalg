@@ -94,10 +94,14 @@ class ApiCalls {
     };
 
     try {
+      if (FFAppState().brukerLat == 59.9138688 &&
+          FFAppState().brukerLng == 10.7522454) {
+        return 'Norge';
+      }
       final response = await http
           .get(
             Uri.parse(
-                'https://ws.geonorge.no/adresser/v1/punktsok?lat=${FFAppState().brukerLat ?? 59.9138688}&lon=${FFAppState().brukerLng ?? 10.7522454}&radius=9999999999999&treffPerSide=1&side=1'),
+                'https://ws.geonorge.no/adresser/v1/punktsok?lat=${FFAppState().brukerLat}&lon=${FFAppState().brukerLng}&radius=9999999999999&treffPerSide=1&side=1'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds

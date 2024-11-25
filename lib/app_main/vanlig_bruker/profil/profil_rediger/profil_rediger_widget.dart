@@ -436,6 +436,20 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     validator: _model
                                         .fornavnTextControllerValidator
                                         .asValidator(context),
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(15),
+                                      TextInputFormatter.withFunction(
+                                          (oldValue, newValue) {
+                                        final lineCount = '\n'
+                                                .allMatches(newValue.text)
+                                                .length +
+                                            1;
+                                        if (lineCount > 1) {
+                                          return oldValue;
+                                        }
+                                        return newValue;
+                                      }),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -515,6 +529,20 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     validator: _model
                                         .etternavnTextControllerValidator
                                         .asValidator(context),
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(15),
+                                      TextInputFormatter.withFunction(
+                                          (oldValue, newValue) {
+                                        final lineCount = '\n'
+                                                .allMatches(newValue.text)
+                                                .length +
+                                            1;
+                                        if (lineCount > 1) {
+                                          return oldValue;
+                                        }
+                                        return newValue;
+                                      }),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -596,6 +624,20 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                       ),
                                   validator: _model.emailTextControllerValidator
                                       .asValidator(context),
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(50),
+                                    TextInputFormatter.withFunction(
+                                        (oldValue, newValue) {
+                                      final lineCount = '\n'
+                                              .allMatches(newValue.text)
+                                              .length +
+                                          1;
+                                      if (lineCount > 1) {
+                                        return oldValue;
+                                      }
+                                      return newValue;
+                                    }),
+                                  ],
                                 ),
                               ),
                             ),
