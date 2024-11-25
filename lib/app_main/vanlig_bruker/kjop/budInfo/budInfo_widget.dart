@@ -302,7 +302,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                             .headlineSmall
                                             .override(
                                               fontFamily: 'Nunito',
-                                              fontSize: 19,
+                                              fontSize: 17,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w700,
                                             ),
@@ -882,7 +882,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                     _bekreftIsLoading = false;
                                                     HapticFeedback
                                                         .mediumImpact();
-                                                    context.pushNamed(
+                                                    context.goNamed(
                                                       'LeggIgjenRating',
                                                       queryParameters: {
                                                         'kjop': serializeParam(

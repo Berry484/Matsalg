@@ -127,7 +127,7 @@ class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
                         20.0, 16.0, 20.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        context.pushNamed('Profil');
+                        context.goNamed('Hjem');
                       },
                       text: 'Ferdig',
                       options: FFButtonOptions(

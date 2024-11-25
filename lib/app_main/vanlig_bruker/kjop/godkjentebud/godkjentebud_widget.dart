@@ -377,9 +377,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                               .override(
                                 fontFamily: 'Nunito',
                                 color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 21,
+                                fontSize: 18,
                                 letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                               ),
                         ),
                       ),
@@ -596,7 +596,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                               if (response.statusCode == 200) {
                                 _bekreftIsLoading = false;
                                 HapticFeedback.mediumImpact();
-                                context.pushNamed(
+                                context.goNamed(
                                   'LeggIgjenRating',
                                   queryParameters: {
                                     'kjop': serializeParam(

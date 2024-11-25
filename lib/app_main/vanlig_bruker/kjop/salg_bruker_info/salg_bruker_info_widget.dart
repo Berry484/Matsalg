@@ -407,9 +407,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               .override(
                                 fontFamily: 'Nunito',
                                 color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 21,
+                                fontSize: 18,
                                 letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                               ),
                         ),
                         Text(

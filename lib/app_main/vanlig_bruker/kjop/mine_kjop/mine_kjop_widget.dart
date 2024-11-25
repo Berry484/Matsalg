@@ -1040,7 +1040,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   .circular(24),
                                                         ),
                                                         child: Container(
-                                                          height: 95,
                                                           decoration:
                                                               BoxDecoration(
                                                             borderRadius:
@@ -1151,7 +1150,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               .max,
                                                                       mainAxisAlignment:
                                                                           MainAxisAlignment
-                                                                              .center,
+                                                                              .start,
                                                                       crossAxisAlignment:
                                                                           CrossAxisAlignment
                                                                               .start,
@@ -1165,16 +1164,25 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               0),
                                                                           child:
                                                                               Row(
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
                                                                             children: [
-                                                                              Text(
-                                                                                alleInfo.kjopte == true ? alleInfo.foodDetails.name ?? '' : alleInfo.kjoper,
-                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                      fontFamily: 'Nunito',
-                                                                                      fontSize: 18,
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
+                                                                              Container(
+                                                                                child: Flexible(
+                                                                                  child: Text(
+                                                                                    alleInfo.kjopte == true ? alleInfo.foodDetails.name ?? '' : alleInfo.kjoper,
+                                                                                    softWrap: true, // Enables wrapping
+                                                                                    overflow: TextOverflow.visible, // Allows overflow to be visible or change to ellipsis
+                                                                                    style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                          fontFamily: 'Nunito',
+                                                                                          fontSize: 16,
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w700,
+                                                                                        ),
+                                                                                  ),
+                                                                                ),
                                                                               ),
+
                                                                               const SizedBox(width: 8), // Optional spacing between text and time
                                                                               Text(
                                                                                 alleInfo.updatetime != null ? (DateFormat("d. MMM", "nb_NO").format(alleInfo.updatetime!.toLocal())) : "",
@@ -1901,15 +1909,23 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               0),
                                                                           child:
                                                                               Row(
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
                                                                             children: [
-                                                                              Text(
-                                                                                ordreInfo.foodDetails.name ?? '',
-                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                      fontFamily: 'Nunito',
-                                                                                      fontSize: 18,
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
+                                                                              Container(
+                                                                                child: Flexible(
+                                                                                  child: Text(
+                                                                                    ordreInfo.foodDetails.name ?? '',
+                                                                                    style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                          fontFamily: 'Nunito',
+                                                                                          fontSize: 16,
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w700,
+                                                                                        ),
+                                                                                    softWrap: true, // Enables wrapping
+                                                                                    overflow: TextOverflow.visible, // Allows overflow to be visible or change to ellipsis
+                                                                                  ),
+                                                                                ),
                                                                               ),
                                                                               const SizedBox(width: 8),
                                                                               Text(

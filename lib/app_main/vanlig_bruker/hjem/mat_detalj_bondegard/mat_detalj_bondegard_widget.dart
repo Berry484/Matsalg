@@ -1686,7 +1686,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             CrossAxisAlignment.end,
                                         children: [
                                           Text(
-                                            'Du vil kanskje også like',
+                                            'Lignende matvarer',
                                             textAlign: TextAlign.start,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium

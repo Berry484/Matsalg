@@ -1746,6 +1746,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               focusNode:
                                                   _model.produktNavnFocusNode,
                                               obscureText: false,
+                                              textCapitalization:
+                                                  TextCapitalization.sentences,
                                               decoration: InputDecoration(
                                                 labelText: 'Tittel',
                                                 labelStyle: FlutterFlowTheme.of(
@@ -2068,7 +2070,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       .fromSTEB(
                                                       20.0, 0.0, 20.0, 10.0),
                                               child: Text(
-                                                'Fortell litt om matvaren, hvor fersk er den, \ner maten fryst ned og mengde osv.',
+                                                'Fortell litt om matvaren, hvor mye er det i hver pakke? osv.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium

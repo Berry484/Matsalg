@@ -194,11 +194,11 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                               await apiRating.giRating(
                                   token, widget.username, rating, widget.kjop);
                               if (mounted) {
-                                context.pushNamed('Hjem');
+                                context.goNamed('Hjem');
                               }
                             } catch (e) {
                               if (mounted) {
-                                context.pushNamed('Hjem');
+                                context.goNamed('Hjem');
                               }
                             }
                           } on SocketException {
