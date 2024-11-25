@@ -69,6 +69,18 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
     return null; // No validation errors.
   }
 
+  // Validation logic for the product description input.
+  String? _produktPrisSTKTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Felt må fylles ut'; // Field must be filled.
+    }
+    if (val.toLowerCase() == 'null') {
+      return 'Felt kan ikke være null'; // Field cannot be null.
+    }
+    return null; // No validation errors.
+  }
+
   // State field(s) for ProduktPrisSTK widget.
   FocusNode? produktPrisSTKFocusNode;
   TextEditingController? produktPrisSTKTextController;
@@ -108,6 +120,8 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
     produktNavnTextControllerValidator = _produktNavnTextControllerValidator;
     produktBeskrivelseTextControllerValidator =
         _produktBeskrivelseTextControllerValidator;
+    produktPrisSTKTextControllerValidator =
+        _produktPrisSTKTextControllerValidator;
     antallStkTextControllerValidator = _antallStkTextControllerValidator;
     leggUtNavBarModel = createModel(context, () => LeggUtNavBarModel());
   }

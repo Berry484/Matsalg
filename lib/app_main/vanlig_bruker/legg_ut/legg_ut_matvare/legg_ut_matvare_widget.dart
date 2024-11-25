@@ -144,6 +144,34 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     }
   }
 
+  bool hasChanges() {
+    // Check if any of the fields have been modified from their initial values
+    bool nameChanged = _model.produktNavnTextController.text.trim() !=
+        (matvare.name ?? '').trim();
+    bool descriptionChanged =
+        _model.produktBeskrivelseTextController.text.trim() !=
+            (matvare.description ?? '').trim();
+    bool priceChanged = _model.produktPrisSTKTextController.text.trim() !=
+        (matvare.price ?? '').toString();
+
+    // Convert the input value for quantity to double and compare with the current value
+    double enteredQuantity =
+        double.tryParse(_model.antallStkTextController.text.trim()) ?? 0.0;
+    bool quantityChanged = (enteredQuantity != (matvare.antall ?? 0.0));
+    bool? imgChanged = _model.uploadedLocalFile1.bytes!.isNotEmpty ||
+        _model.uploadedLocalFile2.bytes!.isNotEmpty ||
+        _model.uploadedLocalFile3.bytes!.isNotEmpty ||
+        _model.uploadedLocalFile4.bytes!.isNotEmpty ||
+        _model.uploadedLocalFile5.bytes!.isNotEmpty;
+
+    // Return true if any of the values have changed
+    return nameChanged ||
+        descriptionChanged ||
+        priceChanged ||
+        quantityChanged ||
+        imgChanged;
+  }
+
   void showErrorToast(BuildContext context, String message) {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
@@ -312,7 +340,49 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                   child: GestureDetector(
                     onTap: () async {
                       try {
-                        context.safePop();
+                        if (hasChanges()) {
+                          showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CupertinoAlertDialog(
+                                title: const Text('Forkast endringer?'),
+                                content: const Text(
+                                  'Alle endringer vil forsvinne',
+                                ),
+                                actions: [
+                                  Column(
+                                    children: [
+                                      CupertinoDialogAction(
+                                        isDestructiveAction: true,
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                        },
+                                        child:
+                                            const Text('Ja, forkast endringer'),
+                                      ),
+                                      CupertinoDialogAction(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Just close the dialog
+                                        },
+                                        child: const Text(
+                                          'Fortsett å redigere',
+                                          style: TextStyle(
+                                              color:
+                                                  CupertinoColors.systemBlue),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          context.safePop();
+                        }
+                        // context.safePop();
                       } on SocketException {
                         showErrorToast(context, 'Ingen internettforbindelse');
                       } catch (e) {
