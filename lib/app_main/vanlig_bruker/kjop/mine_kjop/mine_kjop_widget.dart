@@ -258,8 +258,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
           backgroundColor: FlutterFlowTheme.of(context).primary,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
-            iconTheme:
-                IconThemeData(color: FlutterFlowTheme.of(context).alternate),
+            iconTheme: IconThemeData(color: FlutterFlowTheme.of(context).price),
             automaticallyImplyLeading: false,
             title: Align(
               alignment: const AlignmentDirectional(0, 0),
@@ -1331,7 +1330,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             BoxDecoration(
                                                                           color: alleInfo.hentet == true
                                                                               ? const Color(0xC40B695B)
-                                                                              : FlutterFlowTheme.of(context).alternate,
+                                                                              : FlutterFlowTheme.of(context).price,
                                                                           borderRadius:
                                                                               BorderRadius.circular(13),
                                                                         ),
@@ -2075,7 +2074,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             BoxDecoration(
                                                                           color: ordreInfo.hentet == true
                                                                               ? const Color(0xC40B695B)
-                                                                              : FlutterFlowTheme.of(context).alternate,
+                                                                              : FlutterFlowTheme.of(context).price,
                                                                           borderRadius:
                                                                               BorderRadius.circular(13),
                                                                         ),
@@ -2885,7 +2884,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             BoxDecoration(
                                                                           color: salgInfo.hentet == true
                                                                               ? const Color(0xC40B695B)
-                                                                              : FlutterFlowTheme.of(context).alternate,
+                                                                              : FlutterFlowTheme.of(context).price,
                                                                           borderRadius:
                                                                               BorderRadius.circular(13),
                                                                         ),
