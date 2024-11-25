@@ -1,7 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mat_salg/app_main/chat/message/message_widget.dart';
+import 'package:mat_salg/BottomNavWrapper.dart';
 import 'package:provider/provider.dart';
 
 import '/auth/custom_auth/custom_auth_user_provider.dart';
@@ -68,232 +69,434 @@ class AppStateNotifier extends ChangeNotifier {
   }
 }
 
-GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
-      initialLocation: '/',
-      debugLogDiagnostics: true,
-      refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? const HjemWidget()
-          : const RegistrerWidget(),
-      routes: [
-        FFRoute(
-          name: '_initialize',
-          path: '/',
-          builder: (context, _) =>
-              FFAppState().login ? const HjemWidget() : const RegistrerWidget(),
-        ),
-        FFRoute(
-          name: 'registrer',
-          path: '/registrer',
-          builder: (context, params) => const RegistrerWidget(),
-        ),
-        FFRoute(
-          name: 'MineKjop',
-          path: '/mineKjop',
-          builder: (context, params) => MineKjopWidget(
-            kjopt: params.getParam(
-              'kjopt',
-              ParamType.bool,
-            ),
+final GlobalKey<NavigatorState> _parentKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> _shellKey = GlobalKey<NavigatorState>();
+
+GoRouter createRouter(AppStateNotifier appStateNotifier) {
+  return GoRouter(
+    initialLocation: FFAppState().login ? '/hjem' : '/registrer',
+    navigatorKey: _parentKey, // Root navigator key
+    debugLogDiagnostics: true,
+    refreshListenable: appStateNotifier, // Listen for changes in app state
+    errorBuilder: (context, state) {
+      // Fallback widget
+      return FFAppState().login
+          ? MainWrapper(
+              child: const HjemWidget()) // Show home with navbar if logged in
+          : const RegistrerWidget(); // Show registration screen if not logged in
+    },
+    routes: [
+      // Root route that checks login status and redirects accordingly
+      // GoRoute(
+      //   path: '/',
+      //   builder: (context, state) {
+      //     return FFAppState().login
+      //         ? MainWrapper(child: const HjemWidget()) // Show home if logged in
+      //         : const RegistrerWidget(); // Show registration if not logged in
+      //   },
+      // ),
+
+      // ShellRoute for routes that need the persistent navbar
+      ShellRoute(
+        navigatorKey: _shellKey, // Shell navigator key
+        builder: (context, state, child) {
+          return MainWrapper(child: child); // Wrap with MainWrapper for navbar
+        },
+        routes: [
+          GoRoute(
+            path: '/hjem',
+            name: 'Hjem',
+            builder: (context, state) {
+              return const HjemWidget();
+            },
+            parentNavigatorKey: _shellKey,
+            pageBuilder: (context, state) {
+              // Check if there's any transition info passed as part of the navigation
+              final transitionInfo = state.extra as Map<String, dynamic>?;
+              final transition =
+                  transitionInfo?['transition'] as TransitionInfo?;
+
+              if (transition != null) {
+                // If transition info exists, use it
+                return CustomTransitionPage(
+                  transitionDuration: const Duration(milliseconds: 0),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    );
+                  },
+                  child: const HjemWidget(),
+                );
+              }
+
+              return const MaterialPage<void>(child: HjemWidget());
+            },
           ),
-        ),
-        FFRoute(
-          name: 'Godkjentbetaling',
-          path: '/godkjentbetaling',
-          builder: (context, params) => const GodkjentbetalingWidget(),
-        ),
-        FFRoute(
-          name: 'Profil',
-          path: '/profil',
-          builder: (context, params) => const ProfilWidget(),
-        ),
-        FFRoute(
-          name: 'ProfilRediger',
-          path: '/profilRediger',
-          builder: (context, params) => const ProfilRedigerWidget(),
-        ),
-        FFRoute(
-          name: 'LeggUtMatvare',
-          path: '/leggUtMatvare',
-          builder: (context, params) => LeggUtMatvareWidget(
-            rediger: params.getParam(
-              'rediger',
-              ParamType.bool,
-            ),
-            matinfo: params.getParam(
-              'matinfo',
-              ParamType.JSON,
-            ),
+          GoRoute(
+            path: '/mineKjop',
+            name: 'MineKjop',
+            builder: (context, state) {
+              final params = FFParameters(state);
+              final kjopt =
+                  params.getParam<bool>('kjopt', ParamType.bool) ?? false;
+              return MineKjopWidget(kjopt: kjopt);
+            },
+            pageBuilder: (context, state) {
+              final transitionInfo = state.extra as Map<String, dynamic>?;
+              final transition =
+                  transitionInfo?['transition'] as TransitionInfo?;
+              final params = FFParameters(state);
+              final kjopt =
+                  params.getParam<bool>('kjopt', ParamType.bool) ?? false;
+              if (transition != null) {
+                // If transition info exists, use it
+                return CustomTransitionPage(
+                  transitionDuration: const Duration(milliseconds: 0),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    );
+                  },
+                  child: MineKjopWidget(kjopt: kjopt),
+                );
+              }
+
+              return MaterialPage<void>(child: MineKjopWidget(kjopt: kjopt));
+            },
+            parentNavigatorKey: _shellKey,
           ),
-        ),
-        FFRoute(
-          name: 'BrukerLagtUtInfo',
-          path: '/brukerLagtUtInfo',
-          builder: (context, params) => const BrukerLagtUtInfoWidget(),
-        ),
-        FFRoute(
-          name: 'ChatMain',
-          path: '/chatMain',
-          builder: (context, params) => ChatMainWidget(),
-        ),
-        FFRoute(
-          name: 'message',
-          path: '/message',
-          builder: (context, params) => MessageWidget(
-            conversation: params.getParam('conversation', ParamType.JSON),
+          GoRoute(
+            path: '/bondeGardPage',
+            name: 'BondeGardPage',
+            builder: (context, state) {
+              // Use FFParameters to get the query parameters safely
+              final params = FFParameters(state);
+
+              // Retrieve the parameters using getParam
+              final kategori =
+                  params.getParam<String>('kategori', ParamType.String);
+              final query = params.getParam<String>('query', ParamType.String);
+
+              // Return the widget with the parameters
+              return BondeGardPageWidget(kategori: kategori, query: query);
+            },
+            parentNavigatorKey: _shellKey,
           ),
-        ),
-        FFRoute(
-          name: 'Hjem',
-          path: '/hjem',
-          builder: (context, params) => const HjemWidget(),
-        ),
-        FFRoute(
-          name: 'MinMatvareDetalj',
-          path: '/minMatvareDetalj',
-          builder: (context, params) => MinMatvareDetaljWidget(
-            matvare: params.getParam('matvare', ParamType.JSON),
+          GoRoute(
+            path: '/chatMain',
+            name: 'ChatMain',
+            pageBuilder: (context, state) {
+              // Check if there's any transition info passed as part of the navigation
+              final transitionInfo = state.extra as Map<String, dynamic>?;
+              final transition =
+                  transitionInfo?['transition'] as TransitionInfo?;
+
+              if (transition != null) {
+                // If transition info exists, use it
+                return CustomTransitionPage(
+                  transitionDuration: const Duration(milliseconds: 0),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    );
+                  },
+                  child: const ChatMainWidget(),
+                );
+              }
+
+              return const MaterialPage<void>(child: ChatMainWidget());
+            },
           ),
-        ),
-        FFRoute(
-          name: 'MatDetaljBondegard',
-          path: '/matDetaljBondegard',
-          builder: (context, params) => MatDetaljBondegardWidget(
-            matvare: params.getParam('matvare', ParamType.JSON),
+          GoRoute(
+            path: '/profil',
+            name: 'Profil',
+            parentNavigatorKey: _shellKey,
+            pageBuilder: (context, state) {
+              // Check if there's any transition info passed as part of the navigation
+              final transitionInfo = state.extra as Map<String, dynamic>?;
+              final transition =
+                  transitionInfo?['transition'] as TransitionInfo?;
+
+              if (transition != null) {
+                // If transition info exists, use it
+                return CustomTransitionPage(
+                  transitionDuration: const Duration(milliseconds: 0),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    );
+                  },
+                  child: const ProfilWidget(),
+                );
+              }
+
+              return const MaterialPage<void>(child: ProfilWidget());
+            },
           ),
-        ),
-        FFRoute(
-          name: 'SolgteMatvarer',
-          path: '/solgteMatvarer',
-          builder: (context, params) => const SolgteMatvarerWidget(),
-        ),
-        FFRoute(
-          name: 'BrukerOnboarding',
-          path: '/brukerOnboarding',
-          builder: (context, params) => const BrukerOnboardingWidget(),
-        ),
-        FFRoute(
-          name: 'BondeGardPage',
-          path: '/bondeGardPage',
-          builder: (context, params) => BondeGardPageWidget(
-            kategori: params.getParam('kategori', ParamType.String),
-            query: params.getParam('query', ParamType.String),
+          GoRoute(
+            path: '/matDetaljBondegard',
+            name: 'MatDetaljBondegard',
+            builder: (context, state) {
+              final params = FFParameters(state);
+              final matvare = params.getParam<Map<String, dynamic>>(
+                  'matvare', ParamType.JSON);
+              return MatDetaljBondegardWidget(matvare: matvare);
+            },
+            parentNavigatorKey: _shellKey,
           ),
-        ),
-        FFRoute(
-          name: 'LeggIgjenRating',
-          path: '/leggIgjenRating',
-          builder: (context, params) => LeggIgjenRatingWidget(
-            kjop: params.getParam(
-              'kjop',
-              ParamType.bool,
-            ),
-            username: params.getParam(
-              'username',
-              ParamType.String,
-            ),
+          GoRoute(
+            path: '/minMatvareDetalj',
+            name: 'MinMatvareDetalj',
+            builder: (context, state) {
+              final params = FFParameters(state);
+              final matvare = params.getParam<Map<String, dynamic>>(
+                  'matvare', ParamType.JSON);
+              return MinMatvareDetaljWidget(matvare: matvare);
+            },
+            parentNavigatorKey: _shellKey,
           ),
-        ),
-        FFRoute(
-          name: 'VelgPosisjon',
-          path: '/velgPosisjon',
-          builder: (context, params) => VelgPosisjonWidget(
-            bonde: params.getParam(
-              'bonde',
-              ParamType.bool,
-            ),
-            endrepos: params.getParam(
-              'endrepos',
-              ParamType.bool,
-            ),
-            email: params.getParam(
-              'email',
-              ParamType.String,
-            ),
-            password: params.getParam(
-              'password',
-              ParamType.String,
-            ),
-            phone: params.getParam(
-              'phone',
-              ParamType.String,
-            ),
+          GoRoute(
+            path: '/brukerPage',
+            name: 'BrukerPage',
+            builder: (context, state) {
+              final params = FFParameters(state);
+              final bruker =
+                  params.getParam<String>('bruker', ParamType.String);
+              final username =
+                  params.getParam<String>('username', ParamType.String);
+              return BrukerPageWidget(bruker: bruker, username: username);
+            },
+            parentNavigatorKey: _shellKey,
           ),
-        ),
-        FFRoute(
-          name: 'BrukerPage',
-          path: '/brukerPage',
-          builder: (context, params) => BrukerPageWidget(
-              bruker: params.getParam('bruker', ParamType.JSON),
-              username: params.getParam('username', ParamType.String)),
-        ),
-        FFRoute(
-          name: 'Folgere',
-          path: '/folgere',
-          builder: (context, params) => FolgereWidget(
-            username: params.getParam('username', ParamType.String),
-            folger: params.getParam('folger', ParamType.String),
+          GoRoute(
+            path: '/solgteMatvarer',
+            name: 'solgteMatvarer',
+            builder: (context, state) {
+              return const SolgteMatvarerWidget();
+            },
+            parentNavigatorKey: _shellKey,
           ),
-        ),
-        FFRoute(
-          name: 'BrukerRating',
-          path: '/brukerRating',
-          builder: (context, params) => BrukerRatingWidget(
-            username: params.getParam('username', ParamType.String),
-            mine: params.getParam('mine', ParamType.bool),
+          GoRoute(
+            path: '/innstillinger',
+            name: 'innstillinger',
+            builder: (context, state) {
+              return const InnstillingerWidget();
+            },
+            parentNavigatorKey: _shellKey,
           ),
-        ),
-        FFRoute(
-          name: 'OpprettProfil',
-          path: '/opprettProfil',
-          builder: (context, params) => OpprettProfilWidget(
-            phone: params.getParam(
-              'phone',
-              ParamType.String,
-            ),
-            posisjon: params.getParam(
-              'posisjon',
-              ParamType.LatLng,
-            ),
+          GoRoute(
+            path: '/folgere',
+            name: 'Folgere',
+            builder: (context, state) {
+              // Use FFParameters to retrieve the parameters safely
+              final params = FFParameters(state);
+
+              // Retrieve the 'username' and 'folger' parameters
+              final username =
+                  params.getParam<String>('username', ParamType.String);
+              final folger =
+                  params.getParam<String>('folger', ParamType.String);
+
+              // Return the FolgereWidget with the retrieved parameters
+              return FolgereWidget(username: username, folger: folger);
+            },
+            parentNavigatorKey: _shellKey,
           ),
-        ),
-        FFRoute(
-          name: 'KjopDetaljVentende',
-          path: '/kjopDetaljVentende',
-          builder: (context, params) => KjopDetaljVentendeWidget(
-            matinfo: params.getParam(
-              'matinfo',
-              ParamType.JSON,
-            ),
+          GoRoute(
+            path: '/kjopDetaljVentende',
+            name: 'KjopDetaljVentende',
+            builder: (context, state) {
+              final params = FFParameters(state);
+              final matinfo = params.getParam<Map<String, dynamic>>(
+                  'matinfo', ParamType.JSON);
+              return KjopDetaljVentendeWidget(matinfo: matinfo);
+            },
+            parentNavigatorKey: _shellKey,
           ),
-        ),
-        FFRoute(
-          name: 'Betaling',
-          path: '/betaling',
-          builder: (context, params) => BetalingWidget(
-            matinfo: params.getParam(
-              'matinfo',
-              ParamType.JSON,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: 'innstillinger',
-          path: '/innstillinger',
-          builder: (context, params) => const InnstillingerWidget(),
-        ),
-        FFRoute(
-          name: 'Utbetalingsinfo1',
-          path: '/utbetalingsinfo1',
-          builder: (context, params) => const Utbetalingsinfo1Widget(),
-        ),
-        FFRoute(
-          name: 'BondeLagtUtInfo',
-          path: '/bondeLagtUtInfo',
-          builder: (context, params) => const BondeLagtUtInfoWidget(),
-        )
-      ].map((r) => r.toRoute(appStateNotifier)).toList(),
-    );
+        ],
+      ),
+      GoRoute(
+        path: '/godkjentbetaling',
+        name: 'Godkjentbetaling',
+        builder: (context, state) {
+          // Directly return the GodkjentbetalingWidget as there are no parameters
+          return const GodkjentbetalingWidget();
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/profilRediger',
+        name: 'ProfilRediger',
+        builder: (context, state) {
+          return const ProfilRedigerWidget();
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/brukerLagtUtInfo',
+        name: 'BrukerLagtUtInfo',
+        builder: (context, state) {
+          // Directly return the BrukerLagtUtInfoWidget as there are no parameters
+          return const BrukerLagtUtInfoWidget();
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+
+      GoRoute(
+        path: '/leggIgjenRating',
+        name: 'LeggIgjenRating',
+        builder: (context, state) {
+          // Use FFParameters to retrieve the parameters safely
+          final params = FFParameters(state);
+
+          // Retrieve the 'kjop' (boolean) and 'username' (string) parameters
+          final kjop = params.getParam<bool>('kjop', ParamType.bool);
+          final username =
+              params.getParam<String>('username', ParamType.String);
+
+          // Return the LeggIgjenRatingWidget with the retrieved parameters
+          return LeggIgjenRatingWidget(kjop: kjop, username: username);
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/legguTMatvare',
+        name:
+            'LeggUtMatvare', // Ensure this name matches the one used in `pushNamed`
+        pageBuilder: (context, state) {
+          // Using custom transition animation
+          return CustomTransitionPage(
+            transitionDuration: const Duration(milliseconds: 200),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(0, 1), // Start from the bottom
+                  end: Offset.zero, // End at normal position
+                ).animate(animation),
+                child: child,
+              );
+            },
+            child: const LeggUtMatvareWidget(),
+          );
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/message',
+        name: 'message',
+        builder: (context, state) {
+          // Use FFParameters to retrieve the parameters safely
+          final params = FFParameters(state);
+
+          // Retrieve the 'conversation' parameter using ParamType.JSON
+          final conversation = params.getParam<Map<String, dynamic>>(
+              'conversation', ParamType.JSON);
+
+          // Return the MessageWidget with the retrieved 'conversation' parameter
+          return MessageWidget(conversation: conversation);
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/brukerRating',
+        name: 'BrukerRating',
+        builder: (context, state) {
+          // Use FFParameters to retrieve the parameters safely
+          final params = FFParameters(state);
+
+          // Retrieve the parameters using getParam with the appropriate ParamType
+          final username =
+              params.getParam<String>('username', ParamType.String);
+          final mine = params.getParam<bool>('mine', ParamType.bool);
+
+          // Return the BrukerRatingWidget with the retrieved parameters
+          return BrukerRatingWidget(
+            username: username,
+            mine: mine,
+          );
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+
+      GoRoute(
+        path: '/velgPosisjon',
+        name: 'VelgPosisjon',
+        builder: (context, state) {
+          // Use FFParameters to retrieve the parameters safely
+          final params = FFParameters(state);
+
+          // Retrieve the parameters using getParam with the appropriate ParamType
+          final bonde = params.getParam<bool>('bonde', ParamType.bool);
+          final endrepos = params.getParam<bool>('endrepos', ParamType.bool);
+          final email = params.getParam<String>('email', ParamType.String);
+          final password =
+              params.getParam<String>('password', ParamType.String);
+          final phone = params.getParam<String>('phone', ParamType.String);
+
+          // Return the VelgPosisjonWidget with the retrieved parameters
+          return VelgPosisjonWidget(
+            bonde: bonde,
+            endrepos: endrepos,
+            email: email,
+            password: password,
+            phone: phone,
+          );
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+
+      GoRoute(
+        path: '/brukerOnboarding',
+        name: 'brukerOnboarding',
+        builder: (context, state) {
+          return const BrukerOnboardingWidget();
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/betaling',
+        name: 'Betaling',
+        builder: (context, state) {
+          final params = FFParameters(state);
+          final matinfo =
+              params.getParam<Map<String, dynamic>>('matinfo', ParamType.JSON);
+          return BetalingWidget(matinfo: matinfo);
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/registrer',
+        name: 'registrer',
+        builder: (context, state) => const RegistrerWidget(),
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/opprettProfil',
+        name: 'opprettProfil',
+        builder: (context, state) {
+          final params = FFParameters(state);
+
+          // You can use `params.getParam` to safely get parameters.
+          final phone = params.getParam<String>('phone', ParamType.String)!;
+          final posisjon =
+              params.getParam<LatLng>('posisjon', ParamType.LatLng)!;
+
+          return OpprettProfilWidget(phone: phone, posisjon: posisjon);
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+    ],
+  );
+}
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(
@@ -472,6 +675,7 @@ class FFRoute {
                   builder: (context, _) => builder(context, ffParams),
                 )
               : builder(context, ffParams);
+
           final child = appStateNotifier.loading
               ? Container(
                   color: FlutterFlowTheme.of(context).primary,
@@ -513,7 +717,7 @@ class TransitionInfo {
   const TransitionInfo({
     required this.hasTransition,
     this.transitionType = PageTransitionType.fade,
-    this.duration = const Duration(milliseconds: 300),
+    this.duration = const Duration(milliseconds: 0),
     this.alignment,
   });
 

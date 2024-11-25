@@ -100,7 +100,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         if (widget.folger == 'Følgere') {

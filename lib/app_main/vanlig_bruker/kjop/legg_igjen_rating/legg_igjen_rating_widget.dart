@@ -184,7 +184,7 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                             if (token == null) {
                               FFAppState().login = false;
                               if (mounted) {
-                                context.pushNamed('registrer');
+                                context.goNamed('registrer');
                               }
                               return;
                             }

@@ -633,6 +633,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                 barrierColor:
                                                     const Color.fromARGB(
                                                         60, 17, 0, 0),
+                                                useRootNavigator: true,
                                                 enableDrag: true,
                                                 context: context,
                                                 builder: (context) {
@@ -769,7 +770,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                             if (token ==
                                                                                 null) {
                                                                               FFAppState().login = false;
-                                                                              context.pushNamed('registrer');
+                                                                              context.goNamed('registrer');
                                                                               return;
                                                                             } else {
                                                                               await apiUpdateFood.merkSolgt(token: token, id: matvare.matId, solgt: true);
@@ -851,7 +852,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                             if (token ==
                                                                                 null) {
                                                                               FFAppState().login = false;
-                                                                              context.pushNamed('registrer');
+                                                                              context.goNamed('registrer');
                                                                               return;
                                                                             } else {
                                                                               await apiUpdateFood.merkSolgt(token: token, id: matvare.matId, solgt: false);
@@ -953,7 +954,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                               null) {
                                                                             FFAppState().login =
                                                                                 false;
-                                                                            context.pushNamed('registrer');
+                                                                            context.goNamed('registrer');
                                                                             return;
                                                                           } else {
                                                                             await apiUpdateFood.slettMatvare(

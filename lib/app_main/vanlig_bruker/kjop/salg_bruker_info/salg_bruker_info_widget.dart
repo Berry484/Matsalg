@@ -233,6 +233,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                           highlightColor: Colors.transparent,
                           onTap: () async {
                             try {
+                              Navigator.pop(context);
                               context.pushNamed(
                                 'BrukerPage',
                                 queryParameters: {

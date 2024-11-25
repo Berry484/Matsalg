@@ -160,7 +160,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         _nyematvarer = await ApiGetAllFoods.getAllFoods(token);
@@ -203,7 +203,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         brukerFolger = await ApiFolg.sjekkFolger(token, matvare.username);
@@ -224,7 +224,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         _model.liker = await ApiCheckLiked.getChecklike(token, matvare.matId);
@@ -882,6 +882,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   barrierColor:
                                                       const Color.fromARGB(
                                                           60, 17, 0, 0),
+                                                  useRootNavigator: true,
                                                   enableDrag: true,
                                                   isDismissible: true,
                                                   context: context,
@@ -909,6 +910,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   isScrollControlled: true,
                                                   backgroundColor:
                                                       Colors.transparent,
+                                                  useRootNavigator: true,
                                                   enableDrag: true,
                                                   context: context,
                                                   isDismissible: true,
@@ -994,6 +996,18 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 if (serializedConversation !=
                                                     null) {
                                                   // Step 5: Navigate to 'message' screen with the conversation
+                                                  // GoRouter.of(context)
+                                                  //     .pushNamed(
+                                                  //   '/message',
+
+                                                  //   queryParameters: {
+                                                  //     'conversation':
+                                                  //         serializedConversation, // Pass the serialized conversation
+                                                  //   },
+                                                  //   // extra: {
+                                                  //   //   'parentNavigator': null
+                                                  //   // }, // No navbar
+                                                  // );
                                                   context.pushNamed(
                                                     'message',
                                                     queryParameters: {
@@ -1128,6 +1142,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   isScrollControlled: true,
                                                   backgroundColor:
                                                       Colors.transparent,
+                                                  useRootNavigator: true,
                                                   context: context,
                                                   builder: (context) {
                                                     return GestureDetector(

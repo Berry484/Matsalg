@@ -226,6 +226,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
               highlightColor: Colors.transparent,
               onTap: () async {
                 try {
+                  Navigator.pop(context);
                   context.pushNamed(
                     'BrukerPage',
                     queryParameters: {
@@ -263,6 +264,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         try {
+                          Navigator.pop(context);
                           context.pushNamed(
                             'BrukerPage',
                             queryParameters: {

@@ -127,12 +127,12 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
                         20.0, 16.0, 20.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        context.pushNamed('MineKjop');
+                        context.goNamed('MineKjop');
                       },
                       text: 'Ferdig',
                       options: FFButtonOptions(
                         width: double.infinity,
-                        height: 45.0,
+                        height: 50.0,
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 0.0, 0.0),
                         iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -151,7 +151,7 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(24.0),
+                        borderRadius: BorderRadius.circular(14.0),
                       ),
                     ).animateOnPageLoad(
                         animationsMap['buttonOnPageLoadAnimation']!),

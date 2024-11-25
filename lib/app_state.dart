@@ -13,6 +13,15 @@ class FFAppState extends ChangeNotifier {
 
   FFAppState._internal();
 
+  int _currentNavIndex = 0;
+
+  int get currentNavIndex => _currentNavIndex;
+
+  set currentNavIndex(int index) {
+    _currentNavIndex = index;
+    notifyListeners();
+  }
+
   static void reset() {
     _instance = FFAppState._internal();
   }

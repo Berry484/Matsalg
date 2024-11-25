@@ -12,8 +12,6 @@ import 'package:json_path/json_path.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
-import '../main.dart';
-
 import 'lat_lng.dart';
 
 export 'keep_alive_wrapper.dart';
@@ -314,12 +312,6 @@ extension IterableExt<T> on Iterable<T> {
       .values
       .toList();
 }
-
-void setAppLanguage(BuildContext context, String language) =>
-    MyApp.of(context).setLocale(language);
-
-void setDarkModeSetting(BuildContext context, ThemeMode themeMode) =>
-    MyApp.of(context).setThemeMode(themeMode);
 
 void showSnackbar(
   BuildContext context,

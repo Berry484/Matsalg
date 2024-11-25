@@ -235,7 +235,7 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                 if (location != const LatLng(0.0, 0.0)) {
                                   _isloading = false;
                                   context.goNamed(
-                                    'OpprettProfil',
+                                    'opprettProfil',
                                     queryParameters: {
                                       'phone': serializeParam(
                                         widget.phone,
@@ -247,9 +247,10 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                       ),
                                     }.withoutNulls,
                                   );
+                                  // context.go('/hjem');
                                 } else {
                                   _isloading = false;
-                                  context.pushNamed(
+                                  context.goNamed(
                                     'VelgPosisjon',
                                     queryParameters: {
                                       'bonde': serializeParam(

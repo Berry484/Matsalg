@@ -283,7 +283,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     } catch (e) {
                                       print("errror $e");
                                     }
-                                    context.pushNamed('Hjem');
+                                    context.go('/hjem');
                                     FFAppState().login = true;
                                     return;
                                   }
@@ -468,7 +468,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                       print("errror $e");
                                     }
                                     _isloading = false;
-                                    context.pushNamed('Hjem');
+                                    context.go('/hjem');
                                     FFAppState().login = true;
                                     return;
                                   }

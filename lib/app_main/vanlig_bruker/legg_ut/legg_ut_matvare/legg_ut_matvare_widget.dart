@@ -207,7 +207,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
 
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         String? response = await apiCalls.leggutgetKommune(token, lat, lng);

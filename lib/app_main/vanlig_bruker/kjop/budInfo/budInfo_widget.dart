@@ -235,6 +235,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                     child: InkWell(
                       onTap: () async {
                         try {
+                          Navigator.pop(context);
                           context.pushNamed(
                             'KjopDetaljVentende',
                             queryParameters: {

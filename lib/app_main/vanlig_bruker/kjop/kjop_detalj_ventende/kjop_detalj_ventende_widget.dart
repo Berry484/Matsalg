@@ -145,7 +145,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         _model.liker = await ApiCheckLiked.getChecklike(token, matvare.matId);
@@ -793,6 +793,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                   barrierColor:
                                                       const Color.fromARGB(
                                                           60, 17, 0, 0),
+                                                  useRootNavigator: true,
                                                   enableDrag: true,
                                                   context: context,
                                                   builder: (context) {

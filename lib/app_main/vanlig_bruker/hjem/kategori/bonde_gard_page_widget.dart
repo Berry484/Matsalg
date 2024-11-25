@@ -194,7 +194,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         if (widget.kategori?.toLowerCase() == 'gårder') {
@@ -363,6 +363,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                       await showModalBottomSheet<List<String>>(
                     isScrollControlled: true,
                     backgroundColor: Colors.transparent,
+                    useRootNavigator: true,
                     barrierColor: const Color.fromARGB(25, 0, 0, 0),
                     context: context,
                     builder: (context) {

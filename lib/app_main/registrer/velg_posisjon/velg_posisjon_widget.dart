@@ -470,7 +470,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         );
                                       } else {
                                         HapticFeedback.mediumImpact();
-                                        context.pushNamed('Hjem');
+                                        context.goNamed('Hjem');
                                       }
                                     } on SocketException {
                                       showErrorToast(context,

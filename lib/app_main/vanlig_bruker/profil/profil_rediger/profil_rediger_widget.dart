@@ -735,7 +735,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                           String? token = await Securestorage().readToken();
                           if (token == null) {
                             FFAppState().login = false;
-                            context.pushNamed('registrer');
+                            context.goNamed('registrer');
                             return;
                           } else {
                             String? filelink;
@@ -794,7 +794,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                             } else if (response.statusCode == 401) {
                               _isLoading = false;
                               FFAppState().login = false;
-                              context.pushNamed('registrer');
+                              context.goNamed('registrer');
                               return;
                             }
                           }
@@ -806,7 +806,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                           showErrorToast(context, 'En feil oppstod');
                         }
                         _isLoading = false;
-                        context.pushNamed('Profil');
+                        context.goNamed('Profil');
                       },
                       text: 'Lagre',
                       options: FFButtonOptions(

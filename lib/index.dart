@@ -47,3 +47,5 @@ export '/app_main/vanlig_bruker/profil/utbetalingsinfo1/utbetalingsinfo1_widget.
     show Utbetalingsinfo1Widget;
 export '/app_main/vanlig_bruker/legg_ut/bonde_lagt_ut_info/bonde_lagt_ut_info_widget.dart'
     show BondeLagtUtInfoWidget;
+
+export '/app_main/chat/message/message_widget.dart' show MessageWidget;

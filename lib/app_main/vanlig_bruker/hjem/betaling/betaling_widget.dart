@@ -159,7 +159,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.safePop();
+                context.pop();
               },
               child: Icon(
                 Icons.arrow_back_ios,
@@ -1060,7 +1060,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                           await Securestorage().readToken();
                                       if (token == null) {
                                         FFAppState().login = false;
-                                        context.pushNamed('registrer');
+                                        context.goNamed('registrer');
                                         return;
                                       } else {
                                         if (matId != 0) {
@@ -1071,8 +1071,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                                   antall: antall,
                                                   token: token);
                                           if (response.statusCode == 200) {
-                                            context
-                                                .pushNamed('Godkjentbetaling');
+                                            context.goNamed('Godkjentbetaling');
                                           }
                                         } else {
                                           _isLoading = false;

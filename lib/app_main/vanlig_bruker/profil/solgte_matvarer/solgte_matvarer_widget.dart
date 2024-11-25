@@ -95,7 +95,7 @@ class _SolgteMatvarerWidgetState extends State<SolgteMatvarerWidget> {
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         // Get the data

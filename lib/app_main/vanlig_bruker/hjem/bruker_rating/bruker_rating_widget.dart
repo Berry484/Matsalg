@@ -114,7 +114,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         if (widget.mine != true) {
@@ -159,7 +159,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         if (widget.mine != true && widget.username != null) {
@@ -190,7 +190,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         if (widget.mine != true && widget.username != null) {

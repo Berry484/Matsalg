@@ -128,7 +128,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         // Fetch user info only if bruker is null
@@ -175,7 +175,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         _ratingStats = await ApiRating.ratingSummary(token, widget.username);
@@ -199,7 +199,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         brukerFolger = await ApiFolg.sjekkFolger(token, widget.username);
@@ -264,7 +264,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         _matvarer = await ApiGetUserFood.getUserFood(token, widget.username);
@@ -290,7 +290,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         folger = await ApiFolg.tellFolger(token, widget.username);
@@ -308,7 +308,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         folgere = await ApiFolg.tellFolgere(token, widget.username);

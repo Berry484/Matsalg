@@ -622,7 +622,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                 FFAppState().login = false;
                                                 FFAppState().startet = false;
                                                 _webSocketService.close();
-                                                context.pushNamed('registrer');
+                                                context.go('/registrer');
                                               } on SocketException {
                                                 showErrorToast(context,
                                                     'Ingen internettforbindelse');

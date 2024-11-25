@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '/app_main/vanlig_bruker/custom_nav_bar_user/profil_nav_bar/profil_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -142,7 +140,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         _matvarer = await ApiGetMyFoods.getMyFoods(token);
@@ -165,7 +163,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         await apicalls.updateUserStats(token);
@@ -183,7 +181,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         _ratingStats = await ApiRating.mineRatingSummary(token);
@@ -207,7 +205,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         _likesmatvarer = await ApiGetAllLikes.getAllLikes(token);
@@ -230,7 +228,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         folger = await ApiFolg.tellMineFolger(token);
@@ -248,7 +246,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
       String? token = await Securestorage().readToken();
       if (token == null) {
         FFAppState().login = false;
-        context.pushNamed('registrer');
+        context.goNamed('registrer');
         return;
       } else {
         folgere = await ApiFolg.tellMineFolgere(token);
@@ -2033,11 +2031,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                     ),
                   ),
                 ),
-                wrapWithModel(
-                  model: _model.profilNavBarModel,
-                  updateCallback: () => safeSetState(() {}),
-                  child: const ProfilNavBarWidget(),
-                ),
+                // wrapWithModel(
+                //   model: _model.profilNavBarModel,
+                //   updateCallback: () => safeSetState(() {}),
+                //   child: const ProfilNavBarWidget(),
+                // ),
               ],
             ),
           ),

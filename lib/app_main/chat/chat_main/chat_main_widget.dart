@@ -4,7 +4,6 @@ import 'package:mat_salg/app_main/chat/MessagePreview/message_preview_widget.dar
 import 'package:mat_salg/app_main/chat/chat_main/chat_main_model.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_theme.dart';
 import 'package:shimmer/shimmer.dart';
-import '/app_main/vanlig_bruker/custom_nav_bar_user/chat_nav_bar/chat_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 export 'chat_main_model.dart';
 
@@ -315,11 +314,11 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                       },
                     ),
                   ),
-                wrapWithModel(
-                  model: _model.chatNavBarModel,
-                  updateCallback: () => safeSetState(() {}),
-                  child: const ChatNavBarWidget(),
-                ),
+                // wrapWithModel(
+                //   model: _model.chatNavBarModel,
+                //   updateCallback: () => safeSetState(() {}),
+                //   child: const ChatNavBarWidget(),
+                // ),
               ],
             ),
           ),
