@@ -303,7 +303,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                10, 0, 10, 0),
+                                10, 0, 8, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -313,7 +313,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 20, 0),
+                                            0, 0, 0, 0),
                                     child: GestureDetector(
                                       onTap: () async {
                                         try {

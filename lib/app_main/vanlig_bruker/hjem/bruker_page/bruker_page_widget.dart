@@ -346,7 +346,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).secondaryText,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 28.0,
               ),
               onPressed: () {
@@ -894,29 +894,6 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           ).then((value) =>
                                                                               setState(() {}));
                                                                           return;
-
-                                                                          // context
-                                                                          //     .pushNamed(
-                                                                          //   'BrukerRating',
-                                                                          //   extra: <String,
-                                                                          //       dynamic>{
-                                                                          //     kTransitionInfoKey: const TransitionInfo(
-                                                                          //       hasTransition: true,
-                                                                          //       transitionType: PageTransitionType.bottomToTop,
-                                                                          //       duration: Duration(milliseconds: 200),
-                                                                          //     ),
-                                                                          //   },
-                                                                          //   queryParameters: {
-                                                                          //     'username': serializeParam(
-                                                                          //       widget.username,
-                                                                          //       ParamType.String,
-                                                                          //     ),
-                                                                          //     'mine': serializeParam(
-                                                                          //       false,
-                                                                          //       ParamType.bool,
-                                                                          //     ),
-                                                                          //   },
-                                                                          // );
                                                                         },
                                                                         child:
                                                                             Container(

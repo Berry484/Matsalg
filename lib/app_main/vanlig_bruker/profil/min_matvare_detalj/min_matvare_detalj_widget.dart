@@ -129,7 +129,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).secondaryText,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 28.0,
               ),
             ),
@@ -1096,7 +1096,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
+                                    10.0, 8.0, 0.0, 12.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,

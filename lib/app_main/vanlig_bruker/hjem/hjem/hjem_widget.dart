@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/api/web_socket.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/choose_location/location_widget.dart';
 import 'package:mat_salg/matvarer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -341,27 +342,29 @@ class _HjemWidgetState extends State<HjemWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  context.goNamed(
-                                    'VelgPosisjon',
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: const TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType:
-                                            PageTransitionType.bottomToTop,
-                                        duration: Duration(milliseconds: 200),
-                                      ),
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    barrierColor:
+                                        const Color.fromARGB(60, 17, 0, 0),
+                                    useRootNavigator: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return GestureDetector(
+                                        onTap: () =>
+                                            FocusScope.of(context).unfocus(),
+                                        child: Padding(
+                                          padding:
+                                              MediaQuery.viewInsetsOf(context),
+                                          child: const VelgPosisjonWidget(),
+                                        ),
+                                      );
                                     },
-                                    queryParameters: {
-                                      'bonde': serializeParam(
-                                        false,
-                                        ParamType.bool,
-                                      ),
-                                      'endrepos': serializeParam(
-                                        true,
-                                        ParamType.bool,
-                                      ),
-                                    }.withoutNulls,
-                                  );
+                                  ).then((value) => setState(() {
+                                        getAllFoods();
+                                        getKommune();
+                                      }));
+                                  return;
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,

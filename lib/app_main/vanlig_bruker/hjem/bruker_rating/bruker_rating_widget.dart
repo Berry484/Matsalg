@@ -279,7 +279,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 16),
+                                  0, 0, 0, 12),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -349,184 +349,184 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                           ],
                         ),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: MediaQuery.sizeOf(context).width - 26,
-                            decoration: const BoxDecoration(),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 5, 0, 0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    width: 121,
-                                    height: 117,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(13),
-                                    ),
-                                    child: Align(
-                                      alignment:
-                                          const AlignmentDirectional(0, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Vurdering',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  fontSize: 15,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                          Text(
-                                            ratingVerdi.toString(),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  fontSize: 31,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                          ),
-                                          Text(
-                                            'av 5.0',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  fontSize: 17,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            10, 0, 0, 0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width -
-                                          165,
-                                      height: 117,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        borderRadius: BorderRadius.circular(13),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(15, 0, 0, 0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 0, 7),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  FaIcon(
-                                                    FontAwesomeIcons.star,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    size: 21,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            5, 0, 0, 0),
-                                                    child: Text(
-                                                      '${ratingantall.toString()} vurderinger',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            fontSize: 15,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 7, 0, 0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Icon(
-                                                    Icons.person_outlined,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    size: 27,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            5, 0, 0, 0),
-                                                    child: Text(
-                                                      'Ble med i\n${bruker?.time != null ? DateFormat("MMMM yyyy", "nb_NO").format(bruker!.time!.toLocal()) : ""}',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            fontSize: 15,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisSize: MainAxisSize.max,
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Container(
+                      //       width: MediaQuery.sizeOf(context).width - 26,
+                      //       decoration: const BoxDecoration(),
+                      //       child: Padding(
+                      //         padding: const EdgeInsetsDirectional.fromSTEB(
+                      //             0, 5, 0, 0),
+                      //         child: Row(
+                      //           mainAxisSize: MainAxisSize.max,
+                      //           children: [
+                      //             Container(
+                      //               width: 121,
+                      //               height: 117,
+                      //               decoration: BoxDecoration(
+                      //                 color: FlutterFlowTheme.of(context)
+                      //                     .secondaryBackground,
+                      //                 borderRadius: BorderRadius.circular(13),
+                      //               ),
+                      //               child: Align(
+                      //                 alignment:
+                      //                     const AlignmentDirectional(0, 0),
+                      //                 child: Column(
+                      //                   mainAxisSize: MainAxisSize.max,
+                      //                   mainAxisAlignment:
+                      //                       MainAxisAlignment.center,
+                      //                   children: [
+                      //                     Text(
+                      //                       'Vurdering',
+                      //                       style: FlutterFlowTheme.of(context)
+                      //                           .bodyMedium
+                      //                           .override(
+                      //                             fontFamily: 'Nunito',
+                      //                             color: FlutterFlowTheme.of(
+                      //                                     context)
+                      //                                 .primaryText,
+                      //                             fontSize: 15,
+                      //                             letterSpacing: 0.0,
+                      //                             fontWeight: FontWeight.w600,
+                      //                           ),
+                      //                     ),
+                      //                     Text(
+                      //                       ratingVerdi.toString(),
+                      //                       style: FlutterFlowTheme.of(context)
+                      //                           .bodyMedium
+                      //                           .override(
+                      //                             fontFamily: 'Nunito',
+                      //                             fontSize: 31,
+                      //                             letterSpacing: 0.0,
+                      //                             fontWeight: FontWeight.bold,
+                      //                           ),
+                      //                     ),
+                      //                     Text(
+                      //                       'av 5.0',
+                      //                       style: FlutterFlowTheme.of(context)
+                      //                           .bodyMedium
+                      //                           .override(
+                      //                             fontFamily: 'Nunito',
+                      //                             color: FlutterFlowTheme.of(
+                      //                                     context)
+                      //                                 .secondaryText,
+                      //                             fontSize: 17,
+                      //                             letterSpacing: 0.0,
+                      //                             fontWeight: FontWeight.w600,
+                      //                           ),
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             Padding(
+                      //               padding:
+                      //                   const EdgeInsetsDirectional.fromSTEB(
+                      //                       10, 0, 0, 0),
+                      //               child: Container(
+                      //                 width: MediaQuery.sizeOf(context).width -
+                      //                     165,
+                      //                 height: 117,
+                      //                 decoration: BoxDecoration(
+                      //                   color: FlutterFlowTheme.of(context)
+                      //                       .secondaryBackground,
+                      //                   borderRadius: BorderRadius.circular(13),
+                      //                 ),
+                      //                 child: Padding(
+                      //                   padding: const EdgeInsetsDirectional
+                      //                       .fromSTEB(15, 0, 0, 0),
+                      //                   child: Column(
+                      //                     mainAxisSize: MainAxisSize.max,
+                      //                     mainAxisAlignment:
+                      //                         MainAxisAlignment.center,
+                      //                     children: [
+                      //                       Padding(
+                      //                         padding:
+                      //                             const EdgeInsetsDirectional
+                      //                                 .fromSTEB(0, 0, 0, 7),
+                      //                         child: Row(
+                      //                           mainAxisSize: MainAxisSize.max,
+                      //                           children: [
+                      //                             FaIcon(
+                      //                               FontAwesomeIcons.star,
+                      //                               color: FlutterFlowTheme.of(
+                      //                                       context)
+                      //                                   .primaryText,
+                      //                               size: 21,
+                      //                             ),
+                      //                             Padding(
+                      //                               padding:
+                      //                                   const EdgeInsetsDirectional
+                      //                                       .fromSTEB(
+                      //                                       5, 0, 0, 0),
+                      //                               child: Text(
+                      //                                 '${ratingantall.toString()} vurderinger',
+                      //                                 style: FlutterFlowTheme
+                      //                                         .of(context)
+                      //                                     .bodyMedium
+                      //                                     .override(
+                      //                                       fontFamily:
+                      //                                           'Nunito',
+                      //                                       fontSize: 15,
+                      //                                       letterSpacing: 0.0,
+                      //                                       fontWeight:
+                      //                                           FontWeight.w600,
+                      //                                     ),
+                      //                               ),
+                      //                             ),
+                      //                           ],
+                      //                         ),
+                      //                       ),
+                      //                       Padding(
+                      //                         padding:
+                      //                             const EdgeInsetsDirectional
+                      //                                 .fromSTEB(0, 7, 0, 0),
+                      //                         child: Row(
+                      //                           mainAxisSize: MainAxisSize.max,
+                      //                           children: [
+                      //                             Icon(
+                      //                               Icons.person_outlined,
+                      //                               color: FlutterFlowTheme.of(
+                      //                                       context)
+                      //                                   .primaryText,
+                      //                               size: 27,
+                      //                             ),
+                      //                             Padding(
+                      //                               padding:
+                      //                                   const EdgeInsetsDirectional
+                      //                                       .fromSTEB(
+                      //                                       5, 0, 0, 0),
+                      //                               child: Text(
+                      //                                 'Ble med i\n${bruker?.time != null ? DateFormat("MMMM yyyy", "nb_NO").format(bruker!.time!.toLocal()) : ""}',
+                      //                                 style: FlutterFlowTheme
+                      //                                         .of(context)
+                      //                                     .bodyMedium
+                      //                                     .override(
+                      //                                       fontFamily:
+                      //                                           'Nunito',
+                      //                                       fontSize: 15,
+                      //                                       letterSpacing: 0.0,
+                      //                                       fontWeight:
+                      //                                           FontWeight.w600,
+                      //                                     ),
+                      //                               ),
+                      //                             ),
+                      //                           ],
+                      //                         ),
+                      //                       ),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       Expanded(
                         child: Padding(
                           padding:
@@ -628,7 +628,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                       child: ListView.builder(
                                           padding: const EdgeInsets.fromLTRB(
                                             0,
-                                            10,
+                                            0,
                                             0,
                                             0,
                                           ),
@@ -817,7 +817,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                             return Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
-                                                      .fromSTEB(10, 13, 10, 0),
+                                                      .fromSTEB(10, 8, 10, 0),
                                               child: Material(
                                                 color: Colors.transparent,
                                                 elevation: 0,
@@ -1075,7 +1075,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                       child: ListView.builder(
                                           padding: const EdgeInsets.fromLTRB(
                                             0,
-                                            10,
+                                            0,
                                             0,
                                             0,
                                           ),
@@ -1268,7 +1268,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                             return Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
-                                                      .fromSTEB(10, 13, 10, 0),
+                                                      .fromSTEB(10, 8, 10, 0),
                                               child: Material(
                                                 color: Colors.transparent,
                                                 elevation: 0,
@@ -1524,7 +1524,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                       child: ListView.builder(
                                           padding: const EdgeInsets.fromLTRB(
                                             0,
-                                            10,
+                                            0,
                                             0,
                                             0,
                                           ),
@@ -1717,7 +1717,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                             return Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
-                                                      .fromSTEB(10, 13, 10, 0),
+                                                      .fromSTEB(10, 8, 10, 0),
                                               child: Material(
                                                 color: Colors.transparent,
                                                 elevation: 0,

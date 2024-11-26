@@ -501,7 +501,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                     padding: const EdgeInsets.only(left: 0.0),
                     child: Icon(
                       Icons.arrow_back_ios,
-                      color: FlutterFlowTheme.of(context).secondaryText,
+                      color: FlutterFlowTheme.of(context).primaryText,
                       size: 24,
                     ),
                   ),

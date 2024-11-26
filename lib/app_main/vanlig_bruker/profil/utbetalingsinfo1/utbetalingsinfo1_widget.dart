@@ -76,7 +76,7 @@ class _Utbetalingsinfo1WidgetState extends State<Utbetalingsinfo1Widget> {
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).alternate,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 28.0,
               ),
             ),
@@ -103,8 +103,8 @@ class _Utbetalingsinfo1WidgetState extends State<Utbetalingsinfo1Widget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 40.0, 0.0, 15.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        12.0, 40.0, 0.0, 15.0),
                     child: Text(
                       'Utbetalings informasjon',
                       textAlign: TextAlign.start,
@@ -118,8 +118,8 @@ class _Utbetalingsinfo1WidgetState extends State<Utbetalingsinfo1Widget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        20.0, 0.0, 20.0, 0.0),
                     child: Text(
                       'Forpliktelsene til \"Know Your Customer\" (KYC) krever at vi verifiserer identiteten til kontoinnhavere som selger via vår app. For å gjøre dette så enkelt som mulig ber vi deg bruke adresseinformasjon som samsvarer med informasjonen din som er i offentlige registre.',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -132,8 +132,8 @@ class _Utbetalingsinfo1WidgetState extends State<Utbetalingsinfo1Widget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 30.0, 0.0, 0.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -299,8 +299,8 @@ class _Utbetalingsinfo1WidgetState extends State<Utbetalingsinfo1Widget> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 30.0, 0.0, 0.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -387,8 +387,8 @@ class _Utbetalingsinfo1WidgetState extends State<Utbetalingsinfo1Widget> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -475,8 +475,8 @@ class _Utbetalingsinfo1WidgetState extends State<Utbetalingsinfo1Widget> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -748,8 +748,8 @@ class _Utbetalingsinfo1WidgetState extends State<Utbetalingsinfo1Widget> {
                   Align(
                     alignment: const AlignmentDirectional(0.0, 0.05),
                     child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 35.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 35.0, 0.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           context.safePop();

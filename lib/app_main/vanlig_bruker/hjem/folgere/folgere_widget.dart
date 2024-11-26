@@ -155,7 +155,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios_rounded,
-                color: FlutterFlowTheme.of(context).secondaryText,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 28.0,
               ),
             ),

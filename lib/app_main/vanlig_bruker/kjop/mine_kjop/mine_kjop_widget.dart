@@ -701,11 +701,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                       icon: const FaIcon(
                                                         FontAwesomeIcons
                                                             .chevronDown,
-                                                        size: 18,
+                                                        size: 19,
                                                       ),
                                                       options: FFButtonOptions(
-                                                        width: 140,
-                                                        height: 30,
+                                                        width: 118,
+                                                        height: 35,
                                                         padding:
                                                             const EdgeInsetsDirectional
                                                                 .fromSTEB(
@@ -727,19 +727,19 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                       'Nunito',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .primaryText,
-                                                                  fontSize: 15,
+                                                                      .alternate,
+                                                                  fontSize: 16,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
+                                                                          .w700,
                                                                 ),
                                                         elevation: 0,
                                                         borderSide:
                                                             const BorderSide(
-                                                          color:
-                                                              Color(0x5957636C),
+                                                          color: Color.fromARGB(
+                                                              0, 87, 99, 108),
                                                           width: 1.5,
                                                         ),
                                                         borderRadius:
@@ -1098,19 +1098,36 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                    if (alleInfo
-                                                                            .kjopte !=
-                                                                        true)
-                                                                      Positioned(
-                                                                        top:
-                                                                            6, // Adjust vertical position as needed
-                                                                        left:
-                                                                            0, // Adjust horizontal position as needed
+                                                                    Positioned(
+                                                                      top:
+                                                                          0, // Adjust vertical position as needed
+                                                                      left:
+                                                                          0, // Adjust horizontal position as needed
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            25, // Ensure this matches the width of the image
+                                                                        height:
+                                                                            25, // Ensure this matches the height of the image
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          shape:
+                                                                              BoxShape.circle, // Makes the border circular
+                                                                          border:
+                                                                              Border.all(
+                                                                            color:
+                                                                                Colors.white, // Choose your desired border color
+                                                                            width:
+                                                                                0.5, // Adjust the border width as needed
+                                                                          ),
+                                                                        ),
                                                                         child:
                                                                             ClipOval(
                                                                           child:
                                                                               Image.network(
-                                                                            '${ApiConstants.baseUrl}${alleInfo.kjoperProfilePic}',
+                                                                            alleInfo.kjopte == true
+                                                                                ? '${ApiConstants.baseUrl}${alleInfo.foodDetails.profilepic}'
+                                                                                : '${ApiConstants.baseUrl}${alleInfo.kjoperProfilePic}',
                                                                             width:
                                                                                 25,
                                                                             height:
@@ -1121,7 +1138,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Object error,
                                                                                 StackTrace? stackTrace) {
                                                                               return Image.asset(
-                                                                                'assets/images/profile_pic.png', // Replace with a local asset as a fallback
+                                                                                'assets/images/profile_pic.png',
                                                                                 width: 25,
                                                                                 height: 25,
                                                                                 fit: BoxFit.cover,
@@ -1130,6 +1147,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           ),
                                                                         ),
                                                                       ),
+                                                                    ),
                                                                   ],
                                                                 ),
                                                                 Expanded(
@@ -1169,7 +1187,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               Container(
                                                                                 child: Flexible(
                                                                                   child: Text(
-                                                                                    alleInfo.kjopte == true ? alleInfo.foodDetails.name ?? '' : alleInfo.kjoper,
+                                                                                    alleInfo.kjopte == true ? alleInfo.selger : alleInfo.kjoper,
                                                                                     softWrap: true, // Enables wrapping
                                                                                     overflow: TextOverflow.visible, // Allows overflow to be visible or change to ellipsis
                                                                                     style: FlutterFlowTheme.of(context).headlineSmall.override(
@@ -1329,10 +1347,13 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         decoration:
                                                                             BoxDecoration(
                                                                           color: alleInfo.hentet == true
-                                                                              ? const Color(0xC40B695B)
+                                                                              ? FlutterFlowTheme.of(context).primary
                                                                               : FlutterFlowTheme.of(context).price,
                                                                           borderRadius:
                                                                               BorderRadius.circular(13),
+                                                                          border: alleInfo.hentet == true
+                                                                              ? Border.all(color: const Color.fromARGB(44, 87, 99, 108), width: 1.2) // Add black border
+                                                                              : null, // No border otherwise
                                                                         ),
                                                                         child:
                                                                             Align(
@@ -1352,7 +1373,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               textAlign: TextAlign.start,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Nunito',
-                                                                                    color: FlutterFlowTheme.of(context).primary,
+                                                                                    color: alleInfo.hentet == true ? FlutterFlowTheme.of(context).primaryText : FlutterFlowTheme.of(context).primary,
                                                                                     fontSize: 14,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.bold,
@@ -1850,6 +1871,54 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         ),
                                                                       ),
                                                                     ),
+                                                                    Positioned(
+                                                                      top:
+                                                                          6, // Adjust vertical position as needed
+                                                                      left:
+                                                                          0, // Adjust horizontal position as needed
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            25, // Ensure this matches the width of the image
+                                                                        height:
+                                                                            25, // Ensure this matches the height of the image
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          shape:
+                                                                              BoxShape.circle, // Makes the border circular
+                                                                          border:
+                                                                              Border.all(
+                                                                            color:
+                                                                                Colors.white, // Choose your desired border color
+                                                                            width:
+                                                                                0.5, // Adjust the border width as needed
+                                                                          ),
+                                                                        ),
+                                                                        child:
+                                                                            ClipOval(
+                                                                          child:
+                                                                              Image.network(
+                                                                            '${ApiConstants.baseUrl}${ordreInfo.foodDetails.profilepic}',
+                                                                            width:
+                                                                                25,
+                                                                            height:
+                                                                                25,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            errorBuilder: (BuildContext context,
+                                                                                Object error,
+                                                                                StackTrace? stackTrace) {
+                                                                              return Image.asset(
+                                                                                'assets/images/profile_pic.png',
+                                                                                width: 25,
+                                                                                height: 25,
+                                                                                fit: BoxFit.cover,
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
                                                                     if (ordreInfo
                                                                             .hentet ==
                                                                         true)
@@ -1914,7 +1983,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               Container(
                                                                                 child: Flexible(
                                                                                   child: Text(
-                                                                                    ordreInfo.foodDetails.name ?? '',
+                                                                                    ordreInfo.selger,
                                                                                     style: FlutterFlowTheme.of(context).headlineSmall.override(
                                                                                           fontFamily: 'Nunito',
                                                                                           fontSize: 16,
@@ -2073,7 +2142,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                         decoration:
                                                                             BoxDecoration(
                                                                           color: ordreInfo.hentet == true
-                                                                              ? const Color(0xC40B695B)
+                                                                              ? FlutterFlowTheme.of(context).primary
                                                                               : FlutterFlowTheme.of(context).price,
                                                                           borderRadius:
                                                                               BorderRadius.circular(13),
@@ -2645,26 +2714,45 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                       left:
                                                                           0, // Adjust horizontal position as needed
                                                                       child:
-                                                                          ClipOval(
-                                                                        child: Image
-                                                                            .network(
-                                                                          '${ApiConstants.baseUrl}${salgInfo.kjoperProfilePic}',
-                                                                          width:
-                                                                              25,
-                                                                          height:
-                                                                              25,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                          errorBuilder: (BuildContext context,
-                                                                              Object error,
-                                                                              StackTrace? stackTrace) {
-                                                                            return Image.asset(
-                                                                              'assets/images/profile_pic.png',
-                                                                              width: 25,
-                                                                              height: 25,
-                                                                              fit: BoxFit.cover,
-                                                                            );
-                                                                          },
+                                                                          Container(
+                                                                        width:
+                                                                            25, // Ensure this matches the width of the image
+                                                                        height:
+                                                                            25, // Ensure this matches the height of the image
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          shape:
+                                                                              BoxShape.circle, // Makes the border circular
+                                                                          border:
+                                                                              Border.all(
+                                                                            color:
+                                                                                Colors.white, // Choose your desired border color
+                                                                            width:
+                                                                                0.5, // Adjust the border width as needed
+                                                                          ),
+                                                                        ),
+                                                                        child:
+                                                                            ClipOval(
+                                                                          child:
+                                                                              Image.network(
+                                                                            '${ApiConstants.baseUrl}${salgInfo.kjoperProfilePic}',
+                                                                            width:
+                                                                                25,
+                                                                            height:
+                                                                                25,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            errorBuilder: (BuildContext context,
+                                                                                Object error,
+                                                                                StackTrace? stackTrace) {
+                                                                              return Image.asset(
+                                                                                'assets/images/profile_pic.png',
+                                                                                width: 25,
+                                                                                height: 25,
+                                                                                fit: BoxFit.cover,
+                                                                              );
+                                                                            },
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ),
@@ -2882,9 +2970,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             30,
                                                                         decoration:
                                                                             BoxDecoration(
-                                                                          color: salgInfo.hentet == true
-                                                                              ? const Color(0xC40B695B)
-                                                                              : FlutterFlowTheme.of(context).price,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).price,
                                                                           borderRadius:
                                                                               BorderRadius.circular(13),
                                                                         ),

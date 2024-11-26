@@ -350,30 +350,24 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                   'Alle endringer vil forsvinne',
                                 ),
                                 actions: [
-                                  Column(
-                                    children: [
-                                      CupertinoDialogAction(
-                                        isDestructiveAction: true,
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pop();
-                                        },
-                                        child:
-                                            const Text('Ja, forkast endringer'),
-                                      ),
-                                      CupertinoDialogAction(
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .pop(); // Just close the dialog
-                                        },
-                                        child: const Text(
-                                          'Fortsett å redigere',
-                                          style: TextStyle(
-                                              color:
-                                                  CupertinoColors.systemBlue),
-                                        ),
-                                      ),
-                                    ],
+                                  CupertinoDialogAction(
+                                    isDestructiveAction: true,
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Ja, forkast endringer'),
+                                  ),
+                                  CupertinoDialogAction(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Just close the dialog
+                                    },
+                                    child: const Text(
+                                      'Fortsett å redigere',
+                                      style: TextStyle(
+                                          color: CupertinoColors.systemBlue),
+                                    ),
                                   ),
                                 ],
                               );

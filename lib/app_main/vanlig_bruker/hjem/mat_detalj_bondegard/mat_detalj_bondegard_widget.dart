@@ -271,7 +271,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).secondaryText,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 28.0,
               ),
             ),
@@ -1089,7 +1089,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                              10, 0, 0, 0),
+                                                              0, 0, 0, 0),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -1238,7 +1238,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
+                                    10.0, 12.0, 0.0, 12.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,

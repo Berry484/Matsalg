@@ -114,7 +114,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).secondaryText,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 28,
               ),
             ),

@@ -132,7 +132,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
               },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).secondaryText,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 28,
               ),
             ),
@@ -847,7 +847,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 0, 0),
+                                    10, 8, 0, 12),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,

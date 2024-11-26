@@ -148,7 +148,7 @@ class _MainWrapperState extends State<MainWrapper> {
                   color: Colors.white,
                   border: Border(
                     top: BorderSide(
-                      color: Color.fromARGB(30, 87, 99, 108),
+                      color: Color.fromARGB(50, 87, 99, 108),
                       width: 1.0,
                     ),
                   ),
