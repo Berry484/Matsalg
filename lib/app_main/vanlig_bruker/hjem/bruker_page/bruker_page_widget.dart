@@ -1892,8 +1892,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                           width:
                                                               140, // Adjusted width to avoid overflow after rotation
                                                           height: 23,
-                                                          color:
-                                                              Colors.redAccent,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
                                                           alignment:
                                                               Alignment.center,
                                                           child: const Text(
@@ -2209,7 +2210,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                             width:
                                                 140, // Adjusted width to avoid overflow after rotation
                                             height: 23,
-                                            color: Colors.redAccent,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
                                             alignment: Alignment.center,
                                             child: const Text(
                                               'Utsolgt',
@@ -2217,7 +2219,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize:
-                                                    14, // Font size adjusted to fit the banner
+                                                    13, // Font size adjusted to fit the banner
                                               ),
                                             ),
                                           ),

@@ -490,7 +490,10 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       width:
                                                           140, // Adjusted width to avoid overflow after rotation
                                                       height: 25,
-                                                      color: Colors.redAccent,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
                                                       alignment:
                                                           Alignment.center,
                                                       child: const Text(

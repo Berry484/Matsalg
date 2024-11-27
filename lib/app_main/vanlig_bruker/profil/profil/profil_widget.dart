@@ -1599,8 +1599,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                               width:
                                                                   140, // Adjusted width to avoid overflow after rotation
                                                               height: 23,
-                                                              color: Colors
-                                                                  .redAccent,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .alternate,
                                                               alignment:
                                                                   Alignment
                                                                       .center,
