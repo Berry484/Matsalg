@@ -150,8 +150,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -175,8 +177,10 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
         setState(() {});
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -300,8 +304,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                   Align(
                                     alignment: const Alignment(0, 0),
                                     child: Container(
-                                      height: 36.0,
-                                      padding: const EdgeInsets.all(4.0),
+                                      height: 35.0,
+                                      padding: const EdgeInsets.all(2.7),
                                       decoration: BoxDecoration(
                                         color: Colors.grey[300],
                                         borderRadius:
@@ -330,7 +334,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                   curve: Curves.ease,
                                                   child: Container(
                                                     width: 120,
-                                                    height: 32.0,
+                                                    height: 35.0,
                                                     decoration: BoxDecoration(
                                                       color: Colors.white,
                                                       borderRadius:
@@ -691,9 +695,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                   child: Center(
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
+                                                        HapticFeedback
+                                                            .lightImpact();
                                                         safeSetState(() {
-                                                          HapticFeedback
-                                                              .lightImpact();
                                                           _showMore = true;
                                                         });
                                                       },
@@ -1389,18 +1393,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                       Container(
                                                                         height:
                                                                             30,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              const Color(0xAA262C2D),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(13),
-                                                                          border:
-                                                                              Border.all(
+                                                                        decoration: BoxDecoration(
                                                                             color:
-                                                                                const Color(0x0D262C2D),
-                                                                          ),
-                                                                        ),
+                                                                                Colors.white,
+                                                                            borderRadius: BorderRadius.circular(13),
+                                                                            border: Border.all(color: const Color.fromARGB(44, 87, 99, 108), width: 1.2)),
                                                                         child:
                                                                             Stack(
                                                                           children: [
@@ -1416,8 +1413,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                       left: 0,
                                                                                       right: 0,
                                                                                       child: Container(
-                                                                                        height: 1.2, // Thickness of the line
-                                                                                        color: Colors.white, // Color of the line
+                                                                                        height: 1, // Thickness of the line
+                                                                                        color: const Color.fromARGB(255, 0, 0, 0), // Color of the line
                                                                                       ),
                                                                                     ),
                                                                                     // The actual text
@@ -1426,7 +1423,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                       textAlign: TextAlign.start,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Nunito',
-                                                                                            color: const Color(0xE0FFFFFF),
+                                                                                            color: FlutterFlowTheme.of(context).primaryText,
                                                                                             fontSize: 14,
                                                                                             letterSpacing: 0.0,
                                                                                             fontWeight: FontWeight.bold,
@@ -1811,7 +1808,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   .circular(24),
                                                         ),
                                                         child: Container(
-                                                          height: 107,
                                                           decoration:
                                                               BoxDecoration(
                                                             borderRadius:
@@ -1873,7 +1869,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                     ),
                                                                     Positioned(
                                                                       top:
-                                                                          6, // Adjust vertical position as needed
+                                                                          0, // Adjust vertical position as needed
                                                                       left:
                                                                           0, // Adjust horizontal position as needed
                                                                       child:
@@ -2648,7 +2644,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   .circular(24),
                                                         ),
                                                         child: Container(
-                                                          height: 107,
                                                           decoration:
                                                               BoxDecoration(
                                                             borderRadius:
@@ -2710,7 +2705,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                     ),
                                                                     Positioned(
                                                                       top:
-                                                                          6, // Adjust vertical position as needed
+                                                                          0, // Adjust vertical position as needed
                                                                       left:
                                                                           0, // Adjust horizontal position as needed
                                                                       child:

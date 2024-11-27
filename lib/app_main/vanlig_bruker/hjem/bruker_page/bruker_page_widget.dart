@@ -164,8 +164,10 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -188,8 +190,10 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -209,8 +213,10 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         setState(() {});
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -240,8 +246,10 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         tellFolgere();
       });
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -253,8 +261,10 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         tellFolgere();
       });
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -279,8 +289,10 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -297,8 +309,10 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         setState(() {});
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -315,8 +329,10 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         setState(() {});
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -1025,13 +1041,13 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                   //       } on SocketException {
                                                                   //         _messageIsLoading =
                                                                   //             false;
-                                                                  //         showErrorToast(
+                                                                  //               HapticFeedback.lightImpact();      showErrorToast(
                                                                   //             context,
                                                                   //             'Ingen internettforbindelse');
                                                                   //       } catch (e) {
                                                                   //         _messageIsLoading =
                                                                   //             false;
-                                                                  //         showErrorToast(
+                                                                  //               HapticFeedback.lightImpact();
                                                                   //             context,
                                                                   //             'En feil oppstod');
                                                                   //       }

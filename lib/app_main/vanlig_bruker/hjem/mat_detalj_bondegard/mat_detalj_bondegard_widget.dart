@@ -174,8 +174,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -213,8 +215,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         setState(() {});
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -233,8 +237,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -423,9 +429,11 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 matvare.matId);
                                           }
                                         } on SocketException {
+                                          HapticFeedback.lightImpact();
                                           showErrorToast(context,
                                               'Ingen internettforbindelse');
                                         } catch (e) {
+                                          HapticFeedback.lightImpact();
                                           showErrorToast(
                                               context, 'En feil oppstod');
                                         }
@@ -768,17 +776,19 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           );
                                                           safeSetState(() {});
                                                         },
-                                                        effect: const smooth_page_indicator
+                                                        effect: smooth_page_indicator
                                                             .ExpandingDotsEffect(
                                                           expansionFactor: 1.1,
                                                           spacing: 8.0,
                                                           radius: 16.0,
-                                                          dotWidth: 8.5,
-                                                          dotHeight: 8.5,
-                                                          dotColor:
-                                                              Color(0xFFE6E6E6),
+                                                          dotWidth: 7,
+                                                          dotHeight: 7,
+                                                          dotColor: const Color(
+                                                              0xFFE6E6E6),
                                                           activeDotColor:
-                                                              Color(0xFFB0B0B0),
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .alternate,
                                                           paintStyle:
                                                               PaintingStyle
                                                                   .fill,
@@ -821,7 +831,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
+                                    0.0, 0.0, 0.0, 0.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -1018,10 +1028,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 }
                                               } on SocketException {
                                                 _messageIsLoading = false;
+                                                HapticFeedback.lightImpact();
                                                 showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
                                                 _messageIsLoading = false;
+                                                HapticFeedback.lightImpact();
                                                 showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
@@ -1246,7 +1258,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 8.0),
+                                              0.0, 0.0, 0.0, 12.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -1265,10 +1277,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         .headlineMedium
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          fontSize: 19.0,
+                                                          fontSize: 17.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                              FontWeight.bold,
                                                         ),
                                               ),
                                             ],
@@ -1293,17 +1305,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyMedium
+                                                      .headlineMedium
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 20.0,
+                                                        fontSize: 18.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
-                                                            FontWeight.w700,
+                                                            FontWeight.bold,
                                                       ),
                                                 ),
                                                 if (matvare.kg == true)

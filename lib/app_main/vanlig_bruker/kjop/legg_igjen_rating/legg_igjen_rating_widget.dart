@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
@@ -202,9 +203,11 @@ class _LeggIgjenRatingWidgetState extends State<LeggIgjenRatingWidget> {
                               }
                             }
                           } on SocketException {
+                            HapticFeedback.lightImpact();
                             showErrorToast(
                                 context, 'Ingen internettforbindelse');
                           } catch (e) {
+                            HapticFeedback.lightImpact();
                             showErrorToast(context, 'En feil oppstod');
                           }
                         },

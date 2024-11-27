@@ -251,8 +251,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
         }
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -269,8 +271,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
         });
       });
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -313,9 +317,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
             //         try {
             //           context.safePop();
             //         } on SocketException {
-            //           showErrorToast(context, 'Ingen internettforbindelse');
+            //                 HapticFeedback.lightImpact();
             //         } catch (e) {
-            //           showErrorToast(context, 'En feil oppstod');
             //         }
             //       },
             //       child: Row(
@@ -378,8 +381,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                         }
                         // context.safePop();
                       } on SocketException {
+                        HapticFeedback.lightImpact();
                         showErrorToast(context, 'Ingen internettforbindelse');
                       } catch (e) {
+                        HapticFeedback.lightImpact();
                         showErrorToast(context, 'En feil oppstod');
                       }
                     },
@@ -520,6 +525,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       ),
                                                       onPressed: () async {
                                                         try {
+                                                          FocusScope.of(context)
+                                                              .requestFocus(
+                                                                  FocusNode());
                                                           final selectedMedia =
                                                               await selectMediaWithSourceBottomSheet(
                                                             context: context,
@@ -576,10 +584,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                           }
                                                         } on SocketException {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'En feil oppstod');
@@ -657,10 +669,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 safeSetState(
                                                                     () {});
                                                               } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
@@ -739,10 +755,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               Uint8List.fromList([]));
                                                                 });
                                                               } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
@@ -816,10 +836,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 safeSetState(
                                                                     () {});
                                                               } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
@@ -892,10 +916,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               Uint8List.fromList([]));
                                                                 });
                                                               } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
@@ -938,6 +966,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       ),
                                                       onPressed: () async {
                                                         try {
+                                                          FocusScope.of(context)
+                                                              .requestFocus(
+                                                                  FocusNode());
                                                           final selectedMedia =
                                                               await selectMediaWithSourceBottomSheet(
                                                             context: context,
@@ -994,10 +1025,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                           }
                                                         } on SocketException {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'En feil oppstod');
@@ -1068,10 +1103,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 safeSetState(
                                                                     () {});
                                                               } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
@@ -1144,10 +1183,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               Uint8List.fromList([]));
                                                                 });
                                                               } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
@@ -1190,6 +1233,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       ),
                                                       onPressed: () async {
                                                         try {
+                                                          FocusScope.of(context)
+                                                              .requestFocus(
+                                                                  FocusNode());
                                                           final selectedMedia =
                                                               await selectMediaWithSourceBottomSheet(
                                                             context: context,
@@ -1246,10 +1292,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                           }
                                                         } on SocketException {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'En feil oppstod');
@@ -1320,10 +1370,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 safeSetState(
                                                                     () {});
                                                               } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
@@ -1396,10 +1450,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               Uint8List.fromList([]));
                                                                 });
                                                               } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
@@ -1442,6 +1500,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       ),
                                                       onPressed: () async {
                                                         try {
+                                                          FocusScope.of(context)
+                                                              .requestFocus(
+                                                                  FocusNode());
                                                           final selectedMedia =
                                                               await selectMediaWithSourceBottomSheet(
                                                             context: context,
@@ -1498,10 +1559,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                           }
                                                         } on SocketException {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'En feil oppstod');
@@ -1572,10 +1637,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 safeSetState(
                                                                     () {});
                                                               } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
@@ -1648,10 +1717,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               Uint8List.fromList([]));
                                                                 });
                                                               } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
@@ -1694,6 +1767,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       ),
                                                       onPressed: () async {
                                                         try {
+                                                          FocusScope.of(context)
+                                                              .requestFocus(
+                                                                  FocusNode());
                                                           final selectedMedia =
                                                               await selectMediaWithSourceBottomSheet(
                                                             context: context,
@@ -1750,10 +1826,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                           }
                                                         } on SocketException {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'En feil oppstod');
@@ -1956,6 +2036,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   }
                                                 });
                                               } catch (e) {
+                                                HapticFeedback.lightImpact();
                                                 showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
@@ -3029,9 +3110,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           }
                                                         });
                                                       } on SocketException {
+                                                        HapticFeedback
+                                                            .lightImpact();
                                                         showErrorToast(context,
                                                             'Ingen internettforbindelse');
                                                       } catch (e) {
+                                                        HapticFeedback
+                                                            .lightImpact();
                                                         showErrorToast(context,
                                                             'En feil oppstod');
                                                       }
@@ -3204,9 +3289,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       context.pushNamed(
                                                           'Utbetalingsinfo1');
                                                     } on SocketException {
+                                                      HapticFeedback
+                                                          .lightImpact();
                                                       showErrorToast(context,
                                                           'Ingen internettforbindelse');
                                                     } catch (e) {
+                                                      HapticFeedback
+                                                          .lightImpact();
                                                       showErrorToast(context,
                                                           'En feil oppstod');
                                                     }
@@ -3533,9 +3622,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                         }
                                                       }
                                                     } on SocketException {
+                                                      HapticFeedback
+                                                          .lightImpact();
                                                       showErrorToast(context,
                                                           'Ingen internettforbindelse');
                                                     } catch (e) {
+                                                      HapticFeedback
+                                                          .lightImpact();
                                                       showErrorToast(context,
                                                           'En feil oppstod');
                                                     }
@@ -3827,10 +3920,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             setState(() {});
                                                           }
                                                         } on SocketException {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'En feil oppstod');

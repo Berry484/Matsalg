@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:mat_salg/api/web_socket.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -160,9 +161,11 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                               try {
                                 context.pushNamed('ProfilRediger');
                               } on SocketException {
+                                HapticFeedback.lightImpact();
                                 showErrorToast(
                                     context, 'Ingen internettforbindelse');
                               } catch (e) {
+                                HapticFeedback.lightImpact();
                                 showErrorToast(context, 'En feil oppstod');
                               }
                             },
@@ -624,9 +627,11 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                 _webSocketService.close();
                                                 context.go('/registrer');
                                               } on SocketException {
+                                                HapticFeedback.lightImpact();
                                                 showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
+                                                HapticFeedback.lightImpact();
                                                 showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
@@ -653,9 +658,11 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                     },
                                   );
                                 } on SocketException {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(context, 'En feil oppstod');
                                 }
                               },

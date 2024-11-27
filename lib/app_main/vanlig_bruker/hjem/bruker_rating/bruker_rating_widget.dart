@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/Bonder.dart';
@@ -148,9 +149,11 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       }
     } on SocketException {
       _ratingisLoading = true;
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _ratingisLoading = true;
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -179,9 +182,11 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       }
     } on SocketException {
       _ratingisLoading = true;
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _ratingisLoading = true;
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -220,9 +225,11 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       }
     } on SocketException {
       _ratingisLoading = true;
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _ratingisLoading = true;
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -300,9 +307,11 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                           try {
                                             Navigator.pop(context);
                                           } on SocketException {
+                                            HapticFeedback.lightImpact();
                                             showErrorToast(context,
                                                 'Ingen internettforbindelse');
                                           } catch (e) {
+                                            HapticFeedback.lightImpact();
                                             showErrorToast(
                                                 context, 'En feil oppstod');
                                           }
@@ -536,8 +545,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                               Align(
                                 alignment: const Alignment(0, 0),
                                 child: Container(
-                                  height: 36.0,
-                                  padding: const EdgeInsets.all(4.0),
+                                  height: 35.0,
+                                  padding: const EdgeInsets.all(2.7),
                                   decoration: BoxDecoration(
                                     color: Colors.grey[300],
                                     borderRadius: BorderRadius.circular(14.0),
@@ -563,7 +572,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                               curve: Curves.ease,
                                               child: Container(
                                                 width: 135,
-                                                height: 32.0,
+                                                height: 35.0,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   borderRadius:

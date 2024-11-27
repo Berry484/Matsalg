@@ -900,6 +900,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                   }
                                 });
                               } catch (e) {
+                                HapticFeedback.lightImpact();
                                 showErrorToast(context, 'En feil oppstod');
                               }
                             },
@@ -1084,9 +1085,11 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     }
                                   }
                                 } on SocketException {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(context, 'En feil oppstod');
                                 }
                               },

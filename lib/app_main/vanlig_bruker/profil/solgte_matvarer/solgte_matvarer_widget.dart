@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -121,8 +122,10 @@ class _SolgteMatvarerWidgetState extends State<SolgteMatvarerWidget> {
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -146,8 +149,10 @@ class _SolgteMatvarerWidgetState extends State<SolgteMatvarerWidget> {
         setState(() {});
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -376,9 +381,11 @@ class _SolgteMatvarerWidgetState extends State<SolgteMatvarerWidget> {
                                       }));
                                   return;
                                 } on SocketException {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(context, 'En feil oppstod');
                                 }
                               },

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/kjop/give_rating/give_rating_widget.dart';
 import 'package:mat_salg/matvarer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -181,9 +182,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 try {
                                   Navigator.pop(context);
                                 } on SocketException {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(context, 'En feil oppstod');
                                 }
                               },
@@ -238,18 +241,14 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           Navigator.pop(context);
                           context.pushNamed(
                             'KjopDetaljVentende',
-                            queryParameters: {
-                              'matinfo': serializeParam(
-                                ordreInfo.foodDetails,
-                                ParamType.JSON,
-                              ),
-                              'orgMatinfo':
-                                  serializeParam(matvare, ParamType.JSON),
-                            },
+                            extra:
+                                ordreInfo, // Pass the object directly as 'extra'
                           );
                         } on SocketException {
+                          HapticFeedback.lightImpact();
                           showErrorToast(context, 'Ingen internettforbindelse');
                         } catch (e) {
+                          HapticFeedback.lightImpact();
                           showErrorToast(context, 'En feil oppstod');
                         }
                       },
@@ -604,10 +603,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               }
                             } on SocketException {
                               _messageIsLoading = false;
+                              HapticFeedback.lightImpact();
                               showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
                               _messageIsLoading = false;
+                              HapticFeedback.lightImpact();
                               showErrorToast(context, 'En feil oppstod');
                             }
                           },
@@ -705,9 +706,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 },
                               );
                             } on SocketException {
+                              HapticFeedback.lightImpact();
                               showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
+                              HapticFeedback.lightImpact();
                               showErrorToast(context, 'En feil oppstod');
                             }
                           },
@@ -748,97 +751,9 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                         children: [
                           Align(
                             alignment: const AlignmentDirectional(0, 0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                try {
-                                  // Prevent multiple submissions while loading
-                                  if (_messageIsLoading) return;
-                                  _messageIsLoading = true;
-
-                                  Conversation existingConversation =
-                                      FFAppState().conversations.firstWhere(
-                                    (conv) => conv.user == ordreInfo.selger,
-                                    orElse: () {
-                                      // If no conversation is found, create a new one and add it to the list
-                                      final newConversation = Conversation(
-                                        user: ordreInfo.selger,
-                                        profilePic: matvare.profilepic ?? '',
-                                        messages: [],
-                                      );
-
-                                      // Add the new conversation to the list
-                                      FFAppState()
-                                          .conversations
-                                          .add(newConversation);
-
-                                      // Return the new conversation
-                                      return newConversation;
-                                    },
-                                  );
-
-                                  // Step 3: Serialize the conversation object to JSON
-                                  String? serializedConversation =
-                                      serializeParam(
-                                    existingConversation
-                                        .toJson(), // Convert the conversation to JSON
-                                    ParamType.JSON,
-                                  );
-
-                                  // Step 4: Stop loading and navigate to message screen
-                                  _messageIsLoading = false;
-                                  if (serializedConversation != null) {
-                                    // Step 5: Navigate to 'message' screen with the conversation
-                                    context.pushNamed(
-                                      'message',
-                                      queryParameters: {
-                                        'conversation':
-                                            serializedConversation, // Pass the serialized conversation
-                                      },
-                                    );
-                                  }
-                                } on SocketException {
-                                  _messageIsLoading = false;
-                                  showErrorToast(
-                                      context, 'Ingen internettforbindelse');
-                                } catch (e) {
-                                  _messageIsLoading = false;
-                                  showErrorToast(context, 'En feil oppstod');
-                                }
-                              },
-                              text: 'Melding',
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 47,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    11, 0, 0, 0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 0),
-                                color: FlutterFlowTheme.of(context).alternate,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Nunito',
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      fontSize: 16,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                elevation: 0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(0, 0),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 12, 0, 0),
+                                  0, 0, 0, 0),
                               child: FFButtonWidget(
                                 onPressed: () {
                                   showCupertinoDialog(
@@ -880,29 +795,50 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                   if (response.statusCode ==
                                                       200) {
                                                     _bekreftIsLoading = false;
-                                                    HapticFeedback
-                                                        .mediumImpact();
-                                                    context.goNamed(
-                                                      'LeggIgjenRating',
-                                                      queryParameters: {
-                                                        'kjop': serializeParam(
-                                                          true,
-                                                          ParamType.bool,
-                                                        ),
-                                                        'username':
-                                                            serializeParam(
-                                                          matvare.username,
-                                                          ParamType.String,
-                                                        ),
+                                                    Navigator.pop(context);
+                                                    await showModalBottomSheet(
+                                                      isScrollControlled: true,
+                                                      isDismissible: false,
+                                                      enableDrag: false,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      barrierColor:
+                                                          const Color.fromARGB(
+                                                              60, 17, 0, 0),
+                                                      useRootNavigator: true,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return GestureDetector(
+                                                          onTap: () =>
+                                                              FocusScope.of(
+                                                                      context)
+                                                                  .unfocus(),
+                                                          child: Padding(
+                                                            padding: MediaQuery
+                                                                .viewInsetsOf(
+                                                                    context),
+                                                            child: GiveRatingWidget(
+                                                                kjop: true,
+                                                                username: matvare
+                                                                    .username),
+                                                          ),
+                                                        );
                                                       },
-                                                    );
+                                                    ).then(
+                                                        (value) => setState(() {
+                                                              _bekreftIsLoading =
+                                                                  false;
+                                                            }));
                                                   }
                                                   _bekreftIsLoading = false;
                                                 }
                                               } on SocketException {
+                                                HapticFeedback.lightImpact();
                                                 showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
+                                                HapticFeedback.lightImpact();
+                                                Navigator.pop(context);
                                                 showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
@@ -920,7 +856,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     },
                                   );
                                 },
-                                text: 'Bekreft hentet',
+                                text: 'Bekreft mottatt',
                                 options: FFButtonOptions(
                                   width: double.infinity,
                                   height: 47,
@@ -935,15 +871,110 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                       .override(
                                         fontFamily: 'Nunito',
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryText,
+                                            .alternate,
                                         fontSize: 16,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                   elevation: 0,
+                                  borderSide: BorderSide(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    width: 0.7,
+                                  ),
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: const AlignmentDirectional(0, 0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 12, 0, 0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  try {
+                                    // Prevent multiple submissions while loading
+                                    if (_messageIsLoading) return;
+                                    _messageIsLoading = true;
+
+                                    Conversation existingConversation =
+                                        FFAppState().conversations.firstWhere(
+                                      (conv) => conv.user == ordreInfo.selger,
+                                      orElse: () {
+                                        // If no conversation is found, create a new one and add it to the list
+                                        final newConversation = Conversation(
+                                          user: ordreInfo.selger,
+                                          profilePic: matvare.profilepic ?? '',
+                                          messages: [],
+                                        );
+
+                                        // Add the new conversation to the list
+                                        FFAppState()
+                                            .conversations
+                                            .add(newConversation);
+
+                                        // Return the new conversation
+                                        return newConversation;
+                                      },
+                                    );
+
+                                    // Step 3: Serialize the conversation object to JSON
+                                    String? serializedConversation =
+                                        serializeParam(
+                                      existingConversation
+                                          .toJson(), // Convert the conversation to JSON
+                                      ParamType.JSON,
+                                    );
+
+                                    // Step 4: Stop loading and navigate to message screen
+                                    _messageIsLoading = false;
+                                    if (serializedConversation != null) {
+                                      // Step 5: Navigate to 'message' screen with the conversation
+                                      context.pushNamed(
+                                        'message',
+                                        queryParameters: {
+                                          'conversation':
+                                              serializedConversation, // Pass the serialized conversation
+                                        },
+                                      );
+                                    }
+                                  } on SocketException {
+                                    _messageIsLoading = false;
+                                    HapticFeedback.lightImpact();
+                                    showErrorToast(
+                                        context, 'Ingen internettforbindelse');
+                                  } catch (e) {
+                                    _messageIsLoading = false;
+                                    HapticFeedback.lightImpact();
+                                    showErrorToast(context, 'En feil oppstod');
+                                  }
+                                },
+                                text: 'Melding',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 47,
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      11, 0, 0, 0),
+                                  iconPadding:
+                                      const EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 0),
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        fontSize: 16,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                  elevation: 0,
                                   borderSide: const BorderSide(
-                                    color: Color(0x5957636C),
-                                    width: 1.0,
+                                    color: Colors.transparent,
+                                    width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(14),
                                 ),

@@ -197,9 +197,11 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                       try {
                                         Navigator.pop(context);
                                       } on SocketException {
+                                        HapticFeedback.lightImpact();
                                         showErrorToast(context,
                                             'Ingen internettforbindelse');
                                       } catch (e) {
+                                        HapticFeedback.lightImpact();
                                         showErrorToast(
                                             context, 'En feil oppstod');
                                       }
@@ -229,9 +231,9 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                               child: Container(
                                 padding: const EdgeInsets.only(
                                     bottom:
-                                        170.0), // Adjust the padding as needed
+                                        160.0), // Adjust the padding as needed
                                 width: 500.0,
-                                height: MediaQuery.sizeOf(context).height + 170,
+                                height: MediaQuery.sizeOf(context).height + 160,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -289,7 +291,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              20.0, 40.0, 20.0, 12.0),
+                                              20.0, 27.0, 20.0, 12.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
                                           try {
@@ -348,6 +350,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                             // Hvis plassering er null, vis en feil og avslutt
                                             if (location ==
                                                 const LatLng(0.0, 0.0)) {
+                                              HapticFeedback.lightImpact();
                                               showErrorToast(context,
                                                   'Stedtjenester er deaktivert i innstillinger');
                                               return;
@@ -387,6 +390,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                             // If location was not retrieved, exit
                                             if (location ==
                                                 const LatLng(0.0, 0.0)) {
+                                              HapticFeedback.lightImpact();
                                               showErrorToast(context,
                                                   'posisjonstjenester er skrudd av i innstillinger');
                                               return;
@@ -395,9 +399,11 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                               Navigator.pop(context);
                                             }
                                           } on SocketException {
+                                            HapticFeedback.lightImpact();
                                             showErrorToast(context,
                                                 'Ingen internettforbindelse');
                                           } catch (e) {
+                                            HapticFeedback.lightImpact();
                                             showErrorToast(
                                                 context, 'En feil oppstod');
                                           }
@@ -406,7 +412,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         icon: Icon(CupertinoIcons.location_fill,
                                             size: 20,
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryText),
+                                                .alternate),
                                         options: FFButtonOptions(
                                           width: double.infinity,
                                           height: 50.0,
@@ -424,15 +430,15 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                                 fontFamily: 'Nunito',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                        .alternate,
                                                 fontSize: 16,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w800,
                                               ),
                                           elevation: 0,
                                           borderSide: const BorderSide(
-                                            color: Color(0x5957636C),
-                                            width: 1.0,
+                                            color: Colors.transparent,
+                                            width: 0.69,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(14),
@@ -473,9 +479,11 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                             HapticFeedback.mediumImpact();
                                             Navigator.pop(context);
                                           } on SocketException {
+                                            HapticFeedback.lightImpact();
                                             showErrorToast(context,
                                                 'Ingen internettforbindelse');
                                           } catch (e) {
+                                            HapticFeedback.lightImpact();
                                             showErrorToast(
                                                 context, 'En feil oppstod');
                                           }

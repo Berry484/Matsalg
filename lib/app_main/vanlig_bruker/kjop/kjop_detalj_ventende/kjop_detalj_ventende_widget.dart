@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
-import 'package:mat_salg/matvarer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
@@ -18,10 +18,10 @@ export 'kjop_detalj_ventende_model.dart';
 class KjopDetaljVentendeWidget extends StatefulWidget {
   const KjopDetaljVentendeWidget({
     super.key,
-    this.matinfo,
+    this.ordre,
   });
 
-  final dynamic matinfo;
+  final dynamic ordre;
 
   @override
   State<KjopDetaljVentendeWidget> createState() =>
@@ -30,7 +30,7 @@ class KjopDetaljVentendeWidget extends StatefulWidget {
 
 class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
   late KjopDetaljVentendeModel _model;
-  late Matvarer matvare;
+  late OrdreInfo ordreInfo;
   bool _messageIsLoading = false;
   bool _isExpanded = false;
 
@@ -40,7 +40,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => KjopDetaljVentendeModel());
-    matvare = Matvarer.fromJson1(widget.matinfo);
+    ordreInfo = widget.ordre;
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -125,8 +125,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                 try {
                   context.safePop();
                 } on SocketException {
+                  HapticFeedback.lightImpact();
                   showErrorToast(context, 'Ingen internettforbindelse');
                 } catch (e) {
+                  HapticFeedback.lightImpact();
                   showErrorToast(context, 'En feil oppstod');
                 }
               },
@@ -138,7 +140,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
             ),
             actions: [],
             title: Text(
-              matvare.name ?? '',
+              ordreInfo.foodDetails.name ?? '',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Nunito',
@@ -182,15 +184,17 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       'BrukerPage',
                                       queryParameters: {
                                         'username': serializeParam(
-                                          matvare.username,
+                                          ordreInfo.foodDetails.username,
                                           ParamType.String,
                                         ),
                                       },
                                     );
                                   } on SocketException {
+                                    HapticFeedback.lightImpact();
                                     showErrorToast(
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
+                                    HapticFeedback.lightImpact();
                                     showErrorToast(context, 'En feil oppstod');
                                   }
                                 },
@@ -213,7 +217,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: Image.network(
-                                              '${ApiConstants.baseUrl}${matvare.profilepic}',
+                                              '${ApiConstants.baseUrl}${ordreInfo.foodDetails.profilepic}',
                                               fit: BoxFit.cover,
                                               errorBuilder:
                                                   (BuildContext context,
@@ -233,7 +237,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(8, 0, 0, 13),
                                           child: Text(
-                                            matvare.username ?? '',
+                                            ordreInfo.foodDetails.username ??
+                                                '',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -310,7 +315,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                             0),
                                                                 child: Image
                                                                     .network(
-                                                                  '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
+                                                                  '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
                                                                   width: double
                                                                       .infinity,
                                                                   height: 525.0,
@@ -342,7 +347,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                             ],
                                                           ),
                                                         ),
-                                                        if (matvare.imgUrls!
+                                                        if (ordreInfo
+                                                                .foodDetails
+                                                                .imgUrls!
                                                                 .length >
                                                             1)
                                                           Container(
@@ -358,7 +365,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                               0),
                                                                   child: Image
                                                                       .network(
-                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
+                                                                    '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![1]}',
                                                                     width: double
                                                                         .infinity,
                                                                     height:
@@ -391,7 +398,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               ],
                                                             ),
                                                           ),
-                                                        if (matvare.imgUrls!
+                                                        if (ordreInfo
+                                                                .foodDetails
+                                                                .imgUrls!
                                                                 .length >
                                                             2)
                                                           Container(
@@ -407,7 +416,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                               0),
                                                                   child: Image
                                                                       .network(
-                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
+                                                                    '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![2]}',
                                                                     width: double
                                                                         .infinity,
                                                                     height:
@@ -440,7 +449,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               ],
                                                             ),
                                                           ),
-                                                        if (matvare.imgUrls!
+                                                        if (ordreInfo
+                                                                .foodDetails
+                                                                .imgUrls!
                                                                 .length >
                                                             3)
                                                           Container(
@@ -454,7 +465,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                               0),
                                                                   child: Image
                                                                       .network(
-                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
+                                                                    '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![3]}',
                                                                     width: double
                                                                         .infinity,
                                                                     height:
@@ -487,7 +498,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               ],
                                                             ),
                                                           ),
-                                                        if (matvare.imgUrls!
+                                                        if (ordreInfo
+                                                                .foodDetails
+                                                                .imgUrls!
                                                                 .length >
                                                             4)
                                                           Container(
@@ -503,7 +516,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                               0),
                                                                   child: Image
                                                                       .network(
-                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
+                                                                    '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![4]}',
                                                                     width: double
                                                                         .infinity,
                                                                     height:
@@ -554,8 +567,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                 .pageViewController ??=
                                                             PageController(
                                                                 initialPage: 0),
-                                                        count: matvare
-                                                            .imgUrls!.length,
+                                                        count: ordreInfo
+                                                            .foodDetails
+                                                            .imgUrls!
+                                                            .length,
                                                         axisDirection:
                                                             Axis.horizontal,
                                                         onDotClicked:
@@ -574,26 +589,32 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                             );
                                                             safeSetState(() {});
                                                           } on SocketException {
+                                                            HapticFeedback
+                                                                .lightImpact();
                                                             showErrorToast(
                                                                 context,
                                                                 'Ingen internettforbindelse');
                                                           } catch (e) {
+                                                            HapticFeedback
+                                                                .lightImpact();
                                                             showErrorToast(
                                                                 context,
                                                                 'En feil oppstod');
                                                           }
                                                         },
-                                                        effect: const smooth_page_indicator
+                                                        effect: smooth_page_indicator
                                                             .ExpandingDotsEffect(
                                                           expansionFactor: 1.1,
                                                           spacing: 8.0,
                                                           radius: 16.0,
-                                                          dotWidth: 8.5,
-                                                          dotHeight: 8.5,
-                                                          dotColor:
-                                                              Color(0xFFE6E6E6),
+                                                          dotWidth: 7,
+                                                          dotHeight: 7,
+                                                          dotColor: const Color(
+                                                              0xFFE6E6E6),
                                                           activeDotColor:
-                                                              Color(0xFFB0B0B0),
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .alternate,
                                                           paintStyle:
                                                               PaintingStyle
                                                                   .fill,
@@ -644,9 +665,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             onTap: () async {
                                               try {
                                                 double startLat =
-                                                    matvare.lat ?? 59.9138688;
+                                                    ordreInfo.foodDetails.lat ??
+                                                        59.9138688;
                                                 double startLng =
-                                                    matvare.lng ?? 10.7522454;
+                                                    ordreInfo.foodDetails.lng ??
+                                                        10.7522454;
                                                 await showModalBottomSheet(
                                                   isScrollControlled: true,
                                                   backgroundColor:
@@ -676,9 +699,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 ).then((value) =>
                                                     safeSetState(() {}));
                                               } on SocketException {
+                                                HapticFeedback.lightImpact();
                                                 showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
+                                                HapticFeedback.lightImpact();
                                                 showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
@@ -721,16 +746,20 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         .firstWhere(
                                                   (conv) =>
                                                       conv.user ==
-                                                      matvare.username,
+                                                      ordreInfo
+                                                          .foodDetails.username,
                                                   orElse: () {
                                                     // If no conversation is found, create a new one and add it to the list
                                                     final newConversation =
                                                         Conversation(
-                                                      user: matvare.username ??
+                                                      user: ordreInfo
+                                                              .foodDetails
+                                                              .username ??
                                                           '',
-                                                      profilePic:
-                                                          matvare.profilepic ??
-                                                              '',
+                                                      profilePic: ordreInfo
+                                                              .foodDetails
+                                                              .profilepic ??
+                                                          '',
                                                       messages: [],
                                                     );
 
@@ -767,10 +796,12 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 }
                                               } on SocketException {
                                                 _messageIsLoading = false;
+                                                HapticFeedback.lightImpact();
                                                 showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
                                                 _messageIsLoading = false;
+                                                HapticFeedback.lightImpact();
                                                 showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
@@ -855,7 +886,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 8.0),
+                                              0.0, 0.0, 0.0, 12.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -867,23 +898,25 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                matvare.name ?? '',
+                                                ordreInfo.foodDetails.name ??
+                                                    '',
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .headlineMedium
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          fontSize: 19.0,
+                                                          fontSize: 17.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                              FontWeight.bold,
                                                         ),
                                               ),
                                             ],
                                           ),
                                           Padding(
-                                            padding: matvare.kg == true
+                                            padding: ordreInfo.foodDetails.kg ==
+                                                    true
                                                 ? const EdgeInsetsDirectional
                                                     .fromSTEB(
                                                     0.0, 0.0, 5.0, 0.0)
@@ -898,24 +931,21 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  '${matvare.price ?? 0} Kr',
+                                                  '${ordreInfo.foodDetails.price ?? 0} Kr',
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyMedium
+                                                      .headlineMedium
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 20.0,
+                                                        fontSize: 17.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
-                                                            FontWeight.w700,
+                                                            FontWeight.bold,
                                                       ),
                                                 ),
-                                                if (matvare.kg == true)
+                                                if (ordreInfo.foodDetails.kg ==
+                                                    true)
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
@@ -966,7 +996,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 children: [
                                                   TextSpan(
                                                     text:
-                                                        '${matvare.username}  ',
+                                                        '${ordreInfo.foodDetails.username}  ',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .titleSmall
@@ -980,18 +1010,22 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                   ),
                                                   TextSpan(
                                                     text: _isExpanded
-                                                        ? matvare
+                                                        ? ordreInfo.foodDetails
                                                             .description // Full text if expanded
-                                                        : (matvare.description!
+                                                        : (ordreInfo
+                                                                        .foodDetails
+                                                                        .description!
                                                                         .length >
                                                                     100 ||
                                                                 '\n'
-                                                                        .allMatches(matvare
+                                                                        .allMatches(ordreInfo
+                                                                            .foodDetails
                                                                             .description!)
                                                                         .length >=
                                                                     2
-                                                            ? "${matvare.description!.substring(0, matvare.description!.length > 100 ? 100 : matvare.description!.indexOf('\n', matvare.description!.indexOf('\n') + 1) + 1)}..." // Truncate based on condition
-                                                            : matvare
+                                                            ? "${ordreInfo.foodDetails.description!.substring(0, ordreInfo.foodDetails.description!.length > 100 ? 100 : ordreInfo.foodDetails.description!.indexOf('\n', ordreInfo.foodDetails.description!.indexOf('\n') + 1) + 1)}..." // Truncate based on condition
+                                                            : ordreInfo
+                                                                .foodDetails
                                                                 .description), // Use full text if it doesn't meet truncation conditions
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -1016,11 +1050,15 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                         ],
                                       ),
                                     ),
-                                    if (matvare.description != null &&
-                                        (matvare.description!.length > 100 ||
+                                    if (ordreInfo.foodDetails.description !=
+                                            null &&
+                                        (ordreInfo.foodDetails.description!
+                                                    .length >
+                                                100 ||
                                             '\n'
-                                                    .allMatches(
-                                                        matvare.description!)
+                                                    .allMatches(ordreInfo
+                                                        .foodDetails
+                                                        .description!)
                                                     .length >=
                                                 2))
                                       GestureDetector(
@@ -1091,7 +1129,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                       ),
                                                 ),
                                                 Text(
-                                                  '${matvare.price}Kr',
+                                                  '${ordreInfo.foodDetails.price}Kr',
                                                   textAlign: TextAlign.start,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -1147,7 +1185,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                             .fromSTEB(
                                                             0, 0, 0, 0),
                                                     child: Text(
-                                                      '${matvare.antall!.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
+                                                      '${ordreInfo.antall.toStringAsFixed(0)} ${ordreInfo.foodDetails.kg == true ? 'Kg' : 'stk'}',
                                                       textAlign:
                                                           TextAlign.start,
                                                       style: FlutterFlowTheme
@@ -1176,7 +1214,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 height: 40,
                                                 child: VerticalDivider(
                                                   thickness: 1,
-                                                  color: Colors.transparent,
+                                                  color: Color.fromARGB(
+                                                      48, 113, 113, 113),
                                                 ),
                                               ),
                                               Column(
@@ -1184,7 +1223,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'AVSTAND',
+                                                    'TID',
                                                     textAlign: TextAlign.start,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -1193,8 +1232,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           fontFamily: 'Nunito',
                                                           fontSize: 13.0,
                                                           letterSpacing: 0.0,
-                                                          color: Colors
-                                                              .transparent,
+                                                          color: const Color
+                                                              .fromARGB(255,
+                                                              113, 113, 113),
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -1209,7 +1249,15 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           MainAxisSize.min,
                                                       children: [
                                                         Text(
-                                                          '1 Km',
+                                                          ordreInfo.updatetime !=
+                                                                  null
+                                                              ? (DateFormat(
+                                                                      "HH:mm  d. MMM",
+                                                                      "nb_NO")
+                                                                  .format(ordreInfo
+                                                                      .updatetime!
+                                                                      .toLocal()))
+                                                              : "",
                                                           textAlign:
                                                               TextAlign.start,
                                                           style: FlutterFlowTheme
@@ -1221,8 +1269,12 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                 fontSize: 13.0,
                                                                 letterSpacing:
                                                                     0.0,
-                                                                color: Colors
-                                                                    .transparent,
+                                                                color: const Color
+                                                                    .fromARGB(
+                                                                    255,
+                                                                    113,
+                                                                    113,
+                                                                    113),
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,

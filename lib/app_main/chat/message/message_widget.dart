@@ -164,8 +164,10 @@ class _MessageWidgetState extends State<MessageWidget> {
 
                           context.pop();
                         } on SocketException {
+                          HapticFeedback.lightImpact();
                           showErrorToast(context, 'Ingen internettforbindelse');
                         } catch (e) {
+                          HapticFeedback.lightImpact();
                           showErrorToast(context, 'En feil oppstod');
                         }
                       },
@@ -184,17 +186,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                   actions: const [],
                   flexibleSpace: FlexibleSpaceBar(
                     title: GestureDetector(
-                      onTap: () {
-                        context.goNamed(
-                          'BrukerPage',
-                          queryParameters: {
-                            'username': serializeParam(
-                              conversation.user.toLowerCase(),
-                              ParamType.String,
-                            ),
-                          },
-                        );
-                      },
+                      onTap: () {},
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -230,7 +222,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      3, 0, 0, 0),
+                                      0, 0, 0, 0),
                                   child: Text(
                                     conversation.user,
                                     style: FlutterFlowTheme.of(context)
@@ -241,12 +233,6 @@ class _MessageWidgetState extends State<MessageWidget> {
                                           letterSpacing: 0.0,
                                         ),
                                   ),
-                                ),
-                                Icon(
-                                  Icons.chevron_right_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 14,
                                 ),
                               ],
                             ),
@@ -451,9 +437,11 @@ class _MessageWidgetState extends State<MessageWidget> {
                                             });
                                           }
                                         } on SocketException {
+                                          HapticFeedback.lightImpact();
                                           showErrorToast(context,
                                               'Ingen internettforbindelse');
                                         } catch (e) {
+                                          HapticFeedback.lightImpact();
                                           showErrorToast(
                                               context, 'En feil oppstod');
                                         }

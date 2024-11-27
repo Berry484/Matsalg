@@ -240,9 +240,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                       }
                                     }
                                   } on SocketException {
+                                    HapticFeedback.lightImpact();
                                     showErrorToast(
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
+                                    HapticFeedback.lightImpact();
                                     showErrorToast(context, 'En feil oppstod');
                                   }
                                 },
@@ -842,9 +844,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                           }
                         } on SocketException {
                           _isLoading = false;
+                          HapticFeedback.lightImpact();
                           showErrorToast(context, 'Ingen internettforbindelse');
                         } catch (e) {
                           _isLoading = false;
+                          HapticFeedback.lightImpact();
                           showErrorToast(context, 'En feil oppstod');
                         }
                         _isLoading = false;

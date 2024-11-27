@@ -171,9 +171,11 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                           widget.currentLocation ??
                                               const LatLng(0, 0));
                                     } on SocketException {
+                                      HapticFeedback.lightImpact();
                                       showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } catch (e) {
+                                      HapticFeedback.lightImpact();
                                       showErrorToast(
                                           context, 'En feil oppstod');
                                     }
@@ -228,9 +230,9 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                         Align(
                           alignment: const AlignmentDirectional(0.0, -1.2),
                           child: Container(
-                            padding: const EdgeInsets.only(bottom: 170.0),
+                            padding: const EdgeInsets.only(bottom: 160.0),
                             width: 500.0,
-                            height: MediaQuery.sizeOf(context).height + 170,
+                            height: MediaQuery.sizeOf(context).height + 160,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
@@ -288,7 +290,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      20.0, 40.0, 20.0, 12.0),
+                                      20.0, 27.0, 20.0, 12.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
                                       try {
@@ -348,14 +350,17 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
 
                                         if (location ==
                                             const LatLng(0.0, 0.0)) {
+                                          HapticFeedback.lightImpact();
                                           showErrorToast(context,
                                               'Stedtjenester er deaktivert i innstillinger');
                                           return;
                                         }
                                       } on SocketException {
+                                        HapticFeedback.lightImpact();
                                         showErrorToast(context,
                                             'Ingen internettforbindelse');
                                       } catch (e) {
+                                        HapticFeedback.lightImpact();
                                         showErrorToast(
                                             context, 'En feil oppstod');
                                       }
@@ -364,7 +369,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                     icon: Icon(CupertinoIcons.location_fill,
                                         size: 20,
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryText),
+                                            .alternate),
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: 50.0,
@@ -381,15 +386,15 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                           .override(
                                             fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryText,
+                                                .alternate,
                                             fontSize: 16,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w800,
                                           ),
                                       elevation: 0,
                                       borderSide: const BorderSide(
-                                        color: Color(0x5957636C),
-                                        width: 1.0,
+                                        color: Colors.transparent,
+                                        width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(14),
                                     ),
@@ -415,10 +420,10 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                 //           Navigator.pop(context, location);
                                 //         }
                                 //       } on SocketException {
-                                //         showErrorToast(context,
+                                //               HapticFeedback.lightImpact();
                                 //             'Ingen internettforbindelse');
                                 //       } catch (e) {
-                                //         showErrorToast(
+                                //               HapticFeedback.lightImpact();
                                 //             context, 'En feil oppstod');
                                 //       }
                                 //     },

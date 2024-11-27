@@ -19,6 +19,20 @@ class MainWrapper extends StatefulWidget {
 class _MainWrapperState extends State<MainWrapper> {
   int _selectedIndex = 0;
 
+  // Function to map route to the correct index
+  int _getIndexForRoute(String location) {
+    if (location.startsWith('/hjem')) {
+      return 0;
+    } else if (location.startsWith('/mineKjop')) {
+      return 1;
+    } else if (location.startsWith('/chatMain')) {
+      return 3;
+    } else if (location.startsWith('/profil')) {
+      return 4;
+    }
+    return _selectedIndex; // Default to current index for unmatched routes
+  }
+
   // Function to change the selected index and navigate to the respective page
   void _onItemTapped(int index) {
     // Don't update the navbar color if we're navigating to 'LeggUtMatvare'
@@ -99,35 +113,39 @@ class _MainWrapperState extends State<MainWrapper> {
     }
   }
 
-  // Function to update _selectedIndex based on the GoRouter namedLocation
-  void _updateSelectedIndex(BuildContext context) {
-    final currentLocation = GoRouterState.of(context).uri.toString();
+  // void _updateSelectedIndex(BuildContext context) {
+  //   final location = GoRouterState.of(context).uri.toString();
 
-    // Do not update the index for 'LeggUtMatvare' route
-    if (currentLocation == '/hjem') {
-      _selectedIndex = 0;
-    } else if (currentLocation == '/mineKjop') {
-      _selectedIndex = 1;
-    } else if (currentLocation == '/chatMain') {
-      _selectedIndex = 3;
-    } else if (currentLocation == '/profil') {
-      _selectedIndex = 4;
-    }
-
-    // Skip the update for 'LeggUtMatvare' route, keeping the same index.
-  }
+  //   if (location.startsWith('/hjem')) {
+  //     _selectedIndex = 0;
+  //   } else if (location.startsWith('/mineKjop')) {
+  //     _selectedIndex = 1;
+  //   } else if (location.startsWith('/chatMain')) {
+  //     _selectedIndex = 3;
+  //   } else if (location.startsWith('/profil')) {
+  //     _selectedIndex = 4;
+  //   }
+  //   // Don't update the index for 'LeggUtMatvare'
+  // }
 
   @override
   void initState() {
     super.initState();
     // Update selected index based on the current route on initial load
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _updateSelectedIndex(context);
+      _getIndexForRoute(GoRouterState.of(context).uri.toString());
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Update the selected index based on the current location
+    final location = GoRouterState.of(context).uri.toString();
+    final newIndex = _getIndexForRoute(location);
+
+    if (newIndex != _selectedIndex) {
+      _selectedIndex = newIndex;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,

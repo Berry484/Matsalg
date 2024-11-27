@@ -314,11 +314,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             path: '/kjopDetaljVentende',
             name: 'KjopDetaljVentende',
             builder: (context, state) {
-              final params = FFParameters(state);
-              final matinfo = params.getParam<Map<String, dynamic>>(
-                  'matinfo', ParamType.JSON);
+              // Directly accessing the passed object from `state.extra`
 
-              return KjopDetaljVentendeWidget(matinfo: matinfo);
+              // Return your widget, passing the `ordre` directly
+              return KjopDetaljVentendeWidget(ordre: state.extra);
             },
             parentNavigatorKey: _shellKey,
           ),

@@ -193,9 +193,11 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 try {
                                   Navigator.pop(context);
                                 } on SocketException {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(context, 'En feil oppstod');
                                 }
                               },
@@ -244,9 +246,11 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 },
                               );
                             } on SocketException {
+                              HapticFeedback.lightImpact();
                               showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
+                              HapticFeedback.lightImpact();
                               showErrorToast(context, 'En feil oppstod');
                             }
                           },
@@ -352,10 +356,12 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                     }
                                   } on SocketException {
                                     _messageIsLoading = false;
+                                    HapticFeedback.lightImpact();
                                     showErrorToast(
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
                                     _messageIsLoading = false;
+                                    HapticFeedback.lightImpact();
                                     showErrorToast(context, 'En feil oppstod');
                                   }
                                 },
@@ -373,14 +379,16 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                       .override(
                                         fontFamily: 'Nunito',
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryText,
+                                            .alternate,
                                         fontSize: 14,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                   elevation: 0,
-                                  borderSide: const BorderSide(
-                                    color: Color(0x5957636C),
+                                  borderSide: BorderSide(
+                                    // color: Colors.transparent,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -403,11 +411,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                           matvare.name ?? '',
                           textAlign: TextAlign.end,
                           style: FlutterFlowTheme.of(context)
-                              .bodyMedium
+                              .headlineSmall
                               .override(
                                 fontFamily: 'Nunito',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 18,
+                                fontSize: 17,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -416,13 +423,12 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                           '${salgInfo.pris} Kr',
                           textAlign: TextAlign.end,
                           style: FlutterFlowTheme.of(context)
-                              .bodyMedium
+                              .headlineSmall
                               .override(
                                 fontFamily: 'Nunito',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 19,
+                                fontSize: 17,
                                 letterSpacing: 0.0,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w700,
                               ),
                         ),
                       ],
@@ -679,9 +685,11 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               },
                             );
                           } on SocketException {
+                            HapticFeedback.lightImpact();
                             showErrorToast(
                                 context, 'Ingen internettforbindelse');
                           } catch (e) {
+                            HapticFeedback.lightImpact();
                             showErrorToast(context, 'En feil oppstod');
                           }
                         },
@@ -693,18 +701,19 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           iconPadding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Nunito',
-                                    color: FlutterFlowTheme.of(context).error,
-                                    fontSize: 16,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w800,
-                                  ),
+                          color: const Color(0xFFE1E1E8),
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: 'Nunito',
+                                color: FlutterFlowTheme.of(context).alternate,
+                                fontSize: 16,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w800,
+                              ),
                           elevation: 0,
                           borderSide: const BorderSide(
-                            color: Color(0x5957636C),
+                            color: Color(0xFFE1E1E8),
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(14),
@@ -798,9 +807,11 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 },
                               );
                             } on SocketException {
+                              HapticFeedback.lightImpact();
                               showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
+                              HapticFeedback.lightImpact();
                               showErrorToast(context, 'En feil oppstod');
                             }
                           },

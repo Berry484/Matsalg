@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/kjop/give_rating/give_rating_widget.dart';
 import 'package:mat_salg/matvarer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -189,9 +189,11 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 try {
                                   Navigator.pop(context);
                                 } on SocketException {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
+                                  HapticFeedback.lightImpact();
                                   showErrorToast(context, 'En feil oppstod');
                                 }
                               },
@@ -237,8 +239,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     },
                   );
                 } on SocketException {
+                  HapticFeedback.lightImpact();
                   showErrorToast(context, 'Ingen internettforbindelse');
                 } catch (e) {
+                  HapticFeedback.lightImpact();
                   showErrorToast(context, 'En feil oppstod');
                 }
               },
@@ -277,8 +281,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                             },
                           );
                         } on SocketException {
+                          HapticFeedback.lightImpact();
                           showErrorToast(context, 'Ingen internettforbindelse');
                         } catch (e) {
+                          HapticFeedback.lightImpact();
                           showErrorToast(context, 'En feil oppstod');
                         }
                       },
@@ -344,23 +350,6 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: const AlignmentDirectional(-1, 1),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(5, 15, 0, 0),
-                      child: Text(
-                        'Matvare',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Nunito',
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              fontSize: 15,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ),
-                  ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -373,11 +362,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                           matvare.name ?? '',
                           textAlign: TextAlign.end,
                           style: FlutterFlowTheme.of(context)
-                              .bodyMedium
+                              .headlineSmall
                               .override(
                                 fontFamily: 'Nunito',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 18,
+                                fontSize: 17,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -385,18 +373,17 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                            const EdgeInsetsDirectional.fromSTEB(0, 15, 4, 0),
                         child: Text(
                           '${salgInfo.pris} Kr',
                           textAlign: TextAlign.end,
                           style: FlutterFlowTheme.of(context)
-                              .bodyMedium
+                              .headlineSmall
                               .override(
                                 fontFamily: 'Nunito',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 19,
+                                fontSize: 17,
                                 letterSpacing: 0.0,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w700,
                               ),
                         ),
                       ),
@@ -581,7 +568,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 10),
+                          const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 2),
                       child: FFButtonWidget(
                         onPressed: () async {
                           try {
@@ -589,37 +576,39 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                               return;
                             }
                             _bekreftIsLoading = true;
-                            String? token = Securestorage.authToken;
-                            if (token != null) {
-                              final response = await ApiKjop()
-                                  .giveRating(id: salgInfo.id, token: token);
-                              if (response.statusCode == 200) {
-                                _bekreftIsLoading = false;
-                                HapticFeedback.mediumImpact();
-                                context.goNamed(
-                                  'LeggIgjenRating',
-                                  queryParameters: {
-                                    'kjop': serializeParam(
-                                      false,
-                                      ParamType.bool,
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              barrierColor: const Color.fromARGB(60, 17, 0, 0),
+                              useRootNavigator: true,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () => FocusScope.of(context).unfocus(),
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: GiveRatingWidget(
+                                      kjop: false,
+                                      username: salgInfo.kjoper,
+                                      salgInfoId: salgInfo.id,
                                     ),
-                                    'username': serializeParam(
-                                      salgInfo.kjoper,
-                                      ParamType.String,
-                                    ),
-                                  },
+                                  ),
                                 );
-                              }
-                              _bekreftIsLoading = false;
-                            }
+                              },
+                            ).then((value) => setState(() {
+                                  _bekreftIsLoading = false;
+                                }));
+                            return;
                           } on SocketException {
+                            HapticFeedback.lightImpact();
                             showErrorToast(
                                 context, 'Ingen internettforbindelse');
                           } catch (e) {
+                            HapticFeedback.lightImpact();
                             showErrorToast(context, 'En feil oppstod');
                           }
                         },
-                        text: 'Gi en rating',
+                        text: 'Vurder kjøperen',
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 47,
@@ -632,15 +621,15 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                               .titleSmall
                               .override(
                                 fontFamily: 'Nunito',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 17,
+                                color: FlutterFlowTheme.of(context).alternate,
+                                fontSize: 16,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.bold,
                               ),
                           elevation: 0,
-                          borderSide: const BorderSide(
-                            color: Color(0x5957636C),
-                            width: 0.8,
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).alternate,
+                            width: 0.7,
                           ),
                           borderRadius: BorderRadius.circular(14),
                         ),
@@ -719,9 +708,11 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                           }
                         } on SocketException {
                           _messageIsLoading = false;
+                          HapticFeedback.lightImpact();
                           showErrorToast(context, 'Ingen internettforbindelse');
                         } catch (e) {
                           _messageIsLoading = false;
+                          HapticFeedback.lightImpact();
                           showErrorToast(context, 'En feil oppstod');
                         }
                       },

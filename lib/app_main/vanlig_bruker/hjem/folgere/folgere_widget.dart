@@ -118,8 +118,10 @@ class _FolgereWidgetState extends State<FolgereWidget> {
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -340,9 +342,11 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                   Securestorage.authToken,
                                                   brukere.username);
                                             } on SocketException {
+                                              HapticFeedback.lightImpact();
                                               showErrorToast(context,
                                                   'Ingen internettforbindelse');
                                             } catch (e) {
+                                              HapticFeedback.lightImpact();
                                               showErrorToast(
                                                   context, 'En feil oppstod');
                                             }
@@ -390,9 +394,11 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                   Securestorage.authToken,
                                                   brukere.username);
                                             } on SocketException {
+                                              HapticFeedback.lightImpact();
                                               showErrorToast(context,
                                                   'Ingen internettforbindelse');
                                             } catch (e) {
+                                              HapticFeedback.lightImpact();
                                               showErrorToast(
                                                   context, 'En feil oppstod');
                                             }

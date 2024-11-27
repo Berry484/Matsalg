@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart';
 import 'package:mat_salg/matvarer.dart';
@@ -152,8 +153,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -170,8 +173,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
         setState(() {});
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -194,8 +199,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -217,8 +224,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
         });
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -235,8 +244,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
         setState(() {});
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -253,8 +264,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
         setState(() {});
       }
     } on SocketException {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      HapticFeedback.lightImpact();
       showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -319,9 +332,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                         try {
                                           context.pushNamed('innstillinger');
                                         } on SocketException {
+                                          HapticFeedback.lightImpact();
                                           showErrorToast(context,
                                               'Ingen internettforbindelse');
                                         } catch (e) {
+                                          HapticFeedback.lightImpact();
                                           showErrorToast(
                                               context, 'En feil oppstod');
                                         }
@@ -569,8 +584,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     );
                                                                                   }
                                                                                 } on SocketException {
+                                                                                  HapticFeedback.lightImpact();
                                                                                   showErrorToast(context, 'Ingen internettforbindelse');
                                                                                 } catch (e) {
+                                                                                  HapticFeedback.lightImpact();
                                                                                   showErrorToast(context, 'En feil oppstod');
                                                                                 }
                                                                               },
@@ -642,8 +659,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     );
                                                                                   }
                                                                                 } on SocketException {
+                                                                                  HapticFeedback.lightImpact();
                                                                                   showErrorToast(context, 'Ingen internettforbindelse');
                                                                                 } catch (e) {
+                                                                                  HapticFeedback.lightImpact();
                                                                                   showErrorToast(context, 'En feil oppstod');
                                                                                 }
                                                                               },
@@ -744,9 +763,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                             //   },
                                                                             // );
                                                                           } on SocketException {
+                                                                            HapticFeedback.lightImpact();
                                                                             showErrorToast(context,
                                                                                 'Ingen internettforbindelse');
                                                                           } catch (e) {
+                                                                            HapticFeedback.lightImpact();
                                                                             showErrorToast(context,
                                                                                 'En feil oppstod');
                                                                           }
@@ -1224,9 +1245,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             try {
                                               await getMyFoods();
                                             } on SocketException {
+                                              HapticFeedback.lightImpact();
                                               showErrorToast(context,
                                                   'Ingen internettforbindelse');
                                             } catch (e) {
+                                              HapticFeedback.lightImpact();
                                               showErrorToast(
                                                   context, 'En feil oppstod');
                                             }
@@ -1329,10 +1352,14 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 },
                                                               );
                                                             } on SocketException {
+                                                              HapticFeedback
+                                                                  .lightImpact();
                                                               showErrorToast(
                                                                   context,
                                                                   'Ingen internettforbindelse');
                                                             } catch (e) {
+                                                              HapticFeedback
+                                                                  .lightImpact();
                                                               showErrorToast(
                                                                   context,
                                                                   'En feil oppstod');
@@ -1654,9 +1681,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             try {
                                               getAllLikes();
                                             } on SocketException {
+                                              HapticFeedback.lightImpact();
                                               showErrorToast(context,
                                                   'Ingen internettforbindelse');
                                             } catch (e) {
+                                              HapticFeedback.lightImpact();
                                               showErrorToast(
                                                   context, 'En feil oppstod');
                                             }
@@ -1787,10 +1816,14 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                             },
                                                           );
                                                         } on SocketException {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
+                                                          HapticFeedback
+                                                              .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'En feil oppstod');
