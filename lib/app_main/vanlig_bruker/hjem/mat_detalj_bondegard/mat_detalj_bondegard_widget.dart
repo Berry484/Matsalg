@@ -388,12 +388,138 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 8.0, 0.0),
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24.0,
+                                              0, 0, 8, 0),
+                                      child: IconButton(
+                                        icon: Icon(
+                                          CupertinoIcons.ellipsis,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 28.0,
+                                        ),
+                                        onPressed: () {
+                                          showCupertinoModalPopup(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CupertinoActionSheet(
+                                                actions: <Widget>[
+                                                  CupertinoActionSheetAction(
+                                                    onPressed: () async {
+                                                      try {
+                                                        // Prevent multiple submissions while loading
+                                                        if (_messageIsLoading)
+                                                          return;
+                                                        _messageIsLoading =
+                                                            true;
+
+                                                        Conversation
+                                                            existingConversation =
+                                                            FFAppState()
+                                                                .conversations
+                                                                .firstWhere(
+                                                          (conv) =>
+                                                              conv.user ==
+                                                              matvare.username,
+                                                          orElse: () {
+                                                            final newConversation =
+                                                                Conversation(
+                                                              user: matvare
+                                                                      .username ??
+                                                                  '',
+                                                              profilePic: matvare
+                                                                      .profilepic ??
+                                                                  '',
+                                                              messages: [],
+                                                            );
+
+                                                            FFAppState()
+                                                                .conversations
+                                                                .add(
+                                                                    newConversation);
+
+                                                            // Return the new conversation
+                                                            return newConversation;
+                                                          },
+                                                        );
+
+                                                        String?
+                                                            serializedConversation =
+                                                            serializeParam(
+                                                          existingConversation
+                                                              .toJson(),
+                                                          ParamType.JSON,
+                                                        );
+
+                                                        _messageIsLoading =
+                                                            false;
+                                                        if (serializedConversation !=
+                                                            null) {
+                                                          Navigator.pop(
+                                                              context);
+                                                          context.pushNamed(
+                                                            'message',
+                                                            queryParameters: {
+                                                              'conversation':
+                                                                  serializedConversation,
+                                                            },
+                                                          );
+                                                        }
+                                                      } on SocketException {
+                                                        _messageIsLoading =
+                                                            false;
+                                                        HapticFeedback
+                                                            .lightImpact();
+                                                        showErrorToast(context,
+                                                            'Ingen internettforbindelse');
+                                                      } catch (e) {
+                                                        _messageIsLoading =
+                                                            false;
+                                                        HapticFeedback
+                                                            .lightImpact();
+                                                        showErrorToast(context,
+                                                            'En feil oppstod');
+                                                      }
+                                                    },
+                                                    child: const Text(
+                                                      'Send melding',
+                                                      style: TextStyle(
+                                                        fontSize: 19,
+                                                        color: CupertinoColors
+                                                            .systemBlue,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  CupertinoActionSheetAction(
+                                                    onPressed: () {},
+                                                    child: const Text(
+                                                      'Rapporter',
+                                                      style: TextStyle(
+                                                        fontSize: 19,
+                                                        color: Colors
+                                                            .red, // Red text for 'Slett annonse'
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                                cancelButton:
+                                                    CupertinoActionSheetAction(
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context); // Close the action sheet
+                                                  },
+                                                  isDefaultAction: true,
+                                                  child: const Text(
+                                                    'Avbryt',
+                                                    style: TextStyle(
+                                                      fontSize: 19,
+                                                      color: CupertinoColors
+                                                          .systemBlue,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],

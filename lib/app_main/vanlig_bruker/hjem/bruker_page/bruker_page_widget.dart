@@ -49,6 +49,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   bool ingenRatings = false;
   bool _folgerLoading = false;
   bool _isExpanded = false;
+  bool _messageIsLoading = false;
   final Securestorage securestorage = Securestorage();
   final ApiFolg apiFolg = ApiFolg();
 
@@ -359,15 +360,18 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
             scrolledUnderElevation: 0.0,
             systemOverlayStyle: SystemUiOverlayStyle
                 .dark, // Adjusts status bar icons for light background
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 28.0,
+            leading: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
+              child: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  size: 28.0,
+                ),
+                onPressed: () {
+                  context.safePop();
+                },
               ),
-              onPressed: () {
-                context.safePop();
-              },
             ),
             centerTitle: true,
             title: Text(
@@ -380,6 +384,114 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                     fontWeight: FontWeight.bold,
                   ),
             ),
+            actions: [
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 2, 0),
+                child: IconButton(
+                  icon: Icon(
+                    CupertinoIcons.ellipsis,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 28.0,
+                  ),
+                  onPressed: () {
+                    showCupertinoModalPopup(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CupertinoActionSheet(
+                          actions: <Widget>[
+                            CupertinoActionSheetAction(
+                              onPressed: () async {
+                                try {
+                                  // Prevent multiple submissions while loading
+                                  if (_messageIsLoading) return;
+                                  _messageIsLoading = true;
+
+                                  Conversation existingConversation =
+                                      FFAppState().conversations.firstWhere(
+                                    (conv) => conv.user == widget.username,
+                                    orElse: () {
+                                      final newConversation = Conversation(
+                                        user: widget.username ?? '',
+                                        profilePic: bruker!.profilepic ?? '',
+                                        messages: [],
+                                      );
+
+                                      FFAppState()
+                                          .conversations
+                                          .add(newConversation);
+
+                                      // Return the new conversation
+                                      return newConversation;
+                                    },
+                                  );
+
+                                  String? serializedConversation =
+                                      serializeParam(
+                                    existingConversation.toJson(),
+                                    ParamType.JSON,
+                                  );
+
+                                  _messageIsLoading = false;
+                                  if (serializedConversation != null) {
+                                    Navigator.pop(context);
+                                    context.pushNamed(
+                                      'message',
+                                      queryParameters: {
+                                        'conversation': serializedConversation,
+                                      },
+                                    );
+                                  }
+                                } on SocketException {
+                                  _messageIsLoading = false;
+                                  HapticFeedback.lightImpact();
+                                  showErrorToast(
+                                      context, 'Ingen internettforbindelse');
+                                } catch (e) {
+                                  _messageIsLoading = false;
+                                  HapticFeedback.lightImpact();
+                                  showErrorToast(context, 'En feil oppstod');
+                                }
+                              },
+                              child: const Text(
+                                'Send melding',
+                                style: TextStyle(
+                                  fontSize: 19,
+                                  color: CupertinoColors.systemBlue,
+                                ),
+                              ),
+                            ),
+                            CupertinoActionSheetAction(
+                              onPressed: () {},
+                              child: const Text(
+                                'Rapporter',
+                                style: TextStyle(
+                                  fontSize: 19,
+                                  color: Colors
+                                      .red, // Red text for 'Slett annonse'
+                                ),
+                              ),
+                            ),
+                          ],
+                          cancelButton: CupertinoActionSheetAction(
+                            onPressed: () {
+                              Navigator.pop(context); // Close the action sheet
+                            },
+                            isDefaultAction: true,
+                            child: const Text(
+                              'Avbryt',
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: CupertinoColors.systemBlue,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
           body: SafeArea(
             top: true,
