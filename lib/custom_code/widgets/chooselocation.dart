@@ -108,7 +108,7 @@ class _ChooselocationState extends State<Chooselocation> {
                           widget.center.latitude, widget.center.longitude),
                   builder: (ctx) => Icon(
                     Icons.location_pin,
-                    color: FlutterFlowTheme.of(context).alternate,
+                    color: FlutterFlowTheme.of(context).error,
                     size: 50,
                   ),
                 ),

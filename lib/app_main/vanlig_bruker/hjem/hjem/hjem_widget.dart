@@ -384,7 +384,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                     Icon(
                                       CupertinoIcons.placemark_fill,
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                                          .alternate,
                                       size: 19.0,
                                     ),
                                     Text(
@@ -394,7 +394,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                           .override(
                                             fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryText,
+                                                .alternate,
                                             fontSize: 15.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w700,
@@ -403,7 +403,7 @@ class _HjemWidgetState extends State<HjemWidget> {
                                     Icon(
                                       Icons.keyboard_arrow_down,
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                                          .alternate,
                                       size: 24.0,
                                     ),
                                   ],

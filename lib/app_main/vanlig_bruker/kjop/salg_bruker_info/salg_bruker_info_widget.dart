@@ -701,7 +701,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           iconPadding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          color: const Color(0xFFE1E1E8),
+                          color: Colors.white,
                           textStyle: FlutterFlowTheme.of(context)
                               .titleSmall
                               .override(
@@ -712,9 +712,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 fontWeight: FontWeight.w800,
                               ),
                           elevation: 0,
-                          borderSide: const BorderSide(
-                            color: Color(0xFFE1E1E8),
-                            width: 1.0,
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).alternate,
+                            width: 0.6,
                           ),
                           borderRadius: BorderRadius.circular(14),
                         ),
