@@ -543,85 +543,68 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                           child: Column(
                             children: [
                               Align(
-                                alignment: const Alignment(0, 0),
+                                alignment: Alignment.center,
                                 child: Container(
-                                  height: 35.0,
-                                  padding: const EdgeInsets.all(2.7),
+                                  height: 38, // Integer height
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(
+                                      2.7), // Integer padding
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[300],
-                                    borderRadius: BorderRadius.circular(14.0),
+                                    color: Colors.transparent,
+                                    borderRadius: BorderRadius.circular(
+                                        14), // Integer radius
                                   ),
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Positioned.fill(
-                                        child: AnimatedBuilder(
-                                          animation: _model.tabBarController!,
-                                          builder: (context, child) {
-                                            final selectedIndex =
-                                                _model.tabBarController!.index;
-                                            final double alignmentValue =
-                                                (selectedIndex / (3 - 1)) * 2 -
-                                                    1;
-
-                                            return AnimatedAlign(
-                                              alignment:
-                                                  Alignment(alignmentValue, 0),
-                                              duration: const Duration(
-                                                  milliseconds: 300),
-                                              curve: Curves.ease,
-                                              child: Container(
-                                                width: 135,
-                                                height: 35.0,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          9.0),
-                                                ),
-                                              ),
-                                            );
+                                  child: CupertinoSlidingSegmentedControl<int>(
+                                    backgroundColor: const Color(0xFFE0E0E0),
+                                    thumbColor: CupertinoColors.white,
+                                    groupValue: _model.tabBarController!.index,
+                                    onValueChanged: (int? index) {
+                                      if (index != null) {
+                                        _model.tabBarController!
+                                            .animateTo(index);
+                                        [
+                                          () async {},
+                                          () async {
+                                            FFAppState().kjopAlert = false;
+                                            safeSetState(() {});
                                           },
+                                          () async {
+                                            FFAppState().kjopAlert = false;
+                                            safeSetState(() {});
+                                          }
+                                        ][index]();
+                                      }
+                                    },
+                                    children: const {
+                                      0: Text(
+                                        'Alle',
+                                        style: TextStyle(
+                                          fontFamily:
+                                              'Nunito', // Apple's system font
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w500,
+                                          color: CupertinoColors.black,
                                         ),
                                       ),
-                                      TabBar(
-                                        controller: _model.tabBarController,
-                                        onTap: (i) async {
-                                          [
-                                            () async {},
-                                            () async {},
-                                            () async {}
-                                          ][i]();
-                                        },
-                                        labelColor: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        unselectedLabelColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                        labelStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .override(
-                                              fontFamily: 'Nunito',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                        unselectedLabelStyle:
-                                            FlutterFlowTheme.of(context)
-                                                .titleMedium
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                        indicatorColor: Colors.transparent,
-                                        dividerColor: Colors.transparent,
-                                        tabs: const [
-                                          Tab(text: 'Alle'),
-                                          Tab(text: 'Solgt'),
-                                          Tab(text: 'Kjøpt'),
-                                        ],
+                                      1: Text(
+                                        'Solgt',
+                                        style: TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w500,
+                                          color: CupertinoColors.black,
+                                        ),
                                       ),
-                                    ],
+                                      2: Text(
+                                        'Kjøpt',
+                                        style: TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w500,
+                                          color: CupertinoColors.black,
+                                        ),
+                                      ),
+                                    },
                                   ),
                                 ),
                               ),
