@@ -305,19 +305,18 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                   Align(
                                     alignment: Alignment.center,
                                     child: Container(
-                                      height: 38, // Integer height
+                                      height: 45, // Integer height
                                       width: double.infinity,
                                       padding: const EdgeInsets.all(
-                                          2.7), // Integer padding
+                                          2), // Integer padding
                                       decoration: BoxDecoration(
-                                        color: Colors.transparent,
                                         borderRadius: BorderRadius.circular(
                                             14), // Integer radius
                                       ),
                                       child:
                                           CupertinoSlidingSegmentedControl<int>(
                                         backgroundColor:
-                                            const Color(0xFFE0E0E0),
+                                            const Color(0xFFEBEBED),
                                         thumbColor: CupertinoColors.white,
                                         groupValue:
                                             _model.tabBarController!.index,
@@ -344,8 +343,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             style: TextStyle(
                                               fontFamily:
                                                   'Nunito', // Apple's system font
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
                                               color: CupertinoColors.black,
                                             ),
                                           ),
@@ -353,8 +352,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             'Kjøp',
                                             style: TextStyle(
                                               fontFamily: 'Nunito',
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
                                               color: CupertinoColors.black,
                                             ),
                                           ),
@@ -362,8 +361,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             'Salg',
                                             style: TextStyle(
                                               fontFamily: 'Nunito',
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
                                               color: CupertinoColors.black,
                                             ),
                                           ),

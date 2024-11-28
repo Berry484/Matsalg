@@ -539,23 +539,22 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                       Expanded(
                         child: Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 5),
+                              const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
                           child: Column(
                             children: [
                               Align(
                                 alignment: Alignment.center,
                                 child: Container(
-                                  height: 38, // Integer height
+                                  height: 45, // Integer height
                                   width: double.infinity,
                                   padding: const EdgeInsets.all(
-                                      2.7), // Integer padding
+                                      2), // Integer padding
                                   decoration: BoxDecoration(
-                                    color: Colors.transparent,
                                     borderRadius: BorderRadius.circular(
                                         14), // Integer radius
                                   ),
                                   child: CupertinoSlidingSegmentedControl<int>(
-                                    backgroundColor: const Color(0xFFE0E0E0),
+                                    backgroundColor: const Color(0xFFEBEBED),
                                     thumbColor: CupertinoColors.white,
                                     groupValue: _model.tabBarController!.index,
                                     onValueChanged: (int? index) {
@@ -579,10 +578,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                       0: Text(
                                         'Alle',
                                         style: TextStyle(
-                                          fontFamily:
-                                              'Nunito', // Apple's system font
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Nunito',
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w600,
                                           color: CupertinoColors.black,
                                         ),
                                       ),
@@ -590,8 +588,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                         'Solgt',
                                         style: TextStyle(
                                           fontFamily: 'Nunito',
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w600,
                                           color: CupertinoColors.black,
                                         ),
                                       ),
@@ -599,8 +597,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                         'Kjøpt',
                                         style: TextStyle(
                                           fontFamily: 'Nunito',
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w600,
                                           color: CupertinoColors.black,
                                         ),
                                       ),
