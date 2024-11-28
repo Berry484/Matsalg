@@ -141,7 +141,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                   automaticallyImplyLeading: true,
                   scrolledUnderElevation: 0.0,
                   leading: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,

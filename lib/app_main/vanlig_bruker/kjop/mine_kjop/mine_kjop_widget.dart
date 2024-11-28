@@ -308,7 +308,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                       height: 50, // Integer height
                                       width: double.infinity,
                                       padding: const EdgeInsets.all(
-                                          2), // Integer padding
+                                          0), // Integer padding
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                             14), // Integer radius

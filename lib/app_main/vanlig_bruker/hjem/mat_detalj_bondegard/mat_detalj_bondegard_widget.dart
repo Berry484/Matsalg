@@ -846,9 +846,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           width:
                                                               140, // Adjusted width to avoid overflow after rotation
                                                           height: 25,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .alternate,
+                                                          color:
+                                                              Colors.redAccent,
                                                           alignment:
                                                               Alignment.center,
                                                           padding: const EdgeInsets

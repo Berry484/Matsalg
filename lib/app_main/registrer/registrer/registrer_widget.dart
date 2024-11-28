@@ -143,17 +143,21 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 0, 0, 0),
-                              color: Colors.black,
+                              color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
                                     fontFamily: 'Nunito',
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     fontSize: 17,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
                               elevation: 0,
+                              borderSide: const BorderSide(
+                                color: Color(0x5957636C),
+                                width: 1.5,
+                              ),
                               borderRadius: BorderRadius.circular(14),
                             ),
                           ),

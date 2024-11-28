@@ -385,10 +385,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                   elevation: 0,
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     // color: Colors.transparent,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
+                                    color: Colors.transparent,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8),

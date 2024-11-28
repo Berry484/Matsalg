@@ -548,7 +548,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                   height: 50, // Integer height
                                   width: double.infinity,
                                   padding: const EdgeInsets.all(
-                                      2), // Integer padding
+                                      0), // Integer padding
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(
                                         14), // Integer radius
@@ -642,7 +642,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                 child: Align(
                                                   alignment:
                                                       const AlignmentDirectional(
-                                                          0, -1),
+                                                          0, 0),
                                                   child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
@@ -1092,7 +1092,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                 child: Align(
                                                   alignment:
                                                       const AlignmentDirectional(
-                                                          0, -1),
+                                                          0, 0),
                                                   child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
@@ -1541,7 +1541,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                 child: Align(
                                                   alignment:
                                                       const AlignmentDirectional(
-                                                          0, -1),
+                                                          0, 0),
                                                   child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional

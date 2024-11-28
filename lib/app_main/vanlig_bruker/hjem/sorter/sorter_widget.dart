@@ -171,18 +171,18 @@ class _SorterWidgetState extends State<SorterWidget> {
                       FlutterFlowTheme.of(context).secondaryText,
                   textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Nunito',
-                        fontSize: 18,
+                        fontSize: 17,
                         letterSpacing: 0.0,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w700,
                       ),
                   unselectedTextStyle:
                       FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Nunito',
-                            fontSize: 18,
+                            fontSize: 17,
                             letterSpacing: 0.0,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
                           ),
-                  itemPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+                  itemPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                   checkboxBorderRadius: BorderRadius.circular(24),
                   initialized: _model.checkboxGroupValues != null,
                 ),
