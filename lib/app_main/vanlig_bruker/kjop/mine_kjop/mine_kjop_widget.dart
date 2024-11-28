@@ -305,7 +305,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                   Align(
                                     alignment: Alignment.center,
                                     child: Container(
-                                      height: 45, // Integer height
+                                      height: 50, // Integer height
                                       width: double.infinity,
                                       padding: const EdgeInsets.all(
                                           2), // Integer padding
