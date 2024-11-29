@@ -27,7 +27,7 @@ class MessageWidget extends StatefulWidget {
 }
 
 class _MessageWidgetState extends State<MessageWidget> {
-  late WebSocketService _webSocketService; // Declare WebSocketService
+  late WebSocketService _webSocketService;
   late Conversation conversation;
 
   late MessageModel _model;
@@ -36,19 +36,17 @@ class _MessageWidgetState extends State<MessageWidget> {
   @override
   void initState() {
     super.initState();
+    _webSocketService = WebSocketService();
     // Directly assign the passed conversation to the _conversation variable
     conversation = Conversation.fromJson(widget.conversation);
     markRead();
     _model = createModel(context, () => MessageModel());
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
-    _webSocketService = WebSocketService();
     FFAppState().addListener(_onAppStateChanged);
-    _webSocketService.connect();
   }
 
   void markRead() {
-    _webSocketService = WebSocketService();
     _webSocketService.markAllMessagesAsRead(conversation.user);
     return;
   }
@@ -115,7 +113,7 @@ class _MessageWidgetState extends State<MessageWidget> {
   void _onAppStateChanged() {
     setState(() {
       markRead();
-      // _webSocketService.markAllMessagesAsRead(conversation.user);
+      _webSocketService.markAllMessagesAsRead(conversation.user);
       conversation = FFAppState().conversations.firstWhere(
             (conv) => conv.user == conversation.user,
             orElse: () =>
@@ -162,7 +160,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                             appState.notifyListeners();
                           }
 
-                          context.pop();
+                          Navigator.pop(context);
                         } on SocketException {
                           HapticFeedback.lightImpact();
                           showErrorToast(context, 'Ingen internettforbindelse');

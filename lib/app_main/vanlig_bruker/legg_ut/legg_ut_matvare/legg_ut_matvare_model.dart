@@ -1,4 +1,3 @@
-import '/app_main/vanlig_bruker/custom_nav_bar_user/legg_ut_nav_bar/legg_ut_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'legg_ut_matvare_widget.dart' show LeggUtMatvareWidget;
 import 'package:flutter/material.dart';
@@ -113,7 +112,6 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
   // State field(s) for Checkbox widget.
   bool? checkboxValue;
   // Model for LeggUtNavBar component.
-  late LeggUtNavBarModel leggUtNavBarModel;
 
   @override
   void initState(BuildContext context) {
@@ -123,7 +121,6 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
     produktPrisSTKTextControllerValidator =
         _produktPrisSTKTextControllerValidator;
     antallStkTextControllerValidator = _antallStkTextControllerValidator;
-    leggUtNavBarModel = createModel(context, () => LeggUtNavBarModel());
   }
 
   @override
@@ -139,7 +136,5 @@ class LeggUtMatvareModel extends FlutterFlowModel<LeggUtMatvareWidget> {
 
     antallStkFocusNode?.dispose();
     antallStkTextController?.dispose();
-
-    leggUtNavBarModel.dispose();
   }
 }

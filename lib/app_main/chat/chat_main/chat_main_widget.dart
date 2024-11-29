@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/app_main/chat/MessagePreview/message_preview_widget.dart';
 import 'package:mat_salg/app_main/chat/chat_main/chat_main_model.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_theme.dart';
@@ -16,7 +15,6 @@ class ChatMainWidget extends StatefulWidget {
 
 class _ChatMainWidgetState extends State<ChatMainWidget> {
   late ChatMainModel _model;
-  late WebSocketService _webSocketService; // Declare WebSocketService
   late Conversation conversation;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -24,9 +22,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ChatMainModel());
-    _webSocketService = WebSocketService();
     FFAppState().addListener(_onAppStateChanged);
-    _webSocketService.connect();
     setState(() {});
   }
 
@@ -128,6 +124,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
             ),
             centerTitle: true,
             elevation: 0,
+            scrolledUnderElevation: 0,
           ),
           body: SafeArea(
             top: true,
@@ -282,7 +279,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                                   ParamType.JSON,
                                 ),
                               },
-                            );
+                            ).then((_) => setState(() {}));
                           },
                           child: wrapWithModel(
                             model: _model.messagePreviewModel,

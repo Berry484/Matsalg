@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/choose_location/location_widget.dart';
 import 'package:mat_salg/matvarer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -31,7 +30,7 @@ class HjemWidget extends StatefulWidget {
 
 class _HjemWidgetState extends State<HjemWidget> {
   late HjemModel _model;
-  late WebSocketService _webSocketService; // Declare WebSocketService
+
   List<Matvarer>? _matvarer;
   List<UserInfoSearch>? _profiler;
   bool _isloading = true;
@@ -50,8 +49,6 @@ class _HjemWidgetState extends State<HjemWidget> {
   @override
   void initState() {
     super.initState();
-    _webSocketService = WebSocketService();
-    _webSocketService.connect();
     fetchData();
     getKommune();
     getAllFoods();

@@ -41,7 +41,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => LogginnModel());
-
+    _webSocketService = WebSocketService();
     _model.emailTextController ??= TextEditingController();
     _model.emailFocusNode ??= FocusNode();
 
@@ -277,7 +277,6 @@ class _LogginnWidgetState extends State<LogginnWidget> {
 
                                     _isloading = false;
                                     try {
-                                      _webSocketService = WebSocketService();
                                       _webSocketService.connect();
                                       setState(() {});
                                     } catch (e) {
@@ -461,7 +460,6 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                         decodedResponse['profile_picture'] ??
                                             '';
                                     try {
-                                      _webSocketService = WebSocketService();
                                       _webSocketService.connect();
                                       setState(() {});
                                     } catch (e) {

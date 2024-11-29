@@ -245,7 +245,6 @@ class FFAppState extends ChangeNotifier {
   }
 }
 
-// Example conversation model
 class Conversation {
   final String user;
   final String profilePic;

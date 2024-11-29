@@ -2,72 +2,180 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
-import 'dart:io';
-
+import 'package:rxdart/rxdart.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
 
 import 'dart:async';
 
 class WebSocketService {
   static final WebSocketService _instance = WebSocketService._internal();
-  late WebSocket _socket;
-  bool _isConnected = false;
-  static const String url = ApiConstants.baseSocketUrl;
-  bool _isFirstMessage = true;
 
-  // Private constructor
-  WebSocketService._internal();
-
-  // Factory constructor to return the same instance every time
   factory WebSocketService() {
     return _instance;
   }
 
-  // Getter for _socket to access the WebSocket connection
-  WebSocket get socket => _socket;
+  // Private internal constructor
+  WebSocketService._internal();
 
-  // Method to connect to WebSocket
-  Future<void> connect() async {
-    // if (_isConnected) {
-    //   print("WebSocket already connected.");
-    //   return;
-    // }
+  late IOWebSocketChannel _ioWebSocketChannel;
 
+  WebSocketSink get _sink => _ioWebSocketChannel.sink;
+  late Stream<dynamic> _innerStream;
+  final _outerStreamSubject = BehaviorSubject<dynamic>();
+  Stream<dynamic> get stream => _outerStreamSubject.stream;
+
+  bool _isConnected = false;
+  bool get isConnected => _isConnected;
+
+  bool _isManuallyClosed = false;
+  bool _running = false;
+  static const Duration retryDelay = Duration(seconds: 3);
+  static const Duration listenerTimeout =
+      Duration(seconds: 5); // Timeout for listener response
+
+  Future<void> connect({bool? retrying}) async {
     try {
-      _isFirstMessage = true;
-      String? token = await _getToken();
-      if (token == null) {
-        print('Token is null, cannot connect');
+      if (_running) {
+        print("Connection attempt already in progress.");
         return;
       }
 
-      print('Connecting to WebSocket server: $url');
-      _socket = await WebSocket.connect(url, headers: {
-        'Authorization': 'Bearer $token',
-      });
+      _running = true;
 
-      _isConnected = true;
-      print("WebSocket connection established.");
+      // Prevent redundant reconnections
+      if (_isConnected && retrying == null) {
+        print("Already connected. No need to reconnect.");
+        _running = false;
+        return;
+      }
 
-      // Listen for incoming messages
-      _socket.listen(
-        (message) {
-          _onMessageReceived(message); // Handle incoming message
-        },
-        onError: (error) {
-          print('WebSocket error: $error');
-        },
-        onDone: () {
-          print('WebSocket connection closed');
-          final appState = FFAppState();
-          appState.conversations.clear(); // Clear the conversations list
-          _isFirstMessage = true;
-          _isConnected = false;
-        },
-      );
+      const String url = ApiConstants.baseSocketUrl;
+
+      String? token = await _getToken();
+
+      if (token == null || token.isEmpty) {
+        print('Error: Token is missing or invalid.');
+        _isConnected = false;
+        _running = false;
+        return;
+      }
+
+      try {
+        print("Attempting to connect to WebSocket...");
+
+        // Close existing connection if any
+        await _cleanupConnection();
+
+        // Establish a new WebSocket connection
+        _ioWebSocketChannel = await IOWebSocketChannel.connect(
+          url,
+          headers: {'Authorization': 'Bearer $token'},
+        );
+
+        // Ensure the inner stream is properly set
+        _innerStream = _ioWebSocketChannel.stream.asBroadcastStream();
+
+        // Add a listener to handle incoming messages
+        await _listenWithTimeout(_innerStream);
+
+        _isConnected = true;
+        print("WebSocket connection established.");
+      } catch (e) {
+        print("Failed to connect to WebSocket: $e");
+        _isConnected = false;
+        handleLostConnection();
+      } finally {
+        _running = false;
+      }
     } catch (e) {
-      print('Error during WebSocket connection: $e');
+      print("Error when connecting$e");
     }
+  }
+
+  Future<void> _listenWithTimeout(Stream<dynamic> stream) async {
+    final completer = Completer<void>();
+
+    // Listen for a response or throw an exception if no response within timeout
+    stream.listen(
+      (event) {
+        try {
+          print('Received message: $event');
+          _outerStreamSubject.add(event);
+          _onMessageReceived(event);
+          if (completer.isCompleted) {
+          } else {
+            completer.complete();
+          }
+        } catch (e) {
+          print("error$e");
+        }
+      },
+      onError: (error) {
+        try {
+          print("WebSocket error: $error");
+          completer.completeError(
+              error); // Mark as error if there was a connection issue
+        } catch (e) {
+          print("error$e");
+        }
+      },
+      onDone: () {
+        try {
+          print("WebSocket connection closed.");
+          completer.completeError(
+              Exception("Connection closed before receiving any response"));
+        } catch (e) {
+          print("error$e");
+        }
+      },
+    );
+
+    // Wait for a response or timeout
+    try {
+      await Future.any([
+        completer.future,
+        Future.delayed(listenerTimeout),
+      ]);
+
+      // If we reach here, it means we either got a response or the timeout occurred
+      if (completer.isCompleted) {
+        print("Listener received response.");
+      } else {
+        throw TimeoutException(
+            "No response received within the timeout period.");
+      }
+    } catch (e) {
+      // If an error occurs (including timeout), handle the reconnection
+      print("Error during listener setup: $e");
+      throw e; // Re-throw exception to trigger reconnection logic
+    }
+  }
+
+  Future<void> _cleanupConnection() async {
+    try {
+      if (_ioWebSocketChannel != null) {
+        print("Closing existing WebSocket connection...");
+        await _ioWebSocketChannel.sink.close();
+      }
+    } catch (e) {
+      print("Error during WebSocket cleanup: $e");
+    }
+  }
+
+  void handleLostConnection() {
+    print("Handling lost connection...");
+    Future.delayed(retryDelay, () async {
+      print("Reconnecting after delay...");
+      await connect(retrying: true);
+    });
+  }
+
+  void close() async {
+    _isManuallyClosed = true;
+    await _cleanupConnection();
+    print("WebSocket service closed.");
   }
 
   void _onMessageReceived(dynamic message) {
@@ -94,11 +202,8 @@ class WebSocketService {
             message.read = true; // Mark message as read
           }
         }
-
         // Notify listeners to update the UI
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          appState.notifyListeners();
-        });
+        appState.notifyListeners();
         print('Marked all messages sent by me as read for receiver: $receiver');
       }
 
@@ -111,7 +216,7 @@ class WebSocketService {
         }
 
         // If this is the first message received after connection
-        if (_isFirstMessage) {
+        if ((data['conversations'] != null)) {
           try {
             final appState = FFAppState();
             appState.conversations.clear();
@@ -130,13 +235,11 @@ class WebSocketService {
               }
 
               // notifyListeners() to update the UI
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                appState.notifyListeners();
-              });
+
+              appState.notifyListeners();
               // const Duration(seconds: 1000);
               // appState.notifyListeners();
             }
-            _isFirstMessage = false;
             return;
           } catch (e) {
             print('Error parsing message: $e');
@@ -184,9 +287,8 @@ class WebSocketService {
           if (!_empty) {
             conversation.messages.insert(0, newMessage);
           }
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            appState.notifyListeners();
-          });
+
+          appState.notifyListeners();
           print("Notified listeners to update the UI");
         }
       }
@@ -196,10 +298,13 @@ class WebSocketService {
   }
 
   void sendMessage(String receiver, String content) {
-    if (!_isConnected) {
-      print('WebSocket is not connected. Cannot send message.');
-      return;
-    }
+    // if (!_isConnected) {
+    //   print('WebSocket is not connected. Cannot send message.');
+    //   connect();
+    //   throw const SocketException('');
+    // }
+
+    // if (!_isConnected) throw const SocketException('');
 
     // Create a new message object for the sent message
     Message newMessage = Message(
@@ -213,7 +318,7 @@ class WebSocketService {
     // Access the global app state (FFAppState)
     final appState = FFAppState();
 
-    // Find the existing conversation or create a new one if not found
+    // Find the existing conversation or create a new one if not foundzzZZZZZZZZZZzzzzZZ
     var conversation = appState.conversations.firstWhere(
       (conv) => conv.user == receiver,
       orElse: () => Conversation(
@@ -231,18 +336,16 @@ class WebSocketService {
     _sendMessageToServer(receiver, content);
 
     // Save the updated conversation list to SharedPreferences
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      appState.notifyListeners();
-    });
+    appState.notifyListeners();
   }
 
 // Helper method to send the message via WebSocket
   void _sendMessageToServer(String receiver, String content) {
     final appState = FFAppState();
     // Check if WebSocket is connected
-    if (!_isConnected) {
-      connect();
-    }
+    // if (!_isConnected) {
+    //   connect();
+    // }
 
     // Prepare the message object in the correct format
     Map<String, dynamic> message = {
@@ -253,19 +356,17 @@ class WebSocketService {
     };
 
     // Send the message as a JSON string to the WebSocket server
-    _socket.add(jsonEncode(
+    _ioWebSocketChannel.sink.add(jsonEncode(
         message)); // Assuming `_webSocket` is your WebSocket instance
 
     // Save the updated conversation list to SharedPreferences
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      appState.notifyListeners();
-    });
+    appState.notifyListeners();
   }
 
   void _sendMarkAsReadRequest(String sender) {
-    if (!_isConnected) {
-      return;
-    }
+    // if (!_isConnected) {
+    //   return;
+    // }
 
     // Prepare the message for the server
     Map<String, String> messageData = {
@@ -275,7 +376,7 @@ class WebSocketService {
     String jsonMessage = jsonEncode(messageData);
 
     // Send the message over WebSocket
-    _socket.add(jsonMessage);
+    _ioWebSocketChannel.sink.add(jsonMessage);
     print('Sent mark as read request: $jsonMessage');
   }
 
@@ -308,17 +409,7 @@ class WebSocketService {
     } else {}
   }
 
-  // Fetch token from secure storage
   Future<String?> _getToken() async {
     return await Securestorage().readToken();
-  }
-
-  // Close WebSocket connection
-  void close() {
-    if (_isConnected) {
-      _socket.close();
-      _isConnected = false;
-      print('WebSocket connection closed');
-    }
   }
 }
