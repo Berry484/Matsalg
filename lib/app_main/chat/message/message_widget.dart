@@ -454,6 +454,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Inter',
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
                                             letterSpacing: 0.0,
                                             lineHeight: 1,
                                           ),

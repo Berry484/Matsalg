@@ -246,6 +246,7 @@ class WebSocketService {
             print('Error parsing message: $e');
           }
         } else {
+          var data = jsonDecode(message); // Assuming message is JSON string.
           // Proceed with normal message handling if sender and content are present
           String sender = data['sender'] ?? ''; // The sender of the message
           String content = data['content'] ?? ''; // The content of the message
@@ -304,8 +305,11 @@ class WebSocketService {
       throw const SocketException('');
     }
 
-    // Escape newlines and other special characters if needed
-    String escapedContent = content.replaceAll('\n', '\\n');
+    // Manually escape special characters
+    String escapedContent = content
+        .replaceAll(r'\n', '\\n')
+        .replaceAll(r'\r', '\\r')
+        .replaceAll(r'\t', '\\t');
 
     // Create a new message object for the sent message
     Message newMessage = Message(
@@ -333,30 +337,27 @@ class WebSocketService {
     conversation.messages
         .insert(0, newMessage); // Insert the message at the beginning
 
-    // Send the escaped message over WebSocket to the server
+    // Send the message over WebSocket to the server (escaped)
     _sendMessageToServer(receiver, escapedContent);
 
     // Save the updated conversation list to SharedPreferences
     appState.notifyListeners();
   }
 
-// Helper method to send the message via WebSocket
   void _sendMessageToServer(String receiver, String content) {
     final appState = FFAppState();
-
+    print(content);
     // Prepare the message object in the correct format
     Map<String, dynamic> message = {
       'receiver': receiver,
-      'content': content, // content is already escaped
+      'content': content, // Use the escaped content
       'time': DateTime.now().toIso8601String(),
       'me': true, // Mark message as sent by the current user
     };
 
-    // Ensure the message is properly encoded as JSON
-    String encodedMessage = jsonEncode(message);
-
-    // Send the encoded message
-    _ioWebSocketChannel.sink.add(encodedMessage);
+    // Send the encoded message over WebSocket
+    _ioWebSocketChannel.sink.add(jsonEncode(message));
+    print(message);
 
     // Save the updated conversation list to SharedPreferences
     appState.notifyListeners();
