@@ -281,11 +281,21 @@ class Message {
   bool read; // Changed to non-final to allow modification
   final bool me;
 
+  // Flags for UI (nullable)
+  bool? showDelivered;
+  bool? showLest;
+  bool? isMostRecent;
+  bool? showTime;
+
   Message({
     required this.content,
     required this.time,
     this.read = false, // Default to false for unread messages
     required this.me,
+    this.showDelivered, // Default to null
+    this.showLest, // Default to null
+    this.isMostRecent, // Default to null
+    this.showTime,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) {
@@ -303,6 +313,7 @@ class Message {
       'time': time,
       'read': read,
       'me': me,
+      // You don't need to serialize the flags because they are temporary
     };
   }
 }

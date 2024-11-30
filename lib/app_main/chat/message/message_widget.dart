@@ -8,6 +8,7 @@ import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/app_main/chat/message/message_model.dart';
 import 'package:mat_salg/app_main/chat/messageBubble/message_bubbles_widget.dart';
+import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
@@ -29,9 +30,11 @@ class MessageWidget extends StatefulWidget {
 class _MessageWidgetState extends State<MessageWidget> {
   late WebSocketService _webSocketService;
   late Conversation conversation;
-
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   late MessageModel _model;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  int _lastMessageCount = 0; // Track the number of messages
+  late List<Message> _messageListWithFlags;
 
   @override
   void initState() {
@@ -39,16 +42,76 @@ class _MessageWidgetState extends State<MessageWidget> {
     _webSocketService = WebSocketService();
     // Directly assign the passed conversation to the _conversation variable
     conversation = Conversation.fromJson(widget.conversation);
+    _lastMessageCount = conversation.messages.length; // Initialize count
     markRead();
     _model = createModel(context, () => MessageModel());
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+    _messageListWithFlags = _computeMessageFlags(conversation.messages);
     FFAppState().addListener(_onAppStateChanged);
   }
 
   void markRead() {
     _webSocketService.markAllMessagesAsRead(conversation.user);
     return;
+  }
+
+  List<Message> _computeMessageFlags(List<Message> messages) {
+    DateTime mostRecentTime = DateTime.fromMillisecondsSinceEpoch(0);
+    Map<String, DateTime> mostRecentMessages =
+        {}; // Track most recent messages per day
+
+    // Find the most recent message for each day and the overall most recent message
+    for (var msg in messages) {
+      if (msg.me) {
+        // Check if the message is sent by 'me'
+        DateTime msgDate = DateTime.parse(msg.time);
+        String dateKey = "${msgDate.year}-${msgDate.month}-${msgDate.day}";
+
+        // Update the most recent message for this day
+        if (!mostRecentMessages.containsKey(dateKey) ||
+            msgDate.isAfter(mostRecentMessages[dateKey]!)) {
+          mostRecentMessages[dateKey] = msgDate;
+        }
+
+        // Track the overall most recent message sent by 'me'
+        if (msgDate.isAfter(mostRecentTime)) {
+          mostRecentTime = msgDate;
+        }
+      }
+    }
+
+    // Now iterate over the messages and apply the flags
+    return messages.map((message) {
+      bool showDelivered = false;
+      bool showLest = false;
+      bool showTime = false;
+
+      DateTime msgDate = DateTime.parse(message.time);
+      String dateKey = "${msgDate.year}-${msgDate.month}-${msgDate.day}";
+
+      // Show time only for the most recent message of the day
+      if (message.me && mostRecentMessages[dateKey] == msgDate) {
+        showTime = true;
+      }
+
+      // Check if this message is the most recent message sent by 'me'
+      if (message.me && msgDate.isAtSameMomentAs(mostRecentTime)) {
+        showDelivered = message.read == false; // Show delivered if unread
+        showLest = message.read == true; // Show lest if read
+      }
+
+      // Flag for the most recent message
+      bool isMostRecent = msgDate.isAtSameMomentAs(mostRecentTime);
+
+      // Set the flags
+      message.showDelivered = showDelivered;
+      message.showLest = showLest;
+      message.isMostRecent = isMostRecent;
+      message.showTime = showTime;
+
+      return message;
+    }).toList();
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -114,11 +177,27 @@ class _MessageWidgetState extends State<MessageWidget> {
     setState(() {
       markRead();
       _webSocketService.markAllMessagesAsRead(conversation.user);
-      conversation = FFAppState().conversations.firstWhere(
+      final updatedConversation = FFAppState().conversations.firstWhere(
             (conv) => conv.user == conversation.user,
-            orElse: () =>
-                conversation, // Keeps current conversation if not updated
+            orElse: () => conversation,
           );
+
+      final newMessagesCount =
+          updatedConversation.messages.length - _lastMessageCount;
+
+      if (newMessagesCount > 0) {
+        // Update the conversation and flags
+        conversation = updatedConversation;
+        _messageListWithFlags = _computeMessageFlags(conversation.messages);
+        _lastMessageCount = conversation.messages.length;
+
+        // Insert the new messages one by one
+        for (int i = 0; i < newMessagesCount; i++) {
+          _listKey.currentState
+              ?.insertItem(0); // Animate the addition of each new message
+        }
+      }
+      _messageListWithFlags = _computeMessageFlags(conversation.messages);
     });
   }
 
@@ -264,51 +343,33 @@ class _MessageWidgetState extends State<MessageWidget> {
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
+                        child: AnimatedList(
+                          key: _listKey,
                           reverse: true,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: conversation.messages.length,
-                          itemBuilder: (context, index) {
-                            final message = conversation.messages[index];
-                            bool showDelivered = false;
-                            bool showLest = false;
+                          initialItemCount: _messageListWithFlags
+                              .length, // Use precomputed list
+                          itemBuilder: (context, index, animation) {
+                            final message = _messageListWithFlags[
+                                index]; // Precomputed message list
 
-                            DateTime currentMessageDate =
-                                DateTime.parse(message.time);
-                            DateTime? mostRecentTime;
-                            bool isMostRecent = false;
-
-                            for (var msg in conversation.messages) {
-                              DateTime msgDate = DateTime.parse(msg.time);
-                              if (msgDate.year == currentMessageDate.year &&
-                                  msgDate.month == currentMessageDate.month &&
-                                  msgDate.day == currentMessageDate.day) {
-                                if (mostRecentTime == null ||
-                                    msgDate.isAfter(mostRecentTime)) {
-                                  mostRecentTime = msgDate;
-                                  isMostRecent = msg == message;
-                                }
-                              }
-                            }
-
-                            if (message.me == true &&
-                                conversation.messages.indexOf(message) ==
-                                    conversation.messages
-                                        .indexWhere((msg) => msg.me == true)) {
-                              showLest = message.read == true;
-                              showDelivered = !message.read;
-                            }
-
-                            return MessageBubblesWidget(
-                              key: ValueKey(message.time),
-                              mesageText: message.content,
-                              blueBubble: message.me == true,
-                              showDelivered: showDelivered,
-                              showTail: true,
-                              showLest: showLest,
-                              messageTime: isMostRecent ? message.time : null,
+                            return SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(0.0, 2.0),
+                                  end: Offset.zero,
+                                ).chain(CurveTween(curve: Curves.easeInOut)),
+                              ),
+                              child: MessageBubblesWidget(
+                                key: ValueKey(message.time),
+                                mesageText: message.content,
+                                blueBubble: message.me,
+                                showDelivered: message.showDelivered ?? false,
+                                showTail: true,
+                                showLest: message.showLest ?? false,
+                                messageTime: message.showTime ?? false
+                                    ? message.time
+                                    : null, // Only show time if showTime is true
+                              ),
                             );
                           },
                         ),
@@ -387,7 +448,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                         counterText: '',
                                         contentPadding:
                                             const EdgeInsetsDirectional
-                                                .fromSTEB(14, 16, 24, 16),
+                                                .fromSTEB(14, 16, 45, 16),
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -416,49 +477,6 @@ class _MessageWidgetState extends State<MessageWidget> {
                                       ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            7, 0, 10, 8),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        try {
-                                          if (_model.textController!.text
-                                              .trim()
-                                              .isNotEmpty) {
-                                            _webSocketService.sendMessage(
-                                              conversation.user,
-                                              _model.textController!.text,
-                                            );
-                                            setState(() {
-                                              _model.textController!.clear();
-                                            });
-                                          }
-                                        } on SocketException {
-                                          HapticFeedback.lightImpact();
-                                          showErrorToast(context,
-                                              'Ingen internettforbindelse');
-                                        } catch (e) {
-                                          HapticFeedback.lightImpact();
-                                          showErrorToast(
-                                              context, 'En feil oppstod');
-                                        }
-                                      },
-                                      child: Align(
-                                        alignment: _model
-                                                .textController.text.isEmpty
-                                            ? Alignment
-                                                .center // Center if only one line
-                                            : Alignment
-                                                .bottomCenter, // Bottom when expanded
-                                        child: const FaIcon(
-                                          FontAwesomeIcons.arrowCircleUp,
-                                          color: Color(0xFF357BF7),
-                                          size: 29,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -467,6 +485,44 @@ class _MessageWidgetState extends State<MessageWidget> {
                       ),
                     ),
                   ],
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 4, 0),
+                  child: Align(
+                    alignment: Alignment.bottomRight, // Center if only one line
+
+                    child: FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 50.0,
+                      borderWidth: 1.0,
+                      buttonSize: 68.0,
+                      onPressed: () {
+                        try {
+                          print("pressed");
+                          if (_model.textController!.text.trim().isNotEmpty) {
+                            _webSocketService.sendMessage(
+                              conversation.user,
+                              _model.textController!.text,
+                            );
+                            setState(() {
+                              _model.textController!.clear();
+                            });
+                          }
+                        } on SocketException {
+                          HapticFeedback.lightImpact();
+                          showErrorToast(context, 'Ingen internettforbindelse');
+                        } catch (e) {
+                          HapticFeedback.lightImpact();
+                          showErrorToast(context, 'En feil oppstod');
+                        }
+                      },
+                      icon: const FaIcon(
+                        FontAwesomeIcons.arrowCircleUp,
+                        color: Color(0xFF357BF7),
+                        size: 32,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
@@ -298,17 +299,17 @@ class WebSocketService {
   }
 
   void sendMessage(String receiver, String content) {
-    // if (!_isConnected) {
-    //   print('WebSocket is not connected. Cannot send message.');
-    //   connect();
-    //   throw const SocketException('');
-    // }
+    if (!_isConnected) {
+      print('WebSocket is not connected. Cannot send message.');
+      throw const SocketException('');
+    }
 
-    // if (!_isConnected) throw const SocketException('');
+    // Escape newlines and other special characters if needed
+    String escapedContent = content.replaceAll('\n', '\\n');
 
     // Create a new message object for the sent message
     Message newMessage = Message(
-      content: content,
+      content: escapedContent, // Use escaped content
       time: DateTime.now()
           .toIso8601String(), // Use current time for the sent message
       read: false, // Mark it as read (or modify as needed)
@@ -318,7 +319,7 @@ class WebSocketService {
     // Access the global app state (FFAppState)
     final appState = FFAppState();
 
-    // Find the existing conversation or create a new one if not foundzzZZZZZZZZZZzzzzZZ
+    // Find the existing conversation or create a new one if not found
     var conversation = appState.conversations.firstWhere(
       (conv) => conv.user == receiver,
       orElse: () => Conversation(
@@ -332,8 +333,8 @@ class WebSocketService {
     conversation.messages
         .insert(0, newMessage); // Insert the message at the beginning
 
-    // Send the message over WebSocket to the server
-    _sendMessageToServer(receiver, content);
+    // Send the escaped message over WebSocket to the server
+    _sendMessageToServer(receiver, escapedContent);
 
     // Save the updated conversation list to SharedPreferences
     appState.notifyListeners();
@@ -342,22 +343,20 @@ class WebSocketService {
 // Helper method to send the message via WebSocket
   void _sendMessageToServer(String receiver, String content) {
     final appState = FFAppState();
-    // Check if WebSocket is connected
-    // if (!_isConnected) {
-    //   connect();
-    // }
 
     // Prepare the message object in the correct format
     Map<String, dynamic> message = {
       'receiver': receiver,
-      'content': content,
+      'content': content, // content is already escaped
       'time': DateTime.now().toIso8601String(),
       'me': true, // Mark message as sent by the current user
     };
 
-    // Send the message as a JSON string to the WebSocket server
-    _ioWebSocketChannel.sink.add(jsonEncode(
-        message)); // Assuming `_webSocket` is your WebSocket instance
+    // Ensure the message is properly encoded as JSON
+    String encodedMessage = jsonEncode(message);
+
+    // Send the encoded message
+    _ioWebSocketChannel.sink.add(encodedMessage);
 
     // Save the updated conversation list to SharedPreferences
     appState.notifyListeners();
