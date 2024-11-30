@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart';
-import 'package:mat_salg/matvarer.dart';
 import 'package:shimmer/shimmer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -30,10 +29,9 @@ class ProfilWidget extends StatefulWidget {
 class _ProfilWidgetState extends State<ProfilWidget>
     with TickerProviderStateMixin {
   late ProfilModel _model;
-  List<Matvarer>? _matvarer;
   List<Matvarer>? _likesmatvarer;
   UserInfoStats? _ratingStats;
-  bool _isloading = true;
+  bool _isloading = false;
   bool _likesisloading = true;
   double ratingVerdi = 5.0;
   int ratingantall = 0;
@@ -68,43 +66,55 @@ class _ProfilWidgetState extends State<ProfilWidget>
 
   void showErrorToast(BuildContext context, String message) {
     final overlay = Overlay.of(context);
-    final overlayEntry = OverlayEntry(
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         top: 50.0,
         left: 16.0,
         right: 16.0,
         child: Material(
           color: Colors.transparent,
-          child: Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-              boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
-              ],
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  FontAwesomeIcons.solidTimesCircle,
-                  color: Colors.black,
-                  size: 30.0,
-                ),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: Text(
-                    message,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
                   ),
-                ),
-              ],
+                ],
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    FontAwesomeIcons.solidTimesCircle,
+                    color: Colors.black,
+                    size: 30.0,
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -113,8 +123,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
 
     overlay.insert(overlayEntry);
 
+    // Auto-remove the toast after 3 seconds if not dismissed
     Future.delayed(const Duration(seconds: 3), () {
-      overlayEntry.remove();
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
     });
   }
 
@@ -140,17 +153,26 @@ class _ProfilWidgetState extends State<ProfilWidget>
     try {
       String? token = await Securestorage().readToken();
       if (token == null) {
+        // If there's no token, mark as logged out
         FFAppState().login = false;
-        context.goNamed('registrer');
+        context.goNamed('registrer'); // Redirect to the register screen
         return;
       } else {
-        _matvarer = await ApiGetMyFoods.getMyFoods(token);
-        setState(() {
-          if (_matvarer != null && _matvarer!.isNotEmpty) {
+        // Fetch the Matvarer from the API
+        List<Matvarer>? fetchedMatvarer = await ApiGetMyFoods.getMyFoods(token);
+
+        if (fetchedMatvarer != null && fetchedMatvarer.isNotEmpty) {
+          // If Matvarer are fetched successfully, store them in FFAppState
+          FFAppState().matvarer = fetchedMatvarer;
+          safeSetState(() {
             _isloading = false;
-            return;
-          }
-        });
+          });
+        } else {
+          // If no Matvarer are fetched, you can decide what to do here
+          safeSetState(() {
+            _isloading = false;
+          });
+        }
       }
     } on SocketException {
       HapticFeedback.lightImpact();
@@ -170,7 +192,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
         return;
       } else {
         await apicalls.updateUserStats(token);
-        setState(() {});
+        safeSetState(() {});
       }
     } on SocketException {
       HapticFeedback.lightImpact();
@@ -190,7 +212,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
         return;
       } else {
         _ratingStats = await ApiRating.mineRatingSummary(token);
-        setState(() {
+        safeSetState(() {
           ratingVerdi = _ratingStats!.averageValue ?? 5.0;
           ratingantall = _ratingStats!.totalCount ?? 0;
           if (ratingantall == 0) {
@@ -216,7 +238,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
         return;
       } else {
         _likesmatvarer = await ApiGetAllLikes.getAllLikes(token);
-        setState(() {
+        safeSetState(() {
           if (_likesmatvarer != null && _likesmatvarer!.isEmpty) {
             return;
           }
@@ -241,7 +263,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
         return;
       } else {
         folger = await ApiFolg.tellMineFolger(token);
-        setState(() {});
+        safeSetState(() {});
       }
     } on SocketException {
       HapticFeedback.lightImpact();
@@ -261,7 +283,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
         return;
       } else {
         folgere = await ApiFolg.tellMineFolgere(token);
-        setState(() {});
+        safeSetState(() {});
       }
     } on SocketException {
       HapticFeedback.lightImpact();
@@ -522,7 +544,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               mainAxisAlignment: MainAxisAlignment.center,
                                                                               children: [
                                                                                 Text(
-                                                                                  _matvarer?.length.toString() ?? '',
+                                                                                  FFAppState().matvarer.length.toString(),
                                                                                   textAlign: TextAlign.center,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Nunito',
@@ -1271,7 +1293,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                             scrollDirection: Axis.vertical,
                                             itemCount: _isloading
                                                 ? 1
-                                                : _matvarer?.length ?? 1,
+                                                : FFAppState().matvarer.length,
                                             itemBuilder: (context, index) {
                                               if (_isloading) {
                                                 return Shimmer.fromColors(
@@ -1319,7 +1341,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                 );
                                               }
 
-                                              final matvare = _matvarer![index];
+                                              final matvare = FFAppState()
+                                                  .matvarer
+                                                  .toList()[index];
                                               return Stack(
                                                 children: [
                                                   Stack(

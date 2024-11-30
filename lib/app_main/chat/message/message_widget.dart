@@ -116,43 +116,55 @@ class _MessageWidgetState extends State<MessageWidget> {
 
   void showErrorToast(BuildContext context, String message) {
     final overlay = Overlay.of(context);
-    final overlayEntry = OverlayEntry(
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         top: 50.0,
         left: 16.0,
         right: 16.0,
         child: Material(
           color: Colors.transparent,
-          child: Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-              boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
-              ],
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  FontAwesomeIcons.solidTimesCircle,
-                  color: Colors.black,
-                  size: 30.0,
-                ),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: Text(
-                    message,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
                   ),
-                ),
-              ],
+                ],
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    FontAwesomeIcons.solidTimesCircle,
+                    color: Colors.black,
+                    size: 30.0,
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -161,8 +173,11 @@ class _MessageWidgetState extends State<MessageWidget> {
 
     overlay.insert(overlayEntry);
 
+    // Auto-remove the toast after 3 seconds if not dismissed
     Future.delayed(const Duration(seconds: 3), () {
-      overlayEntry.remove();
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
     });
   }
 
@@ -174,31 +189,33 @@ class _MessageWidgetState extends State<MessageWidget> {
   }
 
   void _onAppStateChanged() {
-    setState(() {
-      markRead();
-      _webSocketService.markAllMessagesAsRead(conversation.user);
-      final updatedConversation = FFAppState().conversations.firstWhere(
-            (conv) => conv.user == conversation.user,
-            orElse: () => conversation,
-          );
+    if (mounted) {
+      setState(() {
+        markRead();
+        _webSocketService.markAllMessagesAsRead(conversation.user);
+        final updatedConversation = FFAppState().conversations.firstWhere(
+              (conv) => conv.user == conversation.user,
+              orElse: () => conversation,
+            );
 
-      final newMessagesCount =
-          updatedConversation.messages.length - _lastMessageCount;
+        final newMessagesCount =
+            updatedConversation.messages.length - _lastMessageCount;
 
-      if (newMessagesCount > 0) {
-        // Update the conversation and flags
-        conversation = updatedConversation;
-        _messageListWithFlags = _computeMessageFlags(conversation.messages);
-        _lastMessageCount = conversation.messages.length;
+        if (newMessagesCount > 0) {
+          // Update the conversation and flags
+          conversation = updatedConversation;
+          _messageListWithFlags = _computeMessageFlags(conversation.messages);
+          _lastMessageCount = conversation.messages.length;
 
-        // Insert the new messages one by one
-        for (int i = 0; i < newMessagesCount; i++) {
-          _listKey.currentState
-              ?.insertItem(0); // Animate the addition of each new message
+          // Insert the new messages one by one
+          for (int i = 0; i < newMessagesCount; i++) {
+            _listKey.currentState
+                ?.insertItem(0); // Animate the addition of each new message
+          }
         }
-      }
-      _messageListWithFlags = _computeMessageFlags(conversation.messages);
-    });
+        _messageListWithFlags = _computeMessageFlags(conversation.messages);
+      });
+    }
   }
 
   @override
@@ -214,7 +231,7 @@ class _MessageWidgetState extends State<MessageWidget> {
             child: Column(
               children: [
                 AppBar(
-                  backgroundColor: FlutterFlowTheme.of(context).primary,
+                  backgroundColor: Colors.transparent,
                   automaticallyImplyLeading: true,
                   scrolledUnderElevation: 0.0,
                   leading: Padding(
@@ -224,7 +241,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
-                      onTap: () async {
+                      onTap: () {
                         try {
                           if (conversation.messages.isEmpty) {
                             // Access the global app state (FFAppState)
@@ -233,12 +250,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                             // Remove the conversation from the list if it has no messages
                             appState.conversations.removeWhere(
                                 (conv) => conv.user == conversation.user);
-
-                            // Notify listeners to update the UI (if necessary)
-                            // ignore: invalid_use_of_protected_member
-                            appState.notifyListeners();
+                            appState.updateUI();
                           }
-
                           Navigator.pop(context);
                         } on SocketException {
                           HapticFeedback.lightImpact();
@@ -320,12 +333,11 @@ class _MessageWidgetState extends State<MessageWidget> {
                     centerTitle: true,
                     expandedTitleScale: 1.0,
                   ),
+                  shape: const Border(
+                      bottom: BorderSide(
+                          color: Color.fromARGB(50, 87, 99, 108), width: 1)),
                   elevation: 0,
                 ),
-                // Bottom border container
-                Container(
-                    height: 0.3, // Thickness of the border
-                    color: FlutterFlowTheme.of(context).secondaryText),
               ],
             ),
           ),
@@ -420,10 +432,13 @@ class _MessageWidgetState extends State<MessageWidget> {
                                         isDense: true,
                                         hintText: 'Melding',
                                         hintStyle: FlutterFlowTheme.of(context)
-                                            .bodySmall
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Inter',
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w400,
                                               letterSpacing: 0.0,
+                                              lineHeight: 1,
                                             ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
@@ -500,7 +515,6 @@ class _MessageWidgetState extends State<MessageWidget> {
                       buttonSize: 68.0,
                       onPressed: () {
                         try {
-                          print("pressed");
                           if (_model.textController!.text.trim().isNotEmpty) {
                             _webSocketService.sendMessage(
                               conversation.user,
@@ -521,7 +535,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                       icon: const FaIcon(
                         FontAwesomeIcons.arrowCircleUp,
                         color: Color(0xFF357BF7),
-                        size: 32,
+                        size: 30,
                       ),
                     ),
                   ),

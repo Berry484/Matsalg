@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
@@ -70,6 +72,92 @@ class FFAppState extends ChangeNotifier {
 
     // Initialize conversations list from shared preferences
     await _safeInitAsync(_initializeConversations);
+    await _safeInitAsync(_initializeMatvarer);
+    await _safeInitAsync(_initializeOrdreInfo);
+  }
+
+  // OrdreInfo List
+  List<OrdreInfo> _ordreInfo = [];
+  List<OrdreInfo> get ordreInfo => _ordreInfo;
+  set ordreInfo(List<OrdreInfo> value) {
+    _ordreInfo = value;
+    _saveOrdreInfoToPrefs();
+    notifyListeners();
+  }
+
+  // Add OrdreInfo to list
+  void addOrdreInfo(OrdreInfo ordre) {
+    _ordreInfo.add(ordre);
+    _saveOrdreInfoToPrefs();
+    notifyListeners();
+  }
+
+  // Remove OrdreInfo from list
+  void removeOrdreInfo(OrdreInfo ordre) {
+    _ordreInfo.remove(ordre);
+    _saveOrdreInfoToPrefs();
+    notifyListeners();
+  }
+
+  // Save OrdreInfo list to SharedPreferences
+  void _saveOrdreInfoToPrefs() {
+    String ordreInfoJson =
+        json.encode(_ordreInfo.map((e) => e.toJson()).toList());
+    prefs.setString('ff_ordre_info', ordreInfoJson);
+    notifyListeners();
+  }
+
+  // Initialize OrdreInfo from SharedPreferences
+  Future<void> _initializeOrdreInfo() async {
+    String? ordreInfoJson = prefs.getString('ff_ordre_info');
+    if (ordreInfoJson != null) {
+      List<dynamic> ordreInfoList = json.decode(ordreInfoJson);
+      _ordreInfo =
+          ordreInfoList.map((ordre) => OrdreInfo.fromJson(ordre)).toList();
+      notifyListeners();
+    } else {
+      _ordreInfo = [];
+    }
+  }
+
+  Future<void> _initializeMatvarer() async {
+    String? matvarerJson = prefs.getString('ff_matvarer');
+    if (matvarerJson != null) {
+      List<dynamic> matvarerList = json.decode(matvarerJson);
+      _matvarer =
+          matvarerList.map((matvare) => Matvarer.fromJson(matvare)).toList();
+      notifyListeners();
+    } else {
+      _matvarer = [];
+    }
+  }
+
+  void addMatvare(Matvarer matvare) {
+    _matvarer.add(matvare);
+    _saveMatvarerToPrefs();
+    notifyListeners();
+  }
+
+  void removeMatvare(Matvarer matvare) {
+    _matvarer.remove(matvare);
+    _saveMatvarerToPrefs();
+    notifyListeners();
+  }
+
+  void _saveMatvarerToPrefs() {
+    String matvarerJson =
+        json.encode(_matvarer.map((e) => e.toJson()).toList());
+    prefs.setString('ff_matvarer', matvarerJson);
+    notifyListeners();
+  }
+
+  late SharedPreferences prefs;
+  List<Matvarer> _matvarer = [];
+  List<Matvarer> get matvarer => _matvarer;
+  set matvarer(List<Matvarer> value) {
+    _matvarer = value;
+    _saveMatvarerToPrefs();
+    notifyListeners();
   }
 
   Future<void> _initializeConversations() async {
@@ -79,6 +167,7 @@ class FFAppState extends ChangeNotifier {
       _conversations = conversationsList
           .map((conversation) => Conversation.fromJson(conversation))
           .toList();
+      notifyListeners();
     } else {
       _conversations = [];
     }
@@ -89,8 +178,6 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  late SharedPreferences prefs;
-
   List<Conversation> _conversations = [];
   List<Conversation> get conversations => _conversations;
   set conversations(List<Conversation> value) {
@@ -100,13 +187,13 @@ class FFAppState extends ChangeNotifier {
   }
 
   void addConversation(Conversation conversation) {
-    _conversations.add(conversation);
+    _conversations = [..._conversations, conversation];
     _saveConversationsToPrefs();
     notifyListeners();
   }
 
   void removeConversation(Conversation conversation) {
-    _conversations.remove(conversation);
+    _conversations = _conversations.where((c) => c != conversation).toList();
     _saveConversationsToPrefs();
     notifyListeners();
   }
@@ -115,6 +202,17 @@ class FFAppState extends ChangeNotifier {
     String conversationsJson =
         json.encode(_conversations.map((e) => e.toJson()).toList());
     prefs.setString('ff_conversations', conversationsJson);
+    notifyListeners();
+  }
+
+  void updateUI() {
+    try {
+      notifyListeners();
+    } on Error {
+      logger.d('Error updating ui');
+    } catch (e) {
+      logger.d('Error updating ui $e');
+    }
   }
 
   bool _login = false;
@@ -328,4 +426,242 @@ Future<void> _safeInitAsync(Function() initializeField) async {
   try {
     await initializeField();
   } catch (_) {}
+}
+
+class Matvarer {
+  final int? matId;
+  final String? name;
+  final List<String>? imgUrls;
+  final String? description;
+  final int? price;
+  final List<String>? kategorier;
+  final double? lat;
+  final double? lng;
+  final bool? betaling;
+  final bool? kg;
+  final String? username;
+  final bool? bonde;
+  final double? antall;
+  final String? profilepic;
+  final bool? kjopt;
+  final DateTime? updatetime; // Add updatetime here
+
+  Matvarer({
+    this.matId,
+    this.name,
+    this.imgUrls,
+    this.description,
+    this.price,
+    this.kategorier,
+    this.lat,
+    this.lng,
+    this.betaling,
+    this.kg,
+    this.username,
+    this.bonde,
+    this.antall,
+    this.profilepic,
+    this.kjopt,
+    this.updatetime, // Add updatetime to constructor
+  });
+
+  factory Matvarer.fromJson1(Map<String, dynamic>? json) {
+    DateTime? parsedTime;
+    if (json?['updatetime'] != null) {
+      parsedTime = DateTime.tryParse(json?['updatetime']);
+    }
+
+    return Matvarer(
+      matId: json?['matId'] as int?,
+      name: json?['name'] as String? ?? "", // Default empty string if null
+      imgUrls: (json?['imgUrl'] != null && json?['imgUrl'] is List)
+          ? List<String>.from(json?['imgUrl']?.whereType<String>() ?? [])
+          : [],
+      description: json?['description'] as String? ?? "",
+      price: json?['price'] as int?,
+      kategorier: (json?['kategorier'] != null && json?['kategorier'] is List)
+          ? List<String>.from(json?['kategorier'])
+          : null,
+      lat: json?['lat'] as double?,
+      lng: json?['lng'] as double?,
+      betaling: json?['betaling'] as bool?,
+      kg: json?['kg'] as bool?,
+      username: json?['username'] as String? ?? "",
+      bonde: json?['bonde'] as bool?,
+      antall: json?['antall'] as double?,
+      profilepic: json?['profilepic'] as String? ?? "",
+      kjopt: json?['kjopt'] as bool?,
+      updatetime: parsedTime, // Parse updatetime if available
+    );
+  }
+
+  factory Matvarer.fromJson(Map<String, dynamic> json) {
+    DateTime? parsedTime;
+    if (json['updatetime'] != null) {
+      parsedTime = DateTime.tryParse(json['updatetime']);
+    }
+
+    return Matvarer(
+      matId: json['matId'] as int?,
+      name: json['name'] as String? ?? "",
+      imgUrls: (json['imgUrl'] != null && json['imgUrl'] is List)
+          ? List<String>.from(json['imgUrl']?.whereType<String>() ?? [])
+          : [],
+      description: json['description'] as String? ?? "",
+      price: json['price'] as int?,
+      kategorier: (json['kategorier'] != null && json['kategorier'] is List)
+          ? List<String>.from(json['kategorier'])
+          : null,
+      lat: json['lat'] as double?,
+      lng: json['lng'] as double?,
+      betaling: json['betaling'] as bool?,
+      kg: json['kg'] as bool?,
+      username: json['username'] as String? ?? "",
+      bonde: json['bonde'] as bool?,
+      antall: json['antall'] as double?,
+      profilepic: json['user']?['profilepic'] as String? ?? "",
+      kjopt: json['kjopt'] as bool?,
+      updatetime: parsedTime, // Parse updatetime if available
+    );
+  }
+
+  // Method to convert a list of snapshots to a list of Matvarer objects
+  static List<Matvarer> matvarerFromSnapShot(List snapshot) {
+    return snapshot.map((data) {
+      return Matvarer.fromJson(data);
+    }).toList();
+  }
+
+  // Convert Matvarer object to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'matId': matId,
+      'name': name,
+      'imgUrl': imgUrls,
+      'description': description,
+      'price': price,
+      'kategorier': kategorier,
+      'lat': lat,
+      'lng': lng,
+      'betaling': betaling,
+      'kg': kg,
+      'username': username,
+      'bonde': bonde,
+      'antall': antall,
+      'profilepic': profilepic,
+      'kjopt': kjopt,
+      'updatetime': updatetime
+          ?.toIso8601String(), // Convert DateTime to ISO string for JSON
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Matvarer {'
+        'matId: $matId, '
+        'name: $name, '
+        'imgUrls: $imgUrls, '
+        'description: $description, '
+        'price: $price, '
+        'kategorier: $kategorier, '
+        'lat: $lat, '
+        'lng: $lng, '
+        'betaling: $betaling, '
+        'kg: $kg, '
+        'username: $username, '
+        'bonde: $bonde, '
+        'antall: $antall, '
+        'profilepic: $profilepic, '
+        'kjopt: $kjopt, '
+        'updatetime: $updatetime'
+        '}';
+  }
+}
+
+class OrdreInfo {
+  final int id;
+  final String kjoper;
+  final String selger;
+  final int matId;
+  final Decimal antall;
+  final Decimal pris;
+  final DateTime time;
+  final DateTime? godkjenttid;
+  final DateTime? updatetime;
+  final bool? hentet;
+  final bool? godkjent;
+  final bool? trekt;
+  final bool? avvist;
+  final String? kjoperProfilePic;
+  final Matvarer foodDetails;
+  final bool? kjopte;
+  final bool? rated;
+
+  OrdreInfo({
+    required this.id,
+    required this.kjoper,
+    required this.selger,
+    required this.matId,
+    required this.antall,
+    required this.pris,
+    required this.time,
+    this.godkjenttid,
+    required this.updatetime,
+    required this.hentet,
+    required this.godkjent,
+    required this.trekt,
+    required this.avvist,
+    required this.kjoperProfilePic,
+    required this.foodDetails,
+    required this.kjopte,
+    required this.rated,
+  });
+
+  // Convert OrdreInfo from JSON
+  factory OrdreInfo.fromJson(Map<String, dynamic> json) {
+    return OrdreInfo(
+      id: json['id'] as int,
+      kjoper: json['kjoper'] as String,
+      selger: json['selger'] as String,
+      matId: json['matId'] as int,
+      antall: Decimal.parse(json['antall'].toString()),
+      pris: Decimal.parse(json['pris'].toString()),
+      time: DateTime.parse(json['time']),
+      godkjenttid: json['godkjenttid'] != null
+          ? DateTime.parse(json['godkjenttid'])
+          : null,
+      updatetime: DateTime.parse(json['updatetime']),
+      hentet: json['hentet'] as bool?,
+      godkjent: json['godkjent'] as bool?,
+      trekt: json['trekt'] as bool?,
+      avvist: json['avvist'] as bool?,
+      kjoperProfilePic: json['kjoperProfilePic'] as String?,
+      foodDetails: Matvarer.fromJson(json['foodDetails']),
+      kjopte: json['kjopte'] as bool?,
+      rated: json['rated'] as bool?,
+    );
+  }
+
+  // Convert OrdreInfo to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'kjoper': kjoper,
+      'selger': selger,
+      'matId': matId,
+      'antall': antall.toString(),
+      'pris': pris.toString(),
+      'time': time.toIso8601String(),
+      'godkjenttid': godkjenttid?.toIso8601String(),
+      'updatetime': updatetime?.toIso8601String(),
+      'hentet': hentet,
+      'godkjent': godkjent,
+      'trekt': trekt,
+      'avvist': avvist,
+      'kjoperProfilePic': kjoperProfilePic,
+      'foodDetails': foodDetails.toJson(),
+      'kjopte': kjopte,
+      'rated': rated,
+    };
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/api/web_socket.dart';
+import 'package:mat_salg/logging.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -280,8 +281,10 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                       _webSocketService.connect();
                                       setState(() {});
                                     } catch (e) {
-                                      print("errror $e");
+                                      logger.d("errror $e");
                                     }
+                                    _webSocketService = WebSocketService();
+                                    _webSocketService.connect(retrying: true);
                                     context.go('/hjem');
                                     FFAppState().login = true;
                                     return;
@@ -463,9 +466,11 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                       _webSocketService.connect();
                                       setState(() {});
                                     } catch (e) {
-                                      print("errror $e");
+                                      logger.d("errror $e");
                                     }
                                     _isloading = false;
+                                    _webSocketService = WebSocketService();
+                                    _webSocketService.connect(retrying: true);
                                     context.go('/hjem');
                                     FFAppState().login = true;
                                     return;

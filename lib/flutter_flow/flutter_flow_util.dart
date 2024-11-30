@@ -9,6 +9,7 @@ import 'dart:math' show pow, pi, sin;
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:json_path/json_path.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -260,7 +261,7 @@ Future<LatLng> getCurrentUserLocation(
     }
     return loc ?? defaultLocation;
   }).onError((error, _) {
-    print("Error querying user location: $error");
+    logger.d("Error querying user location: $error");
     return defaultLocation;
   });
 }

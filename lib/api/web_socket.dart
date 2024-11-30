@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -30,7 +30,6 @@ class WebSocketService {
   bool _isConnected = false;
   bool get isConnected => _isConnected;
 
-  bool _isManuallyClosed = false;
   bool _running = false;
   static const Duration retryDelay = Duration(seconds: 3);
   static const Duration listenerTimeout =
@@ -39,7 +38,7 @@ class WebSocketService {
   Future<void> connect({bool? retrying}) async {
     try {
       if (_running) {
-        print("Connection attempt already in progress.");
+        logger.d("Connection attempt already in progress.");
         return;
       }
 
@@ -47,7 +46,7 @@ class WebSocketService {
 
       // Prevent redundant reconnections
       if (_isConnected && retrying == null) {
-        print("Already connected. No need to reconnect.");
+        logger.d("Already connected. No need to reconnect.");
         _running = false;
         return;
       }
@@ -57,14 +56,14 @@ class WebSocketService {
       String? token = await _getToken();
 
       if (token == null || token.isEmpty) {
-        print('Error: Token is missing or invalid.');
+        logger.d('Error: Token is missing or invalid.');
         _isConnected = false;
         _running = false;
         return;
       }
 
       try {
-        print("Attempting to connect to WebSocket...");
+        logger.d("Attempting to connect to WebSocket...");
 
         // Close existing connection if any
         await _cleanupConnection();
@@ -82,16 +81,16 @@ class WebSocketService {
         await _listenWithTimeout(_innerStream);
 
         _isConnected = true;
-        print("WebSocket connection established.");
+        logger.d("WebSocket connection established.");
       } catch (e) {
-        print("Failed to connect to WebSocket: $e");
+        logger.d("Failed to connect to WebSocket: $e");
         _isConnected = false;
         handleLostConnection();
       } finally {
         _running = false;
       }
     } catch (e) {
-      print("Error when connecting$e");
+      logger.d("Error when connecting$e");
     }
   }
 
@@ -102,7 +101,7 @@ class WebSocketService {
     stream.listen(
       (event) {
         try {
-          print('Received message: $event');
+          logger.d('Received message: $event');
           _outerStreamSubject.add(event);
           _onMessageReceived(event);
           if (completer.isCompleted) {
@@ -110,25 +109,25 @@ class WebSocketService {
             completer.complete();
           }
         } catch (e) {
-          print("error$e");
+          logger.d("error$e");
         }
       },
       onError: (error) {
         try {
-          print("WebSocket error: $error");
+          logger.d("WebSocket error: $error");
           completer.completeError(
               error); // Mark as error if there was a connection issue
         } catch (e) {
-          print("error$e");
+          logger.d("error$e");
         }
       },
       onDone: () {
         try {
-          print("WebSocket connection closed.");
+          logger.d("WebSocket connection closed.");
           completer.completeError(
               Exception("Connection closed before receiving any response"));
         } catch (e) {
-          print("error$e");
+          logger.d("error$e");
         }
       },
     );
@@ -142,51 +141,59 @@ class WebSocketService {
 
       // If we reach here, it means we either got a response or the timeout occurred
       if (completer.isCompleted) {
-        print("Listener received response.");
+        logger.d("Listener received response.");
       } else {
         throw TimeoutException(
             "No response received within the timeout period.");
       }
     } catch (e) {
       // If an error occurs (including timeout), handle the reconnection
-      print("Error during listener setup: $e");
+      logger.d("Error during listener setup: $e");
       throw e; // Re-throw exception to trigger reconnection logic
     }
   }
 
   Future<void> _cleanupConnection() async {
     try {
-      if (_ioWebSocketChannel != null) {
-        print("Closing existing WebSocket connection...");
-        await _ioWebSocketChannel.sink.close();
-      }
+      logger.d("Closing existing WebSocket connection...");
+      await _ioWebSocketChannel.sink.close();
     } catch (e) {
-      print("Error during WebSocket cleanup: $e");
+      logger.d("Error during WebSocket cleanup: $e");
     }
   }
 
   void handleLostConnection() {
-    print("Handling lost connection...");
+    logger.d("Handling lost connection...");
     Future.delayed(retryDelay, () async {
-      print("Reconnecting after delay...");
+      logger.d("Reconnecting after delay...");
       await connect(retrying: true);
     });
   }
 
   void close() async {
-    _isManuallyClosed = true;
     await _cleanupConnection();
-    print("WebSocket service closed.");
+    logger.d("WebSocket service closed.");
+  }
+
+  String _escapeControlCharactersInJson(String message) {
+    // Escape newline, carriage return, and tab characters by replacing them with their escaped versions
+    message = message.replaceAll('\n', r'\n'); // Escape newline
+    message = message.replaceAll('\r', r'\r'); // Escape carriage return
+    message = message.replaceAll('\t', r'\t'); // Escape tab
+
+    // You can add more escape sequences here if needed for other special characters
+
+    return message;
   }
 
   void _onMessageReceived(dynamic message) {
     try {
+      message = _escapeControlCharactersInJson(message);
       var data = jsonDecode(message);
 
       if (data.containsKey('status') && data['status'] == 'read') {
         String receiver = data['receiver'] ?? ''; // Receiver from the message
 
-        // Access FFAppState to update the conversations globally
         final appState = FFAppState();
 
         // Find the conversation with the receiver (i.e., the user who sent the "read" status)
@@ -204,15 +211,16 @@ class WebSocketService {
           }
         }
         // Notify listeners to update the UI
-        appState.notifyListeners();
-        print('Marked all messages sent by me as read for receiver: $receiver');
+        appState.updateUI();
+        logger.d(
+            'Marked all messages sent by me as read for receiver: $receiver');
       }
 
       // Check if data is a Map (assumes the message is in JSON format)
       if (data is Map) {
         // If the message contains only the 'status' field, ignore it
         if (data.containsKey('status')) {
-          print("Received status update, ignoring...");
+          logger.d("Received status update, ignoring...");
           return; // Ignore this message
         }
 
@@ -237,13 +245,11 @@ class WebSocketService {
 
               // notifyListeners() to update the UI
 
-              appState.notifyListeners();
-              // const Duration(seconds: 1000);
-              // appState.notifyListeners();
+              appState.updateUI();
             }
             return;
           } catch (e) {
-            print('Error parsing message: $e');
+            logger.d('Error parsing message: $e');
           }
         } else {
           var data = jsonDecode(message); // Assuming message is JSON string.
@@ -290,18 +296,18 @@ class WebSocketService {
             conversation.messages.insert(0, newMessage);
           }
 
-          appState.notifyListeners();
-          print("Notified listeners to update the UI");
+          appState.updateUI();
+          logger.d("Notified listeners to update the UI");
         }
       }
     } catch (e) {
-      print('Error parsing message: $e');
+      logger.d('Error parsing message: $e');
     }
   }
 
   void sendMessage(String receiver, String content) {
     if (!_isConnected) {
-      print('WebSocket is not connected. Cannot send message.');
+      logger.d('WebSocket is not connected. Cannot send message.');
       throw const SocketException('');
     }
 
@@ -341,12 +347,11 @@ class WebSocketService {
     _sendMessageToServer(receiver, escapedContent);
 
     // Save the updated conversation list to SharedPreferences
-    appState.notifyListeners();
+    appState.updateUI();
   }
 
   void _sendMessageToServer(String receiver, String content) {
     final appState = FFAppState();
-    print(content);
     // Prepare the message object in the correct format
     Map<String, dynamic> message = {
       'receiver': receiver,
@@ -357,10 +362,9 @@ class WebSocketService {
 
     // Send the encoded message over WebSocket
     _ioWebSocketChannel.sink.add(jsonEncode(message));
-    print(message);
 
     // Save the updated conversation list to SharedPreferences
-    appState.notifyListeners();
+    appState.updateUI();
   }
 
   void _sendMarkAsReadRequest(String sender) {
@@ -377,7 +381,7 @@ class WebSocketService {
 
     // Send the message over WebSocket
     _ioWebSocketChannel.sink.add(jsonMessage);
-    print('Sent mark as read request: $jsonMessage');
+    logger.d('Sent mark as read request: $jsonMessage');
   }
 
   void markAllMessagesAsRead(String sender) {

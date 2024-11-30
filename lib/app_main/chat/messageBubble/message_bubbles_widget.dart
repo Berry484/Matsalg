@@ -1,3 +1,5 @@
+import 'package:mat_salg/logging.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +49,7 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
       } catch (e) {
         // Handle parsing error (optional)
         time = DateTime.now(); // Set to current time as fallback
-        print("Error parsing messageTime: $e");
+        logger.d("Error parsing messageTime: $e");
       }
     }
     _model = createModel(context, () => MessageBubblesModel());

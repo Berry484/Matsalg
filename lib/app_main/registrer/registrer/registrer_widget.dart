@@ -1,4 +1,5 @@
 import 'package:mat_salg/app_main/registrer/velg_ny/velg_ny_widget.dart';
+import 'package:mat_salg/logging.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -129,7 +130,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                               40, 0, 40, 12),
                           child: FFButtonWidget(
                             onPressed: () {
-                              print('Button pressed ...');
+                              logger.d('Button pressed ...');
                             },
                             text: 'Fortsett med apple',
                             icon: const FaIcon(
@@ -167,7 +168,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                               40, 0, 40, 0),
                           child: FFButtonWidget(
                             onPressed: () {
-                              print('Button pressed ...');
+                              logger.d('Button pressed ...');
                             },
                             text: 'Fortsett med facebook',
                             icon: const FaIcon(

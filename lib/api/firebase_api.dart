@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mat_salg/logging.dart';
 
 // Top-level background handler function
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('Title: ${message.notification?.title}');
-  print('Body: ${message.notification?.body}');
-  print('Payload: ${message.data}');
+  logger.d('Title: ${message.notification?.title}');
+  logger.d('Body: ${message.notification?.body}');
+  logger.d('Payload: ${message.data}');
 }
 
 class FirebaseApi {
@@ -24,7 +25,7 @@ class FirebaseApi {
 
   void handleMessage(RemoteMessage? message) {
     if (message == null) return;
-    print(message);
+    logger.d(message);
   }
 
   Future initLocalNotifications() async {
@@ -83,7 +84,7 @@ class FirebaseApi {
   Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
-    print('Token: $fCMToken');
+    logger.d('Token: $fCMToken');
     initPushNotifications();
     initLocalNotifications();
   }

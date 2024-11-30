@@ -40,12 +40,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
   List<OrdreInfo>? _ordreInfo;
   List<OrdreInfo>? _salgInfo;
   List<OrdreInfo>? _alleInfo;
-  bool _isloading = true;
+  bool _isloading = false;
   bool _isKjopLoading = true;
   bool _salgisLoading = true;
   bool _kjopEmpty = false;
   bool _salgEmpty = false;
-  bool _allEmpty = false;
   bool _showMore = false;
   final Securestorage securestorage = Securestorage();
   final ApiCalls apicalls = ApiCalls();
@@ -61,47 +60,61 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
       length: 3,
       initialIndex: 0,
     )..addListener(() => safeSetState(() {}));
+
+    _alleInfo = FFAppState().ordreInfo;
   }
 
   void showErrorToast(BuildContext context, String message) {
     final overlay = Overlay.of(context);
-    final overlayEntry = OverlayEntry(
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         top: 50.0,
         left: 16.0,
         right: 16.0,
         child: Material(
           color: Colors.transparent,
-          child: Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-              boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
-              ],
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  FontAwesomeIcons.solidTimesCircle,
-                  color: Colors.black,
-                  size: 30.0,
-                ),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: Text(
-                    message,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
                   ),
-                ),
-              ],
+                ],
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    FontAwesomeIcons.solidTimesCircle,
+                    color: Colors.black,
+                    size: 30.0,
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -110,8 +123,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
 
     overlay.insert(overlayEntry);
 
+    // Auto-remove the toast after 3 seconds if not dismissed
     Future.delayed(const Duration(seconds: 3), () {
-      overlayEntry.remove();
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
     });
   }
 
@@ -124,31 +140,31 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
         return;
       } else {
         _alleInfo = await ApiKjop.getAll(token);
+        if (mounted) {
+          setState(() {
+            if (_alleInfo != null && _alleInfo!.isNotEmpty) {
+              FFAppState().ordreInfo = _alleInfo ?? [];
+              _isloading = false;
 
-        setState(() {
-          if (_alleInfo != null && _alleInfo!.isNotEmpty) {
-            _isloading = false;
-            _allEmpty = false;
+              _ordreInfo = _alleInfo!
+                  .where((order) => order.kjopte == true && _isActive(order))
+                  .toList();
+              _kjopEmpty = _ordreInfo!.isEmpty;
 
-            _ordreInfo = _alleInfo!
-                .where((order) => order.kjopte == true && _isActive(order))
-                .toList();
-            _kjopEmpty = _ordreInfo!.isEmpty;
+              _salgInfo = _alleInfo!
+                  .where((order) => order.kjopte == false && _isActive(order))
+                  .toList();
+              _salgEmpty = _salgInfo!.isEmpty;
 
-            _salgInfo = _alleInfo!
-                .where((order) => order.kjopte == false && _isActive(order))
-                .toList();
-            _salgEmpty = _salgInfo!.isEmpty;
-
-            _isloading = false;
-            _salgisLoading = false;
-            _isKjopLoading = false;
-          } else {
-            _kjopEmpty = true;
-            _salgEmpty = true;
-            _allEmpty = true;
-          }
-        });
+              _isloading = false;
+              _salgisLoading = false;
+              _isKjopLoading = false;
+            } else {
+              _kjopEmpty = true;
+              _salgEmpty = true;
+            }
+          });
+        }
       }
     } on SocketException {
       HapticFeedback.lightImpact();
@@ -175,7 +191,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
         return;
       } else {
         await apicalls.updateUserStats(token);
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+        }
       }
     } on SocketException {
       HapticFeedback.lightImpact();
@@ -246,7 +264,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
   @override
   void dispose() {
     _model.dispose();
-
+    updateUserStats().ignore();
+    getAll().ignore();
     super.dispose();
   }
 
@@ -390,16 +409,26 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             scrollDirection: Axis.vertical,
                                             itemCount: _isloading
                                                 ? 1
-                                                : (_alleInfo?.length ?? 0) == 0
+                                                : (FFAppState()
+                                                        .ordreInfo
+                                                        .isEmpty)
                                                     ? 1
                                                     : _showMore
-                                                        ? _alleInfo!
+                                                        ? FFAppState()
+                                                            .ordreInfo
                                                             .length // Show all items when _showMore is true
-                                                        : (_alleInfo!.length < 5
-                                                            ? _alleInfo!.length
+                                                        : (FFAppState()
+                                                                    .ordreInfo
+                                                                    .length <
+                                                                5
+                                                            ? FFAppState()
+                                                                .ordreInfo
+                                                                .length
                                                             : 5), // Show fewer items if length < 5, else show 5
                                             itemBuilder: (context, index) {
-                                              if (_allEmpty == true) {
+                                              if (FFAppState()
+                                                  .ordreInfo
+                                                  .isEmpty) {
                                                 return Container(
                                                   width:
                                                       MediaQuery.sizeOf(context)
@@ -654,8 +683,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                   ),
                                                 );
                                               }
-                                              final alleInfo =
-                                                  _alleInfo![index];
+                                              final alleInfo = FFAppState()
+                                                  .ordreInfo
+                                                  .toList()[index];
                                               if ((index == 4 && !_showMore) &&
                                                   _alleInfo!.length > 4) {
                                                 // This is where we show the "Show More" button

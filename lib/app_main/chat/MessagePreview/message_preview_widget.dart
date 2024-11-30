@@ -1,4 +1,5 @@
 import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/logging.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -46,7 +47,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
     } catch (e) {
       // Handle parsing error (optional)
       time = DateTime.now(); // Set to current time as fallback
-      print("Error parsing messageTime: $e");
+      logger.d("Error parsing messageTime: $e");
     }
 
     _model = createModel(context, () => MessagePreviewModel());

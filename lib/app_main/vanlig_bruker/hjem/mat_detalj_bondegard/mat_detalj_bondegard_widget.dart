@@ -8,7 +8,6 @@ import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_animations.dart';
-import 'package:mat_salg/matvarer.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -117,9 +116,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10.0),
-              boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8)
-              ],
             ),
             child: Row(
               children: [
@@ -566,12 +562,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       },
                                       child: SizedBox(
                                         width: double.infinity,
-                                        height: 525.0,
+                                        height: 485,
                                         child: Stack(
                                           children: [
                                             SizedBox(
                                               width: double.infinity,
-                                              height: 525.0,
+                                              height: 485,
                                               child: Stack(
                                                 children: [
                                                   Padding(
@@ -594,7 +590,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         SizedBox(
                                                           width:
                                                               double.infinity,
-                                                          height: 525.0,
+                                                          height: 485,
                                                           child: Stack(
                                                             children: [
                                                               ClipRRect(
@@ -607,7 +603,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                                   width: double
                                                                       .infinity,
-                                                                  height: 525.0,
+                                                                  height: 485,
                                                                   fit: BoxFit
                                                                       .cover,
                                                                   alignment:
@@ -642,7 +638,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           SizedBox(
                                                             width:
                                                                 double.infinity,
-                                                            height: 525.0,
+                                                            height: 485,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -691,7 +687,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           SizedBox(
                                                             width:
                                                                 double.infinity,
-                                                            height: 525.0,
+                                                            height: 485,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -738,7 +734,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                 .length >
                                                             3)
                                                           SizedBox(
-                                                            height: 525.0,
+                                                            height: 485,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(
@@ -787,7 +783,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           SizedBox(
                                                             width:
                                                                 double.infinity,
-                                                            height: 525.0,
+                                                            height: 485,
                                                             child: Stack(
                                                               children: [
                                                                 ClipRRect(

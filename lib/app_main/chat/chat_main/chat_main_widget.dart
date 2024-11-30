@@ -91,7 +91,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
   }
 
   void _onAppStateChanged() {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

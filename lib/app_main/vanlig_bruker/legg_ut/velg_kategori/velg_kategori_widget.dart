@@ -237,7 +237,7 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                                 ? Colors.white
                                                                 : const Color(
                                                                     0xFF838383),
-                                                        size: 32,
+                                                        size: 28,
                                                       ),
                                                       Padding(
                                                         padding:
@@ -320,7 +320,7 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                                 ? Colors.white
                                                                 : const Color(
                                                                     0xFF838383),
-                                                        size: 32,
+                                                        size: 28,
                                                       ),
                                                       Padding(
                                                         padding:
@@ -403,7 +403,7 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                                 ? Colors.white
                                                                 : const Color(
                                                                     0xFF838383),
-                                                        size: 32,
+                                                        size: 28,
                                                       ),
                                                       Padding(
                                                         padding:
@@ -496,7 +496,7 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                           ? Colors.white
                                                           : const Color(
                                                               0xFF838383),
-                                                      size: 32,
+                                                      size: 28,
                                                     ),
                                                     Padding(
                                                       padding:
@@ -573,7 +573,7 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                           ? Colors.white
                                                           : const Color(
                                                               0xFF838383),
-                                                      size: 32,
+                                                      size: 28,
                                                     ),
                                                     Padding(
                                                       padding:
@@ -650,7 +650,7 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                                                           ? Colors.white
                                                           : const Color(
                                                               0xFF838383),
-                                                      size: 32,
+                                                      size: 28,
                                                     ),
                                                     Padding(
                                                       padding:

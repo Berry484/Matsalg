@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:decimal/decimal.dart';
 import 'package:http/http.dart' as http;
@@ -7,42 +8,60 @@ import 'package:mat_salg/MyIP.dart';
 import 'dart:async'; // Import this to use Future and TimeoutException
 import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
 import 'package:http_parser/http_parser.dart';
-import 'matvarer.dart';
 
 class ApiCalls {
   static const String baseUrl = ApiConstants.baseUrl;
 
   // Define the method to check if the email is taken
   Future<http.Response> checkEmailTaken(String email) async {
-    final response =
-        await http.get(Uri.parse('$baseUrl/rrh/epostledig?email=$email'));
-    return response; // Return the response
+    try {
+      final response =
+          await http.get(Uri.parse('$baseUrl/rrh/epostledig?email=$email'));
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
 //----------------------------------------------------------------------------------------------
   Future<http.Response> checkUsernameTaken(String username) async {
-    final response = await http
-        .get(Uri.parse('$baseUrl/rrh/usernameledig?username=$username'));
-    return response; // Return the response
+    try {
+      final response = await http
+          .get(Uri.parse('$baseUrl/rrh/usernameledig?username=$username'));
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
 //----------------------------------------------------------------------------------------------
   Future<http.Response> checkPhoneTaken(String phoneNumber) async {
-    final response = await http
-        .get(Uri.parse('$baseUrl/rrh/check-phone?phoneNumber=$phoneNumber'));
+    try {
+      final response = await http
+          .get(Uri.parse('$baseUrl/rrh/check-phone?phoneNumber=$phoneNumber'));
 
-    return response; // Return the response
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
 //----------------------------------------------------------------------------------------------
   Future<http.Response> checkUserInfo(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
-    // Using the timeout method
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Using the timeout method
+
       final response = await http
           .get(
             Uri.parse('$baseUrl/rrh/brukere/brukerinfo'),
@@ -52,19 +71,22 @@ class ApiCalls {
 
       final decodedBody = utf8.decode(response.bodyBytes);
       return http.Response(decodedBody, response.statusCode);
-    } on TimeoutException {
-      return http.Response('Request timed out', 500);
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
     }
   }
 
   Future<http.Response?> updateUserStats(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
-    // Using the timeout method
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Using the timeout method
+
       final response = await http
           .get(
             Uri.parse('$baseUrl/rrh/brukere/seBrukerInfo'),
@@ -80,20 +102,20 @@ class ApiCalls {
       FFAppState().harSolgt = jsonResponse['hasSold'] ?? false;
 
       return response;
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   Future<String> getKommune(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       if (FFAppState().brukerLat == 59.9138688 &&
           FFAppState().brukerLng == 10.7522454) {
         return 'Norge';
@@ -117,21 +139,21 @@ class ApiCalls {
       } else {
         return 'Norge';
       }
-    } on TimeoutException {
-      return 'Norge';
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return 'Norge';
+      throw Exception;
     }
   }
 
   Future<String> leggutgetKommune(
       String? token, double brukerLat, double brukerLng) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       final response = await http
           .get(
             Uri.parse(
@@ -151,10 +173,10 @@ class ApiCalls {
       } else {
         return 'Norge';
       }
-    } on TimeoutException {
-      return 'Norge';
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return 'Norge';
+      throw Exception;
     }
   }
 }
@@ -176,44 +198,50 @@ class RegisterUser {
     String? bio,
     LatLng? posisjon,
   }) async {
-    // Base URL for the API
-    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+    try {
+      // Base URL for the API
+      const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
 
-    // Create the user data as a Map
-    final Map<String, dynamic> userData = {
-      "username": username,
-      "email": email,
-      "emailVerified": true,
-      "firstName": firstName,
-      "lastName": lastName,
-      "enabled": true,
-      "attributes": {
-        "phoneNumber": [phoneNumber] // Custom attributes as a list
-      },
-      "credentials": [
-        {"type": "password", "value": password, "temporary": false}
-      ]
-    };
+      // Create the user data as a Map
+      final Map<String, dynamic> userData = {
+        "username": username,
+        "email": email,
+        "emailVerified": true,
+        "firstName": firstName,
+        "lastName": lastName,
+        "enabled": true,
+        "attributes": {
+          "phoneNumber": [phoneNumber] // Custom attributes as a list
+        },
+        "credentials": [
+          {"type": "password", "value": password, "temporary": false}
+        ]
+      };
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(userData);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userData);
 
-    // Prepare URL with encoded parameters
-    final uri =
-        Uri.parse('$baseUrl/rrh/bruker/opprett').replace(queryParameters: {
-      'bio': bio,
-      'lat': posisjon?.latitude.toString(),
-      'lng': posisjon?.longitude.toString(),
-    });
+      // Prepare URL with encoded parameters
+      final uri =
+          Uri.parse('$baseUrl/rrh/bruker/opprett').replace(queryParameters: {
+        'bio': bio,
+        'lat': posisjon?.latitude.toString(),
+        'lng': posisjon?.longitude.toString(),
+      });
 
-    // Send the POST request
-    final response = await http.post(
-      uri, // Use the updated URI with query parameters
-      headers: {'Content-Type': 'application/json'},
-      body: jsonBody,
-    );
+      // Send the POST request
+      final response = await http.post(
+        uri, // Use the updated URI with query parameters
+        headers: {'Content-Type': 'application/json'},
+        body: jsonBody,
+      );
 
-    return response; // Return the response
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 }
 
@@ -230,34 +258,40 @@ class ApiUserSQL {
     required LatLng posisjon,
     String? token, // Add token parameter
   }) async {
-    // Create the user info data as a Map
-    final Map<String, dynamic> userInfoData = {
-      "username": username,
-      "bio": bio,
-      "profilepic": profilepic,
-      "lat": posisjon.latitude,
-      "lng": posisjon.longitude
-    };
+    try {
+      // Create the user info data as a Map
+      final Map<String, dynamic> userInfoData = {
+        "username": username,
+        "bio": bio,
+        "profilepic": profilepic,
+        "lat": posisjon.latitude,
+        "lng": posisjon.longitude
+      };
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(userInfoData);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userInfoData);
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        if (token != null)
+          'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
 
-    // Send the POST request
-    final response = await http.post(
-      Uri.parse(
-          '$baseUrl/rrh/brukere'), // Endpoint for creating or updating user info
-      headers: headers,
-      body: jsonBody,
-    );
+      // Send the POST request
+      final response = await http.post(
+        Uri.parse(
+            '$baseUrl/rrh/brukere'), // Endpoint for creating or updating user info
+        headers: headers,
+        body: jsonBody,
+      );
 
-    return response; // Return the response
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
   Future<http.Response> updateUserInfo({
@@ -344,32 +378,38 @@ class ApiGetToken {
     required String? password,
     required String? phoneNumber,
   }) async {
-    // Create the user info data as a Map
-    final Map<String, dynamic> userInfoData = {
-      "username": username,
-      "phoneNumber": phoneNumber,
-      "password": password,
-    };
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(userInfoData);
+    try {
+      // Create the user info data as a Map
+      final Map<String, dynamic> userInfoData = {
+        "username": username,
+        "phoneNumber": phoneNumber,
+        "password": password,
+      };
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userInfoData);
 
-    // Send the POST request
-    final response = await http.post(
-      Uri.parse(
-          '$baseUrl/rrh/get-token'), // Endpoint for creating or updating user info
-      headers: {'Content-Type': 'application/json'},
-      body: jsonBody,
-    );
+      // Send the POST request
+      final response = await http.post(
+        Uri.parse(
+            '$baseUrl/rrh/get-token'), // Endpoint for creating or updating user info
+        headers: {'Content-Type': 'application/json'},
+        body: jsonBody,
+      );
 
-    // Check if the response was successful
-    if (response.statusCode == 200) {
-      // Parse the JSON response
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      // Extract the access token
-      String? accessToken = jsonResponse['access_token'];
-      return accessToken; // Return the access token
-    } else {
-      return null; // Return null if there's an error
+      // Check if the response was successful
+      if (response.statusCode == 200) {
+        // Parse the JSON response
+        final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+        // Extract the access token
+        String? accessToken = jsonResponse['access_token'];
+        return accessToken; // Return the access token
+      } else {
+        return null; // Return null if there's an error
+      }
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
     }
   }
 }
@@ -383,56 +423,62 @@ class ApiUploadProfilePic {
     String fileType = 'jpeg', // Default to 'jpeg', can be changed as needed
     String? username,
   }) async {
-    // Check if fileData is null
-    if (fileData == null) {
-      return null; // Handle the error as needed
-    }
-
     try {
-      var request = http.MultipartRequest(
-        'POST',
-        Uri.parse('$baseUrl/files/rrh/sendbilde'),
-      );
-
-      // If token is needed for authorization
-      if (token != null) {
-        request.headers['Authorization'] = 'Bearer $token';
+      // Check if fileData is null
+      if (fileData == null) {
+        return null; // Handle the error as needed
       }
 
-      // Add file data (Uint8List) to the request
-      request.files.add(
-        http.MultipartFile.fromBytes(
-          'file', // Key should match the server's expected form-data key
-          fileData,
-          contentType:
-              MediaType('image', fileType), // Use image/jpeg by default
-          filename:
-              'profilepic.$fileType', // Use a filename with the .jpeg extension
-        ),
-      );
+      try {
+        var request = http.MultipartRequest(
+          'POST',
+          Uri.parse('$baseUrl/files/rrh/sendbilde'),
+        );
 
-      // Include the username as a part of the request
-      if (username != null) {
-        request.fields['username'] = username;
-        request.fields['profilbilde'] = 'true';
+        // If token is needed for authorization
+        if (token != null) {
+          request.headers['Authorization'] = 'Bearer $token';
+        }
+
+        // Add file data (Uint8List) to the request
+        request.files.add(
+          http.MultipartFile.fromBytes(
+            'file', // Key should match the server's expected form-data key
+            fileData,
+            contentType:
+                MediaType('image', fileType), // Use image/jpeg by default
+            filename:
+                'profilepic.$fileType', // Use a filename with the .jpeg extension
+          ),
+        );
+
+        // Include the username as a part of the request
+        if (username != null) {
+          request.fields['username'] = username;
+          request.fields['profilbilde'] = 'true';
+        }
+
+        // Send the request and wait for the response
+        var response = await request.send();
+
+        // Get the response status code
+        var responseString = await http.Response.fromStream(response);
+
+        // Check if the status code is 200 (success)
+        if (response.statusCode == 200) {
+          final Map<String, dynamic> responseJson =
+              jsonDecode(responseString.body);
+          return responseJson['fileLink']; // Return the file link as a string
+        } else {
+          return null; // Or handle the error as needed
+        }
+      } catch (e) {
+        return null; // Handle exceptions as needed
       }
-
-      // Send the request and wait for the response
-      var response = await request.send();
-
-      // Get the response status code
-      var responseString = await http.Response.fromStream(response);
-
-      // Check if the status code is 200 (success)
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseJson =
-            jsonDecode(responseString.body);
-        return responseJson['fileLink']; // Return the file link as a string
-      } else {
-        return null; // Or handle the error as needed
-      }
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null; // Handle exceptions as needed
+      throw Exception;
     }
   }
 }
@@ -454,38 +500,44 @@ class ApiUploadFood {
     required bool kg,
     required String? antall,
   }) async {
-    // Create the user info data as a Map
-    final Map<String, dynamic> userInfoData = {
-      "name": name,
-      "imgUrl": imgUrl,
-      "description": description,
-      "price": price,
-      "kategorier": [kategorier],
-      "lat": posisjon?.latitude,
-      "lng": posisjon?.longitude,
-      "betaling": betaling,
-      "antall": antall,
-      "kjopt": false,
-      "slettet": false,
-      "kg": kg,
-    };
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(userInfoData);
+    try {
+      // Create the user info data as a Map
+      final Map<String, dynamic> userInfoData = {
+        "name": name,
+        "imgUrl": imgUrl,
+        "description": description,
+        "price": price,
+        "kategorier": [kategorier],
+        "lat": posisjon?.latitude,
+        "lng": posisjon?.longitude,
+        "betaling": betaling,
+        "antall": antall,
+        "kjopt": false,
+        "slettet": false,
+        "kg": kg,
+      };
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userInfoData);
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
-    // Send the POST request
-    final response = await http.post(
-      Uri.parse(
-          '$baseUrl/rrh/send/matvarer'), // Endpoint for creating or updating user info
-      headers: headers,
-      body: jsonBody,
-    );
-    return response;
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        if (token != null)
+          'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
+      // Send the POST request
+      final response = await http.post(
+        Uri.parse(
+            '$baseUrl/rrh/send/matvarer'), // Endpoint for creating or updating user info
+        headers: headers,
+        body: jsonBody,
+      );
+      return response;
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 }
 
@@ -497,12 +549,12 @@ class ApiMultiplePics {
     required List<Uint8List?> filesData, // Accept a list of Uint8List
     String fileType = 'jpeg', // Default to 'jpeg', can be changed as needed
   }) async {
-    // Check if filesData is empty
-    if (filesData.isEmpty) {
-      return null; // Handle the error as needed
-    }
-
     try {
+      // Check if filesData is empty
+      if (filesData.isEmpty) {
+        return null; // Handle the error as needed
+      }
+
       // Create a multipart request
       var request = http.MultipartRequest(
         'POST',
@@ -548,8 +600,10 @@ class ApiMultiplePics {
       } else {
         return null; // Or handle the error as needed
       }
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null; // Handle exceptions as needed
+      throw Exception;
     }
   }
 }
@@ -558,12 +612,12 @@ class ApiGetAllFoods {
   static const String baseUrl = ApiConstants.baseUrl;
 
   static Future<List<Matvarer>?> getAllFoods(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -585,11 +639,10 @@ class ApiGetAllFoods {
         // Handle unsuccessful response
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      // Handle any other errors that might occur
-      return null;
+      throw Exception;
     }
   }
 }
@@ -598,12 +651,12 @@ class ApiGetMyFoods {
   static const String baseUrl = ApiConstants.baseUrl;
 
   static Future<List<Matvarer>?> getMyFoods(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -625,11 +678,10 @@ class ApiGetMyFoods {
         // Handle unsuccessful response
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      // Handle any other errors that might occur
-      return null;
+      throw Exception;
     }
   }
 }
@@ -638,12 +690,12 @@ class ApiGetBonder {
   static const String baseUrl = ApiConstants.baseUrl;
 
   static Future<List<Bonder>?> getAllBonder(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request
       final response = await http
           .get(
@@ -664,11 +716,10 @@ class ApiGetBonder {
         // Handle unsuccessful response
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      // Handle any other errors that might occur
-      return null;
+      throw Exception;
     }
   }
 }
@@ -678,12 +729,12 @@ class ApiGetUser {
 
   static Future<List<Bonder>?> checkUser(
       String? token, String? username) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request
       final response = await http
           .get(
@@ -710,13 +761,12 @@ class ApiGetUser {
         // Handle unsuccessful response
         return null;
       }
-    } on TimeoutException {
       return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      // Handle any other errors that might occur
-      return null;
+      throw Exception;
     }
-    return null;
   }
 }
 
@@ -725,12 +775,12 @@ class ApiGetUserFood {
 
   static Future<List<Matvarer>?> getUserFood(
       String? token, String? username) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -749,11 +799,10 @@ class ApiGetUserFood {
         // Handle unsuccessful response
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      // Handle any other errors that might occur
-      return null;
+      throw Exception;
     }
   }
 }
@@ -762,12 +811,12 @@ class ApiLike {
   static const String baseUrl = ApiConstants.baseUrl;
 
   Future<http.Response?> sendLike(String? token, int? matId) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .post(
@@ -777,20 +826,20 @@ class ApiLike {
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
 
       return response;
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   Future<http.Response?> deleteLike(String? token, int? matId) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .delete(
@@ -799,10 +848,10 @@ class ApiLike {
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
       return response;
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 }
@@ -811,12 +860,12 @@ class ApiGetAllLikes {
   static const String baseUrl = ApiConstants.baseUrl;
 
   static Future<List<Matvarer>?> getAllLikes(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -837,11 +886,10 @@ class ApiGetAllLikes {
         // Handle unsuccessful response
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      // Handle any other errors that might occur
-      return null;
+      throw Exception;
     }
   }
 }
@@ -850,12 +898,12 @@ class ApiCheckLiked {
   static const String baseUrl = ApiConstants.baseUrl;
 
   static Future<bool?> getChecklike(String? token, int? matId) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -875,10 +923,10 @@ class ApiCheckLiked {
       } else {
         return false;
       }
-    } on TimeoutException {
-      return false;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return false;
+      throw Exception;
     }
   }
 }
@@ -887,12 +935,11 @@ class ApiFolg {
   static const String baseUrl = ApiConstants.baseUrl;
 
   Future<http.Response?> folgbruker(String? token, String? brukernavn) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
       // Make the API request and parse the response
       final response = await http
           .post(
@@ -901,20 +948,20 @@ class ApiFolg {
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
       return response;
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   Future<http.Response?> unfolgBruker(String? token, String? brukernavn) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .delete(
@@ -923,20 +970,20 @@ class ApiFolg {
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
       return response;
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<String?> tellFolger(String? token, String? brukernavn) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -950,20 +997,20 @@ class ApiFolg {
       } else {
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<String?> tellFolgere(String? token, String? brukernavn) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -977,20 +1024,20 @@ class ApiFolg {
       } else {
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<bool?> sjekkFolger(String? token, String? brukernavn) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -1003,20 +1050,20 @@ class ApiFolg {
       } else {
         return false;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<String?> tellMineFolger(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -1030,20 +1077,20 @@ class ApiFolg {
       } else {
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<String?> tellMineFolgere(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -1057,21 +1104,21 @@ class ApiFolg {
       } else {
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<List<UserInfo>?> listFolgere(
       String? token, String? username) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request with a timeout of 5 seconds
       final response = await http
           .get(
@@ -1100,21 +1147,21 @@ class ApiFolg {
         // Handle any other response codes appropriately
         return null; // Or throw an error
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<List<UserInfo>?> listFolger(
       String? token, String? username) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request with a timeout of 5 seconds
       final response = await http
           .get(
@@ -1143,10 +1190,10 @@ class ApiFolg {
         // Handle any other response codes appropriately
         return null; // Or throw an error
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 }
@@ -1176,44 +1223,50 @@ class ApiKjop {
     required Decimal antall,
     required String token,
   }) async {
-    // Base URL for the API
-    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+    try {
+      // Base URL for the API
+      const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
 
-    // Create the user data as a Map
-    final Map<String, dynamic> userData = {
-      "matId": matId,
-      "pris": price,
-      "antall": antall,
-    };
+      // Create the user data as a Map
+      final Map<String, dynamic> userData = {
+        "matId": matId,
+        "pris": price,
+        "antall": antall,
+      };
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(userData);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userData);
 
-    // Prepare URL with encoded parameters
-    final uri = Uri.parse('$baseUrl/ordre');
+      // Prepare URL with encoded parameters
+      final uri = Uri.parse('$baseUrl/ordre');
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
 
-    // Send the POST request
-    final response = await http.post(
-      uri, // Use the updated URI with query parameters
-      headers: headers,
-      body: jsonBody,
-    );
-    return response; // Return the response
+      // Send the POST request
+      final response = await http.post(
+        uri, // Use the updated URI with query parameters
+        headers: headers,
+        body: jsonBody,
+      );
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
   static Future<List<OrdreInfo>?> getAll(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request with a timeout of 5 seconds
       final response = await http
           .get(
@@ -1275,10 +1328,10 @@ class ApiKjop {
       } else {
         return null; // Or throw an error
       }
-    } on TimeoutException {
-      return null; // Handle timeout
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null; // Handle other errors
+      throw Exception;
     }
   }
 
@@ -1287,34 +1340,40 @@ class ApiKjop {
     required bool godkjent,
     required String token,
   }) async {
-    // Base URL for the API
-    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+    try {
+      // Base URL for the API
+      const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
 
-    // Create the user data as a Map
-    final Map<String, dynamic> userData = {
-      "id": id,
-      "godkjent": godkjent,
-    };
+      // Create the user data as a Map
+      final Map<String, dynamic> userData = {
+        "id": id,
+        "godkjent": godkjent,
+      };
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(userData);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userData);
 
-    // Prepare URL with encoded parameters
-    final uri = Uri.parse('$baseUrl/ordre/update');
+      // Prepare URL with encoded parameters
+      final uri = Uri.parse('$baseUrl/ordre/update');
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
 
-    // Send the POST request
-    final response = await http.post(
-      uri, // Use the updated URI with query parameters
-      headers: headers,
-      body: jsonBody,
-    );
-    return response; // Return the response
+      // Send the POST request
+      final response = await http.post(
+        uri, // Use the updated URI with query parameters
+        headers: headers,
+        body: jsonBody,
+      );
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
   Future<http.Response> hentMat({
@@ -1322,34 +1381,40 @@ class ApiKjop {
     required bool hentet,
     required String token,
   }) async {
-    // Base URL for the API
-    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+    try {
+      // Base URL for the API
+      const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
 
-    // Create the user data as a Map
-    final Map<String, dynamic> userData = {
-      "id": id,
-      "hentet": hentet,
-    };
+      // Create the user data as a Map
+      final Map<String, dynamic> userData = {
+        "id": id,
+        "hentet": hentet,
+      };
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(userData);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userData);
 
-    // Prepare URL with encoded parameters
-    final uri = Uri.parse('$baseUrl/ordre/update');
+      // Prepare URL with encoded parameters
+      final uri = Uri.parse('$baseUrl/ordre/update');
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
 
-    // Send the POST request
-    final response = await http.post(
-      uri, // Use the updated URI with query parameters
-      headers: headers,
-      body: jsonBody,
-    );
-    return response; // Return the response
+      // Send the POST request
+      final response = await http.post(
+        uri, // Use the updated URI with query parameters
+        headers: headers,
+        body: jsonBody,
+      );
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
   Future<http.Response> avvis({
@@ -1358,35 +1423,41 @@ class ApiKjop {
     required bool godkjent,
     required String token,
   }) async {
-    // Base URL for the API
-    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+    try {
+      // Base URL for the API
+      const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
 
-    // Create the user data as a Map
-    final Map<String, dynamic> userData = {
-      "id": id,
-      "avvist": avvist,
-      "godkjent": godkjent,
-    };
+      // Create the user data as a Map
+      final Map<String, dynamic> userData = {
+        "id": id,
+        "avvist": avvist,
+        "godkjent": godkjent,
+      };
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(userData);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userData);
 
-    // Prepare URL with encoded parameters
-    final uri = Uri.parse('$baseUrl/ordre/update');
+      // Prepare URL with encoded parameters
+      final uri = Uri.parse('$baseUrl/ordre/update');
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
 
-    // Send the POST request
-    final response = await http.post(
-      uri, // Use the updated URI with query parameters
-      headers: headers,
-      body: jsonBody,
-    );
-    return response; // Return the response
+      // Send the POST request
+      final response = await http.post(
+        uri, // Use the updated URI with query parameters
+        headers: headers,
+        body: jsonBody,
+      );
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
   Future<http.Response> trekk({
@@ -1394,68 +1465,80 @@ class ApiKjop {
     required bool trekt,
     required String token,
   }) async {
-    // Base URL for the API
-    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+    try {
+      // Base URL for the API
+      const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
 
-    // Create the user data as a Map
-    final Map<String, dynamic> userData = {
-      "id": id,
-      "trekt": trekt,
-    };
+      // Create the user data as a Map
+      final Map<String, dynamic> userData = {
+        "id": id,
+        "trekt": trekt,
+      };
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(userData);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userData);
 
-    // Prepare URL with encoded parameters
-    final uri = Uri.parse('$baseUrl/ordre/update');
+      // Prepare URL with encoded parameters
+      final uri = Uri.parse('$baseUrl/ordre/update');
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
 
-    // Send the POST request
-    final response = await http.post(
-      uri, // Use the updated URI with query parameters
-      headers: headers,
-      body: jsonBody,
-    );
-    return response; // Return the response
+      // Send the POST request
+      final response = await http.post(
+        uri, // Use the updated URI with query parameters
+        headers: headers,
+        body: jsonBody,
+      );
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
   Future<http.Response> giveRating({
     required int id,
     required String token,
   }) async {
-    // Base URL for the API
-    const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+    try {
+      // Base URL for the API
+      const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
 
-    // Create the user data as a Map
-    final Map<String, dynamic> userData = {
-      "id": id,
-      "rated": true,
-    };
+      // Create the user data as a Map
+      final Map<String, dynamic> userData = {
+        "id": id,
+        "rated": true,
+      };
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(userData);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userData);
 
-    // Prepare URL with encoded parameters
-    final uri = Uri.parse('$baseUrl/ordre/updaterated');
+      // Prepare URL with encoded parameters
+      final uri = Uri.parse('$baseUrl/ordre/updaterated');
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
 
-    // Send the POST request
-    final response = await http.post(
-      uri, // Use the updated URI with query parameters
-      headers: headers,
-      body: jsonBody,
-    );
-    return response; // Return the response
+      // Send the POST request
+      final response = await http.post(
+        uri, // Use the updated URI with query parameters
+        headers: headers,
+        body: jsonBody,
+      );
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 }
 
@@ -1464,12 +1547,12 @@ class ApiGetFilterFood {
 
   static Future<List<Matvarer>?> getFilterFood(
       String? token, String? kategorier) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       final response = await http
           .get(
             Uri.parse(
@@ -1487,21 +1570,20 @@ class ApiGetFilterFood {
         // Handle unsuccessful response
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      // Handle any other errors that might occur
-      return null;
+      throw Exception;
     }
   }
 
   static Future<List<Matvarer>?> getBondeFood(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -1522,21 +1604,20 @@ class ApiGetFilterFood {
         // Handle unsuccessful response
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      // Handle any other errors that might occur
-      return null;
+      throw Exception;
     }
   }
 
   static Future<List<Matvarer>?> getFolgerFood(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -1557,52 +1638,12 @@ class ApiGetFilterFood {
         // Handle unsuccessful response
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      // Handle any other errors that might occur
-      return null;
+      throw Exception;
     }
   }
-}
-
-class OrdreInfo {
-  final int id;
-  final String kjoper;
-  final String selger;
-  final int matId;
-  final Decimal antall;
-  final Decimal pris; // Ensure this is a double
-  final DateTime time;
-  final DateTime? godkjenttid;
-  final DateTime? updatetime;
-  final bool? hentet;
-  final bool? godkjent;
-  final bool? trekt;
-  final bool? avvist;
-  final String? kjoperProfilePic;
-  final Matvarer foodDetails; // Change this to Matvarer
-  final bool? kjopte;
-  final bool? rated;
-
-  OrdreInfo(
-      {required this.id,
-      required this.kjoper,
-      required this.selger,
-      required this.matId,
-      required this.antall,
-      required this.pris,
-      required this.time,
-      this.godkjenttid,
-      required this.updatetime,
-      required this.hentet,
-      required this.godkjent,
-      required this.trekt,
-      required this.avvist,
-      required this.kjoperProfilePic,
-      required this.foodDetails, // Pass food details to the constructor
-      required this.kjopte,
-      required this.rated});
 }
 
 class ApiUpdateFood {
@@ -1612,26 +1653,32 @@ class ApiUpdateFood {
     required int? id,
     String? token, // Add token parameter
   }) async {
-    final Map<String, dynamic> requestBody = {"slettet": true};
+    try {
+      final Map<String, dynamic> requestBody = {"slettet": true};
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(requestBody);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(requestBody);
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        if (token != null)
+          'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
 
-    final response = await http.put(
-      Uri.parse(
-          '$baseUrl/rrh/send/matvarer/$id'), // Endpoint for updating user info
-      headers: headers,
-      body: jsonBody,
-    );
+      final response = await http.put(
+        Uri.parse(
+            '$baseUrl/rrh/send/matvarer/$id'), // Endpoint for updating user info
+        headers: headers,
+        body: jsonBody,
+      );
 
-    return response; // Return the response
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
   Future<http.Response> merkSolgt({
@@ -1639,26 +1686,32 @@ class ApiUpdateFood {
     required bool solgt,
     String? token, // Add token parameter
   }) async {
-    final Map<String, dynamic> requestBody = {"kjopt": solgt, "antall": 0};
+    try {
+      final Map<String, dynamic> requestBody = {"kjopt": solgt, "antall": 0};
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(requestBody);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(requestBody);
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        if (token != null)
+          'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
 
-    final response = await http.put(
-      Uri.parse(
-          '$baseUrl/rrh/send/matvarer/$id'), // Endpoint for updating user info
-      headers: headers,
-      body: jsonBody,
-    );
+      final response = await http.put(
+        Uri.parse(
+            '$baseUrl/rrh/send/matvarer/$id'), // Endpoint for updating user info
+        headers: headers,
+        body: jsonBody,
+      );
 
-    return response; // Return the response
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
   Future<http.Response> updateFood({
@@ -1675,39 +1728,45 @@ class ApiUpdateFood {
     String? antall,
     bool? kjopt,
   }) async {
-    final Map<String, dynamic> requestBody = {
-      "name": name,
-      "imgUrl": imgUrl,
-      "description": description,
-      "price": price,
-      "kategorier": [kategorier],
-      "lat": posisjon?.latitude,
-      "lng": posisjon?.longitude,
-      "betaling": betaling,
-      "antall": antall,
-      "kjopt": kjopt,
-      "slettet": false,
-      "kg": kg,
-    };
+    try {
+      final Map<String, dynamic> requestBody = {
+        "name": name,
+        "imgUrl": imgUrl,
+        "description": description,
+        "price": price,
+        "kategorier": [kategorier],
+        "lat": posisjon?.latitude,
+        "lng": posisjon?.longitude,
+        "betaling": betaling,
+        "antall": antall,
+        "kjopt": kjopt,
+        "slettet": false,
+        "kg": kg,
+      };
 
-    // Convert the Map to JSON
-    final String jsonBody = jsonEncode(requestBody);
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(requestBody);
 
-    // Prepare headers
-    final headers = {
-      'Content-Type': 'application/json',
-      if (token != null)
-        'Authorization': 'Bearer $token', // Add Bearer token if present
-    };
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        if (token != null)
+          'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
 
-    final response = await http.put(
-      Uri.parse(
-          '$baseUrl/rrh/send/matvarer/$id'), // Endpoint for updating user info
-      headers: headers,
-      body: jsonBody,
-    );
+      final response = await http.put(
+        Uri.parse(
+            '$baseUrl/rrh/send/matvarer/$id'), // Endpoint for updating user info
+        headers: headers,
+        body: jsonBody,
+      );
 
-    return response; // Return the response
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 }
 
@@ -1716,12 +1775,12 @@ class ApiSearchUsers {
 
   static Future<List<UserInfoSearch>?> searchUsers(
       String? token, String? query) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       if (query != null && query.isNotEmpty) {
         // Make the API request with a timeout of 5 seconds
         final response = await http
@@ -1746,10 +1805,10 @@ class ApiSearchUsers {
       } else {
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
     return null;
   }
@@ -1778,12 +1837,12 @@ class ApiRating {
     int rating,
     bool kjoper,
   ) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request and parse the response
       final response = await http
           .post(
@@ -1793,26 +1852,26 @@ class ApiRating {
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
       return response;
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<List<UserInfoRating>?> listRatings(
       String? token, String? username) async {
-    // Validate token and username
-    if (token == null || username == null || username.isEmpty) {
-      return null; // Early return for invalid inputs
-    }
-
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      // Validate token and username
+      if (token == null || username == null || username.isEmpty) {
+        return null; // Early return for invalid inputs
+      }
+
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request with a timeout of 5 seconds
       final response = await http
           .get(
@@ -1850,20 +1909,19 @@ class ApiRating {
       } else {
         return null; // Or throw an error
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<List<UserInfoRating>?> listMineRatings(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
       // Make the API request with a timeout of 5 seconds
       final response = await http
           .get(
@@ -1898,21 +1956,21 @@ class ApiRating {
       } else {
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<UserInfoStats?> ratingSummary(
       String? token, String? username) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request with a timeout of 5 seconds
       final response = await http
           .get(
@@ -1930,20 +1988,20 @@ class ApiRating {
       } else {
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 
   static Future<UserInfoStats?> mineRatingSummary(String? token) async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-
     try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
       // Make the API request with a timeout of 5 seconds
       final response = await http
           .get(
@@ -1963,10 +2021,10 @@ class ApiRating {
       } else {
         return null;
       }
-    } on TimeoutException {
-      return null;
+    } on SocketException {
+      throw const SocketException('');
     } catch (e) {
-      return null;
+      throw Exception;
     }
   }
 }
