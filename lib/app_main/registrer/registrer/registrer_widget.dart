@@ -62,7 +62,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.asset(
-                        'assets/images/MatSalg.no_transp.png',
+                        'assets/images/MatSalgLogo.png',
                         width: double.infinity,
                         height: 366,
                         fit: BoxFit.contain,

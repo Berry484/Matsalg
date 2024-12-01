@@ -1,9 +1,10 @@
 flutter_native_splash:
-  color: "#FFFFFF"
-  color_dark: "#101213"
-  android_12:
-    color: "#FFFFFF"
-    color_dark: "#101213"
   android: true
   ios: true
   web: false
+  color: "#FFFFFF"
+  image: "assets/MatSalgLogo.png"
+
+  android_12:
+    color: "#FFFFFF"
+    image: "assets/MatSalgLogo.png"

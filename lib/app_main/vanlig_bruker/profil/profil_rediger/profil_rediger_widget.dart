@@ -872,8 +872,6 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                           HapticFeedback.lightImpact();
                           showErrorToast(context, 'En feil oppstod');
                         }
-                        _isLoading = false;
-                        context.goNamed('Profil');
                       },
                       text: 'Lagre',
                       options: FFButtonOptions(
