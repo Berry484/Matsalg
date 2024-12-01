@@ -228,21 +228,6 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
             }
           });
           return;
-        }
-        if (widget.kategori?.toLowerCase() == 'følger') {
-          _allmatvarer = await ApiGetFilterFood.getFolgerFood(token);
-          _matvarer = _allmatvarer;
-          setState(() {
-            if (_matvarer != null && _matvarer!.isNotEmpty) {
-              _isloading = false;
-              _empty = false;
-              return;
-            } else {
-              _empty = true;
-              _isloading = false;
-            }
-          });
-          return;
         } else {
           if (widget.kategori != 'Søk') {
             _allmatvarer =
@@ -261,9 +246,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
             return;
           } else {
             _allmatvarer = await ApiGetAllFoods.getAllFoods(token);
-            if (widget.query != null && widget.query.isNotEmpty) {
-              _runFilter(widget.query);
-            }
+
+            _runFilter(widget.query);
+
             setState(() {});
             return;
           }
@@ -537,9 +522,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                       autofocus: false,
                       onChanged: (value) => _runFilter(value),
                       placeholder: widget.kategori?.toLowerCase() != 'søk'
-                          ? (widget.kategori == 'følger'
-                              ? 'Søk innen brukere du følger'
-                              : 'Søk innen ${widget.kategori}')
+                          ? 'Søk innen ${widget.kategori}'
                           : 'Søk',
                       placeholderStyle:
                           FlutterFlowTheme.of(context).labelMedium.override(
@@ -606,115 +589,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
                           alignment: const AlignmentDirectional(0, -1),
                           children: [
                             if ((_matvarer == null || _matvarer!.isEmpty) &&
-                                (_isloading == false &&
-                                    widget.kategori == 'følger'))
-                              SizedBox(
-                                width: MediaQuery.sizeOf(context).width,
-                                height: MediaQuery.sizeOf(context).height,
-                                child: Align(
-                                  alignment: const AlignmentDirectional(0, -1),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 20, 0, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              const AlignmentDirectional(0, 1),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              // First Profile Outline
-                                              buildProfileOutline(
-                                                context,
-                                                100,
-                                                Colors.grey[300]
-                                                        ?.withOpacity(1) ??
-                                                    Colors.grey.withOpacity(
-                                                        0.3), // Reduce opacity
-                                                Colors.grey[300]
-                                                        ?.withOpacity(1) ??
-                                                    Colors.grey.withOpacity(
-                                                        0.3), // Reduce opacity
-                                              ),
-
-                                              // Second Profile Outline
-                                              buildProfileOutline(
-                                                context,
-                                                80,
-                                                Colors.grey[300]
-                                                        ?.withOpacity(1) ??
-                                                    Colors.grey.withOpacity(1),
-                                                Colors.grey[300]
-                                                        ?.withOpacity(1) ??
-                                                    Colors.grey.withOpacity(1),
-                                              ),
-
-                                              // Third Profile Outline
-                                              buildProfileOutline(
-                                                context,
-                                                50,
-                                                Colors.grey[300]
-                                                        ?.withOpacity(1) ??
-                                                    Colors.grey.withOpacity(1),
-                                                Colors.grey[300]
-                                                        ?.withOpacity(1) ??
-                                                    Colors.grey.withOpacity(1),
-                                              ),
-
-                                              // Fourth Profile Outline
-                                              buildProfileOutline(
-                                                context,
-                                                38,
-                                                Colors.grey[300]
-                                                        ?.withOpacity(1) ??
-                                                    Colors.grey.withOpacity(1),
-                                                Colors.grey[300]
-                                                        ?.withOpacity(1) ??
-                                                    Colors.grey.withOpacity(1),
-                                              ),
-
-                                              const SizedBox(height: 8.0),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(25, 0, 25, 0),
-                                                child: Text(
-                                                  'Du kan se annonser fra folk du følger her',
-                                                  textAlign: TextAlign.center,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .headlineSmall
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 23,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w800,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            if ((_matvarer == null || _matvarer!.isEmpty) &&
-                                (_isloading == false &&
-                                    widget.kategori != 'følger'))
+                                _isloading == false)
                               Container(
                                 width: MediaQuery.sizeOf(context).width,
                                 height: MediaQuery.sizeOf(context).height - 150,

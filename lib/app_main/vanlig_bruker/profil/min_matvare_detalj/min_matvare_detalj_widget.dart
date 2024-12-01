@@ -725,198 +725,102 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                         ),
                                                       ),
 
-                                                      // Second action: Marker solgt (Mark as sold)
-                                                      CupertinoActionSheetAction(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                          // Show confirmation dialog for "Marker solgt"
-                                                          if (matvare.kjopt !=
-                                                              true) {
-                                                            showCupertinoDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return CupertinoAlertDialog(
-                                                                  title: const Text(
-                                                                      'Marker solgt'),
-                                                                  content:
-                                                                      const Text(
-                                                                          'Er du sikker på at du vil markere denne annonsen som solgt? Dette vil automatisk avslå alle bud'),
-                                                                  actions: <Widget>[
-                                                                    CupertinoDialogAction(
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.pop(
-                                                                            context); // Close the dialog
-                                                                      },
-                                                                      child:
-                                                                          const Text(
-                                                                        'Nei, avbryt',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.blue), // Blue for 'Nei'
+                                                      if (matvare.kjopt != true)
+                                                        CupertinoActionSheetAction(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                            if (matvare.kjopt !=
+                                                                true) {
+                                                              showCupertinoDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                                  return CupertinoAlertDialog(
+                                                                    title: const Text(
+                                                                        'Marker utsolgt'),
+                                                                    content:
+                                                                        const Text(
+                                                                            'Dette vil markere matvaren som utsolgt og sette antallet til 0. Juster antallet opp for å fjerne markeringen. Dette vil automatisk avslå alle bud'),
+                                                                    actions: <Widget>[
+                                                                      CupertinoDialogAction(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context); // Close the dialog
+                                                                        },
+                                                                        child:
+                                                                            const Text(
+                                                                          'Avbryt',
+                                                                          style: TextStyle(
+                                                                              fontSize: 16,
+                                                                              fontWeight: FontWeight.w400,
+                                                                              color: CupertinoColors.systemBlue),
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                    // Yes action for 'Ja' (Yes) button
-                                                                    CupertinoDialogAction(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        try {
-                                                                          if (_merSolgtIsLoading) {
-                                                                            return;
-                                                                          } else {
-                                                                            _merSolgtIsLoading =
-                                                                                true;
-                                                                            String?
-                                                                                token =
-                                                                                await Securestorage().readToken();
-                                                                            if (token ==
-                                                                                null) {
-                                                                              FFAppState().login = false;
-                                                                              context.goNamed('registrer');
+                                                                      // Yes action for 'Ja' (Yes) button
+                                                                      CupertinoDialogAction(
+                                                                        onPressed:
+                                                                            () async {
+                                                                          try {
+                                                                            if (_merSolgtIsLoading) {
                                                                               return;
                                                                             } else {
-                                                                              await apiUpdateFood.merkSolgt(token: token, id: matvare.matId, solgt: true);
-                                                                              setState(() {});
-                                                                              Navigator.pop(context);
-                                                                              context.pushNamed('Profil');
+                                                                              _merSolgtIsLoading = true;
+                                                                              String? token = await Securestorage().readToken();
+                                                                              if (token == null) {
+                                                                                FFAppState().login = false;
+                                                                                context.goNamed('registrer');
+                                                                                return;
+                                                                              } else {
+                                                                                await apiUpdateFood.merkSolgt(token: token, id: matvare.matId, solgt: true);
+                                                                                setState(() {});
+                                                                                Navigator.pop(context);
+                                                                                context.pushNamed('Profil');
+                                                                              }
+                                                                              _merSolgtIsLoading = false;
                                                                             }
+                                                                          } on SocketException {
                                                                             _merSolgtIsLoading =
                                                                                 false;
-                                                                          }
-                                                                        } on SocketException {
-                                                                          _merSolgtIsLoading =
-                                                                              false;
-                                                                          HapticFeedback
-                                                                              .lightImpact();
-                                                                          showErrorToast(
-                                                                              context,
-                                                                              'Ingen internettforbindelse');
-                                                                        } catch (e) {
-                                                                          _merSolgtIsLoading =
-                                                                              false;
-                                                                          HapticFeedback
-                                                                              .lightImpact();
-                                                                          showErrorToast(
-                                                                              context,
-                                                                              'En feil oppstod');
-                                                                        }
-                                                                      },
-                                                                      child:
-                                                                          const Text(
-                                                                        'Ja, marker solgt',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.red), // Red for 'Ja'
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            );
-                                                          }
-                                                          if (matvare.kjopt ==
-                                                              true) {
-                                                            showCupertinoDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return CupertinoAlertDialog(
-                                                                  title: const Text(
-                                                                      'Fjern solgt markering'),
-                                                                  content:
-                                                                      const Text(
-                                                                          'Er du sikker på å du vil gjøre denne annonsen tilgjengelig igjen'),
-                                                                  actions: <Widget>[
-                                                                    CupertinoDialogAction(
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.pop(
-                                                                            context); // Close the dialog
-                                                                      },
-                                                                      child:
-                                                                          const Text(
-                                                                        'Nei, avbryt',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.blue), // Blue for 'Nei'
-                                                                      ),
-                                                                    ),
-                                                                    // Yes action for 'Ja' (Yes) button
-                                                                    CupertinoDialogAction(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        try {
-                                                                          if (_merSolgtIsLoading) {
-                                                                            return;
-                                                                          } else {
-                                                                            _merSolgtIsLoading =
-                                                                                true;
-                                                                            String?
-                                                                                token =
-                                                                                await Securestorage().readToken();
-                                                                            if (token ==
-                                                                                null) {
-                                                                              FFAppState().login = false;
-                                                                              context.goNamed('registrer');
-                                                                              return;
-                                                                            } else {
-                                                                              await apiUpdateFood.merkSolgt(token: token, id: matvare.matId, solgt: false);
-                                                                              setState(() {});
-                                                                              Navigator.pop(context);
-                                                                              context.pushNamed('Profil');
-                                                                            }
+                                                                            HapticFeedback.lightImpact();
+                                                                            showErrorToast(context,
+                                                                                'Ingen internettforbindelse');
+                                                                          } catch (e) {
                                                                             _merSolgtIsLoading =
                                                                                 false;
+                                                                            HapticFeedback.lightImpact();
+                                                                            showErrorToast(context,
+                                                                                'En feil oppstod');
                                                                           }
-                                                                        } on SocketException {
-                                                                          _merSolgtIsLoading =
-                                                                              false;
-                                                                          HapticFeedback
-                                                                              .lightImpact();
-                                                                          showErrorToast(
-                                                                              context,
-                                                                              'Ingen internettforbindelse');
-                                                                        } catch (e) {
-                                                                          _merSolgtIsLoading =
-                                                                              false;
-                                                                          HapticFeedback
-                                                                              .lightImpact();
-                                                                          showErrorToast(
-                                                                              context,
-                                                                              'En feil oppstod');
-                                                                        }
-                                                                      },
-                                                                      child:
-                                                                          const Text(
-                                                                        'Ja',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.red), // Red for 'Ja'
+                                                                        },
+                                                                        child:
+                                                                            const Text(
+                                                                          'marker utsolgt',
+                                                                          style: TextStyle(
+                                                                              fontSize: 16,
+                                                                              fontWeight: FontWeight.w400,
+                                                                              color: Colors.red), // Red for 'Ja'
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            );
-                                                          }
-                                                        },
-                                                        child: Text(
-                                                          matvare.kjopt == true
-                                                              ? 'Fjern solgt markering'
-                                                              : 'Marker solgt',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 19,
-                                                            color:
-                                                                CupertinoColors
-                                                                    .systemBlue,
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
+                                                            }
+                                                          },
+                                                          child: const Text(
+                                                            'Marker solgt',
+                                                            style: TextStyle(
+                                                              fontSize: 19,
+                                                              color:
+                                                                  CupertinoColors
+                                                                      .systemBlue,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
 
                                                       // Third action: Slett annonse (Delete ad)
                                                       CupertinoActionSheetAction(
@@ -1002,6 +906,10 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                         const Text(
                                                                       'Ja, slett',
                                                                       style: TextStyle(
+                                                                          fontSize:
+                                                                              16,
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
                                                                           color:
                                                                               Colors.red), // Red for 'Ja'
                                                                     ),

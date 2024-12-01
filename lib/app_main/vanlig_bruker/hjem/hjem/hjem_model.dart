@@ -9,6 +9,9 @@ class HjemModel extends FlutterFlowModel<HjemWidget> {
   String? Function(BuildContext, String?)? textControllerValidator;
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
+  TabController? tabBarController;
+  int get tabBarCurrentIndex =>
+      tabBarController != null ? tabBarController!.index : 0;
 
   @override
   void initState(BuildContext context) {}
@@ -17,5 +20,6 @@ class HjemModel extends FlutterFlowModel<HjemWidget> {
   void dispose() {
     textFieldFocusNode?.dispose();
     textController?.dispose();
+    tabBarController?.dispose();
   }
 }

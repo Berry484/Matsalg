@@ -106,19 +106,28 @@ class _VelgBetalingWidgetState extends State<VelgBetalingWidget> {
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               13, 0, 0, 0),
-                                      child: Text(
-                                        'Lukk',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Nunito',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 16,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          'Lukk',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Nunito',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 17,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
                                       ),
                                     ),
                                     Text(
@@ -136,26 +145,17 @@ class _VelgBetalingWidgetState extends State<VelgBetalingWidget> {
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 0, 13, 0),
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text(
-                                          'Lukk',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Nunito',
-                                                color: const Color(0x00262C2D),
-                                                fontSize: 16,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
+                                      child: Text(
+                                        'Lukk',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color: const Color(0x00262C2D),
+                                              fontSize: 16,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                     ),
                                   ],

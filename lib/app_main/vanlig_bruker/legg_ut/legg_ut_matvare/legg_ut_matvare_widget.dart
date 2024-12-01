@@ -2425,6 +2425,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           .fromSTEB(
                                                           20.0, 0.0, 20.0, 0.0),
                                                   child: TextFormField(
+                                                    autovalidateMode:
+                                                        AutovalidateMode
+                                                            .onUserInteraction,
                                                     controller: _model
                                                         .produktPrisSTKTextController,
                                                     focusNode: _model
@@ -3948,7 +3951,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               'En feil oppstod');
                                                         }
                                                       },
-                                                      text: 'Oppdater',
+                                                      text: 'Lagre',
                                                       options: FFButtonOptions(
                                                         width: double.infinity,
                                                         height: 50.0,
