@@ -114,7 +114,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
 
     _model.antallStkTextController ??= TextEditingController();
     _model.antallStkFocusNode ??= FocusNode();
-
+    if (widget.matinfo == null) {
+      getUserLocation();
+    }
     if (widget.matinfo != null) {
       matvare = Matvarer.fromJson1(widget.matinfo);
 
@@ -141,6 +143,17 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
       while (matvare.imgUrls!.length <= 4) {
         matvare.imgUrls?.add('');
       }
+    }
+  }
+
+  Future<void> getUserLocation() async {
+    LatLng? location;
+    location =
+        await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
+    if (location != const LatLng(0.0, 0.0)) {
+      leggutgetKommune(location.latitude, location.longitude);
+      selectedLatLng = LatLng(location.latitude, location.longitude);
+      currentselectedLatLng = LatLng(location.latitude, location.longitude);
     }
   }
 
