@@ -10,6 +10,7 @@ import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_animations.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '/app_main/vanlig_bruker/hjem/info/info_widget.dart';
@@ -42,6 +43,7 @@ class MatDetaljBondegardWidget extends StatefulWidget {
 class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
   late MatDetaljBondegardModel _model;
   List<Matvarer>? _nyematvarer;
+  final ApiCalls apiCalls = ApiCalls();
   bool _isloading = true;
   late Matvarer matvare;
   final Securestorage securestorage = Securestorage();
@@ -52,12 +54,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
   final animationsMap = <String, AnimationInfo>{};
   bool _isAnimating = false;
   bool _isExpanded = false;
+  String? poststed;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    matvare = Matvarer.fromJson1(widget.matvare);
+    getPoststed();
     _model = createModel(context, () => MatDetaljBondegardModel());
     getAllFoods();
     getChecklike();
@@ -78,7 +83,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         ],
       ),
     });
-    matvare = Matvarer.fromJson1(widget.matvare);
   }
 
   // Trigger animation manually when the liker value changes
@@ -231,6 +235,42 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         _model.liker = await ApiCheckLiked.getChecklike(token, matvare.matId);
         setState(() {
           return;
+        });
+      }
+    } on SocketException {
+      HapticFeedback.lightImpact();
+      showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      HapticFeedback.lightImpact();
+      showErrorToast(context, 'En feil oppstod');
+    }
+  }
+
+  Future<void> getPoststed() async {
+    try {
+      String? token = await Securestorage().readToken();
+
+      if (token == null) {
+        FFAppState().login = false;
+        context.goNamed('registrer');
+        return;
+      } else {
+        if (matvare.lat == 0 || matvare.lng == 0) {
+          poststed = null;
+        }
+        if ((matvare.lat == null || matvare.lat == 0) ||
+            (matvare.lng == null || matvare.lng == 0)) {
+          poststed = null;
+        }
+        String? response = await apiCalls.leggutgetKommune(
+            token, matvare.lat ?? 0, matvare.lng ?? 0);
+        safeSetState(() {
+          if (response.isNotEmpty) {
+            String formattedResponse =
+                response[0].toUpperCase() + response.substring(1).toLowerCase();
+            poststed = formattedResponse;
+            logger.d(formattedResponse);
+          }
         });
       }
     } on SocketException {
@@ -406,8 +446,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                   matvare.lng ??
                                                                       0.0) <
                                                               1)
-                                                          ? '  (1 Km)'
-                                                          : '  (${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)}Km)',
+                                                          ? (poststed != null
+                                                              ? '\n${poststed}, 1 Km'
+                                                              : '\n1 Km')
+                                                          : (poststed != null
+                                                              ? '\n${poststed ?? ''}, ${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)}Km'
+                                                              : '\n${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)}Km'),
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium

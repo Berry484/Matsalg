@@ -202,6 +202,7 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
                                               Navigator.pop(context);
+                                              Navigator.pop(context);
                                             },
                                             child: Text(
                                               'Avbryt',
@@ -226,7 +227,7 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      8, 12, 0, 0),
+                                      20, 12, 0, 0),
                                   child: Text(
                                     widget.matId != null
                                         ? 'Hvorfor ønsker du å rapportere\ndenne annonsen?'
@@ -243,7 +244,7 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      8, 25, 20, 0),
+                                      20, 25, 20, 0),
                                   child: Text(
                                     'Skriv så utfyllende som mulig\nslik at vi kan behandle saken raskest mulig',
                                     style: FlutterFlowTheme.of(context)
@@ -260,7 +261,7 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      8, 12, 8, 0),
+                                      20, 12, 8, 0),
                                   child: TextFormField(
                                     controller: _model.bioTextController,
                                     focusNode: _model.bioFocusNode,
@@ -411,31 +412,31 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                   text: 'Rapporter',
                                   options: FFButtonOptions(
                                     width: double.infinity,
-                                    height: 50,
+                                    height: 50.0,
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            11, 0, 0, 0),
+                                            0.0, 0.0, 0.0, 0.0),
                                     iconPadding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            0.0, 0.0, 0.0, 0.0),
                                     color:
                                         FlutterFlowTheme.of(context).alternate,
                                     textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
+                                        .titleMedium
                                         .override(
                                           fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          fontSize: 18,
+                                              .secondary,
+                                          fontSize: 17.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w800,
                                         ),
-                                    elevation: 0,
+                                    elevation: 0.0,
                                     borderSide: const BorderSide(
                                       color: Colors.transparent,
-                                      width: 0,
+                                      width: 1.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(14),
+                                    borderRadius: BorderRadius.circular(14.0),
                                   ),
                                 ),
                               ),
