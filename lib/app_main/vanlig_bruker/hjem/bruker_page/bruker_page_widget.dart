@@ -8,6 +8,7 @@ import 'package:mat_salg/Bonder.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -475,7 +476,31 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                               ),
                             ),
                             CupertinoActionSheetAction(
-                              onPressed: () {},
+                              onPressed: () async {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  barrierColor:
+                                      const Color.fromARGB(60, 17, 0, 0),
+                                  useRootNavigator: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () =>
+                                          FocusScope.of(context).unfocus(),
+                                      child: Padding(
+                                        padding:
+                                            MediaQuery.viewInsetsOf(context),
+                                        child: RapporterWidget(
+                                          username: widget.username,
+                                          matId: null,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ).then((value) => setState(() {}));
+                                return;
+                              },
                               child: const Text(
                                 'Rapporter',
                                 style: TextStyle(

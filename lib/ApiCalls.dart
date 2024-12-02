@@ -2054,3 +2054,45 @@ class UserInfoStats {
     required this.averageValue,
   });
 }
+
+class ReportUser {
+  // ----Upload food---------------
+
+  static const String baseUrl = ApiConstants.baseUrl; // Your base URL
+
+  Future<http.Response> reportUser({
+    required String? token,
+    required String to,
+    required String description,
+    required int? matId,
+  }) async {
+    try {
+      // Create the user info data as a Map
+      final Map<String, dynamic> userInfoData = {
+        "to": to,
+        "description": description,
+        "matId": matId,
+      };
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userInfoData);
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        if (token != null)
+          'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
+      // Send the POST request
+      final response = await http.post(
+        Uri.parse(
+            '$baseUrl/api/reportUser'), // Endpoint for creating or updating user info
+        headers: headers,
+        body: jsonBody,
+      );
+      return response;
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
+}
