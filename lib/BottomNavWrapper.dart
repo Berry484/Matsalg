@@ -8,9 +8,9 @@ import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
 import 'package:mat_salg/flutter_flow/nav/nav.dart';
 
 class MainWrapper extends StatefulWidget {
-  final Widget child;
+  MainWrapper({Key? key, required this.child}) : super(key: key);
 
-  MainWrapper({required this.child});
+  final StatefulNavigationShell child;
 
   @override
   _MainWrapperState createState() => _MainWrapperState();
@@ -35,7 +35,6 @@ class _MainWrapperState extends State<MainWrapper> {
 
   // Function to change the selected index and navigate to the respective page
   void _onItemTapped(int index) {
-    // Don't update the navbar color if we're navigating to 'LeggUtMatvare'
     if (index != 2) {
       setState(() {
         _selectedIndex = index;
@@ -44,33 +43,18 @@ class _MainWrapperState extends State<MainWrapper> {
     const kTransitionInfoKey = 'transitionInfo';
     switch (index) {
       case 0:
-        GoRouter.of(context).go(
-          '/hjem',
-          extra: <String, dynamic>{
-            // Pass the transition information
-            kTransitionInfoKey: const TransitionInfo(
-              hasTransition: true, // Trigger the transition
-              transitionType: PageTransitionType.fade, // Fade transition
-              duration: Duration(milliseconds: 0), // Instant transition
-            ),
-          },
-        );
+        widget.child.goBranch(index);
         break;
       case 1:
-        GoRouter.of(context).go(
-          '/mineKjop',
-          extra: <String, dynamic>{
-            kTransitionInfoKey: const TransitionInfo(
-              hasTransition: true,
-              transitionType: PageTransitionType.fade, // Using fade transition
-              duration: Duration(
-                  milliseconds:
-                      0), // Set duration to 0ms for no transition time
-            ),
-          },
-        );
+        widget.child.goBranch(index);
         break;
       case 2:
+        widget.child.goBranch(index);
+        break;
+      case 3:
+        widget.child.goBranch(index);
+        break;
+      case 4:
         context.pushNamed(
           'LeggUtMatvare',
           extra: <String, dynamic>{
@@ -78,34 +62,6 @@ class _MainWrapperState extends State<MainWrapper> {
               hasTransition: true,
               transitionType: PageTransitionType.bottomToTop,
               duration: Duration(milliseconds: 200),
-            ),
-          },
-        );
-        break;
-      case 3:
-        GoRouter.of(context).go(
-          '/chatMain',
-          extra: <String, dynamic>{
-            kTransitionInfoKey: const TransitionInfo(
-              hasTransition: true,
-              transitionType: PageTransitionType.fade, // Using fade transition
-              duration: Duration(
-                  milliseconds:
-                      0), // Set duration to 0ms for no transition time
-            ),
-          },
-        );
-        break;
-      case 4:
-        GoRouter.of(context).go(
-          '/profil',
-          extra: <String, dynamic>{
-            kTransitionInfoKey: const TransitionInfo(
-              hasTransition: true,
-              transitionType: PageTransitionType.fade, // Using fade transition
-              duration: Duration(
-                  milliseconds:
-                      0), // Set duration to 0ms for no transition time
             ),
           },
         );
@@ -244,14 +200,12 @@ class _MainWrapperState extends State<MainWrapper> {
                             borderRadius: 30.0,
                             borderWidth: 1.0,
                             buttonSize: 50.0,
-                            icon: Icon(
+                            icon: const Icon(
                               CupertinoIcons.add,
-                              color: _selectedIndex == 2
-                                  ? FlutterFlowTheme.of(context).alternate
-                                  : const Color(0xFF262626),
+                              color: Color(0xFF262626),
                               size: 29.0,
                             ),
-                            onPressed: () => _onItemTapped(2),
+                            onPressed: () => _onItemTapped(4),
                           ),
                           FlutterFlowIconButton(
                             borderColor: Colors.transparent,
@@ -265,7 +219,7 @@ class _MainWrapperState extends State<MainWrapper> {
                                   : const Color(0xFF262626),
                               size: 29.0,
                             ),
-                            onPressed: () => _onItemTapped(3),
+                            onPressed: () => _onItemTapped(2),
                           ),
                           FlutterFlowIconButton(
                             borderColor: Colors.transparent,
@@ -279,7 +233,7 @@ class _MainWrapperState extends State<MainWrapper> {
                                   : const Color(0xFF262626),
                               size: 29.0,
                             ),
-                            onPressed: () => _onItemTapped(4),
+                            onPressed: () => _onItemTapped(3),
                           ),
                         ],
                       ),

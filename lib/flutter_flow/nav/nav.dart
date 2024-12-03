@@ -70,7 +70,13 @@ class AppStateNotifier extends ChangeNotifier {
 }
 
 final GlobalKey<NavigatorState> _parentKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> _shellKey = GlobalKey<NavigatorState>();
+final _shellNavigatorHome = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
+final _mineKjopNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shellSettings');
+final GlobalKey<NavigatorState> _chatMainNavigatorKey =
+    GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> _profilNavigatorKey =
+    GlobalKey<NavigatorState>();
 
 GoRouter createRouter(AppStateNotifier appStateNotifier) {
   return GoRouter(
@@ -79,247 +85,384 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
     debugLogDiagnostics: true,
     refreshListenable: appStateNotifier, // Listen for changes in app state
     errorBuilder: (context, state) {
-      // Fallback widget
-      return FFAppState().login
-          ? MainWrapper(
-              child: const HjemWidget()) // Show home with navbar if logged in
-          : const RegistrerWidget(); // Show registration screen if not logged in
+      return const RegistrerWidget();
     },
     routes: [
-      // Root route that checks login status and redirects accordingly
-      // GoRoute(
-      //   path: '/',
-      //   builder: (context, state) {
-      //     return FFAppState().login
-      //         ? MainWrapper(child: const HjemWidget()) // Show home if logged in
-      //         : const RegistrerWidget(); // Show registration if not logged in
-      //   },
-      // ),
-
-      // ShellRoute for routes that need the persistent navbar
-      ShellRoute(
-        navigatorKey: _shellKey, // Shell navigator key
-        builder: (context, state, child) {
-          return MainWrapper(child: child); // Wrap with MainWrapper for navbar
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return MainWrapper(child: navigationShell);
         },
-        routes: [
-          GoRoute(
-            path: '/hjem',
-            name: 'Hjem',
-            builder: (context, state) {
-              return const HjemWidget();
-            },
-            parentNavigatorKey: _shellKey,
-            pageBuilder: (context, state) {
-              // Check if there's any transition info passed as part of the navigation
-              final transitionInfo = state.extra as Map<String, dynamic>?;
-              final transition =
-                  transitionInfo?['transition'] as TransitionInfo?;
+        branches: <StatefulShellBranch>[
+          StatefulShellBranch(
+            navigatorKey:
+                _shellNavigatorHome, // Keep a separate navigator for Hjem
+            routes: <RouteBase>[
+              GoRoute(
+                path: '/hjem',
+                name: 'Hjem',
+                builder: (context, state) {
+                  return const HjemWidget();
+                },
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(child: HjemWidget());
+                },
+                routes: [
+                  GoRoute(
+                    path: 'matDetaljBondegard',
+                    name: 'MatDetaljBondegard',
+                    builder: (context, state) {
+                      final params = FFParameters(state);
+                      final matvare = params.getParam<Map<String, dynamic>>(
+                          'matvare', ParamType.JSON);
+                      return MatDetaljBondegardWidget(matvare: matvare);
+                    },
+                    pageBuilder: (context, state) {
+                      return CustomTransitionPage<void>(
+                        key: state.pageKey, // Maintain page state
+                        child: MatDetaljBondegardWidget(
+                          matvare: FFParameters(state)
+                              .getParam<Map<String, dynamic>>(
+                                  'matvare', ParamType.JSON),
+                        ),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const Offset begin =
+                              Offset(1.0, 0.0); // Slide in from right
+                          const Offset end = Offset.zero;
+                          const Curve curve = Curves.easeInOut;
 
-              if (transition != null) {
-                // If transition info exists, use it
-                return CustomTransitionPage(
-                  transitionDuration: const Duration(milliseconds: 0),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: 'brukerPage', // Full path: /hjem/brukerPage
+                    name: 'BrukerPage',
+                    builder: (context, state) {
+                      final params = FFParameters(state);
+                      final bruker =
+                          params.getParam<String>('bruker', ParamType.String);
+                      final username =
+                          params.getParam<String>('username', ParamType.String);
+                      return BrukerPageWidget(
+                          bruker: bruker, username: username);
+                    },
+                    pageBuilder: (context, state) {
+                      return CustomTransitionPage<void>(
+                        key: state.pageKey,
+                        child: BrukerPageWidget(
+                          bruker: FFParameters(state)
+                              .getParam<String>('bruker', ParamType.String),
+                          username: FFParameters(state)
+                              .getParam<String>('username', ParamType.String),
+                        ),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const Offset begin =
+                              Offset(1.0, 0.0); // Slide in from right
+                          const Offset end = Offset.zero;
+                          const Curve curve = Curves.easeInOut;
+
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: 'folgere',
+                    name: 'Folgere',
+                    builder: (context, state) {
+                      // Use FFParameters to retrieve the parameters safely
+                      final params = FFParameters(state);
+
+                      // Retrieve the 'username' and 'folger' parameters
+                      final username =
+                          params.getParam<String>('username', ParamType.String);
+                      final folger =
+                          params.getParam<String>('folger', ParamType.String);
+
+                      // Return the FolgereWidget with the retrieved parameters
+                      return FolgereWidget(username: username, folger: folger);
+                    },
+                    pageBuilder: (context, state) {
+                      return CustomTransitionPage<void>(
+                        key: state.pageKey, // Maintain the page state
+                        child: FolgereWidget(
+                          username: FFParameters(state)
+                              .getParam<String>('username', ParamType.String),
+                          folger: FFParameters(state)
+                              .getParam<String>('folger', ParamType.String),
+                        ),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const Offset begin =
+                              Offset(1.0, 0.0); // Slide in from the right
+                          const Offset end = Offset.zero;
+                          const Curve curve = Curves.easeInOut;
+
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: 'bondeGardPage', // Relative path, no leading '/'
+                    name: 'BondeGardPage',
+                    builder: (context, state) {
+                      // Use FFParameters to get the query parameters safely
+                      final params = FFParameters(state);
+
+                      // Retrieve the parameters using getParam
+                      final kategori =
+                          params.getParam<String>('kategori', ParamType.String);
+                      final query =
+                          params.getParam<String>('query', ParamType.String);
+
+                      // Return the widget with the parameters
+                      return BondeGardPageWidget(
+                          kategori: kategori, query: query);
+                    },
+                    pageBuilder: (context, state) {
+                      return CustomTransitionPage<void>(
+                        key: state.pageKey, // Maintain page state
+                        child: BondeGardPageWidget(
+                          kategori: FFParameters(state)
+                              .getParam<String>('kategori', ParamType.String),
+                          query: FFParameters(state)
+                              .getParam<String>('query', ParamType.String),
+                        ),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const Offset begin =
+                              Offset(1.0, 0.0); // Slide in from right
+                          const Offset end = Offset.zero;
+                          const Curve curve = Curves.easeInOut;
+
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          // MineKjop Branch
+          StatefulShellBranch(
+            navigatorKey: _mineKjopNavigatorKey,
+            routes: <RouteBase>[
+              GoRoute(
+                path: '/mineKjop',
+                name: 'MineKjop',
+                builder: (context, state) {
+                  final params = FFParameters(state);
+                  final kjopt =
+                      params.getParam<bool>('kjopt', ParamType.bool) ?? false;
+                  return MineKjopWidget(kjopt: kjopt);
+                },
+                pageBuilder: (context, state) {
+                  final params = FFParameters(state);
+                  final kjopt =
+                      params.getParam<bool>('kjopt', ParamType.bool) ?? false;
+                  return MaterialPage<void>(
+                      child: MineKjopWidget(kjopt: kjopt));
+                },
+                routes: [
+                  GoRoute(
+                    path: 'kjopDetaljVentende',
+                    name: 'KjopDetaljVentende',
+                    builder: (context, state) {
+                      // Accessing the passed object from `state.extra`
+                      final ordre = state.extra;
+
+                      // Return the widget, passing `ordre` directly
+                      return KjopDetaljVentendeWidget(ordre: ordre);
+                    },
+                    pageBuilder: (context, state) {
+                      return CustomTransitionPage<void>(
+                        key: state.pageKey, // Maintain the page state
+                        child: KjopDetaljVentendeWidget(ordre: state.extra),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const Offset begin =
+                              Offset(1.0, 0.0); // Slide in from the right
+                          const Offset end = Offset.zero;
+                          const Curve curve = Curves.easeInOut;
+
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          // ChatMain Branch
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: '/chatMain',
+                name: 'ChatMain',
+                pageBuilder: (context, state) {
+                  final transitionInfo = state.extra as Map<String, dynamic>?;
+                  final transition =
+                      transitionInfo?['transition'] as TransitionInfo?;
+                  if (transition != null) {
+                    return CustomTransitionPage(
+                      transitionDuration: const Duration(milliseconds: 0),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        );
+                      },
+                      child: const ChatMainWidget(),
                     );
+                  }
+                  return const MaterialPage<void>(child: ChatMainWidget());
+                },
+              ),
+            ],
+          ),
+
+          // Profil Branch
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                  path: '/profil',
+                  name: 'Profil',
+                  pageBuilder: (context, state) {
+                    final transitionInfo = state.extra as Map<String, dynamic>?;
+                    final transition =
+                        transitionInfo?['transition'] as TransitionInfo?;
+                    if (transition != null) {
+                      return CustomTransitionPage(
+                        transitionDuration: const Duration(milliseconds: 0),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        child: const ProfilWidget(),
+                      );
+                    }
+                    return const MaterialPage<void>(child: ProfilWidget());
                   },
-                  child: const HjemWidget(),
-                );
-              }
+                  routes: [
+                    GoRoute(
+                      path: 'minMatvareDetalj',
+                      name: 'MinMatvareDetalj',
+                      builder: (context, state) {
+                        // Use FFParameters to retrieve the parameters safely
+                        final params = FFParameters(state);
 
-              return const MaterialPage<void>(child: HjemWidget());
-            },
-          ),
-          GoRoute(
-            path: '/mineKjop',
-            name: 'MineKjop',
-            builder: (context, state) {
-              final params = FFParameters(state);
-              final kjopt =
-                  params.getParam<bool>('kjopt', ParamType.bool) ?? false;
-              return MineKjopWidget(kjopt: kjopt);
-            },
-            pageBuilder: (context, state) {
-              final transitionInfo = state.extra as Map<String, dynamic>?;
-              final transition =
-                  transitionInfo?['transition'] as TransitionInfo?;
-              final params = FFParameters(state);
-              final kjopt =
-                  params.getParam<bool>('kjopt', ParamType.bool) ?? false;
-              if (transition != null) {
-                // If transition info exists, use it
-                return CustomTransitionPage(
-                  transitionDuration: const Duration(milliseconds: 0),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
-                  child: MineKjopWidget(kjopt: kjopt),
-                );
-              }
+                        // Retrieve the 'matvare' parameter as JSON
+                        final matvare = params.getParam<Map<String, dynamic>>(
+                            'matvare', ParamType.JSON);
 
-              return MaterialPage<void>(child: MineKjopWidget(kjopt: kjopt));
-            },
-            parentNavigatorKey: _shellKey,
-          ),
-          GoRoute(
-            path: '/bondeGardPage',
-            name: 'BondeGardPage',
-            builder: (context, state) {
-              // Use FFParameters to get the query parameters safely
-              final params = FFParameters(state);
+                        // Return the MinMatvareDetaljWidget with the retrieved parameter
+                        return MinMatvareDetaljWidget(matvare: matvare);
+                      },
+                      pageBuilder: (context, state) {
+                        return CustomTransitionPage<void>(
+                          key: state.pageKey, // Maintain the page state
+                          child: MinMatvareDetaljWidget(
+                            matvare: FFParameters(state)
+                                .getParam<Map<String, dynamic>>(
+                                    'matvare', ParamType.JSON),
+                          ),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const Offset begin =
+                                Offset(1.0, 0.0); // Slide in from the right
+                            const Offset end = Offset.zero;
+                            const Curve curve = Curves.easeInOut;
 
-              // Retrieve the parameters using getParam
-              final kategori =
-                  params.getParam<String>('kategori', ParamType.String);
-              final query = params.getParam<String>('query', ParamType.String);
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
 
-              // Return the widget with the parameters
-              return BondeGardPageWidget(kategori: kategori, query: query);
-            },
-            parentNavigatorKey: _shellKey,
-          ),
-          GoRoute(
-            path: '/chatMain',
-            name: 'ChatMain',
-            pageBuilder: (context, state) {
-              // Check if there's any transition info passed as part of the navigation
-              final transitionInfo = state.extra as Map<String, dynamic>?;
-              final transition =
-                  transitionInfo?['transition'] as TransitionInfo?;
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      path: 'innstillinger',
+                      name: 'innstillinger',
+                      builder: (context, state) {
+                        // Return the widget for the settings page
+                        return const InnstillingerWidget();
+                      },
+                      pageBuilder: (context, state) {
+                        return CustomTransitionPage<void>(
+                          key: state.pageKey, // Maintain the page state
+                          child: const InnstillingerWidget(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const Offset begin =
+                                Offset(1.0, 0.0); // Slide in from the right
+                            const Offset end = Offset.zero;
+                            const Curve curve = Curves.easeInOut;
 
-              if (transition != null) {
-                // If transition info exists, use it
-                return CustomTransitionPage(
-                  transitionDuration: const Duration(milliseconds: 0),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
-                  child: const ChatMainWidget(),
-                );
-              }
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
 
-              return const MaterialPage<void>(child: ChatMainWidget());
-            },
-          ),
-          GoRoute(
-            path: '/profil',
-            name: 'Profil',
-            parentNavigatorKey: _shellKey,
-            pageBuilder: (context, state) {
-              // Check if there's any transition info passed as part of the navigation
-              final transitionInfo = state.extra as Map<String, dynamic>?;
-              final transition =
-                  transitionInfo?['transition'] as TransitionInfo?;
-
-              if (transition != null) {
-                // If transition info exists, use it
-                return CustomTransitionPage(
-                  transitionDuration: const Duration(milliseconds: 0),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
-                  child: const ProfilWidget(),
-                );
-              }
-
-              return const MaterialPage<void>(child: ProfilWidget());
-            },
-          ),
-          GoRoute(
-            path: '/matDetaljBondegard',
-            name: 'MatDetaljBondegard',
-            builder: (context, state) {
-              final params = FFParameters(state);
-              final matvare = params.getParam<Map<String, dynamic>>(
-                  'matvare', ParamType.JSON);
-              return MatDetaljBondegardWidget(matvare: matvare);
-            },
-            parentNavigatorKey: _shellKey,
-          ),
-          GoRoute(
-            path: '/minMatvareDetalj',
-            name: 'MinMatvareDetalj',
-            builder: (context, state) {
-              final params = FFParameters(state);
-              final matvare = params.getParam<Map<String, dynamic>>(
-                  'matvare', ParamType.JSON);
-              return MinMatvareDetaljWidget(matvare: matvare);
-            },
-            parentNavigatorKey: _shellKey,
-          ),
-          GoRoute(
-            path: '/brukerPage',
-            name: 'BrukerPage',
-            builder: (context, state) {
-              final params = FFParameters(state);
-              final bruker =
-                  params.getParam<String>('bruker', ParamType.String);
-              final username =
-                  params.getParam<String>('username', ParamType.String);
-              return BrukerPageWidget(bruker: bruker, username: username);
-            },
-            parentNavigatorKey: _shellKey,
-          ),
-          GoRoute(
-            path: '/solgteMatvarer',
-            name: 'solgteMatvarer',
-            builder: (context, state) {
-              return const SolgteMatvarerWidget();
-            },
-            parentNavigatorKey: _shellKey,
-          ),
-          GoRoute(
-            path: '/innstillinger',
-            name: 'innstillinger',
-            builder: (context, state) {
-              return const InnstillingerWidget();
-            },
-            parentNavigatorKey: _shellKey,
-          ),
-          GoRoute(
-            path: '/folgere',
-            name: 'Folgere',
-            builder: (context, state) {
-              // Use FFParameters to retrieve the parameters safely
-              final params = FFParameters(state);
-
-              // Retrieve the 'username' and 'folger' parameters
-              final username =
-                  params.getParam<String>('username', ParamType.String);
-              final folger =
-                  params.getParam<String>('folger', ParamType.String);
-
-              // Return the FolgereWidget with the retrieved parameters
-              return FolgereWidget(username: username, folger: folger);
-            },
-            parentNavigatorKey: _shellKey,
-          ),
-          GoRoute(
-            path: '/kjopDetaljVentende',
-            name: 'KjopDetaljVentende',
-            builder: (context, state) {
-              // Directly accessing the passed object from `state.extra`
-
-              // Return your widget, passing the `ordre` directly
-              return KjopDetaljVentendeWidget(ordre: state.extra);
-            },
-            parentNavigatorKey: _shellKey,
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ]),
+            ],
           ),
         ],
       ),
@@ -349,7 +492,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         },
         parentNavigatorKey: _parentKey,
       ),
-
       GoRoute(
         path: '/leggIgjenRating',
         name: 'LeggIgjenRating',
@@ -432,7 +574,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         },
         parentNavigatorKey: _parentKey,
       ),
-
       GoRoute(
         path: '/velgPosisjon',
         name: 'VelgPosisjon',
@@ -459,7 +600,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         },
         parentNavigatorKey: _parentKey,
       ),
-
       GoRoute(
         path: '/brukerOnboarding',
         name: 'brukerOnboarding',
