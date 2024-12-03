@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/choose_location/location_widget.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/profil/kontakt/kontakt_widget.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -690,7 +691,30 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
-                                      onTap: () async {},
+                                      onTap: () async {
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          barrierColor: const Color.fromARGB(
+                                              60, 17, 0, 0),
+                                          useRootNavigator: true,
+                                          context: context,
+                                          builder: (context) {
+                                            return GestureDetector(
+                                              onTap: () =>
+                                                  FocusScope.of(context)
+                                                      .unfocus(),
+                                              child: Padding(
+                                                padding:
+                                                    MediaQuery.viewInsetsOf(
+                                                        context),
+                                                child: const KontaktWidget(),
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) => setState(() {}));
+                                        return;
+                                      },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [

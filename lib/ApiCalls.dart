@@ -2095,4 +2095,38 @@ class ReportUser {
       throw Exception;
     }
   }
+
+  Future<http.Response> contactUs({
+    required String? token,
+    required String description,
+    required String email,
+  }) async {
+    try {
+      // Create the user info data as a Map
+      final Map<String, dynamic> userInfoData = {
+        "description": description,
+        "email": email,
+      };
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userInfoData);
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        if (token != null)
+          'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
+      // Send the POST request
+      final response = await http.post(
+        Uri.parse(
+            '$baseUrl/api/reportUser/contact'), // Endpoint for creating or updating user info
+        headers: headers,
+        body: jsonBody,
+      );
+      return response;
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
 }
