@@ -211,7 +211,8 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                         return;
                                       }
                                       if (_model.emailTextController.text !=
-                                          FFAppState().email) {
+                                              FFAppState().email &&
+                                          widget.konto == 'E-post') {
                                         final response = await apiCalls
                                             .checkEmailTaken(_model
                                                 .emailTextController.text);
@@ -272,20 +273,36 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                             filelink = fileLinks.first;
                                           }
                                         }
-
+                                        String? username =
+                                            widget.konto == 'Brukernavn'
+                                                ? _model
+                                                    .brukernavnTextController
+                                                    .text
+                                                : null;
+                                        String? firstname = widget.konto ==
+                                                'For- og etternavn'
+                                            ? _model.fornavnTextController.text
+                                            : null;
+                                        String? lastname =
+                                            widget.konto == 'For- og etternavn'
+                                                ? _model.etternavnTextController
+                                                    .text
+                                                : null;
+                                        String? email = widget.konto == 'E-post'
+                                            ? _model.emailTextController.text
+                                            : null;
+                                        String? bio = widget.konto == 'Bio'
+                                            ? _model.bioTextController.text
+                                            : null;
                                         // Only include profilepic in updateUserInfo if filelink is non-null
                                         final response =
                                             await apiUserSQL.updateUserInfo(
                                           token: token,
-                                          username: _model
-                                              .brukernavnTextController.text,
-                                          firstname:
-                                              _model.fornavnTextController.text,
-                                          lastname: _model
-                                              .etternavnTextController.text,
-                                          email:
-                                              _model.emailTextController.text,
-                                          bio: _model.bioTextController.text,
+                                          username: username,
+                                          firstname: firstname,
+                                          lastname: lastname,
+                                          email: email,
+                                          bio: bio,
                                           profilepic:
                                               filelink, // Null if no file was uploaded
                                         );

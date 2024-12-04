@@ -295,11 +295,11 @@ class ApiUserSQL {
   }
 
   Future<http.Response> updateUserInfo({
-    required String username,
-    required String bio,
-    required String firstname,
-    required String lastname,
-    required String email,
+    required String? username,
+    required String? bio,
+    required String? firstname,
+    required String? lastname,
+    required String? email,
     String? profilepic,
     String? token,
   }) async {
