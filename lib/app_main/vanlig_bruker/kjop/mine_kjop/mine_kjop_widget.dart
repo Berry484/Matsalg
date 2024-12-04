@@ -416,7 +416,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                     : _showMore
                                                         ? FFAppState()
                                                             .ordreInfo
-                                                            .length // Show all items when _showMore is true
+                                                            .length
                                                         : (FFAppState()
                                                                     .ordreInfo
                                                                     .length <
@@ -424,7 +424,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                             ? FFAppState()
                                                                 .ordreInfo
                                                                 .length
-                                                            : 5), // Show fewer items if length < 5, else show 5
+                                                            : 5),
                                             itemBuilder: (context, index) {
                                               if (FFAppState()
                                                   .ordreInfo
@@ -758,695 +758,722 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
 
                                               return Stack(
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 0, 0, 0),
-                                                    child: InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        if (alleInfo.kjopte ==
-                                                            true) {
-                                                          if (alleInfo.hentet != true &&
-                                                              alleInfo.avvist !=
-                                                                  true &&
-                                                              alleInfo.trekt !=
-                                                                  true) {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor:
-                                                                  const Color
-                                                                      .fromARGB(
-                                                                      60,
-                                                                      17,
-                                                                      0,
-                                                                      0),
-                                                              useRootNavigator:
-                                                                  true,
-                                                              useSafeArea: true,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
-                                                                    child:
-                                                                        BudInfoWidget(
-                                                                      info: alleInfo
-                                                                          .foodDetails,
-                                                                      ordre:
-                                                                          alleInfo,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                setState(() {
-                                                                  getAll();
-                                                                }));
-                                                            return;
-                                                          }
-                                                        }
-                                                        if (alleInfo.kjopte ==
-                                                            true) {
-                                                          if (alleInfo.godkjent !=
-                                                                  true &&
-                                                              alleInfo.trekt !=
-                                                                  true &&
-                                                              alleInfo.avvist !=
-                                                                  true) {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor:
-                                                                  const Color
-                                                                      .fromARGB(
-                                                                      60,
-                                                                      17,
-                                                                      0,
-                                                                      0),
-                                                              useRootNavigator:
-                                                                  true,
-                                                              useSafeArea: true,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
-                                                                    child:
-                                                                        SalgBrukerInfoWidget(
-                                                                      info: alleInfo
-                                                                          .foodDetails,
-                                                                      ordre:
-                                                                          alleInfo,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                setState(() {
-                                                                  getAll();
-                                                                }));
-                                                            return;
-                                                          }
-                                                        }
-                                                        if (alleInfo.hentet == true ||
-                                                            alleInfo.trekt ==
-                                                                true ||
-                                                            alleInfo.avvist ==
-                                                                true ||
-                                                            alleInfo.godkjent ==
+                                                  Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 0, 0, 0),
+                                                        child: InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
+                                                          onTap: () async {
+                                                            if (alleInfo
+                                                                    .kjopte ==
                                                                 true) {
-                                                          await showModalBottomSheet(
-                                                            isScrollControlled:
-                                                                true,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            barrierColor:
-                                                                const Color
-                                                                    .fromARGB(
-                                                                    60,
-                                                                    17,
-                                                                    0,
-                                                                    0),
-                                                            useRootNavigator:
-                                                                true,
-                                                            useSafeArea: true,
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return GestureDetector(
-                                                                onTap: () =>
-                                                                    FocusScope.of(
-                                                                            context)
-                                                                        .unfocus(),
-                                                                child: Padding(
-                                                                  padding: MediaQuery
-                                                                      .viewInsetsOf(
-                                                                          context),
-                                                                  child:
-                                                                      GodkjentebudWidget(
-                                                                    info: alleInfo
-                                                                        .foodDetails,
-                                                                    ordre:
-                                                                        alleInfo,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ).then((value) =>
-                                                              setState(() {
-                                                                getAll();
-                                                              }));
-                                                          return;
-                                                        }
-
-                                                        if (alleInfo.kjopte !=
-                                                            true) {
-                                                          if (alleInfo.godkjent !=
-                                                                  true &&
-                                                              alleInfo.trekt !=
-                                                                  true &&
-                                                              alleInfo.avvist !=
-                                                                  true) {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor:
-                                                                  const Color
-                                                                      .fromARGB(
-                                                                      60,
-                                                                      17,
-                                                                      0,
-                                                                      0),
-                                                              useRootNavigator:
-                                                                  true,
-                                                              useSafeArea: true,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
-                                                                    child:
-                                                                        SalgBrukerInfoWidget(
-                                                                      info: alleInfo
-                                                                          .foodDetails,
-                                                                      ordre:
-                                                                          alleInfo,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                setState(() {
-                                                                  getAll();
-                                                                }));
-                                                          }
-
-                                                          if (alleInfo
-                                                                  .godkjent ==
-                                                              true) {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor:
-                                                                  const Color
-                                                                      .fromARGB(
-                                                                      60,
-                                                                      17,
-                                                                      0,
-                                                                      0),
-                                                              useRootNavigator:
-                                                                  true,
-                                                              useSafeArea: true,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
-                                                                    child:
-                                                                        GodkjentebudWidget(
-                                                                      info: alleInfo
-                                                                          .foodDetails,
-                                                                      ordre:
-                                                                          alleInfo,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                setState(() {
-                                                                  getAll();
-                                                                }));
-                                                          }
-                                                        }
-                                                      },
-                                                      child: Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        elevation: 0,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(24),
-                                                        ),
-                                                        child: Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        24),
-                                                            shape: BoxShape
-                                                                .rectangle,
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Stack(
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment: const AlignmentDirectional(
-                                                                          1.76,
-                                                                          -0.05),
+                                                              if (alleInfo.hentet != true &&
+                                                                  alleInfo.avvist !=
+                                                                      true &&
+                                                                  alleInfo.trekt !=
+                                                                      true) {
+                                                                await showModalBottomSheet(
+                                                                  isScrollControlled:
+                                                                      true,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  barrierColor:
+                                                                      const Color
+                                                                          .fromARGB(
+                                                                          60,
+                                                                          17,
+                                                                          0,
+                                                                          0),
+                                                                  useRootNavigator:
+                                                                      true,
+                                                                  useSafeArea:
+                                                                      true,
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return GestureDetector(
+                                                                      onTap: () =>
+                                                                          FocusScope.of(context)
+                                                                              .unfocus(),
                                                                       child:
                                                                           Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            1,
-                                                                            1,
-                                                                            1),
+                                                                        padding:
+                                                                            MediaQuery.viewInsetsOf(context),
                                                                         child:
-                                                                            ClipRRect(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(6),
+                                                                            BudInfoWidget(
+                                                                          info:
+                                                                              alleInfo.foodDetails,
+                                                                          ordre:
+                                                                              alleInfo,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ).then((value) =>
+                                                                    setState(
+                                                                        () {
+                                                                      getAll();
+                                                                    }));
+                                                                return;
+                                                              }
+                                                            }
+                                                            if (alleInfo
+                                                                    .kjopte ==
+                                                                true) {
+                                                              if (alleInfo.godkjent != true &&
+                                                                  alleInfo.trekt !=
+                                                                      true &&
+                                                                  alleInfo.avvist !=
+                                                                      true) {
+                                                                await showModalBottomSheet(
+                                                                  isScrollControlled:
+                                                                      true,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  barrierColor:
+                                                                      const Color
+                                                                          .fromARGB(
+                                                                          60,
+                                                                          17,
+                                                                          0,
+                                                                          0),
+                                                                  useRootNavigator:
+                                                                      true,
+                                                                  useSafeArea:
+                                                                      true,
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return GestureDetector(
+                                                                      onTap: () =>
+                                                                          FocusScope.of(context)
+                                                                              .unfocus(),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            MediaQuery.viewInsetsOf(context),
+                                                                        child:
+                                                                            SalgBrukerInfoWidget(
+                                                                          info:
+                                                                              alleInfo.foodDetails,
+                                                                          ordre:
+                                                                              alleInfo,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ).then((value) =>
+                                                                    setState(
+                                                                        () {
+                                                                      getAll();
+                                                                    }));
+                                                                return;
+                                                              }
+                                                            }
+                                                            if (alleInfo.hentet == true ||
+                                                                alleInfo.trekt ==
+                                                                    true ||
+                                                                alleInfo.avvist ==
+                                                                    true ||
+                                                                alleInfo.godkjent ==
+                                                                    true) {
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                barrierColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                        60,
+                                                                        17,
+                                                                        0,
+                                                                        0),
+                                                                useRootNavigator:
+                                                                    true,
+                                                                useSafeArea:
+                                                                    true,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return GestureDetector(
+                                                                    onTap: () =>
+                                                                        FocusScope.of(context)
+                                                                            .unfocus(),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          GodkjentebudWidget(
+                                                                        info: alleInfo
+                                                                            .foodDetails,
+                                                                        ordre:
+                                                                            alleInfo,
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  setState(() {
+                                                                    getAll();
+                                                                  }));
+                                                              return;
+                                                            }
+
+                                                            if (alleInfo
+                                                                    .kjopte !=
+                                                                true) {
+                                                              if (alleInfo.godkjent != true &&
+                                                                  alleInfo.trekt !=
+                                                                      true &&
+                                                                  alleInfo.avvist !=
+                                                                      true) {
+                                                                await showModalBottomSheet(
+                                                                  isScrollControlled:
+                                                                      true,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  barrierColor:
+                                                                      const Color
+                                                                          .fromARGB(
+                                                                          60,
+                                                                          17,
+                                                                          0,
+                                                                          0),
+                                                                  useRootNavigator:
+                                                                      true,
+                                                                  useSafeArea:
+                                                                      true,
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return GestureDetector(
+                                                                      onTap: () =>
+                                                                          FocusScope.of(context)
+                                                                              .unfocus(),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            MediaQuery.viewInsetsOf(context),
+                                                                        child:
+                                                                            SalgBrukerInfoWidget(
+                                                                          info:
+                                                                              alleInfo.foodDetails,
+                                                                          ordre:
+                                                                              alleInfo,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ).then((value) =>
+                                                                    setState(
+                                                                        () {
+                                                                      getAll();
+                                                                    }));
+                                                              }
+
+                                                              if (alleInfo
+                                                                      .godkjent ==
+                                                                  true) {
+                                                                await showModalBottomSheet(
+                                                                  isScrollControlled:
+                                                                      true,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  barrierColor:
+                                                                      const Color
+                                                                          .fromARGB(
+                                                                          60,
+                                                                          17,
+                                                                          0,
+                                                                          0),
+                                                                  useRootNavigator:
+                                                                      true,
+                                                                  useSafeArea:
+                                                                      true,
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return GestureDetector(
+                                                                      onTap: () =>
+                                                                          FocusScope.of(context)
+                                                                              .unfocus(),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            MediaQuery.viewInsetsOf(context),
+                                                                        child:
+                                                                            GodkjentebudWidget(
+                                                                          info:
+                                                                              alleInfo.foodDetails,
+                                                                          ordre:
+                                                                              alleInfo,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ).then((value) =>
+                                                                    setState(
+                                                                        () {
+                                                                      getAll();
+                                                                    }));
+                                                              }
+                                                            }
+                                                          },
+                                                          child: Material(
+                                                            color: Colors
+                                                                .transparent,
+                                                            elevation: 0,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          24),
+                                                            ),
+                                                            child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            24),
+                                                                shape: BoxShape
+                                                                    .rectangle,
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(8),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Stack(
+                                                                      children: [
+                                                                        Align(
+                                                                          alignment: const AlignmentDirectional(
+                                                                              1.76,
+                                                                              -0.05),
                                                                           child:
-                                                                              Image.network(
-                                                                            '${ApiConstants.baseUrl}${alleInfo.foodDetails.imgUrls![0]}',
-                                                                            width:
-                                                                                60,
-                                                                            height:
-                                                                                60,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                            errorBuilder: (BuildContext context,
-                                                                                Object error,
-                                                                                StackTrace? stackTrace) {
-                                                                              return Image.asset(
-                                                                                'assets/images/error_image.jpg',
+                                                                              Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                1,
+                                                                                1,
+                                                                                1),
+                                                                            child:
+                                                                                ClipRRect(
+                                                                              borderRadius: BorderRadius.circular(6),
+                                                                              child: Image.network(
+                                                                                '${ApiConstants.baseUrl}${alleInfo.foodDetails.imgUrls![0]}',
                                                                                 width: 60,
                                                                                 height: 60,
                                                                                 fit: BoxFit.cover,
-                                                                              );
-                                                                            },
+                                                                                errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                                                  return Image.asset(
+                                                                                    'assets/images/error_image.jpg',
+                                                                                    width: 60,
+                                                                                    height: 60,
+                                                                                    fit: BoxFit.cover,
+                                                                                  );
+                                                                                },
+                                                                              ),
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                    ),
-                                                                    Positioned(
-                                                                      top:
-                                                                          0, // Adjust vertical position as needed
-                                                                      left:
-                                                                          0, // Adjust horizontal position as needed
-                                                                      child:
-                                                                          Container(
-                                                                        width:
-                                                                            25, // Ensure this matches the width of the image
-                                                                        height:
-                                                                            25, // Ensure this matches the height of the image
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          shape:
-                                                                              BoxShape.circle, // Makes the border circular
-                                                                          border:
-                                                                              Border.all(
-                                                                            color:
-                                                                                Colors.white, // Choose your desired border color
-                                                                            width:
-                                                                                0.5, // Adjust the border width as needed
-                                                                          ),
-                                                                        ),
-                                                                        child:
-                                                                            ClipOval(
+                                                                        Positioned(
+                                                                          top:
+                                                                              0, // Adjust vertical position as needed
+                                                                          left:
+                                                                              0, // Adjust horizontal position as needed
                                                                           child:
-                                                                              Image.network(
-                                                                            alleInfo.kjopte == true
-                                                                                ? '${ApiConstants.baseUrl}${alleInfo.foodDetails.profilepic}'
-                                                                                : '${ApiConstants.baseUrl}${alleInfo.kjoperProfilePic}',
+                                                                              Container(
                                                                             width:
-                                                                                25,
+                                                                                25, // Ensure this matches the width of the image
                                                                             height:
-                                                                                25,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                            errorBuilder: (BuildContext context,
-                                                                                Object error,
-                                                                                StackTrace? stackTrace) {
-                                                                              return Image.asset(
-                                                                                'assets/images/profile_pic.png',
+                                                                                25, // Ensure this matches the height of the image
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              shape: BoxShape.circle, // Makes the border circular
+                                                                              border: Border.all(
+                                                                                color: Colors.white, // Choose your desired border color
+                                                                                width: 0.5, // Adjust the border width as needed
+                                                                              ),
+                                                                            ),
+                                                                            child:
+                                                                                ClipOval(
+                                                                              child: Image.network(
+                                                                                alleInfo.kjopte == true ? '${ApiConstants.baseUrl}${alleInfo.foodDetails.profilepic}' : '${ApiConstants.baseUrl}${alleInfo.kjoperProfilePic}',
                                                                                 width: 25,
                                                                                 height: 25,
                                                                                 fit: BoxFit.cover,
-                                                                              );
-                                                                            },
+                                                                                errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                                                  return Image.asset(
+                                                                                    'assets/images/profile_pic.png',
+                                                                                    width: 25,
+                                                                                    height: 25,
+                                                                                    fit: BoxFit.cover,
+                                                                                  );
+                                                                                },
+                                                                              ),
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
+                                                                      ],
                                                                     ),
-                                                                  ],
-                                                                ),
-                                                                Expanded(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
+                                                                    Expanded(
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: const EdgeInsetsDirectional
                                                                             .fromSTEB(
                                                                             8,
                                                                             0,
                                                                             4,
                                                                             0),
-                                                                    child:
-                                                                        Column(
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.start,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                                                              child: Row(
+                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                children: [
+                                                                                  Container(
+                                                                                    child: Flexible(
+                                                                                      child: Text(
+                                                                                        alleInfo.kjopte == true ? alleInfo.selger : alleInfo.kjoper,
+                                                                                        softWrap: true, // Enables wrapping
+                                                                                        overflow: TextOverflow.visible, // Allows overflow to be visible or change to ellipsis
+                                                                                        style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                              fontFamily: 'Nunito',
+                                                                                              fontSize: 16,
+                                                                                              letterSpacing: 0.0,
+                                                                                              fontWeight: FontWeight.w700,
+                                                                                            ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+
+                                                                                  const SizedBox(width: 8), // Optional spacing between text and time
+                                                                                  Text(
+                                                                                    alleInfo.updatetime != null ? (DateFormat("d. MMM", "nb_NO").format(alleInfo.updatetime!.toLocal())) : "",
+                                                                                    style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                          fontFamily: 'Nunito',
+                                                                                          fontSize: 14,
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                          color: Colors.grey, // Set a different color here
+                                                                                        ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            if (alleInfo.trekt ==
+                                                                                true)
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
+                                                                                child: Text(
+                                                                                  alleInfo.kjopte == true ? 'Du trakk budet' : 'Kjøperen trakk budet',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Nunito',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        fontSize: 15,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            if (alleInfo.godkjent != true &&
+                                                                                alleInfo.hentet != true &&
+                                                                                alleInfo.trekt != true &&
+                                                                                alleInfo.avvist != true)
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
+                                                                                child: Text(
+                                                                                  alleInfo.kjopte == true ? 'Venter svar fra selgeren' : 'Vurder kjøperen',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Nunito',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        fontSize: 15,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            if (alleInfo.avvist ==
+                                                                                true)
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
+                                                                                child: Text(
+                                                                                  alleInfo.kjopte == true ? 'Selgeren avslo budet' : 'Du avslo budet',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Nunito',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        fontSize: 15,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            if (alleInfo.godkjent == true &&
+                                                                                alleInfo.hentet != true)
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
+                                                                                child: Text(
+                                                                                  alleInfo.kjopte == true ? 'Budet er godkjent,\nkontakt selgeren' : 'Budet er godkjent, kontakt kjøperen',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Nunito',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        fontSize: 14,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                        lineHeight: 1.1,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            if (alleInfo.hentet ==
+                                                                                true)
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
+                                                                                child: Text(
+                                                                                  alleInfo.kjopte == true ? 'Kjøpet er fullført' : 'Salget er fullført',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Nunito',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        fontSize: 15,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Column(
                                                                       mainAxisSize:
                                                                           MainAxisSize
                                                                               .max,
                                                                       mainAxisAlignment:
                                                                           MainAxisAlignment
-                                                                              .start,
+                                                                              .center,
                                                                       crossAxisAlignment:
                                                                           CrossAxisAlignment
-                                                                              .start,
+                                                                              .center,
                                                                       children: [
-                                                                        Padding(
-                                                                          padding: const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              0,
-                                                                              10,
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              Row(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.start,
-                                                                            children: [
-                                                                              Container(
-                                                                                child: Flexible(
-                                                                                  child: Text(
-                                                                                    alleInfo.kjopte == true ? alleInfo.selger : alleInfo.kjoper,
-                                                                                    softWrap: true, // Enables wrapping
-                                                                                    overflow: TextOverflow.visible, // Allows overflow to be visible or change to ellipsis
-                                                                                    style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                          fontFamily: 'Nunito',
-                                                                                          fontSize: 16,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w700,
-                                                                                        ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-
-                                                                              const SizedBox(width: 8), // Optional spacing between text and time
-                                                                              Text(
-                                                                                alleInfo.updatetime != null ? (DateFormat("d. MMM", "nb_NO").format(alleInfo.updatetime!.toLocal())) : "",
-                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                      fontFamily: 'Nunito',
-                                                                                      fontSize: 14,
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                      color: Colors.grey, // Set a different color here
-                                                                                    ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        if (alleInfo.trekt ==
-                                                                            true)
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                6),
-                                                                            child:
-                                                                                Text(
-                                                                              alleInfo.kjopte == true ? 'Du trakk budet' : 'Kjøperen trakk budet',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 15,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        if (alleInfo.godkjent != true &&
-                                                                            alleInfo.hentet !=
-                                                                                true &&
-                                                                            alleInfo.trekt !=
+                                                                        if (alleInfo.trekt !=
                                                                                 true &&
                                                                             alleInfo.avvist !=
                                                                                 true)
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                6),
+                                                                          Container(
+                                                                            height:
+                                                                                30,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color: alleInfo.hentet == true ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).price,
+                                                                              borderRadius: BorderRadius.circular(13),
+                                                                              border: alleInfo.hentet == true
+                                                                                  ? Border.all(color: const Color.fromARGB(44, 87, 99, 108), width: 1.2) // Add black border
+                                                                                  : null, // No border otherwise
+                                                                            ),
                                                                             child:
-                                                                                Text(
-                                                                              alleInfo.kjopte == true ? 'Venter svar fra selgeren' : 'Vurder kjøperen',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 15,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
+                                                                                Align(
+                                                                              alignment: const AlignmentDirectional(0, 0),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
+                                                                                child: Text(
+                                                                                  (alleInfo.kjopte ?? false) ? '${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr' : '+${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                  textAlign: TextAlign.start,
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Nunito',
+                                                                                        color: alleInfo.hentet == true ? FlutterFlowTheme.of(context).primaryText : FlutterFlowTheme.of(context).primary,
+                                                                                        fontSize: 14,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.bold,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
                                                                             ),
                                                                           ),
-                                                                        if (alleInfo.avvist ==
-                                                                            true)
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                6),
-                                                                            child:
-                                                                                Text(
-                                                                              alleInfo.kjopte == true ? 'Selgeren avslo budet' : 'Du avslo budet',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 15,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        if (alleInfo.godkjent ==
-                                                                                true &&
-                                                                            alleInfo.hentet !=
+                                                                        if (alleInfo.trekt ==
+                                                                                true ||
+                                                                            alleInfo.avvist ==
                                                                                 true)
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                6),
+                                                                          Container(
+                                                                            height:
+                                                                                30,
+                                                                            decoration: BoxDecoration(
+                                                                                color: Colors.white,
+                                                                                borderRadius: BorderRadius.circular(13),
+                                                                                border: Border.all(color: const Color.fromARGB(44, 87, 99, 108), width: 1.2)),
                                                                             child:
-                                                                                Text(
-                                                                              alleInfo.kjopte == true ? 'Budet er godkjent,\nkontakt selgeren' : 'Budet er godkjent, kontakt kjøperen',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 14,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    lineHeight: 1.1,
+                                                                                Stack(
+                                                                              children: [
+                                                                                Align(
+                                                                                  alignment: const AlignmentDirectional(0, 0),
+                                                                                  child: Padding(
+                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
+                                                                                    child: Stack(
+                                                                                      children: [
+                                                                                        // White line behind the text
+                                                                                        Positioned(
+                                                                                          top: 10, // Adjust this value to control the vertical alignment of the line
+                                                                                          left: 0,
+                                                                                          right: 0,
+                                                                                          child: Container(
+                                                                                            height: 1, // Thickness of the line
+                                                                                            color: const Color.fromARGB(255, 0, 0, 0), // Color of the line
+                                                                                          ),
+                                                                                        ),
+                                                                                        // The actual text
+                                                                                        Text(
+                                                                                          '${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Nunito',
+                                                                                                color: FlutterFlowTheme.of(context).primaryText,
+                                                                                                fontSize: 14,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                                // You can still keep the text decoration if you want, but the line through won't be white or thick.
+                                                                                                decoration: TextDecoration.none,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
                                                                                   ),
-                                                                            ),
-                                                                          ),
-                                                                        if (alleInfo.hentet ==
-                                                                            true)
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                6),
-                                                                            child:
-                                                                                Text(
-                                                                              alleInfo.kjopte == true ? 'Kjøpet er fullført' : 'Salget er fullført',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    fontSize: 15,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
+                                                                                ),
+                                                                              ],
                                                                             ),
                                                                           ),
                                                                       ],
                                                                     ),
-                                                                  ),
-                                                                ),
-                                                                Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    if (alleInfo.trekt !=
-                                                                            true &&
-                                                                        alleInfo.avvist !=
-                                                                            true)
-                                                                      Container(
-                                                                        height:
-                                                                            30,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color: alleInfo.hentet == true
-                                                                              ? FlutterFlowTheme.of(context).primary
-                                                                              : FlutterFlowTheme.of(context).price,
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(13),
-                                                                          border: alleInfo.hentet == true
-                                                                              ? Border.all(color: const Color.fromARGB(44, 87, 99, 108), width: 1.2) // Add black border
-                                                                              : null, // No border otherwise
-                                                                        ),
-                                                                        child:
-                                                                            Align(
-                                                                          alignment: const AlignmentDirectional(
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                15,
-                                                                                0,
-                                                                                12,
-                                                                                0),
-                                                                            child:
-                                                                                Text(
-                                                                              (alleInfo.kjopte ?? false) ? '${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr' : '+${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
-                                                                              textAlign: TextAlign.start,
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    color: alleInfo.hentet == true ? FlutterFlowTheme.of(context).primaryText : FlutterFlowTheme.of(context).primary,
-                                                                                    fontSize: 14,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    if (alleInfo.trekt ==
-                                                                            true ||
-                                                                        alleInfo.avvist ==
-                                                                            true)
-                                                                      Container(
-                                                                        height:
-                                                                            30,
-                                                                        decoration: BoxDecoration(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            borderRadius: BorderRadius.circular(13),
-                                                                            border: Border.all(color: const Color.fromARGB(44, 87, 99, 108), width: 1.2)),
-                                                                        child:
-                                                                            Stack(
-                                                                          children: [
-                                                                            Align(
-                                                                              alignment: const AlignmentDirectional(0, 0),
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
-                                                                                child: Stack(
-                                                                                  children: [
-                                                                                    // White line behind the text
-                                                                                    Positioned(
-                                                                                      top: 10, // Adjust this value to control the vertical alignment of the line
-                                                                                      left: 0,
-                                                                                      right: 0,
-                                                                                      child: Container(
-                                                                                        height: 1, // Thickness of the line
-                                                                                        color: const Color.fromARGB(255, 0, 0, 0), // Color of the line
-                                                                                      ),
-                                                                                    ),
-                                                                                    // The actual text
-                                                                                    Text(
-                                                                                      '${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
-                                                                                      textAlign: TextAlign.start,
-                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Nunito',
-                                                                                            color: FlutterFlowTheme.of(context).primaryText,
-                                                                                            fontSize: 14,
-                                                                                            letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                            // You can still keep the text decoration if you want, but the line through won't be white or thick.
-                                                                                            decoration: TextDecoration.none,
-                                                                                          ),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
                                                                   ],
                                                                 ),
-                                                              ],
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
+                                                      if (_showMore &&
+                                                          _alleInfo!.length -
+                                                                  1 ==
+                                                              index)
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical:
+                                                                      16.0),
+                                                          child: Center(
+                                                            child:
+                                                                FFButtonWidget(
+                                                              onPressed:
+                                                                  () async {
+                                                                HapticFeedback
+                                                                    .lightImpact();
+                                                                safeSetState(
+                                                                    () {
+                                                                  _showMore =
+                                                                      false;
+                                                                });
+                                                              },
+                                                              text: 'Se mindre',
+                                                              icon:
+                                                                  const FaIcon(
+                                                                FontAwesomeIcons
+                                                                    .chevronUp,
+                                                                size: 19,
+                                                              ),
+                                                              options:
+                                                                  FFButtonOptions(
+                                                                width: 130,
+                                                                height: 35,
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        16,
+                                                                        0,
+                                                                        16,
+                                                                        0),
+                                                                iconPadding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                      fontSize:
+                                                                          16,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
+                                                                    ),
+                                                                elevation: 0,
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          0,
+                                                                          87,
+                                                                          99,
+                                                                          108),
+                                                                  width: 1.5,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                    ],
                                                   ),
                                                 ],
                                               );

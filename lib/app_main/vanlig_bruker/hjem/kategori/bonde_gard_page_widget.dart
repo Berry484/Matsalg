@@ -7,6 +7,7 @@ import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/sorter/sorter_widget.dart';
+import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -493,24 +494,18 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
               mainAxisSize: MainAxisSize
                   .min, // Ensure Row does not try to fill unbounded width
               children: [
-                InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    context.safePop();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 0.0),
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 24,
-                    ),
+                FlutterFlowIconButton(
+                  borderColor: Colors.transparent,
+                  borderRadius: 50.0,
+                  borderWidth: 1.0,
+                  buttonSize: 40.0,
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 24,
                   ),
+                  onPressed: () => context.safePop(),
                 ),
-                const SizedBox(width: 8.0),
                 Flexible(
                   fit: FlexFit
                       .loose, // FlexFit.loose to avoid taking infinite space

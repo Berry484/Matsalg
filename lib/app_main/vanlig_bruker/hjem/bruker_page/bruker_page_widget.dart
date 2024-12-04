@@ -709,7 +709,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Nunito',
                                                                                       color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                      fontSize: 12,
+                                                                                      fontSize: 13,
                                                                                       letterSpacing: 0.0,
                                                                                     ),
                                                                               ),
@@ -780,7 +780,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Nunito',
                                                                                         color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                        fontSize: 12,
+                                                                                        fontSize: 13,
                                                                                         letterSpacing: 0.0,
                                                                                       ),
                                                                                 ),
@@ -855,7 +855,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Nunito',
                                                                                         color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                        fontSize: 12,
+                                                                                        fontSize: 13,
                                                                                         letterSpacing: 0.0,
                                                                                       ),
                                                                                 ),

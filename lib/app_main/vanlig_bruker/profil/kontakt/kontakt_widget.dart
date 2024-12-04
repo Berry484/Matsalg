@@ -467,20 +467,25 @@ class _KontaktWidgetState extends State<KontaktWidget> {
                                         context.goNamed('registrer');
                                         return;
                                       } else {
-                                        final response =
-                                            await reportUser.contactUs(
-                                                token: token,
-                                                description: _model
-                                                    .bioTextController.text,
-                                                email: _model
-                                                    .emailTextController.text);
-                                        if (response.statusCode == 200) {
-                                          Navigator.pop(context);
-                                        } else {
+                                        if (_model.bioTextController!.text
+                                            .trim()
+                                            .isNotEmpty) {
+                                          final response =
+                                              await reportUser.contactUs(
+                                                  token: token,
+                                                  description: _model
+                                                      .bioTextController.text,
+                                                  email: _model
+                                                      .emailTextController
+                                                      .text);
+                                          if (response.statusCode == 200) {
+                                            Navigator.pop(context);
+                                          } else {
+                                            _loading = false;
+                                            throw Exception();
+                                          }
                                           _loading = false;
-                                          throw Exception();
                                         }
-                                        _loading = false;
                                       }
                                     } on SocketException {
                                       _loading = false;

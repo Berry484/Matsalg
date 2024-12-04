@@ -376,19 +376,23 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                         context.goNamed('registrer');
                                         return;
                                       } else {
-                                        final response =
-                                            await reportUser.reportUser(
-                                                token: token,
-                                                to: widget.username,
-                                                description: _model
-                                                    .bioTextController.text,
-                                                matId: widget.matId);
-                                        if (response.statusCode == 200) {
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                        } else {
-                                          _loading = false;
-                                          throw Exception();
+                                        if (_model.bioTextController!.text
+                                            .trim()
+                                            .isNotEmpty) {
+                                          final response =
+                                              await reportUser.reportUser(
+                                                  token: token,
+                                                  to: widget.username,
+                                                  description: _model
+                                                      .bioTextController.text,
+                                                  matId: widget.matId);
+                                          if (response.statusCode == 200) {
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          } else {
+                                            _loading = false;
+                                            throw Exception();
+                                          }
                                         }
                                         _loading = false;
                                       }

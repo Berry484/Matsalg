@@ -52,7 +52,9 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
     _model = createModel(context, () => HjemModel());
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
-    _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
+    _model.textFieldFocusNode!.addListener(() => safeSetState(() {
+          searching = true;
+        }));
 
     _model.tabBarController = TabController(
       vsync: this,

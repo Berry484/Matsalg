@@ -11,7 +11,6 @@ import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +18,9 @@ import 'profil_rediger_model.dart';
 export 'profil_rediger_model.dart';
 
 class ProfilRedigerWidget extends StatefulWidget {
-  const ProfilRedigerWidget({super.key});
+  const ProfilRedigerWidget({super.key, this.konto});
+
+  final dynamic konto;
 
   @override
   State<ProfilRedigerWidget> createState() => _ProfilRedigerWidgetState();
@@ -149,32 +150,213 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
-            automaticallyImplyLeading: true,
+            automaticallyImplyLeading: false,
             scrolledUnderElevation: 0.0,
-            leading: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.safePop();
-              },
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 28,
-              ),
-            ),
-            title: Text(
-              'Rediger profil',
-              textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Nunito',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 20,
-                    letterSpacing: 0.0,
-                    fontWeight: FontWeight.w800,
+            title: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+              child: Align(
+                alignment: const AlignmentDirectional(0, 0),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  child: SafeArea(
+                    child: Container(
+                      width: valueOrDefault<double>(
+                        MediaQuery.sizeOf(context).width,
+                        500.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primary,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.safePop();
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 28,
+                            ),
+                          ),
+                          Text(
+                            widget.konto ?? 'Rediger',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontSize: 19,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 0, 0),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    try {
+                                      if (_isLoading) {
+                                        return;
+                                      }
+                                      if (_model.emailTextController.text !=
+                                          FFAppState().email) {
+                                        final response = await apiCalls
+                                            .checkEmailTaken(_model
+                                                .emailTextController.text);
+                                        if (response.statusCode != 200) {
+                                          showCupertinoDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CupertinoAlertDialog(
+                                                title: const Text(
+                                                    'E-posten er opptatt'),
+                                                content: const Text(
+                                                    'Denne e-posten er allerede i bruk av en annen bruker.'),
+                                                actions: <Widget>[
+                                                  CupertinoDialogAction(
+                                                    onPressed: () async {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text(
+                                                      'Ok',
+                                                      style: TextStyle(
+                                                          color: Colors.blue),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          _isLoading = false;
+                                          return;
+                                        }
+                                      }
+                                      String? token =
+                                          await Securestorage().readToken();
+                                      if (token == null) {
+                                        FFAppState().login = false;
+                                        context.goNamed('registrer');
+                                        return;
+                                      } else {
+                                        String? filelink;
+
+                                        // Check if a file is selected and ready to upload
+                                        if (_model.uploadedLocalFile.bytes
+                                                ?.isNotEmpty ??
+                                            false) {
+                                          final List<Uint8List?> filesData = [
+                                            _model.uploadedLocalFile.bytes
+                                          ];
+
+                                          // Upload file and retrieve the list of links
+                                          final List<String>? fileLinks =
+                                              await apiMultiplePics
+                                                  .uploadPictures(
+                                                      token: token,
+                                                      filesData: filesData);
+
+                                          // Set filelink to the first link if available
+                                          if (fileLinks!.isNotEmpty) {
+                                            filelink = fileLinks.first;
+                                          }
+                                        }
+
+                                        // Only include profilepic in updateUserInfo if filelink is non-null
+                                        final response =
+                                            await apiUserSQL.updateUserInfo(
+                                          token: token,
+                                          username: _model
+                                              .brukernavnTextController.text,
+                                          firstname:
+                                              _model.fornavnTextController.text,
+                                          lastname: _model
+                                              .etternavnTextController.text,
+                                          email:
+                                              _model.emailTextController.text,
+                                          bio: _model.bioTextController.text,
+                                          profilepic:
+                                              filelink, // Null if no file was uploaded
+                                        );
+                                        if (response.statusCode == 200) {
+                                          final decodedBody =
+                                              utf8.decode(response.bodyBytes);
+                                          final decodedResponse =
+                                              jsonDecode(decodedBody);
+                                          // Update local app state with server response
+                                          FFAppState().brukernavn =
+                                              decodedResponse['username'] ?? '';
+                                          FFAppState().email =
+                                              decodedResponse['email'] ?? '';
+                                          FFAppState().firstname =
+                                              decodedResponse['firstname'] ??
+                                                  '';
+                                          FFAppState().lastname =
+                                              decodedResponse['lastname'] ?? '';
+                                          FFAppState().bio =
+                                              decodedResponse['bio'] ?? '';
+                                          FFAppState().profilepic =
+                                              decodedResponse['profilepic'] ??
+                                                  '';
+
+                                          _isLoading = false;
+                                          setState(() {});
+                                          Navigator.pop(context);
+                                          context.pushNamed('Profil');
+                                          return;
+                                        } else if (response.statusCode == 401) {
+                                          _isLoading = false;
+                                          FFAppState().login = false;
+                                          context.goNamed('registrer');
+                                          return;
+                                        }
+                                      }
+                                    } on SocketException {
+                                      _isLoading = false;
+                                      HapticFeedback.lightImpact();
+                                      showErrorToast(context,
+                                          'Ingen internettforbindelse');
+                                    } catch (e) {
+                                      _isLoading = false;
+                                      HapticFeedback.lightImpact();
+                                      showErrorToast(
+                                          context, 'En feil oppstod');
+                                    }
+                                  },
+                                  child: Text(
+                                    'Lagre',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          fontSize: 17,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
+                ),
+              ),
             ),
             actions: [],
             centerTitle: true,
@@ -182,155 +364,195 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
           ),
           body: SafeArea(
             top: true,
-            child: SingleChildScrollView(
-              child: Column(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16, 50, 16, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Align(
-                              alignment: const AlignmentDirectional(1, -1),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  try {
-                                    final selectedMedia =
-                                        await selectMediaWithSourceBottomSheet(
-                                      context: context,
-                                      maxWidth: 500.00,
-                                      maxHeight: 500.00,
-                                      allowPhoto: true,
-                                    );
-                                    if (selectedMedia != null &&
-                                        selectedMedia.every((m) =>
-                                            validateFileFormat(
-                                                m.storagePath, context))) {
-                                      safeSetState(
-                                          () => _model.isDataUploading = true);
-                                      var selectedUploadedFiles =
-                                          <FFUploadedFile>[];
+                  if (widget.konto == 'Profilbilde')
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 50, 16, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Align(
+                                alignment: const AlignmentDirectional(1, -1),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    try {
+                                      final selectedMedia =
+                                          await selectMediaWithSourceBottomSheet(
+                                        context: context,
+                                        maxWidth: 500.00,
+                                        maxHeight: 500.00,
+                                        allowPhoto: true,
+                                      );
+                                      if (selectedMedia != null &&
+                                          selectedMedia.every((m) =>
+                                              validateFileFormat(
+                                                  m.storagePath, context))) {
+                                        safeSetState(() =>
+                                            _model.isDataUploading = true);
+                                        var selectedUploadedFiles =
+                                            <FFUploadedFile>[];
 
-                                      try {
-                                        selectedUploadedFiles = selectedMedia
-                                            .map((m) => FFUploadedFile(
-                                                  name: m.storagePath
-                                                      .split('/')
-                                                      .last,
-                                                  bytes: m.bytes,
-                                                  height: m.dimensions?.height,
-                                                  width: m.dimensions?.width,
-                                                  blurHash: m.blurHash,
-                                                ))
-                                            .toList();
-                                      } finally {
-                                        _model.isDataUploading = false;
+                                        try {
+                                          selectedUploadedFiles = selectedMedia
+                                              .map((m) => FFUploadedFile(
+                                                    name: m.storagePath
+                                                        .split('/')
+                                                        .last,
+                                                    bytes: m.bytes,
+                                                    height:
+                                                        m.dimensions?.height,
+                                                    width: m.dimensions?.width,
+                                                    blurHash: m.blurHash,
+                                                  ))
+                                              .toList();
+                                        } finally {
+                                          _model.isDataUploading = false;
+                                        }
+                                        if (selectedUploadedFiles.length ==
+                                            selectedMedia.length) {
+                                          safeSetState(() {
+                                            _model.uploadedLocalFile =
+                                                selectedUploadedFiles.first;
+                                          });
+                                        } else {
+                                          safeSetState(() {});
+                                          return;
+                                        }
                                       }
-                                      if (selectedUploadedFiles.length ==
-                                          selectedMedia.length) {
-                                        safeSetState(() {
-                                          _model.uploadedLocalFile =
-                                              selectedUploadedFiles.first;
-                                        });
-                                      } else {
-                                        safeSetState(() {});
-                                        return;
-                                      }
+                                    } on SocketException {
+                                      HapticFeedback.lightImpact();
+                                      showErrorToast(context,
+                                          'Ingen internettforbindelse');
+                                    } catch (e) {
+                                      HapticFeedback.lightImpact();
+                                      showErrorToast(
+                                          context, 'En feil oppstod');
                                     }
-                                  } on SocketException {
-                                    HapticFeedback.lightImpact();
-                                    showErrorToast(
-                                        context, 'Ingen internettforbindelse');
-                                  } catch (e) {
-                                    HapticFeedback.lightImpact();
-                                    showErrorToast(context, 'En feil oppstod');
-                                  }
-                                },
-                                child: Container(
-                                  height: 122,
+                                  },
                                   child: Stack(
                                     alignment:
                                         const AlignmentDirectional(1, -1),
                                     children: [
                                       if (_model
                                           .uploadedLocalFile.bytes!.isEmpty)
-                                        Align(
-                                          alignment: const AlignmentDirectional(
-                                              0, -0.5),
-                                          child: Container(
-                                            width: 100,
-                                            height: 100,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Image.network(
-                                              '${ApiConstants.baseUrl}${FFAppState().profilepic}',
-                                              fit: BoxFit.cover,
-                                              width: 100,
-                                              height: 100,
-                                              errorBuilder: (context, error,
-                                                      stackTrace) =>
-                                                  Image.asset(
-                                                'assets/images/profile_pic.png',
-                                                width: 100,
-                                                height: 100,
-                                                fit: BoxFit.cover,
+                                        Column(
+                                          children: [
+                                            Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0, -0.5),
+                                              child: Container(
+                                                width: 135,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Image.network(
+                                                  '${ApiConstants.baseUrl}${FFAppState().profilepic}',
+                                                  fit: BoxFit.cover,
+                                                  width: 135,
+                                                  height: 135,
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      Image.asset(
+                                                    'assets/images/profile_pic.png',
+                                                    width: 135,
+                                                    height: 135,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 8, 0, 0),
+                                              child: Text(
+                                                'Last opp bilde',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          fontSize: 17,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       if (_model
                                           .uploadedLocalFile.bytes!.isNotEmpty)
-                                        Align(
-                                          alignment: const AlignmentDirectional(
-                                              0, -0.5),
-                                          child: Container(
-                                            width: 100,
-                                            height: 100,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Image.memory(
-                                              _model.uploadedLocalFile.bytes ??
-                                                  Uint8List.fromList([]),
-                                              width: 100,
-                                              height: 100,
-                                              fit: BoxFit.cover,
-                                              errorBuilder: (context, error,
-                                                      stackTrace) =>
-                                                  Image.asset(
-                                                'assets/images/profile_pic.png',
-                                                width: 100,
-                                                height: 100,
-                                                fit: BoxFit.cover,
+                                        Column(
+                                          children: [
+                                            Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0, -0.5),
+                                              child: Container(
+                                                width: 135,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Image.memory(
+                                                  _model.uploadedLocalFile
+                                                          .bytes ??
+                                                      Uint8List.fromList([]),
+                                                  width: 135,
+                                                  height: 135,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      Image.asset(
+                                                    'assets/images/profile_pic.png',
+                                                    width: 135,
+                                                    height: 135,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 8, 0, 0),
+                                              child: Text(
+                                                'Last opp bilde',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          fontSize: 17,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       if ((_model.uploadedLocalFile.bytes
                                               ?.isNotEmpty ??
@@ -366,225 +588,33 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   ),
                                 ),
                               ),
-                            ),
-                          ]
-                              .addToStart(const SizedBox(width: 15))
-                              .addToEnd(const SizedBox(width: 15)),
-                        ),
-                      ],
+                            ]
+                                .addToStart(const SizedBox(width: 15))
+                                .addToEnd(const SizedBox(width: 15)),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 5, 0),
-                                child: Container(
-                                  width: 0,
-                                  child: TextFormField(
-                                    controller: _model.fornavnTextController,
-                                    focusNode: _model.fornavnFocusNode,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Fornavn',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Nunito',
-                                            color: const Color.fromRGBO(
-                                                113, 113, 113, 1.0),
-                                            fontSize: 17.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .secondary,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Nunito',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          fontSize: 16,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    validator: _model
-                                        .fornavnTextControllerValidator
-                                        .asValidator(context),
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(15),
-                                      TextInputFormatter.withFunction(
-                                          (oldValue, newValue) {
-                                        final lineCount = '\n'
-                                                .allMatches(newValue.text)
-                                                .length +
-                                            1;
-                                        if (lineCount > 1) {
-                                          return oldValue;
-                                        }
-                                        return newValue;
-                                      }),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5, 16, 0, 0),
-                                child: Container(
-                                  width: 0,
-                                  child: TextFormField(
-                                    controller: _model.etternavnTextController,
-                                    focusNode: _model.etternavnFocusNode,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Etternavn',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Nunito',
-                                            color: const Color.fromRGBO(
-                                                113, 113, 113, 1.0),
-                                            fontSize: 17.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .secondary,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Nunito',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          fontSize: 16,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    validator: _model
-                                        .etternavnTextControllerValidator
-                                        .asValidator(context),
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(15),
-                                      TextInputFormatter.withFunction(
-                                          (oldValue, newValue) {
-                                        final lineCount = '\n'
-                                                .allMatches(newValue.text)
-                                                .length +
-                                            1;
-                                        if (lineCount > 1) {
-                                          return oldValue;
-                                        }
-                                        return newValue;
-                                      }),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: Padding(
+                  if (widget.konto == 'For- og etternavn')
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 16, 0, 0),
                                 child: TextFormField(
-                                  controller: _model.emailTextController,
-                                  focusNode: _model.emailFocusNode,
+                                  controller: _model.fornavnTextController,
+                                  focusNode: _model.fornavnFocusNode,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'E-post',
+                                    labelText: 'Fornavn',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -611,7 +641,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
-                                            .secondary,
+                                            .primary,
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(14),
@@ -645,10 +675,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                         fontSize: 16,
                                         letterSpacing: 0.0,
                                       ),
-                                  validator: _model.emailTextControllerValidator
+                                  validator: _model
+                                      .fornavnTextControllerValidator
                                       .asValidator(context),
                                   inputFormatters: [
-                                    LengthLimitingTextInputFormatter(50),
+                                    LengthLimitingTextInputFormatter(17),
                                     TextInputFormatter.withFunction(
                                         (oldValue, newValue) {
                                       final lineCount = '\n'
@@ -663,245 +694,296 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   ],
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 40),
-                    child: TextFormField(
-                      controller: _model.bioTextController,
-                      focusNode: _model.bioFocusNode,
-                      onChanged: (_) => EasyDebounce.debounce(
-                        '_model.textController',
-                        const Duration(milliseconds: 200),
-                        () => safeSetState(() {}),
-                      ),
-                      textCapitalization: TextCapitalization.sentences,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelStyle:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  fontFamily: 'Open Sans',
-                                  fontSize: 13,
-                                  letterSpacing: 0.0,
-                                ),
-                        hintText: 'Bio',
-                        hintStyle: FlutterFlowTheme.of(context)
-                            .bodyMedium
-                            .override(
-                              fontFamily: 'Nunito',
-                              color: const Color.fromRGBO(113, 113, 113, 1.0),
-                              fontSize: 16.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primary,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).error,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).error,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        filled: true,
-                        fillColor: FlutterFlowTheme.of(context).secondary,
-                        contentPadding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Nunito',
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 16,
-                            letterSpacing: 0.0,
-                          ),
-                      textAlign: TextAlign.start,
-                      maxLength: 200,
-                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                      minLines: 3,
-                      maxLines: 7,
-                      validator: _model.bioTextControllerValidator
-                          .asValidator(context),
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(200),
-                        TextInputFormatter.withFunction((oldValue, newValue) {
-                          final lineCount =
-                              '\n'.allMatches(newValue.text).length + 1;
-                          if (lineCount > 7) {
-                            return oldValue;
-                          }
-                          return newValue;
-                        }),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 25, 20, 0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        try {
-                          if (_isLoading) {
-                            return;
-                          }
-                          if (_model.emailTextController.text !=
-                              FFAppState().email) {
-                            final response = await apiCalls.checkEmailTaken(
-                                _model.emailTextController.text);
-                            if (response.statusCode != 200) {
-                              showCupertinoDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CupertinoAlertDialog(
-                                    title: const Text('E-posten er opptatt'),
-                                    content: const Text(
-                                        'Denne e-posten er allerede i bruk av en annen bruker.'),
-                                    actions: <Widget>[
-                                      CupertinoDialogAction(
-                                        onPressed: () async {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text(
-                                          'Ok',
-                                          style: TextStyle(color: Colors.blue),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 16, 0, 0),
+                                child: TextFormField(
+                                  controller: _model.etternavnTextController,
+                                  focusNode: _model.etternavnFocusNode,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Etternavn',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: const Color.fromRGBO(
+                                              113, 113, 113, 1.0),
+                                          fontSize: 17.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w700,
                                         ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
                                       ),
-                                    ],
-                                  );
-                                },
-                              );
-                              _isLoading = false;
-                              return;
-                            }
-                          }
-                          String? token = await Securestorage().readToken();
-                          if (token == null) {
-                            FFAppState().login = false;
-                            context.goNamed('registrer');
-                            return;
-                          } else {
-                            String? filelink;
-
-                            // Check if a file is selected and ready to upload
-                            if (_model.uploadedLocalFile.bytes?.isNotEmpty ??
-                                false) {
-                              final List<Uint8List?> filesData = [
-                                _model.uploadedLocalFile.bytes
-                              ];
-
-                              // Upload file and retrieve the list of links
-                              final List<String>? fileLinks =
-                                  await apiMultiplePics.uploadPictures(
-                                      token: token, filesData: filesData);
-
-                              // Set filelink to the first link if available
-                              if (fileLinks!.isNotEmpty) {
-                                filelink = fileLinks.first;
-                              }
-                            }
-
-                            // Only include profilepic in updateUserInfo if filelink is non-null
-                            final response = await apiUserSQL.updateUserInfo(
-                              token: token,
-                              username: _model.brukernavnTextController.text,
-                              firstname: _model.fornavnTextController.text,
-                              lastname: _model.etternavnTextController.text,
-                              email: _model.emailTextController.text,
-                              bio: _model.bioTextController.text,
-                              profilepic:
-                                  filelink, // Null if no file was uploaded
-                            );
-                            if (response.statusCode == 200) {
-                              final decodedBody =
-                                  utf8.decode(response.bodyBytes);
-                              final decodedResponse = jsonDecode(decodedBody);
-                              // Update local app state with server response
-                              FFAppState().brukernavn =
-                                  decodedResponse['username'] ?? '';
-                              FFAppState().email =
-                                  decodedResponse['email'] ?? '';
-                              FFAppState().firstname =
-                                  decodedResponse['firstname'] ?? '';
-                              FFAppState().lastname =
-                                  decodedResponse['lastname'] ?? '';
-                              FFAppState().bio = decodedResponse['bio'] ?? '';
-                              FFAppState().profilepic =
-                                  decodedResponse['profilepic'] ?? '';
-
-                              _isLoading = false;
-                              setState(() {});
-                              Navigator.pop(context);
-                              context.pushNamed('Profil');
-                              return;
-                            } else if (response.statusCode == 401) {
-                              _isLoading = false;
-                              FFAppState().login = false;
-                              context.goNamed('registrer');
-                              return;
-                            }
-                          }
-                        } on SocketException {
-                          _isLoading = false;
-                          HapticFeedback.lightImpact();
-                          showErrorToast(context, 'Ingen internettforbindelse');
-                        } catch (e) {
-                          _isLoading = false;
-                          HapticFeedback.lightImpact();
-                          showErrorToast(context, 'En feil oppstod');
-                        }
-                      },
-                      text: 'Lagre',
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 50.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
-                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).alternate,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleMedium.override(
-                                  fontFamily: 'Nunito',
-                                  color: FlutterFlowTheme.of(context).secondary,
-                                  fontSize: 17.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w800,
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 16,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  validator: _model
+                                      .etternavnTextControllerValidator
+                                      .asValidator(context),
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(17),
+                                    TextInputFormatter.withFunction(
+                                        (oldValue, newValue) {
+                                      final lineCount = '\n'
+                                              .allMatches(newValue.text)
+                                              .length +
+                                          1;
+                                      if (lineCount > 1) {
+                                        return oldValue;
+                                      }
+                                      return newValue;
+                                    }),
+                                  ],
                                 ),
-                        elevation: 0.0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(14.0),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ].addToEnd(const SizedBox(height: 170)),
-              ),
-            ),
+                  if (widget.konto == 'E-post')
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: TextFormField(
+                                    controller: _model.emailTextController,
+                                    focusNode: _model.emailFocusNode,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'E-post',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Nunito',
+                                            color: const Color.fromRGBO(
+                                                113, 113, 113, 1.0),
+                                            fontSize: 17.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondary,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondary,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 16,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    validator: _model
+                                        .emailTextControllerValidator
+                                        .asValidator(context),
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(50),
+                                      TextInputFormatter.withFunction(
+                                          (oldValue, newValue) {
+                                        final lineCount = '\n'
+                                                .allMatches(newValue.text)
+                                                .length +
+                                            1;
+                                        if (lineCount > 1) {
+                                          return oldValue;
+                                        }
+                                        return newValue;
+                                      }),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (widget.konto == 'Bio')
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 40),
+                      child: TextFormField(
+                        controller: _model.bioTextController,
+                        focusNode: _model.bioFocusNode,
+                        onChanged: (_) => EasyDebounce.debounce(
+                          '_model.textController',
+                          const Duration(milliseconds: 200),
+                          () => safeSetState(() {}),
+                        ),
+                        textCapitalization: TextCapitalization.sentences,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelStyle:
+                              FlutterFlowTheme.of(context).labelMedium.override(
+                                    fontFamily: 'Open Sans',
+                                    fontSize: 13,
+                                    letterSpacing: 0.0,
+                                  ),
+                          hintText: 'Bio',
+                          hintStyle: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Nunito',
+                                color: const Color.fromRGBO(113, 113, 113, 1.0),
+                                fontSize: 16.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w700,
+                              ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primary,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          filled: true,
+                          fillColor: FlutterFlowTheme.of(context).secondary,
+                          contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                              20, 24, 0, 24),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Nunito',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              fontSize: 16,
+                              letterSpacing: 0.0,
+                            ),
+                        textAlign: TextAlign.start,
+                        maxLength: 200,
+                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                        minLines: 3,
+                        maxLines: 7,
+                        validator: _model.bioTextControllerValidator
+                            .asValidator(context),
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(200),
+                          TextInputFormatter.withFunction((oldValue, newValue) {
+                            final lineCount =
+                                '\n'.allMatches(newValue.text).length + 1;
+                            if (lineCount > 7) {
+                              return oldValue;
+                            }
+                            return newValue;
+                          }),
+                        ],
+                      ),
+                    ),
+                ]),
           ),
         ),
       ),

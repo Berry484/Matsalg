@@ -559,7 +559,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Nunito',
                                                                                         color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                        fontSize: 12,
+                                                                                        fontSize: 13,
                                                                                         letterSpacing: 0.0,
                                                                                       ),
                                                                                 ),
@@ -633,7 +633,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                          fontSize: 12,
+                                                                                          fontSize: 13,
                                                                                           letterSpacing: 0.0,
                                                                                         ),
                                                                                   ),
@@ -708,7 +708,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                          fontSize: 12,
+                                                                                          fontSize: 13,
                                                                                           letterSpacing: 0.0,
                                                                                         ),
                                                                                   ),
@@ -927,11 +927,17 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           24, 0, 40, 0),
                                                   child: GestureDetector(
                                                     onTap: () {
-                                                      if (FFAppState()
-                                                          .bio
-                                                          .isEmpty) {
+                                                      {
                                                         context.pushNamed(
-                                                            'ProfilRediger');
+                                                          'ProfilRediger',
+                                                          queryParameters: {
+                                                            'konto':
+                                                                serializeParam(
+                                                              'Bio',
+                                                              ParamType.String,
+                                                            ),
+                                                          },
+                                                        );
                                                       }
                                                     },
                                                     child: Column(

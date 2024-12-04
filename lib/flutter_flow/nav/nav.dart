@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/BottomNavWrapper.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/profil/innstillinger/konto/settings_konto_widget.dart';
 import 'package:provider/provider.dart';
 
 import '/auth/custom_auth/custom_auth_user_provider.dart';
@@ -461,6 +462,36 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                         );
                       },
                     ),
+                    GoRoute(
+                      path: 'konto',
+                      name: 'Konto',
+                      builder: (context, state) {
+                        // Return the widget for the settings page
+                        return const SettingsKontoWidget();
+                      },
+                      pageBuilder: (context, state) {
+                        return CustomTransitionPage<void>(
+                          key: state.pageKey, // Maintain the page state
+                          child: const SettingsKontoWidget(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const Offset begin =
+                                Offset(1.0, 0.0); // Slide in from the right
+                            const Offset end = Offset.zero;
+                            const Curve curve = Curves.easeInOut;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ]),
             ],
           ),
@@ -479,7 +510,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         path: '/profilRediger',
         name: 'ProfilRediger',
         builder: (context, state) {
-          return const ProfilRedigerWidget();
+          final params = FFParameters(state);
+          final konto = params.getParam<String>('konto', ParamType.String);
+          return ProfilRedigerWidget(konto: konto);
         },
         parentNavigatorKey: _parentKey,
       ),

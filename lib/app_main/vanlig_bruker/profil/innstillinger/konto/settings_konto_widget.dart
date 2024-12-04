@@ -1,104 +1,27 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:mat_salg/api/web_socket.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/hjem/choose_location/location_widget.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/profil/kontakt/kontakt_widget.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'innstillinger_model.dart';
-export 'innstillinger_model.dart';
+import 'settings_konto_model.dart';
+export 'settings_konto_model.dart';
 
-class InnstillingerWidget extends StatefulWidget {
-  const InnstillingerWidget({super.key});
+class SettingsKontoWidget extends StatefulWidget {
+  const SettingsKontoWidget({super.key});
 
   @override
-  State<InnstillingerWidget> createState() => _InnstillingerWidgetState();
+  State<SettingsKontoWidget> createState() => _SettingsKontoWidgetState();
 }
 
-class _InnstillingerWidgetState extends State<InnstillingerWidget> {
-  late WebSocketService _webSocketService; // Declare WebSocketService
-  late InnstillingerModel _model;
+class _SettingsKontoWidgetState extends State<SettingsKontoWidget> {
+  late SettingsKontoModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _webSocketService = WebSocketService();
-    _model = createModel(context, () => InnstillingerModel());
-  }
-
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.solidTimesCircle,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
+    _model = createModel(context, () => SettingsKontoModel());
   }
 
   @override
@@ -119,10 +42,10 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
-            scrolledUnderElevation: 0,
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: true,
+            scrolledUnderElevation: 0,
             leading: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -136,6 +59,15 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                 color: FlutterFlowTheme.of(context).primaryText,
                 size: 28,
               ),
+            ),
+            title: Text(
+              'Konto',
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Nunito',
+                    fontSize: 21,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w800,
+                  ),
             ),
             actions: [],
             centerTitle: true,
@@ -152,12 +84,12 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                     alignment: const AlignmentDirectional(-1, 0),
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(16, 30, 0, 0),
                       child: Text(
-                        'Innstillinger',
+                        'Min profil',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Nunito',
-                              fontSize: 26,
+                              fontSize: 14,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w800,
                             ),
@@ -165,31 +97,21 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16, 30, 16, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 12),
+                                0, 8, 0, 8),
                             child: InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                try {
-                                  context.pushNamed('Konto');
-                                } on SocketException {
-                                  HapticFeedback.lightImpact();
-                                  showErrorToast(
-                                      context, 'Ingen internettforbindelse');
-                                } catch (e) {
-                                  HapticFeedback.lightImpact();
-                                  showErrorToast(context, 'En feil oppstod');
-                                }
+                                context.pushNamed('ProfilRediger');
                               },
                               child: Material(
                                 color: Colors.transparent,
@@ -216,15 +138,26 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                         focusColor: Colors.transparent,
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            'ProfilRediger',
+                                            queryParameters: {
+                                              'konto': serializeParam(
+                                                'Profilbilde',
+                                                ParamType.String,
+                                              ),
+                                            },
+                                          );
+                                        },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Icon(
-                                              CupertinoIcons.person,
+                                              Icons.account_circle_outlined,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 30,
+                                              size: 28,
                                             ),
                                             Column(
                                               mainAxisSize: MainAxisSize.max,
@@ -237,7 +170,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                           .fromSTEB(
                                                           12, 0, 0, 0),
                                                   child: Text(
-                                                    'Konto',
+                                                    'Profilbilde',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .labelLarge
@@ -250,27 +183,6 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
-                                                        ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          12, 0, 0, 0),
-                                                  child: Text(
-                                                    'Rediger profilen din',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .labelLarge
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          color: const Color(
-                                                              0x9F57636C),
-                                                          fontSize: 15,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
                                                         ),
                                                   ),
                                                 ),
@@ -298,125 +210,13 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                           ),
                           const Divider(
                             thickness: 1.2,
-                            indent: 15,
-                            endIndent: 15,
+                            indent: 0,
+                            endIndent: 0,
                             color: Color(0xE5EAEAEA),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 12),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  borderRadius: BorderRadius.circular(14),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                    width: 0,
-                                  ),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {},
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.creditcard,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 30,
-                                          ),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Betalinger',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 16,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Utbetalinger, kort og salg',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color: const Color(
-                                                            0x9F57636C),
-                                                        fontSize: 15,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Expanded(
-                                            child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(0.9, 0),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Color(0xA0262C2D),
-                                                size: 22,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Divider(
-                            thickness: 1.2,
-                            indent: 15,
-                            endIndent: 15,
-                            color: Color(0xE5EAEAEA),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 12),
+                                0, 8, 0, 8),
                             child: Material(
                               color: Colors.transparent,
                               elevation: 0,
@@ -443,38 +243,24 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor: Colors.transparent,
-                                          barrierColor: const Color.fromARGB(
-                                              60, 17, 0, 0),
-                                          useRootNavigator: true,
-                                          context: context,
-                                          builder: (context) {
-                                            return GestureDetector(
-                                              onTap: () =>
-                                                  FocusScope.of(context)
-                                                      .unfocus(),
-                                              child: Padding(
-                                                padding:
-                                                    MediaQuery.viewInsetsOf(
-                                                        context),
-                                                child:
-                                                    const VelgPosisjonWidget(),
-                                              ),
-                                            );
+                                        context.pushNamed(
+                                          'ProfilRediger',
+                                          queryParameters: {
+                                            'konto': serializeParam(
+                                              'For- og etternavn',
+                                              ParamType.String,
+                                            ),
                                           },
-                                        ).then((value) => setState(() {}));
-                                        return;
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Icon(
-                                            CupertinoIcons.placemark,
+                                            CupertinoIcons.person,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            size: 30,
+                                            size: 28,
                                           ),
                                           Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -486,7 +272,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(12, 0, 0, 0),
                                                 child: Text(
-                                                  'Endre lokasjon',
+                                                  'For- og etternavn',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelLarge
@@ -500,26 +286,6 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Sett ny lokasjon',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color: const Color(
-                                                            0x9F57636C),
-                                                        fontSize: 15,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
                                                       ),
                                                 ),
                                               ),
@@ -546,126 +312,13 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                           ),
                           const Divider(
                             thickness: 1.2,
-                            indent: 15,
-                            endIndent: 15,
+                            indent: 0,
+                            endIndent: 0,
                             color: Color(0xE5EAEAEA),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 12),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  borderRadius: BorderRadius.circular(14),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                    width: 0,
-                                  ),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {},
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons
-                                                .exclamationmark_shield,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 30,
-                                          ),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Persornvern og vilkår',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 16,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Våre vilkår og betingelser',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color: const Color(
-                                                            0x9F57636C),
-                                                        fontSize: 15,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Expanded(
-                                            child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(0.9, 0),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Color(0xA0262C2D),
-                                                size: 22,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Divider(
-                            thickness: 1.2,
-                            indent: 15,
-                            endIndent: 15,
-                            color: Color(0xE5EAEAEA),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 12),
+                                0, 8, 0, 8),
                             child: Material(
                               color: Colors.transparent,
                               elevation: 0,
@@ -692,37 +345,24 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor: Colors.transparent,
-                                          barrierColor: const Color.fromARGB(
-                                              60, 17, 0, 0),
-                                          useRootNavigator: true,
-                                          context: context,
-                                          builder: (context) {
-                                            return GestureDetector(
-                                              onTap: () =>
-                                                  FocusScope.of(context)
-                                                      .unfocus(),
-                                              child: Padding(
-                                                padding:
-                                                    MediaQuery.viewInsetsOf(
-                                                        context),
-                                                child: const KontaktWidget(),
-                                              ),
-                                            );
+                                        context.pushNamed(
+                                          'ProfilRediger',
+                                          queryParameters: {
+                                            'konto': serializeParam(
+                                              'Bio',
+                                              ParamType.String,
+                                            ),
                                           },
-                                        ).then((value) => setState(() {}));
-                                        return;
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Icon(
-                                            CupertinoIcons.chat_bubble_2,
+                                            CupertinoIcons.pen,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            size: 30,
+                                            size: 28,
                                           ),
                                           Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -734,7 +374,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(12, 0, 0, 0),
                                                 child: Text(
-                                                  'Support',
+                                                  'Bio',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelLarge
@@ -748,26 +388,6 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Få hjelp eller send tilbakemeldinger',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color: const Color(
-                                                            0x9F57636C),
-                                                        fontSize: 15,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
                                                       ),
                                                 ),
                                               ),
@@ -792,100 +412,318 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: const AlignmentDirectional(0, 0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 40, 0, 0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  try {
-                                    showCupertinoDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return CupertinoAlertDialog(
-                                          title: const Text('Logg ut?'),
-                                          actions: <Widget>[
-                                            CupertinoDialogAction(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Text(
-                                                'Avbryt',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: CupertinoColors
-                                                        .activeBlue),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: const AlignmentDirectional(-1, 0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 40, 0, 0),
+                      child: Text(
+                        'Personlig informasjon',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Nunito',
+                              fontSize: 14,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w800,
+                            ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 8, 0, 8),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('ProfilRediger');
+                              },
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    borderRadius: BorderRadius.circular(14),
+                                    shape: BoxShape.rectangle,
+                                    border: Border.all(
+                                      color: Colors.transparent,
+                                      width: 0,
+                                    ),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            'ProfilRediger',
+                                            queryParameters: {
+                                              'konto': serializeParam(
+                                                'E-post',
+                                                ParamType.String,
                                               ),
+                                            },
+                                          );
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.envelope,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 28,
                                             ),
-                                            CupertinoDialogAction(
-                                              onPressed: () async {
-                                                try {
-                                                  final appState = FFAppState();
-                                                  FFAppState().login = false;
-                                                  FFAppState().startet = false;
-                                                  appState.conversations
-                                                      .clear();
-                                                  appState.matvarer.clear();
-                                                  appState.ordreInfo.clear();
-                                                  _webSocketService.close();
-                                                  context.go('/registrer');
-                                                } on SocketException {
-                                                  HapticFeedback.lightImpact();
-                                                  showErrorToast(context,
-                                                      'Ingen internettforbindelse');
-                                                } catch (e) {
-                                                  HapticFeedback.lightImpact();
-                                                  showErrorToast(context,
-                                                      'En feil oppstod');
-                                                }
-                                              },
-                                              child: const Text(
-                                                'Logg ut',
-                                                style: TextStyle(
-                                                    color: CupertinoColors
-                                                        .activeBlue),
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          12, 0, 0, 0),
+                                                  child: Text(
+                                                    'E-post',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 16,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const Expanded(
+                                              child: Align(
+                                                alignment: AlignmentDirectional(
+                                                    0.9, 0),
+                                                child: Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  color: Color(0xA0262C2D),
+                                                  size: 22,
+                                                ),
                                               ),
                                             ),
                                           ],
-                                        );
-                                      },
-                                    );
-                                  } on SocketException {
-                                    HapticFeedback.lightImpact();
-                                    showErrorToast(
-                                        context, 'Ingen internettforbindelse');
-                                  } catch (e) {
-                                    HapticFeedback.lightImpact();
-                                    showErrorToast(context, 'En feil oppstod');
-                                  }
-                                },
-                                text: 'Logg ut',
-                                options: FFButtonOptions(
-                                  width: 151,
-                                  height: 45,
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 0),
-                                  iconPadding:
-                                      const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 16,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                  elevation: 0,
-                                  borderSide: const BorderSide(
-                                    color: Color(0x5957636C),
-                                    width: 1.5,
+                                    ],
                                   ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 1.2,
+                            indent: 0,
+                            endIndent: 0,
+                            color: Color(0xE5EAEAEA),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 8, 0, 8),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).primary,
                                   borderRadius: BorderRadius.circular(14),
+                                  shape: BoxShape.rectangle,
+                                  border: Border.all(
+                                    color: Colors.transparent,
+                                    width: 0,
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {},
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.phone,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 28,
+                                          ),
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(12, 0, 0, 0),
+                                                child: Text(
+                                                  'Telefonnummer',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelLarge
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        fontSize: 16,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Expanded(
+                                            child: Align(
+                                              alignment:
+                                                  AlignmentDirectional(0.9, 0),
+                                              child: Icon(
+                                                Icons.arrow_forward_ios,
+                                                color: Color(0xA0262C2D),
+                                                size: 22,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 1.2,
+                            indent: 0,
+                            endIndent: 0,
+                            color: Color(0xE5EAEAEA),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 8, 0, 8),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  borderRadius: BorderRadius.circular(14),
+                                  shape: BoxShape.rectangle,
+                                  border: Border.all(
+                                    color: Colors.transparent,
+                                    width: 0,
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {},
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.delete_simple,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 28,
+                                          ),
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(12, 0, 0, 0),
+                                                child: Text(
+                                                  'Slett kontoen min',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelLarge
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        fontSize: 16,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Expanded(
+                                            child: Align(
+                                              alignment:
+                                                  AlignmentDirectional(0.9, 0),
+                                              child: Icon(
+                                                Icons.arrow_forward_ios,
+                                                color: Color(0xA0262C2D),
+                                                size: 22,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -894,7 +732,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                       ),
                     ),
                   ),
-                ],
+                ].addToEnd(const SizedBox(height: 80)),
               ),
             ),
           ),
