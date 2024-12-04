@@ -409,291 +409,148 @@ class _ProfilWidgetState extends State<ProfilWidget>
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
-                  child: SingleChildScrollView(
-                    primary: false,
-                    physics: AlwaysScrollableScrollPhysics(),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 20, 0, 0),
-                              child: SingleChildScrollView(
-                                primary: false,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    ListView(
-                                      padding: EdgeInsets.zero,
-                                      primary: false,
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.vertical,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 0, 0, 0),
-                                          child: SingleChildScrollView(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            24, 0, 0, 5),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Container(
-                                                          width: 85,
-                                                          height: 85,
-                                                          clipBehavior:
-                                                              Clip.antiAlias,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                          ),
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            fadeInDuration:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        0),
-                                                            fadeOutDuration:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        0),
-                                                            imageUrl:
-                                                                '${ApiConstants.baseUrl}${FFAppState().profilepic}',
-                                                            fit: BoxFit.cover,
-                                                            errorWidget: (context,
-                                                                    error,
-                                                                    stackTrace) =>
-                                                                Image.asset(
-                                                              'assets/images/profile_pic.png',
+                  child: RefreshIndicator.adaptive(
+                    color: FlutterFlowTheme.of(context).alternate,
+                    onRefresh: () async {
+                      HapticFeedback.lightImpact();
+                      getMyFoods();
+                      getAllLikes();
+                      tellMineFolger();
+                      tellMineFolgere();
+                      updateUserStats();
+                      getRatingStats();
+                    },
+                    child: SingleChildScrollView(
+                      primary: false,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 20, 0, 0),
+                                child: SingleChildScrollView(
+                                  primary: false,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      ListView(
+                                        padding: EdgeInsets.zero,
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 0, 0, 0),
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            0, 0),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              24, 0, 0, 5),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Container(
+                                                            width: 85,
+                                                            height: 85,
+                                                            clipBehavior:
+                                                                Clip.antiAlias,
+                                                            decoration:
+                                                                const BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                            child:
+                                                                CachedNetworkImage(
+                                                              fadeInDuration:
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          0),
+                                                              fadeOutDuration:
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          0),
+                                                              imageUrl:
+                                                                  '${ApiConstants.baseUrl}${FFAppState().profilepic}',
                                                               fit: BoxFit.cover,
+                                                              errorWidget: (context,
+                                                                      error,
+                                                                      stackTrace) =>
+                                                                  Image.asset(
+                                                                'assets/images/profile_pic.png',
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  7, 0, 0, 20),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        10,
-                                                                        15,
-                                                                        0,
-                                                                        0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  children: [
-                                                                    Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      children: [
-                                                                        Padding(
-                                                                          padding: const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                70,
-                                                                            height:
-                                                                                50,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                            ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(7,
+                                                                    0, 0, 20),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          10,
+                                                                          15,
+                                                                          0,
+                                                                          0),
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    children: [
+                                                                      Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children: [
+                                                                          Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                5,
+                                                                                0,
+                                                                                0,
+                                                                                0),
                                                                             child:
-                                                                                Column(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                                              children: [
-                                                                                Text(
-                                                                                  FFAppState().matvarer.length.toString(),
-                                                                                  textAlign: TextAlign.center,
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Nunito',
-                                                                                        fontSize: 16,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                                Text(
-                                                                                  'matvarer',
-                                                                                  textAlign: TextAlign.center,
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Nunito',
-                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                        fontSize: 13,
-                                                                                        letterSpacing: 0.0,
-                                                                                      ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                70,
-                                                                            height:
-                                                                                50,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                            ),
-                                                                            child:
-                                                                                InkWell(
-                                                                              splashColor: Colors.transparent,
-                                                                              focusColor: Colors.transparent,
-                                                                              hoverColor: Colors.transparent,
-                                                                              highlightColor: Colors.transparent,
-                                                                              onTap: () async {
-                                                                                try {
-                                                                                  if (folgere != '0') {
-                                                                                    context.pushNamed(
-                                                                                      'Folgere',
-                                                                                      queryParameters: {
-                                                                                        'username': serializeParam(FFAppState().brukernavn, ParamType.String),
-                                                                                        'folger': serializeParam(
-                                                                                          'Følgere',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  }
-                                                                                } on SocketException {
-                                                                                  HapticFeedback.lightImpact();
-                                                                                  showErrorToast(context, 'Ingen internettforbindelse');
-                                                                                } catch (e) {
-                                                                                  HapticFeedback.lightImpact();
-                                                                                  showErrorToast(context, 'En feil oppstod');
-                                                                                }
-                                                                              },
-                                                                              child: Column(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                                children: [
-                                                                                  Text(
-                                                                                    folgere ?? '',
-                                                                                    textAlign: TextAlign.center,
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Nunito',
-                                                                                          fontSize: 17,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w600,
-                                                                                        ),
-                                                                                  ),
-                                                                                  Text(
-                                                                                    'følgere',
-                                                                                    textAlign: TextAlign.center,
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Nunito',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                          fontSize: 13,
-                                                                                          letterSpacing: 0.0,
-                                                                                        ),
-                                                                                  ),
-                                                                                ],
+                                                                                Container(
+                                                                              width: 70,
+                                                                              height: 50,
+                                                                              decoration: BoxDecoration(
+                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                borderRadius: BorderRadius.circular(10),
                                                                               ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                70,
-                                                                            height:
-                                                                                50,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                            ),
-                                                                            child:
-                                                                                InkWell(
-                                                                              splashColor: Colors.transparent,
-                                                                              focusColor: Colors.transparent,
-                                                                              hoverColor: Colors.transparent,
-                                                                              highlightColor: Colors.transparent,
-                                                                              onTap: () async {
-                                                                                try {
-                                                                                  if (folger != '0') {
-                                                                                    context.pushNamed(
-                                                                                      'Folgere',
-                                                                                      queryParameters: {
-                                                                                        'username': serializeParam(FFAppState().brukernavn, ParamType.String),
-                                                                                        'folger': serializeParam(
-                                                                                          'Følger',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  }
-                                                                                } on SocketException {
-                                                                                  HapticFeedback.lightImpact();
-                                                                                  showErrorToast(context, 'Ingen internettforbindelse');
-                                                                                } catch (e) {
-                                                                                  HapticFeedback.lightImpact();
-                                                                                  showErrorToast(context, 'En feil oppstod');
-                                                                                }
-                                                                              },
                                                                               child: Column(
                                                                                 mainAxisSize: MainAxisSize.max,
                                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                                 children: [
                                                                                   Text(
-                                                                                    folger ?? '',
+                                                                                    FFAppState().matvarer.length.toString(),
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
@@ -703,7 +560,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         ),
                                                                                   ),
                                                                                   Text(
-                                                                                    'følger',
+                                                                                    'matvarer',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
@@ -716,847 +573,1016 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0,
-                                                                        10,
-                                                                        0,
-                                                                        0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          9,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                      child:
-                                                                          InkWell(
-                                                                        splashColor:
-                                                                            Colors.transparent,
-                                                                        focusColor:
-                                                                            Colors.transparent,
-                                                                        hoverColor:
-                                                                            Colors.transparent,
-                                                                        highlightColor:
-                                                                            Colors.transparent,
-                                                                        onTap:
-                                                                            () async {
-                                                                          try {
-                                                                            await showModalBottomSheet(
-                                                                              isScrollControlled: true,
-                                                                              backgroundColor: Colors.transparent,
-                                                                              barrierColor: const Color.fromARGB(60, 17, 0, 0),
-                                                                              useRootNavigator: true,
-                                                                              context: context,
-                                                                              builder: (context) {
-                                                                                return GestureDetector(
-                                                                                  onTap: () => FocusScope.of(context).unfocus(),
-                                                                                  child: Padding(
-                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                    child: const BrukerRatingWidget(
-                                                                                      mine: true,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                            ).then((value) =>
-                                                                                setState(() {}));
-                                                                            return;
-                                                                            // context.pushNamed(
-                                                                            //   'BrukerRating',
-                                                                            //   queryParameters: {
-                                                                            //     'mine': serializeParam(
-                                                                            //       true,
-                                                                            //       ParamType.bool,
-                                                                            //     ),
-                                                                            //   },
-                                                                            // );
-                                                                          } on SocketException {
-                                                                            HapticFeedback.lightImpact();
-                                                                            showErrorToast(context,
-                                                                                'Ingen internettforbindelse');
-                                                                          } catch (e) {
-                                                                            HapticFeedback.lightImpact();
-                                                                            showErrorToast(context,
-                                                                                'En feil oppstod');
-                                                                          }
-                                                                        },
-                                                                        child:
-                                                                            Container(
-                                                                          width:
-                                                                              200,
-                                                                          height:
-                                                                              30,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primary,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8),
-                                                                            border:
-                                                                                Border.all(
-                                                                              color: const Color(0x4A57636C),
-                                                                              width: 1.3,
-                                                                            ),
-                                                                          ),
-                                                                          child:
-                                                                              Padding(
+                                                                          Padding(
                                                                             padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                5,
                                                                                 0,
-                                                                                1,
                                                                                 0,
                                                                                 0),
                                                                             child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                                                              children: [
-                                                                                if (ingenRatings == true)
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                                                                                    child: Text(
-                                                                                      'Ingen vurderinger',
+                                                                                Container(
+                                                                              width: 70,
+                                                                              height: 50,
+                                                                              decoration: BoxDecoration(
+                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                borderRadius: BorderRadius.circular(10),
+                                                                              ),
+                                                                              child: InkWell(
+                                                                                splashColor: Colors.transparent,
+                                                                                focusColor: Colors.transparent,
+                                                                                hoverColor: Colors.transparent,
+                                                                                highlightColor: Colors.transparent,
+                                                                                onTap: () async {
+                                                                                  try {
+                                                                                    if (folgere != '0') {
+                                                                                      context.pushNamed(
+                                                                                        'Folgere',
+                                                                                        queryParameters: {
+                                                                                          'username': serializeParam(FFAppState().brukernavn, ParamType.String),
+                                                                                          'folger': serializeParam(
+                                                                                            'Følgere',
+                                                                                            ParamType.String,
+                                                                                          ),
+                                                                                        }.withoutNulls,
+                                                                                      );
+                                                                                    }
+                                                                                  } on SocketException {
+                                                                                    HapticFeedback.lightImpact();
+                                                                                    showErrorToast(context, 'Ingen internettforbindelse');
+                                                                                  } catch (e) {
+                                                                                    HapticFeedback.lightImpact();
+                                                                                    showErrorToast(context, 'En feil oppstod');
+                                                                                  }
+                                                                                },
+                                                                                child: Column(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      folgere ?? '',
+                                                                                      textAlign: TextAlign.center,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Nunito',
-                                                                                            fontSize: 14,
+                                                                                            fontSize: 17,
                                                                                             letterSpacing: 0.0,
                                                                                             fontWeight: FontWeight.w600,
                                                                                           ),
                                                                                     ),
-                                                                                  ),
-                                                                                if (ingenRatings != true && ratingantall != 0)
-                                                                                  FaIcon(
-                                                                                    FontAwesomeIcons.solidStar,
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                    size: 16,
-                                                                                  ),
-                                                                                if (ingenRatings != true && ratingantall != 0)
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                                                                                    child: Text(
-                                                                                      ratingVerdi.toString(),
+                                                                                    Text(
+                                                                                      'følgere',
+                                                                                      textAlign: TextAlign.center,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Nunito',
-                                                                                            fontSize: 14,
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                            fontSize: 13,
+                                                                                            letterSpacing: 0.0,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                5,
+                                                                                0,
+                                                                                0,
+                                                                                0),
+                                                                            child:
+                                                                                Container(
+                                                                              width: 70,
+                                                                              height: 50,
+                                                                              decoration: BoxDecoration(
+                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                borderRadius: BorderRadius.circular(10),
+                                                                              ),
+                                                                              child: InkWell(
+                                                                                splashColor: Colors.transparent,
+                                                                                focusColor: Colors.transparent,
+                                                                                hoverColor: Colors.transparent,
+                                                                                highlightColor: Colors.transparent,
+                                                                                onTap: () async {
+                                                                                  try {
+                                                                                    if (folger != '0') {
+                                                                                      context.pushNamed(
+                                                                                        'Folgere',
+                                                                                        queryParameters: {
+                                                                                          'username': serializeParam(FFAppState().brukernavn, ParamType.String),
+                                                                                          'folger': serializeParam(
+                                                                                            'Følger',
+                                                                                            ParamType.String,
+                                                                                          ),
+                                                                                        }.withoutNulls,
+                                                                                      );
+                                                                                    }
+                                                                                  } on SocketException {
+                                                                                    HapticFeedback.lightImpact();
+                                                                                    showErrorToast(context, 'Ingen internettforbindelse');
+                                                                                  } catch (e) {
+                                                                                    HapticFeedback.lightImpact();
+                                                                                    showErrorToast(context, 'En feil oppstod');
+                                                                                  }
+                                                                                },
+                                                                                child: Column(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      folger ?? '',
+                                                                                      textAlign: TextAlign.center,
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Nunito',
+                                                                                            fontSize: 16,
                                                                                             letterSpacing: 0.0,
                                                                                             fontWeight: FontWeight.w600,
                                                                                           ),
                                                                                     ),
-                                                                                  ),
-                                                                                if (ingenRatings != true && ratingantall != 0)
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                                                                                    child: Text(
-                                                                                      ' (${ratingantall.toString()})',
+                                                                                    Text(
+                                                                                      'følger',
+                                                                                      textAlign: TextAlign.center,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Nunito',
-                                                                                            color: const Color(0xB0262C2D),
-                                                                                            fontSize: 14,
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                            fontSize: 13,
                                                                                             letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.w500,
                                                                                           ),
                                                                                     ),
-                                                                                  ),
-                                                                              ],
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          0,
+                                                                          10,
+                                                                          0,
+                                                                          0),
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            9,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                        child:
+                                                                            InkWell(
+                                                                          splashColor:
+                                                                              Colors.transparent,
+                                                                          focusColor:
+                                                                              Colors.transparent,
+                                                                          hoverColor:
+                                                                              Colors.transparent,
+                                                                          highlightColor:
+                                                                              Colors.transparent,
+                                                                          onTap:
+                                                                              () async {
+                                                                            try {
+                                                                              await showModalBottomSheet(
+                                                                                isScrollControlled: true,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                barrierColor: const Color.fromARGB(60, 17, 0, 0),
+                                                                                useRootNavigator: true,
+                                                                                context: context,
+                                                                                builder: (context) {
+                                                                                  return GestureDetector(
+                                                                                    onTap: () => FocusScope.of(context).unfocus(),
+                                                                                    child: Padding(
+                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                      child: const BrukerRatingWidget(
+                                                                                        mine: true,
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                },
+                                                                              ).then((value) => setState(() {}));
+                                                                              return;
+                                                                              // context.pushNamed(
+                                                                              //   'BrukerRating',
+                                                                              //   queryParameters: {
+                                                                              //     'mine': serializeParam(
+                                                                              //       true,
+                                                                              //       ParamType.bool,
+                                                                              //     ),
+                                                                              //   },
+                                                                              // );
+                                                                            } on SocketException {
+                                                                              HapticFeedback.lightImpact();
+                                                                              showErrorToast(context, 'Ingen internettforbindelse');
+                                                                            } catch (e) {
+                                                                              HapticFeedback.lightImpact();
+                                                                              showErrorToast(context, 'En feil oppstod');
+                                                                            }
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            width:
+                                                                                200,
+                                                                            height:
+                                                                                30,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                              borderRadius: BorderRadius.circular(8),
+                                                                              border: Border.all(
+                                                                                color: const Color(0x4A57636C),
+                                                                                width: 1.3,
+                                                                              ),
+                                                                            ),
+                                                                            child:
+                                                                                Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                children: [
+                                                                                  if (ingenRatings == true)
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                      child: Text(
+                                                                                        'Ingen vurderinger',
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                              fontFamily: 'Nunito',
+                                                                                              fontSize: 14,
+                                                                                              letterSpacing: 0.0,
+                                                                                              fontWeight: FontWeight.w600,
+                                                                                            ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  if (ingenRatings != true && ratingantall != 0)
+                                                                                    FaIcon(
+                                                                                      FontAwesomeIcons.solidStar,
+                                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                                      size: 16,
+                                                                                    ),
+                                                                                  if (ingenRatings != true && ratingantall != 0)
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                      child: Text(
+                                                                                        ratingVerdi.toString(),
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                              fontFamily: 'Nunito',
+                                                                                              fontSize: 14,
+                                                                                              letterSpacing: 0.0,
+                                                                                              fontWeight: FontWeight.w600,
+                                                                                            ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  if (ingenRatings != true && ratingantall != 0)
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                                                                                      child: Text(
+                                                                                        ' (${ratingantall.toString()})',
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                              fontFamily: 'Nunito',
+                                                                                              color: const Color(0xB0262C2D),
+                                                                                              fontSize: 14,
+                                                                                              letterSpacing: 0.0,
+                                                                                              fontWeight: FontWeight.w500,
+                                                                                            ),
+                                                                                      ),
+                                                                                    ),
+                                                                                ],
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                    ),
-                                                                  ],
+                                                                    ],
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(0, 5, 0, 0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                24, 0, 0, 0),
-                                                        child: Text(
-                                                          '${FFAppState().firstname} ${FFAppState().lastname}',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .headlineLarge
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: 18,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          24, 0, 40, 0),
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      {
-                                                        context.pushNamed(
-                                                          'ProfilRediger',
-                                                          queryParameters: {
-                                                            'konto':
-                                                                serializeParam(
-                                                              'Bio',
-                                                              ParamType.String,
-                                                            ),
-                                                          },
-                                                        );
-                                                      }
-                                                    },
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 5, 0, 0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
                                                       children: [
-                                                        Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary,
-                                                          ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  24, 0, 0, 0),
                                                           child: Text(
-                                                            FFAppState()
-                                                                    .bio
-                                                                    .isEmpty
-                                                                ? 'Trykk for å legge til bio...'
-                                                                : FFAppState()
-                                                                    .bio,
-                                                            maxLines: _isExpanded
-                                                                ? null
-                                                                : 2, // Expand or limit lines
-                                                            overflow: _isExpanded
-                                                                ? TextOverflow
-                                                                    .visible
-                                                                : TextOverflow
-                                                                    .ellipsis,
+                                                            '${FFAppState().firstname} ${FFAppState().lastname}',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .labelMedium
+                                                                .headlineLarge
                                                                 .override(
                                                                   fontFamily:
                                                                       'Nunito',
-                                                                  fontSize: FFAppState()
-                                                                          .bio
-                                                                          .isEmpty
-                                                                      ? 15
-                                                                      : 14,
-                                                                  color: FFAppState()
-                                                                          .bio
-                                                                          .isEmpty
-                                                                      ? const Color
-                                                                          .fromRGBO(
-                                                                          113,
-                                                                          113,
-                                                                          113,
-                                                                          1.0)
-                                                                      : FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
+                                                                  fontSize: 18,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
+                                                                          .bold,
                                                                 ),
                                                           ),
                                                         ),
-                                                        if (FFAppState()
-                                                                    .bio
-                                                                    .length >
-                                                                50 ||
-                                                            '\n'
-                                                                    .allMatches(
-                                                                        FFAppState()
-                                                                            .bio)
-                                                                    .length >=
-                                                                2)
-                                                          if (FFAppState()
-                                                              .bio
-                                                              .isNotEmpty)
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  _isExpanded =
-                                                                      !_isExpanded; // Toggle expanded state
-                                                                });
-                                                              },
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        top: 2),
-                                                                child: Text(
-                                                                  _isExpanded
-                                                                      ? 'Se mindre'
-                                                                      : 'Se mer',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Nunito',
-                                                                        fontSize:
-                                                                            13,
-                                                                        fontWeight:
-                                                                            FontWeight.w700,
-                                                                        color: const Color
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            24, 0, 40, 0),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        {
+                                                          context.pushNamed(
+                                                            'ProfilRediger',
+                                                            queryParameters: {
+                                                              'konto':
+                                                                  serializeParam(
+                                                                'Bio',
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                            },
+                                                          );
+                                                        }
+                                                      },
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                            ),
+                                                            child: Text(
+                                                              FFAppState()
+                                                                      .bio
+                                                                      .isEmpty
+                                                                  ? 'Trykk for å legge til bio...'
+                                                                  : FFAppState()
+                                                                      .bio,
+                                                              maxLines: _isExpanded
+                                                                  ? null
+                                                                  : 2, // Expand or limit lines
+                                                              overflow: _isExpanded
+                                                                  ? TextOverflow
+                                                                      .visible
+                                                                  : TextOverflow
+                                                                      .ellipsis,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .labelMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    fontSize: FFAppState()
+                                                                            .bio
+                                                                            .isEmpty
+                                                                        ? 15
+                                                                        : 14,
+                                                                    color: FFAppState()
+                                                                            .bio
+                                                                            .isEmpty
+                                                                        ? const Color
                                                                             .fromRGBO(
                                                                             113,
                                                                             113,
                                                                             113,
-                                                                            1.0),
-                                                                      ),
+                                                                            1.0)
+                                                                        : FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          if (FFAppState()
+                                                                      .bio
+                                                                      .length >
+                                                                  50 ||
+                                                              '\n'
+                                                                      .allMatches(
+                                                                          FFAppState()
+                                                                              .bio)
+                                                                      .length >=
+                                                                  2)
+                                                            if (FFAppState()
+                                                                .bio
+                                                                .isNotEmpty)
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                  setState(() {
+                                                                    _isExpanded =
+                                                                        !_isExpanded; // Toggle expanded state
+                                                                  });
+                                                                },
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              2),
+                                                                  child: Text(
+                                                                    _isExpanded
+                                                                        ? 'Se mindre'
+                                                                        : 'Se mer',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodySmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Nunito',
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontWeight:
+                                                                              FontWeight.w700,
+                                                                          color: const Color
+                                                                              .fromRGBO(
+                                                                              113,
+                                                                              113,
+                                                                              113,
+                                                                              1.0),
+                                                                        ),
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                Container(
-                                                  width: double.infinity,
-                                                  height: 90,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 30, 0, 0),
-                                                    child: Column(
-                                                      children: [
-                                                        Align(
-                                                          alignment:
-                                                              const Alignment(
-                                                                  0, 0),
-                                                          child: TabBar(
-                                                            labelColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                            unselectedLabelColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                            labelStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Nunito',
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                            unselectedLabelStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Nunito',
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                            indicatorColor:
-                                                                const Color
-                                                                    .fromARGB(
-                                                                    0, 0, 0, 0),
-                                                            dividerColor:
-                                                                const Color
-                                                                    .fromARGB(
-                                                                    10,
-                                                                    0,
-                                                                    0,
-                                                                    0),
-                                                            indicatorWeight: 1,
-                                                            tabs: [
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Icon(
-                                                                    CupertinoIcons
-                                                                        .square_grid_2x2,
-                                                                    color: _model.tabBarCurrentIndex ==
-                                                                            0
-                                                                        ? FlutterFlowTheme.of(context)
-                                                                            .primaryText
-                                                                        : Colors
-                                                                            .grey,
-                                                                    size: 32,
-                                                                  ),
-                                                                  const Tab(
-                                                                    text: '',
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Icon(
-                                                                    CupertinoIcons
-                                                                        .heart,
-                                                                    color: _model.tabBarCurrentIndex ==
-                                                                            1
-                                                                        ? FlutterFlowTheme.of(context)
-                                                                            .primaryText
-                                                                        : Colors
-                                                                            .grey,
-                                                                    size: 32,
-                                                                  ),
-                                                                  const Tab(
-                                                                    text: '',
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                            controller: _model
-                                                                .tabBarController,
-                                                            onTap: (i) async {
-                                                              [
-                                                                () async {},
-                                                                () async {}
-                                                              ][i]();
-                                                            },
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          child: TabBarView(
-                                                            controller: _model
-                                                                .tabBarController,
-                                                            physics:
-                                                                const NeverScrollableScrollPhysics(),
-                                                            children: [
-                                                              Container(),
-                                                              Container(),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    if (_model.tabBarCurrentIndex == 0)
-                                      if ((FFAppState().lagtUt != true &&
-                                          _model.tabBarCurrentIndex == 0))
-                                        Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width,
-                                          height: MediaQuery.sizeOf(context)
-                                                  .height -
-                                              550,
-                                          child: Center(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize
-                                                  .min, // Use min to fit content
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  CupertinoIcons.add,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  size: 53,
-                                                ),
-                                                const SizedBox(height: 16),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      'Trykk på ',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyLarge
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            fontSize: 17,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                    ),
-                                                    Icon(
-                                                      CupertinoIcons.add,
+                                                  Container(
+                                                    width: double.infinity,
+                                                    height: 90,
+                                                    decoration: BoxDecoration(
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primaryText,
-                                                      size: 23,
+                                                              .primary,
                                                     ),
-                                                    Text(
-                                                      ' for å lage din første annonse',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyLarge
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            fontSize: 17,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.bold,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 30, 0, 0),
+                                                      child: Column(
+                                                        children: [
+                                                          Align(
+                                                            alignment:
+                                                                const Alignment(
+                                                                    0, 0),
+                                                            child: TabBar(
+                                                              labelColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                              unselectedLabelColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                              labelStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              unselectedLabelStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              indicatorColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      0,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                              dividerColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      10,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                              indicatorWeight:
+                                                                  1,
+                                                              tabs: [
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Icon(
+                                                                      CupertinoIcons
+                                                                          .square_grid_2x2,
+                                                                      color: _model.tabBarCurrentIndex == 0
+                                                                          ? FlutterFlowTheme.of(context)
+                                                                              .primaryText
+                                                                          : Colors
+                                                                              .grey,
+                                                                      size: 32,
+                                                                    ),
+                                                                    const Tab(
+                                                                      text: '',
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Icon(
+                                                                      CupertinoIcons
+                                                                          .heart,
+                                                                      color: _model.tabBarCurrentIndex == 1
+                                                                          ? FlutterFlowTheme.of(context)
+                                                                              .primaryText
+                                                                          : Colors
+                                                                              .grey,
+                                                                      size: 32,
+                                                                    ),
+                                                                    const Tab(
+                                                                      text: '',
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                              controller: _model
+                                                                  .tabBarController,
+                                                              onTap: (i) async {
+                                                                [
+                                                                  () async {},
+                                                                  () async {}
+                                                                ][i]();
+                                                              },
+                                                            ),
                                                           ),
+                                                          Expanded(
+                                                            child: TabBarView(
+                                                              controller: _model
+                                                                  .tabBarController,
+                                                              physics:
+                                                                  const NeverScrollableScrollPhysics(),
+                                                              children: [
+                                                                Container(),
+                                                                Container(),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ],
-                                                )
-                                              ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                    if (FFAppState().lagtUt &&
-                                        _model.tabBarCurrentIndex == 0)
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(5, 15, 5, 0),
-                                        child: RefreshIndicator(
-                                          onRefresh: () async {
-                                            try {
-                                              await getMyFoods();
-                                            } on SocketException {
-                                              HapticFeedback.lightImpact();
-                                              showErrorToast(context,
-                                                  'Ingen internettforbindelse');
-                                            } catch (e) {
-                                              HapticFeedback.lightImpact();
-                                              showErrorToast(
-                                                  context, 'En feil oppstod');
-                                            }
-                                          },
-                                          child: GridView.builder(
-                                            padding: const EdgeInsets.fromLTRB(
-                                              0,
-                                              0,
-                                              0,
-                                              70,
-                                            ),
-                                            gridDelegate:
-                                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: 0.68,
-                                            ),
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: _isloading
-                                                ? 1
-                                                : FFAppState().matvarer.length,
-                                            itemBuilder: (context, index) {
-                                              if (_isloading) {
-                                                return Shimmer.fromColors(
-                                                  baseColor: Colors.grey[300]!,
-                                                  highlightColor:
-                                                      Colors.grey[100]!,
-                                                  child: Column(
+                                        ],
+                                      ),
+                                      if (_model.tabBarCurrentIndex == 0)
+                                        if ((FFAppState().lagtUt != true &&
+                                            _model.tabBarCurrentIndex == 0))
+                                          Container(
+                                            width: MediaQuery.sizeOf(context)
+                                                .width,
+                                            height: MediaQuery.sizeOf(context)
+                                                    .height -
+                                                550,
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize
+                                                    .min, // Use min to fit content
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    CupertinoIcons.add,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    size: 53,
+                                                  ),
+                                                  const SizedBox(height: 16),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
                                                     children: [
-                                                      Container(
-                                                        margin: const EdgeInsets
-                                                            .all(5.0),
-                                                        width: 200.0,
-                                                        height: 230.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: const Color
-                                                              .fromARGB(127,
-                                                              255, 255, 255),
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  16.0), // Rounded corners
-                                                        ),
+                                                      Text(
+                                                        'Trykk på ',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyLarge
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 17,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
                                                       ),
-                                                      const SizedBox(
-                                                          height: 8.0),
-                                                      Container(
-                                                        width: 200,
-                                                        height: 15,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: const Color
-                                                              .fromARGB(127,
-                                                              255, 255, 255),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10.0),
-                                                        ),
+                                                      Icon(
+                                                        CupertinoIcons.add,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        size: 23,
+                                                      ),
+                                                      Text(
+                                                        ' for å lage din første annonse',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyLarge
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 17,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
                                                       ),
                                                     ],
-                                                  ),
-                                                );
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                      if (FFAppState().lagtUt &&
+                                          _model.tabBarCurrentIndex == 0)
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(5, 15, 5, 0),
+                                          child: RefreshIndicator(
+                                            onRefresh: () async {
+                                              try {
+                                                await getMyFoods();
+                                              } on SocketException {
+                                                HapticFeedback.lightImpact();
+                                                showErrorToast(context,
+                                                    'Ingen internettforbindelse');
+                                              } catch (e) {
+                                                HapticFeedback.lightImpact();
+                                                showErrorToast(
+                                                    context, 'En feil oppstod');
                                               }
+                                            },
+                                            child: GridView.builder(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                0,
+                                                0,
+                                                0,
+                                                70,
+                                              ),
+                                              gridDelegate:
+                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                childAspectRatio: 0.68,
+                                              ),
+                                              primary: false,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: _isloading
+                                                  ? 1
+                                                  : FFAppState()
+                                                      .matvarer
+                                                      .length,
+                                              itemBuilder: (context, index) {
+                                                if (_isloading) {
+                                                  return Shimmer.fromColors(
+                                                    baseColor:
+                                                        Colors.grey[300]!,
+                                                    highlightColor:
+                                                        Colors.grey[100]!,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(5.0),
+                                                          width: 200.0,
+                                                          height: 230.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: const Color
+                                                                .fromARGB(127,
+                                                                255, 255, 255),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        16.0), // Rounded corners
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 8.0),
+                                                        Container(
+                                                          width: 200,
+                                                          height: 15,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: const Color
+                                                                .fromARGB(127,
+                                                                255, 255, 255),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }
 
-                                              final matvare = FFAppState()
-                                                  .matvarer
-                                                  .toList()[index];
-                                              return Stack(
-                                                children: [
-                                                  Stack(
-                                                    children: [
-                                                      Align(
-                                                        alignment:
-                                                            const AlignmentDirectional(
-                                                                0, -1),
-                                                        child: InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            try {
-                                                              context.pushNamed(
-                                                                'MinMatvareDetalj',
-                                                                queryParameters: {
-                                                                  'matvare':
-                                                                      serializeParam(
-                                                                    matvare
-                                                                        .toJson(), // Convert to JSON before passing
-                                                                    ParamType
-                                                                        .JSON,
-                                                                  ),
-                                                                },
-                                                              );
-                                                            } on SocketException {
-                                                              HapticFeedback
-                                                                  .lightImpact();
-                                                              showErrorToast(
-                                                                  context,
-                                                                  'Ingen internettforbindelse');
-                                                            } catch (e) {
-                                                              HapticFeedback
-                                                                  .lightImpact();
-                                                              showErrorToast(
-                                                                  context,
-                                                                  'En feil oppstod');
-                                                            }
-                                                          },
-                                                          child: Material(
-                                                            color: Colors
+                                                final matvare = FFAppState()
+                                                    .matvarer
+                                                    .toList()[index];
+                                                return Stack(
+                                                  children: [
+                                                    Stack(
+                                                      children: [
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0, -1),
+                                                          child: InkWell(
+                                                            splashColor: Colors
                                                                 .transparent,
-                                                            elevation: 0,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16),
-                                                            ),
-                                                            child: Container(
-                                                              width: 235,
-                                                              height: 290,
-                                                              decoration:
-                                                                  BoxDecoration(
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () async {
+                                                              try {
+                                                                context
+                                                                    .pushNamed(
+                                                                  'MinMatvareDetalj',
+                                                                  queryParameters: {
+                                                                    'matvare':
+                                                                        serializeParam(
+                                                                      matvare
+                                                                          .toJson(), // Convert to JSON before passing
+                                                                      ParamType
+                                                                          .JSON,
+                                                                    ),
+                                                                  },
+                                                                );
+                                                              } on SocketException {
+                                                                HapticFeedback
+                                                                    .lightImpact();
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'Ingen internettforbindelse');
+                                                              } catch (e) {
+                                                                HapticFeedback
+                                                                    .lightImpact();
+                                                                showErrorToast(
+                                                                    context,
+                                                                    'En feil oppstod');
+                                                              }
+                                                            },
+                                                            child: Material(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              elevation: 0,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
                                                                             16),
-                                                                border:
-                                                                    Border.all(
-                                                                  color: Colors
-                                                                      .transparent,
-                                                                ),
                                                               ),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .min,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Align(
-                                                                    alignment:
-                                                                        const AlignmentDirectional(
+                                                              child: Container(
+                                                                width: 235,
+                                                                height: 290,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              16),
+                                                                  border: Border
+                                                                      .all(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                  ),
+                                                                ),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Align(
+                                                                      alignment:
+                                                                          const AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            3,
+                                                                            0,
                                                                             0,
                                                                             0),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          3,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                      child:
-                                                                          ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(17),
-                                                                        child: Image
-                                                                            .network(
-                                                                          '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
-                                                                          width:
-                                                                              200,
-                                                                          height:
-                                                                              229,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                          errorBuilder: (BuildContext context,
-                                                                              Object error,
-                                                                              StackTrace? stackTrace) {
-                                                                            return Image.asset(
-                                                                              'assets/images/error_image.jpg', // Path to your local error image
-                                                                              width: 200,
-                                                                              height: 229,
-                                                                              fit: BoxFit.cover,
-                                                                            );
-                                                                          },
+                                                                        child:
+                                                                            ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(17),
+                                                                          child:
+                                                                              Image.network(
+                                                                            '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
+                                                                            width:
+                                                                                200,
+                                                                            height:
+                                                                                229,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            errorBuilder: (BuildContext context,
+                                                                                Object error,
+                                                                                StackTrace? stackTrace) {
+                                                                              return Image.asset(
+                                                                                'assets/images/error_image.jpg', // Path to your local error image
+                                                                                width: 200,
+                                                                                height: 229,
+                                                                                fit: BoxFit.cover,
+                                                                              );
+                                                                            },
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            5,
-                                                                            0,
-                                                                            5,
-                                                                            0),
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      children: [
-                                                                        Align(
-                                                                          alignment: const AlignmentDirectional(
-                                                                              -1,
-                                                                              0),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                7,
-                                                                                0,
-                                                                                0,
-                                                                                0),
-                                                                            child:
-                                                                                AutoSizeText(
-                                                                              matvare.name ?? '',
-                                                                              textAlign: TextAlign.start,
-                                                                              minFontSize: 11,
-                                                                              style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    fontSize: 14,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            4),
-                                                                    child: Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .min,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .end,
-                                                                      children: [
-                                                                        Flexible(
-                                                                          child:
-                                                                              Align(
+                                                                    Padding(
+                                                                      padding: const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          5,
+                                                                          0,
+                                                                          5,
+                                                                          0),
+                                                                      child:
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children: [
+                                                                          Align(
                                                                             alignment:
-                                                                                const AlignmentDirectional(0, 0),
+                                                                                const AlignmentDirectional(-1, 0),
                                                                             child:
                                                                                 Padding(
-                                                                              padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                                                                              child: Row(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                crossAxisAlignment: CrossAxisAlignment.end,
-                                                                                children: [
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                                                                    child: Row(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                              child: AutoSizeText(
+                                                                                matvare.name ?? '',
+                                                                                textAlign: TextAlign.start,
+                                                                                minFontSize: 11,
+                                                                                style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                                      fontFamily: 'Nunito',
+                                                                                      fontSize: 14,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.bold,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          0,
+                                                                          0,
+                                                                          0,
+                                                                          4),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.end,
+                                                                        children: [
+                                                                          Flexible(
+                                                                            child:
+                                                                                Align(
+                                                                              alignment: const AlignmentDirectional(0, 0),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                  children: [
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                                                                      child: Row(
+                                                                                        mainAxisSize: MainAxisSize.max,
+                                                                                        children: [
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                            child: Text(
+                                                                                              '${matvare.price} Kr',
+                                                                                              textAlign: TextAlign.end,
+                                                                                              style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                                    fontFamily: 'Nunito',
+                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                    fontSize: 14,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.bold,
+                                                                                                  ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          if (matvare.kg == true)
+                                                                                            Text(
+                                                                                              '/kg',
+                                                                                              textAlign: TextAlign.end,
+                                                                                              style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                                    fontFamily: 'Nunito',
+                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                    fontSize: 14,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.bold,
+                                                                                                  ),
+                                                                                            ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                    Row(
                                                                                       mainAxisSize: MainAxisSize.max,
                                                                                       children: [
                                                                                         Padding(
-                                                                                          padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                           child: Text(
-                                                                                            '${matvare.price} Kr',
-                                                                                            textAlign: TextAlign.end,
-                                                                                            style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                            // Directly calculate the distance using the provided latitude and longitude
+                                                                                            (calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
+                                                                                            textAlign: TextAlign.start,
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                   fontFamily: 'Nunito',
                                                                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   fontSize: 14,
@@ -1565,31 +1591,452 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                                 ),
                                                                                           ),
                                                                                         ),
-                                                                                        if (matvare.kg == true)
-                                                                                          Text(
-                                                                                            '/kg',
-                                                                                            textAlign: TextAlign.end,
-                                                                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Nunito',
-                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 14,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                ),
-                                                                                          ),
                                                                                       ],
                                                                                     ),
-                                                                                  ),
-                                                                                  Row(
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        // Sale banner
+                                                        if (matvare.kjopt ==
+                                                            true)
+                                                          Positioned(
+                                                            top:
+                                                                15, // Slight offset from the top edge
+                                                            right:
+                                                                -29, // Fine-tune the positioning (shift it to the right edge)
+                                                            child: Transform
+                                                                .rotate(
+                                                              angle:
+                                                                  0.600, // 45-degree angle (approx.)
+                                                              child: Container(
+                                                                width:
+                                                                    140, // Adjusted width to avoid overflow after rotation
+                                                                height: 23,
+                                                                color: Colors
+                                                                    .redAccent,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child:
+                                                                    const Text(
+                                                                  'Utsolgt',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        14, // Font size adjusted to fit the banner
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      if (_model.tabBarCurrentIndex == 1)
+                                        if (FFAppState().liked != true &&
+                                            _model.tabBarCurrentIndex == 1)
+                                          Container(
+                                            width: MediaQuery.sizeOf(context)
+                                                .width,
+                                            height: MediaQuery.sizeOf(context)
+                                                    .height -
+                                                550,
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize
+                                                    .min, // Use min to fit content
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    CupertinoIcons.heart,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    size: 50,
+                                                  ),
+                                                  const SizedBox(height: 16),
+                                                  Text(
+                                                    'Du kan se mat du har likt her.',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 17,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                      if (FFAppState().liked &&
+                                          _model.tabBarCurrentIndex == 1)
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(5, 15, 5, 0),
+                                          child: RefreshIndicator(
+                                            onRefresh: () async {
+                                              try {
+                                                getAllLikes();
+                                              } on SocketException {
+                                                HapticFeedback.lightImpact();
+                                                showErrorToast(context,
+                                                    'Ingen internettforbindelse');
+                                              } catch (e) {
+                                                HapticFeedback.lightImpact();
+                                                showErrorToast(
+                                                    context, 'En feil oppstod');
+                                              }
+                                            },
+                                            child: GridView.builder(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                0,
+                                                0,
+                                                0,
+                                                70,
+                                              ),
+                                              gridDelegate:
+                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                childAspectRatio: 0.68,
+                                              ),
+                                              primary: false,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: _likesisloading
+                                                  ? 1
+                                                  : _likesmatvarer?.length ?? 1,
+                                              itemBuilder: (context, index) {
+                                                if (_likesisloading) {
+                                                  return Shimmer.fromColors(
+                                                    baseColor:
+                                                        Colors.grey[300]!,
+                                                    highlightColor:
+                                                        Colors.grey[100]!,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(5.0),
+                                                          width: 200.0,
+                                                          height: 230.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: const Color
+                                                                .fromARGB(127,
+                                                                255, 255, 255),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        16.0), // Rounded corners
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 8.0),
+                                                        Container(
+                                                          width: 200,
+                                                          height: 15,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: const Color
+                                                                .fromARGB(127,
+                                                                255, 255, 255),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                        ),
+                                                        // const SizedBox(
+                                                        //     height: 8.0),
+                                                        // Align(
+                                                        //   alignment: Alignment
+                                                        //       .centerLeft,
+                                                        //   child: Padding(
+                                                        //     padding:
+                                                        //         const EdgeInsets
+                                                        //             .only(
+                                                        //             left: 10.0),
+                                                        //     child: Container(
+                                                        //       width: 38,
+                                                        //       height: 15,
+                                                        //       decoration:
+                                                        //           BoxDecoration(
+                                                        //         color: const Color
+                                                        //             .fromARGB(
+                                                        //             127,
+                                                        //             255,
+                                                        //             255,
+                                                        //             255),
+                                                        //         borderRadius:
+                                                        //             BorderRadius
+                                                        //                 .circular(
+                                                        //                     10.0),
+                                                        //       ),
+                                                        //     ),
+                                                        //   ),
+                                                        // )
+                                                      ],
+                                                    ),
+                                                  );
+                                                }
+
+                                                final likesmatvare =
+                                                    _likesmatvarer![index];
+
+                                                return Stack(
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          const AlignmentDirectional(
+                                                              0, -1),
+                                                      child: InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () async {
+                                                          try {
+                                                            context.pushNamed(
+                                                              'MatDetaljBondegard',
+                                                              queryParameters: {
+                                                                'matvare':
+                                                                    serializeParam(
+                                                                  likesmatvare
+                                                                      .toJson(), // Convert to JSON before passing
+                                                                  ParamType
+                                                                      .JSON,
+                                                                ),
+                                                              },
+                                                            );
+                                                          } on SocketException {
+                                                            HapticFeedback
+                                                                .lightImpact();
+                                                            showErrorToast(
+                                                                context,
+                                                                'Ingen internettforbindelse');
+                                                          } catch (e) {
+                                                            HapticFeedback
+                                                                .lightImpact();
+                                                            showErrorToast(
+                                                                context,
+                                                                'En feil oppstod');
+                                                          }
+                                                        },
+                                                        child: Material(
+                                                          color: Colors
+                                                              .transparent,
+                                                          elevation: 0,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        16),
+                                                          ),
+                                                          child: Container(
+                                                            width: 235,
+                                                            height: 290,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          16),
+                                                              border:
+                                                                  Border.all(
+                                                                color: Colors
+                                                                    .transparent,
+                                                              ),
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Align(
+                                                                  alignment:
+                                                                      const AlignmentDirectional(
+                                                                          0, 0),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            3,
+                                                                            0,
+                                                                            3,
+                                                                            0),
+                                                                    child:
+                                                                        ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              17),
+                                                                      child: Image
+                                                                          .network(
+                                                                        '${ApiConstants.baseUrl}${likesmatvare.imgUrls![0]}',
+                                                                        width:
+                                                                            200,
+                                                                        height:
+                                                                            229,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        errorBuilder: (BuildContext context,
+                                                                            Object
+                                                                                error,
+                                                                            StackTrace?
+                                                                                stackTrace) {
+                                                                          return Image
+                                                                              .asset(
+                                                                            'assets/images/error_image.jpg',
+                                                                            width:
+                                                                                200,
+                                                                            height:
+                                                                                229,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          );
+                                                                        },
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          5,
+                                                                          0,
+                                                                          5,
+                                                                          0),
+                                                                  child: Column(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    children: [
+                                                                      Align(
+                                                                        alignment: const AlignmentDirectional(
+                                                                            -1,
+                                                                            0),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                              7,
+                                                                              0,
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              AutoSizeText(
+                                                                            likesmatvare.name ??
+                                                                                '',
+                                                                            textAlign:
+                                                                                TextAlign.start,
+                                                                            minFontSize:
+                                                                                11,
+                                                                            style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                                  fontFamily: 'Nunito',
+                                                                                  fontSize: 14,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          0,
+                                                                          0,
+                                                                          0,
+                                                                          4),
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .min,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .end,
+                                                                    children: [
+                                                                      Flexible(
+                                                                        child:
+                                                                            Align(
+                                                                          alignment: const AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                5,
+                                                                                0,
+                                                                                5,
+                                                                                0),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                                                              children: [
+                                                                                Padding(
+                                                                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                                                                  child: Row(
                                                                                     mainAxisSize: MainAxisSize.max,
                                                                                     children: [
                                                                                       Padding(
-                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                         child: Text(
-                                                                                          // Directly calculate the distance using the provided latitude and longitude
-                                                                                          (calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)} Km',
-                                                                                          textAlign: TextAlign.start,
-                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          '${likesmatvare.price} Kr',
+                                                                                          textAlign: TextAlign.end,
+                                                                                          style: FlutterFlowTheme.of(context).titleLarge.override(
                                                                                                 fontFamily: 'Nunito',
                                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                 fontSize: 14,
@@ -1598,449 +2045,31 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                               ),
                                                                                         ),
                                                                                       ),
+                                                                                      if (likesmatvare.kg == true)
+                                                                                        Text(
+                                                                                          '/kg',
+                                                                                          textAlign: TextAlign.end,
+                                                                                          style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                                fontFamily: 'Nunito',
+                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                fontSize: 14,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                              ),
+                                                                                        ),
                                                                                     ],
                                                                                   ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      // Sale banner
-                                                      if (matvare.kjopt == true)
-                                                        Positioned(
-                                                          top:
-                                                              15, // Slight offset from the top edge
-                                                          right:
-                                                              -29, // Fine-tune the positioning (shift it to the right edge)
-                                                          child:
-                                                              Transform.rotate(
-                                                            angle:
-                                                                0.600, // 45-degree angle (approx.)
-                                                            child: Container(
-                                                              width:
-                                                                  140, // Adjusted width to avoid overflow after rotation
-                                                              height: 23,
-                                                              color: Colors
-                                                                  .redAccent,
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: const Text(
-                                                                'Utsolgt',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      14, // Font size adjusted to fit the banner
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    if (_model.tabBarCurrentIndex == 1)
-                                      if (FFAppState().liked != true &&
-                                          _model.tabBarCurrentIndex == 1)
-                                        Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width,
-                                          height: MediaQuery.sizeOf(context)
-                                                  .height -
-                                              550,
-                                          child: Center(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize
-                                                  .min, // Use min to fit content
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  CupertinoIcons.heart,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  size: 50,
-                                                ),
-                                                const SizedBox(height: 16),
-                                                Text(
-                                                  'Du kan se mat du har likt her.',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        fontSize: 17,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                    if (FFAppState().liked &&
-                                        _model.tabBarCurrentIndex == 1)
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(5, 15, 5, 0),
-                                        child: RefreshIndicator(
-                                          onRefresh: () async {
-                                            try {
-                                              getAllLikes();
-                                            } on SocketException {
-                                              HapticFeedback.lightImpact();
-                                              showErrorToast(context,
-                                                  'Ingen internettforbindelse');
-                                            } catch (e) {
-                                              HapticFeedback.lightImpact();
-                                              showErrorToast(
-                                                  context, 'En feil oppstod');
-                                            }
-                                          },
-                                          child: GridView.builder(
-                                            padding: const EdgeInsets.fromLTRB(
-                                              0,
-                                              0,
-                                              0,
-                                              70,
-                                            ),
-                                            gridDelegate:
-                                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: 0.68,
-                                            ),
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: _likesisloading
-                                                ? 1
-                                                : _likesmatvarer?.length ?? 1,
-                                            itemBuilder: (context, index) {
-                                              if (_likesisloading) {
-                                                return Shimmer.fromColors(
-                                                  baseColor: Colors.grey[300]!,
-                                                  highlightColor:
-                                                      Colors.grey[100]!,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        margin: const EdgeInsets
-                                                            .all(5.0),
-                                                        width: 200.0,
-                                                        height: 230.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: const Color
-                                                              .fromARGB(127,
-                                                              255, 255, 255),
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  16.0), // Rounded corners
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 8.0),
-                                                      Container(
-                                                        width: 200,
-                                                        height: 15,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: const Color
-                                                              .fromARGB(127,
-                                                              255, 255, 255),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10.0),
-                                                        ),
-                                                      ),
-                                                      // const SizedBox(
-                                                      //     height: 8.0),
-                                                      // Align(
-                                                      //   alignment: Alignment
-                                                      //       .centerLeft,
-                                                      //   child: Padding(
-                                                      //     padding:
-                                                      //         const EdgeInsets
-                                                      //             .only(
-                                                      //             left: 10.0),
-                                                      //     child: Container(
-                                                      //       width: 38,
-                                                      //       height: 15,
-                                                      //       decoration:
-                                                      //           BoxDecoration(
-                                                      //         color: const Color
-                                                      //             .fromARGB(
-                                                      //             127,
-                                                      //             255,
-                                                      //             255,
-                                                      //             255),
-                                                      //         borderRadius:
-                                                      //             BorderRadius
-                                                      //                 .circular(
-                                                      //                     10.0),
-                                                      //       ),
-                                                      //     ),
-                                                      //   ),
-                                                      // )
-                                                    ],
-                                                  ),
-                                                );
-                                              }
-
-                                              final likesmatvare =
-                                                  _likesmatvarer![index];
-
-                                              return Stack(
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            0, -1),
-                                                    child: InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        try {
-                                                          context.pushNamed(
-                                                            'MatDetaljBondegard',
-                                                            queryParameters: {
-                                                              'matvare':
-                                                                  serializeParam(
-                                                                likesmatvare
-                                                                    .toJson(), // Convert to JSON before passing
-                                                                ParamType.JSON,
-                                                              ),
-                                                            },
-                                                          );
-                                                        } on SocketException {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
-                                                              context,
-                                                              'Ingen internettforbindelse');
-                                                        } catch (e) {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
-                                                              context,
-                                                              'En feil oppstod');
-                                                        }
-                                                      },
-                                                      child: Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        elevation: 0,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(16),
-                                                        ),
-                                                        child: Container(
-                                                          width: 235,
-                                                          height: 290,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        16),
-                                                            border: Border.all(
-                                                              color: Colors
-                                                                  .transparent,
-                                                            ),
-                                                          ),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Align(
-                                                                alignment:
-                                                                    const AlignmentDirectional(
-                                                                        0, 0),
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          3,
-                                                                          0,
-                                                                          3,
-                                                                          0),
-                                                                  child:
-                                                                      ClipRRect(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            17),
-                                                                    child: Image
-                                                                        .network(
-                                                                      '${ApiConstants.baseUrl}${likesmatvare.imgUrls![0]}',
-                                                                      width:
-                                                                          200,
-                                                                      height:
-                                                                          229,
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                      errorBuilder: (BuildContext context,
-                                                                          Object
-                                                                              error,
-                                                                          StackTrace?
-                                                                              stackTrace) {
-                                                                        return Image
-                                                                            .asset(
-                                                                          'assets/images/error_image.jpg',
-                                                                          width:
-                                                                              200,
-                                                                          height:
-                                                                              229,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        );
-                                                                      },
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        5,
-                                                                        0),
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                          const AlignmentDirectional(
-                                                                              -1,
-                                                                              0),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            7,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            AutoSizeText(
-                                                                          likesmatvare.name ??
-                                                                              '',
-                                                                          textAlign:
-                                                                              TextAlign.start,
-                                                                          minFontSize:
-                                                                              11,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyLarge
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                fontSize: 14,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        4),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .min,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .end,
-                                                                  children: [
-                                                                    Flexible(
-                                                                      child:
-                                                                          Align(
-                                                                        alignment: const AlignmentDirectional(
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding: const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              5,
-                                                                              0),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceBetween,
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.end,
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                                                                child: Row(
+                                                                                ),
+                                                                                Row(
                                                                                   mainAxisSize: MainAxisSize.max,
                                                                                   children: [
                                                                                     Padding(
-                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                       child: Text(
-                                                                                        '${likesmatvare.price} Kr',
-                                                                                        textAlign: TextAlign.end,
-                                                                                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                                                                                        // Directly calculate the distance using the provided latitude and longitude
+                                                                                        (calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0).toStringAsFixed(0)} Km',
+                                                                                        textAlign: TextAlign.start,
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                               fontFamily: 'Nunito',
                                                                                               color: FlutterFlowTheme.of(context).secondaryText,
                                                                                               fontSize: 14,
@@ -2049,68 +2078,36 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             ),
                                                                                       ),
                                                                                     ),
-                                                                                    if (likesmatvare.kg == true)
-                                                                                      Text(
-                                                                                        '/kg',
-                                                                                        textAlign: TextAlign.end,
-                                                                                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                              fontFamily: 'Nunito',
-                                                                                              color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                              fontSize: 14,
-                                                                                              letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.bold,
-                                                                                            ),
-                                                                                      ),
                                                                                   ],
                                                                                 ),
-                                                                              ),
-                                                                              Row(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                children: [
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
-                                                                                    child: Text(
-                                                                                      // Directly calculate the distance using the provided latitude and longitude
-                                                                                      (calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0) < 1) ? '<1 Km' : '${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, likesmatvare.lat ?? 0.0, likesmatvare.lng ?? 0.0).toStringAsFixed(0)} Km',
-                                                                                      textAlign: TextAlign.start,
-                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Nunito',
-                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                            fontSize: 14,
-                                                                                            letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                          ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ],
+                                                                              ],
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                    ),
-                                                                  ],
+                                                                    ],
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
-                                              );
-                                            },
+                                                  ],
+                                                );
+                                              },
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
