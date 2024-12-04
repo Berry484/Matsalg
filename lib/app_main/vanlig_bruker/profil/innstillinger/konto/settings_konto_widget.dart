@@ -90,6 +90,7 @@ class _SettingsKontoWidgetState extends State<SettingsKontoWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Nunito',
                               fontSize: 14,
+                              color: FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w800,
                             ),
@@ -426,6 +427,7 @@ class _SettingsKontoWidgetState extends State<SettingsKontoWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Nunito',
                               fontSize: 14,
+                              color: FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w800,
                             ),
