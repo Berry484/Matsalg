@@ -328,40 +328,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
           backgroundColor: FlutterFlowTheme.of(context).primary,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
-            // iconTheme:
-            //     IconThemeData(color: FlutterFlowTheme.of(context).primaryText),
             automaticallyImplyLeading: false,
             scrolledUnderElevation: 0.0,
-            // leading: Align(
-            //   alignment: const AlignmentDirectional(0, 0),
-            //   child: Padding(
-            //     padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-            //     child: InkWell(
-            //       splashColor: Colors.transparent,
-            //       focusColor: Colors.transparent,
-            //       hoverColor: Colors.transparent,
-            //       highlightColor: Colors.transparent,
-            //       onTap: () async {
-            //         try {
-            //           context.safePop();
-            //         } on SocketException {
-            //                 HapticFeedback.lightImpact();
-            //         } catch (e) {
-            //         }
-            //       },
-            //       child: Row(
-            //         mainAxisSize: MainAxisSize.max,
-            //         children: [
-            //           Icon(
-            //             Icons.arrow_back_ios,
-            //             color: FlutterFlowTheme.of(context).secondaryText,
-            //             size: 28,
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
             title: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -439,7 +407,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                       ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: Text(
                     'Avbryt',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -3651,13 +3619,17 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               false;
                                                           throw (Exception);
                                                         }
+                                                        _oppdaterLoading =
+                                                            false;
                                                       }
                                                     } on SocketException {
+                                                      _oppdaterLoading = false;
                                                       HapticFeedback
                                                           .lightImpact();
                                                       showErrorToast(context,
                                                           'Ingen internettforbindelse');
                                                     } catch (e) {
+                                                      _oppdaterLoading = false;
                                                       HapticFeedback
                                                           .lightImpact();
                                                       showErrorToast(context,
@@ -3950,13 +3922,19 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                             setState(() {});
                                                           }
+                                                          _leggUtLoading =
+                                                              false;
                                                         } on SocketException {
+                                                          _leggUtLoading =
+                                                              false;
                                                           HapticFeedback
                                                               .lightImpact();
                                                           showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
+                                                          _leggUtLoading =
+                                                              false;
                                                           HapticFeedback
                                                               .lightImpact();
                                                           showErrorToast(

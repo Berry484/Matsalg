@@ -618,7 +618,7 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
                                             fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
-                                            fontSize: 16,
+                                            fontSize: 17,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -667,6 +667,8 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
                                       getFolgerFoods();
                                     },
                                     child: SingleChildScrollView(
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
                                       primary: false,
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,

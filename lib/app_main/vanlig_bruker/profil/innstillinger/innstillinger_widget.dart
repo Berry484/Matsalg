@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/api/web_socket.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/hjem/choose_location/location_widget.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/profil/innstillinger/choose_location/location_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/profil/kontakt/kontakt_widget.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';

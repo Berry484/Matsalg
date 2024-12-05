@@ -526,23 +526,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         parentNavigatorKey: _parentKey,
       ),
       GoRoute(
-        path: '/leggIgjenRating',
-        name: 'LeggIgjenRating',
-        builder: (context, state) {
-          // Use FFParameters to retrieve the parameters safely
-          final params = FFParameters(state);
-
-          // Retrieve the 'kjop' (boolean) and 'username' (string) parameters
-          final kjop = params.getParam<bool>('kjop', ParamType.bool);
-          final username =
-              params.getParam<String>('username', ParamType.String);
-
-          // Return the LeggIgjenRatingWidget with the retrieved parameters
-          return LeggIgjenRatingWidget(kjop: kjop, username: username);
-        },
-        parentNavigatorKey: _parentKey,
-      ),
-      GoRoute(
         path: '/legguTMatvare',
         name:
             'LeggUtMatvare', // Ensure this name matches the one used in `pushNamed`
@@ -630,14 +613,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             password: password,
             phone: phone,
           );
-        },
-        parentNavigatorKey: _parentKey,
-      ),
-      GoRoute(
-        path: '/brukerOnboarding',
-        name: 'brukerOnboarding',
-        builder: (context, state) {
-          return const BrukerOnboardingWidget();
         },
         parentNavigatorKey: _parentKey,
       ),

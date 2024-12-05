@@ -5,9 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/kjop/avbryt_ikon/avbryt_ikon_widget.dart';
-
-import '../godkjent_ikon/godkjent_ikon_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -90,6 +87,138 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                     size: 30.0,
                   ),
                   const SizedBox(width: 15),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    // Auto-remove the toast after 3 seconds if not dismissed
+    Future.delayed(const Duration(seconds: 3), () {
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
+    });
+  }
+
+  void showAccepted(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 56.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.checkmark_alt_circle_fill,
+                    color: FlutterFlowTheme.of(context).alternate,
+                    size: 35.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    // Auto-remove the toast after 3 seconds if not dismissed
+    Future.delayed(const Duration(seconds: 3), () {
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
+    });
+  }
+
+  void budetBleTrekt(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 56.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.xmark_circle_fill,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 35.0,
+                  ),
                   Expanded(
                     child: Text(
                       message,
@@ -664,26 +793,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                             Navigator.of(context).pop();
                                             Navigator.pop(context);
                                             HapticFeedback.mediumImpact();
-                                            showDialog(
-                                              barrierColor: Colors.transparent,
-                                              context: context,
-                                              builder: (dialogContext) {
-                                                return Dialog(
-                                                  elevation: 0,
-                                                  insetPadding: EdgeInsets.zero,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                              0, 0)
-                                                          .resolve(
-                                                              Directionality.of(
-                                                                  context)),
-                                                  child:
-                                                      const AvbrytIkonWidget(),
-                                                );
-                                              },
-                                            );
+                                            budetBleTrekt(
+                                                context, 'Budet ble avslått');
                                           }
                                           godkjennIsLoading = false;
                                         }
@@ -778,32 +889,13 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                             // Perform action for 'Yes'
                                             if (response.statusCode == 200) {
                                               godkjennIsLoading = false;
+
                                               Navigator.of(context)
                                                   .pop(); // Close the dialog
                                               Navigator.pop(context);
                                               HapticFeedback.mediumImpact();
-                                              showDialog(
-                                                barrierColor:
-                                                    Colors.transparent,
-                                                context: context,
-                                                builder: (dialogContext) {
-                                                  return Dialog(
-                                                    elevation: 0,
-                                                    insetPadding:
-                                                        EdgeInsets.zero,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                                0, 0)
-                                                            .resolve(
-                                                                Directionality.of(
-                                                                    context)),
-                                                    child:
-                                                        const GodkjentIkonWidget(),
-                                                  );
-                                                },
-                                              );
+                                              showAccepted(context,
+                                                  'Budet ble godkjent');
                                             }
                                             godkjennIsLoading = false;
                                           }

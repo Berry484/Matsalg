@@ -63,6 +63,18 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
     _model.bioTextController.text = FFAppState().bio;
   }
 
+  bool isTextFieldEmpty() {
+    if (widget.konto == 'Brukernavn') {
+      return _model.brukernavnTextController.text.trim().isEmpty;
+    } else if (widget.konto == 'For- og etternavn') {
+      return _model.fornavnTextController.text.trim().isEmpty ||
+          _model.etternavnTextController.text.trim().isEmpty;
+    } else if (widget.konto == 'E-post') {
+      return _model.emailTextController.text.trim().isEmpty;
+    }
+    return false; // Default case if widget.konto doesn't match any expected value
+  }
+
   void showErrorToast(BuildContext context, String message) {
     final overlay = Overlay.of(context);
     late OverlayEntry overlayEntry;
@@ -149,7 +161,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme:
-                IconThemeData(color: FlutterFlowTheme.of(context).alternate),
+                IconThemeData(color: FlutterFlowTheme.of(context).primaryText),
             automaticallyImplyLeading: false,
             scrolledUnderElevation: 0.0,
             title: Padding(
@@ -210,6 +222,10 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                       if (_isLoading) {
                                         return;
                                       }
+                                      if (isTextFieldEmpty()) {
+                                        return;
+                                      }
+                                      _isLoading = true;
                                       if (_model.emailTextController.text !=
                                               FFAppState().email &&
                                           widget.konto == 'E-post') {
@@ -339,6 +355,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           return;
                                         }
                                       }
+                                      _isLoading = false;
                                     } on SocketException {
                                       _isLoading = false;
                                       HapticFeedback.lightImpact();
@@ -357,8 +374,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Nunito',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
+                                          color: isTextFieldEmpty()
+                                              ? FlutterFlowTheme.of(context)
+                                                  .secondaryText
+                                              : FlutterFlowTheme.of(context)
+                                                  .alternate,
                                           fontSize: 17,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
@@ -630,6 +650,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   controller: _model.fornavnTextController,
                                   focusNode: _model.fornavnFocusNode,
                                   obscureText: false,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    '_model.textController',
+                                    const Duration(milliseconds: 200),
+                                    () => safeSetState(() {}),
+                                  ),
                                   decoration: InputDecoration(
                                     labelText: 'Fornavn',
                                     labelStyle: FlutterFlowTheme.of(context)
@@ -718,6 +743,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   controller: _model.etternavnTextController,
                                   focusNode: _model.etternavnFocusNode,
                                   obscureText: false,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    '_model.textController',
+                                    const Duration(milliseconds: 200),
+                                    () => safeSetState(() {}),
+                                  ),
                                   decoration: InputDecoration(
                                     labelText: 'Etternavn',
                                     labelStyle: FlutterFlowTheme.of(context)
@@ -823,6 +853,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     controller: _model.emailTextController,
                                     focusNode: _model.emailFocusNode,
                                     obscureText: false,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      '_model.textController',
+                                      const Duration(milliseconds: 200),
+                                      () => safeSetState(() {}),
+                                    ),
                                     decoration: InputDecoration(
                                       labelText: 'E-post',
                                       labelStyle: FlutterFlowTheme.of(context)

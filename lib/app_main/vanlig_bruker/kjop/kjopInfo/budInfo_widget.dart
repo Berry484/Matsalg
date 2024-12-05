@@ -118,6 +118,138 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
     });
   }
 
+  void showAccepted(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 56.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.checkmark_alt_circle_fill,
+                    color: FlutterFlowTheme.of(context).alternate,
+                    size: 35.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    // Auto-remove the toast after 3 seconds if not dismissed
+    Future.delayed(const Duration(seconds: 3), () {
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
+    });
+  }
+
+  void budetBleTrekt(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 56.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.xmark_circle_fill,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 35.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    // Auto-remove the toast after 3 seconds if not dismissed
+    Future.delayed(const Duration(seconds: 3), () {
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
+    });
+  }
+
   // Haversine formula to calculate distance between two lat/lng points
   double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
     const earthRadius = 6371.0; // Earth's radius in kilometers
@@ -704,6 +836,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                     token: token);
                                             if (response.statusCode == 200) {
                                               HapticFeedback.mediumImpact();
+                                              budetBleTrekt(
+                                                  context, 'Budet ble trekt');
                                               Navigator.pop(context);
                                               Navigator.pop(context);
                                             }
@@ -808,6 +942,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                           token: token);
                                                   if (response.statusCode ==
                                                       200) {
+                                                    HapticFeedback
+                                                        .mediumImpact();
+                                                    showAccepted(context,
+                                                        'Handelen er fullført');
                                                     _bekreftIsLoading = false;
                                                     Navigator.pop(context);
                                                     await showModalBottomSheet(

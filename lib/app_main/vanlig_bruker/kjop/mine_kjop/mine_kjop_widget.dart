@@ -8,11 +8,11 @@ import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/godkjentebud/godkjentebud_widget.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/kjop/budInfo/budInfo_widget.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/kjop/kjopInfo/budInfo_widget.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../salg_bruker_info/salg_bruker_info_widget.dart';
+import '../salgInfo/salg_bruker_info_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
