@@ -756,18 +756,6 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     ),
                   ),
                 ),
-                // if (salgInfo.hentet != true && salgInfo.godkjent == true)
-                //   Padding(
-                //     padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 40),
-                //     child: Text(
-                //       'Husk å be kjøperen bekrefte at \nmatvaren er mottatt',
-                //       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                //             fontFamily: 'Nunito',
-                //             letterSpacing: 0.0,
-                //             fontWeight: FontWeight.w500,
-                //           ),
-                //     ),
-                //   ),
               ],
             ),
           ],
