@@ -356,6 +356,20 @@ class FFAppState extends ChangeNotifier {
     prefs.setString('ff_bio', value);
   }
 
+  // List of liked foods
+  List<int> _likedFoods = [];
+  List<int> get likedFoods => _likedFoods;
+  set likedFoods(List<int> value) {
+    _likedFoods = value;
+  }
+
+  // List of unliked foods
+  List<int> _unlikedFoods = [];
+  List<int> get unlikedFoods => _unlikedFoods;
+  set unlikedFoods(List<int> value) {
+    _unlikedFoods = value;
+  }
+
   String _profilepic = "";
   String get profilepic => _profilepic;
   set profilepic(String value) {

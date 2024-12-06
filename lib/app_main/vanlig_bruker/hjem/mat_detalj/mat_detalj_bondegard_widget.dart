@@ -14,7 +14,6 @@ import 'package:mat_salg/logging.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '/app_main/vanlig_bruker/hjem/info/info_widget.dart';
-import '/app_main/vanlig_bruker/kart/kart_pop_up_bondegard/kart_pop_up_bondegard_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -65,8 +64,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
     getPoststed();
     _model = createModel(context, () => MatDetaljBondegardModel());
     getAllFoods();
-    _model.liker = matvare.liked;
-
+    if (FFAppState().likedFoods.contains(matvare.matId)) {
+      _model.liker = true;
+    } else {
+      if (FFAppState().unlikedFoods.contains(matvare.matId)) {
+        _model.liker = false;
+      } else {
+        _model.liker = matvare.liked;
+      }
+    }
     // Adding the animation for the heart icon
     animationsMap.addAll({
       'iconOnPageLoadAnimation': AnimationInfo(
@@ -621,13 +627,34 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         try {
                                           _model.liker =
                                               !(_model.liker ?? true);
+
                                           HapticFeedback.lightImpact();
+                                          FFAppState()
+                                              .likedFoods
+                                              .remove(matvare.matId);
+                                          if (!FFAppState()
+                                              .unlikedFoods
+                                              .contains(matvare.matId)) {
+                                            FFAppState()
+                                                .unlikedFoods
+                                                .add(matvare.matId ?? 0);
+                                          }
                                           apiLike.deleteLike(
                                               Securestorage.authToken,
                                               matvare.matId);
                                           safeSetState(() {});
                                           if (_model.liker == true) {
                                             HapticFeedback.lightImpact();
+                                            FFAppState()
+                                                .unlikedFoods
+                                                .remove(matvare.matId);
+                                            if (!FFAppState()
+                                                .likedFoods
+                                                .contains(matvare.matId)) {
+                                              FFAppState()
+                                                  .likedFoods
+                                                  .add(matvare.matId ?? 0);
+                                            }
                                             _triggerHeartAnimation();
                                             apiLike.sendLike(
                                                 Securestorage.authToken,
@@ -1052,11 +1079,31 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             safeSetState(() =>
                                                 _model.liker = !_model.liker!);
                                             if (_model.liker!) {
+                                              FFAppState()
+                                                  .unlikedFoods
+                                                  .remove(matvare.matId);
+                                              if (!FFAppState()
+                                                  .likedFoods
+                                                  .contains(matvare.matId)) {
+                                                FFAppState()
+                                                    .likedFoods
+                                                    .add(matvare.matId ?? 0);
+                                              }
                                               _triggerHeartAnimation();
                                               apiLike.sendLike(
                                                   Securestorage.authToken,
                                                   matvare.matId);
                                             } else {
+                                              FFAppState()
+                                                  .likedFoods
+                                                  .remove(matvare.matId);
+                                              if (!FFAppState()
+                                                  .unlikedFoods
+                                                  .contains(matvare.matId)) {
+                                                FFAppState()
+                                                    .unlikedFoods
+                                                    .add(matvare.matId ?? 0);
+                                              }
                                               apiLike.deleteLike(
                                                   Securestorage.authToken,
                                                   matvare.matId);
@@ -1089,65 +1136,32 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   matvare.lat ?? 59.9138688;
                                               double startLng =
                                                   matvare.lng ?? 10.7522454;
-                                              if (matvare.bonde == true) {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  barrierColor:
-                                                      const Color.fromARGB(
-                                                          60, 17, 0, 0),
-                                                  useRootNavigator: true,
-                                                  enableDrag: true,
-                                                  isDismissible: true,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(context)
-                                                              .unfocus(),
-                                                      child: Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child:
-                                                            KartPopUpBondegardWidget(
-                                                          startLat: startLat,
-                                                          startLng: startLng,
-                                                        ),
+                                              await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                useRootNavigator: true,
+                                                enableDrag: true,
+                                                context: context,
+                                                isDismissible: true,
+                                                builder: (context) {
+                                                  return GestureDetector(
+                                                    onTap: () =>
+                                                        FocusScope.of(context)
+                                                            .unfocus(),
+                                                    child: Padding(
+                                                      padding: MediaQuery
+                                                          .viewInsetsOf(
+                                                              context),
+                                                      child: KartPopUpWidget(
+                                                        startLat: startLat,
+                                                        startLng: startLng,
                                                       ),
-                                                    );
-                                                  },
-                                                ).then((value) =>
-                                                    safeSetState(() {}));
-                                              } else {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  useRootNavigator: true,
-                                                  enableDrag: true,
-                                                  context: context,
-                                                  isDismissible: true,
-                                                  builder: (context) {
-                                                    return GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(context)
-                                                              .unfocus(),
-                                                      child: Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child: KartPopUpWidget(
-                                                          startLat: startLat,
-                                                          startLng: startLng,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) =>
-                                                    safeSetState(() {}));
-                                              }
+                                                    ),
+                                                  );
+                                                },
+                                              ).then((value) =>
+                                                  safeSetState(() {}));
                                             },
                                             child: Icon(
                                               CupertinoIcons.map,

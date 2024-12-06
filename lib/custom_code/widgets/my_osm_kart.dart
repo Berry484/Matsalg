@@ -82,6 +82,16 @@ class _MyOsmKartState extends State<MyOsmKart> {
             ),
           ),
         ]),
+        Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: Text(
+              '© OpenStreetMap-bidragsyterene',
+              style: TextStyle(fontSize: 11, color: Colors.black54),
+            ),
+          ),
+        ),
       ],
     );
   }
