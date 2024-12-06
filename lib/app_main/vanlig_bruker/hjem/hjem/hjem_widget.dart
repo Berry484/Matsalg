@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/logging.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -38,6 +40,7 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
   bool searching = false;
   Timer? _debounce;
   final ScrollController _scrollController = ScrollController();
+  final _firebaseMessaging = FirebaseMessaging.instance;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final ApiCalls apicalls = ApiCalls();
@@ -65,26 +68,25 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
             getFolgerFoods();
           }
         }));
+
     fetchData();
     getAllFoods();
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      currentUserLocationValue =
-          await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
-      FFAppState().brukersted = currentUserLocationValue;
-      FFAppState().bonde = false;
-
       _scrollController.addListener(_onScroll);
       safeSetState(() {});
     });
   }
 
-  Future<void> getUserLocation() async {
-    LatLng? location;
-    location =
-        await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
-    if (location != const LatLng(0.0, 0.0)) {
-      FFAppState().brukerLat = location.latitude;
-      FFAppState().brukerLng = location.latitude;
+  Future<void> getDeviceToken() async {
+    try {
+      await _firebaseMessaging.requestPermission();
+      final aPNToken = await _firebaseMessaging.getAPNSToken();
+      final fCMToken = await _firebaseMessaging.getToken();
+      logger.d('Token: $fCMToken\nAPNToken: $aPNToken');
+    } on Error {
+      logger.d('An error was thrown $Error');
+    } catch (e) {
+      logger.d('an exception was thrown: $e');
     }
   }
 
@@ -326,9 +328,16 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
         if (response.statusCode == 200) {
           final decodedResponse = jsonDecode(response.body);
           final userInfo = decodedResponse['userInfo'] ?? {};
+          LatLng? location = await getCurrentUserLocation(
+              defaultLocation: const LatLng(0.0, 0.0));
+          if (location != const LatLng(0.0, 0.0)) {
+            FFAppState().brukerLat = location.latitude;
+            FFAppState().brukerLng = location.longitude;
+          } else {
+            FFAppState().brukerLat = userInfo['lat'] ?? 59.9138688;
+            FFAppState().brukerLng = userInfo['lng'] ?? 10.7522454;
+          }
 
-          FFAppState().brukerLat = userInfo['lat'] ?? 59.9138688;
-          FFAppState().brukerLng = userInfo['lng'] ?? 10.7522454;
           FFAppState().brukernavn = userInfo['username'] ?? '';
           FFAppState().email = userInfo['email'] ?? '';
           FFAppState().firstname = userInfo['firstname'] ?? '';
@@ -341,7 +350,6 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
               decodedResponse['ratingTotalCount'] ?? 0;
           FFAppState().ratingAverageValue =
               decodedResponse['ratingAverageValue'] ?? 5.0;
-          getUserLocation();
         }
         if (response.statusCode == 401) {
           FFAppState().login = false;
