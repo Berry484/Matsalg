@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/Bonder.dart';
+import 'package:mat_salg/User.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:shimmer/shimmer.dart';
@@ -18,7 +18,11 @@ import 'bruker_rating_model.dart';
 export 'bruker_rating_model.dart';
 
 class BrukerRatingWidget extends StatefulWidget {
-  const BrukerRatingWidget({super.key, this.username, this.mine});
+  const BrukerRatingWidget({
+    super.key,
+    this.username,
+    this.mine,
+  });
 
   final dynamic username;
   final dynamic mine;
@@ -31,15 +35,12 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
     with TickerProviderStateMixin {
   late BrukerRatingModel _model;
   List<UserInfoRating>? _ratings;
-  UserInfoStats? _ratingStats;
   List<UserInfoRating>? _kjopratings = [];
   List<UserInfoRating>? _selgratings = [];
-  List<Bonder>? _brukerinfo;
-  Bonder? bruker;
+  List<User>? _brukerinfo;
+  User? bruker;
   String? username;
   bool _ratingisLoading = true;
-  double ratingVerdi = 5.0;
-  int ratingantall = 0;
   bool ingenRatings = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -47,7 +48,6 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => BrukerRatingModel());
-    getRatingStats();
     _checkUser();
     getAllRatings();
     timeago.setLocaleMessages('nb_NO', timeago.NbNoMessages());
@@ -145,7 +145,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
           bruker = _brukerinfo![0];
         } else {
           // Fallback values
-          bruker = Bonder(
+          bruker = User(
             username: '',
             firstname: '',
             lastname: '',
@@ -161,39 +161,6 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
         }
 
         setState(() {});
-      }
-    } on SocketException {
-      _ratingisLoading = true;
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      _ratingisLoading = true;
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-  Future<void> getRatingStats() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        if (widget.mine != true && widget.username != null) {
-          _ratingStats = await ApiRating.ratingSummary(token, widget.username);
-        } else {
-          _ratingStats = await ApiRating.mineRatingSummary(token);
-        }
-        setState(() {
-          ratingVerdi = _ratingStats!.averageValue ?? 5.0;
-          ratingantall = _ratingStats!.totalCount ?? 0;
-          if (ratingantall == 0) {
-            ingenRatings = true;
-            _ratingisLoading = false;
-          }
-        });
       }
     } on SocketException {
       _ratingisLoading = true;
@@ -373,184 +340,6 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                           ],
                         ),
                       ),
-                      // Row(
-                      //   mainAxisSize: MainAxisSize.max,
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     Container(
-                      //       width: MediaQuery.sizeOf(context).width - 26,
-                      //       decoration: const BoxDecoration(),
-                      //       child: Padding(
-                      //         padding: const EdgeInsetsDirectional.fromSTEB(
-                      //             0, 5, 0, 0),
-                      //         child: Row(
-                      //           mainAxisSize: MainAxisSize.max,
-                      //           children: [
-                      //             Container(
-                      //               width: 121,
-                      //               height: 117,
-                      //               decoration: BoxDecoration(
-                      //                 color: FlutterFlowTheme.of(context)
-                      //                     .secondaryBackground,
-                      //                 borderRadius: BorderRadius.circular(13),
-                      //               ),
-                      //               child: Align(
-                      //                 alignment:
-                      //                     const AlignmentDirectional(0, 0),
-                      //                 child: Column(
-                      //                   mainAxisSize: MainAxisSize.max,
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.center,
-                      //                   children: [
-                      //                     Text(
-                      //                       'Vurdering',
-                      //                       style: FlutterFlowTheme.of(context)
-                      //                           .bodyMedium
-                      //                           .override(
-                      //                             fontFamily: 'Nunito',
-                      //                             color: FlutterFlowTheme.of(
-                      //                                     context)
-                      //                                 .primaryText,
-                      //                             fontSize: 15,
-                      //                             letterSpacing: 0.0,
-                      //                             fontWeight: FontWeight.w600,
-                      //                           ),
-                      //                     ),
-                      //                     Text(
-                      //                       ratingVerdi.toString(),
-                      //                       style: FlutterFlowTheme.of(context)
-                      //                           .bodyMedium
-                      //                           .override(
-                      //                             fontFamily: 'Nunito',
-                      //                             fontSize: 31,
-                      //                             letterSpacing: 0.0,
-                      //                             fontWeight: FontWeight.bold,
-                      //                           ),
-                      //                     ),
-                      //                     Text(
-                      //                       'av 5.0',
-                      //                       style: FlutterFlowTheme.of(context)
-                      //                           .bodyMedium
-                      //                           .override(
-                      //                             fontFamily: 'Nunito',
-                      //                             color: FlutterFlowTheme.of(
-                      //                                     context)
-                      //                                 .secondaryText,
-                      //                             fontSize: 17,
-                      //                             letterSpacing: 0.0,
-                      //                             fontWeight: FontWeight.w600,
-                      //                           ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Padding(
-                      //               padding:
-                      //                   const EdgeInsetsDirectional.fromSTEB(
-                      //                       10, 0, 0, 0),
-                      //               child: Container(
-                      //                 width: MediaQuery.sizeOf(context).width -
-                      //                     165,
-                      //                 height: 117,
-                      //                 decoration: BoxDecoration(
-                      //                   color: FlutterFlowTheme.of(context)
-                      //                       .secondaryBackground,
-                      //                   borderRadius: BorderRadius.circular(13),
-                      //                 ),
-                      //                 child: Padding(
-                      //                   padding: const EdgeInsetsDirectional
-                      //                       .fromSTEB(15, 0, 0, 0),
-                      //                   child: Column(
-                      //                     mainAxisSize: MainAxisSize.max,
-                      //                     mainAxisAlignment:
-                      //                         MainAxisAlignment.center,
-                      //                     children: [
-                      //                       Padding(
-                      //                         padding:
-                      //                             const EdgeInsetsDirectional
-                      //                                 .fromSTEB(0, 0, 0, 7),
-                      //                         child: Row(
-                      //                           mainAxisSize: MainAxisSize.max,
-                      //                           children: [
-                      //                             FaIcon(
-                      //                               FontAwesomeIcons.star,
-                      //                               color: FlutterFlowTheme.of(
-                      //                                       context)
-                      //                                   .primaryText,
-                      //                               size: 21,
-                      //                             ),
-                      //                             Padding(
-                      //                               padding:
-                      //                                   const EdgeInsetsDirectional
-                      //                                       .fromSTEB(
-                      //                                       5, 0, 0, 0),
-                      //                               child: Text(
-                      //                                 '${ratingantall.toString()} vurderinger',
-                      //                                 style: FlutterFlowTheme
-                      //                                         .of(context)
-                      //                                     .bodyMedium
-                      //                                     .override(
-                      //                                       fontFamily:
-                      //                                           'Nunito',
-                      //                                       fontSize: 15,
-                      //                                       letterSpacing: 0.0,
-                      //                                       fontWeight:
-                      //                                           FontWeight.w600,
-                      //                                     ),
-                      //                               ),
-                      //                             ),
-                      //                           ],
-                      //                         ),
-                      //                       ),
-                      //                       Padding(
-                      //                         padding:
-                      //                             const EdgeInsetsDirectional
-                      //                                 .fromSTEB(0, 7, 0, 0),
-                      //                         child: Row(
-                      //                           mainAxisSize: MainAxisSize.max,
-                      //                           children: [
-                      //                             Icon(
-                      //                               Icons.person_outlined,
-                      //                               color: FlutterFlowTheme.of(
-                      //                                       context)
-                      //                                   .primaryText,
-                      //                               size: 27,
-                      //                             ),
-                      //                             Padding(
-                      //                               padding:
-                      //                                   const EdgeInsetsDirectional
-                      //                                       .fromSTEB(
-                      //                                       5, 0, 0, 0),
-                      //                               child: Text(
-                      //                                 'Ble med i\n${bruker?.time != null ? DateFormat("MMMM yyyy", "nb_NO").format(bruker!.time!.toLocal()) : ""}',
-                      //                                 style: FlutterFlowTheme
-                      //                                         .of(context)
-                      //                                     .bodyMedium
-                      //                                     .override(
-                      //                                       fontFamily:
-                      //                                           'Nunito',
-                      //                                       fontSize: 15,
-                      //                                       letterSpacing: 0.0,
-                      //                                       fontWeight:
-                      //                                           FontWeight.w600,
-                      //                                     ),
-                      //                               ),
-                      //                             ),
-                      //                           ],
-                      //                         ),
-                      //                       ),
-                      //                     ],
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       Expanded(
                         child: Padding(
                           padding:

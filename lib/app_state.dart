@@ -34,6 +34,10 @@ class FFAppState extends ChangeNotifier {
       _brukerLat = prefs.getDouble('ff_brukerLat') ?? _brukerLat;
     });
     _safeInit(() {
+      _ratingAverageValue =
+          prefs.getDouble('ff_ratingAverageValue') ?? _ratingAverageValue;
+    });
+    _safeInit(() {
       _brukerLng = prefs.getDouble('ff_brukerLng') ?? _brukerLng;
     });
     _safeInit(() {
@@ -65,6 +69,16 @@ class FFAppState extends ChangeNotifier {
     });
     _safeInit(() {
       _bio = prefs.getString('ff_bio') ?? _bio;
+    });
+    _safeInit(() {
+      _followersCount = prefs.getInt('ff_followersCount') ?? _followersCount;
+    });
+    _safeInit(() {
+      _followingCount = prefs.getInt('ff_followingCount') ?? _followingCount;
+    });
+    _safeInit(() {
+      _ratingTotalCount =
+          prefs.getInt('ff_ratingTotalCount') ?? _ratingTotalCount;
     });
     _safeInit(() {
       _profilepic = prefs.getString('ff_profilepic') ?? _profilepic;
@@ -300,6 +314,34 @@ class FFAppState extends ChangeNotifier {
     prefs.setString('ff_firstname', value);
   }
 
+  int _followersCount = 0;
+  int get followersCount => _followersCount;
+  set followersCount(int value) {
+    _followersCount = value;
+    prefs.setInt('ff_followersCount', value);
+  }
+
+  int _followingCount = 0;
+  int get followingCount => _followingCount;
+  set followingCount(int value) {
+    _followingCount = value;
+    prefs.setInt('ff_followingCount', value);
+  }
+
+  int _ratingTotalCount = 0;
+  int get ratingTotalCount => _ratingTotalCount;
+  set ratingTotalCount(int value) {
+    _ratingTotalCount = value;
+    prefs.setInt('ff_ratingTotalCount', value);
+  }
+
+  double _ratingAverageValue = 5;
+  double get ratingAverageValue => _ratingAverageValue;
+  set ratingAverageValue(double value) {
+    _ratingAverageValue = value;
+    prefs.setDouble('ff_ratingAverageValue', value);
+  }
+
   String _lastname = "";
   String get lastname => _lastname;
   set lastname(String value) {
@@ -445,6 +487,7 @@ class Matvarer {
   final String? profilepic;
   final bool? kjopt;
   final DateTime? updatetime; // Add updatetime here
+  final bool? liked;
 
   Matvarer({
     this.matId,
@@ -463,6 +506,7 @@ class Matvarer {
     this.profilepic,
     this.kjopt,
     this.updatetime, // Add updatetime to constructor
+    this.liked,
   });
 
   factory Matvarer.fromJson1(Map<String, dynamic>? json) {
@@ -471,57 +515,71 @@ class Matvarer {
       parsedTime = DateTime.tryParse(json?['updatetime']);
     }
 
+    // Extract the 'listing' data (if it exists)
+    Map<String, dynamic> listingJson = json?['listing'] ?? json;
+
     return Matvarer(
-      matId: json?['matId'] as int?,
-      name: json?['name'] as String? ?? "", // Default empty string if null
-      imgUrls: (json?['imgUrl'] != null && json?['imgUrl'] is List)
-          ? List<String>.from(json?['imgUrl']?.whereType<String>() ?? [])
+      matId: listingJson['matId'] as int?,
+      name:
+          listingJson['name'] as String? ?? "", // Default empty string if null
+      imgUrls: (listingJson['imgUrl'] != null && listingJson['imgUrl'] is List)
+          ? List<String>.from(listingJson['imgUrl']?.whereType<String>() ?? [])
           : [],
-      description: json?['description'] as String? ?? "",
-      price: json?['price'] as int?,
-      kategorier: (json?['kategorier'] != null && json?['kategorier'] is List)
-          ? List<String>.from(json?['kategorier'])
+      description: listingJson['description'] as String? ?? "",
+      price: listingJson['price'] as int?,
+      kategorier: (listingJson['kategorier'] != null &&
+              listingJson['kategorier'] is List)
+          ? List<String>.from(listingJson['kategorier'])
           : null,
-      lat: json?['lat'] as double?,
-      lng: json?['lng'] as double?,
-      betaling: json?['betaling'] as bool?,
-      kg: json?['kg'] as bool?,
-      username: json?['username'] as String? ?? "",
-      bonde: json?['bonde'] as bool?,
-      antall: json?['antall'] as double?,
-      profilepic: json?['profilepic'] as String? ?? "",
-      kjopt: json?['kjopt'] as bool?,
+      lat: listingJson['lat'] as double?,
+      lng: listingJson['lng'] as double?,
+      betaling: listingJson['betaling'] as bool?,
+      kg: listingJson['kg'] as bool?,
+      // Getting the username and profilepic from the 'user' field inside 'listing'
+      username: listingJson['username'] as String? ?? "",
+      bonde: listingJson['bonde'] as bool?,
+      antall: listingJson['antall'] as double?,
+      profilepic: listingJson['profilepic'] as String? ?? "",
+      kjopt: listingJson['kjopt'] as bool?,
       updatetime: parsedTime, // Parse updatetime if available
+      liked: listingJson['liked'] as bool?,
     );
   }
 
-  factory Matvarer.fromJson(Map<String, dynamic> json) {
+  factory Matvarer.fromJson(Map<String, dynamic>? json) {
     DateTime? parsedTime;
-    if (json['updatetime'] != null) {
-      parsedTime = DateTime.tryParse(json['updatetime']);
+    if (json?['updatetime'] != null) {
+      parsedTime = DateTime.tryParse(json?['updatetime']);
     }
 
+    // Extract listing data (assuming the main object is stored in 'listing' or as root)
+    Map<String, dynamic> listingJson = json?['listing'] ?? json;
+
+    Map<String, dynamic> userJson = listingJson['user'] ?? {};
     return Matvarer(
-      matId: json['matId'] as int?,
-      name: json['name'] as String? ?? "",
-      imgUrls: (json['imgUrl'] != null && json['imgUrl'] is List)
-          ? List<String>.from(json['imgUrl']?.whereType<String>() ?? [])
+      matId: listingJson['matId'] as int?,
+      name: listingJson['name'] as String? ?? "",
+      imgUrls: (listingJson['imgUrl'] != null && listingJson['imgUrl'] is List)
+          ? List<String>.from(listingJson['imgUrl']?.whereType<String>() ?? [])
           : [],
-      description: json['description'] as String? ?? "",
-      price: json['price'] as int?,
-      kategorier: (json['kategorier'] != null && json['kategorier'] is List)
-          ? List<String>.from(json['kategorier'])
+      description: listingJson['description'] as String? ?? "",
+      price: listingJson['price'] as int?,
+      kategorier: (listingJson['kategorier'] != null &&
+              listingJson['kategorier'] is List)
+          ? List<String>.from(listingJson['kategorier'])
           : null,
-      lat: json['lat'] as double?,
-      lng: json['lng'] as double?,
-      betaling: json['betaling'] as bool?,
-      kg: json['kg'] as bool?,
-      username: json['username'] as String? ?? "",
-      bonde: json['bonde'] as bool?,
-      antall: json['antall'] as double?,
-      profilepic: json['user']?['profilepic'] as String? ?? "",
-      kjopt: json['kjopt'] as bool?,
-      updatetime: parsedTime, // Parse updatetime if available
+      lat: listingJson['lat'] as double?,
+      lng: listingJson['lng'] as double?,
+      betaling: listingJson['betaling'] as bool?,
+      kg: listingJson['kg'] as bool?,
+      // Getting the username and profilepic from the 'user' field
+      username: userJson['username'] as String? ?? "",
+      bonde: userJson['bonde'] as bool?,
+      antall: listingJson['antall'] as double?,
+      profilepic: userJson['profilepic'] as String? ?? "",
+      kjopt: listingJson['kjopt'] as bool?,
+      updatetime: parsedTime,
+      liked: listingJson['liked'] as bool?,
     );
   }
 
@@ -552,6 +610,7 @@ class Matvarer {
       'kjopt': kjopt,
       'updatetime': updatetime
           ?.toIso8601String(), // Convert DateTime to ISO string for JSON
+      'liked': liked,
     };
   }
 
@@ -573,7 +632,8 @@ class Matvarer {
         'antall: $antall, '
         'profilepic: $profilepic, '
         'kjopt: $kjopt, '
-        'updatetime: $updatetime'
+        'updatetime: $updatetime, '
+        'liked: $liked'
         '}';
   }
 }

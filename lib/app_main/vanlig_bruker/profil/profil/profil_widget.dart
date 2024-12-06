@@ -30,17 +30,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
     with TickerProviderStateMixin {
   late ProfilModel _model;
   List<Matvarer>? _likesmatvarer;
-  UserInfoStats? _ratingStats;
   bool _isloading = false;
   bool _likesisloading = true;
-  double ratingVerdi = 5.0;
-  int ratingantall = 0;
-  bool ingenRatings = false;
   bool _isExpanded = false;
   final ApiCalls apicalls = ApiCalls();
   final Securestorage securestorage = Securestorage();
-  String? folger;
-  String? folgere;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -51,10 +45,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
     super.initState();
     getMyFoods();
     getAllLikes();
-    tellMineFolger();
-    tellMineFolgere();
-    updateUserStats();
-    getRatingStats();
+    fetchData();
+
     _model = createModel(context, () => ProfilModel());
 
     _model.tabBarController = TabController(
@@ -183,52 +175,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
     }
   }
 
-  Future<void> updateUserStats() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        await apicalls.updateUserStats(token);
-        safeSetState(() {});
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-  Future<void> getRatingStats() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        _ratingStats = await ApiRating.mineRatingSummary(token);
-        safeSetState(() {
-          ratingVerdi = _ratingStats!.averageValue ?? 5.0;
-          ratingantall = _ratingStats!.totalCount ?? 0;
-          if (ratingantall == 0) {
-            ingenRatings = true;
-          }
-        });
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
   Future<void> getAllLikes() async {
     try {
       String? token = await Securestorage().readToken();
@@ -254,7 +200,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
     }
   }
 
-  Future<void> tellMineFolger() async {
+  Future<void> fetchData() async {
     try {
       String? token = await Securestorage().readToken();
       if (token == null) {
@@ -262,29 +208,34 @@ class _ProfilWidgetState extends State<ProfilWidget>
         context.goNamed('registrer');
         return;
       } else {
-        folger = await ApiFolg.tellMineFolger(token);
-        safeSetState(() {});
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
+        final response = await apicalls.checkUserInfo(Securestorage.authToken);
+        if (response.statusCode == 200) {
+          final decodedResponse = jsonDecode(response.body);
+          final userInfo = decodedResponse['userInfo'] ?? {};
 
-  Future<void> tellMineFolgere() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        folgere = await ApiFolg.tellMineFolgere(token);
-        safeSetState(() {});
+          FFAppState().brukerLat = userInfo['lat'] ?? 59.9138688;
+          FFAppState().brukerLng = userInfo['lng'] ?? 10.7522454;
+          FFAppState().brukernavn = userInfo['username'] ?? '';
+          FFAppState().email = userInfo['email'] ?? '';
+          FFAppState().firstname = userInfo['firstname'] ?? '';
+          FFAppState().lastname = userInfo['lastname'] ?? '';
+          FFAppState().bio = userInfo['bio'] ?? '';
+          FFAppState().profilepic = userInfo['profilepic'] ?? '';
+          FFAppState().followersCount = decodedResponse['followersCount'] ?? 0;
+          FFAppState().followingCount = decodedResponse['followingCount'] ?? 0;
+          FFAppState().ratingTotalCount =
+              decodedResponse['ratingTotalCount'] ?? 0;
+          FFAppState().ratingAverageValue =
+              decodedResponse['ratingAverageValue'] ?? 5.0;
+          await apicalls.updateUserStats(token);
+        }
+        if (response.statusCode == 401) {
+          FFAppState().login = false;
+          context.goNamed('registrer');
+          return;
+        }
       }
+      safeSetState(() {});
     } on SocketException {
       HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
@@ -415,10 +366,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                       HapticFeedback.lightImpact();
                       getMyFoods();
                       getAllLikes();
-                      tellMineFolger();
-                      tellMineFolgere();
-                      updateUserStats();
-                      getRatingStats();
+                      fetchData();
                     },
                     child: SingleChildScrollView(
                       primary: false,
@@ -594,7 +542,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 highlightColor: Colors.transparent,
                                                                                 onTap: () async {
                                                                                   try {
-                                                                                    if (folgere != '0') {
+                                                                                    if (FFAppState().followersCount != 0) {
                                                                                       context.pushNamed(
                                                                                         'Folgere',
                                                                                         queryParameters: {
@@ -619,7 +567,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                                                   children: [
                                                                                     Text(
-                                                                                      folgere ?? '',
+                                                                                      FFAppState().followersCount.toString(),
                                                                                       textAlign: TextAlign.center,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Nunito',
@@ -664,7 +612,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 highlightColor: Colors.transparent,
                                                                                 onTap: () async {
                                                                                   try {
-                                                                                    if (folger != '0') {
+                                                                                    if (FFAppState().followingCount != 0) {
                                                                                       context.pushNamed(
                                                                                         'Folgere',
                                                                                         queryParameters: {
@@ -689,7 +637,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                                                   children: [
                                                                                     Text(
-                                                                                      folger ?? '',
+                                                                                      FFAppState().followingCount.toString(),
                                                                                       textAlign: TextAlign.center,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Nunito',
@@ -770,15 +718,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 },
                                                                               ).then((value) => setState(() {}));
                                                                               return;
-                                                                              // context.pushNamed(
-                                                                              //   'BrukerRating',
-                                                                              //   queryParameters: {
-                                                                              //     'mine': serializeParam(
-                                                                              //       true,
-                                                                              //       ParamType.bool,
-                                                                              //     ),
-                                                                              //   },
-                                                                              // );
                                                                             } on SocketException {
                                                                               HapticFeedback.lightImpact();
                                                                               showErrorToast(context, 'Ingen internettforbindelse');
@@ -810,7 +749,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                                                 children: [
-                                                                                  if (ingenRatings == true)
+                                                                                  if (FFAppState().ratingTotalCount == 0)
                                                                                     Padding(
                                                                                       padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                                                                                       child: Text(
@@ -823,17 +762,17 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             ),
                                                                                       ),
                                                                                     ),
-                                                                                  if (ingenRatings != true && ratingantall != 0)
+                                                                                  if (FFAppState().ratingTotalCount != 0)
                                                                                     FaIcon(
                                                                                       FontAwesomeIcons.solidStar,
                                                                                       color: FlutterFlowTheme.of(context).primaryText,
                                                                                       size: 16,
                                                                                     ),
-                                                                                  if (ingenRatings != true && ratingantall != 0)
+                                                                                  if (FFAppState().ratingTotalCount != 0)
                                                                                     Padding(
                                                                                       padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                                                                                       child: Text(
-                                                                                        ratingVerdi.toString(),
+                                                                                        FFAppState().ratingAverageValue.toString(),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                               fontFamily: 'Nunito',
                                                                                               fontSize: 14,
@@ -842,11 +781,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                             ),
                                                                                       ),
                                                                                     ),
-                                                                                  if (ingenRatings != true && ratingantall != 0)
+                                                                                  if (FFAppState().ratingTotalCount != 0)
                                                                                     Padding(
                                                                                       padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                                                                                       child: Text(
-                                                                                        ' (${ratingantall.toString()})',
+                                                                                        ' (${FFAppState().ratingTotalCount.toString()})',
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                               fontFamily: 'Nunito',
                                                                                               color: const Color(0xB0262C2D),
@@ -1269,7 +1208,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                           child: RefreshIndicator(
                                             onRefresh: () async {
                                               try {
-                                                await getMyFoods();
+                                                getMyFoods();
+                                                getAllLikes();
+                                                fetchData();
                                               } on SocketException {
                                                 HapticFeedback.lightImpact();
                                                 showErrorToast(context,

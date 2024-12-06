@@ -60,12 +60,13 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
       vsync: this,
       length: 2,
       initialIndex: 0,
-    )..addListener(() => safeSetState(() {}));
-
+    )..addListener(() => safeSetState(() {
+          if (_model.tabBarCurrentIndex == 1) {
+            getFolgerFoods();
+          }
+        }));
     fetchData();
-    getKommune();
     getAllFoods();
-    getFolgerFoods();
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
@@ -303,60 +304,6 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> getKommune() async {
-    try {
-      String? token = await Securestorage().readToken();
-
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        String? response = await apicalls.getKommune(token);
-
-        if (response.isNotEmpty) {
-          // Convert the response to lowercase and then capitalize the first letter
-          String formattedResponse =
-              response[0].toUpperCase() + response.substring(1).toLowerCase();
-          FFAppState().kommune = formattedResponse;
-          if (mounted) {
-            setState(() {});
-          }
-        }
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-  Future<void> updateUserStats() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        final response = await apicalls.updateUserStats(token);
-        if (response?.statusCode == 401) {
-          FFAppState().login = false;
-          context.goNamed('registrer');
-          return;
-        }
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
   Future<void> fetchData() async {
     try {
       String? token = await Securestorage().readToken();
@@ -368,18 +315,22 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
         final response = await apicalls.checkUserInfo(Securestorage.authToken);
         if (response.statusCode == 200) {
           final decodedResponse = jsonDecode(response.body);
-          userInfo = decodedResponse; // Update userInfo with fetched data
-          FFAppState().brukerLat = decodedResponse['lat'] ?? 59.9138688;
-          FFAppState().brukerLng = decodedResponse['lng'] ?? 10.7522454;
-          FFAppState().brukernavn = decodedResponse['brukernavn'] ?? '';
-          FFAppState().email = decodedResponse['email'] ?? '';
-          FFAppState().firstname = decodedResponse['firstname'] ?? '';
-          FFAppState().lastname = decodedResponse['lastname'] ?? '';
-          FFAppState().brukernavn = decodedResponse['username'] ?? '';
-          FFAppState().bio = decodedResponse['bio'] ?? '';
-          FFAppState().profilepic = decodedResponse['profilepic'] ?? '';
-          getKommune();
-          updateUserStats();
+          final userInfo = decodedResponse['userInfo'] ?? {};
+
+          FFAppState().brukerLat = userInfo['lat'] ?? 59.9138688;
+          FFAppState().brukerLng = userInfo['lng'] ?? 10.7522454;
+          FFAppState().brukernavn = userInfo['username'] ?? '';
+          FFAppState().email = userInfo['email'] ?? '';
+          FFAppState().firstname = userInfo['firstname'] ?? '';
+          FFAppState().lastname = userInfo['lastname'] ?? '';
+          FFAppState().bio = userInfo['bio'] ?? '';
+          FFAppState().profilepic = userInfo['profilepic'] ?? '';
+          FFAppState().followersCount = decodedResponse['followersCount'] ?? 0;
+          FFAppState().followingCount = decodedResponse['followingCount'] ?? 0;
+          FFAppState().ratingTotalCount =
+              decodedResponse['ratingTotalCount'] ?? 0;
+          FFAppState().ratingAverageValue =
+              decodedResponse['ratingAverageValue'] ?? 5.0;
         }
         if (response.statusCode == 401) {
           FFAppState().login = false;
@@ -662,9 +613,7 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
                                     onRefresh: () async {
                                       HapticFeedback.lightImpact();
                                       fetchData();
-                                      getKommune();
                                       getAllFoods();
-                                      getFolgerFoods();
                                     },
                                     child: SingleChildScrollView(
                                       physics:

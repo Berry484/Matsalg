@@ -65,8 +65,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
     getPoststed();
     _model = createModel(context, () => MatDetaljBondegardModel());
     getAllFoods();
-    getChecklike();
-    sjekkFolger();
+    _model.liker = matvare.liked;
 
     // Adding the animation for the heart icon
     animationsMap.addAll({
@@ -199,51 +198,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
 
   double _degreesToRadians(double degrees) {
     return degrees * pi / 180;
-  }
-
-  Future<void> sjekkFolger() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        brukerFolger = await ApiFolg.sjekkFolger(token, matvare.username);
-        if (brukerFolger == true) {
-          _model.folges = true;
-        }
-        setState(() {});
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-  Future<void> getChecklike() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        _model.liker = await ApiCheckLiked.getChecklike(token, matvare.matId);
-        setState(() {
-          return;
-        });
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
   }
 
   Future<void> getPoststed() async {

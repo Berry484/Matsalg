@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:decimal/decimal.dart';
 import 'package:http/http.dart' as http;
-import 'package:mat_salg/Bonder.dart';
+import 'package:mat_salg/User.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'dart:async'; // Import this to use Future and TimeoutException
 import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
@@ -689,7 +689,7 @@ class ApiGetMyFoods {
 class ApiGetBonder {
   static const String baseUrl = ApiConstants.baseUrl;
 
-  static Future<List<Bonder>?> getAllBonder(String? token) async {
+  static Future<List<User>?> getAllBonder(String? token) async {
     try {
       final headers = {
         'Content-Type': 'application/json',
@@ -711,7 +711,7 @@ class ApiGetBonder {
             jsonDecode(utf8.decode(response.bodyBytes));
 
         // Convert the JSON into a list of Bonder objects
-        return Bonder.bonderFromSnapshot(jsonResponse);
+        return User.usersFromSnapshot(jsonResponse);
       } else {
         // Handle unsuccessful response
         return null;
@@ -727,8 +727,7 @@ class ApiGetBonder {
 class ApiGetUser {
   static const String baseUrl = ApiConstants.baseUrl;
 
-  static Future<List<Bonder>?> checkUser(
-      String? token, String? username) async {
+  static Future<List<User>?> checkUser(String? token, String? username) async {
     try {
       final headers = {
         'Content-Type': 'application/json',
@@ -751,10 +750,10 @@ class ApiGetUser {
 
         // If the response is not a list, wrap it in a list before passing to fromSnapshot
         if (jsonResponse is Map<String, dynamic>) {
-          return Bonder.bonderFromSnapshot(
+          return User.usersFromSnapshot(
               [jsonResponse]); // Wrap single object in a list
         } else if (jsonResponse is List) {
-          return Bonder.bonderFromSnapshot(
+          return User.usersFromSnapshot(
               jsonResponse); // If it's already a list, pass it directly
         }
       } else {
@@ -881,6 +880,7 @@ class ApiGetAllLikes {
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
         // Convert the JSON into a list of Matvarer objects
+        print(jsonResponse);
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {
         // Handle unsuccessful response
@@ -1023,32 +1023,6 @@ class ApiFolg {
         return folgere;
       } else {
         return null;
-      }
-    } on SocketException {
-      throw const SocketException('');
-    } catch (e) {
-      throw Exception;
-    }
-  }
-
-  static Future<bool?> sjekkFolger(String? token, String? brukernavn) async {
-    try {
-      final headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      };
-
-      // Make the API request and parse the response
-      final response = await http
-          .get(
-            Uri.parse('$baseUrl/api/follows?bruker=$brukernavn'),
-            headers: headers,
-          )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
-      if (response.body.toLowerCase() == 'true') {
-        return true;
-      } else {
-        return false;
       }
     } on SocketException {
       throw const SocketException('');

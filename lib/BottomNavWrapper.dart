@@ -35,12 +35,16 @@ class _MainWrapperState extends State<MainWrapper> {
 
   // Function to change the selected index and navigate to the respective page
   void _onItemTapped(int index) {
+    const kTransitionInfoKey = 'transitionInfo';
+
+    // Update the selected index for pages other than the special case
     if (index != 2) {
       setState(() {
         _selectedIndex = index;
       });
     }
-    const kTransitionInfoKey = 'transitionInfo';
+
+    // Navigate based on the index
     switch (index) {
       case 0:
         widget.child.goBranch(index);
@@ -68,21 +72,6 @@ class _MainWrapperState extends State<MainWrapper> {
         break;
     }
   }
-
-  // void _updateSelectedIndex(BuildContext context) {
-  //   final location = GoRouterState.of(context).uri.toString();
-
-  //   if (location.startsWith('/hjem')) {
-  //     _selectedIndex = 0;
-  //   } else if (location.startsWith('/mineKjop')) {
-  //     _selectedIndex = 1;
-  //   } else if (location.startsWith('/chatMain')) {
-  //     _selectedIndex = 3;
-  //   } else if (location.startsWith('/profil')) {
-  //     _selectedIndex = 4;
-  //   }
-  //   // Don't update the index for 'LeggUtMatvare'
-  // }
 
   @override
   void initState() {

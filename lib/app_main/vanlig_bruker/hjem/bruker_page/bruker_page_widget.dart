@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/Bonder.dart';
+import 'package:mat_salg/User.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart';
@@ -36,17 +36,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   late BrukerPageModel _model;
   bool _isLoading = true;
   bool _empty = false;
-  List<Bonder>? _brukerinfo;
+  List<User>? _brukerinfo;
   List<Matvarer>? _matvarer;
-  UserInfoStats? _ratingStats;
   bool _matisLoading = true;
-  Bonder? bruker;
-  String? folgere;
-  String? folger;
+  User? bruker;
   bool? brukerFolger = false;
-  double ratingVerdi = 5.0;
-  int ratingantall = 0;
-  bool ingenRatings = false;
   bool _folgerLoading = false;
   bool _isExpanded = false;
   bool _messageIsLoading = false;
@@ -59,12 +53,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => BrukerPageModel());
-    getRatingStats();
-    sjekkFolger();
     _checkUser();
+
     getUserFood();
-    tellFolger();
-    tellFolgere();
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -151,12 +142,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         if (widget.bruker != 1) {
           _brukerinfo = await ApiGetUser.checkUser(token, widget.username);
           if (_brukerinfo != null && _brukerinfo!.isNotEmpty) {
-            bruker = _brukerinfo![0]; // Get the first Bonder object
+            bruker = _brukerinfo![0]; // Get the first User object
 
             _isLoading = false;
           } else {
             // Fallback values
-            bruker = Bonder(
+            bruker = User(
               username: '',
               firstname: '',
               lastname: '',
@@ -172,61 +163,13 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
           }
         } else {
           // Initialize bruker from passed parameter
-          bruker = Bonder.fromJson(widget.bruker);
+          bruker = User.fromJson(widget.bruker);
           _isLoading = false;
         }
         setState(() {
           _isLoading = false; // Update loading state after data is fetched
+          _model.folger = bruker!.isFollowing ?? false;
         });
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-  Future<void> getRatingStats() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        _ratingStats = await ApiRating.ratingSummary(token, widget.username);
-        setState(() {
-          ratingVerdi = _ratingStats!.averageValue ?? 5.0;
-          ratingantall = _ratingStats!.totalCount ?? 0;
-          if (ratingantall == 0) {
-            ingenRatings = true;
-          }
-        });
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-  Future<void> sjekkFolger() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        brukerFolger = await ApiFolg.sjekkFolger(token, widget.username);
-        if (brukerFolger == true) {
-          _model.folger = true;
-        }
-        setState(() {});
       }
     } on SocketException {
       HapticFeedback.lightImpact();
@@ -259,7 +202,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
     try {
       await apiFolg.unfolgBruker(Securestorage.authToken, bruker?.username);
       safeSetState(() {
-        tellFolgere();
+        _checkUser();
       });
     } on SocketException {
       HapticFeedback.lightImpact();
@@ -274,7 +217,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
     try {
       await apiFolg.folgbruker(Securestorage.authToken, bruker?.username);
       safeSetState(() {
-        tellFolgere();
+        _checkUser();
       });
     } on SocketException {
       HapticFeedback.lightImpact();
@@ -303,46 +246,6 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
             _matisLoading = false;
           }
         });
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-  Future<void> tellFolger() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        folger = await ApiFolg.tellFolger(token, widget.username);
-        setState(() {});
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-  Future<void> tellFolgere() async {
-    try {
-      String? token = await Securestorage().readToken();
-      if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
-        return;
-      } else {
-        folgere = await ApiFolg.tellFolgere(token, widget.username);
-        setState(() {});
       }
     } on SocketException {
       HapticFeedback.lightImpact();
@@ -543,12 +446,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                     color: FlutterFlowTheme.of(context).alternate,
                     onRefresh: () async {
                       HapticFeedback.lightImpact();
-                      getRatingStats();
-                      sjekkFolger();
                       _checkUser();
                       getUserFood();
-                      tellFolger();
-                      tellFolgere();
                     },
                     child: SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),
@@ -752,7 +651,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               hoverColor: Colors.transparent,
                                                                               highlightColor: Colors.transparent,
                                                                               onTap: () async {
-                                                                                if (folgere != '0') {
+                                                                                if ((bruker?.followersCount) != 0) {
                                                                                   context.pushNamed(
                                                                                     'Folgere',
                                                                                     queryParameters: {
@@ -767,7 +666,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                                 children: [
                                                                                   Text(
-                                                                                    folgere ?? '',
+                                                                                    bruker!.followersCount.toString(),
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
@@ -816,7 +715,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               hoverColor: Colors.transparent,
                                                                               highlightColor: Colors.transparent,
                                                                               onTap: () async {
-                                                                                if (folger != '0') {
+                                                                                if (bruker!.followingCount != 0) {
                                                                                   context.pushNamed(
                                                                                     'Folgere',
                                                                                     queryParameters: {
@@ -834,7 +733,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                                 children: [
                                                                                   Text(
-                                                                                    folger ?? '',
+                                                                                    bruker!.followingCount.toString(),
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
@@ -900,7 +799,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                             'Følger',
                                                                         options:
                                                                             FFButtonOptions(
-                                                                          width: !ingenRatings
+                                                                          width: ((bruker!.ratingTotalCount ?? 0) != 0)
                                                                               ? 130
                                                                               : 215,
                                                                           height:
@@ -969,7 +868,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                             'Følg',
                                                                         options:
                                                                             FFButtonOptions(
-                                                                          width: !ingenRatings
+                                                                          width: ((bruker!.ratingTotalCount ?? 0) != 0)
                                                                               ? 130
                                                                               : 215,
                                                                           height:
@@ -1003,8 +902,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               BorderRadius.circular(9),
                                                                         ),
                                                                       ),
-                                                                    if (ingenRatings !=
-                                                                        true)
+                                                                    if (((bruker!.ratingTotalCount ??
+                                                                            0) !=
+                                                                        0))
                                                                       Padding(
                                                                         padding: const EdgeInsetsDirectional
                                                                             .fromSTEB(
@@ -1075,7 +975,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 Padding(
                                                                                   padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                                                                                   child: Text(
-                                                                                    ratingVerdi.toString(),
+                                                                                    bruker!.ratingAverageValue.toString(),
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
                                                                                           fontSize: 14,
@@ -1087,7 +987,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                 Padding(
                                                                                   padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                                                                                   child: Text(
-                                                                                    ' (${ratingantall.toString()})',
+                                                                                    ' (${bruker!.ratingTotalCount.toString()})',
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
                                                                                           color: const Color(0xB0262C2D),
@@ -1102,142 +1002,6 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                    // Padding(
-                                                                    //   padding:
-                                                                    //       const EdgeInsetsDirectional
-                                                                    //           .fromSTEB(
-                                                                    //           9,
-                                                                    //           0,
-                                                                    //           0,
-                                                                    //           0),
-                                                                    //   child:
-                                                                    //       FFButtonWidget(
-                                                                    //     onPressed:
-                                                                    //         () async {
-                                                                    //       try {
-                                                                    //         // Prevent multiple submissions while loading
-                                                                    //         if (_messageIsLoading)
-                                                                    //           return;
-                                                                    //         _messageIsLoading =
-                                                                    //             true;
-
-                                                                    //         // Step 1: Validate username (non-nullable, so no need for null check)
-                                                                    //         if (widget.username !=
-                                                                    //             null) {
-                                                                    //           // Step 2: Check if there's already an existing conversation for the given username
-                                                                    //           Conversation
-                                                                    //               existingConversation =
-                                                                    //               FFAppState().conversations.firstWhere(
-                                                                    //             (conv) => conv.user == widget.username,
-                                                                    //             orElse: () {
-                                                                    //               // If no conversation is found, create a new one and add it to the list
-                                                                    //               final newConversation = Conversation(
-                                                                    //                 user: widget.username ?? '',
-                                                                    //                 profilePic: bruker?.profilepic ?? '',
-                                                                    //                 messages: [], // No messages initially
-                                                                    //               );
-
-                                                                    //               // Add the new conversation to the list
-                                                                    //               FFAppState().conversations.add(newConversation);
-
-                                                                    //               // Return the new conversation
-                                                                    //               return newConversation;
-                                                                    //             },
-                                                                    //           );
-
-                                                                    //           // Step 3: Serialize the conversation object to JSON
-                                                                    //           String?
-                                                                    //               serializedConversation =
-                                                                    //               serializeParam(
-                                                                    //             existingConversation.toJson(), // Convert the conversation to JSON
-                                                                    //             ParamType.JSON,
-                                                                    //           );
-
-                                                                    //           // Step 4: Stop loading and navigate to message screen
-                                                                    //           _messageIsLoading =
-                                                                    //               false;
-                                                                    //           if (serializedConversation !=
-                                                                    //               null) {
-                                                                    //             // Step 5: Navigate to 'message' screen with the conversation
-                                                                    //             context.pushNamed(
-                                                                    //               'message',
-                                                                    //               queryParameters: {
-                                                                    //                 'conversation': serializedConversation, // Pass the serialized conversation
-                                                                    //               },
-                                                                    //             );
-                                                                    //           }
-                                                                    //         }
-                                                                    //       } on SocketException {
-                                                                    //         _messageIsLoading =
-                                                                    //             false;
-                                                                    //               HapticFeedback.lightImpact();      showErrorToast(
-                                                                    //             context,
-                                                                    //             'Ingen internettforbindelse');
-                                                                    //       } catch (e) {
-                                                                    //         _messageIsLoading =
-                                                                    //             false;
-                                                                    //               HapticFeedback.lightImpact();
-                                                                    //             context,
-                                                                    //             'En feil oppstod');
-                                                                    //       }
-                                                                    //     },
-                                                                    //     text: '',
-                                                                    //     icon:
-                                                                    //         Icon(
-                                                                    //       CupertinoIcons
-                                                                    //           .chat_bubble,
-                                                                    //       color: FlutterFlowTheme.of(context)
-                                                                    //           .primaryText,
-                                                                    //       size:
-                                                                    //           24,
-                                                                    //     ),
-                                                                    //     options:
-                                                                    //         FFButtonOptions(
-                                                                    //       width:
-                                                                    //           45,
-                                                                    //       height:
-                                                                    //           33,
-                                                                    //       padding: const EdgeInsetsDirectional
-                                                                    //           .fromSTEB(
-                                                                    //           0,
-                                                                    //           0,
-                                                                    //           0,
-                                                                    //           0),
-                                                                    //       iconPadding: const EdgeInsetsDirectional
-                                                                    //           .fromSTEB(
-                                                                    //           10,
-                                                                    //           1,
-                                                                    //           0,
-                                                                    //           0),
-                                                                    //       color: FlutterFlowTheme.of(context)
-                                                                    //           .primary,
-                                                                    //       textStyle: FlutterFlowTheme.of(context)
-                                                                    //           .titleSmall
-                                                                    //           .override(
-                                                                    //             fontFamily: 'Nunito',
-                                                                    //             color: FlutterFlowTheme.of(context).alternate,
-                                                                    //             fontSize: 1,
-                                                                    //             letterSpacing: 0.0,
-                                                                    //             fontWeight: FontWeight.w600,
-                                                                    //           ),
-                                                                    //       elevation:
-                                                                    //           0,
-                                                                    //       borderSide:
-                                                                    //           const BorderSide(
-                                                                    //         color: const Color
-                                                                    //             .fromARGB(
-                                                                    //             32,
-                                                                    //             87,
-                                                                    //             99,
-                                                                    //             108),
-                                                                    //         width:
-                                                                    //             1.3,
-                                                                    //       ),
-                                                                    //       borderRadius:
-                                                                    //           BorderRadius.circular(9),
-                                                                    //     ),
-                                                                    //   ),
-                                                                    // ),
                                                                   ],
                                                                 ),
                                                               ),
