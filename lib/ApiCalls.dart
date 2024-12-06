@@ -880,7 +880,6 @@ class ApiGetAllLikes {
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
         // Convert the JSON into a list of Matvarer objects
-        print(jsonResponse);
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {
         // Handle unsuccessful response
