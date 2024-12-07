@@ -822,7 +822,6 @@ class ApiLike {
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
-      print("Response ${response.body} ${response.statusCode} MatId: $matId");
       return response;
     } on SocketException {
       throw const SocketException('');

@@ -61,24 +61,6 @@ class FirebaseApi {
 
     // Register the top-level background message handler
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-    FirebaseMessaging.onMessage.listen((message) {
-      final notification = message.notification;
-      if (notification == null) return;
-      _localNotifications.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            _androidChannel.id,
-            _androidChannel.name,
-            channelDescription: _androidChannel.description,
-            icon: '@drawable/ic_launcher1',
-          ),
-        ),
-        payload: jsonEncode(message.toMap()),
-      );
-    });
   }
 
   Future<void> initNotifications() async {
