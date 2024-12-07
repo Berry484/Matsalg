@@ -212,9 +212,16 @@ class _ProfilWidgetState extends State<ProfilWidget>
         if (response.statusCode == 200) {
           final decodedResponse = jsonDecode(response.body);
           final userInfo = decodedResponse['userInfo'] ?? {};
+          LatLng? location = await getCurrentUserLocation(
+              defaultLocation: const LatLng(0.0, 0.0));
+          if (location != const LatLng(0.0, 0.0)) {
+            FFAppState().brukerLat = location.latitude;
+            FFAppState().brukerLng = location.longitude;
+          } else {
+            FFAppState().brukerLat = userInfo['lat'] ?? 59.9138688;
+            FFAppState().brukerLng = userInfo['lng'] ?? 10.7522454;
+          }
 
-          FFAppState().brukerLat = userInfo['lat'] ?? 59.9138688;
-          FFAppState().brukerLng = userInfo['lng'] ?? 10.7522454;
           FFAppState().brukernavn = userInfo['username'] ?? '';
           FFAppState().email = userInfo['email'] ?? '';
           FFAppState().firstname = userInfo['firstname'] ?? '';
@@ -227,7 +234,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
               decodedResponse['ratingTotalCount'] ?? 0;
           FFAppState().ratingAverageValue =
               decodedResponse['ratingAverageValue'] ?? 5.0;
-          await apicalls.updateUserStats(token);
         }
         if (response.statusCode == 401) {
           FFAppState().login = false;
@@ -235,7 +241,6 @@ class _ProfilWidgetState extends State<ProfilWidget>
           return;
         }
       }
-      safeSetState(() {});
     } on SocketException {
       HapticFeedback.lightImpact();
       showErrorToast(context, 'Ingen internettforbindelse');
