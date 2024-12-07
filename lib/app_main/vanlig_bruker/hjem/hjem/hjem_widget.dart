@@ -71,6 +71,7 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
 
     fetchData();
     getAllFoods();
+    getFolgerFoods();
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _scrollController.addListener(_onScroll);
       safeSetState(() {});
@@ -1610,8 +1611,7 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
                                               ),
                                             ),
                                           if ((_folgerMatvarer == null ||
-                                                  _folgerMatvarer!.isEmpty) &&
-                                              _folgermatLoading == false)
+                                              _folgerMatvarer!.isEmpty))
                                             SizedBox(
                                               width: MediaQuery.sizeOf(context)
                                                   .width,
