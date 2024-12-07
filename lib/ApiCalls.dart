@@ -815,7 +815,6 @@ class ApiLike {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
       // Make the API request and parse the response
       final response = await http
           .post(
@@ -823,7 +822,7 @@ class ApiLike {
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
-
+      print("Response ${response.body} ${response.statusCode} MatId: $matId");
       return response;
     } on SocketException {
       throw const SocketException('');
@@ -1764,7 +1763,6 @@ class ApiSearchUsers {
             .timeout(const Duration(seconds: 5));
         if (response.statusCode == 200) {
           List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
-
           List<UserInfoSearch> profiler = data.map((userData) {
             return UserInfoSearch(
               username: userData['username'] ?? '',

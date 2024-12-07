@@ -1600,8 +1600,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                           ),
                                         ),
                                       if (_model.tabBarCurrentIndex == 1)
-                                        if (FFAppState().liked != true &&
-                                            _model.tabBarCurrentIndex == 1)
+                                        if ((FFAppState().liked != true &&
+                                                _model.tabBarCurrentIndex ==
+                                                    1) &&
+                                            (_likesmatvarer!.isEmpty))
                                           Container(
                                             width: MediaQuery.sizeOf(context)
                                                 .width,
@@ -1642,8 +1644,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                               ),
                                             ),
                                           ),
-                                      if (FFAppState().liked &&
-                                          _model.tabBarCurrentIndex == 1)
+                                      if ((FFAppState().liked &&
+                                              _model.tabBarCurrentIndex == 1) ||
+                                          (_likesisloading == false &&
+                                              _likesmatvarer!.isNotEmpty))
                                         Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(5, 15, 5, 0),
