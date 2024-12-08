@@ -9,7 +9,6 @@ import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/godkjentebud/godkjentebud_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/kjopInfo/budInfo_widget.dart';
-import 'package:mat_salg/flutter_flow/flutter_flow_widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../salgInfo/salg_bruker_info_widget.dart';
@@ -45,7 +44,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
   bool _salgisLoading = true;
   bool _kjopEmpty = false;
   bool _salgEmpty = false;
-  bool _showMore = false;
   final Securestorage securestorage = Securestorage();
   final ApiCalls apicalls = ApiCalls();
 
@@ -421,18 +419,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                           .ordreInfo
                                                           .isEmpty)
                                                       ? 1
-                                                      : _showMore
-                                                          ? FFAppState()
-                                                              .ordreInfo
-                                                              .length
-                                                          : (FFAppState()
-                                                                      .ordreInfo
-                                                                      .length <
-                                                                  5
-                                                              ? FFAppState()
-                                                                  .ordreInfo
-                                                                  .length
-                                                              : 5),
+                                                      : FFAppState()
+                                                          .ordreInfo
+                                                          .length,
                                               itemBuilder: (context, index) {
                                                 if (FFAppState()
                                                     .ordreInfo
@@ -685,81 +674,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                 final alleInfo = FFAppState()
                                                     .ordreInfo
                                                     .toList()[index];
-                                                if ((index == 4 &&
-                                                        !_showMore) &&
-                                                    _alleInfo!.length > 4) {
-                                                  // This is where we show the "Show More" button
-                                                  return Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        vertical: 16.0),
-                                                    child: Center(
-                                                      child: FFButtonWidget(
-                                                        onPressed: () async {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          safeSetState(() {
-                                                            _showMore = true;
-                                                          });
-                                                        },
-                                                        text: 'Se mer',
-                                                        icon: const FaIcon(
-                                                          FontAwesomeIcons
-                                                              .chevronDown,
-                                                          size: 19,
-                                                        ),
-                                                        options:
-                                                            FFButtonOptions(
-                                                          width: 118,
-                                                          height: 35,
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  16, 0, 16, 0),
-                                                          iconPadding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  0, 0, 0, 0),
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleSmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    fontSize:
-                                                                        16,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700,
-                                                                  ),
-                                                          elevation: 0,
-                                                          borderSide:
-                                                              const BorderSide(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    0,
-                                                                    87,
-                                                                    99,
-                                                                    108),
-                                                            width: 1.5,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                }
 
                                                 return Stack(
                                                   children: [
@@ -1357,92 +1271,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                             ),
                                                           ),
                                                         ),
-                                                        if (_showMore &&
-                                                            _alleInfo!.length -
-                                                                    1 ==
-                                                                index)
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                                    vertical:
-                                                                        16.0),
-                                                            child: Center(
-                                                              child:
-                                                                  FFButtonWidget(
-                                                                onPressed:
-                                                                    () async {
-                                                                  HapticFeedback
-                                                                      .lightImpact();
-                                                                  safeSetState(
-                                                                      () {
-                                                                    _showMore =
-                                                                        false;
-                                                                  });
-                                                                },
-                                                                text:
-                                                                    'Se mindre',
-                                                                icon:
-                                                                    const FaIcon(
-                                                                  FontAwesomeIcons
-                                                                      .chevronUp,
-                                                                  size: 19,
-                                                                ),
-                                                                options:
-                                                                    FFButtonOptions(
-                                                                  width: 130,
-                                                                  height: 35,
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          16,
-                                                                          0,
-                                                                          16,
-                                                                          0),
-                                                                  iconPadding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  textStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Nunito',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                        fontSize:
-                                                                            16,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w700,
-                                                                      ),
-                                                                  elevation: 0,
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                            0,
-                                                                            87,
-                                                                            99,
-                                                                            108),
-                                                                    width: 1.5,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
                                                       ],
                                                     ),
                                                   ],

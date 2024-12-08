@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/logging.dart';
@@ -21,6 +22,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
   static const String baseUrl = ApiConstants.baseUrl;
+  final appState = FFAppState();
 
   final _androidChannel = const AndroidNotificationChannel(
     'high_importance_channel', // id
@@ -71,9 +73,11 @@ class FirebaseApi {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
     // Only run the onMessage handler on Android
-    if (Platform.isAndroid) {
-      FirebaseMessaging.onMessage.listen((message) {
-        final notification = message.notification;
+
+    FirebaseMessaging.onMessage.listen((message) {
+      final notification = message.notification;
+      getAll();
+      if (Platform.isAndroid) {
         if (notification == null) return;
         _localNotifications.show(
           notification.hashCode,
@@ -89,8 +93,8 @@ class FirebaseApi {
           ),
           payload: jsonEncode(message.toMap()),
         );
-      });
-    }
+      }
+    });
   }
 
   Future<void> initNotifications() async {
@@ -169,5 +173,21 @@ class FirebaseApi {
       logger.d('Exception: $e');
       rethrow; // Rethrow the exception to let the caller handle it
     }
+  }
+
+  Future<void> getAll() async {
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        return;
+      } else {
+        List<OrdreInfo>? _alleInfo = await ApiKjop.getAll(token);
+        if (_alleInfo != null && _alleInfo.isNotEmpty) {
+          FFAppState().ordreInfo = _alleInfo;
+        }
+      }
+    } on SocketException {
+    } catch (e) {}
   }
 }
