@@ -1,12 +1,18 @@
+import 'dart:io';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
 import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/logging.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'logginn_model.dart';
 export 'logginn_model.dart';
@@ -29,6 +35,8 @@ class _LogginnWidgetState extends State<LogginnWidget> {
   final ApiCalls apiCalls = ApiCalls(); // Instantiate the ApiCalls class
   final ApiGetToken apiGetToken = ApiGetToken();
   final Securestorage secureStorage = Securestorage();
+  static const String baseUrl = ApiConstants.baseUrl;
+  final _firebaseMessaging = FirebaseMessaging.instance;
 
   bool _isloading = false;
 
@@ -55,6 +63,59 @@ class _LogginnWidgetState extends State<LogginnWidget> {
     _model.maybeDispose();
 
     super.dispose();
+  }
+
+  Future<http.Response?> sendToken() async {
+    try {
+      String? token = await Securestorage().readToken();
+      if (token == null) {
+        FFAppState().login = false;
+        return null;
+      } else {
+        await _firebaseMessaging.requestPermission();
+        final fCMToken = await _firebaseMessaging.getToken();
+        DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+        AndroidDeviceInfo? androidInfo;
+        IosDeviceInfo? iosInfo;
+
+        // Fetch device information for Android or iOS
+        if (Platform.isAndroid) {
+          androidInfo = await deviceInfo.androidInfo;
+        } else if (Platform.isIOS) {
+          iosInfo = await deviceInfo.iosInfo;
+        }
+        // Handle the case where deviceInfo may be null
+        if ((Platform.isAndroid && androidInfo == null) ||
+            (Platform.isIOS && iosInfo == null)) {
+          logger.d('Failed to fetch device information');
+          return null;
+        }
+        final Map<String, dynamic> userData = {
+          "token": fCMToken,
+          "device": Platform.isAndroid
+              ? androidInfo!.model
+              : iosInfo!.utsname.machine,
+        };
+        // Convert the Map to JSON
+        final String jsonBody = jsonEncode(userData);
+        final uri = Uri.parse('$baseUrl/push');
+        final headers = {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token', // Add Bearer token if present
+        };
+
+        final response = await http.post(
+          uri,
+          headers: headers,
+          body: jsonBody,
+        );
+        return response; // Return the response
+      }
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
   }
 
   @override
@@ -285,6 +346,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     }
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
+                                    sendToken();
                                     context.go('/hjem');
                                     FFAppState().login = true;
                                     return;
@@ -471,6 +533,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     _isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
+                                    sendToken();
                                     context.go('/hjem');
                                     FFAppState().login = true;
                                     return;
