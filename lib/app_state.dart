@@ -397,6 +397,13 @@ class FFAppState extends ChangeNotifier {
     _chatAlert = value;
     prefs.setBool('ff_chatAlert', value);
   }
+
+  String _chatRoom = '';
+  String get chatRoom => _chatRoom;
+  set chatRoom(String value) {
+    _chatRoom = value;
+    prefs.setString('ff_chatRoom', value);
+  }
 }
 
 class Conversation {

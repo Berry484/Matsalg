@@ -775,28 +775,39 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                     ),
                                     CupertinoDialogAction(
                                       onPressed: () async {
-                                        if (godkjennIsLoading) {
-                                          return;
-                                        }
-                                        godkjennIsLoading = true;
-                                        String? token = Securestorage.authToken;
-                                        if (token != null) {
-                                          final response = await ApiKjop()
-                                              .avvis(
-                                                  id: salgInfo.id,
-                                                  avvist: true,
-                                                  godkjent: false,
-                                                  token: token);
-                                          // Perform action for 'Yes'
-                                          if (response.statusCode == 200) {
-                                            godkjennIsLoading = false;
-                                            Navigator.of(context).pop();
-                                            Navigator.pop(context);
-                                            HapticFeedback.mediumImpact();
-                                            budetBleTrekt(
-                                                context, 'Budet ble avslått');
+                                        try {
+                                          if (godkjennIsLoading) {
+                                            return;
                                           }
-                                          godkjennIsLoading = false;
+                                          godkjennIsLoading = true;
+                                          String? token =
+                                              Securestorage.authToken;
+                                          if (token != null) {
+                                            final response = await ApiKjop()
+                                                .avvis(
+                                                    id: salgInfo.id,
+                                                    avvist: true,
+                                                    godkjent: false,
+                                                    token: token);
+                                            // Perform action for 'Yes'
+                                            if (response.statusCode == 200) {
+                                              godkjennIsLoading = false;
+                                              Navigator.of(context).pop();
+                                              Navigator.pop(context);
+                                              HapticFeedback.mediumImpact();
+                                              budetBleTrekt(
+                                                  context, 'Budet ble avslått');
+                                            }
+                                            godkjennIsLoading = false;
+                                          }
+                                        } on SocketException {
+                                          HapticFeedback.lightImpact();
+                                          showErrorToast(context,
+                                              'Ingen internettforbindelse');
+                                        } catch (e) {
+                                          HapticFeedback.lightImpact();
+                                          showErrorToast(
+                                              context, 'En feil oppstod');
                                         }
                                       },
                                       child: const Text(
@@ -874,30 +885,40 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                       ),
                                       CupertinoDialogAction(
                                         onPressed: () async {
-                                          if (godkjennIsLoading) {
-                                            return;
-                                          }
-                                          godkjennIsLoading = true;
-                                          String? token =
-                                              Securestorage.authToken;
-                                          if (token != null) {
-                                            final response = await ApiKjop()
-                                                .svarBud(
-                                                    id: salgInfo.id,
-                                                    godkjent: true,
-                                                    token: token);
-                                            // Perform action for 'Yes'
-                                            if (response.statusCode == 200) {
-                                              godkjennIsLoading = false;
-
-                                              Navigator.of(context)
-                                                  .pop(); // Close the dialog
-                                              Navigator.pop(context);
-                                              HapticFeedback.mediumImpact();
-                                              showAccepted(context,
-                                                  'Budet ble godkjent');
+                                          try {
+                                            if (godkjennIsLoading) {
+                                              return;
                                             }
-                                            godkjennIsLoading = false;
+                                            godkjennIsLoading = true;
+                                            String? token =
+                                                Securestorage.authToken;
+                                            if (token != null) {
+                                              final response = await ApiKjop()
+                                                  .svarBud(
+                                                      id: salgInfo.id,
+                                                      godkjent: true,
+                                                      token: token);
+                                              // Perform action for 'Yes'
+                                              if (response.statusCode == 200) {
+                                                godkjennIsLoading = false;
+
+                                                Navigator.of(context)
+                                                    .pop(); // Close the dialog
+                                                Navigator.pop(context);
+                                                HapticFeedback.mediumImpact();
+                                                showAccepted(context,
+                                                    'Budet ble godkjent');
+                                              }
+                                              godkjennIsLoading = false;
+                                            }
+                                          } on SocketException {
+                                            HapticFeedback.lightImpact();
+                                            showErrorToast(context,
+                                                'Ingen internettforbindelse');
+                                          } catch (e) {
+                                            HapticFeedback.lightImpact();
+                                            showErrorToast(
+                                                context, 'En feil oppstod');
                                           }
                                         },
                                         child: const Text(

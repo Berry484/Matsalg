@@ -49,6 +49,7 @@ class _MessageWidgetState extends State<MessageWidget> {
     _model.textFieldFocusNode ??= FocusNode();
     _messageListWithFlags = _computeMessageFlags(conversation.messages);
     FFAppState().addListener(_onAppStateChanged);
+    FFAppState().chatRoom = conversation.user;
   }
 
   void markRead() {
@@ -252,6 +253,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                 (conv) => conv.user == conversation.user);
                             appState.updateUI();
                           }
+                          FFAppState().chatRoom = '';
                           Navigator.pop(context);
                         } on SocketException {
                           HapticFeedback.lightImpact();

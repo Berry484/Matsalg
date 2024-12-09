@@ -59,23 +59,29 @@ class FirebaseApi {
   }
 
   Future initPushNotifications() async {
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-
-    FirebaseMessaging.instance.getInitialMessage().then(handleMessage);
-    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
-
-    // Register the top-level background message handler
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-    // Only run the onMessage handler on Android
-
     FirebaseMessaging.onMessage.listen((message) {
+      if (RegExp(r'@([a-zA-Z0-9_øØåÅäÄöÖ]+)')
+              .firstMatch(message.notification?.title ?? "")
+              ?.group(1) ==
+          FFAppState().chatRoom) {
+        FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+          alert: false,
+          badge: false,
+          sound: false,
+        );
+      } else {
+        FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+      }
       final notification = message.notification;
+      FirebaseMessaging.instance.getInitialMessage().then(handleMessage);
+      FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
+
+      // Register the top-level background message handler
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
       getAll();
       if (Platform.isAndroid) {
         if (notification == null) return;
