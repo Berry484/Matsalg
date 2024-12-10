@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/mat_detalj/get_updates/get_updates_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_animations.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
@@ -1291,7 +1292,41 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               hoverColor: Colors.transparent,
                                               highlightColor:
                                                   Colors.transparent,
-                                              onTap: () async {},
+                                              onTap: () async {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  barrierColor:
+                                                      const Color.fromARGB(
+                                                          153, 0, 0, 0),
+                                                  useRootNavigator: true,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () =>
+                                                          FocusScope.of(context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child: FolgBrukerWidget(
+                                                          matId: matvare.matId,
+                                                          name: matvare.name,
+                                                          pushEnabled:
+                                                              matvare.wantPush,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) => setState(() {
+                                                      if (value == true) {
+                                                        safeSetState(() {});
+                                                      }
+                                                    }));
+                                                return;
+                                              },
                                               child: Material(
                                                 color: Colors.transparent,
                                                 elevation: 0,

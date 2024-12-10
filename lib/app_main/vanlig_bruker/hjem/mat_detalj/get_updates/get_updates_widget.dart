@@ -10,12 +10,13 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'folg_bruker_model.dart';
-export 'folg_bruker_model.dart';
+import 'get_updates_model.dart';
+export 'get_updates_model.dart';
 
 class FolgBrukerWidget extends StatefulWidget {
-  const FolgBrukerWidget({super.key, this.username, this.pushEnabled});
-  final dynamic username;
+  const FolgBrukerWidget({super.key, this.matId, this.name, this.pushEnabled});
+  final dynamic matId;
+  final dynamic name;
   final dynamic pushEnabled;
 
   @override
@@ -38,10 +39,10 @@ class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
     super.initState();
     _model = createModel(context, () => FolgBrukerModel());
 
-    if (FFAppState().wantPush.contains(widget.username)) {
+    if (FFAppState().wantPushFoodDetails.contains(widget.matId)) {
       _model.switchValue = true;
     } else {
-      if (FFAppState().noPush.contains(widget.username)) {
+      if (FFAppState().noPushFoodDetails.contains(widget.matId)) {
         _model.switchValue = false;
       } else {
         _model.switchValue = widget.pushEnabled ?? false;
@@ -127,8 +128,8 @@ class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
     try {
       if (_isLoading) return;
       _isLoading = true;
-      await apiFolg.varslingBruker(Securestorage.authToken, widget.username,
-          _model.switchValue ?? false);
+      await apiFolg.varslingMatTilgjengelig(
+          Securestorage.authToken, widget.matId, _model.switchValue ?? false);
       _isLoading = false;
     } on SocketException {
       _isLoading = false;
@@ -218,7 +219,7 @@ class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
                                         size: 29,
                                       ),
                                       Text(
-                                        '@${widget.username}',
+                                        '${widget.name}',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -281,7 +282,7 @@ class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
                                                       ),
                                                 ),
                                                 Text(
-                                                  'Få varsling når ${widget.username} legger\nut en ny annonse',
+                                                  'Bli varslet når matvaren blir \ntilgjengelig igjen',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -305,26 +306,26 @@ class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
                                               _model.switchValue = newValue);
                                           if (newValue == false) {
                                             FFAppState()
-                                                .wantPush
-                                                .remove(widget.username);
+                                                .wantPushFoodDetails
+                                                .remove(widget.matId);
                                             if (!FFAppState()
-                                                .noPush
-                                                .contains(widget.username)) {
+                                                .noPushFoodDetails
+                                                .contains(widget.matId)) {
                                               FFAppState()
-                                                  .noPush
-                                                  .add(widget.username);
+                                                  .noPushFoodDetails
+                                                  .add(widget.matId);
                                             }
                                           }
                                           if (newValue == true) {
                                             FFAppState()
-                                                .noPush
-                                                .remove(widget.username);
+                                                .noPushFoodDetails
+                                                .remove(widget.matId);
                                             if (!FFAppState()
-                                                .wantPush
-                                                .contains(widget.username)) {
+                                                .wantPushFoodDetails
+                                                .contains(widget.matId)) {
                                               FFAppState()
-                                                  .wantPush
-                                                  .add(widget.username);
+                                                  .wantPushFoodDetails
+                                                  .add(widget.matId);
                                             }
                                             if (newValue == true) {}
                                           }
@@ -358,18 +359,12 @@ class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
                               20, 0, 20, 40),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              FFAppState().wantPush.remove(widget.username);
-                              if (!FFAppState()
-                                  .noPush
-                                  .contains(widget.username)) {
-                                FFAppState().noPush.add(widget.username);
-                              }
                               Navigator.pop(context, true);
                             },
-                            text: 'Slutt å følge',
+                            text: 'Lukk',
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 50,
+                              height: 45,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   11, 0, 0, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(

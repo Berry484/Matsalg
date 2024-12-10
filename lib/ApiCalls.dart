@@ -972,6 +972,34 @@ class ApiFolg {
     }
   }
 
+  Future<http.Response?> varslingMatTilgjengelig(
+      String? token, int matId, bool varsling) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      final response = varsling == true
+          ? await http
+              .post(
+                Uri.parse('$baseUrl/api/updates?matId=$matId'),
+                headers: headers,
+              )
+              .timeout(const Duration(seconds: 5))
+          : await http
+              .delete(
+                Uri.parse('$baseUrl/api/updates?matId=$matId'),
+                headers: headers,
+              )
+              .timeout(const Duration(seconds: 5));
+      return response;
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
+
   Future<http.Response?> unfolgBruker(String? token, String? brukernavn) async {
     try {
       final headers = {

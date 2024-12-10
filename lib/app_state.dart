@@ -376,6 +376,20 @@ class FFAppState extends ChangeNotifier {
     _noPush = value;
   }
 
+  // List of liked foods
+  List<int> _wantPushFoodDetails = [];
+  List<int> get wantPushFoodDetails => _wantPushFoodDetails;
+  set wantPushFoodDetails(List<int> value) {
+    _wantPushFoodDetails = value;
+  }
+
+  // List of unliked foods
+  List<int> _noPushFoodDetails = [];
+  List<int> get noPushFoodDetails => _noPushFoodDetails;
+  set noPushFoodDetails(List<int> value) {
+    _noPushFoodDetails = value;
+  }
+
   String _profilepic = "";
   String get profilepic => _profilepic;
   set profilepic(String value) {
@@ -503,6 +517,7 @@ class Matvarer {
   final bool? kjopt;
   final DateTime? updatetime; // Add updatetime here
   final bool? liked;
+  final bool? wantPush;
 
   Matvarer({
     this.matId,
@@ -522,6 +537,7 @@ class Matvarer {
     this.kjopt,
     this.updatetime, // Add updatetime to constructor
     this.liked,
+    this.wantPush,
   });
 
   factory Matvarer.fromJson1(Map<String, dynamic>? json) {
@@ -558,6 +574,7 @@ class Matvarer {
       kjopt: listingJson['kjopt'] as bool?,
       updatetime: parsedTime, // Parse updatetime if available
       liked: listingJson['liked'] as bool?,
+      wantPush: listingJson['wantPush'] as bool?,
     );
   }
 
@@ -595,6 +612,7 @@ class Matvarer {
       kjopt: listingJson['kjopt'] as bool?,
       updatetime: parsedTime,
       liked: listingJson['liked'] as bool?,
+      wantPush: listingJson['wantPush'] as bool?,
     );
   }
 
@@ -626,6 +644,7 @@ class Matvarer {
       'updatetime': updatetime
           ?.toIso8601String(), // Convert DateTime to ISO string for JSON
       'liked': liked,
+      'wantPush': wantPush,
     };
   }
 
@@ -648,7 +667,8 @@ class Matvarer {
         'profilepic: $profilepic, '
         'kjopt: $kjopt, '
         'updatetime: $updatetime, '
-        'liked: $liked'
+        'liked: $liked, '
+        'wantPush: $wantPush'
         '}';
   }
 }

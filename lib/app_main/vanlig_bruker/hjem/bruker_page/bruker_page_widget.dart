@@ -895,7 +895,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   padding: MediaQuery.viewInsetsOf(context),
                                                                                   child: FolgBrukerWidget(
                                                                                     username: widget.username,
-                                                                                    pushEnabled: bruker!.getPush ?? false,
+                                                                                    pushEnabled: bruker?.getPush ?? false,
                                                                                   ),
                                                                                 ),
                                                                               );
@@ -986,8 +986,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                             backgroundColor:
                                                                                 Colors.transparent,
                                                                             barrierColor: const Color.fromARGB(
-                                                                                60,
-                                                                                17,
+                                                                                153,
+                                                                                0,
                                                                                 0,
                                                                                 0),
                                                                             useRootNavigator:
