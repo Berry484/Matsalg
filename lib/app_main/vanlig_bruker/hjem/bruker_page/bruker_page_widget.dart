@@ -7,6 +7,7 @@ import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/User.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_page/folg_bruker/folg_bruker_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
 import 'package:shimmer/shimmer.dart';
@@ -778,69 +779,185 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     if (_model
                                                                             .folger ==
                                                                         true)
-                                                                      FFButtonWidget(
-                                                                        onPressed:
+                                                                      // FFButtonWidget(
+                                                                      //   onPressed:
+                                                                      //       () async {
+                                                                      //     if (_folgerLoading)
+                                                                      //       return;
+                                                                      //     _folgerLoading =
+                                                                      //         true;
+                                                                      //     await showModalBottomSheet(
+                                                                      //       isScrollControlled:
+                                                                      //           true,
+                                                                      //       backgroundColor:
+                                                                      //           Colors.transparent,
+                                                                      //       barrierColor: const Color.fromARGB(
+                                                                      //           60,
+                                                                      //           17,
+                                                                      //           0,
+                                                                      //           0),
+                                                                      //       useRootNavigator:
+                                                                      //           true,
+                                                                      //       context:
+                                                                      //           context,
+                                                                      //       builder:
+                                                                      //           (context) {
+                                                                      //         return GestureDetector(
+                                                                      //           onTap: () => FocusScope.of(context).unfocus(),
+                                                                      //           child: Padding(
+                                                                      //             padding: MediaQuery.viewInsetsOf(context),
+                                                                      //             child: FolgBrukerWidget(
+                                                                      //               username: widget.username,
+                                                                      //             ),
+                                                                      //           ),
+                                                                      //         );
+                                                                      //       },
+                                                                      //     ).then((value) =>
+                                                                      //         setState(() {
+                                                                      //           if (value == true) {
+                                                                      //             _model.folger = false;
+                                                                      //             safeSetState(() {});
+                                                                      //             unFolg();
+                                                                      //             _folgerLoading = false;
+                                                                      //           }
+                                                                      //           _folgerLoading = false;
+                                                                      //         }));
+                                                                      //     return;
+                                                                      //   },
+                                                                      //   text:
+                                                                      //       'Følger',
+                                                                      //   options:
+                                                                      //       FFButtonOptions(
+                                                                      //     width: ((bruker!.ratingTotalCount ?? 0) != 0)
+                                                                      //         ? 130
+                                                                      //         : 215,
+                                                                      //     height:
+                                                                      //         35,
+                                                                      //     padding: const EdgeInsetsDirectional
+                                                                      //         .fromSTEB(
+                                                                      //         16,
+                                                                      //         0,
+                                                                      //         16,
+                                                                      //         0),
+                                                                      //     color:
+                                                                      //         FlutterFlowTheme.of(context).primary,
+                                                                      //     textStyle: FlutterFlowTheme.of(context)
+                                                                      //         .titleSmall
+                                                                      //         .override(
+                                                                      //           fontFamily: 'Nunito',
+                                                                      //           color: FlutterFlowTheme.of(context).primaryText,
+                                                                      //           fontSize: 14,
+                                                                      //           letterSpacing: 0.0,
+                                                                      //           fontWeight: FontWeight.bold,
+                                                                      //         ),
+                                                                      //     elevation:
+                                                                      //         0,
+                                                                      //     borderSide:
+                                                                      //         const BorderSide(
+                                                                      //       color: const Color.fromARGB(
+                                                                      //           32,
+                                                                      //           87,
+                                                                      //           99,
+                                                                      //           108),
+                                                                      //       width:
+                                                                      //           1.3,
+                                                                      //     ),
+                                                                      //     borderRadius:
+                                                                      //         BorderRadius.circular(9),
+                                                                      //   ),
+                                                                      // ),
+                                                                      GestureDetector(
+                                                                        onTap:
                                                                             () async {
                                                                           if (_folgerLoading)
                                                                             return;
                                                                           _folgerLoading =
                                                                               true;
-                                                                          HapticFeedback
-                                                                              .mediumImpact();
-                                                                          _model.folger =
-                                                                              false;
-                                                                          safeSetState(
-                                                                              () {});
-                                                                          unFolg();
-                                                                          _folgerLoading =
-                                                                              false;
+                                                                          await showModalBottomSheet(
+                                                                            isScrollControlled:
+                                                                                true,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            barrierColor: const Color.fromARGB(
+                                                                                60,
+                                                                                17,
+                                                                                0,
+                                                                                0),
+                                                                            useRootNavigator:
+                                                                                true,
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (context) {
+                                                                              return GestureDetector(
+                                                                                onTap: () => FocusScope.of(context).unfocus(),
+                                                                                child: Padding(
+                                                                                  padding: MediaQuery.viewInsetsOf(context),
+                                                                                  child: FolgBrukerWidget(
+                                                                                    username: widget.username,
+                                                                                    pushEnabled: bruker!.getPush ?? false,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          ).then((value) =>
+                                                                              setState(() {
+                                                                                if (value == true) {
+                                                                                  _model.folger = false;
+                                                                                  safeSetState(() {});
+                                                                                  unFolg();
+                                                                                  _folgerLoading = false;
+                                                                                }
+                                                                                _folgerLoading = false;
+                                                                              }));
+                                                                          return;
                                                                         },
-                                                                        text:
-                                                                            'Følger',
-                                                                        options:
-                                                                            FFButtonOptions(
+                                                                        child:
+                                                                            Container(
                                                                           width: ((bruker!.ratingTotalCount ?? 0) != 0)
                                                                               ? 130
                                                                               : 215,
                                                                           height:
                                                                               35,
-                                                                          padding: const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              16,
-                                                                              0,
-                                                                              16,
-                                                                              0),
-                                                                          iconPadding: const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              0,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primary,
-                                                                          textStyle: FlutterFlowTheme.of(context)
-                                                                              .titleSmall
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                color: FlutterFlowTheme.of(context).primaryText,
-                                                                                fontSize: 14,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ),
-                                                                          elevation:
-                                                                              0,
-                                                                          borderSide:
-                                                                              const BorderSide(
-                                                                            color: const Color.fromARGB(
-                                                                                32,
-                                                                                87,
-                                                                                99,
-                                                                                108),
-                                                                            width:
-                                                                                1.3,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primary,
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(9),
+                                                                            border:
+                                                                                Border.all(
+                                                                              color: const Color.fromARGB(32, 87, 99, 108),
+                                                                              width: 1.3,
+                                                                            ),
                                                                           ),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(9),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            children: [
+                                                                              Text(
+                                                                                'Følger',
+                                                                                style: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                      fontFamily: 'Nunito',
+                                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                                      fontSize: 14,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.bold,
+                                                                                    ),
+                                                                              ),
+                                                                              const SizedBox(
+                                                                                width: 5,
+                                                                              ),
+                                                                              Icon(
+                                                                                CupertinoIcons.chevron_down,
+                                                                                color: FlutterFlowTheme.of(context).primaryText,
+                                                                                size: 17,
+                                                                              ),
+                                                                            ],
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     if (_model
@@ -863,6 +980,43 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                           folgBruker();
                                                                           _folgerLoading =
                                                                               false;
+                                                                          await showModalBottomSheet(
+                                                                            isScrollControlled:
+                                                                                true,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            barrierColor: const Color.fromARGB(
+                                                                                60,
+                                                                                17,
+                                                                                0,
+                                                                                0),
+                                                                            useRootNavigator:
+                                                                                true,
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (context) {
+                                                                              return GestureDetector(
+                                                                                onTap: () => FocusScope.of(context).unfocus(),
+                                                                                child: Padding(
+                                                                                  padding: MediaQuery.viewInsetsOf(context),
+                                                                                  child: FolgBrukerWidget(
+                                                                                    username: widget.username,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          ).then((value) =>
+                                                                              setState(() {
+                                                                                if (value == true) {
+                                                                                  _model.folger = false;
+                                                                                  safeSetState(() {});
+                                                                                  unFolg();
+                                                                                  _folgerLoading = false;
+                                                                                }
+                                                                                _folgerLoading = false;
+                                                                              }));
+                                                                          return;
                                                                         },
                                                                         text:
                                                                             'Følg',

@@ -949,6 +949,29 @@ class ApiFolg {
     }
   }
 
+  Future<http.Response?> varslingBruker(
+      String? token, String? brukernavn, bool varsling) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      // Make the API request and parse the response
+      final response = await http
+          .put(
+            Uri.parse(
+                '$baseUrl/api/varsling?bruker=${brukernavn}&varsling=${varsling}'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+      return response;
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
+
   Future<http.Response?> unfolgBruker(String? token, String? brukernavn) async {
     try {
       final headers = {

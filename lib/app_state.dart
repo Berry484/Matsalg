@@ -362,6 +362,20 @@ class FFAppState extends ChangeNotifier {
     _unlikedFoods = value;
   }
 
+  // List of liked foods
+  List<String> _wantPush = [];
+  List<String> get wantPush => _wantPush;
+  set wantPush(List<String> value) {
+    _wantPush = value;
+  }
+
+  // List of unliked foods
+  List<String> _noPush = [];
+  List<String> get noPush => _noPush;
+  set noPush(List<String> value) {
+    _noPush = value;
+  }
+
   String _profilepic = "";
   String get profilepic => _profilepic;
   set profilepic(String value) {

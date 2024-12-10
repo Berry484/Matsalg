@@ -14,6 +14,7 @@ class User {
 
   // New fields for data outside userInfo
   final bool? isFollowing;
+  final bool? getPush;
   final int? followersCount;
   final int? followingCount;
   final int? ratingTotalCount;
@@ -35,6 +36,7 @@ class User {
     this.time,
 
     // New fields
+    this.getPush,
     this.isFollowing,
     this.followersCount,
     this.followingCount,
@@ -72,6 +74,7 @@ class User {
       time: parsedTime,
 
       // New fields outside userInfo
+      getPush: json['getPush'] as bool? ?? false,
       isFollowing: json['isFollowing'] as bool? ?? false,
       followersCount: json['followersCount'] as int? ?? 0,
       followingCount: json['followingCount'] as int? ?? 0,
@@ -106,6 +109,7 @@ class User {
       'time': time?.toIso8601String(),
 
       // New fields outside userInfo
+      'getPush': getPush,
       'isFollowing': isFollowing,
       'followersCount': followersCount,
       'followingCount': followingCount,
@@ -129,6 +133,7 @@ class User {
         'bonde: $bonde, '
         'gardsnavn: $gardsnavn, '
         'time: $time, '
+        'getPush: $getPush, '
         'isFollowing: $isFollowing, '
         'followersCount: $followersCount, '
         'followingCount: $followingCount, '
