@@ -47,6 +47,8 @@
 	<string>For å ta et bilde eller en video, trenger appen tilgang til kameraet ditt.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>For å vise matvarer i nærheten, trenger appen tilgang til posisjonen din.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>For å vise matvarer i nærheten, trenger appen tilgang til posisjonen din.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>For å laste opp bilder eller videoer, trenger appen tilgang til kamerarullen din.</string>
 	<key>PermissionGroupNotification</key>
