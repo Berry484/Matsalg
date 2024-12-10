@@ -53,6 +53,7 @@ class _MessageWidgetState extends State<MessageWidget> {
   }
 
   void markRead() {
+    FFAppState().chatAlert.value = false;
     _webSocketService.markAllMessagesAsRead(conversation.user);
     return;
   }

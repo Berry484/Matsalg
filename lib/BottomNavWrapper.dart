@@ -8,7 +8,7 @@ import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
 import 'package:mat_salg/flutter_flow/nav/nav.dart';
 
 class MainWrapper extends StatefulWidget {
-  MainWrapper({Key? key, required this.child}) : super(key: key);
+  const MainWrapper({Key? key, required this.child}) : super(key: key);
 
   final StatefulNavigationShell child;
 
@@ -196,19 +196,47 @@ class _MainWrapperState extends State<MainWrapper> {
                             ),
                             onPressed: () => _onItemTapped(4),
                           ),
-                          FlutterFlowIconButton(
-                            borderColor: Colors.transparent,
-                            borderRadius: 30.0,
-                            borderWidth: 1.0,
-                            buttonSize: 50.0,
-                            icon: Icon(
-                              CupertinoIcons.chat_bubble,
-                              color: _selectedIndex == 3
-                                  ? FlutterFlowTheme.of(context).alternate
-                                  : const Color(0xFF262626),
-                              size: 29.0,
-                            ),
-                            onPressed: () => _onItemTapped(2),
+                          Stack(
+                            clipBehavior:
+                                Clip.none, // Ensures the red dot isn't clipped
+                            children: [
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30.0,
+                                borderWidth: 1.0,
+                                buttonSize: 50.0,
+                                icon: Icon(
+                                  CupertinoIcons.chat_bubble,
+                                  color: _selectedIndex == 3
+                                      ? FlutterFlowTheme.of(context).alternate
+                                      : const Color(0xFF262626),
+                                  size: 29.0,
+                                ),
+                                onPressed: () => _onItemTapped(2),
+                              ),
+                              ValueListenableBuilder<bool>(
+                                valueListenable: FFAppState().chatAlert,
+                                builder: (context, chatAlert, _) {
+                                  if (!chatAlert) {
+                                    return const SizedBox
+                                        .shrink(); // No dot if `chatAlert` is false
+                                  }
+                                  return Positioned(
+                                    top: 11,
+                                    right: 10,
+                                    child: Container(
+                                      width: 8.0,
+                                      height: 8.0,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
                           FlutterFlowIconButton(
                             borderColor: Colors.transparent,
@@ -232,31 +260,6 @@ class _MainWrapperState extends State<MainWrapper> {
               ),
             ),
           ),
-          // Optional: Add the BottomSheet as a separate stack layer if you need to show custom content
-          if (FFAppState().kjopAlert == true)
-            Align(
-              alignment: const AlignmentDirectional(-0.3, -0.18),
-              child: Container(
-                width: 10.0,
-                height: 10.0,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).error,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-          if (FFAppState().chatAlert == true)
-            Align(
-              alignment: const AlignmentDirectional(0.45, -0.15),
-              child: Container(
-                width: 10.0,
-                height: 10.0,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).error,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
         ],
       ),
     );

@@ -66,7 +66,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     with TickerProviderStateMixin {
   late ScrollController _scrollController;
   late LeggUtMatvareModel _model;
-  double _selectedValue = 0.0;
+  int _selectedValue = 0;
   final FocusNode _hiddenFocusNode = FocusNode();
   late Matvarer matvare;
 
@@ -121,7 +121,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
       matvare = Matvarer.fromJson1(widget.matinfo);
 
       if (matvare.antall != null) {
-        _selectedValue = matvare.antall!;
+        _selectedValue = matvare.antall ?? 0;
       }
       while (matvare.imgUrls!.length <= 4) {
         matvare.imgUrls?.add(''); // Add empty string placeholders
@@ -2833,15 +2833,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               .asValidator(
                                                                   context),
                                                           onTap: () {
-                                                            List<double>
+                                                            List<int>
                                                                 getPickerValues() {
-                                                              List<double>
-                                                                  values = [];
-                                                              double step;
+                                                              List<int> values =
+                                                                  [];
+                                                              int step;
 
-                                                              step = 1.0;
-                                                              for (double i =
-                                                                      1.0;
+                                                              step = 1;
+                                                              for (int i = 1;
                                                                   i <= 50;
                                                                   i += step) {
                                                                 values.add(i);
@@ -3550,10 +3549,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             .text;
                                                         kg = false;
 
-                                                        _selectedValue = double
-                                                            .parse(_selectedValue
-                                                                .toStringAsFixed(
-                                                                    2));
                                                         if (filelinks != null &&
                                                             filelinks
                                                                 .isNotEmpty) {
@@ -3568,14 +3563,14 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             description: _model
                                                                 .produktBeskrivelseTextController
                                                                 .text,
-                                                            price: pris,
+                                                            price:
+                                                                int.parse(pris),
                                                             kategorier:
                                                                 kategori,
                                                             posisjon:
                                                                 selectedLatLng,
                                                             antall:
-                                                                _selectedValue
-                                                                    .toString(),
+                                                                _selectedValue,
                                                             betaling: _model
                                                                 .checkboxValue,
                                                             kg: kg,
@@ -3864,13 +3859,8 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 false; // KG is disabled if STK is set
 
                                                             bool? kjopt;
-                                                            _selectedValue =
-                                                                double.parse(
-                                                                    _selectedValue
-                                                                        .toStringAsFixed(
-                                                                            2));
                                                             if (_selectedValue ==
-                                                                0.0) {
+                                                                0) {
                                                               kjopt = true;
                                                             } else {
                                                               kjopt = false;
@@ -3897,8 +3887,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                               posisjon:
                                                                   selectedLatLng,
                                                               antall:
-                                                                  _selectedValue
-                                                                      .toString(),
+                                                                  _selectedValue,
                                                               betaling: _model
                                                                   .checkboxValue,
                                                               kg: kg,

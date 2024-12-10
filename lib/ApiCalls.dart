@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:decimal/decimal.dart';
 import 'package:http/http.dart' as http;
 import 'package:mat_salg/User.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -168,7 +166,6 @@ class ApiCalls {
 
         // Extract the first "adresser" element and get the "kommunenavn"
         final kommunenavn = jsonResponse['adresser'][0]['poststed'];
-
         return kommunenavn ?? 'Norge';
       } else {
         return 'Norge';
@@ -493,12 +490,12 @@ class ApiUploadFood {
     required String name,
     required var imgUrl,
     required String description,
-    required String? price,
+    required int? price,
     required String? kategorier,
     required LatLng? posisjon,
     required bool? betaling,
     required bool kg,
-    required String? antall,
+    required int? antall,
   }) async {
     try {
       // Create the user info data as a Map
@@ -1190,8 +1187,8 @@ class ApiKjop {
 
   Future<http.Response> kjopMat({
     required int matId,
-    required Decimal price,
-    required Decimal antall,
+    required int price,
+    required int antall,
     required String token,
   }) async {
     try {
@@ -1266,16 +1263,10 @@ class ApiKjop {
             selger: orderData['selger'], // Username of the seller
             matId: orderData['matId'], // Corrected to 'matId'
             // Parse antall and ensure it has exactly 2 decimal places
-            antall: (orderData['antall'] % 1 == 0)
-                ? Decimal.parse(orderData['antall']
-                    .toInt()
-                    .toStringAsFixed(2)) // Converts int to 2 decimal places
-                : Decimal.parse(orderData['antall'].toStringAsFixed(2)),
+            antall: orderData['antall'],
 
             // Parse pris and ensure it has exactly 2 decimal places
-            pris: (orderData['pris'] % 1 == 0)
-                ? Decimal.parse(orderData['pris'].toInt().toStringAsFixed(2))
-                : Decimal.parse(orderData['pris'].toStringAsFixed(2)),
+            pris: orderData['pris'],
             time: DateTime.parse(orderData['time']), // Convert to DateTime
             godkjenttid: orderData['godkjenttid'] != null
                 ? DateTime.parse(orderData['godkjenttid'])
@@ -1696,7 +1687,7 @@ class ApiUpdateFood {
     LatLng? posisjon,
     bool? betaling,
     bool? kg,
-    String? antall,
+    int? antall,
     bool? kjopt,
   }) async {
     try {

@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -58,7 +56,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
       length: 3,
       initialIndex: 0,
     )..addListener(() => safeSetState(() {}));
-
     _alleInfo = FFAppState().ordreInfo;
   }
 
@@ -344,11 +341,9 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                             [
                                               () async {},
                                               () async {
-                                                FFAppState().kjopAlert = false;
                                                 safeSetState(() {});
                                               },
                                               () async {
-                                                FFAppState().kjopAlert = false;
                                                 safeSetState(() {});
                                               }
                                             ][index]();
@@ -1205,7 +1200,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
                                                                                   child: Text(
-                                                                                    (alleInfo.kjopte ?? false) ? '${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr' : '+${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                    (alleInfo.kjopte ?? false) ? '${alleInfo.pris} Kr' : '+${alleInfo.pris} Kr',
                                                                                     textAlign: TextAlign.start,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
@@ -1243,7 +1238,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                           ),
                                                                                           // The actual text
                                                                                           Text(
-                                                                                            '${alleInfo.pris.remainder(Decimal.one) == Decimal.zero ? alleInfo.pris.toBigInt() : alleInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                            '${alleInfo.pris} Kr',
                                                                                             textAlign: TextAlign.start,
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                   fontFamily: 'Nunito',
@@ -1926,7 +1921,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Padding(
                                                                               padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
                                                                               child: Text(
-                                                                                (ordreInfo.kjopte ?? false) ? '${ordreInfo.pris.remainder(Decimal.one) == Decimal.zero ? ordreInfo.pris.toBigInt() : ordreInfo.pris.toStringAsFixed(2)} Kr' : '+${ordreInfo.pris.remainder(Decimal.one) == Decimal.zero ? ordreInfo.pris.toBigInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                (ordreInfo.kjopte ?? false) ? '${ordreInfo.pris} Kr' : '+${ordreInfo.pris} Kr',
                                                                                 textAlign: TextAlign.start,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Nunito',
@@ -1978,7 +1973,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                       ),
                                                                                       // The actual text
                                                                                       Text(
-                                                                                        '${ordreInfo.pris.remainder(Decimal.one) == Decimal.zero ? ordreInfo.pris.toBigInt() : ordreInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                        '${ordreInfo.pris} Kr',
                                                                                         textAlign: TextAlign.start,
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                               fontFamily: 'Nunito',
@@ -2698,7 +2693,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Padding(
                                                                               padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
                                                                               child: Text(
-                                                                                (salgInfo.kjopte ?? false) ? '${salgInfo.pris.remainder(Decimal.one) == Decimal.zero ? salgInfo.pris.toBigInt() : salgInfo.pris.toStringAsFixed(2)} Kr' : '+${salgInfo.pris.remainder(Decimal.one) == Decimal.zero ? salgInfo.pris.toBigInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                (salgInfo.kjopte ?? false) ? '${salgInfo.pris} Kr' : '+${salgInfo.pris} Kr',
                                                                                 textAlign: TextAlign.start,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Nunito',
@@ -2750,7 +2745,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                       ),
                                                                                       // The actual text
                                                                                       Text(
-                                                                                        '${salgInfo.pris.remainder(Decimal.one) == Decimal.zero ? salgInfo.pris.toBigInt() : salgInfo.pris.toStringAsFixed(2)} Kr',
+                                                                                        '${salgInfo.pris} Kr',
                                                                                         textAlign: TextAlign.start,
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                               fontFamily: 'Nunito',
@@ -2791,29 +2786,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                               ),
                             ),
                           ),
-                          if (FFAppState().kjopAlert == true)
-                            Align(
-                              alignment:
-                                  const AlignmentDirectional(0.54, -0.96),
-                              child: Container(
-                                width: 7,
-                                height: 7,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                            ),
                         ],
                       ),
                     ),
                   ),
                 ),
-                // wrapWithModel(
-                //   model: _model.kjopNavBarModel,
-                //   updateCallback: () => safeSetState(() {}),
-                //   child: const KjopNavBarWidget(),
-                // ),
               ],
             ),
           ),

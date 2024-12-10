@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,12 +46,6 @@ class FFAppState extends ChangeNotifier {
     });
     _safeInit(() {
       _bonde = prefs.getBool('ff_bonde') ?? _bonde;
-    });
-    _safeInit(() {
-      _kjopAlert = prefs.getBool('ff_kjopAlert') ?? _kjopAlert;
-    });
-    _safeInit(() {
-      _chatAlert = prefs.getBool('ff_chatAlert') ?? _chatAlert;
     });
     _safeInit(() {
       _brukernavn = prefs.getString('ff_brukernavn') ?? _brukernavn;
@@ -384,19 +376,7 @@ class FFAppState extends ChangeNotifier {
     prefs.setBool('ff_bonde', value);
   }
 
-  bool _kjopAlert = false;
-  bool get kjopAlert => _kjopAlert;
-  set kjopAlert(bool value) {
-    _kjopAlert = value;
-    prefs.setBool('ff_kjopAlert', value);
-  }
-
-  bool _chatAlert = false;
-  bool get chatAlert => _chatAlert;
-  set chatAlert(bool value) {
-    _chatAlert = value;
-    prefs.setBool('ff_chatAlert', value);
-  }
+  final ValueNotifier<bool> chatAlert = ValueNotifier<bool>(false);
 
   String _chatRoom = '';
   String get chatRoom => _chatRoom;
@@ -504,7 +484,7 @@ class Matvarer {
   final bool? kg;
   final String? username;
   final bool? bonde;
-  final double? antall;
+  final int? antall;
   final String? profilepic;
   final bool? kjopt;
   final DateTime? updatetime; // Add updatetime here
@@ -559,7 +539,7 @@ class Matvarer {
       // Getting the username and profilepic from the 'user' field inside 'listing'
       username: listingJson['username'] as String? ?? "",
       bonde: listingJson['bonde'] as bool?,
-      antall: listingJson['antall'] as double?,
+      antall: listingJson['antall'] as int?,
       profilepic: listingJson['profilepic'] as String? ?? "",
       kjopt: listingJson['kjopt'] as bool?,
       updatetime: parsedTime, // Parse updatetime if available
@@ -596,7 +576,7 @@ class Matvarer {
       // Getting the username and profilepic from the 'user' field
       username: userJson['username'] as String? ?? "",
       bonde: userJson['bonde'] as bool?,
-      antall: listingJson['antall'] as double?,
+      antall: listingJson['antall'] as int?,
       profilepic: userJson['profilepic'] as String? ?? "",
       kjopt: listingJson['kjopt'] as bool?,
       updatetime: parsedTime,
@@ -664,8 +644,8 @@ class OrdreInfo {
   final String kjoper;
   final String selger;
   final int matId;
-  final Decimal antall;
-  final Decimal pris;
+  final int antall;
+  final int pris;
   final DateTime time;
   final DateTime? godkjenttid;
   final DateTime? updatetime;
@@ -705,8 +685,8 @@ class OrdreInfo {
       kjoper: json['kjoper'] as String,
       selger: json['selger'] as String,
       matId: json['matId'] as int,
-      antall: Decimal.parse(json['antall'].toString()),
-      pris: Decimal.parse(json['pris'].toString()),
+      antall: json['antall'] as int,
+      pris: json['pris'] as int,
       time: DateTime.parse(json['time']),
       godkjenttid: json['godkjenttid'] != null
           ? DateTime.parse(json['godkjenttid'])
@@ -730,8 +710,8 @@ class OrdreInfo {
       'kjoper': kjoper,
       'selger': selger,
       'matId': matId,
-      'antall': antall.toString(),
-      'pris': pris.toString(),
+      'antall': antall,
+      'pris': pris,
       'time': time.toIso8601String(),
       'godkjenttid': godkjenttid?.toIso8601String(),
       'updatetime': updatetime?.toIso8601String(),

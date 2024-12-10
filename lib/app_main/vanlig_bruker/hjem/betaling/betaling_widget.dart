@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:decimal/decimal.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -58,7 +57,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
   bool _isLoading = false;
   int matpris = 1;
   bool isFocused = false;
-  double _selectedValue = 0.0;
+  int _selectedValue = 0;
   int kjopsBeskyttelse = 2;
   bool applePay = true;
 
@@ -535,14 +534,13 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                             .antallStkTextControllerValidator
                                             .asValidator(context),
                                         onTap: () {
-                                          List<double> getPickerValues() {
-                                            List<double> values = [];
-                                            double step;
+                                          List<int> getPickerValues() {
+                                            List<int> values = [];
+                                            int step;
 
-                                            step = 1.0;
-                                            double antall =
-                                                matvare.antall as double;
-                                            for (double i = 1.0;
+                                            step = 1;
+                                            int antall = matvare.antall as int;
+                                            for (int i = 1;
                                                 i <= antall;
                                                 i += step) {
                                               values.add(i);
@@ -1061,16 +1059,18 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 }
                                 try {
                                   _isLoading = true;
+
                                   if (matvare.matId != null &&
                                       _model.antallStkTextController.text
                                           .isNotEmpty) {
-                                    Decimal antall = Decimal.parse(
-                                        _selectedValue.toString());
-                                    Decimal pris = Decimal.parse(
-                                        (_selectedValue * matpris +
-                                                kjopsBeskyttelse)
-                                            .toString());
+                                    // Parse the selected value and calculate price
+                                    int antall =
+                                        int.parse(_selectedValue.toString());
+                                    int pris = (_selectedValue * matpris +
+                                            kjopsBeskyttelse)
+                                        .toInt();
                                     int matId = matvare.matId ?? 0;
+
                                     if (matvare.matId != null) {
                                       String? token =
                                           await Securestorage().readToken();
@@ -1080,23 +1080,25 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                         return;
                                       } else {
                                         if (matId != 0) {
-                                          final response = await ApiKjop()
-                                              .kjopMat(
-                                                  matId: matId,
-                                                  price: pris,
-                                                  antall: antall,
-                                                  token: token);
+                                          final response =
+                                              await ApiKjop().kjopMat(
+                                            matId: matId,
+                                            price: pris,
+                                            antall: antall,
+                                            token: token,
+                                          );
+
                                           if (response.statusCode == 200) {
                                             context.goNamed('Godkjentbetaling');
                                           }
                                         } else {
                                           _isLoading = false;
-                                          throw (Exception);
+                                          throw Exception("Invalid matId");
                                         }
                                       }
                                     } else {
                                       _isLoading = false;
-                                      throw (Exception);
+                                      throw Exception("matvare.matId is null");
                                     }
                                   }
                                 } on SocketException {

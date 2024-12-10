@@ -368,11 +368,9 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                         [
                                           () async {},
                                           () async {
-                                            FFAppState().kjopAlert = false;
                                             safeSetState(() {});
                                           },
                                           () async {
-                                            FFAppState().kjopAlert = false;
                                             safeSetState(() {});
                                           }
                                         ][index]();

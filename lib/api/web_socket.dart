@@ -235,15 +235,21 @@ class WebSocketService {
             if (data is Map && data['conversations'] != null) {
               var conversationsList = data['conversations'] as List<dynamic>;
 
-              // Clear previous conversations in FFAppState
-
               // Parse and add new conversations to FFAppState
               for (var conversationJson in conversationsList) {
                 var conv = Conversation.fromJson(conversationJson);
                 appState.conversations.add(conv);
               }
 
-              // notifyListeners() to update the UI
+              // Determine if any latest message is unread
+              bool hasUnreadMessages =
+                  appState.conversations.any((conversation) {
+                return conversation.messages.isNotEmpty &&
+                    !conversation
+                        .messages.first.read; // Check the latest message
+              });
+
+              FFAppState().chatAlert.value = hasUnreadMessages;
 
               appState.updateUI();
             }
@@ -270,6 +276,7 @@ class WebSocketService {
             read: false, // Assuming the message is unread initially
             me: me,
           );
+          FFAppState().chatAlert.value = true;
           // Access FFAppState to update the conversations globally
           final appState = FFAppState();
 

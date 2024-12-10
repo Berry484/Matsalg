@@ -60,7 +60,7 @@ class FirebaseApi {
 
   Future initPushNotifications() async {
     FirebaseMessaging.onMessage.listen((message) {
-      if (RegExp(r'@([a-zA-Z0-9_øØåÅäÄöÖ]+)')
+      if (RegExp(r'@([a-zA-Z0-9_øØåÅäÄöÖ]+) sendte en melding')
               .firstMatch(message.notification?.title ?? "")
               ?.group(1) ==
           FFAppState().chatRoom) {
