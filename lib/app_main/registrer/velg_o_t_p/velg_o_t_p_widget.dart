@@ -24,6 +24,7 @@ class VelgOTPWidget extends StatefulWidget {
 class _VelgOTPWidgetState extends State<VelgOTPWidget> {
   late VelgOTPModel _model;
   bool _isloading = false;
+  String? _errorMessage;
 
   @override
   void setState(VoidCallback callback) {
@@ -132,84 +133,90 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     3, 0, 0, 0),
                                 child: TextFormField(
-                                  controller: _model.emailTextController,
-                                  focusNode: _model.emailFocusNode,
-                                  textInputAction: TextInputAction.done,
-                                  autofocus: true,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: '6 siffer fra SMS',
-                                    labelStyle: FlutterFlowTheme.of(context)
+                                    controller: _model.emailTextController,
+                                    focusNode: _model.emailFocusNode,
+                                    textInputAction: TextInputAction.done,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: '6 siffer fra SMS',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Nunito',
+                                            color: const Color.fromRGBO(
+                                                113, 113, 113, 1.0),
+                                            fontSize: 17.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Nunito',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondary,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondary,
+                                      errorText: _errorMessage,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Nunito',
-                                          color: const Color.fromRGBO(
-                                              113, 113, 113, 1.0),
-                                          fontSize: 17.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w700,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Nunito',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondary,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    filled: true,
-                                    fillColor:
-                                        FlutterFlowTheme.of(context).secondary,
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Nunito',
-                                        letterSpacing: 0.0,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                  maxLength: 6,
-                                  maxLengthEnforcement:
-                                      MaxLengthEnforcement.enforced,
-                                  buildCounter: (context,
-                                          {required currentLength,
-                                          required isFocused,
-                                          maxLength}) =>
-                                      null,
-                                  keyboardType: TextInputType.number,
-                                  validator: _model.emailTextControllerValidator
-                                      .asValidator(context),
-                                ),
+                                    maxLength: 6,
+                                    maxLengthEnforcement:
+                                        MaxLengthEnforcement.enforced,
+                                    buildCounter: (context,
+                                            {required currentLength,
+                                            required isFocused,
+                                            maxLength}) =>
+                                        null,
+                                    keyboardType: TextInputType.number,
+                                    validator: _model
+                                        .emailTextControllerValidator
+                                        .asValidator(context),
+                                    onChanged: (number) {
+                                      setState(() {
+                                        _errorMessage = null;
+                                      });
+                                    }),
                               ),
                             ),
                           ],
@@ -224,6 +231,20 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                               }
                               if (_model.formKey.currentState == null ||
                                   !_model.formKey.currentState!.validate()) {
+                                return;
+                              }
+                              if (_model.emailTextController.text.isEmpty) {
+                                setState(() {
+                                  _isloading = false;
+                                  _errorMessage = "felt må fylles ut";
+                                });
+                                return;
+                              }
+                              if (_model.emailTextController.text.length != 6) {
+                                setState(() {
+                                  _isloading = false;
+                                  _errorMessage = "feil kode";
+                                });
                                 return;
                               }
                               try {

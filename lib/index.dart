@@ -9,6 +9,8 @@ export '/app_main/vanlig_bruker/profil/profil/profil_widget.dart'
     show ProfilWidget;
 export '/app_main/vanlig_bruker/profil/profil_rediger/profil_rediger_widget.dart'
     show ProfilRedigerWidget;
+export '/app_main/registrer/opprett_profil/add_profile_picture/add_profilepic_widget.dart'
+    show AddProfilePicWidget;
 export '/app_main/vanlig_bruker/legg_ut/legg_ut_matvare/legg_ut_matvare_widget.dart'
     show LeggUtMatvareWidget;
 export '/app_main/vanlig_bruker/legg_ut/bruker_lagt_ut_info/bruker_lagt_ut_info_widget.dart'

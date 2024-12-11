@@ -222,8 +222,8 @@ class _MainWrapperState extends State<MainWrapper> {
                                         .shrink(); // No dot if `chatAlert` is false
                                   }
                                   return Positioned(
-                                    top: 11,
-                                    right: 10,
+                                    top: 9,
+                                    right: 7,
                                     child: Container(
                                       width: 8.0,
                                       height: 8.0,

@@ -648,6 +648,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         },
         parentNavigatorKey: _parentKey,
       ),
+      GoRoute(
+        path: '/addProfilepic',
+        name: 'AddProfilepic',
+        builder: (context, state) => const AddProfilePicWidget(),
+        parentNavigatorKey: _parentKey,
+      ),
     ],
   );
 }

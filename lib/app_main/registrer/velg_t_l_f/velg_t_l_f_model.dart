@@ -15,8 +15,16 @@ class VelgTLFModel extends FlutterFlowModel<VelgTLFWidget> {
   TextEditingController? telefonnummerTextController;
   String? Function(BuildContext, String?)? telefonnummerTextControllerValidator;
 
+  String? _telefonnummerTextControllerValidator(
+      BuildContext context, String? val) {
+    return null; // No validation errors.
+  }
+
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    telefonnummerTextControllerValidator =
+        _telefonnummerTextControllerValidator;
+  }
 
   @override
   void dispose() {

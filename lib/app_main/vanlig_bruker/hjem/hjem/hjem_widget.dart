@@ -2119,6 +2119,7 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
                             return false; // Return false to allow further handling of the event
                           },
                           child: SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
                             primary: false,
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -2131,8 +2132,6 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(0.0, 0.0, 0.0, 80.0),
                                         child: SingleChildScrollView(
-                                          physics:
-                                              const AlwaysScrollableScrollPhysics(),
                                           primary: false,
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,

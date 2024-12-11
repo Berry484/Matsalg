@@ -6,14 +6,11 @@ import 'package:flutter/rendering.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:mat_salg/ApiCalls.dart';
 import 'package:mat_salg/SecureStorage.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'opprett_profil_model.dart';
 export 'opprett_profil_model.dart';
@@ -83,16 +80,17 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
+          resizeToAvoidBottomInset: false,
           backgroundColor: FlutterFlowTheme.of(context).primary,
           body: SafeArea(
             top: true,
             bottom: false,
-            child: SingleChildScrollView(
-              child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
+            child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -112,7 +110,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                           const AlignmentDirectional(-1, 0),
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 20, 0, 0),
+                                            .fromSTEB(0, 10, 0, 0),
                                         child: Text(
                                           'Sett opp profilen din',
                                           style: FlutterFlowTheme.of(context)
@@ -152,210 +150,210 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Align(
-                                      alignment:
-                                          const AlignmentDirectional(1, -1),
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          final selectedMedia =
-                                              await selectMediaWithSourceBottomSheet(
-                                            context: context,
-                                            maxWidth: 1000.00,
-                                            maxHeight: 1000.00,
-                                            allowPhoto: true,
-                                            pickerFontFamily: 'Nunito',
-                                          );
-                                          if (selectedMedia != null &&
-                                              selectedMedia.every((m) =>
-                                                  validateFileFormat(
-                                                      m.storagePath,
-                                                      context))) {
-                                            safeSetState(() =>
-                                                _model.isDataUploading = true);
-                                            var selectedUploadedFiles =
-                                                <FFUploadedFile>[];
+                                // Row(
+                                //   mainAxisSize: MainAxisSize.max,
+                                //   mainAxisAlignment: MainAxisAlignment.center,
+                                //   children: [
+                                //     Align(
+                                //       alignment:
+                                //           const AlignmentDirectional(1, -1),
+                                //       child: InkWell(
+                                //         splashColor: Colors.transparent,
+                                //         focusColor: Colors.transparent,
+                                //         hoverColor: Colors.transparent,
+                                //         highlightColor: Colors.transparent,
+                                //         onTap: () async {
+                                //           final selectedMedia =
+                                //               await selectMediaWithSourceBottomSheet(
+                                //             context: context,
+                                //             maxWidth: 1000.00,
+                                //             maxHeight: 1000.00,
+                                //             allowPhoto: true,
+                                //             pickerFontFamily: 'Nunito',
+                                //           );
+                                //           if (selectedMedia != null &&
+                                //               selectedMedia.every((m) =>
+                                //                   validateFileFormat(
+                                //                       m.storagePath,
+                                //                       context))) {
+                                //             safeSetState(() =>
+                                //                 _model.isDataUploading = true);
+                                //             var selectedUploadedFiles =
+                                //                 <FFUploadedFile>[];
 
-                                            try {
-                                              selectedUploadedFiles =
-                                                  selectedMedia
-                                                      .map(
-                                                          (m) => FFUploadedFile(
-                                                                name: m
-                                                                    .storagePath
-                                                                    .split('/')
-                                                                    .last,
-                                                                bytes: m.bytes,
-                                                                height: m
-                                                                    .dimensions
-                                                                    ?.height,
-                                                                width: m
-                                                                    .dimensions
-                                                                    ?.width,
-                                                                blurHash:
-                                                                    m.blurHash,
-                                                              ))
-                                                      .toList();
-                                            } finally {
-                                              _model.isDataUploading = false;
-                                            }
-                                            if (selectedUploadedFiles.length ==
-                                                selectedMedia.length) {
-                                              safeSetState(() {
-                                                _model.uploadedLocalFile =
-                                                    selectedUploadedFiles.first;
-                                              });
-                                            } else {
-                                              safeSetState(() {});
-                                              return;
-                                            }
-                                          }
-                                        },
-                                        child: Stack(
-                                          alignment:
-                                              const AlignmentDirectional(1, -1),
-                                          children: [
-                                            if ((_model.uploadedLocalFile.bytes
-                                                    ?.isNotEmpty ??
-                                                false))
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        -0.39, 0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              2, 13, 2, 0),
-                                                      child: Container(
-                                                        width: 90,
-                                                        height: 90,
-                                                        clipBehavior:
-                                                            Clip.antiAlias,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        child: Image.memory(
-                                                          _model.uploadedLocalFile
-                                                                  .bytes ??
-                                                              Uint8List
-                                                                  .fromList([]),
-                                                          fit: BoxFit.fill,
-                                                          errorBuilder: (context,
-                                                                  error,
-                                                                  stackTrace) =>
-                                                              Image.asset(
-                                                            'assets/images/error_image.jpg',
-                                                            fit: BoxFit.fill,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            if ((_model.uploadedLocalFile.bytes
-                                                    ?.isNotEmpty ??
-                                                false))
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        1, -1),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0, 13, 0, 0),
-                                                  child: FlutterFlowIconButton(
-                                                    borderColor:
-                                                        Colors.transparent,
-                                                    borderRadius: 100,
-                                                    buttonSize: 29,
-                                                    fillColor:
-                                                        const Color(0xB3262C2D),
-                                                    icon: FaIcon(
-                                                      FontAwesomeIcons.times,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      size: 16,
-                                                    ),
-                                                    onPressed: () async {
-                                                      safeSetState(() {
-                                                        _model.isDataUploading =
-                                                            false;
-                                                        _model.uploadedLocalFile =
-                                                            FFUploadedFile(
-                                                                bytes: Uint8List
-                                                                    .fromList(
-                                                                        []));
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            if ((_model.uploadedLocalFile.bytes
-                                                    ?.isEmpty ??
-                                                true))
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        -0.39, 0.03),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              2, 5, 2, 0),
-                                                      child: Container(
-                                                        width: 140,
-                                                        height: 140,
-                                                        clipBehavior:
-                                                            Clip.antiAlias,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        child: Image.asset(
-                                                          'assets/images/add-profile-picture-icon-upload-photo-of-social-media-user-vector-removebg-preview.png',
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                //             try {
+                                //               selectedUploadedFiles =
+                                //                   selectedMedia
+                                //                       .map(
+                                //                           (m) => FFUploadedFile(
+                                //                                 name: m
+                                //                                     .storagePath
+                                //                                     .split('/')
+                                //                                     .last,
+                                //                                 bytes: m.bytes,
+                                //                                 height: m
+                                //                                     .dimensions
+                                //                                     ?.height,
+                                //                                 width: m
+                                //                                     .dimensions
+                                //                                     ?.width,
+                                //                                 blurHash:
+                                //                                     m.blurHash,
+                                //                               ))
+                                //                       .toList();
+                                //             } finally {
+                                //               _model.isDataUploading = false;
+                                //             }
+                                //             if (selectedUploadedFiles.length ==
+                                //                 selectedMedia.length) {
+                                //               safeSetState(() {
+                                //                 _model.uploadedLocalFile =
+                                //                     selectedUploadedFiles.first;
+                                //               });
+                                //             } else {
+                                //               safeSetState(() {});
+                                //               return;
+                                //             }
+                                //           }
+                                //         },
+                                //         child: Stack(
+                                //           alignment:
+                                //               const AlignmentDirectional(1, -1),
+                                //           children: [
+                                //             if ((_model.uploadedLocalFile.bytes
+                                //                     ?.isNotEmpty ??
+                                //                 false))
+                                //               Align(
+                                //                 alignment:
+                                //                     const AlignmentDirectional(
+                                //                         -0.39, 0),
+                                //                 child: Column(
+                                //                   mainAxisSize:
+                                //                       MainAxisSize.min,
+                                //                   mainAxisAlignment:
+                                //                       MainAxisAlignment.center,
+                                //                   children: [
+                                //                     Padding(
+                                //                       padding:
+                                //                           const EdgeInsetsDirectional
+                                //                               .fromSTEB(
+                                //                               2, 13, 2, 0),
+                                //                       child: Container(
+                                //                         width: 90,
+                                //                         height: 90,
+                                //                         clipBehavior:
+                                //                             Clip.antiAlias,
+                                //                         decoration:
+                                //                             const BoxDecoration(
+                                //                           shape:
+                                //                               BoxShape.circle,
+                                //                         ),
+                                //                         child: Image.memory(
+                                //                           _model.uploadedLocalFile
+                                //                                   .bytes ??
+                                //                               Uint8List
+                                //                                   .fromList([]),
+                                //                           fit: BoxFit.fill,
+                                //                           errorBuilder: (context,
+                                //                                   error,
+                                //                                   stackTrace) =>
+                                //                               Image.asset(
+                                //                             'assets/images/error_image.jpg',
+                                //                             fit: BoxFit.fill,
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                     ),
+                                //                   ],
+                                //                 ),
+                                //               ),
+                                //             if ((_model.uploadedLocalFile.bytes
+                                //                     ?.isNotEmpty ??
+                                //                 false))
+                                //               Align(
+                                //                 alignment:
+                                //                     const AlignmentDirectional(
+                                //                         1, -1),
+                                //                 child: Padding(
+                                //                   padding:
+                                //                       const EdgeInsetsDirectional
+                                //                           .fromSTEB(
+                                //                           0, 13, 0, 0),
+                                //                   child: FlutterFlowIconButton(
+                                //                     borderColor:
+                                //                         Colors.transparent,
+                                //                     borderRadius: 100,
+                                //                     buttonSize: 29,
+                                //                     fillColor:
+                                //                         const Color(0xB3262C2D),
+                                //                     icon: FaIcon(
+                                //                       FontAwesomeIcons.times,
+                                //                       color:
+                                //                           FlutterFlowTheme.of(
+                                //                                   context)
+                                //                               .primary,
+                                //                       size: 16,
+                                //                     ),
+                                //                     onPressed: () async {
+                                //                       safeSetState(() {
+                                //                         _model.isDataUploading =
+                                //                             false;
+                                //                         _model.uploadedLocalFile =
+                                //                             FFUploadedFile(
+                                //                                 bytes: Uint8List
+                                //                                     .fromList(
+                                //                                         []));
+                                //                       });
+                                //                     },
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             if ((_model.uploadedLocalFile.bytes
+                                //                     ?.isEmpty ??
+                                //                 true))
+                                //               Align(
+                                //                 alignment:
+                                //                     const AlignmentDirectional(
+                                //                         -0.39, 0.03),
+                                //                 child: Column(
+                                //                   mainAxisSize:
+                                //                       MainAxisSize.min,
+                                //                   mainAxisAlignment:
+                                //                       MainAxisAlignment.center,
+                                //                   children: [
+                                //                     Padding(
+                                //                       padding:
+                                //                           const EdgeInsetsDirectional
+                                //                               .fromSTEB(
+                                //                               2, 5, 2, 0),
+                                //                       child: Container(
+                                //                         width: 140,
+                                //                         height: 140,
+                                //                         clipBehavior:
+                                //                             Clip.antiAlias,
+                                //                         decoration:
+                                //                             const BoxDecoration(
+                                //                           shape:
+                                //                               BoxShape.circle,
+                                //                         ),
+                                //                         child: Image.asset(
+                                //                           'assets/images/add-profile-picture-icon-upload-photo-of-social-media-user-vector-removebg-preview.png',
+                                //                           fit: BoxFit.fill,
+                                //                         ),
+                                //                       ),
+                                //                     ),
+                                //                   ],
+                                //                 ),
+                                //               ),
+                                //           ],
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 0),
+                                      0, 15, 0, 0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -382,7 +380,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                     fontFamily: 'Nunito',
                                                     color: const Color.fromRGBO(
                                                         113, 113, 113, 1.0),
-                                                    fontSize: 17.0,
+                                                    fontSize: 16.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w700,
                                                   ),
@@ -445,7 +443,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
-                                                  fontSize: 16,
+                                                  fontSize: 15,
                                                   letterSpacing: 0.0,
                                                 ),
                                             textAlign: TextAlign.start,
@@ -512,7 +510,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   fontFamily: 'Nunito',
                                                   color: const Color.fromRGBO(
                                                       113, 113, 113, 1.0),
-                                                  fontSize: 17.0,
+                                                  fontSize: 16.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -574,7 +572,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                fontSize: 16,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                               ),
                                           textAlign: TextAlign.start,
@@ -605,7 +603,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   fontFamily: 'Nunito',
                                                   color: const Color.fromRGBO(
                                                       113, 113, 113, 1.0),
-                                                  fontSize: 17.0,
+                                                  fontSize: 16.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -667,7 +665,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                fontSize: 16,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                               ),
                                           textAlign: TextAlign.start,
@@ -703,7 +701,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   fontFamily: 'Nunito',
                                                   color: const Color.fromRGBO(
                                                       113, 113, 113, 1.0),
-                                                  fontSize: 17.0,
+                                                  fontSize: 16.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -766,7 +764,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                fontSize: 16,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                               ),
                                           textAlign: TextAlign.start,
@@ -826,7 +824,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   fontFamily: 'Nunito',
                                                   color: const Color.fromRGBO(
                                                       113, 113, 113, 1.0),
-                                                  fontSize: 17.0,
+                                                  fontSize: 16.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -904,7 +902,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                fontSize: 16,
+                                                fontSize: 15,
                                                 letterSpacing: 0.0,
                                               ),
                                           textAlign: TextAlign.start,
@@ -922,187 +920,172 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                         ),
                       ],
                     ),
-                    Align(
-                      alignment: const AlignmentDirectional(0, 1),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            20, 150, 20, 40),
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            if (_isloading == true) {
+                  ),
+                  Align(
+                    alignment: const AlignmentDirectional(0, 0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 40),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          if (_isloading == true) {
+                            return;
+                          }
+                          if (_model.formKey.currentState == null ||
+                              !_model.formKey.currentState!.validate()) {
+                            return;
+                          }
+
+                          if (_errorMessage != null || _emailTatt != null) {
+                            return;
+                          }
+
+                          try {
+                            _isloading = true;
+                            await apiCalls
+                                .checkEmailTaken(
+                                    _model.emailTextController.text)
+                                .then((response1) {
+                              setState(() {
+                                if (response1.statusCode != 200) {
+                                  _emailTatt = "E-posten er allerede i bruk";
+                                } else {
+                                  _emailTatt = null;
+                                }
+                              });
                               return;
-                            }
-                            if (_model.formKey.currentState == null ||
-                                !_model.formKey.currentState!.validate()) {
-                              return;
+                            });
+                            String username =
+                                _model.brukernavnTextController.text.trim();
+                            String firstName =
+                                _model.fornavnTextController.text.trim();
+                            String lastName =
+                                _model.etternavnTextController.text.trim();
+                            String email =
+                                _model.emailTextController.text.trim();
+                            String password =
+                                _model.passordTextController.text.trim();
+
+                            // Call the createUser method
+                            final response = await registerUser.createUser1(
+                              username: username,
+                              email: email,
+                              firstName: firstName,
+                              lastName: lastName,
+                              phoneNumber: widget.phone,
+                              password: password,
+                              posisjon: widget.posisjon,
+                            );
+                            if (response.statusCode == 200) {
+                              final token =
+                                  await secureStorage.writeToken(response.body);
+                              if (token == null) {
+                                _isloading = false;
+                                throw (Exception());
+                              }
+                              FFAppState().brukernavn = username;
+                              FFAppState().firstname = firstName;
+                              FFAppState().lastname = lastName;
+                              FFAppState().email = email;
+                              FFAppState().brukerLat = widget.posisjon.latitude;
+                              FFAppState().brukerLng =
+                                  widget.posisjon.longitude;
+                              FFAppState().login = true;
                             }
 
-                            if (_errorMessage != null || _emailTatt != null) {
-                              return;
-                            }
-
-                            try {
-                              _isloading = true;
-                              await apiCalls
-                                  .checkEmailTaken(
-                                      _model.emailTextController.text)
-                                  .then((response1) {
-                                setState(() {
-                                  if (response1.statusCode != 200) {
-                                    _emailTatt = "E-posten er allerede i bruk";
-                                  } else {
-                                    _emailTatt = null;
-                                  }
-                                });
+                            if (response.statusCode != 200) {
+                              _isloading = false;
+                              safeSetState(() {
+                                showCupertinoDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return CupertinoAlertDialog(
+                                      title: const Text('En feil oppstod'),
+                                      content: const Text(
+                                          'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
+                                      actions: <Widget>[
+                                        CupertinoDialogAction(
+                                          onPressed: () async {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text(
+                                            'Ok',
+                                            style:
+                                                TextStyle(color: Colors.blue),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                                 return;
                               });
-                              String username =
-                                  _model.brukernavnTextController.text.trim();
-                              String firstName =
-                                  _model.fornavnTextController.text.trim();
-                              String lastName =
-                                  _model.etternavnTextController.text.trim();
-                              String email =
-                                  _model.emailTextController.text.trim();
-                              String password =
-                                  _model.passordTextController.text.trim();
-
-                              // Call the createUser method
-                              final response = await registerUser.createUser1(
-                                username: username,
-                                email: email,
-                                firstName: firstName,
-                                lastName: lastName,
-                                phoneNumber: widget.phone,
-                                password: password,
-                                posisjon: widget.posisjon,
-                              );
-                              if (response.statusCode == 200) {
-                                final token = await secureStorage
-                                    .writeToken(response.body);
-                                if (token == null) {
-                                  _isloading = false;
-                                  throw (Exception());
-                                }
-                                FFAppState().brukernavn = username;
-                                FFAppState().firstname = firstName;
-                                FFAppState().lastname = lastName;
-                                FFAppState().email = email;
-                                FFAppState().brukerLat =
-                                    widget.posisjon.latitude;
-                                FFAppState().brukerLng =
-                                    widget.posisjon.longitude;
-                                if (_model
-                                        .uploadedLocalFile.bytes?.isNotEmpty ??
-                                    false) {
-                                  Uint8List? image =
-                                      _model.uploadedLocalFile.bytes;
-                                  final response = await apiUploadProfilePic
-                                      .uploadProfilePic(
-                                    fileData: image,
-                                    username: username,
-                                  );
-                                  if (response != null && response != 'null') {
-                                    FFAppState().profilepic = response;
-                                  }
-                                }
-                                FFAppState().login = true;
-                              }
-
-                              if (response.statusCode != 200) {
-                                _isloading = false;
-                                safeSetState(() {
-                                  showCupertinoDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return CupertinoAlertDialog(
-                                        title: const Text('En feil oppstod'),
-                                        content: const Text(
-                                            'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
-                                        actions: <Widget>[
-                                          CupertinoDialogAction(
-                                            onPressed: () async {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text(
-                                              'Ok',
-                                              style:
-                                                  TextStyle(color: Colors.blue),
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  return;
-                                });
-                                _isloading = false;
-                              }
-
-                              if (_model.formKey.currentState == null ||
-                                  !_model.formKey.currentState!.validate()) {
-                                _isloading = false;
-                                return;
-                              }
-                              if (response.statusCode == 200) {
-                                _isloading = false;
-                                context.goNamed('Hjem');
-                              }
-                            } catch (e) {
                               _isloading = false;
-                              showCupertinoDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CupertinoAlertDialog(
-                                    title: const Text('En feil oppstod'),
-                                    content: const Text(
-                                        'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
-                                    actions: <Widget>[
-                                      CupertinoDialogAction(
-                                        onPressed: () async {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text(
-                                          'Ok',
-                                          style: TextStyle(color: Colors.blue),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
                             }
-                          },
-                          text: 'Fullfør',
-                          options: FFButtonOptions(
-                            width: double.infinity,
-                            height: 50.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).alternate,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
-                                  fontFamily: 'Nunito',
-                                  color: FlutterFlowTheme.of(context).secondary,
-                                  fontSize: 17.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                            elevation: 0.0,
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(14.0),
+
+                            if (_model.formKey.currentState == null ||
+                                !_model.formKey.currentState!.validate()) {
+                              _isloading = false;
+                              return;
+                            }
+                            if (response.statusCode == 200) {
+                              _isloading = false;
+                              context.goNamed('AddProfilepic');
+                            }
+                          } catch (e) {
+                            _isloading = false;
+                            showCupertinoDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CupertinoAlertDialog(
+                                  title: const Text('En feil oppstod'),
+                                  content: const Text(
+                                      'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
+                                  actions: <Widget>[
+                                    CupertinoDialogAction(
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        'Ok',
+                                        style: TextStyle(color: Colors.blue),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        },
+                        text: 'Neste',
+                        options: FFButtonOptions(
+                          width: double.infinity,
+                          height: 50.0,
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).alternate,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleMedium
+                              .override(
+                                fontFamily: 'Nunito',
+                                color: FlutterFlowTheme.of(context).secondary,
+                                fontSize: 17.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w800,
+                              ),
+                          elevation: 0.0,
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
                           ),
+                          borderRadius: BorderRadius.circular(14.0),
                         ),
                       ),
                     ),
-                  ]),
-            ),
+                  ),
+                ]),
           ),
         ),
       ),

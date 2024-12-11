@@ -348,6 +348,31 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                               }
                               try {
                                 _isloading = true;
+
+                                if (_model
+                                    .telefonnummerTextController.text.isEmpty) {
+                                  setState(() {
+                                    _isloading = false;
+                                    _errorMessage = "felt må fylles ut";
+                                  });
+                                  return;
+                                }
+                                if (_model.telefonnummerTextController.text
+                                            .length !=
+                                        8 ||
+                                    (_model.telefonnummerTextController.text
+                                                .startsWith('4') !=
+                                            true &&
+                                        _model.telefonnummerTextController.text
+                                                .startsWith('9') !=
+                                            true)) {
+                                  setState(() {
+                                    _isloading = false;
+                                    _errorMessage = "fant ikke telefonnummeret";
+                                  });
+                                  return;
+                                }
+
                                 final response = await apiCalls.checkPhoneTaken(
                                     _model.telefonnummerTextController.text);
                                 if (response.statusCode == 200) {
