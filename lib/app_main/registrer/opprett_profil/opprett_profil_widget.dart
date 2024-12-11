@@ -921,81 +921,150 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                       ],
                     ),
                   ),
-                  Align(
-                    alignment: const AlignmentDirectional(0, 0),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 40),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          if (_isloading == true) {
-                            return;
-                          }
-                          if (_model.formKey.currentState == null ||
-                              !_model.formKey.currentState!.validate()) {
-                            return;
-                          }
-
-                          if (_errorMessage != null || _emailTatt != null) {
-                            return;
-                          }
-
-                          try {
-                            _isloading = true;
-                            await apiCalls
-                                .checkEmailTaken(
-                                    _model.emailTextController.text)
-                                .then((response1) {
-                              setState(() {
-                                if (response1.statusCode != 200) {
-                                  _emailTatt = "E-posten er allerede i bruk";
-                                } else {
-                                  _emailTatt = null;
-                                }
-                              });
-                              return;
-                            });
-                            String username =
-                                _model.brukernavnTextController.text.trim();
-                            String firstName =
-                                _model.fornavnTextController.text.trim();
-                            String lastName =
-                                _model.etternavnTextController.text.trim();
-                            String email =
-                                _model.emailTextController.text.trim();
-                            String password =
-                                _model.passordTextController.text.trim();
-
-                            // Call the createUser method
-                            final response = await registerUser.createUser1(
-                              username: username,
-                              email: email,
-                              firstName: firstName,
-                              lastName: lastName,
-                              phoneNumber: widget.phone,
-                              password: password,
-                              posisjon: widget.posisjon,
-                            );
-                            if (response.statusCode == 200) {
-                              final token =
-                                  await secureStorage.writeToken(response.body);
-                              if (token == null) {
-                                _isloading = false;
-                                throw (Exception());
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // First rectangle
+                          Container(
+                            width: 30,
+                            height: 5.5,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                          ),
+                          const SizedBox(width: 10), // Space between rectangles
+                          // Second rectangle
+                          Container(
+                            width: 30,
+                            height: 5.5,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: const AlignmentDirectional(0, 0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              20, 0, 20, 40),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              if (_isloading == true) {
+                                return;
                               }
-                              FFAppState().brukernavn = username;
-                              FFAppState().firstname = firstName;
-                              FFAppState().lastname = lastName;
-                              FFAppState().email = email;
-                              FFAppState().brukerLat = widget.posisjon.latitude;
-                              FFAppState().brukerLng =
-                                  widget.posisjon.longitude;
-                              FFAppState().login = true;
-                            }
+                              if (_model.formKey.currentState == null ||
+                                  !_model.formKey.currentState!.validate()) {
+                                return;
+                              }
 
-                            if (response.statusCode != 200) {
-                              _isloading = false;
-                              safeSetState(() {
+                              if (_errorMessage != null || _emailTatt != null) {
+                                return;
+                              }
+
+                              try {
+                                _isloading = true;
+                                await apiCalls
+                                    .checkEmailTaken(
+                                        _model.emailTextController.text)
+                                    .then((response1) {
+                                  setState(() {
+                                    if (response1.statusCode != 200) {
+                                      _emailTatt =
+                                          "E-posten er allerede i bruk";
+                                    } else {
+                                      _emailTatt = null;
+                                    }
+                                  });
+                                  return;
+                                });
+                                String username =
+                                    _model.brukernavnTextController.text.trim();
+                                String firstName =
+                                    _model.fornavnTextController.text.trim();
+                                String lastName =
+                                    _model.etternavnTextController.text.trim();
+                                String email =
+                                    _model.emailTextController.text.trim();
+                                String password =
+                                    _model.passordTextController.text.trim();
+
+                                // Call the createUser method
+                                final response = await registerUser.createUser1(
+                                  username: username,
+                                  email: email,
+                                  firstName: firstName,
+                                  lastName: lastName,
+                                  phoneNumber: widget.phone,
+                                  password: password,
+                                  posisjon: widget.posisjon,
+                                );
+                                if (response.statusCode == 200) {
+                                  final token = await secureStorage
+                                      .writeToken(response.body);
+                                  if (token == null) {
+                                    _isloading = false;
+                                    throw (Exception());
+                                  }
+                                  FFAppState().brukernavn = username;
+                                  FFAppState().firstname = firstName;
+                                  FFAppState().lastname = lastName;
+                                  FFAppState().email = email;
+                                  FFAppState().brukerLat =
+                                      widget.posisjon.latitude;
+                                  FFAppState().brukerLng =
+                                      widget.posisjon.longitude;
+                                  FFAppState().login = true;
+                                }
+
+                                if (response.statusCode != 200) {
+                                  _isloading = false;
+                                  safeSetState(() {
+                                    showCupertinoDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return CupertinoAlertDialog(
+                                          title: const Text('En feil oppstod'),
+                                          content: const Text(
+                                              'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
+                                          actions: <Widget>[
+                                            CupertinoDialogAction(
+                                              onPressed: () async {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text(
+                                                'Ok',
+                                                style: TextStyle(
+                                                    color: Colors.blue),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    return;
+                                  });
+                                  _isloading = false;
+                                }
+
+                                if (_model.formKey.currentState == null ||
+                                    !_model.formKey.currentState!.validate()) {
+                                  _isloading = false;
+                                  return;
+                                }
+                                if (response.statusCode == 200) {
+                                  _isloading = false;
+                                  context.goNamed('AddProfilepic');
+                                }
+                              } catch (e) {
+                                _isloading = false;
                                 showCupertinoDialog(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -1018,72 +1087,38 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     );
                                   },
                                 );
-                                return;
-                              });
-                              _isloading = false;
-                            }
-
-                            if (_model.formKey.currentState == null ||
-                                !_model.formKey.currentState!.validate()) {
-                              _isloading = false;
-                              return;
-                            }
-                            if (response.statusCode == 200) {
-                              _isloading = false;
-                              context.goNamed('AddProfilepic');
-                            }
-                          } catch (e) {
-                            _isloading = false;
-                            showCupertinoDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CupertinoAlertDialog(
-                                  title: const Text('En feil oppstod'),
-                                  content: const Text(
-                                      'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
-                                  actions: <Widget>[
-                                    CupertinoDialogAction(
-                                      onPressed: () async {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'Ok',
-                                        style: TextStyle(color: Colors.blue),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                        },
-                        text: 'Neste',
-                        options: FFButtonOptions(
-                          width: double.infinity,
-                          height: 50.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).alternate,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .titleMedium
-                              .override(
-                                fontFamily: 'Nunito',
-                                color: FlutterFlowTheme.of(context).secondary,
-                                fontSize: 17.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w800,
+                              }
+                            },
+                            text: 'Neste',
+                            options: FFButtonOptions(
+                              width: double.infinity,
+                              height: 50.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).alternate,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleMedium
+                                  .override(
+                                    fontFamily: 'Nunito',
+                                    color:
+                                        FlutterFlowTheme.of(context).secondary,
+                                    fontSize: 17.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                              elevation: 0.0,
+                              borderSide: const BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
                               ),
-                          elevation: 0.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                              borderRadius: BorderRadius.circular(14.0),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(14.0),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ]),
           ),
