@@ -82,7 +82,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              40, 0, 40, 12),
+                              20, 0, 20, 12),
                           child: FFButtonWidget(
                             onPressed: () async {
                               await showModalBottomSheet(
@@ -105,7 +105,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                             text: 'Fortsett med tlf eller email',
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 45,
+                              height: 50,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -127,7 +127,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              40, 0, 40, 12),
+                              20, 0, 20, 12),
                           child: FFButtonWidget(
                             onPressed: () {
                               logger.d('Button pressed ...');
@@ -139,7 +139,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                             ),
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 45,
+                              height: 50,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -165,7 +165,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              40, 0, 40, 0),
+                              20, 0, 20, 0),
                           child: FFButtonWidget(
                             onPressed: () {
                               logger.d('Button pressed ...');
@@ -177,7 +177,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                             ),
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 45,
+                              height: 50,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
