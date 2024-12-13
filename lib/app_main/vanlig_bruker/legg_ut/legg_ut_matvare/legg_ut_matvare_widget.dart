@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/legg_ut/velg_kategori/velg_kategori_widget.dart';
 import 'package:mat_salg/logging.dart';
 
@@ -19,8 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/secureStorage.dart';
 import 'legg_ut_matvare_model.dart';
 export 'legg_ut_matvare_model.dart';
 

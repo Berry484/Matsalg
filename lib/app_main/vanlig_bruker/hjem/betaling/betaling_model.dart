@@ -19,7 +19,7 @@ class BetalingModel extends FlutterFlowModel<BetalingWidget> {
       return 'Ugyldig antall';
     }
 
-    if (val.length < 1) {
+    if (val.isEmpty) {
       return 'Ugyldig antall';
     }
 

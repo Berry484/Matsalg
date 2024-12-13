@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/secureStorage.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';

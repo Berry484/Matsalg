@@ -1,17 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
 import 'package:mat_salg/api/web_socket.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/secureStorage.dart';
 
 import 'opprett_profil_model.dart';
 export 'opprett_profil_model.dart';

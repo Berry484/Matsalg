@@ -3,10 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/ApiCalls.dart';
+import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/User.dart';
-import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_page/folg_bruker/folg_bruker_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
@@ -1429,7 +1429,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                         ],
                                       ),
                                     if (_isLoading != true && _empty == true)
-                                      Container(
+                                      SizedBox(
                                         width: MediaQuery.sizeOf(context).width,
                                         height:
                                             MediaQuery.sizeOf(context).height -

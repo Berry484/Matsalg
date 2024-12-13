@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/secureStorage.dart';
 
 import '/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';

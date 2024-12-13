@@ -2,15 +2,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/secureStorage.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'velg_posisjon_model.dart';
 export 'velg_posisjon_model.dart';
@@ -53,8 +52,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
-    selectedLocation = functions.doubletillatlon(
-        FFAppState().brukerLat, FFAppState().brukerLng)!;
+    selectedLocation = LatLng(FFAppState().brukerLat, FFAppState().brukerLng);
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -222,12 +220,10 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                               child: custom_widgets.Chooselocation(
                                 width: 500.0,
                                 height: double.infinity,
-                                center: functions.doubletillatlon(
-                                    FFAppState().brukerLat,
-                                    FFAppState().brukerLng)!,
-                                matsted: functions.doubletillatlon(
-                                    FFAppState().brukerLat,
-                                    FFAppState().brukerLng)!,
+                                center: LatLng(FFAppState().brukerLat,
+                                    FFAppState().brukerLng),
+                                matsted: LatLng(FFAppState().brukerLat,
+                                    FFAppState().brukerLng),
                                 onLocationChanged: (newLocation) {
                                   setState(() {
                                     selectedLocation = newLocation;

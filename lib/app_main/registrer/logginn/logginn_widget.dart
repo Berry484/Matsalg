@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/logging.dart';
 import '/flutter_flow/flutter_flow_theme.dart';

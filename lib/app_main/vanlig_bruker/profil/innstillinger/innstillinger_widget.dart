@@ -841,7 +841,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                 }
                                               },
                                               child: const Text(
-                                                'Logg ut',
+                                                'Ja',
                                                 style: TextStyle(
                                                     color: CupertinoColors
                                                         .activeBlue),

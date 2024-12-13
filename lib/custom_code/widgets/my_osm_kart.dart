@@ -1,15 +1,12 @@
-// Automatic FlutterFlow imports
+// import 'index.dart'; // Imports other custom widgets
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom widgets
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
-import 'package:flutter/material.dart';
-// Begin custom widget code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'package:flutter_map/flutter_map.dart';
+// import 'package:flutter_map/plugin_api.dart';
+
 import 'package:latlong2/latlong.dart' as MyOsmKartLatLng;
-import 'package:flutter_map/plugin_api.dart';
 import 'dart:math' as math;
 
 class MyOsmKart extends StatefulWidget {
@@ -65,19 +62,17 @@ class _MyOsmKartState extends State<MyOsmKart> {
         ),
         MarkerLayer(markers: [
           Marker(
-            width: _calculateCircleSize(), // Dynamic width of the marker widget
-            height:
-                _calculateCircleSize(), // Dynamic height of the marker widget
+            width: _calculateCircleSize(),
+            height: _calculateCircleSize(),
             point: MyOsmKartLatLng.LatLng(
                 widget.center.latitude, widget.center.longitude),
-            builder: (ctx) => CustomPaint(
+            child: CustomPaint(
               size: Size(
                 _calculateCircleSize(),
                 _calculateCircleSize(),
-              ), // Dynamic size based on zoom
+              ),
               painter: CirclePainter(
-                radius:
-                    _calculateCircleRadius(), // Pass the radius to the painter
+                radius: _calculateCircleRadius(),
               ),
             ),
           ),

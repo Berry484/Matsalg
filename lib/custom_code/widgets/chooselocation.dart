@@ -1,16 +1,9 @@
 // Automatic FlutterFlow imports
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom widgets
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
-
-// Begin custom widget code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
-
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as ChooselocationLatLng;
-import 'package:flutter_map/plugin_api.dart';
 import '/flutter_flow/flutter_flow_widgets.dart'; // Add any missing imports if necessary
 import 'dart:math' as math;
 
@@ -106,7 +99,7 @@ class _ChooselocationState extends State<Chooselocation> {
                   point: currentCenter ??
                       ChooselocationLatLng.LatLng(
                           widget.center.latitude, widget.center.longitude),
-                  builder: (ctx) => Icon(
+                  child: Icon(
                     Icons.location_pin,
                     color: FlutterFlowTheme.of(context).alternate,
                     size: 45,

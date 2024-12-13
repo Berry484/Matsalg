@@ -213,9 +213,8 @@ class _VelgNyWidgetState extends State<VelgNyWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     const Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 0, 15),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 15),
                                       child: Icon(
                                         CupertinoIcons.square_arrow_right,
                                         color: Color.fromARGB(255, 38, 38, 38),

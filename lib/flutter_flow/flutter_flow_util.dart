@@ -17,7 +17,6 @@ import 'lat_lng.dart';
 
 export 'keep_alive_wrapper.dart';
 export 'lat_lng.dart';
-export 'place.dart';
 export 'uploaded_file.dart';
 export '../app_state.dart';
 export 'flutter_flow_model.dart';

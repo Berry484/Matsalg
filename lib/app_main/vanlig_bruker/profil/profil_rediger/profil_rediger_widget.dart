@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';

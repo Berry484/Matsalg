@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:http/http.dart' as http;
@@ -188,12 +187,15 @@ class FirebaseApi {
         FFAppState().login = false;
         return;
       } else {
-        List<OrdreInfo>? _alleInfo = await ApiKjop.getAll(token);
-        if (_alleInfo != null && _alleInfo.isNotEmpty) {
-          FFAppState().ordreInfo = _alleInfo;
+        List<OrdreInfo>? alleInfo = await ApiKjop.getAll(token);
+        if (alleInfo != null && alleInfo.isNotEmpty) {
+          FFAppState().ordreInfo = alleInfo;
         }
       }
     } on SocketException {
-    } catch (e) {}
+      logger.d('Exception: Socket exception');
+    } catch (e) {
+      logger.d('Exception: getAll');
+    }
   }
 }

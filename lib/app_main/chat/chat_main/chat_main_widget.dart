@@ -143,7 +143,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                       padding: const EdgeInsets.fromLTRB(
                           0, 0, 0, 100), // Adjust padding as needed
                       children: [
-                        Container(
+                        SizedBox(
                           width: MediaQuery.sizeOf(context).width,
                           height: MediaQuery.sizeOf(context).height - 350,
                           child: Align(

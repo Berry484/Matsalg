@@ -8,7 +8,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'velg_pos_model.dart';
 export 'velg_pos_model.dart';
@@ -45,8 +44,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
-    selectedLocation = widget.currentLocation ??
-        functions.doubletillatlon(59.913868, 10.752245);
+    selectedLocation = widget.currentLocation ?? LatLng(59.913868, 10.752245);
   }
 
   void showErrorToast(BuildContext context, String message) {
@@ -261,13 +259,11 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                   width: 500.0,
                                   height: double.infinity,
                                   center: widget.currentLocation ??
-                                      functions.doubletillatlon(
-                                          59.12681775541445,
-                                          11.386219119466823)!,
+                                      LatLng(59.12681775541445,
+                                          11.386219119466823),
                                   matsted: widget.currentLocation ??
-                                      functions.doubletillatlon(
-                                          59.12681775541445,
-                                          11.386219119466823)!,
+                                      LatLng(59.12681775541445,
+                                          11.386219119466823),
                                   onLocationChanged: (newLocation) {
                                     setState(() {
                                       selectedLocation = newLocation;

@@ -155,7 +155,7 @@ class ApiCalls {
       final response = await http
           .get(
             Uri.parse(
-                'https://ws.geonorge.no/adresser/v1/punktsok?lat=${brukerLat}&lon=${brukerLng}&radius=9999999999999&treffPerSide=1&side=1'),
+                'https://ws.geonorge.no/adresser/v1/punktsok?lat=$brukerLat&lon=$brukerLng&radius=9999999999999&treffPerSide=1&side=1'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
@@ -780,7 +780,7 @@ class ApiGetUserFood {
       // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse('$baseUrl/rrh/send/matvarer/mine?username=${username}'),
+            Uri.parse('$baseUrl/rrh/send/matvarer/mine?username=$username'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -815,7 +815,7 @@ class ApiLike {
       // Make the API request and parse the response
       final response = await http
           .post(
-            Uri.parse('$baseUrl/api/likes?mat_id=${matId}'),
+            Uri.parse('$baseUrl/api/likes?mat_id=$matId'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -837,7 +837,7 @@ class ApiLike {
       // Make the API request and parse the response
       final response = await http
           .delete(
-            Uri.parse('$baseUrl/api/likes?mat_id=${matId}'),
+            Uri.parse('$baseUrl/api/likes?mat_id=$matId'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -960,7 +960,7 @@ class ApiFolg {
       final response = await http
           .put(
             Uri.parse(
-                '$baseUrl/api/varsling?bruker=${brukernavn}&varsling=${varsling}'),
+                '$baseUrl/api/varsling?bruker=$brukernavn&varsling=$varsling'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds

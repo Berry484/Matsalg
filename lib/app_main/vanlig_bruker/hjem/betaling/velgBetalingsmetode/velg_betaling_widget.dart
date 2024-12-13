@@ -56,7 +56,7 @@ class _VelgBetalingWidgetState extends State<VelgBetalingWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: 100,
                 child: Stack(
                   alignment: const AlignmentDirectional(0, 1),

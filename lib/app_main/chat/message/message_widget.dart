@@ -346,7 +346,7 @@ class _MessageWidgetState extends State<MessageWidget> {
           ),
         ),
         body: SafeArea(
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.sizeOf(context).width,
             height: MediaQuery.sizeOf(context).height * 1,
             child: Stack(

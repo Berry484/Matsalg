@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
 
 import 'dart:async';
@@ -22,7 +20,6 @@ class WebSocketService {
 
   late IOWebSocketChannel _ioWebSocketChannel;
 
-  WebSocketSink get _sink => _ioWebSocketChannel.sink;
   late Stream<dynamic> _innerStream;
   final _outerStreamSubject = BehaviorSubject<dynamic>();
   Stream<dynamic> get stream => _outerStreamSubject.stream;
@@ -69,7 +66,7 @@ class WebSocketService {
         await _cleanupConnection();
 
         // Establish a new WebSocket connection
-        _ioWebSocketChannel = await IOWebSocketChannel.connect(
+        _ioWebSocketChannel = IOWebSocketChannel.connect(
           url,
           headers: {'Authorization': 'Bearer $token'},
         );
@@ -149,7 +146,7 @@ class WebSocketService {
     } catch (e) {
       // If an error occurs (including timeout), handle the reconnection
       logger.d("Error during listener setup: $e");
-      throw e; // Re-throw exception to trigger reconnection logic
+      rethrow; // Re-throw exception to trigger reconnection logic
     }
   }
 
@@ -280,13 +277,13 @@ class WebSocketService {
           // Access FFAppState to update the conversations globally
           final appState = FFAppState();
 
-          bool _empty = false;
+          bool empty = false;
 
           var conversation = appState.conversations.firstWhere(
             (conv) => conv.user == sender,
             orElse: () {
-              // Set _empty to true to indicate a new conversation is being created
-              _empty = true;
+              // Set empty to true to indicate a new conversation is being created
+              empty = true;
               return Conversation(
                 user: sender,
                 profilePic: profilePic,
@@ -295,11 +292,11 @@ class WebSocketService {
             },
           );
 
-          if (_empty) {
+          if (empty) {
             appState.conversations.add(conversation);
           }
 
-          if (!_empty) {
+          if (!empty) {
             conversation.messages.insert(0, newMessage);
           }
 

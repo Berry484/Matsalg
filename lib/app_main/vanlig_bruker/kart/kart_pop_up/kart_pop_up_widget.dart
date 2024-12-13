@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'kart_pop_up_model.dart';
 export 'kart_pop_up_model.dart';
@@ -231,8 +230,7 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
                     child: custom_widgets.MyOsmKart(
                       width: 500.0,
                       height: 450.0,
-                      center: functions.doubletillatlon(
-                          widget.startLat, widget.startLng)!,
+                      center: LatLng(widget.startLat, widget.startLng),
                     ),
                   ),
                 ),

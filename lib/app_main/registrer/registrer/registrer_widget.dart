@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'registrer_model.dart';
 
-import 'package:mat_salg/ApiCalls.dart';
-import 'package:mat_salg/SecureStorage.dart';
+import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/secureStorage.dart';
 
 export 'registrer_model.dart';
 
