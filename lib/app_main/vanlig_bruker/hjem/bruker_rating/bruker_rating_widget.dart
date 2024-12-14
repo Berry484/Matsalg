@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/User.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -43,6 +43,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
   bool _ratingisLoading = true;
   bool ingenRatings = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   @override
   void initState() {
@@ -128,10 +129,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
 
   Future<void> _checkUser() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         _brukerinfo = await ApiGetUser.checkUser(token, widget.username);
@@ -169,10 +168,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
 
   Future<void> getAllRatings() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         if (widget.mine != true && widget.username != null) {

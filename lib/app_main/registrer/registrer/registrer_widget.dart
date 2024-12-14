@@ -9,7 +9,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'registrer_model.dart';
 
 import 'package:mat_salg/apiCalls.dart';
-import 'package:mat_salg/secureStorage.dart';
 
 export 'registrer_model.dart';
 
@@ -25,7 +24,6 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
   late RegistrerModel _model;
   final ApiCalls apiCalls = ApiCalls(); // Instantiate the ApiCalls class
   final ApiGetToken apiGetToken = ApiGetToken();
-  final Securestorage secureStorage = Securestorage();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

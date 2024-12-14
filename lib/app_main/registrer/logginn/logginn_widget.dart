@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/logging.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -36,11 +35,10 @@ class _LogginnWidgetState extends State<LogginnWidget> {
   late WebSocketService _webSocketService; // Declare WebSocketService
   final ApiCalls apiCalls = ApiCalls(); // Instantiate the ApiCalls class
   final ApiGetToken apiGetToken = ApiGetToken();
-  final Securestorage secureStorage = Securestorage();
   static const String baseUrl = ApiConstants.baseUrl;
   final _firebaseMessaging = FirebaseMessaging.instance;
-  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   bool _isloading = false;
 
@@ -69,11 +67,76 @@ class _LogginnWidgetState extends State<LogginnWidget> {
     super.dispose();
   }
 
+  void feilInnlogging(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 56.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.xmark_circle_fill,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 35.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    // Auto-remove the toast after 3 seconds if not dismissed
+    Future.delayed(const Duration(seconds: 3), () {
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
+    });
+  }
+
   Future<http.Response?> sendToken() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
         return null;
       } else {
         await _firebaseMessaging.requestPermission();
@@ -119,6 +182,34 @@ class _LogginnWidgetState extends State<LogginnWidget> {
       throw const SocketException('');
     } catch (e) {
       throw Exception;
+    }
+  }
+
+  Future<void> getAll() async {
+    try {
+      final appState = FFAppState();
+      appState.matvarer.clear();
+      appState.ordreInfo.clear();
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      } else {
+        List<OrdreInfo>? _alleInfo = await ApiKjop.getAll(token);
+        List<Matvarer>? fetchedMatvarer = await ApiGetMyFoods.getMyFoods(token);
+
+        setState(() {
+          if (_alleInfo != null && _alleInfo.isNotEmpty) {
+            FFAppState().ordreInfo = _alleInfo;
+          }
+          if (fetchedMatvarer != null && fetchedMatvarer.isNotEmpty) {
+            FFAppState().matvarer = fetchedMatvarer;
+          }
+        });
+      }
+    } on SocketException {
+      HapticFeedback.lightImpact();
+    } catch (e) {
+      HapticFeedback.lightImpact();
     }
   }
 
@@ -317,11 +408,19 @@ class _LogginnWidgetState extends State<LogginnWidget> {
 
                               try {
                                 // Await the sign-in operation to ensure it's completed before proceeding
-                                await firebaseAuthService
+                                final response = await firebaseAuthService
                                     .signInWithEmailAndPassword(
                                   _model.emailTextController.text,
                                   _model.passordTextController.text,
                                 );
+
+                                if (response == null) {
+                                  _isloading = false;
+                                  HapticFeedback.mediumImpact();
+                                  feilInnlogging(
+                                      context, 'Feil innlogging eller passord');
+                                  return;
+                                }
 
                                 // After sign-in, check the current user
                                 final user = await _firebaseAuth.currentUser;
@@ -331,9 +430,8 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 }
                                 final idToken = await user.getIdToken();
                                 if (idToken != null) {
-                                  await secureStorage.writeToken(idToken);
-                                  final response = await apiCalls
-                                      .checkUserInfo(Securestorage.authToken);
+                                  final response =
+                                      await apiCalls.checkUserInfo(idToken);
 
                                   if (response.statusCode == 200) {
                                     final decodedResponse =
@@ -358,6 +456,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     _isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
+                                    getAll();
                                     sendToken();
                                     context.go('/hjem');
                                     FFAppState().login = true;
@@ -512,24 +611,30 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                               _isloading = true;
 
                               try {
-                                // Await the sign-in operation to ensure it's completed before proceeding
-                                await firebaseAuthService
+                                final response = await firebaseAuthService
                                     .signInWithEmailAndPassword(
                                   _model.emailTextController.text,
                                   _model.passordTextController.text,
                                 );
 
+                                if (response == null) {
+                                  _isloading = false;
+                                  HapticFeedback.mediumImpact();
+                                  feilInnlogging(
+                                      context, 'Feil innlogging eller passord');
+                                  return;
+                                }
+
                                 // After sign-in, check the current user
                                 final user = await _firebaseAuth.currentUser;
 
                                 if (user == null) {
-                                  return; // Handle error or user not found case
+                                  return;
                                 }
                                 final idToken = await user.getIdToken();
                                 if (idToken != null) {
-                                  await secureStorage.writeToken(idToken);
-                                  final response = await apiCalls
-                                      .checkUserInfo(Securestorage.authToken);
+                                  final response =
+                                      await apiCalls.checkUserInfo(idToken);
 
                                   if (response.statusCode == 200) {
                                     final decodedResponse =
@@ -554,6 +659,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     _isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
+                                    getAll();
                                     sendToken();
                                     context.go('/hjem');
                                     FFAppState().login = true;

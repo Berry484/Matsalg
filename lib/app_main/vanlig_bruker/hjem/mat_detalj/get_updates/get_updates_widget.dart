@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
-import 'package:mat_salg/secureStorage.dart';
-
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -26,6 +25,7 @@ class FolgBrukerWidget extends StatefulWidget {
 class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
   late FolgBrukerModel _model;
   final ApiFolg apiFolg = ApiFolg();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   bool _isLoading = false;
 
   @override
@@ -128,8 +128,12 @@ class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
     try {
       if (_isLoading) return;
       _isLoading = true;
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      }
       await apiFolg.varslingMatTilgjengelig(
-          Securestorage.authToken, widget.matId, _model.switchValue ?? false);
+          token, widget.matId, _model.switchValue ?? false);
       _isLoading = false;
     } on SocketException {
       _isLoading = false;

@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/mat_detalj/get_updates/get_updates_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_animations.dart';
@@ -45,7 +45,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
   final ApiCalls apiCalls = ApiCalls();
   bool _isloading = true;
   late Matvarer matvare;
-  final Securestorage securestorage = Securestorage();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiLike apiLike = ApiLike();
   bool? brukerFolger = false;
   bool _messageIsLoading = false;
@@ -163,10 +163,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
 
   Future<void> getAllFoods() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         _nyematvarer = await ApiGetAllFoods.getAllFoods(token);
@@ -208,11 +206,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
 
   Future<void> getPoststed() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
 
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         if (matvare.lat == 0 || matvare.lng == 0) {
@@ -631,10 +627,16 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       highlightColor: Colors.transparent,
                                       onDoubleTap: () async {
                                         try {
+                                          HapticFeedback.lightImpact();
+                                          String? token =
+                                              await firebaseAuthService
+                                                  .getToken(context);
+                                          if (token == null) {
+                                            return;
+                                          }
                                           _model.liker =
                                               !(_model.liker ?? true);
 
-                                          HapticFeedback.lightImpact();
                                           FFAppState()
                                               .likedFoods
                                               .remove(matvare.matId);
@@ -646,8 +648,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 .add(matvare.matId ?? 0);
                                           }
                                           apiLike.deleteLike(
-                                              Securestorage.authToken,
-                                              matvare.matId);
+                                              token, matvare.matId);
                                           safeSetState(() {});
                                           if (_model.liker == true) {
                                             HapticFeedback.lightImpact();
@@ -663,8 +664,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                             }
                                             _triggerHeartAnimation();
                                             apiLike.sendLike(
-                                                Securestorage.authToken,
-                                                matvare.matId);
+                                                token, matvare.matId);
                                           }
                                         } on SocketException {
                                           HapticFeedback.lightImpact();
@@ -1082,6 +1082,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         ToggleIcon(
                                           onPressed: () async {
                                             HapticFeedback.lightImpact();
+                                            String? token =
+                                                await firebaseAuthService
+                                                    .getToken(context);
+                                            if (token == null) {
+                                              return;
+                                            }
                                             safeSetState(() =>
                                                 _model.liker = !_model.liker!);
                                             if (_model.liker!) {
@@ -1095,10 +1101,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     .likedFoods
                                                     .add(matvare.matId ?? 0);
                                               }
+
                                               _triggerHeartAnimation();
                                               apiLike.sendLike(
-                                                  Securestorage.authToken,
-                                                  matvare.matId);
+                                                  token, matvare.matId);
                                             } else {
                                               FFAppState()
                                                   .likedFoods
@@ -1111,8 +1117,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                     .add(matvare.matId ?? 0);
                                               }
                                               apiLike.deleteLike(
-                                                  Securestorage.authToken,
-                                                  matvare.matId);
+                                                  token, matvare.matId);
                                             }
                                           },
                                           value: _model.liker!,

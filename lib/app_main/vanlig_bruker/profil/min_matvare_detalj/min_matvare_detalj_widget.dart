@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
-
 import '/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -36,6 +35,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
   bool _merSolgtIsLoading = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   ApiUpdateFood apiUpdateFood = ApiUpdateFood();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   bool _isExpanded = false;
 
   @override
@@ -769,10 +769,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                               return;
                                                                             } else {
                                                                               _merSolgtIsLoading = true;
-                                                                              String? token = await Securestorage().readToken();
+                                                                              String? token = await firebaseAuthService.getToken(context);
                                                                               if (token == null) {
-                                                                                FFAppState().login = false;
-                                                                                context.goNamed('registrer');
                                                                                 return;
                                                                               } else {
                                                                                 await apiUpdateFood.merkSolgt(token: token, id: matvare.matId, solgt: true);
@@ -866,12 +864,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                               true;
                                                                           String?
                                                                               token =
-                                                                              await Securestorage().readToken();
+                                                                              await firebaseAuthService.getToken(context);
                                                                           if (token ==
                                                                               null) {
-                                                                            FFAppState().login =
-                                                                                false;
-                                                                            context.goNamed('registrer');
                                                                             return;
                                                                           } else {
                                                                             await apiUpdateFood.slettMatvare(

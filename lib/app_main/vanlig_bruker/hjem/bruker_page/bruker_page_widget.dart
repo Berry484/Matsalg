@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/User.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_page/folg_bruker/folg_bruker_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
@@ -46,7 +46,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   bool _folgerLoading = false;
   bool _isExpanded = false;
   bool _messageIsLoading = false;
-  final Securestorage securestorage = Securestorage();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiFolg apiFolg = ApiFolg();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -134,10 +134,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
 
   Future<void> _checkUser() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         // Fetch user info only if bruker is null
@@ -203,7 +201,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
 
   Future<void> unFolg() async {
     try {
-      await apiFolg.unfolgBruker(Securestorage.authToken, widget.uid);
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      }
+      await apiFolg.unfolgBruker(token, widget.uid);
       safeSetState(() {
         _checkUser();
       });
@@ -218,7 +220,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
 
   Future<void> folgBruker() async {
     try {
-      await apiFolg.folgbruker(Securestorage.authToken, widget.uid);
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      }
+      await apiFolg.folgbruker(token, widget.uid);
       safeSetState(() {
         _checkUser();
       });
@@ -233,10 +239,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
 
   Future<void> getUserFood() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         _matvarer = await ApiGetUserFood.getUserFood(token, widget.uid);

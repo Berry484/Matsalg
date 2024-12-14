@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:http/http.dart' as http;
@@ -20,6 +20,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   static const String baseUrl = ApiConstants.baseUrl;
   final appState = FFAppState();
 
@@ -116,9 +117,8 @@ class FirebaseApi {
     try {
       logger.d('Code ran');
 
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(null);
       if (token == null) {
-        FFAppState().login = false;
         return null;
       } else {
         // Check if fcmtoken is null before proceeding
@@ -182,9 +182,8 @@ class FirebaseApi {
 
   Future<void> getAll() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(null);
       if (token == null) {
-        FFAppState().login = false;
         return;
       } else {
         List<OrdreInfo>? alleInfo = await ApiKjop.getAll(token);

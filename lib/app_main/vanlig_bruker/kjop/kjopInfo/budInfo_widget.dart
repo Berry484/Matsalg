@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/give_rating/give_rating_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -30,6 +30,7 @@ class BudInfoWidget extends StatefulWidget {
 }
 
 class _BudInfoWidgetState extends State<BudInfoWidget> {
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   late BudInfoModel _model;
   late Matvarer matvare;
   late OrdreInfo ordreInfo;
@@ -828,7 +829,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                           }
                                           _trekkIsLoading = true;
                                           String? token =
-                                              Securestorage.authToken;
+                                              await firebaseAuthService
+                                                  .getToken(context);
                                           if (token != null) {
                                             final response = await ApiKjop()
                                                 .trekk(
@@ -934,7 +936,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                 }
                                                 _bekreftIsLoading = true;
                                                 String? token =
-                                                    Securestorage.authToken;
+                                                    await firebaseAuthService
+                                                        .getToken(context);
                                                 if (token != null) {
                                                   final response =
                                                       await ApiKjop().hentMat(

@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_widgets.dart';
 
@@ -27,6 +27,7 @@ class AddProfilePicWidget extends StatefulWidget {
 
 class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
   late ProfilRedigerModel _model;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   ApiUserSQL apiUserSQL = ApiUserSQL();
   ApiMultiplePics apiMultiplePics = ApiMultiplePics();
   ApiCalls apiCalls = ApiCalls();
@@ -512,7 +513,7 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                 }
                                 _isloading = true;
                                 String? token =
-                                    await Securestorage().readToken();
+                                    await firebaseAuthService.getToken(context);
                                 if (token == null) {
                                   FFAppState().login = false;
                                   context.goNamed('registrer');

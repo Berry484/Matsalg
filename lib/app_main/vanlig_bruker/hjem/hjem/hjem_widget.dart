@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/logging.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -16,7 +17,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:mat_salg/apiCalls.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'dart:math';
 import 'hjem_model.dart';
 export 'hjem_model.dart';
@@ -44,7 +44,7 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final ApiCalls apicalls = ApiCalls();
-  final Securestorage securestorage = Securestorage();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   LatLng? currentUserLocationValue;
   Map<String, dynamic>? userInfo;
@@ -224,10 +224,8 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
   Future<void> handleSearch() async {
     try {
       _profilisloading = true;
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         _profiler =
@@ -254,10 +252,8 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
 
   Future<void> getAllFoods() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         if (FFAppState().brukerLat == 59.9138688 ||
@@ -286,10 +282,8 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
 
   Future<void> getFolgerFoods() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         if (FFAppState().brukerLat == 59.9138688 ||
@@ -319,13 +313,11 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
 
   Future<void> fetchData() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
-        final response = await apicalls.checkUserInfo(Securestorage.authToken);
+        final response = await apicalls.checkUserInfo(token);
         if (response.statusCode == 200) {
           final decodedResponse = jsonDecode(response.body);
           final userInfo = decodedResponse['userInfo'] ?? {};

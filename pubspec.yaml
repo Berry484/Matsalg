@@ -28,7 +28,6 @@ dependencies:
   logger: ^2.5.0
   auto_size_text: 3.0.0
   cached_network_image: ^3.4.1
-  flutter_secure_storage: ^9.2.2
   flutter_local_notifications: ^18.0.1
   collection: 1.18.0
   easy_debounce: ^2.0.3

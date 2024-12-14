@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/legg_ut/velg_kategori/velg_kategori_widget.dart';
 import 'package:mat_salg/logging.dart';
@@ -20,7 +21,6 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:mat_salg/apiCalls.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'legg_ut_matvare_model.dart';
 export 'legg_ut_matvare_model.dart';
 
@@ -73,7 +73,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
   final ApiCalls apiCalls = ApiCalls();
 
   final ApiUploadFood apiUploadFood = ApiUploadFood();
-  final Securestorage securestorage = Securestorage();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiMultiplePics apiMultiplePics = ApiMultiplePics();
   bool _leggUtLoading = false;
   bool _oppdaterLoading = false;
@@ -257,11 +257,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
       if (lat == 0 || lng == 0) {
         return;
       }
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
 
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         String? response = await apiCalls.leggutgetKommune(token, lat, lng);
@@ -2942,33 +2940,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 ),
                                                       ),
                                                     ),
-                                                    // if (_model.tabBarController!
-                                                    //         .index !=
-                                                    //     0)
-                                                    //   Align(
-                                                    //     alignment:
-                                                    //         const AlignmentDirectional(
-                                                    //             0.8, -0.19),
-                                                    //     child: Text(
-                                                    //       'Kg',
-                                                    //       style: FlutterFlowTheme
-                                                    //               .of(context)
-                                                    //           .bodyMedium
-                                                    //           .override(
-                                                    //             fontFamily:
-                                                    //                 'Nunito',
-                                                    //             color: FlutterFlowTheme.of(
-                                                    //                     context)
-                                                    //                 .primaryText,
-                                                    //             fontSize: 17.0,
-                                                    //             letterSpacing:
-                                                    //                 0.0,
-                                                    //             fontWeight:
-                                                    //                 FontWeight
-                                                    //                     .w600,
-                                                    //           ),
-                                                    //     ),
-                                                    //   ),
                                                   ],
                                                 ),
                                               ),
@@ -3210,65 +3181,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   ),
                                                 ),
                                               ),
-                                              // if (selectedLatLng != null)
-                                              //   Padding(
-                                              //     padding:
-                                              //         const EdgeInsetsDirectional
-                                              //             .fromSTEB(
-                                              //             30, 0, 30, 16),
-                                              //     child: Stack(
-                                              //       children: [
-                                              //         // The map widget wrapped in a Container for consistent sizing
-                                              //         Container(
-                                              //           width:
-                                              //               500, // Set this to the desired width
-                                              //           height:
-                                              //               200, // Set this to the desired height
-                                              //           child: FFAppState()
-                                              //                       .bonde ==
-                                              //                   true
-                                              //               ? custom_widgets
-                                              //                   .MyOsmKartBedrift(
-                                              //                   width:
-                                              //                       500, // Using the same size
-                                              //                   height: 200,
-                                              //                   center: selectedLatLng ??
-                                              //                       const LatLng(
-                                              //                           58.940090,
-                                              //                           11.634092),
-                                              //                   matsted: selectedLatLng ??
-                                              //                       const LatLng(
-                                              //                           58.940090,
-                                              //                           11.634092),
-                                              //                 )
-                                              //               : custom_widgets
-                                              //                   .MyOsmKart(
-                                              //                   width:
-                                              //                       500, // Using the same size
-                                              //                   height: 200,
-                                              //                   center: selectedLatLng ??
-                                              //                       const LatLng(
-                                              //                           58.940090,
-                                              //                           11.634092),
-                                              //                 ),
-                                              //         ),
-
-                                              //         // Overlay to disable interactions
-                                              //         Positioned.fill(
-                                              //           child: GestureDetector(
-                                              //             onTap:
-                                              //                 () {}, // Consuming tap interactions
-                                              //             onPanUpdate:
-                                              //                 (_) {}, // Consuming drag interactions
-                                              //             child: Container(
-                                              //               color: Colors
-                                              //                   .transparent, // Keeps the overlay invisible
-                                              //             ),
-                                              //           ),
-                                              //         ),
-                                              //       ],
-                                              //     ),
-                                              //   ),
                                             ],
                                           ),
                                           if (_model.checkboxValue == true)
@@ -3495,13 +3407,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
 
                                                       _oppdaterLoading = true;
                                                       final token =
-                                                          await securestorage
-                                                              .readToken();
+                                                          await firebaseAuthService
+                                                              .getToken(
+                                                                  context);
                                                       if (token == null) {
-                                                        FFAppState().login =
-                                                            false;
-                                                        context.pushNamed(
-                                                            'registrer');
+                                                        return;
                                                       } else {
                                                         final List<Uint8List?>
                                                             filesData = [
@@ -3757,13 +3667,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           }
                                                           _leggUtLoading = true;
                                                           String? token =
-                                                              await Securestorage()
-                                                                  .readToken();
+                                                              await firebaseAuthService
+                                                                  .getToken(
+                                                                      context);
                                                           if (token == null) {
-                                                            FFAppState().login =
-                                                                false;
-                                                            context.pushNamed(
-                                                                'registrer');
                                                             return;
                                                           } else {
                                                             final List<

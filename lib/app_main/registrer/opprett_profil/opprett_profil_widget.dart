@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/api/web_socket.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -9,7 +10,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mat_salg/apiCalls.dart';
-import 'package:mat_salg/secureStorage.dart';
 
 import 'opprett_profil_model.dart';
 export 'opprett_profil_model.dart';
@@ -34,7 +34,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   final ApiUserSQL apiUserSQL = ApiUserSQL();
   late WebSocketService _webSocketService;
   final ApiGetToken apiGetToken = ApiGetToken();
-  final Securestorage secureStorage = Securestorage();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiUploadProfilePic apiUploadProfilePic = ApiUploadProfilePic();
   final RegisterUser registerUser = RegisterUser();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -919,8 +919,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                 posisjon: widget.posisjon,
                               );
                               if (response.statusCode == 200) {
-                                final token = await secureStorage
-                                    .writeToken(response.body);
+                                final token =
+                                    await firebaseAuthService.getToken(context);
                                 if (token == null) {
                                   _isloading = false;
                                   throw (Exception());

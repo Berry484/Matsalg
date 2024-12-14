@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
-
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -33,6 +32,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
   bool _isloading = true;
   List<UserInfo>? _brukere;
   final ApiFolg apiFolg = ApiFolg();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -112,10 +112,8 @@ class _FolgereWidgetState extends State<FolgereWidget> {
 
   Future<void> listFolgere() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         if (widget.folger == 'Følgere') {
@@ -357,9 +355,14 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                               HapticFeedback.lightImpact();
                                               brukere.following = false;
                                               safeSetState(() {});
+                                              String? token =
+                                                  await firebaseAuthService
+                                                      .getToken(context);
+                                              if (token == null) {
+                                                return;
+                                              }
                                               apiFolg.unfolgBruker(
-                                                  Securestorage.authToken,
-                                                  brukere.uid);
+                                                  token, brukere.uid);
                                             } on SocketException {
                                               HapticFeedback.lightImpact();
                                               showErrorToast(context,
@@ -409,9 +412,14 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                               HapticFeedback.mediumImpact();
                                               brukere.following = true;
                                               safeSetState(() {});
+                                              String? token =
+                                                  await firebaseAuthService
+                                                      .getToken(context);
+                                              if (token == null) {
+                                                return;
+                                              }
                                               apiFolg.folgbruker(
-                                                  Securestorage.authToken,
-                                                  brukere.uid);
+                                                  token, brukere.uid);
                                             } on SocketException {
                                               HapticFeedback.lightImpact();
                                               showErrorToast(context,

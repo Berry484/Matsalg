@@ -3,8 +3,7 @@ import 'dart:io';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
-import 'package:mat_salg/secureStorage.dart';
-
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -25,6 +24,7 @@ class _KontaktWidgetState extends State<KontaktWidget> {
   late RapporterModel _model;
   ReportUser reportUser = ReportUser();
   bool _loading = false;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   @override
   void setState(VoidCallback callback) {
@@ -459,12 +459,10 @@ class _KontaktWidgetState extends State<KontaktWidget> {
                                     try {
                                       if (_loading) return;
                                       _loading = true;
-                                      String? token =
-                                          await Securestorage().readToken();
+                                      String? token = await firebaseAuthService
+                                          .getToken(context);
                                       if (token == null) {
                                         _loading = false;
-                                        FFAppState().login = false;
-                                        context.goNamed('registrer');
                                         return;
                                       } else {
                                         if (_model.bioTextController!.text

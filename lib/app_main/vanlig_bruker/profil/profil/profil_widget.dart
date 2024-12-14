@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart';
 import 'package:shimmer/shimmer.dart';
@@ -16,8 +17,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'profil_model.dart';
 export 'profil_model.dart';
 import 'package:mat_salg/apiCalls.dart';
-import 'package:mat_salg/secureStorage.dart';
-
 import 'package:provider/provider.dart';
 
 class ProfilWidget extends StatefulWidget {
@@ -35,7 +34,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
   bool _likesisloading = true;
   bool _isExpanded = false;
   final ApiCalls apicalls = ApiCalls();
-  final Securestorage securestorage = Securestorage();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -144,11 +143,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
 
   Future<void> getMyFoods() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        // If there's no token, mark as logged out
-        FFAppState().login = false;
-        context.goNamed('registrer'); // Redirect to the register screen
         return;
       } else {
         // Fetch the Matvarer from the API
@@ -178,10 +174,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
 
   Future<void> getAllLikes() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         _likesmatvarer = await ApiGetAllLikes.getAllLikes(token);
@@ -203,13 +197,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
 
   Future<void> fetchData() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
-        final response = await apicalls.checkUserInfo(Securestorage.authToken);
+        final response = await apicalls.checkUserInfo(token);
         if (response.statusCode == 200) {
           final decodedResponse = jsonDecode(response.body);
           final userInfo = decodedResponse['userInfo'] ?? {};

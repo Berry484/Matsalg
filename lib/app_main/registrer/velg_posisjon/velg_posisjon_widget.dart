@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
-import 'package:mat_salg/secureStorage.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -42,7 +42,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
   LatLng? currentUserLocationValue;
   LatLng? selectedLocation; // State variable to store selected location
   final ApiUserSQL apiUserSQL = ApiUserSQL();
-  final Securestorage securestorage = Securestorage();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   @override
   void initState() {
@@ -338,10 +338,9 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         FFAppState().brukerLng =
                                             location.longitude;
                                         String? token =
-                                            await Securestorage().readToken();
+                                            await firebaseAuthService
+                                                .getToken(context);
                                         if (token == null) {
-                                          FFAppState().login = false;
-                                          context.pushNamed('registrer');
                                           return;
                                         } else {
                                           final apiUserSQL = ApiUserSQL();
@@ -448,10 +447,9 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         FFAppState().brukerLng =
                                             location.longitude;
                                         String? token =
-                                            await Securestorage().readToken();
+                                            await firebaseAuthService
+                                                .getToken(context);
                                         if (token == null) {
-                                          FFAppState().login = false;
-                                          context.pushNamed('registrer');
                                           return;
                                         } else {
                                           final apiUserSQL = ApiUserSQL();

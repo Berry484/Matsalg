@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -34,6 +33,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
   late OrdreInfo salgInfo;
   bool godkjennIsLoading = false;
   bool _messageIsLoading = false;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   @override
   void setState(VoidCallback callback) {
@@ -787,7 +787,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                           }
                                           godkjennIsLoading = true;
                                           String? token =
-                                              Securestorage.authToken;
+                                              await firebaseAuthService
+                                                  .getToken(context);
                                           if (token != null) {
                                             final response = await ApiKjop()
                                                 .avvis(
@@ -897,7 +898,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                             }
                                             godkjennIsLoading = true;
                                             String? token =
-                                                Securestorage.authToken;
+                                                await firebaseAuthService
+                                                    .getToken(context);
                                             if (token != null) {
                                               final response = await ApiKjop()
                                                   .svarBud(

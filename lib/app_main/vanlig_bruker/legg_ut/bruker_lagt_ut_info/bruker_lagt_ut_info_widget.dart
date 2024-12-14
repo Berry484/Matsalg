@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -20,6 +23,7 @@ class BrukerLagtUtInfoWidget extends StatefulWidget {
 class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
     with TickerProviderStateMixin {
   late BrukerLagtUtInfoModel _model;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -61,6 +65,34 @@ class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
         ],
       ),
     });
+  }
+
+  Future<void> getAll() async {
+    try {
+      final appState = FFAppState();
+      appState.matvarer.clear();
+      appState.ordreInfo.clear();
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      } else {
+        List<OrdreInfo>? _alleInfo = await ApiKjop.getAll(token);
+        List<Matvarer>? fetchedMatvarer = await ApiGetMyFoods.getMyFoods(token);
+
+        setState(() {
+          if (_alleInfo != null && _alleInfo.isNotEmpty) {
+            FFAppState().ordreInfo = _alleInfo;
+          }
+          if (fetchedMatvarer != null && fetchedMatvarer.isNotEmpty) {
+            FFAppState().matvarer = fetchedMatvarer;
+          }
+        });
+      }
+    } on SocketException {
+      HapticFeedback.lightImpact();
+    } catch (e) {
+      HapticFeedback.lightImpact();
+    }
   }
 
   @override
@@ -127,6 +159,7 @@ class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
                         20.0, 16.0, 20.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        getAll();
                         context.goNamed('Hjem');
                       },
                       text: 'Ferdig',

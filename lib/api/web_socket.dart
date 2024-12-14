@@ -1,6 +1,6 @@
 import 'dart:io';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:web_socket_channel/io.dart';
@@ -22,6 +22,7 @@ class WebSocketService {
 
   late Stream<dynamic> _innerStream;
   final _outerStreamSubject = BehaviorSubject<dynamic>();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   Stream<dynamic> get stream => _outerStreamSubject.stream;
 
   bool _isConnected = false;
@@ -50,7 +51,7 @@ class WebSocketService {
 
       const String url = ApiConstants.baseSocketUrl;
 
-      String? token = await _getToken();
+      String? token = await firebaseAuthService.getToken(null);
 
       if (token == null || token.isEmpty) {
         logger.d('Error: Token is missing or invalid.');
@@ -418,9 +419,5 @@ class WebSocketService {
     if (updated) {
       _sendMarkAsReadRequest(sender);
     } else {}
-  }
-
-  Future<String?> _getToken() async {
-    return await Securestorage().readToken();
   }
 }

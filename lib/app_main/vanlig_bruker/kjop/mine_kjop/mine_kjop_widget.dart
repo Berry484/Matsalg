@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/godkjentebud/godkjentebud_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/kjopInfo/budInfo_widget.dart';
 import 'package:shimmer/shimmer.dart';
@@ -42,7 +42,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
   bool _salgisLoading = true;
   bool _kjopEmpty = false;
   bool _salgEmpty = false;
-  final Securestorage securestorage = Securestorage();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiCalls apicalls = ApiCalls();
 
   @override
@@ -128,10 +128,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
 
   Future<void> getAll() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         _alleInfo = await ApiKjop.getAll(token);
@@ -179,10 +177,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
 
   Future<void> updateUserStats() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         await apicalls.updateUserStats(token);

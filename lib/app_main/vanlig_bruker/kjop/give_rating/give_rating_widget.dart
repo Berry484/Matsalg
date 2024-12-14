@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
-import 'package:mat_salg/secureStorage.dart';
-
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -34,6 +33,7 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
   late GiveRatingModel _model;
   bool _messageIsLoading = false;
   ApiRating apiRating = ApiRating();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   @override
   void setState(VoidCallback callback) {
@@ -346,15 +346,11 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
                             try {
                               if (_messageIsLoading) return;
                               _messageIsLoading = true;
-                              String? token = await Securestorage().readToken();
-
+                              String? token =
+                                  await firebaseAuthService.getToken(context);
                               // Early return if token is null
                               if (token == null) {
-                                FFAppState().login = false;
                                 _messageIsLoading = false;
-                                if (mounted) {
-                                  context.goNamed('registrer');
-                                }
                                 return;
                               }
                               int rating = _model.ratingBarValue?.round() ?? 5;

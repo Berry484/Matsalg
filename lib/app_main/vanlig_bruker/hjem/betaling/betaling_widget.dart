@@ -3,8 +3,8 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/betaling/velgBetalingsmetode/velg_betaling_widget.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mat_salg/logging.dart';
@@ -62,7 +62,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
   bool applePay = true;
 
   late Matvarer matvare;
-  final Securestorage securestorage = Securestorage();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -1072,11 +1072,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     int matId = matvare.matId ?? 0;
 
                                     if (matvare.matId != null) {
-                                      String? token =
-                                          await Securestorage().readToken();
+                                      String? token = await firebaseAuthService
+                                          .getToken(context);
                                       if (token == null) {
-                                        FFAppState().login = false;
-                                        context.goNamed('registrer');
                                         return;
                                       } else {
                                         if (matId != 0) {

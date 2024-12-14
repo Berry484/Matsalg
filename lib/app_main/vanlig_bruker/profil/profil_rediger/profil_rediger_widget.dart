@@ -5,10 +5,9 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
-
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
@@ -31,6 +30,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
   ApiUserSQL apiUserSQL = ApiUserSQL();
   ApiMultiplePics apiMultiplePics = ApiMultiplePics();
   ApiCalls apiCalls = ApiCalls();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   bool _isLoading = false;
 
@@ -260,11 +260,9 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           return;
                                         }
                                       }
-                                      String? token =
-                                          await Securestorage().readToken();
+                                      String? token = await firebaseAuthService
+                                          .getToken(context);
                                       if (token == null) {
-                                        FFAppState().login = false;
-                                        context.goNamed('registrer');
                                         return;
                                       } else {
                                         String? filelink;

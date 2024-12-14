@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/sorter/sorter_widget.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:shimmer/shimmer.dart';
@@ -41,7 +41,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
   bool _isloading = true;
   bool _empty = false;
   int sorterVerdi = 1;
-  final Securestorage securestorage = Securestorage();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiGetFilterFood apiGetFilterFood = ApiGetFilterFood();
   final ScrollController _scrollController = ScrollController();
 
@@ -209,10 +209,8 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
 
   Future<void> getFilterFoods() async {
     try {
-      String? token = await Securestorage().readToken();
+      String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
-        FFAppState().login = false;
-        context.goNamed('registrer');
         return;
       } else {
         if (widget.kategori?.toLowerCase() == 'gårder') {
