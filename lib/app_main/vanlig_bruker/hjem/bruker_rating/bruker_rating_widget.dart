@@ -177,7 +177,6 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       } else {
         if (widget.mine != true && widget.username != null) {
           _ratings = await ApiRating.listRatings(token, widget.username);
-          print(_ratings);
         } else {
           _ratings = await ApiRating.listMineRatings(token);
         }

@@ -327,7 +327,6 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 final user = await _firebaseAuth.currentUser;
 
                                 if (user == null) {
-                                  print("FUUUUCK");
                                   return; // Handle error or user not found case
                                 }
                                 final idToken = await user.getIdToken();
@@ -524,7 +523,6 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 final user = await _firebaseAuth.currentUser;
 
                                 if (user == null) {
-                                  print("FUUUUCK");
                                   return; // Handle error or user not found case
                                 }
                                 final idToken = await user.getIdToken();

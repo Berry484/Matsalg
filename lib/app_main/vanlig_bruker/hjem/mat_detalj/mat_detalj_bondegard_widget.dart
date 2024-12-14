@@ -11,7 +11,6 @@ import 'package:mat_salg/app_main/vanlig_bruker/hjem/mat_detalj/get_updates/get_
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_animations.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
-import 'package:mat_salg/logging.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '/app_main/vanlig_bruker/hjem/info/info_widget.dart';
@@ -230,7 +229,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
             String formattedResponse =
                 response[0].toUpperCase() + response.substring(1).toLowerCase();
             poststed = formattedResponse;
-            logger.d(formattedResponse);
           }
         });
       }
