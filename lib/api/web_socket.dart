@@ -243,7 +243,8 @@ class WebSocketService {
                   appState.conversations.any((conversation) {
                 return conversation.messages.isNotEmpty &&
                     !conversation
-                        .messages.first.read; // Check the latest message
+                        .messages.first.read && // Check the latest message
+                    !conversation.messages.first.me; // Ensure it's sent by "me"
               });
 
               FFAppState().chatAlert.value = hasUnreadMessages;
