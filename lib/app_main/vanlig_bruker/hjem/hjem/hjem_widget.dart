@@ -2458,6 +2458,12 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
                                                             context.pushNamed(
                                                               'BrukerPage',
                                                               queryParameters: {
+                                                                'uid':
+                                                                    serializeParam(
+                                                                  profil.uid,
+                                                                  ParamType
+                                                                      .String,
+                                                                ),
                                                                 'username':
                                                                     serializeParam(
                                                                   profil

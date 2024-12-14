@@ -134,13 +134,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
         context.goNamed('registrer');
         return;
       } else {
-        if (widget.mine != true) {
-          username = widget.username;
-        }
-        if (widget.mine == true) {
-          username = FFAppState().brukernavn;
-        }
-        _brukerinfo = await ApiGetUser.checkUser(token, username);
+        _brukerinfo = await ApiGetUser.checkUser(token, widget.username);
         if (_brukerinfo != null && _brukerinfo!.isNotEmpty) {
           bruker = _brukerinfo![0];
         } else {
@@ -183,6 +177,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       } else {
         if (widget.mine != true && widget.username != null) {
           _ratings = await ApiRating.listRatings(token, widget.username);
+          print(_ratings);
         } else {
           _ratings = await ApiRating.listMineRatings(token);
         }

@@ -1074,7 +1074,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                     Container(
                                                                                       child: Flexible(
                                                                                         child: Text(
-                                                                                          alleInfo.kjopte == true ? alleInfo.selger : alleInfo.kjoper,
+                                                                                          alleInfo.kjopte == true ? alleInfo.selgerUsername ?? '' : alleInfo.kjoperUsername ?? '',
                                                                                           softWrap: true, // Enables wrapping
                                                                                           overflow: TextOverflow.visible, // Allows overflow to be visible or change to ellipsis
                                                                                           style: FlutterFlowTheme.of(context).headlineSmall.override(
@@ -1779,7 +1779,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Container(
                                                                                   child: Flexible(
                                                                                     child: Text(
-                                                                                      ordreInfo.selger,
+                                                                                      ordreInfo.selgerUsername ?? '',
                                                                                       style: FlutterFlowTheme.of(context).headlineSmall.override(
                                                                                             fontFamily: 'Nunito',
                                                                                             fontSize: 16,
@@ -2556,7 +2556,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Row(
                                                                               children: [
                                                                                 Text(
-                                                                                  salgInfo.kjoper,
+                                                                                  salgInfo.kjoperUsername ?? '',
                                                                                   style: FlutterFlowTheme.of(context).headlineSmall.override(
                                                                                         fontFamily: 'Nunito',
                                                                                         fontSize: 18,

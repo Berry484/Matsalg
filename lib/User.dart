@@ -1,5 +1,6 @@
 class User {
   final String? username;
+  final String? uid;
   final String? firstname;
   final String? lastname;
   final String? profilepic;
@@ -23,6 +24,7 @@ class User {
   User({
     // Fields for userInfo
     this.username,
+    this.uid,
     this.firstname,
     this.lastname,
     this.profilepic,
@@ -61,6 +63,7 @@ class User {
       // Fields from userInfo
 
       username: userInfo['username'] as String?,
+      uid: userInfo['uid'] as String?,
       firstname: userInfo['firstname'] as String?,
       lastname: userInfo['lastname'] as String?,
       profilepic: userInfo['profilepic'] as String?,
@@ -96,6 +99,7 @@ class User {
       // Fields from userInfo
 
       'username': username,
+      'uid': uid,
       'firstname': firstname,
       'lastname': lastname,
       'profilepic': profilepic,
@@ -122,6 +126,7 @@ class User {
   String toString() {
     return 'User {'
         'username: $username, '
+        'uid: $uid, '
         'firstname: $firstname, '
         'lastname: $lastname, '
         'profilepic: $profilepic, '

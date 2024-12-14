@@ -324,6 +324,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                   context.pushNamed(
                                     'BrukerPage',
                                     queryParameters: {
+                                      'uid': serializeParam(
+                                        matvare.uid,
+                                        ParamType.String,
+                                      ),
                                       'username': serializeParam(
                                         matvare.username,
                                         ParamType.String,
@@ -469,13 +473,16 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                 .firstWhere(
                                                           (conv) =>
                                                               conv.user ==
-                                                              matvare.username,
+                                                              matvare.uid,
                                                           orElse: () {
                                                             final newConversation =
                                                                 Conversation(
-                                                              user: matvare
+                                                              username: matvare
                                                                       .username ??
                                                                   '',
+                                                              user:
+                                                                  matvare.uid ??
+                                                                      '',
                                                               profilePic: matvare
                                                                       .profilepic ??
                                                                   '',
@@ -564,8 +571,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                                       context),
                                                               child:
                                                                   RapporterWidget(
-                                                                username: matvare
-                                                                    .username,
+                                                                username:
+                                                                    matvare.uid,
                                                                 matId: matvare
                                                                     .matId,
                                                               ),
@@ -1189,14 +1196,15 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                         .conversations
                                                         .firstWhere(
                                                   (conv) =>
-                                                      conv.user ==
-                                                      matvare.username,
+                                                      conv.user == matvare.uid,
                                                   orElse: () {
                                                     // If no conversation is found, create a new one and add it to the list
                                                     final newConversation =
                                                         Conversation(
-                                                      user: matvare.username ??
-                                                          '',
+                                                      username:
+                                                          matvare.username ??
+                                                              '',
+                                                      user: matvare.uid ?? '',
                                                       profilePic:
                                                           matvare.profilepic ??
                                                               '',

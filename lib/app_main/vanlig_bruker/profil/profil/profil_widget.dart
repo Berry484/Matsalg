@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/myIP.dart';
@@ -551,7 +552,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                       context.pushNamed(
                                                                                         'Folgere',
                                                                                         queryParameters: {
-                                                                                          'username': serializeParam(FFAppState().brukernavn, ParamType.String),
+                                                                                          'username': serializeParam(FirebaseAuth.instance.currentUser!.uid, ParamType.String),
                                                                                           'folger': serializeParam(
                                                                                             'Følgere',
                                                                                             ParamType.String,
@@ -621,7 +622,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                       context.pushNamed(
                                                                                         'Folgere',
                                                                                         queryParameters: {
-                                                                                          'username': serializeParam(FFAppState().brukernavn, ParamType.String),
+                                                                                          'username': serializeParam(FirebaseAuth.instance.currentUser!.uid, ParamType.String),
                                                                                           'folger': serializeParam(
                                                                                             'Følger',
                                                                                             ParamType.String,
@@ -715,7 +716,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     onTap: () => FocusScope.of(context).unfocus(),
                                                                                     child: Padding(
                                                                                       padding: MediaQuery.viewInsetsOf(context),
-                                                                                      child: const BrukerRatingWidget(
+                                                                                      child: BrukerRatingWidget(
+                                                                                        username: FirebaseAuth.instance.currentUser!.uid,
                                                                                         mine: true,
                                                                                       ),
                                                                                     ),

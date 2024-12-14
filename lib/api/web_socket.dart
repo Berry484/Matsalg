@@ -259,6 +259,7 @@ class WebSocketService {
           // Proceed with normal message handling if sender and content are present
           String sender = data['sender'] ?? ''; // The sender of the message
           String content = data['content'] ?? ''; // The content of the message
+          String username = data['username'] ?? '';
           String profilePic =
               data['profile_picture'] ?? ''; // The sender of the message
           String time =
@@ -278,7 +279,6 @@ class WebSocketService {
           final appState = FFAppState();
 
           bool empty = false;
-
           var conversation = appState.conversations.firstWhere(
             (conv) => conv.user == sender,
             orElse: () {
@@ -286,6 +286,7 @@ class WebSocketService {
               empty = true;
               return Conversation(
                 user: sender,
+                username: username,
                 profilePic: profilePic,
                 messages: [newMessage],
               );
@@ -309,7 +310,7 @@ class WebSocketService {
     }
   }
 
-  void sendMessage(String receiver, String content) {
+  void sendMessage(String receiver, String content, String username) {
     if (!_isConnected) {
       logger.d('WebSocket is not connected. Cannot send message.');
       throw const SocketException('');
@@ -337,8 +338,9 @@ class WebSocketService {
     var conversation = appState.conversations.firstWhere(
       (conv) => conv.user == receiver,
       orElse: () => Conversation(
+        username: username,
         user: receiver,
-        profilePic: '', // Default profile picture (empty or placeholder)
+        profilePic: '',
         messages: [newMessage], // Start the conversation with the new message
       ),
     );

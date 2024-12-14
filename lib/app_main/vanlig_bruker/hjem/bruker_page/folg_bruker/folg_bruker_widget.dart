@@ -14,8 +14,10 @@ import 'folg_bruker_model.dart';
 export 'folg_bruker_model.dart';
 
 class FolgBrukerWidget extends StatefulWidget {
-  const FolgBrukerWidget({super.key, this.username, this.pushEnabled});
+  const FolgBrukerWidget(
+      {super.key, this.uid, this.username, this.pushEnabled});
   final dynamic username;
+  final dynamic uid;
   final dynamic pushEnabled;
 
   @override
@@ -127,8 +129,8 @@ class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
     try {
       if (_isLoading) return;
       _isLoading = true;
-      await apiFolg.varslingBruker(Securestorage.authToken, widget.username,
-          _model.switchValue ?? false);
+      await apiFolg.varslingBruker(
+          Securestorage.authToken, widget.uid, _model.switchValue ?? false);
       _isLoading = false;
     } on SocketException {
       _isLoading = false;

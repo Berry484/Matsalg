@@ -23,9 +23,10 @@ import 'bruker_page_model.dart';
 export 'bruker_page_model.dart';
 
 class BrukerPageWidget extends StatefulWidget {
-  const BrukerPageWidget({this.bruker, this.username, super.key});
+  const BrukerPageWidget({this.bruker, this.uid, this.username, super.key});
 
   final dynamic bruker;
+  final String? uid;
   final String? username;
 
   @override
@@ -141,7 +142,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
       } else {
         // Fetch user info only if bruker is null
         if (widget.bruker != 1) {
-          _brukerinfo = await ApiGetUser.checkUser(token, widget.username);
+          _brukerinfo = await ApiGetUser.checkUser(token, widget.uid);
           if (_brukerinfo != null && _brukerinfo!.isNotEmpty) {
             bruker = _brukerinfo![0]; // Get the first User object
 
@@ -150,6 +151,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
             // Fallback values
             bruker = User(
               username: '',
+              uid: '',
               firstname: '',
               lastname: '',
               profilepic: '', // Default image
@@ -201,7 +203,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
 
   Future<void> unFolg() async {
     try {
-      await apiFolg.unfolgBruker(Securestorage.authToken, bruker?.username);
+      await apiFolg.unfolgBruker(Securestorage.authToken, widget.uid);
       safeSetState(() {
         _checkUser();
       });
@@ -216,7 +218,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
 
   Future<void> folgBruker() async {
     try {
-      await apiFolg.folgbruker(Securestorage.authToken, bruker?.username);
+      await apiFolg.folgbruker(Securestorage.authToken, widget.uid);
       safeSetState(() {
         _checkUser();
       });
@@ -237,7 +239,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         context.goNamed('registrer');
         return;
       } else {
-        _matvarer = await ApiGetUserFood.getUserFood(token, widget.username);
+        _matvarer = await ApiGetUserFood.getUserFood(token, widget.uid);
         setState(() {
           if (_matvarer != null && _matvarer!.isNotEmpty) {
             _matisLoading = false;
@@ -327,10 +329,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
 
                                   Conversation existingConversation =
                                       FFAppState().conversations.firstWhere(
-                                    (conv) => conv.user == widget.username,
+                                    (conv) => conv.user == widget.uid,
                                     orElse: () {
                                       final newConversation = Conversation(
-                                        user: widget.username ?? '',
+                                        username: widget.username ?? '',
+                                        user: widget.uid ?? '',
                                         profilePic: bruker!.profilepic ?? '',
                                         messages: [],
                                       );
@@ -396,7 +399,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
                                         child: RapporterWidget(
-                                          username: widget.username,
+                                          username: widget.uid,
                                           matId: null,
                                         ),
                                       ),
@@ -656,7 +659,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   context.pushNamed(
                                                                                     'Folgere',
                                                                                     queryParameters: {
-                                                                                      'username': serializeParam(widget.username, ParamType.String),
+                                                                                      'username': serializeParam(widget.uid, ParamType.String),
                                                                                       'folger': serializeParam('Følgere', ParamType.String),
                                                                                     }.withoutNulls,
                                                                                   );
@@ -720,7 +723,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   context.pushNamed(
                                                                                     'Folgere',
                                                                                     queryParameters: {
-                                                                                      'username': serializeParam(widget.username, ParamType.String),
+                                                                                      'username': serializeParam(widget.uid, ParamType.String),
                                                                                       'folger': serializeParam(
                                                                                         'Følger',
                                                                                         ParamType.String,
@@ -779,93 +782,6 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                     if (_model
                                                                             .folger ==
                                                                         true)
-                                                                      // FFButtonWidget(
-                                                                      //   onPressed:
-                                                                      //       () async {
-                                                                      //     if (_folgerLoading)
-                                                                      //       return;
-                                                                      //     _folgerLoading =
-                                                                      //         true;
-                                                                      //     await showModalBottomSheet(
-                                                                      //       isScrollControlled:
-                                                                      //           true,
-                                                                      //       backgroundColor:
-                                                                      //           Colors.transparent,
-                                                                      //       barrierColor: const Color.fromARGB(
-                                                                      //           60,
-                                                                      //           17,
-                                                                      //           0,
-                                                                      //           0),
-                                                                      //       useRootNavigator:
-                                                                      //           true,
-                                                                      //       context:
-                                                                      //           context,
-                                                                      //       builder:
-                                                                      //           (context) {
-                                                                      //         return GestureDetector(
-                                                                      //           onTap: () => FocusScope.of(context).unfocus(),
-                                                                      //           child: Padding(
-                                                                      //             padding: MediaQuery.viewInsetsOf(context),
-                                                                      //             child: FolgBrukerWidget(
-                                                                      //               username: widget.username,
-                                                                      //             ),
-                                                                      //           ),
-                                                                      //         );
-                                                                      //       },
-                                                                      //     ).then((value) =>
-                                                                      //         setState(() {
-                                                                      //           if (value == true) {
-                                                                      //             _model.folger = false;
-                                                                      //             safeSetState(() {});
-                                                                      //             unFolg();
-                                                                      //             _folgerLoading = false;
-                                                                      //           }
-                                                                      //           _folgerLoading = false;
-                                                                      //         }));
-                                                                      //     return;
-                                                                      //   },
-                                                                      //   text:
-                                                                      //       'Følger',
-                                                                      //   options:
-                                                                      //       FFButtonOptions(
-                                                                      //     width: ((bruker!.ratingTotalCount ?? 0) != 0)
-                                                                      //         ? 130
-                                                                      //         : 215,
-                                                                      //     height:
-                                                                      //         35,
-                                                                      //     padding: const EdgeInsetsDirectional
-                                                                      //         .fromSTEB(
-                                                                      //         16,
-                                                                      //         0,
-                                                                      //         16,
-                                                                      //         0),
-                                                                      //     color:
-                                                                      //         FlutterFlowTheme.of(context).primary,
-                                                                      //     textStyle: FlutterFlowTheme.of(context)
-                                                                      //         .titleSmall
-                                                                      //         .override(
-                                                                      //           fontFamily: 'Nunito',
-                                                                      //           color: FlutterFlowTheme.of(context).primaryText,
-                                                                      //           fontSize: 14,
-                                                                      //           letterSpacing: 0.0,
-                                                                      //           fontWeight: FontWeight.bold,
-                                                                      //         ),
-                                                                      //     elevation:
-                                                                      //         0,
-                                                                      //     borderSide:
-                                                                      //         const BorderSide(
-                                                                      //       color: const Color.fromARGB(
-                                                                      //           32,
-                                                                      //           87,
-                                                                      //           99,
-                                                                      //           108),
-                                                                      //       width:
-                                                                      //           1.3,
-                                                                      //     ),
-                                                                      //     borderRadius:
-                                                                      //         BorderRadius.circular(9),
-                                                                      //   ),
-                                                                      // ),
                                                                       GestureDetector(
                                                                         onTap:
                                                                             () async {
@@ -895,6 +811,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   padding: MediaQuery.viewInsetsOf(context),
                                                                                   child: FolgBrukerWidget(
                                                                                     username: widget.username,
+                                                                                    uid: widget.uid,
                                                                                     pushEnabled: bruker?.getPush ?? false,
                                                                                   ),
                                                                                 ),
@@ -1002,6 +919,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   padding: MediaQuery.viewInsetsOf(context),
                                                                                   child: FolgBrukerWidget(
                                                                                     username: widget.username,
+                                                                                    uid: widget.uid,
+                                                                                    pushEnabled: bruker?.getPush ?? false,
                                                                                   ),
                                                                                 ),
                                                                               );
@@ -1090,7 +1009,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   child: Padding(
                                                                                     padding: MediaQuery.viewInsetsOf(context),
                                                                                     child: BrukerRatingWidget(
-                                                                                      username: widget.username,
+                                                                                      username: widget.uid,
                                                                                       mine: false,
                                                                                     ),
                                                                                   ),

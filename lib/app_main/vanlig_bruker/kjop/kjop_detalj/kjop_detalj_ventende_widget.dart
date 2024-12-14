@@ -197,8 +197,12 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                     context.pushNamed(
                                       'BrukerPage',
                                       queryParameters: {
+                                        'uid': serializeParam(
+                                          ordreInfo.selger,
+                                          ParamType.String,
+                                        ),
                                         'username': serializeParam(
-                                          ordreInfo.foodDetails.username,
+                                          ordreInfo.selgerUsername,
                                           ParamType.String,
                                         ),
                                       },
@@ -251,8 +255,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(8, 0, 0, 13),
                                           child: Text(
-                                            ordreInfo.foodDetails.username ??
-                                                '',
+                                            ordreInfo.selgerUsername ?? '',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -760,16 +763,15 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         .firstWhere(
                                                   (conv) =>
                                                       conv.user ==
-                                                      ordreInfo
-                                                          .foodDetails.username,
+                                                      ordreInfo.selger,
                                                   orElse: () {
                                                     // If no conversation is found, create a new one and add it to the list
                                                     final newConversation =
                                                         Conversation(
-                                                      user: ordreInfo
-                                                              .foodDetails
-                                                              .username ??
+                                                      username: ordreInfo
+                                                              .selgerUsername ??
                                                           '',
+                                                      user: ordreInfo.selger,
                                                       profilePic: ordreInfo
                                                               .foodDetails
                                                               .profilepic ??

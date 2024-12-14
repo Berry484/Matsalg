@@ -631,6 +631,7 @@ class ApiGetAllFoods {
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
         // Convert the JSON into a list of Matvarer objects
+
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {
         // Handle unsuccessful response
@@ -1153,6 +1154,7 @@ class ApiFolg {
         // Map the dynamic data to UserInfo instances
         List<UserInfo> folgere = data.map((userData) {
           return UserInfo(
+            uid: userData['uid'],
             username: userData['username'],
             firstname: userData['firstname'],
             lastname: userData['lastname'],
@@ -1196,6 +1198,7 @@ class ApiFolg {
         // Map the dynamic data to UserInfo instances
         List<UserInfo> folgere = data.map((userData) {
           return UserInfo(
+            uid: userData['uid'],
             username: userData['username'],
             firstname: userData['firstname'],
             lastname: userData['lastname'],
@@ -1219,12 +1222,14 @@ class ApiFolg {
 
 class UserInfo {
   final String username;
+  final String uid;
   final String firstname;
   final String lastname;
   final String profilepic;
   bool following;
 
   UserInfo({
+    required this.uid,
     required this.username,
     required this.firstname,
     required this.lastname,
@@ -1308,15 +1313,13 @@ class ApiKjop {
           }
           Matvarer foodDetails = Matvarer.fromJson(
               orderData['matCopyDetails']); // Use the new Matvarer.fromJson
+
           return OrdreInfo(
             id: orderData['id'], // Unique ID of the order
             kjoper: orderData['kjoper'], // Username of the buyer
             selger: orderData['selger'], // Username of the seller
             matId: orderData['matId'], // Corrected to 'matId'
-            // Parse antall and ensure it has exactly 2 decimal places
             antall: orderData['antall'],
-
-            // Parse pris and ensure it has exactly 2 decimal places
             pris: orderData['pris'],
             time: DateTime.parse(orderData['time']), // Convert to DateTime
             godkjenttid: orderData['godkjenttid'] != null
@@ -1331,9 +1334,12 @@ class ApiKjop {
             avvist: orderData['avvist'], // Approval status
             kjopte: orderData['kjopte'],
             rated: orderData['rated'],
-
             kjoperProfilePic: orderData['user']['profilepic'] as String?,
-            foodDetails: foodDetails, // Pass the Matvarer instance here
+            kjoperUsername: orderData['user']['username'] as String?,
+            selgerUsername:
+                orderData['matCopyDetails']['user']['username'] as String?,
+
+            foodDetails: foodDetails,
           );
         }).toList();
 
@@ -1806,6 +1812,7 @@ class ApiSearchUsers {
           List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
           List<UserInfoSearch> profiler = data.map((userData) {
             return UserInfoSearch(
+              uid: userData['uid'] ?? '',
               username: userData['username'] ?? '',
               firstname: userData['firstname'] ?? '',
               lastname: userData['lastname'] ?? '',
@@ -1827,12 +1834,14 @@ class ApiSearchUsers {
 }
 
 class UserInfoSearch {
+  final String uid;
   final String username;
   final String firstname;
   final String lastname;
   final String profilepic;
 
   UserInfoSearch({
+    required this.uid,
     required this.username,
     required this.firstname,
     required this.lastname,
@@ -1887,7 +1896,7 @@ class ApiRating {
       // Make the API request with a timeout of 5 seconds
       final response = await http
           .get(
-            Uri.parse('$baseUrl/api/ratings/${username.toLowerCase()}'),
+            Uri.parse('$baseUrl/api/ratings/$username'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5));

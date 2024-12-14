@@ -416,11 +416,13 @@ class FFAppState extends ChangeNotifier {
 
 class Conversation {
   final String user;
+  final String username;
   final String profilePic;
   final List<Message> messages;
 
   Conversation({
     required this.user,
+    required this.username,
     required this.profilePic,
     required this.messages,
   });
@@ -428,6 +430,7 @@ class Conversation {
   factory Conversation.fromJson(Map<String, dynamic> json) {
     return Conversation(
       user: json['user'] as String? ?? "",
+      username: json['username'] as String? ?? "",
       profilePic: json['profile_picture'] as String? ?? "",
       messages: (json['messages'] as List)
           .map((messageJson) => Message.fromJson(messageJson))
@@ -437,6 +440,7 @@ class Conversation {
 
   Map<String, dynamic> toJson() {
     return {
+      'username': username,
       'user': user,
       'profile_picture': profilePic,
       'messages': messages.map((message) => message.toJson()).toList(),
@@ -511,6 +515,7 @@ class Matvarer {
   final bool? betaling;
   final bool? kg;
   final String? username;
+  final String? uid;
   final bool? bonde;
   final int? antall;
   final String? profilepic;
@@ -531,6 +536,7 @@ class Matvarer {
     this.betaling,
     this.kg,
     this.username,
+    this.uid,
     this.bonde,
     this.antall,
     this.profilepic,
@@ -568,6 +574,7 @@ class Matvarer {
       kg: listingJson['kg'] as bool?,
       // Getting the username and profilepic from the 'user' field inside 'listing'
       username: listingJson['username'] as String? ?? "",
+      uid: listingJson['uid'] as String? ?? "",
       bonde: listingJson['bonde'] as bool?,
       antall: listingJson['antall'] as int?,
       profilepic: listingJson['profilepic'] as String? ?? "",
@@ -606,6 +613,7 @@ class Matvarer {
       kg: listingJson['kg'] as bool?,
       // Getting the username and profilepic from the 'user' field
       username: userJson['username'] as String? ?? "",
+      uid: listingJson['uid'] as String? ?? "",
       bonde: userJson['bonde'] as bool?,
       antall: listingJson['antall'] as int?,
       profilepic: userJson['profilepic'] as String? ?? "",
@@ -636,6 +644,7 @@ class Matvarer {
       'lng': lng,
       'betaling': betaling,
       'kg': kg,
+      'uid': uid,
       'username': username,
       'bonde': bonde,
       'antall': antall,
@@ -661,6 +670,7 @@ class Matvarer {
         'lng: $lng, '
         'betaling: $betaling, '
         'kg: $kg, '
+        'uid: $uid, '
         'username: $username, '
         'bonde: $bonde, '
         'antall: $antall, '
@@ -688,6 +698,8 @@ class OrdreInfo {
   final bool? trekt;
   final bool? avvist;
   final String? kjoperProfilePic;
+  final String? kjoperUsername;
+  final String? selgerUsername;
   final Matvarer foodDetails;
   final bool? kjopte;
   final bool? rated;
@@ -707,6 +719,8 @@ class OrdreInfo {
     required this.trekt,
     required this.avvist,
     required this.kjoperProfilePic,
+    required this.kjoperUsername,
+    required this.selgerUsername,
     required this.foodDetails,
     required this.kjopte,
     required this.rated,
@@ -731,6 +745,8 @@ class OrdreInfo {
       trekt: json['trekt'] as bool?,
       avvist: json['avvist'] as bool?,
       kjoperProfilePic: json['kjoperProfilePic'] as String?,
+      kjoperUsername: json['kjoperUsername'] as String?,
+      selgerUsername: json['selgerUsername'] as String?,
       foodDetails: Matvarer.fromJson(json['foodDetails']),
       kjopte: json['kjopte'] as bool?,
       rated: json['rated'] as bool?,
@@ -754,6 +770,8 @@ class OrdreInfo {
       'trekt': trekt,
       'avvist': avvist,
       'kjoperProfilePic': kjoperProfilePic,
+      'kjoperUsername': kjoperUsername,
+      'selgerUsername': selgerUsername,
       'foodDetails': foodDetails.toJson(),
       'kjopte': kjopte,
       'rated': rated,

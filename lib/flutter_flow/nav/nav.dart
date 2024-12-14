@@ -151,10 +151,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                       final params = FFParameters(state);
                       final bruker =
                           params.getParam<String>('bruker', ParamType.String);
+                      final uid =
+                          params.getParam<String>('uid', ParamType.String);
                       final username =
                           params.getParam<String>('username', ParamType.String);
                       return BrukerPageWidget(
-                          bruker: bruker, username: username);
+                          bruker: bruker, uid: uid, username: username);
                     },
                     pageBuilder: (context, state) {
                       return CustomTransitionPage<void>(
@@ -162,6 +164,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                         child: BrukerPageWidget(
                           bruker: FFParameters(state)
                               .getParam<String>('bruker', ParamType.String),
+                          uid: FFParameters(state)
+                              .getParam<String>('uid', ParamType.String),
                           username: FFParameters(state)
                               .getParam<String>('username', ParamType.String),
                         ),

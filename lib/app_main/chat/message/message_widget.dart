@@ -317,7 +317,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 0),
                                   child: Text(
-                                    conversation.user,
+                                    conversation.username,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -520,9 +520,9 @@ class _MessageWidgetState extends State<MessageWidget> {
                         try {
                           if (_model.textController!.text.trim().isNotEmpty) {
                             _webSocketService.sendMessage(
-                              conversation.user,
-                              _model.textController!.text,
-                            );
+                                conversation.user,
+                                _model.textController!.text,
+                                conversation.username);
                             setState(() {
                               _model.textController!.clear();
                             });

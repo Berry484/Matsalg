@@ -713,6 +713,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 orElse: () {
                                   // If no conversation is found, create a new one and add it to the list
                                   final newConversation = Conversation(
+                                    username: ordreInfo.selgerUsername ?? '',
                                     user: ordreInfo.selger,
                                     profilePic: matvare.profilepic ?? '',
                                     messages: [],
@@ -971,8 +972,9 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                                     context),
                                                             child: GiveRatingWidget(
                                                                 kjop: true,
-                                                                username: matvare
-                                                                    .username),
+                                                                username:
+                                                                    ordreInfo
+                                                                        .selger),
                                                           ),
                                                         );
                                                       },
@@ -1057,6 +1059,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                       orElse: () {
                                         // If no conversation is found, create a new one and add it to the list
                                         final newConversation = Conversation(
+                                          username:
+                                              ordreInfo.selgerUsername ?? '',
                                           user: ordreInfo.selger,
                                           profilePic: matvare.profilepic ?? '',
                                           messages: [],

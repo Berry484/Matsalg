@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/api/web_socket.dart';
@@ -829,6 +830,8 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                   appState.matvarer.clear();
                                                   appState.ordreInfo.clear();
                                                   _webSocketService.close();
+                                                  await FirebaseAuth.instance
+                                                      .signOut();
                                                   context.go('/registrer');
                                                 } on SocketException {
                                                   HapticFeedback.lightImpact();

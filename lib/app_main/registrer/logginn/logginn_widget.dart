@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/secureStorage.dart';
 import 'package:mat_salg/api/web_socket.dart';
@@ -37,6 +39,8 @@ class _LogginnWidgetState extends State<LogginnWidget> {
   final Securestorage secureStorage = Securestorage();
   static const String baseUrl = ApiConstants.baseUrl;
   final _firebaseMessaging = FirebaseMessaging.instance;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   bool _isloading = false;
 
@@ -300,25 +304,35 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                             obscureText: !_model.passordVisibility,
                             onFieldSubmitted: (_) async {
                               if (_isloading) {
-                                return;
+                                return; // Prevent multiple presses while loading
                               }
+
+                              // Validate the form
                               if (_model.formKey.currentState == null ||
                                   !_model.formKey.currentState!.validate()) {
-                                return;
+                                return; // If the form is invalid, return early
                               }
+
                               _isloading = true;
+
                               try {
-                                FFAppState().startet = false;
-                                String? token = await apiGetToken.getAuthToken(
-                                    username: _model.emailTextController.text,
-                                    phoneNumber:
-                                        _model.emailTextController.text,
-                                    password:
-                                        _model.passordTextController.text);
+                                // Await the sign-in operation to ensure it's completed before proceeding
+                                await firebaseAuthService
+                                    .signInWithEmailAndPassword(
+                                  _model.emailTextController.text,
+                                  _model.passordTextController.text,
+                                );
 
-                                if (token != null) {
-                                  await secureStorage.writeToken(token);
+                                // After sign-in, check the current user
+                                final user = await _firebaseAuth.currentUser;
 
+                                if (user == null) {
+                                  print("FUUUUCK");
+                                  return; // Handle error or user not found case
+                                }
+                                final idToken = await user.getIdToken();
+                                if (idToken != null) {
+                                  await secureStorage.writeToken(idToken);
                                   final response = await apiCalls
                                       .checkUserInfo(Securestorage.authToken);
 
@@ -336,14 +350,13 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     FFAppState().profilepic =
                                         decodedResponse['profile_picture'] ??
                                             '';
-
-                                    _isloading = false;
                                     try {
                                       _webSocketService.connect();
                                       setState(() {});
                                     } catch (e) {
                                       logger.d("errror $e");
                                     }
+                                    _isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     sendToken();
@@ -405,7 +418,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     );
                                   },
                                 );
-                              } // Move focus to next field
+                              }
                             },
                             decoration: InputDecoration(
                               labelText: 'Passord',
@@ -488,25 +501,35 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (_isloading) {
-                                return;
+                                return; // Prevent multiple presses while loading
                               }
+
+                              // Validate the form
                               if (_model.formKey.currentState == null ||
                                   !_model.formKey.currentState!.validate()) {
-                                return;
+                                return; // If the form is invalid, return early
                               }
+
                               _isloading = true;
+
                               try {
-                                FFAppState().startet = false;
-                                String? token = await apiGetToken.getAuthToken(
-                                    username: _model.emailTextController.text,
-                                    phoneNumber:
-                                        _model.emailTextController.text,
-                                    password:
-                                        _model.passordTextController.text);
+                                // Await the sign-in operation to ensure it's completed before proceeding
+                                await firebaseAuthService
+                                    .signInWithEmailAndPassword(
+                                  _model.emailTextController.text,
+                                  _model.passordTextController.text,
+                                );
 
-                                if (token != null) {
-                                  await secureStorage.writeToken(token);
+                                // After sign-in, check the current user
+                                final user = await _firebaseAuth.currentUser;
 
+                                if (user == null) {
+                                  print("FUUUUCK");
+                                  return; // Handle error or user not found case
+                                }
+                                final idToken = await user.getIdToken();
+                                if (idToken != null) {
+                                  await secureStorage.writeToken(idToken);
                                   final response = await apiCalls
                                       .checkUserInfo(Securestorage.authToken);
 

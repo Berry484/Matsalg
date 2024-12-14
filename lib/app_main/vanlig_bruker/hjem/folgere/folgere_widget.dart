@@ -236,6 +236,10 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                             context.pushNamed(
                               'BrukerPage',
                               queryParameters: {
+                                'uid': serializeParam(
+                                  brukere.uid,
+                                  ParamType.String,
+                                ),
                                 'username': serializeParam(
                                   brukere.username,
                                   ParamType.String,
@@ -355,7 +359,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                               safeSetState(() {});
                                               apiFolg.unfolgBruker(
                                                   Securestorage.authToken,
-                                                  brukere.username);
+                                                  brukere.uid);
                                             } on SocketException {
                                               HapticFeedback.lightImpact();
                                               showErrorToast(context,
@@ -407,7 +411,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                               safeSetState(() {});
                                               apiFolg.folgbruker(
                                                   Securestorage.authToken,
-                                                  brukere.username);
+                                                  brukere.uid);
                                             } on SocketException {
                                               HapticFeedback.lightImpact();
                                               showErrorToast(context,

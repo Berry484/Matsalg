@@ -382,8 +382,12 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               context.pushNamed(
                                 'BrukerPage',
                                 queryParameters: {
-                                  'username': serializeParam(
+                                  'uid': serializeParam(
                                     salgInfo.kjoper,
+                                    ParamType.String,
+                                  ),
+                                  'username': serializeParam(
+                                    salgInfo.kjoperUsername,
                                     ParamType.String,
                                   ),
                                 },
@@ -427,7 +431,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     13, 0, 7, 0),
                                 child: Text(
-                                  salgInfo.kjoper,
+                                  salgInfo.kjoperUsername ?? '',
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
                                       .override(
@@ -461,6 +465,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                       orElse: () {
                                         // If no conversation is found, create a new one and add it to the list
                                         final newConversation = Conversation(
+                                          username:
+                                              salgInfo.kjoperUsername ?? '',
                                           user: salgInfo.kjoper,
                                           profilePic:
                                               salgInfo.kjoperProfilePic ?? '',

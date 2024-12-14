@@ -288,7 +288,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                             updateCallback: () => safeSetState(() {}),
                             child: MessagePreviewWidget(
                               messageTitle: conversation
-                                  .user, // Use the user's name from the conversation
+                                  .username, // Use the user's name from the conversation
                               messageContent: conversation.messages.isNotEmpty
                                   ? conversation.messages.first
                                       .content // Last message content

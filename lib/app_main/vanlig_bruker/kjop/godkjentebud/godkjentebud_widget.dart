@@ -245,6 +245,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                   context.pushNamed(
                     'BrukerPage',
                     queryParameters: {
+                      'uid': serializeParam(
+                        matvare.uid,
+                        ParamType.String,
+                      ),
                       'username': serializeParam(
                         matvare.username,
                         ParamType.String,
@@ -285,10 +289,16 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                           context.pushNamed(
                             'BrukerPage',
                             queryParameters: {
-                              'username': serializeParam(
+                              'uid': serializeParam(
                                 salgInfo.kjopte == true
                                     ? salgInfo.selger
                                     : salgInfo.kjoper,
+                                ParamType.String,
+                              ),
+                              'username': serializeParam(
+                                salgInfo.kjopte == true
+                                    ? salgInfo.selgerUsername
+                                    : salgInfo.kjoperUsername,
                                 ParamType.String,
                               ),
                             },
@@ -337,8 +347,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                     9, 0, 0, 0),
                                 child: Text(
                                   salgInfo.kjopte == true
-                                      ? salgInfo.selger
-                                      : salgInfo.kjoper,
+                                      ? salgInfo.selgerUsername ?? ''
+                                      : salgInfo.kjoperUsername ?? '',
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
                                       .override(
@@ -683,6 +693,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                             orElse: () {
                               // If no conversation is found, create a new one and add it to the list
                               final newConversation = Conversation(
+                                username: salgInfo.kjopte == false
+                                    ? salgInfo.kjoperUsername ?? ''
+                                    : salgInfo.selgerUsername ?? '',
                                 user: salgInfo.kjopte == false
                                     ? salgInfo.kjoper
                                     : salgInfo.selger,
