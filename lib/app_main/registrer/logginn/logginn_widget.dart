@@ -214,10 +214,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
         });
       }
     } on SocketException {
-      HapticFeedback.lightImpact();
-    } catch (e) {
-      HapticFeedback.lightImpact();
-    }
+    } catch (e) {}
   }
 
   @override

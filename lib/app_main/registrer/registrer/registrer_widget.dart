@@ -188,10 +188,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
         });
       }
     } on SocketException {
-      HapticFeedback.lightImpact();
-    } catch (e) {
-      HapticFeedback.lightImpact();
-    }
+    } catch (e) {}
   }
 
   @override
@@ -528,7 +525,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                 HapticFeedback.lightImpact();
                                 _isloading = false;
                                 feilInnlogging(
-                                    context, 'En uforventet feil oppstod');
+                                    context, 'Verifisering mislyktes');
                               }
                             },
                             text: 'Fortsett med google',
