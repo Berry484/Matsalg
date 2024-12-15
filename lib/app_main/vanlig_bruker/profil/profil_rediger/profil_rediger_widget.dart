@@ -320,12 +320,11 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           profilepic:
                                               filelink, // Null if no file was uploaded
                                         );
+                                        final decodedBody =
+                                            utf8.decode(response.bodyBytes);
+                                        final decodedResponse =
+                                            jsonDecode(decodedBody);
                                         if (response.statusCode == 200) {
-                                          final decodedBody =
-                                              utf8.decode(response.bodyBytes);
-                                          final decodedResponse =
-                                              jsonDecode(decodedBody);
-                                          // Update local app state with server response
                                           FFAppState().brukernavn =
                                               decodedResponse['username'] ?? '';
                                           FFAppState().email =
@@ -351,6 +350,20 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           FFAppState().login = false;
                                           context.goNamed('registrer');
                                           return;
+                                        }
+                                        if (decodedResponse['username'] ==
+                                            'username_change_too_soon') {
+                                          _isLoading = false;
+                                          HapticFeedback.lightImpact();
+                                          showErrorToast(context,
+                                              'Du må vente før du kan endre brukernavnet igjen');
+                                          context.safePop();
+                                        }
+                                        if (response.statusCode == 500) {
+                                          _isLoading = false;
+                                          HapticFeedback.lightImpact();
+                                          showErrorToast(context,
+                                              'Brukernavnet er allerede brukt av en annen bruker');
                                         }
                                       }
                                       _isLoading = false;
@@ -828,6 +841,134 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                 ),
                               ),
                             ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (widget.konto == 'Brukernavn')
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: TextFormField(
+                                    controller: _model.brukernavnTextController,
+                                    focusNode: _model.brukernavnFocusNode,
+                                    obscureText: false,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      '_model.textController',
+                                      const Duration(milliseconds: 200),
+                                      () => safeSetState(() {}),
+                                    ),
+                                    decoration: InputDecoration(
+                                      labelText: 'Brukernavn',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Nunito',
+                                            color: const Color.fromRGBO(
+                                                113, 113, 113, 1.0),
+                                            fontSize: 17.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondary,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondary,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 16,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    validator: _model
+                                        .brukernavnTextControllerValidator
+                                        .asValidator(context),
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(50),
+                                      TextInputFormatter.withFunction(
+                                          (oldValue, newValue) {
+                                        final lineCount = '\n'
+                                                .allMatches(newValue.text)
+                                                .length +
+                                            1;
+                                        if (lineCount > 1) {
+                                          return oldValue;
+                                        }
+                                        return newValue;
+                                      }),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 8, 12, 0),
+                            child: Text(
+                              'Du kan kun endre brukernavnet ditt en gang hver 30. dag',
+                              style: FlutterFlowTheme.of(context)
+                                  .labelLarge
+                                  .override(
+                                    fontFamily: 'Nunito',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 14,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
                           ),
                         ],
                       ),
