@@ -41,6 +41,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   bool _isloading = false;
+  String? _errorMessage;
 
   @override
   void setState(VoidCallback callback) {
@@ -53,11 +54,17 @@ class _LogginnWidgetState extends State<LogginnWidget> {
     super.initState();
     _model = createModel(context, () => LogginnModel());
     _webSocketService = WebSocketService();
-    _model.emailTextController ??= TextEditingController();
-    _model.emailFocusNode ??= FocusNode();
+    _model.telefonnummerTextController ??= TextEditingController();
+    _model.telefonnummerFocusNode ??= FocusNode();
 
     _model.passordTextController ??= TextEditingController();
     _model.passordFocusNode ??= FocusNode();
+    _model.landskodeTextController ??= TextEditingController();
+    _model.landskodeFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {
+          _model.landskodeTextController?.text = '+47';
+        }));
   }
 
   @override
@@ -312,78 +319,182 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                          child: TextFormField(
-                            controller: _model.emailTextController,
-                            focusNode: _model.emailFocusNode,
-                            obscureText: false,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (_) {
-                              FocusScope.of(context).requestFocus(_model
-                                  .passordFocusNode); // Move focus to next field
-                            },
-                            decoration: InputDecoration(
-                              labelText: 'E-post eller telefonnummer',
-                              labelStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    color: const Color.fromRGBO(
-                                        113, 113, 113, 1.0),
-                                    fontSize: 17.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                              hintStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    letterSpacing: 0.0,
-                                  ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
+                              child: Container(
+                                width: 60,
+                                height: 55,
+                                decoration: BoxDecoration(
                                   color: Colors.transparent,
-                                  width: 1,
+                                  borderRadius: BorderRadius.circular(0),
                                 ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).secondary,
-                                  width: 1,
+                                child: TextFormField(
+                                  controller: _model.landskodeTextController,
+                                  focusNode: _model.landskodeFocusNode,
+                                  readOnly: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          fontSize: 16,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 17,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                  textAlign: TextAlign.center,
+                                  validator: _model
+                                      .landskodeTextControllerValidator
+                                      .asValidator(context),
                                 ),
-                                borderRadius: BorderRadius.circular(20),
                               ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              filled: true,
-                              fillColor: FlutterFlowTheme.of(context).secondary,
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Nunito',
-                                  letterSpacing: 0.0,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 0, 0),
+                                child: TextFormField(
+                                  controller:
+                                      _model.telefonnummerTextController,
+                                  focusNode: _model.telefonnummerFocusNode,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Telefonnummer',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: const Color.fromRGBO(
+                                              113, 113, 113, 1.0),
+                                          fontSize: 17.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                    errorText: _errorMessage,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        letterSpacing: 0.0,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                  textAlign: TextAlign.start,
+                                  maxLength: 8,
+                                  buildCounter: (context,
+                                          {required currentLength,
+                                          required isFocused,
+                                          maxLength}) =>
+                                      null,
+                                  keyboardType: TextInputType.phone,
+                                  validator: _model
+                                      .telefonnummerTextControllerValidator
+                                      .asValidator(context),
+                                  onChanged: (phone) {
+                                    setState(() {
+                                      _errorMessage = null;
+                                    });
+                                  },
                                 ),
-                            validator: _model.emailTextControllerValidator
-                                .asValidator(context),
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding:
@@ -410,7 +521,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 // Await the sign-in operation to ensure it's completed before proceeding
                                 final response = await firebaseAuthService
                                     .signInWithEmailAndPassword(
-                                  _model.emailTextController.text,
+                                  '${_model.telefonnummerTextController.text}@gmail.com',
                                   _model.passordTextController.text,
                                 );
 
@@ -422,11 +533,10 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                   return;
                                 }
 
-                                // After sign-in, check the current user
                                 final user = await _firebaseAuth.currentUser;
 
                                 if (user == null) {
-                                  return; // Handle error or user not found case
+                                  return;
                                 }
                                 final idToken = await user.getIdToken();
                                 if (idToken != null) {
@@ -541,28 +651,28 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(14),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).secondary,
                                   width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(14),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).error,
                                   width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(14),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).error,
                                   width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(14),
                               ),
                               filled: true,
                               fillColor: FlutterFlowTheme.of(context).secondary,
@@ -613,7 +723,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                               try {
                                 final response = await firebaseAuthService
                                     .signInWithEmailAndPassword(
-                                  _model.emailTextController.text,
+                                  '${_model.telefonnummerTextController.text}@gmail.com',
                                   _model.passordTextController.text,
                                 );
 

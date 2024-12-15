@@ -872,6 +872,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               showCupertinoDialog(
                                 context: context,
                                 builder: (BuildContext context) {
+                                  bool godkjennIsLoading = false;
                                   return CupertinoAlertDialog(
                                     title: const Text("Bekreftelse"),
                                     content: const Text(

@@ -1,5 +1,14 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/app_main/registrer/velg_ny/velg_ny_widget.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/logging.dart';
+import 'package:mat_salg/myIP.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -7,6 +16,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'registrer_model.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:mat_salg/apiCalls.dart';
 
@@ -24,12 +34,164 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
   late RegistrerModel _model;
   final ApiCalls apiCalls = ApiCalls(); // Instantiate the ApiCalls class
   final ApiGetToken apiGetToken = ApiGetToken();
+  static const String baseUrl = ApiConstants.baseUrl;
+  final _firebaseMessaging = FirebaseMessaging.instance;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  late WebSocketService _webSocketService; // Declare WebSocketService
+
+  bool _isloading = false;
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => RegistrerModel());
+  }
+
+  void feilInnlogging(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 56.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.xmark_circle_fill,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 35.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    // Auto-remove the toast after 3 seconds if not dismissed
+    Future.delayed(const Duration(seconds: 3), () {
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
+    });
+  }
+
+  Future<http.Response?> sendToken() async {
+    try {
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return null;
+      } else {
+        await _firebaseMessaging.requestPermission();
+        final fCMToken = await _firebaseMessaging.getToken();
+        DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+        AndroidDeviceInfo? androidInfo;
+        IosDeviceInfo? iosInfo;
+
+        // Fetch device information for Android or iOS
+        if (Platform.isAndroid) {
+          androidInfo = await deviceInfo.androidInfo;
+        } else if (Platform.isIOS) {
+          iosInfo = await deviceInfo.iosInfo;
+        }
+        // Handle the case where deviceInfo may be null
+        if ((Platform.isAndroid && androidInfo == null) ||
+            (Platform.isIOS && iosInfo == null)) {
+          logger.d('Failed to fetch device information');
+          return null;
+        }
+        final Map<String, dynamic> userData = {
+          "token": fCMToken,
+          "device": Platform.isAndroid
+              ? androidInfo!.model
+              : iosInfo!.utsname.machine,
+        };
+        // Convert the Map to JSON
+        final String jsonBody = jsonEncode(userData);
+        final uri = Uri.parse('$baseUrl/push');
+        final headers = {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token', // Add Bearer token if present
+        };
+
+        final response = await http.post(
+          uri,
+          headers: headers,
+          body: jsonBody,
+        );
+        return response; // Return the response
+      }
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
+
+  Future<void> getAll() async {
+    try {
+      final appState = FFAppState();
+      appState.matvarer.clear();
+      appState.ordreInfo.clear();
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      } else {
+        List<OrdreInfo>? _alleInfo = await ApiKjop.getAll(token);
+        List<Matvarer>? fetchedMatvarer = await ApiGetMyFoods.getMyFoods(token);
+
+        setState(() {
+          if (_alleInfo != null && _alleInfo.isNotEmpty) {
+            FFAppState().ordreInfo = _alleInfo;
+          }
+          if (fetchedMatvarer != null && fetchedMatvarer.isNotEmpty) {
+            FFAppState().matvarer = fetchedMatvarer;
+          }
+        });
+      }
+    } on SocketException {
+      HapticFeedback.lightImpact();
+    } catch (e) {
+      HapticFeedback.lightImpact();
+    }
   }
 
   @override
@@ -100,7 +262,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                 },
                               ).then((value) => safeSetState(() {}));
                             },
-                            text: 'Fortsett med tlf eller email',
+                            text: 'Fortsett med telefonnummer',
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 50,
@@ -123,44 +285,285 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              20, 0, 20, 12),
-                          child: FFButtonWidget(
-                            onPressed: () {
-                              logger.d('Button pressed ...');
-                            },
-                            text: 'Fortsett med apple',
-                            icon: const FaIcon(
-                              FontAwesomeIcons.apple,
-                              size: 20,
-                            ),
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 50,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16, 0, 16, 0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    color: Colors.black,
-                                    fontSize: 17,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                              elevation: 0,
-                              borderSide: const BorderSide(
-                                color: Color(0x5957636C),
-                                width: 1.5,
+                        if (Platform.isAndroid)
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 0, 20, 12),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                try {
+                                  if (_isloading) return;
+                                  _isloading = true;
+                                  await firebaseAuthService.loginWithGoogle();
+
+                                  String? token = await firebaseAuthService
+                                      .getToken(context);
+
+                                  if (token != null) {
+                                    final response =
+                                        await apiCalls.checkUserInfo(token);
+
+                                    if (response.statusCode == 200) {
+                                      final decodedResponse =
+                                          jsonDecode(response.body);
+                                      FFAppState().brukernavn =
+                                          decodedResponse['brukernavn'] ?? '';
+                                      FFAppState().firstname =
+                                          decodedResponse['firstname'] ?? '';
+                                      FFAppState().lastname =
+                                          decodedResponse['lastname'] ?? '';
+                                      FFAppState().bio =
+                                          decodedResponse['bio'] ?? '';
+                                      FFAppState().profilepic =
+                                          decodedResponse['profile_picture'] ??
+                                              '';
+                                      try {
+                                        _webSocketService.connect();
+                                        setState(() {});
+                                      } catch (e) {
+                                        logger.d("errror $e");
+                                      }
+                                      _isloading = false;
+                                      _webSocketService = WebSocketService();
+                                      _webSocketService.connect(retrying: true);
+                                      getAll();
+                                      sendToken();
+                                      _isloading = false;
+                                      context.go('/hjem');
+                                      FFAppState().login = true;
+                                      return;
+                                    }
+                                    if (response.statusCode == 404) {
+                                      LatLng? location;
+                                      location = await getCurrentUserLocation(
+                                          defaultLocation:
+                                              const LatLng(0.0, 0.0));
+
+                                      if (location != const LatLng(0.0, 0.0)) {
+                                        _isloading = false;
+                                        context.goNamed(
+                                          'opprettProfil',
+                                          queryParameters: {
+                                            'phone': serializeParam(
+                                              '0',
+                                              ParamType.String,
+                                            ),
+                                            'posisjon': serializeParam(
+                                              location,
+                                              ParamType.LatLng,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      } else {
+                                        _isloading = false;
+                                        context.goNamed(
+                                          'VelgPosisjon',
+                                          queryParameters: {
+                                            'bonde': serializeParam(
+                                              false,
+                                              ParamType.bool,
+                                            ),
+                                            'endrepos': serializeParam(
+                                              false,
+                                              ParamType.bool,
+                                            ),
+                                            'phone': serializeParam(
+                                              '0',
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      }
+                                      _isloading = false;
+                                    }
+                                  } else {
+                                    _isloading = false;
+                                    throw (Exception);
+                                  }
+                                } on SocketException {
+                                  HapticFeedback.lightImpact();
+                                  _isloading = false;
+                                  feilInnlogging(
+                                      context, 'Ingen internettforbindelse');
+                                } catch (e) {
+                                  HapticFeedback.lightImpact();
+                                  _isloading = false;
+                                  feilInnlogging(
+                                      context, 'En uforventet feil oppstod');
+                                }
+                              },
+                              text: 'Fortsett med google',
+                              icon: const FaIcon(
+                                FontAwesomeIcons.google,
+                                size: 20,
                               ),
-                              borderRadius: BorderRadius.circular(14),
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 50,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    16, 0, 16, 0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 0),
+                                color: FlutterFlowTheme.of(context).primary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Nunito',
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                elevation: 0,
+                                borderSide: const BorderSide(
+                                  color: Color(0x5957636C),
+                                  width: 1.5,
+                                ),
+                                borderRadius: BorderRadius.circular(14),
+                              ),
                             ),
                           ),
-                        ),
+                        if (Platform.isIOS)
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 0, 20, 12),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                try {
+                                  if (_isloading) return;
+                                  _isloading = true;
+                                  await firebaseAuthService.signInWithApple();
+
+                                  String? token = await firebaseAuthService
+                                      .getToken(context);
+                                  logger.d(token);
+
+                                  if (token != null) {
+                                    final response =
+                                        await apiCalls.checkUserInfo(token);
+
+                                    if (response.statusCode == 200) {
+                                      final decodedResponse =
+                                          jsonDecode(response.body);
+                                      FFAppState().brukernavn =
+                                          decodedResponse['brukernavn'] ?? '';
+                                      FFAppState().firstname =
+                                          decodedResponse['firstname'] ?? '';
+                                      FFAppState().lastname =
+                                          decodedResponse['lastname'] ?? '';
+                                      FFAppState().bio =
+                                          decodedResponse['bio'] ?? '';
+                                      FFAppState().profilepic =
+                                          decodedResponse['profile_picture'] ??
+                                              '';
+                                      try {
+                                        _webSocketService.connect();
+                                        setState(() {});
+                                      } catch (e) {
+                                        logger.d("errror $e");
+                                      }
+                                      _isloading = false;
+                                      _webSocketService = WebSocketService();
+                                      _webSocketService.connect(retrying: true);
+                                      getAll();
+                                      sendToken();
+                                      _isloading = false;
+                                      context.go('/hjem');
+                                      FFAppState().login = true;
+                                      return;
+                                    }
+                                    if (response.statusCode == 404) {
+                                      LatLng? location;
+                                      location = await getCurrentUserLocation(
+                                          defaultLocation:
+                                              const LatLng(0.0, 0.0));
+
+                                      if (location != const LatLng(0.0, 0.0)) {
+                                        _isloading = false;
+                                        context.goNamed(
+                                          'opprettProfil',
+                                          queryParameters: {
+                                            'phone': serializeParam(
+                                              '0',
+                                              ParamType.String,
+                                            ),
+                                            'posisjon': serializeParam(
+                                              location,
+                                              ParamType.LatLng,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      } else {
+                                        _isloading = false;
+                                        context.goNamed(
+                                          'VelgPosisjon',
+                                          queryParameters: {
+                                            'bonde': serializeParam(
+                                              false,
+                                              ParamType.bool,
+                                            ),
+                                            'endrepos': serializeParam(
+                                              false,
+                                              ParamType.bool,
+                                            ),
+                                            'phone': serializeParam(
+                                              '0',
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      }
+                                      _isloading = false;
+                                    }
+                                  } else {
+                                    _isloading = false;
+                                    throw (Exception);
+                                  }
+                                } on SocketException {
+                                  HapticFeedback.lightImpact();
+                                  _isloading = false;
+                                  feilInnlogging(
+                                      context, 'Ingen internettforbindelse');
+                                } catch (e) {
+                                  HapticFeedback.lightImpact();
+                                  _isloading = false;
+                                  feilInnlogging(
+                                      context, 'En uforventet feil oppstod');
+                                }
+                              },
+                              text: 'Fortsett med apple',
+                              icon: const FaIcon(
+                                FontAwesomeIcons.apple,
+                                size: 20,
+                              ),
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 50,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    16, 0, 16, 0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 0),
+                                color: FlutterFlowTheme.of(context).primary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Nunito',
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                elevation: 0,
+                                borderSide: const BorderSide(
+                                  color: Color(0x5957636C),
+                                  width: 1.5,
+                                ),
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                            ),
+                          ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               20, 0, 20, 0),

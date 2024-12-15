@@ -50,7 +50,9 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   @override
   void initState() {
     super.initState();
-    FirebaseAuth.instance.signOut();
+    if (widget.phone != '0') {
+      FirebaseAuth.instance.signOut();
+    }
     _model = createModel(context, () => OpprettProfilModel());
     _model.brukernavnTextController ??= TextEditingController();
     _model.brukernavnFocusNode ??= FocusNode();
@@ -761,141 +763,151 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 16, 0, 0),
-                                            child: TextFormField(
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
-                                              controller:
-                                                  _model.passordTextController,
-                                              focusNode:
-                                                  _model.passordFocusNode,
-                                              textInputAction:
-                                                  TextInputAction.done,
-                                              enableSuggestions: false,
-                                              autocorrect: false,
-                                              autofillHints:
-                                                  null, // Disable autofill for this field
-                                              keyboardType: TextInputType.text,
-                                              obscureText:
-                                                  !_model.passordVisibility,
-                                              decoration: InputDecoration(
-                                                labelText: 'Passord',
-                                                labelStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Nunito',
-                                                      color:
-                                                          const Color.fromRGBO(
-                                                              113,
-                                                              113,
-                                                              113,
-                                                              1.0),
-                                                      fontSize: 16.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondary,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                                suffixIcon: InkWell(
-                                                  onTap: () => safeSetState(
-                                                    () => _model
-                                                            .passordVisibility =
-                                                        !_model
-                                                            .passordVisibility,
-                                                  ),
-                                                  focusNode: FocusNode(
-                                                      skipTraversal: true),
-                                                  child: Icon(
-                                                    _model.passordVisibility
-                                                        ? Icons
-                                                            .visibility_outlined
-                                                        : Icons
-                                                            .visibility_off_outlined,
-                                                    color:
-                                                        const Color(0xFF757575),
-                                                    size: 22,
-                                                  ),
-                                                ),
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
+                                    if (widget.phone != '0')
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 16, 0, 0),
+                                              child: TextFormField(
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                controller: _model
+                                                    .passordTextController,
+                                                focusNode:
+                                                    _model.passordFocusNode,
+                                                textInputAction:
+                                                    TextInputAction.done,
+                                                enableSuggestions: false,
+                                                autocorrect: false,
+                                                autofillHints:
+                                                    null, // Disable autofill for this field
+                                                keyboardType:
+                                                    TextInputType.text,
+                                                obscureText:
+                                                    !_model.passordVisibility,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Passord',
+                                                  labelStyle: FlutterFlowTheme
+                                                          .of(context)
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 15,
+                                                        color: const Color
+                                                            .fromRGBO(
+                                                            113, 113, 113, 1.0),
+                                                        fontSize: 16.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                  hintStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
                                                         letterSpacing: 0.0,
                                                       ),
-                                              textAlign: TextAlign.start,
-                                              validator: _model
-                                                  .passordTextControllerValidator
-                                                  .asValidator(context),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Colors.transparent,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondary,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                  suffixIcon: InkWell(
+                                                    onTap: () => safeSetState(
+                                                      () => _model
+                                                              .passordVisibility =
+                                                          !_model
+                                                              .passordVisibility,
+                                                    ),
+                                                    focusNode: FocusNode(
+                                                        skipTraversal: true),
+                                                    child: Icon(
+                                                      _model.passordVisibility
+                                                          ? Icons
+                                                              .visibility_outlined
+                                                          : Icons
+                                                              .visibility_off_outlined,
+                                                      color: const Color(
+                                                          0xFF757575),
+                                                      size: 22,
+                                                    ),
+                                                  ),
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 15,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                textAlign: TextAlign.start,
+                                                validator: _model
+                                                    .passordTextControllerValidator
+                                                    .asValidator(context),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
+                                        ],
+                                      ),
                                   ],
                                 ),
                               ),
@@ -946,135 +958,246 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                             if (_isloading == true) {
                               return;
                             }
-                            if (_model.formKey.currentState == null ||
-                                !_model.formKey.currentState!.validate()) {
-                              return;
-                            }
 
-                            if (_errorMessage != null || _emailTatt != null) {
-                              return;
-                            }
-
-                            try {
-                              _isloading = true;
-                              FirebaseAuth.instance.signOut();
-                              await apiCalls
-                                  .checkEmailTaken(
-                                      _model.emailTextController.text)
-                                  .then((response1) {
-                                setState(() {
-                                  if (response1.statusCode != 200) {
-                                    _emailTatt = "E-posten er allerede i bruk";
-                                  } else {
-                                    _emailTatt = null;
-                                  }
-                                });
-                                return;
-                              });
-                              String username =
-                                  _model.brukernavnTextController.text.trim();
-                              String firstName =
-                                  _model.fornavnTextController.text.trim();
-                              String lastName =
-                                  _model.etternavnTextController.text.trim();
-                              String email =
-                                  _model.emailTextController.text.trim();
-                              String password =
-                                  _model.passordTextController.text.trim();
-
-                              //Make user in firebase
+                            //Lag bruker med apple, google, facebook
+                            if (widget.phone == '0') {
                               try {
-                                final response = await firebaseAuthService
-                                    .signUpWithEmailAndPassword(
-                                        email, password);
-                                if (response == null) {
-                                  _isloading = false;
-                                  safeSetState(() {
-                                    showCupertinoDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return CupertinoAlertDialog(
-                                          title: const Text('En feil oppstod'),
-                                          content: const Text(
-                                              'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
-                                          actions: <Widget>[
-                                            CupertinoDialogAction(
-                                              onPressed: () async {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Text(
-                                                'Ok',
-                                                style: TextStyle(
-                                                    color: Colors.blue),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    return;
-                                  });
+                                if (_model.formKey.currentState == null ||
+                                    !_model.formKey.currentState!.validate()) {
+                                  return;
                                 }
-                              } catch (e) {
-                                if (e == 'email-taken') {
-                                  setState(() {
-                                    _isloading = false;
-                                    _emailTatt = "E-posten er allerede i bruk";
-                                  });
-                                }
-                              }
 
-                              String? token =
-                                  await firebaseAuthService.getToken(context);
-                              if (token == null) {
+                                if (_errorMessage != null ||
+                                    _emailTatt != null) {
+                                  return;
+                                }
+                                _isloading = true;
+                                String? token =
+                                    await firebaseAuthService.getToken(context);
+                                logger.d(token);
+                                _isloading = false;
+
+                                await apiCalls
+                                    .checkEmailTaken(
+                                        _model.emailTextController.text)
+                                    .then((response1) {
+                                  setState(() {
+                                    if (response1.statusCode != 200) {
+                                      _emailTatt =
+                                          "E-posten er allerede i bruk";
+                                    } else {
+                                      _emailTatt = null;
+                                    }
+                                  });
+                                  return;
+                                });
+                                String username =
+                                    _model.brukernavnTextController.text.trim();
+                                String firstName =
+                                    _model.fornavnTextController.text.trim();
+                                String lastName =
+                                    _model.etternavnTextController.text.trim();
+                                String email =
+                                    _model.emailTextController.text.trim();
+
+                                if (token == null) {
+                                  _isloading = false;
+                                  errorToast(context,
+                                      'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
+                                }
+                                logger.d(token);
+
+                                if (token != null) {
+                                  final response =
+                                      await registerUser.createUser1(
+                                    token: token,
+                                    username: username,
+                                    email: email,
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    phoneNumber: '0',
+                                    posisjon: widget.posisjon,
+                                  );
+                                  logger.d(
+                                      '${response.body} + ${response.statusCode}');
+
+                                  if (response.statusCode == 200 ||
+                                      response.statusCode == 201) {
+                                    FFAppState().brukernavn = username;
+                                    FFAppState().firstname = firstName;
+                                    FFAppState().lastname = lastName;
+                                    FFAppState().email = email;
+                                    FFAppState().brukerLat =
+                                        widget.posisjon.latitude;
+                                    FFAppState().brukerLng =
+                                        widget.posisjon.longitude;
+                                    FFAppState().login = true;
+                                    _isloading = false;
+                                    _webSocketService = WebSocketService();
+                                    _webSocketService.connect(retrying: true);
+                                    context.goNamed('AddProfilepic');
+                                  }
+
+                                  if (response.statusCode != 200 &&
+                                      response.statusCode != 201) {
+                                    _isloading = false;
+                                    errorToast(context,
+                                        'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
+                                    return;
+                                  }
+                                }
+                                _isloading = false;
+                              } catch (e) {
                                 _isloading = false;
                                 errorToast(context,
                                     'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                               }
+                              return;
+                            }
+                            /*
 
-                              if (token != null) {
-                                final response = await registerUser.createUser1(
-                                  token: token,
-                                  username: username,
-                                  email: email,
-                                  firstName: firstName,
-                                  lastName: lastName,
-                                  phoneNumber: widget.phone,
-                                  posisjon: widget.posisjon,
-                                );
-                                logger.d(
-                                    '${response.body} + ${response.statusCode}');
 
-                                if (response.statusCode == 200 ||
-                                    response.statusCode == 201) {
-                                  FFAppState().brukernavn = username;
-                                  FFAppState().firstname = firstName;
-                                  FFAppState().lastname = lastName;
-                                  FFAppState().email = email;
-                                  FFAppState().brukerLat =
-                                      widget.posisjon.latitude;
-                                  FFAppState().brukerLng =
-                                      widget.posisjon.longitude;
-                                  FFAppState().login = true;
-                                  _isloading = false;
-                                  _webSocketService = WebSocketService();
-                                  _webSocketService.connect(retrying: true);
-                                  context.goNamed('AddProfilepic');
+
+
+
+                            */
+                            //Vanlig lag bruker
+                            if (widget.phone != null) {
+                              if (_model.formKey.currentState == null ||
+                                  !_model.formKey.currentState!.validate()) {
+                                return;
+                              }
+
+                              if (_errorMessage != null || _emailTatt != null) {
+                                return;
+                              }
+
+                              try {
+                                _isloading = true;
+                                FirebaseAuth.instance.signOut();
+                                await apiCalls
+                                    .checkEmailTaken(
+                                        _model.emailTextController.text)
+                                    .then((response1) {
+                                  setState(() {
+                                    if (response1.statusCode != 200) {
+                                      _emailTatt =
+                                          "E-posten er allerede i bruk";
+                                    } else {
+                                      _emailTatt = null;
+                                    }
+                                  });
+                                  return;
+                                });
+                                String username =
+                                    _model.brukernavnTextController.text.trim();
+                                String firstName =
+                                    _model.fornavnTextController.text.trim();
+                                String lastName =
+                                    _model.etternavnTextController.text.trim();
+                                String email =
+                                    _model.emailTextController.text.trim();
+                                String password =
+                                    _model.passordTextController.text.trim();
+
+                                //Make user in firebase
+                                try {
+                                  final response = await firebaseAuthService
+                                      .signUpWithEmailAndPassword(
+                                          '${widget.phone}@gmail.com',
+                                          password);
+                                  if (response == null) {
+                                    _isloading = false;
+                                    safeSetState(() {
+                                      showCupertinoDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return CupertinoAlertDialog(
+                                            title:
+                                                const Text('En feil oppstod'),
+                                            content: const Text(
+                                                'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
+                                            actions: <Widget>[
+                                              CupertinoDialogAction(
+                                                onPressed: () async {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  'Ok',
+                                                  style: TextStyle(
+                                                      color: Colors.blue),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      return;
+                                    });
+                                  }
+                                } catch (e) {
+                                  if (e == 'email-taken') {
+                                    setState(() {
+                                      _isloading = false;
+                                      _emailTatt =
+                                          "E-posten er allerede i bruk";
+                                    });
+                                  }
                                 }
 
-                                if (response.statusCode != 200 &&
-                                    response.statusCode != 201) {
+                                String? token =
+                                    await firebaseAuthService.getToken(context);
+                                if (token == null) {
                                   _isloading = false;
                                   errorToast(context,
                                       'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
-                                  return;
                                 }
+
+                                if (token != null) {
+                                  final response =
+                                      await registerUser.createUser1(
+                                    token: token,
+                                    username: username,
+                                    email: email,
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    phoneNumber: widget.phone,
+                                    posisjon: widget.posisjon,
+                                  );
+                                  logger.d(
+                                      '${response.body} + ${response.statusCode}');
+
+                                  if (response.statusCode == 200 ||
+                                      response.statusCode == 201) {
+                                    FFAppState().brukernavn = username;
+                                    FFAppState().firstname = firstName;
+                                    FFAppState().lastname = lastName;
+                                    FFAppState().email = email;
+                                    FFAppState().brukerLat =
+                                        widget.posisjon.latitude;
+                                    FFAppState().brukerLng =
+                                        widget.posisjon.longitude;
+                                    FFAppState().login = true;
+                                    _isloading = false;
+                                    _webSocketService = WebSocketService();
+                                    _webSocketService.connect(retrying: true);
+                                    context.goNamed('AddProfilepic');
+                                  }
+
+                                  if (response.statusCode != 200 &&
+                                      response.statusCode != 201) {
+                                    _isloading = false;
+                                    errorToast(context,
+                                        'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
+                                    return;
+                                  }
+                                }
+                                _isloading = false;
+                              } catch (e) {
+                                _isloading = false;
+                                errorToast(context,
+                                    'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                               }
-                              _isloading = false;
-                            } catch (e) {
-                              _isloading = false;
-                              errorToast(context,
-                                  'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                             }
                           },
                           text: 'Neste',

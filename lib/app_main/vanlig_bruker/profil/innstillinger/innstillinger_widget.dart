@@ -834,13 +834,19 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                       .signOut();
                                                   context.go('/registrer');
                                                 } on SocketException {
-                                                  HapticFeedback.lightImpact();
-                                                  showErrorToast(context,
-                                                      'Ingen internettforbindelse');
+                                                  if (mounted) {
+                                                    HapticFeedback
+                                                        .lightImpact();
+                                                    showErrorToast(context,
+                                                        'Ingen internettforbindelse');
+                                                  }
                                                 } catch (e) {
-                                                  HapticFeedback.lightImpact();
-                                                  showErrorToast(context,
-                                                      'En feil oppstod');
+                                                  if (mounted) {
+                                                    HapticFeedback
+                                                        .lightImpact();
+                                                    showErrorToast(context,
+                                                        'En feil oppstod');
+                                                  }
                                                 }
                                               },
                                               child: const Text(
