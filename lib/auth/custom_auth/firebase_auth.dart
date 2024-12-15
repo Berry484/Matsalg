@@ -14,12 +14,11 @@ class FirebaseAuthService {
       return credential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        // showToast(message: 'The email address is already in use.');
+        throw (Exception('email-taken'));
       } else {
-        // showToast(message: 'An error occurred: ${e.code}');
+        return null;
       }
     }
-    return null;
   }
 
   Future<User?> signInWithEmailAndPassword(

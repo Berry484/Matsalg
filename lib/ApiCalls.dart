@@ -37,11 +37,10 @@ class ApiCalls {
   }
 
 //----------------------------------------------------------------------------------------------
-  Future<http.Response> checkPhoneTaken(String phoneNumber) async {
+  Future<http.Response> checkPhoneTaken(String phone) async {
     try {
-      final response = await http
-          .get(Uri.parse('$baseUrl/rrh/check-phone?phoneNumber=$phoneNumber'));
-
+      final response =
+          await http.get(Uri.parse('$baseUrl/rrh/phoneLedig?phone=$phone'));
       return response; // Return the response
     } on SocketException {
       throw const SocketException('');
@@ -186,9 +185,9 @@ class ApiCalls {
 //----------------------------------------------------------------------------------------------
 class RegisterUser {
   Future<http.Response> createUser1({
+    required String token,
     required String username,
     required String? email,
-    required String? password,
     required String? phoneNumber,
     required String firstName,
     required String lastName,
@@ -203,33 +202,23 @@ class RegisterUser {
       final Map<String, dynamic> userData = {
         "username": username,
         "email": email,
-        "emailVerified": true,
-        "firstName": firstName,
-        "lastName": lastName,
-        "enabled": true,
-        "attributes": {
-          "phoneNumber": [phoneNumber] // Custom attributes as a list
-        },
-        "credentials": [
-          {"type": "password", "value": password, "temporary": false}
-        ]
+        "firstname": firstName,
+        "lastname": lastName,
+        "phone_number": phoneNumber,
+        "lat": posisjon?.latitude.toString(),
+        "lng": posisjon?.longitude.toString(),
       };
 
-      // Convert the Map to JSON
       final String jsonBody = jsonEncode(userData);
+      final uri = Uri.parse('$baseUrl/rrh/brukere/create');
 
-      // Prepare URL with encoded parameters
-      final uri =
-          Uri.parse('$baseUrl/rrh/bruker/opprett').replace(queryParameters: {
-        'bio': bio,
-        'lat': posisjon?.latitude.toString(),
-        'lng': posisjon?.longitude.toString(),
-      });
-
-      // Send the POST request
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
       final response = await http.post(
         uri, // Use the updated URI with query parameters
-        headers: {'Content-Type': 'application/json'},
+        headers: headers,
         body: jsonBody,
       );
 
@@ -670,7 +659,7 @@ class ApiGetMyFoods {
 
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
-        // Convert the JSON into a list of Matvarer objects
+        FFAppState().matvarer = Matvarer.matvarerFromSnapShot(jsonResponse);
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {
         // Handle unsuccessful response
@@ -781,7 +770,7 @@ class ApiGetUserFood {
       // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse('$baseUrl/rrh/send/matvarer/mine?username=$username'),
+            Uri.parse('$baseUrl/rrh/send/matvarer/mine?uid=$username'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -790,7 +779,6 @@ class ApiGetUserFood {
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
-        // Convert the JSON into a list of Matvarer objects
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {
         // Handle unsuccessful response
@@ -1691,7 +1679,7 @@ class ApiUpdateFood {
         headers: headers,
         body: jsonBody,
       );
-
+      ApiGetMyFoods.getMyFoods(token);
       return response; // Return the response
     } on SocketException {
       throw const SocketException('');

@@ -192,6 +192,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
             if (widget.mine != true) {
               _ratingisLoading = true;
             }
+            ingenRatings = true;
             _ratingisLoading = true;
           }
         });

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mat_salg/logging.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,9 +15,11 @@ class VelgOTPWidget extends StatefulWidget {
   const VelgOTPWidget({
     super.key,
     this.phone,
+    required this.verificationId,
   });
 
   final String? phone;
+  final String verificationId;
 
   @override
   State<VelgOTPWidget> createState() => _VelgOTPWidgetState();
@@ -224,124 +228,154 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 12, 0, 35),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              if (_isloading) {
-                                return;
-                              }
-                              if (_model.formKey.currentState == null ||
-                                  !_model.formKey.currentState!.validate()) {
-                                return;
-                              }
-                              if (_model.emailTextController.text.isEmpty) {
-                                setState(() {
-                                  _isloading = false;
-                                  _errorMessage = "felt må fylles ut";
-                                });
-                                return;
-                              }
-                              if (_model.emailTextController.text.length != 6) {
-                                setState(() {
-                                  _isloading = false;
-                                  _errorMessage = "feil kode";
-                                });
-                                return;
-                              }
-                              try {
-                                _isloading = true;
-                                LatLng? location;
-                                location = await getCurrentUserLocation(
-                                    defaultLocation: const LatLng(0.0, 0.0));
+                          child: _isloading
+                              ? const CircularProgressIndicator()
+                              : FFButtonWidget(
+                                  onPressed: () async {
+                                    if (_isloading) {
+                                      return;
+                                    }
+                                    if (_model.formKey.currentState == null ||
+                                        !_model.formKey.currentState!
+                                            .validate()) {
+                                      return;
+                                    }
+                                    if (_model
+                                        .emailTextController.text.isEmpty) {
+                                      setState(() {
+                                        _isloading = false;
+                                        _errorMessage = "felt må fylles ut";
+                                      });
+                                      return;
+                                    }
+                                    if (_model
+                                            .emailTextController.text.length !=
+                                        6) {
+                                      setState(() {
+                                        _isloading = false;
+                                        _errorMessage = "feil kode";
+                                      });
+                                      return;
+                                    }
+                                    try {
+                                      _isloading = true;
+                                      try {
+                                        final cred =
+                                            PhoneAuthProvider.credential(
+                                                verificationId:
+                                                    widget.verificationId,
+                                                smsCode: _model
+                                                    .emailTextController.text);
+                                        await FirebaseAuth.instance
+                                            .signInWithCredential(cred);
+                                      } catch (e) {
+                                        logger.d(e.toString());
+                                        setState(() {
+                                          _isloading = false;
 
-                                if (location != const LatLng(0.0, 0.0)) {
-                                  _isloading = false;
-                                  context.goNamed(
-                                    'opprettProfil',
-                                    queryParameters: {
-                                      'phone': serializeParam(
-                                        widget.phone,
-                                        ParamType.String,
-                                      ),
-                                      'posisjon': serializeParam(
-                                        location,
-                                        ParamType.LatLng,
-                                      ),
-                                    }.withoutNulls,
-                                  );
-                                  // context.go('/hjem');
-                                } else {
-                                  _isloading = false;
-                                  context.goNamed(
-                                    'VelgPosisjon',
-                                    queryParameters: {
-                                      'bonde': serializeParam(
-                                        false,
-                                        ParamType.bool,
-                                      ),
-                                      'endrepos': serializeParam(
-                                        false,
-                                        ParamType.bool,
-                                      ),
-                                      'phone': serializeParam(
-                                        widget.phone,
-                                        ParamType.String,
-                                      ),
-                                    }.withoutNulls,
-                                  );
-                                }
-                                _isloading = false;
-                              } catch (e) {
-                                _isloading = false;
-                                showCupertinoDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return CupertinoAlertDialog(
-                                      title: const Text('En feil oppstod'),
-                                      content: const Text(
-                                          'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
-                                      actions: <Widget>[
-                                        CupertinoDialogAction(
-                                          onPressed: () async {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text(
-                                            'Ok',
-                                            style:
-                                                TextStyle(color: Colors.blue),
-                                          ),
-                                        ),
-                                      ],
-                                    );
+                                          _errorMessage = "feil kode";
+                                        });
+                                        return;
+                                      }
+
+                                      LatLng? location;
+                                      location = await getCurrentUserLocation(
+                                          defaultLocation:
+                                              const LatLng(0.0, 0.0));
+
+                                      if (location != const LatLng(0.0, 0.0)) {
+                                        _isloading = false;
+                                        context.goNamed(
+                                          'opprettProfil',
+                                          queryParameters: {
+                                            'phone': serializeParam(
+                                              widget.phone,
+                                              ParamType.String,
+                                            ),
+                                            'posisjon': serializeParam(
+                                              location,
+                                              ParamType.LatLng,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      } else {
+                                        _isloading = false;
+                                        context.goNamed(
+                                          'VelgPosisjon',
+                                          queryParameters: {
+                                            'bonde': serializeParam(
+                                              false,
+                                              ParamType.bool,
+                                            ),
+                                            'endrepos': serializeParam(
+                                              false,
+                                              ParamType.bool,
+                                            ),
+                                            'phone': serializeParam(
+                                              widget.phone,
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      }
+                                      _isloading = false;
+                                    } catch (e) {
+                                      _isloading = false;
+                                      showCupertinoDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return CupertinoAlertDialog(
+                                            title:
+                                                const Text('En feil oppstod'),
+                                            content: const Text(
+                                                'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
+                                            actions: <Widget>[
+                                              CupertinoDialogAction(
+                                                onPressed: () async {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  'Ok',
+                                                  style: TextStyle(
+                                                      color: Colors.blue),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                   },
-                                );
-                              }
-                            },
-                            text: 'Neste',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 50,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16, 0, 16, 0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 0),
-                              color: FlutterFlowTheme.of(context).alternate,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 17,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
+                                  text: 'Neste',
+                                  options: FFButtonOptions(
+                                    width: double.infinity,
+                                    height: 50,
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 16, 0),
+                                    iconPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 0),
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          fontSize: 17,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                    elevation: 0,
+                                    borderSide: const BorderSide(
+                                      color: Color(0x5957636C),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(14),
                                   ),
-                              elevation: 0,
-                              borderSide: const BorderSide(
-                                color: Color(0x5957636C),
-                                width: 1.5,
-                              ),
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                          ),
+                                ),
                         ),
                       ],
                     ),

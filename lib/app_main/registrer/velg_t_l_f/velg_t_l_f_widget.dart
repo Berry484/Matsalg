@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/app_main/registrer/logginn/logginn_widget.dart';
 import 'package:mat_salg/app_main/registrer/velg_o_t_p/velg_o_t_p_widget.dart';
+import 'package:mat_salg/logging.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -32,6 +36,72 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
   void setState(VoidCallback callback) {
     super.setState(callback);
     _model.onUpdate();
+  }
+
+  void errorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 56.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.xmark_circle_fill,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 35.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    // Auto-remove the toast after 3 seconds if not dismissed
+    Future.delayed(const Duration(seconds: 3), () {
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
+    });
   }
 
   @override
@@ -337,123 +407,224 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 12, 0, 35),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              if (_isloading) {
-                                return;
-                              }
-                              if (_model.formKey.currentState == null ||
-                                  !_model.formKey.currentState!.validate()) {
-                                return;
-                              }
-                              try {
-                                _isloading = true;
+                          child: _isloading
+                              ? const CircularProgressIndicator()
+                              : FFButtonWidget(
+                                  onPressed: () async {
+                                    if (_isloading) {
+                                      return;
+                                    }
+                                    if (_model.formKey.currentState == null ||
+                                        !_model.formKey.currentState!
+                                            .validate()) {
+                                      return;
+                                    }
+                                    try {
+                                      setState(() {
+                                        _isloading = true;
+                                      });
 
-                                if (_model
-                                    .telefonnummerTextController.text.isEmpty) {
-                                  setState(() {
-                                    _isloading = false;
-                                    _errorMessage = "felt må fylles ut";
-                                  });
-                                  return;
-                                }
-                                if (_model.telefonnummerTextController.text
-                                            .length !=
-                                        8 ||
-                                    (_model.telefonnummerTextController.text
-                                                .startsWith('4') !=
-                                            true &&
-                                        _model.telefonnummerTextController.text
-                                                .startsWith('9') !=
-                                            true)) {
-                                  setState(() {
-                                    _isloading = false;
-                                    _errorMessage = "fant ikke telefonnummeret";
-                                  });
-                                  return;
-                                }
+                                      if (_model.telefonnummerTextController
+                                          .text.isEmpty) {
+                                        safeSetState(() {
+                                          _isloading = false;
+                                          _errorMessage = "felt må fylles ut";
+                                        });
+                                        return;
+                                      }
+                                      if (_model.telefonnummerTextController
+                                                  .text.length !=
+                                              8 ||
+                                          (_model.telefonnummerTextController
+                                                      .text
+                                                      .startsWith('4') !=
+                                                  true &&
+                                              _model.telefonnummerTextController
+                                                      .text
+                                                      .startsWith('9') !=
+                                                  true)) {
+                                        safeSetState(() {
+                                          _isloading = false;
+                                          _errorMessage =
+                                              "fant ikke telefonnummeret";
+                                        });
+                                        return;
+                                      }
 
-                                final response = await apiCalls.checkPhoneTaken(
-                                    _model.telefonnummerTextController.text);
-                                if (response.statusCode == 200) {
-                                  Navigator.pop(context);
-                                  await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    enableDrag: false,
-                                    context: context,
-                                    builder: (context) {
-                                      return Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
-                                        child: VelgOTPWidget(
-                                          phone: _model
-                                              .telefonnummerTextController.text,
-                                        ),
-                                      );
-                                    },
-                                  ).then((value) => safeSetState(() {}));
-                                } else {
-                                  setState(() {
-                                    _isloading = false;
-                                    _errorMessage =
-                                        "Telefonnummeret er opptatt";
-                                  });
-                                  return;
-                                }
-                                _isloading = false;
-                              } catch (e) {
-                                _isloading = false;
-                                showCupertinoDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return CupertinoAlertDialog(
-                                      title: const Text('En feil oppstod'),
-                                      content: const Text(
-                                          'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
-                                      actions: <Widget>[
-                                        CupertinoDialogAction(
-                                          onPressed: () async {
-                                            Navigator.pop(context);
+                                      final response =
+                                          await apiCalls.checkPhoneTaken(_model
+                                              .telefonnummerTextController
+                                              .text);
+
+                                      if (response.statusCode != 200) {
+                                        safeSetState(() {
+                                          _isloading = false;
+                                        });
+                                        HapticFeedback.mediumImpact();
+                                        errorToast(context,
+                                            'En bruker med dette nummeret finnes allerede');
+                                        if (mounted) {
+                                          Navigator.pop(context);
+                                          showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            enableDrag: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding:
+                                                    MediaQuery.viewInsetsOf(
+                                                        context),
+                                                child: LogginnWidget(),
+                                              );
+                                            },
+                                          ).then((value) {
+                                            safeSetState(() {});
+                                          });
+                                        }
+                                        return;
+                                      }
+
+                                      bool canRequest =
+                                          await FFAppState().canRequestCode();
+                                      if (canRequest) {
+                                        await FirebaseAuth.instance
+                                            .verifyPhoneNumber(
+                                          phoneNumber:
+                                              '+47${_model.telefonnummerTextController.text}',
+                                          verificationCompleted:
+                                              (phoneAuthCredential) {},
+                                          verificationFailed: (error) {
+                                            logger.d(error.toString());
+                                            logger.d(
+                                                "Verification Failed: ${error.toString()}");
+                                            logger
+                                                .d("Error Code: ${error.code}");
+                                            logger.d(
+                                                "Error Message: ${error.message}");
+                                            if (error.code ==
+                                                'too-many-requests') {
+                                              if (mounted) {}
+                                              safeSetState(() {
+                                                _isloading = false;
+                                                _errorMessage =
+                                                    "For mange forsøk";
+                                              });
+                                            } else {
+                                              safeSetState(() {
+                                                _isloading = false;
+                                                HapticFeedback.mediumImpact();
+                                                errorToast(context,
+                                                    'En feil oppstod. Ta kontakt \nhvis problemet vedvarer');
+                                              });
+                                            }
                                           },
-                                          child: const Text(
-                                            'Ok',
-                                            style:
-                                                TextStyle(color: Colors.blue),
-                                          ),
-                                        ),
-                                      ],
-                                    );
+                                          codeSent: (verificationId,
+                                              forceResendingToken) {
+                                            logger.d("sent code");
+                                            logger.d(
+                                                "The code is: ${verificationId}");
+
+                                            FFAppState().storeTimestamp();
+                                            safeSetState(() {
+                                              _isloading = false;
+                                            });
+                                            if (mounted) {
+                                              showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                enableDrag: false,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: VelgOTPWidget(
+                                                      phone: _model
+                                                          .telefonnummerTextController
+                                                          .text,
+                                                      verificationId:
+                                                          verificationId,
+                                                    ),
+                                                  );
+                                                },
+                                              ).then((value) {
+                                                //safeSetState(() {});
+                                              });
+                                            }
+                                          },
+                                          codeAutoRetrievalTimeout:
+                                              (verificationId) {
+                                            logger.d("Auto Retireval timeout");
+                                          },
+                                        );
+                                      } else {
+                                        safeSetState(() {
+                                          _isloading = false;
+                                          HapticFeedback.mediumImpact();
+                                          errorToast(context,
+                                              'Vent minst 2 minutter før \ndu ber om ny kode');
+                                        });
+                                      }
+                                    } catch (e) {
+                                      _isloading = false;
+                                      showCupertinoDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return CupertinoAlertDialog(
+                                            title:
+                                                const Text('En feil oppstod'),
+                                            content: const Text(
+                                                'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
+                                            actions: <Widget>[
+                                              CupertinoDialogAction(
+                                                onPressed: () async {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  'Ok',
+                                                  style: TextStyle(
+                                                      color: Colors.blue),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                   },
-                                );
-                              }
-                            },
-                            text: 'Send',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 50,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16, 0, 16, 0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 0),
-                              color: FlutterFlowTheme.of(context).alternate,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 17,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
+                                  text: 'Send',
+                                  options: FFButtonOptions(
+                                    width: double.infinity,
+                                    height: 50,
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 16, 0),
+                                    iconPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 0),
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          fontSize: 17,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                    elevation: 0,
+                                    borderSide: const BorderSide(
+                                      color: Color(0x5957636C),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(14),
                                   ),
-                              elevation: 0,
-                              borderSide: const BorderSide(
-                                color: Color(0x5957636C),
-                                width: 1.5,
-                              ),
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                          ),
+                                ),
                         ),
                       ],
                     ),

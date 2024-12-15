@@ -412,6 +412,20 @@ class FFAppState extends ChangeNotifier {
     _chatRoom = value;
     prefs.setString('ff_chatRoom', value);
   }
+
+  Future<void> storeTimestamp() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('lastRequestTime', DateTime.now().millisecondsSinceEpoch);
+  }
+
+  Future<bool> canRequestCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    final lastRequestTime = prefs.getInt('lastRequestTime');
+    if (lastRequestTime == null) return true; // No previous request, allow
+
+    final timePassed = DateTime.now().millisecondsSinceEpoch - lastRequestTime;
+    return timePassed > 120 * 1000; // 2 minutes in milliseconds
+  }
 }
 
 class Conversation {

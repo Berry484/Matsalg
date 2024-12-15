@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'package:mat_salg/logging.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -48,6 +50,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   @override
   void initState() {
     super.initState();
+    FirebaseAuth.instance.signOut();
     _model = createModel(context, () => OpprettProfilModel());
     _model.brukernavnTextController ??= TextEditingController();
     _model.brukernavnFocusNode ??= FocusNode();
@@ -72,6 +75,72 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
     _model.dispose();
 
     super.dispose();
+  }
+
+  void errorToast(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry overlayEntry;
+
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 56.0,
+        left: 16.0,
+        right: 16.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.up, // Allow dismissing upwards
+            onDismissed: (_) =>
+                overlayEntry.remove(), // Remove overlay on dismiss
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.xmark_circle_fill,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 35.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      message,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    // Auto-remove the toast after 3 seconds if not dismissed
+    Future.delayed(const Duration(seconds: 3), () {
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
+    });
   }
 
   @override
@@ -335,6 +404,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   _model.fornavnTextController,
                                               focusNode:
                                                   _model.fornavnFocusNode,
+                                              textCapitalization:
+                                                  TextCapitalization.sentences,
                                               textInputAction:
                                                   TextInputAction.next,
                                               enableSuggestions:
@@ -448,6 +519,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   .etternavnTextController,
                                               focusNode:
                                                   _model.etternavnFocusNode,
+                                              textCapitalization:
+                                                  TextCapitalization.sentences,
                                               textInputAction:
                                                   TextInputAction.next,
                                               enableSuggestions:
@@ -884,6 +957,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
 
                             try {
                               _isloading = true;
+                              FirebaseAuth.instance.signOut();
                               await apiCalls
                                   .checkEmailTaken(
                                       _model.emailTextController.text)
@@ -908,98 +982,99 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                               String password =
                                   _model.passordTextController.text.trim();
 
-                              // Call the createUser method
-                              final response = await registerUser.createUser1(
-                                username: username,
-                                email: email,
-                                firstName: firstName,
-                                lastName: lastName,
-                                phoneNumber: widget.phone,
-                                password: password,
-                                posisjon: widget.posisjon,
-                              );
-                              if (response.statusCode == 200) {
-                                final token =
-                                    await firebaseAuthService.getToken(context);
-                                if (token == null) {
+                              //Make user in firebase
+                              try {
+                                final response = await firebaseAuthService
+                                    .signUpWithEmailAndPassword(
+                                        email, password);
+                                if (response == null) {
                                   _isloading = false;
-                                  throw (Exception());
-                                }
-                                FFAppState().brukernavn = username;
-                                FFAppState().firstname = firstName;
-                                FFAppState().lastname = lastName;
-                                FFAppState().email = email;
-                                FFAppState().brukerLat =
-                                    widget.posisjon.latitude;
-                                FFAppState().brukerLng =
-                                    widget.posisjon.longitude;
-                                FFAppState().login = true;
-                              }
-
-                              if (response.statusCode != 200) {
-                                _isloading = false;
-                                safeSetState(() {
-                                  showCupertinoDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return CupertinoAlertDialog(
-                                        title: const Text('En feil oppstod'),
-                                        content: const Text(
-                                            'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
-                                        actions: <Widget>[
-                                          CupertinoDialogAction(
-                                            onPressed: () async {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text(
-                                              'Ok',
-                                              style:
-                                                  TextStyle(color: Colors.blue),
+                                  safeSetState(() {
+                                    showCupertinoDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return CupertinoAlertDialog(
+                                          title: const Text('En feil oppstod'),
+                                          content: const Text(
+                                              'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
+                                          actions: <Widget>[
+                                            CupertinoDialogAction(
+                                              onPressed: () async {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text(
+                                                'Ok',
+                                                style: TextStyle(
+                                                    color: Colors.blue),
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  return;
-                                });
-                                _isloading = false;
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    return;
+                                  });
+                                }
+                              } catch (e) {
+                                if (e == 'email-taken') {
+                                  setState(() {
+                                    _isloading = false;
+                                    _emailTatt = "E-posten er allerede i bruk";
+                                  });
+                                }
                               }
 
-                              if (_model.formKey.currentState == null ||
-                                  !_model.formKey.currentState!.validate()) {
+                              String? token =
+                                  await firebaseAuthService.getToken(context);
+                              if (token == null) {
                                 _isloading = false;
-                                return;
+                                errorToast(context,
+                                    'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                               }
-                              if (response.statusCode == 200) {
-                                _isloading = false;
-                                _webSocketService = WebSocketService();
-                                _webSocketService.connect(retrying: true);
-                                context.goNamed('AddProfilepic');
+
+                              if (token != null) {
+                                final response = await registerUser.createUser1(
+                                  token: token,
+                                  username: username,
+                                  email: email,
+                                  firstName: firstName,
+                                  lastName: lastName,
+                                  phoneNumber: widget.phone,
+                                  posisjon: widget.posisjon,
+                                );
+                                logger.d(
+                                    '${response.body} + ${response.statusCode}');
+
+                                if (response.statusCode == 200 ||
+                                    response.statusCode == 201) {
+                                  FFAppState().brukernavn = username;
+                                  FFAppState().firstname = firstName;
+                                  FFAppState().lastname = lastName;
+                                  FFAppState().email = email;
+                                  FFAppState().brukerLat =
+                                      widget.posisjon.latitude;
+                                  FFAppState().brukerLng =
+                                      widget.posisjon.longitude;
+                                  FFAppState().login = true;
+                                  _isloading = false;
+                                  _webSocketService = WebSocketService();
+                                  _webSocketService.connect(retrying: true);
+                                  context.goNamed('AddProfilepic');
+                                }
+
+                                if (response.statusCode != 200 &&
+                                    response.statusCode != 201) {
+                                  _isloading = false;
+                                  errorToast(context,
+                                      'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
+                                  return;
+                                }
                               }
+                              _isloading = false;
                             } catch (e) {
                               _isloading = false;
-                              showCupertinoDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CupertinoAlertDialog(
-                                    title: const Text('En feil oppstod'),
-                                    content: const Text(
-                                        'Prøv på nytt senere eller ta kontakt hvis problemet vedvarer'),
-                                    actions: <Widget>[
-                                      CupertinoDialogAction(
-                                        onPressed: () async {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text(
-                                          'Ok',
-                                          style: TextStyle(color: Colors.blue),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                              errorToast(context,
+                                  'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                             }
                           },
                           text: 'Neste',
