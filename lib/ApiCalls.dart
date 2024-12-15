@@ -204,7 +204,7 @@ class RegisterUser {
         "email": email,
         "firstname": firstName,
         "lastname": lastName,
-        "phone_number": phoneNumber,
+        "phoneNumber": phoneNumber,
         "lat": posisjon?.latitude.toString(),
         "lng": posisjon?.longitude.toString(),
       };
