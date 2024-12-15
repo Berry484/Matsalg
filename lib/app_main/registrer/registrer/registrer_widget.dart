@@ -285,145 +285,6 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                             ),
                           ),
                         ),
-                        if (Platform.isAndroid)
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                20, 0, 20, 12),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                try {
-                                  if (_isloading) return;
-                                  _isloading = true;
-                                  await firebaseAuthService.loginWithGoogle();
-
-                                  String? token = await firebaseAuthService
-                                      .getToken(context);
-
-                                  if (token != null) {
-                                    final response =
-                                        await apiCalls.checkUserInfo(token);
-
-                                    if (response.statusCode == 200) {
-                                      final decodedResponse =
-                                          jsonDecode(response.body);
-                                      FFAppState().brukernavn =
-                                          decodedResponse['brukernavn'] ?? '';
-                                      FFAppState().firstname =
-                                          decodedResponse['firstname'] ?? '';
-                                      FFAppState().lastname =
-                                          decodedResponse['lastname'] ?? '';
-                                      FFAppState().bio =
-                                          decodedResponse['bio'] ?? '';
-                                      FFAppState().profilepic =
-                                          decodedResponse['profile_picture'] ??
-                                              '';
-                                      try {
-                                        _webSocketService.connect();
-                                        setState(() {});
-                                      } catch (e) {
-                                        logger.d("errror $e");
-                                      }
-                                      _isloading = false;
-                                      _webSocketService = WebSocketService();
-                                      _webSocketService.connect(retrying: true);
-                                      getAll();
-                                      sendToken();
-                                      _isloading = false;
-                                      context.go('/hjem');
-                                      FFAppState().login = true;
-                                      return;
-                                    }
-                                    if (response.statusCode == 404) {
-                                      LatLng? location;
-                                      location = await getCurrentUserLocation(
-                                          defaultLocation:
-                                              const LatLng(0.0, 0.0));
-
-                                      if (location != const LatLng(0.0, 0.0)) {
-                                        _isloading = false;
-                                        context.goNamed(
-                                          'opprettProfil',
-                                          queryParameters: {
-                                            'phone': serializeParam(
-                                              '0',
-                                              ParamType.String,
-                                            ),
-                                            'posisjon': serializeParam(
-                                              location,
-                                              ParamType.LatLng,
-                                            ),
-                                          }.withoutNulls,
-                                        );
-                                      } else {
-                                        _isloading = false;
-                                        context.goNamed(
-                                          'VelgPosisjon',
-                                          queryParameters: {
-                                            'bonde': serializeParam(
-                                              false,
-                                              ParamType.bool,
-                                            ),
-                                            'endrepos': serializeParam(
-                                              false,
-                                              ParamType.bool,
-                                            ),
-                                            'phone': serializeParam(
-                                              '0',
-                                              ParamType.String,
-                                            ),
-                                          }.withoutNulls,
-                                        );
-                                      }
-                                      _isloading = false;
-                                    }
-                                  } else {
-                                    _isloading = false;
-                                    throw (Exception);
-                                  }
-                                } on SocketException {
-                                  HapticFeedback.lightImpact();
-                                  _isloading = false;
-                                  feilInnlogging(
-                                      context, 'Ingen internettforbindelse');
-                                } catch (e) {
-                                  HapticFeedback.lightImpact();
-                                  _isloading = false;
-                                  feilInnlogging(
-                                      context, 'En uforventet feil oppstod');
-                                }
-                              },
-                              text: 'Fortsett med google',
-                              icon: const FaIcon(
-                                FontAwesomeIcons.google,
-                                size: 20,
-                              ),
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 50,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16, 0, 16, 0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Nunito',
-                                      color: Colors.black,
-                                      fontSize: 17,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                elevation: 0,
-                                borderSide: const BorderSide(
-                                  color: Color(0x5957636C),
-                                  width: 1.5,
-                                ),
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                            ),
-                          ),
                         if (Platform.isIOS)
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
@@ -529,7 +390,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                                   HapticFeedback.lightImpact();
                                   _isloading = false;
                                   feilInnlogging(
-                                      context, 'En uforventet feil oppstod');
+                                      context, 'Verifisering mislyktes');
                                 }
                               },
                               text: 'Fortsett med apple',
@@ -566,14 +427,113 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
                           ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              20, 0, 20, 0),
+                              20, 0, 20, 12),
                           child: FFButtonWidget(
-                            onPressed: () {
-                              logger.d('Button pressed ...');
+                            onPressed: () async {
+                              try {
+                                if (_isloading) return;
+                                _isloading = true;
+                                await firebaseAuthService.loginWithGoogle();
+
+                                String? token =
+                                    await firebaseAuthService.getToken(context);
+
+                                if (token != null) {
+                                  final response =
+                                      await apiCalls.checkUserInfo(token);
+
+                                  if (response.statusCode == 200) {
+                                    final decodedResponse =
+                                        jsonDecode(response.body);
+                                    FFAppState().brukernavn =
+                                        decodedResponse['brukernavn'] ?? '';
+                                    FFAppState().firstname =
+                                        decodedResponse['firstname'] ?? '';
+                                    FFAppState().lastname =
+                                        decodedResponse['lastname'] ?? '';
+                                    FFAppState().bio =
+                                        decodedResponse['bio'] ?? '';
+                                    FFAppState().profilepic =
+                                        decodedResponse['profile_picture'] ??
+                                            '';
+                                    try {
+                                      _webSocketService.connect();
+                                      setState(() {});
+                                    } catch (e) {
+                                      logger.d("errror $e");
+                                    }
+                                    _isloading = false;
+                                    _webSocketService = WebSocketService();
+                                    _webSocketService.connect(retrying: true);
+                                    getAll();
+                                    sendToken();
+                                    _isloading = false;
+                                    context.go('/hjem');
+                                    FFAppState().login = true;
+                                    return;
+                                  }
+                                  if (response.statusCode == 404) {
+                                    LatLng? location;
+                                    location = await getCurrentUserLocation(
+                                        defaultLocation:
+                                            const LatLng(0.0, 0.0));
+
+                                    if (location != const LatLng(0.0, 0.0)) {
+                                      _isloading = false;
+                                      context.goNamed(
+                                        'opprettProfil',
+                                        queryParameters: {
+                                          'phone': serializeParam(
+                                            '0',
+                                            ParamType.String,
+                                          ),
+                                          'posisjon': serializeParam(
+                                            location,
+                                            ParamType.LatLng,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    } else {
+                                      _isloading = false;
+                                      context.goNamed(
+                                        'VelgPosisjon',
+                                        queryParameters: {
+                                          'bonde': serializeParam(
+                                            false,
+                                            ParamType.bool,
+                                          ),
+                                          'endrepos': serializeParam(
+                                            false,
+                                            ParamType.bool,
+                                          ),
+                                          'phone': serializeParam(
+                                            '0',
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    }
+                                    _isloading = false;
+                                  }
+                                } else {
+                                  _isloading = false;
+                                  throw (Exception);
+                                }
+                              } on SocketException {
+                                HapticFeedback.lightImpact();
+                                _isloading = false;
+                                feilInnlogging(
+                                    context, 'Ingen internettforbindelse');
+                              } catch (e) {
+                                HapticFeedback.lightImpact();
+                                _isloading = false;
+                                feilInnlogging(
+                                    context, 'En uforventet feil oppstod');
+                              }
                             },
-                            text: 'Fortsett med facebook',
+                            text: 'Fortsett med google',
                             icon: const FaIcon(
-                              FontAwesomeIcons.facebook,
+                              FontAwesomeIcons.google,
                               size: 20,
                             ),
                             options: FFButtonOptions(
