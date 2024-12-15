@@ -524,8 +524,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                               .start,
                                                       children: [
                                                         Container(
-                                                          width: 85,
-                                                          height: 85,
+                                                          width: 90,
+                                                          height: 90,
                                                           clipBehavior:
                                                               Clip.antiAlias,
                                                           decoration:

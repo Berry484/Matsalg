@@ -414,8 +414,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 .start,
                                                         children: [
                                                           Container(
-                                                            width: 85,
-                                                            height: 85,
+                                                            width: 90,
+                                                            height: 90,
                                                             clipBehavior:
                                                                 Clip.antiAlias,
                                                             decoration:
@@ -1161,7 +1161,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 .override(
                                                                   fontFamily:
                                                                       'Nunito',
-                                                                  fontSize: 17,
+                                                                  fontSize: 16,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -1175,7 +1175,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primaryText,
-                                                        size: 23,
+                                                        size: 22,
                                                       ),
                                                       Text(
                                                         ' for å lage din første annonse',
@@ -1186,7 +1186,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 .override(
                                                                   fontFamily:
                                                                       'Nunito',
-                                                                  fontSize: 17,
+                                                                  fontSize: 16,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -1632,7 +1632,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                         .bodyLarge
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          fontSize: 17,
+                                                          fontSize: 16,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
