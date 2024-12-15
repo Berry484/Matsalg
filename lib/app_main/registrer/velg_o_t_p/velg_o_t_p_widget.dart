@@ -229,7 +229,7 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 12, 0, 35),
                           child: _isloading
-                              ? const CircularProgressIndicator()
+                              ? const CupertinoActivityIndicator(radius: 10.5)
                               : FFButtonWidget(
                                   onPressed: () async {
                                     if (_isloading) {
@@ -251,14 +251,16 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                     if (_model
                                             .emailTextController.text.length !=
                                         6) {
-                                      setState(() {
+                                      safeSetState(() {
                                         _isloading = false;
                                         _errorMessage = "feil kode";
                                       });
                                       return;
                                     }
                                     try {
-                                      _isloading = true;
+                                      safeSetState(() {
+                                        _isloading = true;
+                                      });
                                       try {
                                         final cred =
                                             PhoneAuthProvider.credential(
@@ -270,7 +272,7 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                             .signInWithCredential(cred);
                                       } catch (e) {
                                         logger.d(e.toString());
-                                        setState(() {
+                                        safeSetState(() {
                                           _isloading = false;
 
                                           _errorMessage = "feil kode";
@@ -284,7 +286,9 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                               const LatLng(0.0, 0.0));
 
                                       if (location != const LatLng(0.0, 0.0)) {
-                                        _isloading = false;
+                                        safeSetState(() {
+                                          _isloading = false;
+                                        });
                                         context.goNamed(
                                           'opprettProfil',
                                           queryParameters: {
@@ -299,7 +303,9 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                           }.withoutNulls,
                                         );
                                       } else {
-                                        _isloading = false;
+                                        safeSetState(() {
+                                          _isloading = false;
+                                        });
                                         context.goNamed(
                                           'VelgPosisjon',
                                           queryParameters: {
@@ -318,9 +324,13 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                           }.withoutNulls,
                                         );
                                       }
-                                      _isloading = false;
+                                      safeSetState(() {
+                                        _isloading = false;
+                                      });
                                     } catch (e) {
-                                      _isloading = false;
+                                      safeSetState(() {
+                                        _isloading = false;
+                                      });
                                       showCupertinoDialog(
                                         context: context,
                                         builder: (BuildContext context) {

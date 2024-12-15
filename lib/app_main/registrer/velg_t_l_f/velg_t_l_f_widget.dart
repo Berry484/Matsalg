@@ -408,7 +408,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 12, 0, 35),
                           child: _isloading
-                              ? const CircularProgressIndicator()
+                              ? const CupertinoActivityIndicator(radius: 10.5)
                               : FFButtonWidget(
                                   onPressed: () async {
                                     if (_isloading) {
@@ -568,8 +568,13 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                               'Vent minst 2 minutter før \ndu ber om ny kode');
                                         });
                                       }
+                                      safeSetState(() {
+                                        _isloading = false;
+                                      });
                                     } catch (e) {
-                                      _isloading = false;
+                                      safeSetState(() {
+                                        _isloading = false;
+                                      });
                                       showCupertinoDialog(
                                         context: context,
                                         builder: (BuildContext context) {
