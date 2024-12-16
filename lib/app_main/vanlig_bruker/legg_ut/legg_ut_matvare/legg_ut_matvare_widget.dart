@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/legg_ut/velg_kategori/velg_kategori_widget.dart';
@@ -69,8 +70,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
   int _selectedValue = 0;
   final FocusNode _hiddenFocusNode = FocusNode();
   late Matvarer matvare;
+  bool _merSolgtIsLoading = false;
 
   final ApiCalls apiCalls = ApiCalls();
+  final ApiUpdateFood apiUpdateFood = ApiUpdateFood();
 
   final ApiUploadFood apiUploadFood = ApiUploadFood();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
@@ -85,6 +88,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
   LatLng? currentselectedLatLng =
       LatLng(FFAppState().brukerLat, FFAppState().brukerLng);
   bool test = true;
+  final Toasts toasts = Toasts();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -146,6 +150,55 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
     }
   }
 
+  // Function to show the loading dialog
+  void _showLoadingDialog() {
+    setState(() {
+      _leggUtLoading = true;
+    });
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black26,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false, // Disable the back button
+          child: Center(
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CupertinoActivityIndicator(
+                    radius: 12,
+                    color: FlutterFlowTheme.of(context).alternate,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    ).then((_) {
+      // Clean up state when dialog is dismissed
+      setState(() {
+        _leggUtLoading = false;
+      });
+    });
+  }
+
+  // Function to close the loading dialog
+  void _hideLoadingDialog() {
+    if (_leggUtLoading) {
+      Navigator.of(context).pop(); // Close the dialog
+    }
+  }
+
   Future<void> getUserLocation() async {
     LatLng? location;
     location =
@@ -185,73 +238,6 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
         imgChanged;
   }
 
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.solidTimesCircle,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
-  }
-
   Future<void> leggutgetKommune(double lat, double lng) async {
     try {
       if (lat == 0 || lng == 0) {
@@ -277,11 +263,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
         }
       }
     } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -297,11 +281,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
         });
       });
     } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -375,11 +357,10 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                         }
                         // context.safePop();
                       } on SocketException {
-                        HapticFeedback.lightImpact();
-                        showErrorToast(context, 'Ingen internettforbindelse');
+                        toasts.showErrorToast(
+                            context, 'Ingen internettforbindelse');
                       } catch (e) {
-                        HapticFeedback.lightImpact();
-                        showErrorToast(context, 'En feil oppstod');
+                        toasts.showErrorToast(context, 'En feil oppstod');
                       }
                     },
                     child: Text(
@@ -395,26 +376,182 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                   ),
                 ),
                 Text(
-                  'Ny matvare',
+                  widget.rediger == true ? 'Rediger' : 'Ny matvare',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Nunito',
                         color: FlutterFlowTheme.of(context).primaryText,
-                        fontSize: 20,
+                        fontSize: 18,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.w800,
                       ),
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                  child: Text(
-                    'Avbryt',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Nunito',
-                          color: Colors.transparent,
-                          fontSize: 16,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  child: GestureDetector(
+                    onTap: () async {
+                      try {
+                        if (_model.formKey.currentState == null ||
+                            !_model.formKey.currentState!.validate()) {
+                          return;
+                        }
+                        if (_leggUtLoading == true) {
+                          return;
+                        }
+
+                        if (_model.produktPrisSTKTextController.text.isEmpty) {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return CupertinoAlertDialog(
+                                title: const Text('Velg pris'),
+                                content: const Text('Velg en pris på matvaren'),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          return;
+                        }
+
+                        if (selectedLatLng == null) {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return CupertinoAlertDialog(
+                                title: const Text('Velg posisjon'),
+                                content: const Text('Mangler posisjon'),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          return null;
+                        }
+                        _leggUtLoading = true;
+                        _showLoadingDialog();
+                        String? token =
+                            await firebaseAuthService.getToken(context);
+                        if (token == null) {
+                          return;
+                        } else {
+                          final List<Uint8List?> filesData = [
+                            _model.uploadedLocalFile1.bytes,
+                            _model.uploadedLocalFile2.bytes,
+                            _model.uploadedLocalFile3.bytes,
+                            _model.uploadedLocalFile4.bytes,
+                            _model.uploadedLocalFile5.bytes,
+                          ];
+
+                          final List<Uint8List> filteredFilesData = filesData
+                              .where((file) => file != null && file.isNotEmpty)
+                              .cast<Uint8List>()
+                              .toList();
+
+                          final filelinks =
+                              await apiMultiplePics.uploadPictures(
+                                  token: token, filesData: filteredFilesData);
+                          final List<String> combinedLinks = [
+                            ...matvare.imgUrls!.where((url) => url
+                                .isNotEmpty) // Filters out both null and empty strings
+                          ];
+
+                          if (filelinks != null && filelinks.isNotEmpty) {
+                            combinedLinks.addAll(filelinks);
+                          }
+
+                          if (combinedLinks.isEmpty) {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return CupertinoAlertDialog(
+                                  title: const Text('Mangler bilder'),
+                                  content: const Text('Last opp minst 1 bilde'),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            return null;
+                          }
+
+                          String pris =
+                              _model.produktPrisSTKTextController.text;
+                          bool kg = false; // KG is disabled if STK is set
+
+                          bool? kjopt;
+                          if (_selectedValue == 0) {
+                            kjopt = true;
+                          } else {
+                            kjopt = false;
+                          }
+                          ApiUpdateFood apiUpdateFood = ApiUpdateFood();
+                          final response = await apiUpdateFood.updateFood(
+                            token: token,
+                            id: matvare.matId,
+                            name: _model.produktNavnTextController.text,
+                            imgUrl: combinedLinks,
+                            description:
+                                _model.produktBeskrivelseTextController.text,
+                            price: pris,
+                            kategorier: kategori,
+                            posisjon: selectedLatLng,
+                            antall: _selectedValue,
+                            betaling: _model.checkboxValue,
+                            kg: kg,
+                            kjopt: kjopt,
+                          );
+
+                          if (response.statusCode == 200) {
+                            setState(() {});
+                            _hideLoadingDialog();
+                            _leggUtLoading = false;
+                            setState(() {});
+                            Navigator.pop(context);
+                            context.pushNamed('Profil');
+                            toasts.showAccepted(context, 'Matvare oppdatert');
+                          } else {
+                            _leggUtLoading = false;
+                          }
+                          setState(() {});
+                        }
+                        _hideLoadingDialog();
+                        _leggUtLoading = false;
+                      } on SocketException {
+                        _hideLoadingDialog();
+                        _leggUtLoading = false;
+                        toasts.showErrorToast(
+                            context, 'Ingen internettforbindelse');
+                      } catch (e) {
+                        _hideLoadingDialog();
+                        _leggUtLoading = false;
+                        toasts.showErrorToast(context, 'En feil oppstod');
+                      }
+                    },
+                    child: Text(
+                      'Lagre',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Nunito',
+                            color: FlutterFlowTheme.of(context).alternate,
+                            fontSize: 17,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                 ),
               ],
@@ -578,15 +715,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                           }
                                                         } on SocketException {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'En feil oppstod');
                                                         }
@@ -663,15 +796,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 safeSetState(
                                                                     () {});
                                                               } on SocketException {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -749,15 +878,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               Uint8List.fromList([]));
                                                                 });
                                                               } on SocketException {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -830,15 +955,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 safeSetState(
                                                                     () {});
                                                               } on SocketException {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -910,15 +1031,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               Uint8List.fromList([]));
                                                                 });
                                                               } on SocketException {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -1019,15 +1136,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                           }
                                                         } on SocketException {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'En feil oppstod');
                                                         }
@@ -1097,15 +1210,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 safeSetState(
                                                                     () {});
                                                               } on SocketException {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -1177,15 +1286,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               Uint8List.fromList([]));
                                                                 });
                                                               } on SocketException {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -1286,15 +1391,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                           }
                                                         } on SocketException {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'En feil oppstod');
                                                         }
@@ -1364,15 +1465,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 safeSetState(
                                                                     () {});
                                                               } on SocketException {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -1444,15 +1541,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               Uint8List.fromList([]));
                                                                 });
                                                               } on SocketException {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -1553,15 +1646,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                           }
                                                         } on SocketException {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'En feil oppstod');
                                                         }
@@ -1631,15 +1720,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                 safeSetState(
                                                                     () {});
                                                               } on SocketException {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -1711,15 +1796,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                               Uint8List.fromList([]));
                                                                 });
                                                               } on SocketException {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                HapticFeedback
-                                                                    .lightImpact();
-                                                                showErrorToast(
+                                                                toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -1820,15 +1901,11 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                             }
                                                           }
                                                         } on SocketException {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
-                                                          HapticFeedback
-                                                              .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'En feil oppstod');
                                                         }
@@ -2030,8 +2107,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                   }
                                                 });
                                               } catch (e) {
-                                                HapticFeedback.lightImpact();
-                                                showErrorToast(
+                                                toasts.showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
                                             },
@@ -3079,14 +3155,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                           }
                                                         });
                                                       } on SocketException {
-                                                        HapticFeedback
-                                                            .lightImpact();
-                                                        showErrorToast(context,
+                                                        toasts.showErrorToast(
+                                                            context,
                                                             'Ingen internettforbindelse');
                                                       } catch (e) {
-                                                        HapticFeedback
-                                                            .lightImpact();
-                                                        showErrorToast(context,
+                                                        toasts.showErrorToast(
+                                                            context,
                                                             'En feil oppstod');
                                                       }
                                                     },
@@ -3199,14 +3273,12 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       context.pushNamed(
                                                           'Utbetalingsinfo1');
                                                     } on SocketException {
-                                                      HapticFeedback
-                                                          .lightImpact();
-                                                      showErrorToast(context,
+                                                      toasts.showErrorToast(
+                                                          context,
                                                           'Ingen internettforbindelse');
                                                     } catch (e) {
-                                                      HapticFeedback
-                                                          .lightImpact();
-                                                      showErrorToast(context,
+                                                      toasts.showErrorToast(
+                                                          context,
                                                           'En feil oppstod');
                                                     }
                                                   },
@@ -3529,15 +3601,13 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                       }
                                                     } on SocketException {
                                                       _oppdaterLoading = false;
-                                                      HapticFeedback
-                                                          .lightImpact();
-                                                      showErrorToast(context,
+                                                      toasts.showErrorToast(
+                                                          context,
                                                           'Ingen internettforbindelse');
                                                     } catch (e) {
                                                       _oppdaterLoading = false;
-                                                      HapticFeedback
-                                                          .lightImpact();
-                                                      showErrorToast(context,
+                                                      toasts.showErrorToast(
+                                                          context,
                                                           'En feil oppstod');
                                                     }
                                                   },
@@ -3598,247 +3668,54 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         try {
-                                                          if (_model.formKey
-                                                                      .currentState ==
-                                                                  null ||
-                                                              !_model.formKey
-                                                                  .currentState!
-                                                                  .validate()) {
-                                                            return;
-                                                          }
-                                                          if (_leggUtLoading ==
-                                                              true) {
-                                                            return;
-                                                          }
-                                                          if (_model
-                                                              .produktPrisSTKTextController
-                                                              .text
-                                                              .isEmpty) {
-                                                            await showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (alertDialogContext) {
-                                                                return CupertinoAlertDialog(
-                                                                  title: const Text(
-                                                                      'Velg pris'),
-                                                                  content:
-                                                                      const Text(
-                                                                          'Velg en pris på matvaren'),
-                                                                  actions: [
-                                                                    CupertinoDialogAction(
-                                                                      onPressed:
-                                                                          () =>
-                                                                              Navigator.pop(alertDialogContext),
-                                                                      child: const Text(
-                                                                          'Ok'),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            );
-                                                            return;
-                                                          }
-
-                                                          if (selectedLatLng ==
-                                                              null) {
-                                                            await showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (alertDialogContext) {
-                                                                return CupertinoAlertDialog(
-                                                                  title: const Text(
-                                                                      'Velg posisjon'),
-                                                                  content:
-                                                                      const Text(
-                                                                          'Mangler posisjon'),
-                                                                  actions: [
-                                                                    CupertinoDialogAction(
-                                                                      onPressed:
-                                                                          () =>
-                                                                              Navigator.pop(alertDialogContext),
-                                                                      child: const Text(
-                                                                          'Ok'),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            );
-                                                            return null;
-                                                          }
-                                                          _leggUtLoading = true;
-                                                          String? token =
-                                                              await firebaseAuthService
-                                                                  .getToken(
-                                                                      context);
-                                                          if (token == null) {
+                                                          if (_merSolgtIsLoading) {
                                                             return;
                                                           } else {
-                                                            final List<
-                                                                    Uint8List?>
-                                                                filesData = [
-                                                              _model
-                                                                  .uploadedLocalFile1
-                                                                  .bytes,
-                                                              _model
-                                                                  .uploadedLocalFile2
-                                                                  .bytes,
-                                                              _model
-                                                                  .uploadedLocalFile3
-                                                                  .bytes,
-                                                              _model
-                                                                  .uploadedLocalFile4
-                                                                  .bytes,
-                                                              _model
-                                                                  .uploadedLocalFile5
-                                                                  .bytes,
-                                                            ];
-
-                                                            final List<
-                                                                    Uint8List>
-                                                                filteredFilesData =
-                                                                filesData
-                                                                    .where((file) =>
-                                                                        file !=
-                                                                            null &&
-                                                                        file
-                                                                            .isNotEmpty)
-                                                                    .cast<
-                                                                        Uint8List>()
-                                                                    .toList();
-
-                                                            final filelinks =
-                                                                await apiMultiplePics
-                                                                    .uploadPictures(
-                                                                        token:
-                                                                            token,
-                                                                        filesData:
-                                                                            filteredFilesData);
-                                                            final List<String>
-                                                                combinedLinks =
-                                                                [
-                                                              ...matvare
-                                                                  .imgUrls!
-                                                                  .where((url) =>
-                                                                      url.isNotEmpty) // Filters out both null and empty strings
-                                                            ];
-
-                                                            if (filelinks !=
-                                                                    null &&
-                                                                filelinks
-                                                                    .isNotEmpty) {
-                                                              combinedLinks
-                                                                  .addAll(
-                                                                      filelinks);
-                                                            }
-
-                                                            if (combinedLinks
-                                                                .isEmpty) {
-                                                              await showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (alertDialogContext) {
-                                                                  return CupertinoAlertDialog(
-                                                                    title: const Text(
-                                                                        'Mangler bilder'),
-                                                                    content:
-                                                                        const Text(
-                                                                            'Last opp minst 1 bilde'),
-                                                                    actions: [
-                                                                      CupertinoDialogAction(
-                                                                        onPressed:
-                                                                            () =>
-                                                                                Navigator.pop(alertDialogContext),
-                                                                        child: const Text(
-                                                                            'Ok'),
-                                                                      ),
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
-                                                              return null;
-                                                            }
-
-                                                            String pris = _model
-                                                                .produktPrisSTKTextController
-                                                                .text;
-                                                            bool kg =
-                                                                false; // KG is disabled if STK is set
-
-                                                            bool? kjopt;
-                                                            if (_selectedValue ==
-                                                                0) {
-                                                              kjopt = true;
+                                                            _merSolgtIsLoading =
+                                                                true;
+                                                            String? token =
+                                                                await firebaseAuthService
+                                                                    .getToken(
+                                                                        context);
+                                                            if (token == null) {
+                                                              return;
                                                             } else {
-                                                              kjopt = false;
-                                                            }
-                                                            ApiUpdateFood
-                                                                apiUpdateFood =
-                                                                ApiUpdateFood();
-                                                            final response =
-                                                                await apiUpdateFood
-                                                                    .updateFood(
-                                                              token: token,
-                                                              id: matvare.matId,
-                                                              name: _model
-                                                                  .produktNavnTextController
-                                                                  .text,
-                                                              imgUrl:
-                                                                  combinedLinks,
-                                                              description: _model
-                                                                  .produktBeskrivelseTextController
-                                                                  .text,
-                                                              price: pris,
-                                                              kategorier:
-                                                                  kategori,
-                                                              posisjon:
-                                                                  selectedLatLng,
-                                                              antall:
-                                                                  _selectedValue,
-                                                              betaling: _model
-                                                                  .checkboxValue,
-                                                              kg: kg,
-                                                              kjopt: kjopt,
-                                                            );
-
-                                                            if (response
-                                                                    .statusCode ==
-                                                                200) {
-                                                              setState(() {});
-                                                              _leggUtLoading =
-                                                                  false;
+                                                              await apiUpdateFood
+                                                                  .merkSolgt(
+                                                                      token:
+                                                                          token,
+                                                                      id: matvare
+                                                                          .matId,
+                                                                      solgt:
+                                                                          true);
                                                               setState(() {});
                                                               Navigator.pop(
                                                                   context);
                                                               context.pushNamed(
                                                                   'Profil');
-                                                            } else {
-                                                              _leggUtLoading =
-                                                                  false;
                                                             }
-                                                            setState(() {});
+                                                            _merSolgtIsLoading =
+                                                                false;
                                                           }
-                                                          _leggUtLoading =
-                                                              false;
                                                         } on SocketException {
-                                                          _leggUtLoading =
+                                                          _merSolgtIsLoading =
                                                               false;
                                                           HapticFeedback
                                                               .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
-                                                          _leggUtLoading =
+                                                          _merSolgtIsLoading =
                                                               false;
                                                           HapticFeedback
                                                               .lightImpact();
-                                                          showErrorToast(
+                                                          toasts.showErrorToast(
                                                               context,
                                                               'En feil oppstod');
                                                         }
                                                       },
-                                                      text: 'Lagre',
+                                                      text: 'Marker utsolgt',
                                                       options: FFButtonOptions(
                                                         width: double.infinity,
                                                         height: 50.0,
@@ -3889,7 +3766,7 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                               ],
                                             ),
                                         ].addToEnd(
-                                            const SizedBox(height: 30.0)),
+                                            const SizedBox(height: 40.0)),
                                       ),
                                     ),
                                   ),

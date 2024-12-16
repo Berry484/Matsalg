@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/logging.dart';
@@ -13,7 +14,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:mat_salg/apiCalls.dart';
 import 'package:shimmer/shimmer.dart';
@@ -41,7 +41,7 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
   Timer? _debounce;
   final ScrollController _scrollController = ScrollController();
   final _firebaseMessaging = FirebaseMessaging.instance;
-
+  final Toasts toasts = Toasts();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final ApiCalls apicalls = ApiCalls();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
@@ -154,73 +154,6 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
     );
   }
 
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.solidTimesCircle,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
-  }
-
   Future<void> handleSearch() async {
     try {
       _profilisloading = true;
@@ -242,11 +175,9 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
         }
       }
     } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -272,11 +203,9 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
         }
       }
     } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -303,11 +232,9 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
         }
       }
     } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -351,11 +278,9 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
         }
       }
     } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 

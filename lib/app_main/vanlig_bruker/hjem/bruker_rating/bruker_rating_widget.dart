@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/User.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:shimmer/shimmer.dart';
@@ -44,6 +45,7 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
   bool ingenRatings = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final Toasts toasts = Toasts();
 
   @override
   void initState() {
@@ -58,73 +60,6 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       length: 3,
       initialIndex: 0,
     )..addListener(() => safeSetState(() {}));
-  }
-
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.solidTimesCircle,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
   }
 
   Future<void> _checkUser() async {
@@ -157,12 +92,11 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       }
     } on SocketException {
       _ratingisLoading = true;
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _ratingisLoading = true;
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -199,12 +133,10 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       }
     } on SocketException {
       _ratingisLoading = true;
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _ratingisLoading = true;
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -281,12 +213,10 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                           try {
                                             Navigator.pop(context);
                                           } on SocketException {
-                                            HapticFeedback.lightImpact();
-                                            showErrorToast(context,
+                                            toasts.showErrorToast(context,
                                                 'Ingen internettforbindelse');
                                           } catch (e) {
-                                            HapticFeedback.lightImpact();
-                                            showErrorToast(
+                                            toasts.showErrorToast(
                                                 context, 'En feil oppstod');
                                           }
                                         },

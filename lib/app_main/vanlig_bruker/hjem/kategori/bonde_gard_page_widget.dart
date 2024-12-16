@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/sorter/sorter_widget.dart';
@@ -14,7 +15,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math';
 import 'bonde_gard_page_model.dart';
 export 'bonde_gard_page_model.dart';
@@ -44,7 +44,7 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiGetFilterFood apiGetFilterFood = ApiGetFilterFood();
   final ScrollController _scrollController = ScrollController();
-
+  final Toasts toasts = Toasts();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -65,73 +65,6 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
   void _onScroll() {
     FocusScope.of(context).requestFocus(FocusNode());
     setState(() {});
-  }
-
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.solidTimesCircle,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
   }
 
   void _runFilter(String enteredKeyword) {
@@ -199,11 +132,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         }
       });
     } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -254,11 +185,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         }
       }
     } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/api/web_socket.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/profil/innstillinger/choose_location/location_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/profil/kontakt/kontakt_widget.dart';
 
@@ -11,7 +12,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'innstillinger_model.dart';
 export 'innstillinger_model.dart';
 
@@ -25,6 +25,7 @@ class InnstillingerWidget extends StatefulWidget {
 class _InnstillingerWidgetState extends State<InnstillingerWidget> {
   late WebSocketService _webSocketService; // Declare WebSocketService
   late InnstillingerModel _model;
+  final Toasts toasts = Toasts();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -33,73 +34,6 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
     super.initState();
     _webSocketService = WebSocketService();
     _model = createModel(context, () => InnstillingerModel());
-  }
-
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.solidTimesCircle,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
   }
 
   @override
@@ -184,12 +118,11 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                 try {
                                   context.pushNamed('Konto');
                                 } on SocketException {
-                                  HapticFeedback.lightImpact();
-                                  showErrorToast(
+                                  toasts.showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
-                                  HapticFeedback.lightImpact();
-                                  showErrorToast(context, 'En feil oppstod');
+                                  toasts.showErrorToast(
+                                      context, 'En feil oppstod');
                                 }
                               },
                               child: Material(
@@ -579,7 +512,10 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
-                                      onTap: () async {},
+                                      onTap: () async {
+                                        toasts.showErrorToast(
+                                            context, 'message');
+                                      },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -600,7 +536,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(12, 0, 0, 0),
                                                 child: Text(
-                                                  'Persornvern og vilkår',
+                                                  'Personvern og vilkår',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelLarge
@@ -814,7 +750,6 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                               child: const Text(
                                                 'Avbryt',
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
                                                     color: CupertinoColors
                                                         .activeBlue),
                                               ),
@@ -835,16 +770,14 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                   context.go('/registrer');
                                                 } on SocketException {
                                                   if (mounted) {
-                                                    HapticFeedback
-                                                        .lightImpact();
-                                                    showErrorToast(context,
+                                                    toasts.showErrorToast(
+                                                        context,
                                                         'Ingen internettforbindelse');
                                                   }
                                                 } catch (e) {
                                                   if (mounted) {
-                                                    HapticFeedback
-                                                        .lightImpact();
-                                                    showErrorToast(context,
+                                                    toasts.showErrorToast(
+                                                        context,
                                                         'En feil oppstod');
                                                   }
                                                 }
@@ -861,12 +794,11 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                       },
                                     );
                                   } on SocketException {
-                                    HapticFeedback.lightImpact();
-                                    showErrorToast(
+                                    toasts.showErrorToast(
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
-                                    HapticFeedback.lightImpact();
-                                    showErrorToast(context, 'En feil oppstod');
+                                    toasts.showErrorToast(
+                                        context, 'En feil oppstod');
                                   }
                                 },
                                 text: 'Logg ut',

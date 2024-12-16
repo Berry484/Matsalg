@@ -59,23 +59,12 @@ class FirebaseApi {
   }
 
   Future initPushNotifications() async {
+    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
     FirebaseMessaging.onMessage.listen((message) {
-      if (RegExp(r'@([a-zA-Z0-9_øØåÅäÄöÖ]+) sendte en melding')
-              .firstMatch(message.notification?.title ?? "")
-              ?.group(1) ==
-          FFAppState().chatRoom) {
-        FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-          alert: false,
-          badge: false,
-          sound: false,
-        );
-      } else {
-        FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
-      }
       final notification = message.notification;
       FirebaseMessaging.instance.getInitialMessage().then(handleMessage);
       FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
@@ -115,8 +104,6 @@ class FirebaseApi {
 
   Future<http.Response?> sendToken(String? fcmtoken) async {
     try {
-      logger.d('Code ran');
-
       String? token = await firebaseAuthService.getToken(null);
       if (token == null) {
         return null;

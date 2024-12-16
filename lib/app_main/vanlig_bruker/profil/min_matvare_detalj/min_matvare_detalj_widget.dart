@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import '/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
@@ -11,7 +12,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'min_matvare_detalj_model.dart';
 export 'min_matvare_detalj_model.dart';
 
@@ -32,10 +32,10 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
 
   late Matvarer matvare;
   bool _slettIsLoading = false;
-  bool _merSolgtIsLoading = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   ApiUpdateFood apiUpdateFood = ApiUpdateFood();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final Toasts toasts = Toasts();
   bool _isExpanded = false;
 
   @override
@@ -43,73 +43,6 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
     super.initState();
     _model = createModel(context, () => MinMatvareDetaljModel());
     matvare = Matvarer.fromJson1(widget.matvare);
-  }
-
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.solidTimesCircle,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
   }
 
   @override
@@ -217,7 +150,9 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                       Object error,
                                                       StackTrace? stackTrace) {
                                                 return Image.asset(
-                                                  'assets/images/error_image.jpg', // Path to your local error image
+                                                  'assets/images/profile_pic.png',
+                                                  width: 44.0,
+                                                  height: 44.0,
                                                   fit: BoxFit.cover,
                                                 );
                                               },
@@ -241,6 +176,182 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                           ),
                                         ),
                                       ],
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 8, 0),
+                                      child: IconButton(
+                                        icon: Icon(
+                                          CupertinoIcons.ellipsis,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 28.0,
+                                        ),
+                                        onPressed: () async {
+                                          showCupertinoModalPopup(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CupertinoActionSheet(
+                                                actions: <Widget>[
+                                                  CupertinoActionSheetAction(
+                                                    onPressed: () {
+                                                      setState(() {});
+                                                      Navigator.pop(context);
+                                                      context.pushNamed(
+                                                        'LeggUtMatvare',
+                                                        queryParameters: {
+                                                          'rediger':
+                                                              serializeParam(
+                                                                  true,
+                                                                  ParamType
+                                                                      .bool),
+                                                          'matinfo':
+                                                              serializeParam(
+                                                                  matvare
+                                                                      .toJson(),
+                                                                  ParamType
+                                                                      .JSON),
+                                                        }.withoutNulls,
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      'Rediger annonse',
+                                                      style: TextStyle(
+                                                        fontSize: 19,
+                                                        color: CupertinoColors
+                                                            .systemBlue,
+                                                      ),
+                                                    ),
+                                                  ),
+
+                                                  // Third action: Slett annonse (Delete ad)
+                                                  CupertinoActionSheetAction(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      // Show confirmation dialog for "Slett annonse"
+                                                      showCupertinoDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return CupertinoAlertDialog(
+                                                            title: const Text(
+                                                                'Slett annonse'),
+                                                            content: const Text(
+                                                                'Er du sikker på at du vil slette denne annonsen?'),
+                                                            actions: <Widget>[
+                                                              // No action for 'Nei' (No) button
+                                                              CupertinoDialogAction(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context); // Close the dialog
+                                                                },
+                                                                child:
+                                                                    const Text(
+                                                                  'Nei, avbryt',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .blue), // Blue for 'Nei'
+                                                                ),
+                                                              ),
+                                                              // Yes action for 'Ja' (Yes) button
+                                                              CupertinoDialogAction(
+                                                                onPressed:
+                                                                    () async {
+                                                                  try {
+                                                                    if (_slettIsLoading) {
+                                                                      return;
+                                                                    } else {
+                                                                      _slettIsLoading =
+                                                                          true;
+                                                                      String?
+                                                                          token =
+                                                                          await firebaseAuthService
+                                                                              .getToken(context);
+                                                                      if (token ==
+                                                                          null) {
+                                                                        return;
+                                                                      } else {
+                                                                        await apiUpdateFood.slettMatvare(
+                                                                            token:
+                                                                                token,
+                                                                            id: matvare.matId);
+                                                                        setState(
+                                                                            () {});
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        context.pushNamed(
+                                                                            'Profil');
+                                                                        toasts.showAccepted(
+                                                                            context,
+                                                                            'Matvare slettet');
+                                                                      }
+                                                                      _slettIsLoading =
+                                                                          false;
+                                                                    }
+                                                                  } on SocketException {
+                                                                    _slettIsLoading =
+                                                                        false;
+                                                                    toasts.showErrorToast(
+                                                                        context,
+                                                                        'Ingen internettforbindelse');
+                                                                  } catch (e) {
+                                                                    _slettIsLoading =
+                                                                        false;
+                                                                    toasts.showErrorToast(
+                                                                        context,
+                                                                        'En feil oppstod');
+                                                                  }
+                                                                },
+                                                                child:
+                                                                    const Text(
+                                                                  'Ja, slett',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .red), // Red for 'Ja'
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      'Slett annonse',
+                                                      style: TextStyle(
+                                                        fontSize: 19,
+                                                        color: Colors
+                                                            .red, // Red text for 'Slett annonse'
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                                cancelButton:
+                                                    CupertinoActionSheetAction(
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context); // Close the action sheet
+                                                  },
+                                                  isDefaultAction: true,
+                                                  child: const Text(
+                                                    'Avbryt',
+                                                    style: TextStyle(
+                                                      fontSize: 19,
+                                                      color: CupertinoColors
+                                                          .systemBlue,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -620,7 +731,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(12.0, 0.0, 0.0, 0.0),
+                                              .fromSTEB(9.0, 0.0, 0.0, 0.0),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -661,11 +772,11 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                   safeSetState(() {}));
                                             },
                                             child: Icon(
-                                              CupertinoIcons.map,
+                                              CupertinoIcons.placemark,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 32,
+                                              size: 33,
                                             ),
                                           ),
                                         ),
@@ -725,101 +836,6 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                         ),
                                                       ),
 
-                                                      if (matvare.kjopt != true)
-                                                        CupertinoActionSheetAction(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                            if (matvare.kjopt !=
-                                                                true) {
-                                                              showCupertinoDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (BuildContext
-                                                                        context) {
-                                                                  return CupertinoAlertDialog(
-                                                                    title: const Text(
-                                                                        'Marker utsolgt'),
-                                                                    content:
-                                                                        const Text(
-                                                                            'Dette vil markere matvaren som utsolgt og sette antallet til 0. Juster antallet opp for å fjerne markeringen. Dette vil automatisk avslå alle bud'),
-                                                                    actions: <Widget>[
-                                                                      CupertinoDialogAction(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context); // Close the dialog
-                                                                        },
-                                                                        child:
-                                                                            const Text(
-                                                                          'Avbryt',
-                                                                          style: TextStyle(
-                                                                              fontSize: 16,
-                                                                              fontWeight: FontWeight.w400,
-                                                                              color: CupertinoColors.systemBlue),
-                                                                        ),
-                                                                      ),
-                                                                      // Yes action for 'Ja' (Yes) button
-                                                                      CupertinoDialogAction(
-                                                                        onPressed:
-                                                                            () async {
-                                                                          try {
-                                                                            if (_merSolgtIsLoading) {
-                                                                              return;
-                                                                            } else {
-                                                                              _merSolgtIsLoading = true;
-                                                                              String? token = await firebaseAuthService.getToken(context);
-                                                                              if (token == null) {
-                                                                                return;
-                                                                              } else {
-                                                                                await apiUpdateFood.merkSolgt(token: token, id: matvare.matId, solgt: true);
-                                                                                setState(() {});
-                                                                                Navigator.pop(context);
-                                                                                context.pushNamed('Profil');
-                                                                              }
-                                                                              _merSolgtIsLoading = false;
-                                                                            }
-                                                                          } on SocketException {
-                                                                            _merSolgtIsLoading =
-                                                                                false;
-                                                                            HapticFeedback.lightImpact();
-                                                                            showErrorToast(context,
-                                                                                'Ingen internettforbindelse');
-                                                                          } catch (e) {
-                                                                            _merSolgtIsLoading =
-                                                                                false;
-                                                                            HapticFeedback.lightImpact();
-                                                                            showErrorToast(context,
-                                                                                'En feil oppstod');
-                                                                          }
-                                                                        },
-                                                                        child:
-                                                                            const Text(
-                                                                          'marker utsolgt',
-                                                                          style: TextStyle(
-                                                                              fontSize: 16,
-                                                                              fontWeight: FontWeight.w400,
-                                                                              color: Colors.red), // Red for 'Ja'
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
-                                                            }
-                                                          },
-                                                          child: const Text(
-                                                            'Marker solgt',
-                                                            style: TextStyle(
-                                                              fontSize: 19,
-                                                              color:
-                                                                  CupertinoColors
-                                                                      .systemBlue,
-                                                            ),
-                                                          ),
-                                                        ),
-
                                                       // Third action: Slett annonse (Delete ad)
                                                       CupertinoActionSheetAction(
                                                         onPressed: () {
@@ -875,6 +891,8 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                             setState(() {});
                                                                             Navigator.pop(context);
                                                                             context.pushNamed('Profil');
+                                                                            toasts.showAccepted(context,
+                                                                                'Matvare slettet');
                                                                           }
                                                                           _slettIsLoading =
                                                                               false;
@@ -882,17 +900,13 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                       } on SocketException {
                                                                         _slettIsLoading =
                                                                             false;
-                                                                        HapticFeedback
-                                                                            .lightImpact();
-                                                                        showErrorToast(
+                                                                        toasts.showErrorToast(
                                                                             context,
                                                                             'Ingen internettforbindelse');
                                                                       } catch (e) {
                                                                         _slettIsLoading =
                                                                             false;
-                                                                        HapticFeedback
-                                                                            .lightImpact();
-                                                                        showErrorToast(
+                                                                        toasts.showErrorToast(
                                                                             context,
                                                                             'En feil oppstod');
                                                                       }

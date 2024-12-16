@@ -411,19 +411,16 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                               ? const CupertinoActivityIndicator(radius: 10.5)
                               : FFButtonWidget(
                                   onPressed: () async {
-                                    if (_isloading) {
-                                      return;
-                                    }
+                                    if (_isloading) return;
                                     if (_model.formKey.currentState == null ||
                                         !_model.formKey.currentState!
                                             .validate()) {
                                       return;
                                     }
+                                    setState(() {
+                                      _isloading = true;
+                                    });
                                     try {
-                                      setState(() {
-                                        _isloading = true;
-                                      });
-
                                       if (_model.telefonnummerTextController
                                           .text.isEmpty) {
                                         safeSetState(() {
@@ -526,9 +523,6 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                                 "The code is: ${verificationId}");
 
                                             FFAppState().storeTimestamp();
-                                            safeSetState(() {
-                                              _isloading = false;
-                                            });
                                             if (mounted) {
                                               showModalBottomSheet(
                                                 isScrollControlled: true,
@@ -551,7 +545,9 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                                   );
                                                 },
                                               ).then((value) {
-                                                //safeSetState(() {});
+                                                safeSetState(() {
+                                                  _isloading = false;
+                                                });
                                               });
                                             }
                                           },
@@ -568,9 +564,6 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                               'Vent minst 2 minutter før \ndu ber om ny kode');
                                         });
                                       }
-                                      safeSetState(() {
-                                        _isloading = false;
-                                      });
                                     } catch (e) {
                                       safeSetState(() {
                                         _isloading = false;

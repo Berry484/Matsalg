@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/mat_detalj/get_updates/get_updates_widget.dart';
@@ -21,7 +22,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'mat_detalj_bondegard_model.dart';
 export 'mat_detalj_bondegard_model.dart';
 import 'dart:math';
@@ -54,6 +54,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
   bool _isAnimating = false;
   bool _isExpanded = false;
   String? poststed;
+  final Toasts toasts = Toasts();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -111,56 +112,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
     });
   }
 
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    final overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  // ignore: deprecated_member_use
-                  FontAwesomeIcons.solidTimesCircle,
-                  color: Colors.black,
-                  size: 30.0,
-                ),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: Text(
-                    message,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    Future.delayed(const Duration(seconds: 3), () {
-      overlayEntry.remove();
-    });
-  }
-
   Future<void> getAllFoods() async {
     try {
       String? token = await firebaseAuthService.getToken(context);
@@ -178,11 +129,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         });
       }
     } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -229,11 +178,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         });
       }
     } on SocketException {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'Ingen internettforbindelse');
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      HapticFeedback.lightImpact();
-      showErrorToast(context, 'En feil oppstod');
+      toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -518,16 +465,14 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       } on SocketException {
                                                         _messageIsLoading =
                                                             false;
-                                                        HapticFeedback
-                                                            .lightImpact();
-                                                        showErrorToast(context,
+                                                        toasts.showErrorToast(
+                                                            context,
                                                             'Ingen internettforbindelse');
                                                       } catch (e) {
                                                         _messageIsLoading =
                                                             false;
-                                                        HapticFeedback
-                                                            .lightImpact();
-                                                        showErrorToast(context,
+                                                        toasts.showErrorToast(
+                                                            context,
                                                             'En feil oppstod');
                                                       }
                                                     },
@@ -627,7 +572,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       highlightColor: Colors.transparent,
                                       onDoubleTap: () async {
                                         try {
-                                          HapticFeedback.lightImpact();
+                                          HapticFeedback.selectionClick();
                                           String? token =
                                               await firebaseAuthService
                                                   .getToken(context);
@@ -651,7 +596,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               token, matvare.matId);
                                           safeSetState(() {});
                                           if (_model.liker == true) {
-                                            HapticFeedback.lightImpact();
+                                            HapticFeedback.selectionClick();
                                             FFAppState()
                                                 .unlikedFoods
                                                 .remove(matvare.matId);
@@ -667,12 +612,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 token, matvare.matId);
                                           }
                                         } on SocketException {
-                                          HapticFeedback.lightImpact();
-                                          showErrorToast(context,
+                                          toasts.showErrorToast(context,
                                               'Ingen internettforbindelse');
                                         } catch (e) {
-                                          HapticFeedback.lightImpact();
-                                          showErrorToast(
+                                          toasts.showErrorToast(
                                               context, 'En feil oppstod');
                                         }
                                       },
@@ -1081,7 +1024,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                       children: [
                                         ToggleIcon(
                                           onPressed: () async {
-                                            HapticFeedback.lightImpact();
+                                            HapticFeedback.selectionClick();
                                             String? token =
                                                 await firebaseAuthService
                                                     .getToken(context);
@@ -1136,7 +1079,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(3.0, 0.0, 0.0, 0.0),
+                                              .fromSTEB(0.0, 0.0, 0.0, 0.0),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -1175,17 +1118,17 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   safeSetState(() {}));
                                             },
                                             child: Icon(
-                                              CupertinoIcons.map,
+                                              CupertinoIcons.placemark,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 30,
+                                              size: 31,
                                             ),
                                           ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(9.0, 0.0, 0.0, 0.0),
+                                              .fromSTEB(5.0, 0.0, 0.0, 0.0),
                                           child: GestureDetector(
                                             onTap: () async {
                                               try {
@@ -1259,13 +1202,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 }
                                               } on SocketException {
                                                 _messageIsLoading = false;
-                                                HapticFeedback.lightImpact();
-                                                showErrorToast(context,
+
+                                                toasts.showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
                                                 _messageIsLoading = false;
-                                                HapticFeedback.lightImpact();
-                                                showErrorToast(
+
+                                                toasts.showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
                                             },

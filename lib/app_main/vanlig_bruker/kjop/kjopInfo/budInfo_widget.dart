@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kjop/give_rating/give_rating_widget.dart';
@@ -11,7 +12,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'budInfo_model.dart';
 export 'budInfo_model.dart';
 
@@ -34,6 +34,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
   late BudInfoModel _model;
   late Matvarer matvare;
   late OrdreInfo ordreInfo;
+  final Toasts toasts = Toasts();
   bool _trekkIsLoading = false;
   bool _bekreftIsLoading = false;
   bool _messageIsLoading = false;
@@ -52,205 +53,6 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
     ordreInfo = widget.ordre;
   }
 
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.solidTimesCircle,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
-  }
-
-  void showAccepted(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 56.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    CupertinoIcons.checkmark_alt_circle_fill,
-                    color: FlutterFlowTheme.of(context).alternate,
-                    size: 35.0,
-                  ),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
-  }
-
-  void budetBleTrekt(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 56.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    CupertinoIcons.xmark_circle_fill,
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    size: 35.0,
-                  ),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
-  }
-
   // Haversine formula to calculate distance between two lat/lng points
   double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
     const earthRadius = 6371.0; // Earth's radius in kilometers
@@ -267,6 +69,53 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
 
   double _degreesToRadians(double degrees) {
     return degrees * pi / 180;
+  }
+
+  // Function to show the loading dialog
+  void _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black26,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false, // Disable the back button
+          child: Center(
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CupertinoActivityIndicator(
+                    radius: 12,
+                    color: FlutterFlowTheme.of(context).alternate,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    ).then((_) {
+      // Clean up state when dialog is dismissed
+      safeSetState(() {
+        _bekreftIsLoading = false;
+        _trekkIsLoading = false;
+        _messageIsLoading = false;
+      });
+    });
+  }
+
+  // Function to close the loading dialog
+  void _hideLoadingDialog() {
+    if (_bekreftIsLoading || _trekkIsLoading || _messageIsLoading) {
+      Navigator.of(context).pop(); // Close the dialog
+    }
   }
 
   @override
@@ -329,12 +178,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 try {
                                   Navigator.pop(context);
                                 } on SocketException {
-                                  HapticFeedback.lightImpact();
-                                  showErrorToast(
+                                  toasts.showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
-                                  HapticFeedback.lightImpact();
-                                  showErrorToast(context, 'En feil oppstod');
+                                  toasts.showErrorToast(
+                                      context, 'En feil oppstod');
                                 }
                               },
                               child: Padding(
@@ -392,11 +240,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 ordreInfo, // Pass the object directly as 'extra'
                           );
                         } on SocketException {
-                          HapticFeedback.lightImpact();
-                          showErrorToast(context, 'Ingen internettforbindelse');
+                          toasts.showErrorToast(
+                              context, 'Ingen internettforbindelse');
                         } catch (e) {
-                          HapticFeedback.lightImpact();
-                          showErrorToast(context, 'En feil oppstod');
+                          toasts.showErrorToast(context, 'En feil oppstod');
                         }
                       },
                       child: Row(
@@ -751,13 +598,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               }
                             } on SocketException {
                               _messageIsLoading = false;
-                              HapticFeedback.lightImpact();
-                              showErrorToast(
+                              toasts.showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
                               _messageIsLoading = false;
-                              HapticFeedback.lightImpact();
-                              showErrorToast(context, 'En feil oppstod');
+                              toasts.showErrorToast(context, 'En feil oppstod');
                             }
                           },
                           text: 'Melding',
@@ -824,27 +669,41 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                       ),
                                       CupertinoDialogAction(
                                         onPressed: () async {
-                                          if (_trekkIsLoading) {
-                                            return;
-                                          }
-                                          _trekkIsLoading = true;
-                                          String? token =
-                                              await firebaseAuthService
-                                                  .getToken(context);
-                                          if (token != null) {
-                                            final response = await ApiKjop()
-                                                .trekk(
-                                                    id: ordreInfo.id,
-                                                    trekt: true,
-                                                    token: token);
-                                            if (response.statusCode == 200) {
-                                              HapticFeedback.mediumImpact();
-                                              budetBleTrekt(
-                                                  context, 'Budet ble trekt');
-                                              Navigator.pop(context);
-                                              Navigator.pop(context);
+                                          if (_trekkIsLoading) return;
+                                          try {
+                                            _trekkIsLoading = true;
+                                            Navigator.pop(context);
+                                            _showLoadingDialog();
+
+                                            String? token =
+                                                await firebaseAuthService
+                                                    .getToken(context);
+                                            if (token != null) {
+                                              final response = await ApiKjop()
+                                                  .trekk(
+                                                      id: ordreInfo.id,
+                                                      trekt: true,
+                                                      token: token);
+                                              if (response.statusCode == 200) {
+                                                _hideLoadingDialog();
+                                                Navigator.pop(context);
+                                                toasts.showAccepted(
+                                                    context, 'Budet ble trekt');
+                                                return;
+                                              } else {
+                                                _hideLoadingDialog();
+                                                Navigator.pop(context);
+                                                toasts.showErrorToast(context,
+                                                    'En uforventet feil oppstod');
+                                                return;
+                                              }
                                             }
-                                            _trekkIsLoading = false;
+                                          } catch (e) {
+                                            _hideLoadingDialog();
+                                            Navigator.pop(context);
+                                            toasts.showErrorToast(context,
+                                                'En uforventet feil oppstod');
+                                            return;
                                           }
                                         },
                                         child: const Text(
@@ -857,12 +716,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 },
                               );
                             } on SocketException {
-                              HapticFeedback.lightImpact();
-                              showErrorToast(
+                              toasts.showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
-                              HapticFeedback.lightImpact();
-                              showErrorToast(context, 'En feil oppstod');
+                              toasts.showErrorToast(context, 'En feil oppstod');
                             }
                           },
                           text: 'Trekk bud',
@@ -931,10 +788,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                           CupertinoDialogAction(
                                             onPressed: () async {
                                               try {
-                                                if (_bekreftIsLoading) {
-                                                  return;
-                                                }
+                                                if (_bekreftIsLoading) return;
+
                                                 _bekreftIsLoading = true;
+                                                _showLoadingDialog();
                                                 String? token =
                                                     await firebaseAuthService
                                                         .getToken(context);
@@ -946,11 +803,9 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                           token: token);
                                                   if (response.statusCode ==
                                                       200) {
-                                                    HapticFeedback
-                                                        .mediumImpact();
-                                                    showAccepted(context,
+                                                    toasts.showAccepted(context,
                                                         'Handelen er fullført');
-                                                    _bekreftIsLoading = false;
+                                                    _hideLoadingDialog();
                                                     Navigator.pop(context);
                                                     await showModalBottomSheet(
                                                       isScrollControlled: true,
@@ -986,17 +841,21 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                               _bekreftIsLoading =
                                                                   false;
                                                             }));
+                                                  } else {
+                                                    _hideLoadingDialog();
+                                                    toasts.showErrorToast(
+                                                        context,
+                                                        'En uforventet feil oppstod');
                                                   }
-                                                  _bekreftIsLoading = false;
                                                 }
                                               } on SocketException {
-                                                HapticFeedback.lightImpact();
-                                                showErrorToast(context,
+                                                _hideLoadingDialog();
+                                                toasts.showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
-                                                HapticFeedback.lightImpact();
+                                                _hideLoadingDialog();
                                                 Navigator.pop(context);
-                                                showErrorToast(
+                                                toasts.showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
                                             },
@@ -1101,13 +960,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     }
                                   } on SocketException {
                                     _messageIsLoading = false;
-                                    HapticFeedback.lightImpact();
-                                    showErrorToast(
+                                    toasts.showErrorToast(
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
                                     _messageIsLoading = false;
-                                    HapticFeedback.lightImpact();
-                                    showErrorToast(context, 'En feil oppstod');
+                                    toasts.showErrorToast(
+                                        context, 'En feil oppstod');
                                   }
                                 },
                                 text: 'Melding',

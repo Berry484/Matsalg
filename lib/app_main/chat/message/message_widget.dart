@@ -8,6 +8,7 @@ import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/app_main/chat/message/message_model.dart';
 import 'package:mat_salg/app_main/chat/messageBubble/message_bubbles_widget.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -35,6 +36,7 @@ class _MessageWidgetState extends State<MessageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int _lastMessageCount = 0; // Track the number of messages
   late List<Message> _messageListWithFlags;
+  final Toasts toasts = Toasts();
 
   @override
   void initState() {
@@ -116,73 +118,6 @@ class _MessageWidgetState extends State<MessageWidget> {
     }).toList();
   }
 
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.solidTimesCircle,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
-  }
-
   @override
   void dispose() {
     FFAppState().removeListener(_onAppStateChanged);
@@ -257,11 +192,10 @@ class _MessageWidgetState extends State<MessageWidget> {
                           FFAppState().chatRoom = '';
                           Navigator.pop(context);
                         } on SocketException {
-                          HapticFeedback.lightImpact();
-                          showErrorToast(context, 'Ingen internettforbindelse');
+                          toasts.showErrorToast(
+                              context, 'Ingen internettforbindelse');
                         } catch (e) {
-                          HapticFeedback.lightImpact();
-                          showErrorToast(context, 'En feil oppstod');
+                          toasts.showErrorToast(context, 'En feil oppstod');
                         }
                       },
                       child: const Row(
@@ -528,11 +462,10 @@ class _MessageWidgetState extends State<MessageWidget> {
                             });
                           }
                         } on SocketException {
-                          HapticFeedback.lightImpact();
-                          showErrorToast(context, 'Ingen internettforbindelse');
+                          toasts.showErrorToast(
+                              context, 'Ingen internettforbindelse');
                         } catch (e) {
-                          HapticFeedback.lightImpact();
-                          showErrorToast(context, 'En feil oppstod');
+                          toasts.showErrorToast(context, 'En feil oppstod');
                         }
                       },
                       icon: const FaIcon(

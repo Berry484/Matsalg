@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -32,6 +32,7 @@ class _RapporterWidgetState extends State<RapporterWidget> {
   ReportUser reportUser = ReportUser();
   bool _loading = false;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final Toasts toasts = Toasts();
 
   @override
   void setState(VoidCallback callback) {
@@ -46,56 +47,6 @@ class _RapporterWidgetState extends State<RapporterWidget> {
 
     _model.bioTextController ??= TextEditingController();
     _model.bioFocusNode ??= FocusNode();
-  }
-
-  void showErrorToast(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    final overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 50.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  // ignore: deprecated_member_use
-                  FontAwesomeIcons.solidTimesCircle,
-                  color: Colors.black,
-                  size: 30.0,
-                ),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: Text(
-                    message,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    Future.delayed(const Duration(seconds: 3), () {
-      overlayEntry.remove();
-    });
   }
 
   @override
@@ -387,6 +338,8 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                           if (response.statusCode == 200) {
                                             Navigator.pop(context);
                                             Navigator.pop(context);
+                                            toasts.showAccepted(
+                                                context, 'Rapport sendt');
                                           } else {
                                             _loading = false;
                                             throw Exception();
@@ -396,18 +349,18 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                       }
                                     } on SocketException {
                                       _loading = false;
-                                      HapticFeedback.lightImpact();
-                                      showErrorToast(context,
+
+                                      toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } on Error {
                                       _loading = false;
-                                      HapticFeedback.lightImpact();
-                                      showErrorToast(
+
+                                      toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     } catch (e) {
                                       _loading = false;
-                                      HapticFeedback.lightImpact();
-                                      showErrorToast(
+
+                                      toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     }
                                   },
