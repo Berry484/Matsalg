@@ -76,7 +76,7 @@ class Toasts {
   }
 
   void showAccepted(BuildContext context, String message) {
-    HapticFeedback.selectionClick();
+    HapticFeedback.lightImpact();
     final overlay = Overlay.of(context);
     late OverlayEntry overlayEntry;
 
