@@ -385,97 +385,49 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                         fontWeight: FontWeight.w800,
                       ),
                 ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                  child: GestureDetector(
-                    onTap: () async {
-                      try {
-                        if (_model.formKey.currentState == null ||
-                            !_model.formKey.currentState!.validate()) {
-                          return;
-                        }
-                        if (_leggUtLoading == true) {
-                          return;
-                        }
-
-                        if (_model.produktPrisSTKTextController.text.isEmpty) {
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return CupertinoAlertDialog(
-                                title: const Text('Velg pris'),
-                                content: const Text('Velg en pris på matvaren'),
-                                actions: [
-                                  CupertinoDialogAction(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: const Text('Ok'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                          return;
-                        }
-
-                        if (selectedLatLng == null) {
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return CupertinoAlertDialog(
-                                title: const Text('Velg posisjon'),
-                                content: const Text('Mangler posisjon'),
-                                actions: [
-                                  CupertinoDialogAction(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: const Text('Ok'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                          return null;
-                        }
-                        _leggUtLoading = true;
-                        _showLoadingDialog();
-                        String? token =
-                            await firebaseAuthService.getToken(context);
-                        if (token == null) {
-                          return;
-                        } else {
-                          final List<Uint8List?> filesData = [
-                            _model.uploadedLocalFile1.bytes,
-                            _model.uploadedLocalFile2.bytes,
-                            _model.uploadedLocalFile3.bytes,
-                            _model.uploadedLocalFile4.bytes,
-                            _model.uploadedLocalFile5.bytes,
-                          ];
-
-                          final List<Uint8List> filteredFilesData = filesData
-                              .where((file) => file != null && file.isNotEmpty)
-                              .cast<Uint8List>()
-                              .toList();
-
-                          final filelinks =
-                              await apiMultiplePics.uploadPictures(
-                                  token: token, filesData: filteredFilesData);
-                          final List<String> combinedLinks = [
-                            ...matvare.imgUrls!.where((url) => url
-                                .isNotEmpty) // Filters out both null and empty strings
-                          ];
-
-                          if (filelinks != null && filelinks.isNotEmpty) {
-                            combinedLinks.addAll(filelinks);
+                if (widget.rediger == true)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                    child: GestureDetector(
+                      onTap: () async {
+                        try {
+                          if (_model.formKey.currentState == null ||
+                              !_model.formKey.currentState!.validate()) {
+                            return;
+                          }
+                          if (_leggUtLoading == true) {
+                            return;
                           }
 
-                          if (combinedLinks.isEmpty) {
+                          if (_model
+                              .produktPrisSTKTextController.text.isEmpty) {
                             await showDialog(
                               context: context,
                               builder: (alertDialogContext) {
                                 return CupertinoAlertDialog(
-                                  title: const Text('Mangler bilder'),
-                                  content: const Text('Last opp minst 1 bilde'),
+                                  title: const Text('Velg pris'),
+                                  content:
+                                      const Text('Velg en pris på matvaren'),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            return;
+                          }
+
+                          if (selectedLatLng == null) {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return CupertinoAlertDialog(
+                                  title: const Text('Velg posisjon'),
+                                  content: const Text('Mangler posisjon'),
                                   actions: [
                                     CupertinoDialogAction(
                                       onPressed: () =>
@@ -488,72 +440,125 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                             );
                             return null;
                           }
-
-                          String pris =
-                              _model.produktPrisSTKTextController.text;
-                          bool kg = false; // KG is disabled if STK is set
-
-                          bool? kjopt;
-                          if (_selectedValue == 0) {
-                            kjopt = true;
+                          _leggUtLoading = true;
+                          _showLoadingDialog();
+                          String? token =
+                              await firebaseAuthService.getToken(context);
+                          if (token == null) {
+                            return;
                           } else {
-                            kjopt = false;
-                          }
-                          ApiUpdateFood apiUpdateFood = ApiUpdateFood();
-                          final response = await apiUpdateFood.updateFood(
-                            token: token,
-                            id: matvare.matId,
-                            name: _model.produktNavnTextController.text,
-                            imgUrl: combinedLinks,
-                            description:
-                                _model.produktBeskrivelseTextController.text,
-                            price: pris,
-                            kategorier: kategori,
-                            posisjon: selectedLatLng,
-                            antall: _selectedValue,
-                            betaling: _model.checkboxValue,
-                            kg: kg,
-                            kjopt: kjopt,
-                          );
+                            final List<Uint8List?> filesData = [
+                              _model.uploadedLocalFile1.bytes,
+                              _model.uploadedLocalFile2.bytes,
+                              _model.uploadedLocalFile3.bytes,
+                              _model.uploadedLocalFile4.bytes,
+                              _model.uploadedLocalFile5.bytes,
+                            ];
 
-                          if (response.statusCode == 200) {
+                            final List<Uint8List> filteredFilesData = filesData
+                                .where(
+                                    (file) => file != null && file.isNotEmpty)
+                                .cast<Uint8List>()
+                                .toList();
+
+                            final filelinks =
+                                await apiMultiplePics.uploadPictures(
+                                    token: token, filesData: filteredFilesData);
+                            final List<String> combinedLinks = [
+                              ...matvare.imgUrls!.where((url) => url
+                                  .isNotEmpty) // Filters out both null and empty strings
+                            ];
+
+                            if (filelinks != null && filelinks.isNotEmpty) {
+                              combinedLinks.addAll(filelinks);
+                            }
+
+                            if (combinedLinks.isEmpty) {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return CupertinoAlertDialog(
+                                    title: const Text('Mangler bilder'),
+                                    content:
+                                        const Text('Last opp minst 1 bilde'),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: const Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return null;
+                            }
+
+                            String pris =
+                                _model.produktPrisSTKTextController.text;
+                            bool kg = false; // KG is disabled if STK is set
+
+                            bool? kjopt;
+                            if (_selectedValue == 0) {
+                              kjopt = true;
+                            } else {
+                              kjopt = false;
+                            }
+                            ApiUpdateFood apiUpdateFood = ApiUpdateFood();
+                            final response = await apiUpdateFood.updateFood(
+                              token: token,
+                              id: matvare.matId,
+                              name: _model.produktNavnTextController.text,
+                              imgUrl: combinedLinks,
+                              description:
+                                  _model.produktBeskrivelseTextController.text,
+                              price: pris,
+                              kategorier: kategori,
+                              posisjon: selectedLatLng,
+                              antall: _selectedValue,
+                              betaling: _model.checkboxValue,
+                              kg: kg,
+                              kjopt: kjopt,
+                            );
+
+                            if (response.statusCode == 200) {
+                              setState(() {});
+                              _hideLoadingDialog();
+                              _leggUtLoading = false;
+                              setState(() {});
+                              Navigator.pop(context);
+                              context.pushNamed('Profil');
+                              toasts.showAccepted(context, 'Matvare oppdatert');
+                            } else {
+                              _leggUtLoading = false;
+                            }
                             setState(() {});
-                            _hideLoadingDialog();
-                            _leggUtLoading = false;
-                            setState(() {});
-                            Navigator.pop(context);
-                            context.pushNamed('Profil');
-                            toasts.showAccepted(context, 'Matvare oppdatert');
-                          } else {
-                            _leggUtLoading = false;
                           }
-                          setState(() {});
+                          _hideLoadingDialog();
+                          _leggUtLoading = false;
+                        } on SocketException {
+                          _hideLoadingDialog();
+                          _leggUtLoading = false;
+                          toasts.showErrorToast(
+                              context, 'Ingen internettforbindelse');
+                        } catch (e) {
+                          _hideLoadingDialog();
+                          _leggUtLoading = false;
+                          toasts.showErrorToast(context, 'En feil oppstod');
                         }
-                        _hideLoadingDialog();
-                        _leggUtLoading = false;
-                      } on SocketException {
-                        _hideLoadingDialog();
-                        _leggUtLoading = false;
-                        toasts.showErrorToast(
-                            context, 'Ingen internettforbindelse');
-                      } catch (e) {
-                        _hideLoadingDialog();
-                        _leggUtLoading = false;
-                        toasts.showErrorToast(context, 'En feil oppstod');
-                      }
-                    },
-                    child: Text(
-                      'Lagre',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Nunito',
-                            color: FlutterFlowTheme.of(context).alternate,
-                            fontSize: 17,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      },
+                      child: Text(
+                        'Lagre',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Nunito',
+                              color: FlutterFlowTheme.of(context).alternate,
+                              fontSize: 17,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
             actions: const [],
