@@ -1662,7 +1662,10 @@ class ApiUpdateFood {
     String? token, // Add token parameter
   }) async {
     try {
-      final Map<String, dynamic> requestBody = {"slettet": true};
+      final Map<String, dynamic> requestBody = {
+        "slettet": true,
+        "antall": 0,
+      };
 
       // Convert the Map to JSON
       final String jsonBody = jsonEncode(requestBody);
@@ -1680,6 +1683,8 @@ class ApiUpdateFood {
         headers: headers,
         body: jsonBody,
       );
+      print(response.body);
+      print(response.statusCode);
       ApiGetMyFoods.getMyFoods(token);
       return response; // Return the response
     } on SocketException {
