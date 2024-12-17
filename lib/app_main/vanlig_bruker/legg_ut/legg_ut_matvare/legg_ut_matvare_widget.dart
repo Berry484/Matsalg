@@ -3698,6 +3698,9 @@ class _LeggUtMatvareWidgetState extends State<LeggUtMatvareWidget>
                                                                   context);
                                                               context.pushNamed(
                                                                   'Profil');
+                                                              toasts.showAccepted(
+                                                                  context,
+                                                                  'Markert utsolgt');
                                                             }
                                                             _merSolgtIsLoading =
                                                                 false;
