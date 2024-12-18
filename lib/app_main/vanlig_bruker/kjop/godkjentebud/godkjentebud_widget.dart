@@ -328,7 +328,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 15, 4, 0),
                         child: Text(
-                          '${salgInfo.pris} Kr',
+                          salgInfo.kjopte == true
+                              ? '${salgInfo.prisBetalt} Kr'
+                              : '${salgInfo.pris} Kr',
                           textAlign: TextAlign.end,
                           style: FlutterFlowTheme.of(context)
                               .headlineSmall

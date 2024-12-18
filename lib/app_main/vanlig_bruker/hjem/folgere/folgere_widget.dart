@@ -132,270 +132,290 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                 Padding(
                   padding:
                       const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 0.0),
-                  child: ListView.builder(
-                    padding: const EdgeInsets.fromLTRB(
-                      0,
-                      10,
-                      0,
-                      0,
-                    ),
-                    scrollDirection: Axis.vertical,
-                    itemCount: _isloading ? 3 : _brukere?.length ?? 1,
-                    itemBuilder: (context, index) {
-                      if (_isloading) {
-                        return Container(
-                          margin: const EdgeInsets.all(5.0),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(0, 255, 255,
-                                255), // Background color of the shimmer box
-                            borderRadius:
-                                BorderRadius.circular(16.0), // Rounded corners
-                          ),
-                        );
-                      }
-                      final brukere = _brukere![index];
-                      return Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            10.0, 0.0, 10.0, 0.0),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.pushNamed(
-                              'BrukerPage',
-                              queryParameters: {
-                                'uid': serializeParam(
-                                  brukere.uid,
-                                  ParamType.String,
-                                ),
-                                'username': serializeParam(
-                                  brukere.username,
-                                  ParamType.String,
-                                ),
-                                'bruker': serializeParam(
-                                  null,
-                                  ParamType.JSON,
-                                ),
-                              },
-                            );
-                          },
-                          child: Material(
-                            color: Colors.transparent,
-                            elevation: 0.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(13.0),
+                  child: RefreshIndicator.adaptive(
+                    color: FlutterFlowTheme.of(context).alternate,
+                    onRefresh: () async {
+                      HapticFeedback.lightImpact();
+                      listFolgere();
+                    },
+                    child: ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(
+                        0,
+                        10,
+                        0,
+                        0,
+                      ),
+                      scrollDirection: Axis.vertical,
+                      itemCount: _isloading ? 3 : _brukere?.length ?? 1,
+                      itemBuilder: (context, index) {
+                        if (_isloading) {
+                          return Container(
+                            margin: const EdgeInsets.all(5.0),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(0, 255, 255,
+                                  255), // Background color of the shimmer box
+                              borderRadius: BorderRadius.circular(
+                                  16.0), // Rounded corners
                             ),
-                            child: Container(
-                              height: 80.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).primary,
+                          );
+                        }
+                        final brukere = _brukere![index];
+                        return Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 10.0, 0.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed(
+                                'BrukerPage',
+                                queryParameters: {
+                                  'uid': serializeParam(
+                                    brukere.uid,
+                                    ParamType.String,
+                                  ),
+                                  'username': serializeParam(
+                                    brukere.username,
+                                    ParamType.String,
+                                  ),
+                                  'bruker': serializeParam(
+                                    null,
+                                    ParamType.JSON,
+                                  ),
+                                },
+                              );
+                            },
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 0.0,
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(13.0),
-                                shape: BoxShape.rectangle,
                               ),
-                              child: Align(
-                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 1.0, 1.0, 1.0),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.network(
-                                                '${ApiConstants.baseUrl}${brukere.profilepic}',
-                                                width: 50.0,
-                                                height: 50.0,
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (BuildContext
-                                                        context,
-                                                    Object error,
-                                                    StackTrace? stackTrace) {
-                                                  return Image.asset(
-                                                    'assets/images/profile_pic.png',
-                                                    width: 50.0,
-                                                    height: 50.0,
-                                                    fit: BoxFit.cover,
-                                                  );
-                                                },
+                              child: Container(
+                                height: 80.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  borderRadius: BorderRadius.circular(13.0),
+                                  shape: BoxShape.rectangle,
+                                ),
+                                child: Align(
+                                  alignment:
+                                      const AlignmentDirectional(0.0, 0.0),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      0.0, 1.0, 1.0, 1.0),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.network(
+                                                  '${ApiConstants.baseUrl}${brukere.profilepic}',
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (BuildContext
+                                                          context,
+                                                      Object error,
+                                                      StackTrace? stackTrace) {
+                                                    return Image.asset(
+                                                      'assets/images/profile_pic.png',
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                            child: Container(
-                                              width: 179.0,
-                                              height: 103.0,
-                                              decoration: const BoxDecoration(),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            -1.0, 1.0),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(0.0,
-                                                              0.0, 0.0, 10.0),
-                                                      child: Text(
-                                                        brukere.username,
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: FlutterFlowTheme
-                                                                .of(context)
-                                                            .headlineSmall
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Nunito',
-                                                              fontSize: 17.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      8.0, 0.0, 0.0, 0.0),
+                                              child: Container(
+                                                width: 179.0,
+                                                height: 103.0,
+                                                decoration:
+                                                    const BoxDecoration(),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          const AlignmentDirectional(
+                                                              -1.0, 1.0),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(0.0,
+                                                                0.0, 0.0, 10.0),
+                                                        child: Text(
+                                                          brukere.username,
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .headlineSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 17.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      if (brukere.following == true)
-                                        FFButtonWidget(
-                                          onPressed: () async {
-                                            try {
-                                              HapticFeedback.lightImpact();
-                                              brukere.following = false;
-                                              safeSetState(() {});
-                                              String? token =
-                                                  await firebaseAuthService
-                                                      .getToken(context);
-                                              if (token == null) {
-                                                return;
-                                              }
-                                              apiFolg.unfolgBruker(
-                                                  token, brukere.uid);
-                                            } on SocketException {
-                                              toasts.showErrorToast(context,
-                                                  'Ingen internettforbindelse');
-                                            } catch (e) {
-                                              toasts.showErrorToast(
-                                                  context, 'En feil oppstod');
-                                            }
-                                          },
-                                          text: 'Følger',
-                                          options: FFButtonOptions(
-                                            width: 80,
-                                            height: 35,
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(16, 0, 16, 0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle: FlutterFlowTheme.of(
-                                                    context)
-                                                .titleSmall
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  fontSize: 15,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                            elevation: 0,
-                                            borderSide: const BorderSide(
-                                              color: Color(0x5957636C),
-                                              width: 0.8,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
+                                          ],
                                         ),
-                                      if (brukere.following != true)
-                                        FFButtonWidget(
-                                          onPressed: () async {
-                                            try {
-                                              HapticFeedback.mediumImpact();
-                                              brukere.following = true;
-                                              safeSetState(() {});
-                                              String? token =
-                                                  await firebaseAuthService
-                                                      .getToken(context);
-                                              if (token == null) {
-                                                return;
+                                        if (brukere.following == true)
+                                          FFButtonWidget(
+                                            onPressed: () async {
+                                              try {
+                                                HapticFeedback.lightImpact();
+                                                brukere.following = false;
+                                                safeSetState(() {});
+                                                String? token =
+                                                    await firebaseAuthService
+                                                        .getToken(context);
+                                                if (token == null) {
+                                                  return;
+                                                }
+                                                apiFolg.unfolgBruker(
+                                                    token, brukere.uid);
+                                              } on SocketException {
+                                                toasts.showErrorToast(context,
+                                                    'Ingen internettforbindelse');
+                                              } catch (e) {
+                                                toasts.showErrorToast(
+                                                    context, 'En feil oppstod');
                                               }
-                                              apiFolg.folgbruker(
-                                                  token, brukere.uid);
-                                            } on SocketException {
-                                              toasts.showErrorToast(context,
-                                                  'Ingen internettforbindelse');
-                                            } catch (e) {
-                                              toasts.showErrorToast(
-                                                  context, 'En feil oppstod');
-                                            }
-                                          },
-                                          text: 'Følg',
-                                          options: FFButtonOptions(
-                                            width: 80.0,
-                                            height: 35.0,
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(16.0, 0.0, 16.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            textStyle: FlutterFlowTheme.of(
-                                                    context)
-                                                .titleSmall
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
+                                            },
+                                            text: 'Følger',
+                                            options: FFButtonOptions(
+                                              width: 80,
+                                              height: 35,
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(16, 0, 16, 0),
+                                              iconPadding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 0, 0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
                                                       .primary,
-                                                  fontSize: 15,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                            elevation: 0.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                              textStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleSmall
+                                                  .override(
+                                                    fontFamily: 'Nunito',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontSize: 15,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                              elevation: 0,
+                                              borderSide: const BorderSide(
+                                                color: Color(0x5957636C),
+                                                width: 0.8,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
                                           ),
-                                        ),
-                                    ],
+                                        if (brukere.following != true)
+                                          FFButtonWidget(
+                                            onPressed: () async {
+                                              try {
+                                                HapticFeedback.mediumImpact();
+                                                brukere.following = true;
+                                                safeSetState(() {});
+                                                String? token =
+                                                    await firebaseAuthService
+                                                        .getToken(context);
+                                                if (token == null) {
+                                                  return;
+                                                }
+                                                apiFolg.folgbruker(
+                                                    token, brukere.uid);
+                                              } on SocketException {
+                                                toasts.showErrorToast(context,
+                                                    'Ingen internettforbindelse');
+                                              } catch (e) {
+                                                toasts.showErrorToast(
+                                                    context, 'En feil oppstod');
+                                              }
+                                            },
+                                            text: 'Følg',
+                                            options: FFButtonOptions(
+                                              width: 80.0,
+                                              height: 35.0,
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      16.0, 0.0, 16.0, 0.0),
+                                              iconPadding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      0.0, 0.0, 0.0, 0.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              textStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleSmall
+                                                  .override(
+                                                    fontFamily: 'Nunito',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    fontSize: 15,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                              elevation: 0.0,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ].divide(const SizedBox(height: 20.0)),
