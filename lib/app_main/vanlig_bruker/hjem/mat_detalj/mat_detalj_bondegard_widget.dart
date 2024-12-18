@@ -264,7 +264,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
                                   if (widget.liked == true) {
-                                    print(widget.liked);
                                     context.pushNamed(
                                       'BrukerPage3',
                                       queryParameters: {

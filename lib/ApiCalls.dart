@@ -6,6 +6,7 @@ import 'package:mat_salg/MyIP.dart';
 import 'dart:async'; // Import this to use Future and TimeoutException
 import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:mat_salg/logging.dart';
 
 class ApiCalls {
   static const String baseUrl = ApiConstants.baseUrl;
@@ -126,10 +127,10 @@ class ApiCalls {
         // Parse the response body
         final String lastActiveTime =
             response.body; // the last active time is expected as a string
-        print('Last Active Time: $lastActiveTime');
+        logger.d('Last Active Time: $lastActiveTime');
         return response;
       } else {
-        print('Failed to fetch last active time: ${response.statusCode}');
+        logger.d('Failed to fetch last active time: ${response.statusCode}');
         return null;
       }
     } on SocketException {
@@ -1719,8 +1720,6 @@ class ApiUpdateFood {
         headers: headers,
         body: jsonBody,
       );
-      print(response.body);
-      print(response.statusCode);
       ApiGetMyFoods.getMyFoods(token);
       return response; // Return the response
     } on SocketException {

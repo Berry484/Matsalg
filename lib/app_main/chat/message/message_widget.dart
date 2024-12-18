@@ -275,7 +275,7 @@ class _MessageWidgetState extends State<MessageWidget> {
 
                               appState.conversations.removeWhere(
                                   (conv) => conv.user == conversation.user);
-                              appState.updateUI();
+                              //appState.updateUI();
                             }
                             FFAppState().chatRoom = '';
                             Navigator.pop(context);
