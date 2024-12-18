@@ -1233,6 +1233,7 @@ class ApiKjop {
   Future<http.Response> kjopMat({
     required int matId,
     required int price,
+    required int prisBetalt,
     required int antall,
     required String token,
   }) async {
@@ -1244,6 +1245,7 @@ class ApiKjop {
       final Map<String, dynamic> userData = {
         "matId": matId,
         "pris": price,
+        "prisbetalt": prisBetalt,
         "antall": antall,
       };
 
@@ -1302,7 +1304,6 @@ class ApiKjop {
           }
           Matvarer foodDetails = Matvarer.fromJson(
               orderData['matCopyDetails']); // Use the new Matvarer.fromJson
-
           return OrdreInfo(
             id: orderData['id'], // Unique ID of the order
             kjoper: orderData['kjoper'], // Username of the buyer
@@ -1310,6 +1311,7 @@ class ApiKjop {
             matId: orderData['matId'], // Corrected to 'matId'
             antall: orderData['antall'],
             pris: orderData['pris'],
+            prisBetalt: orderData['prisbetalt'],
             time: DateTime.parse(orderData['time']), // Convert to DateTime
             godkjenttid: orderData['godkjenttid'] != null
                 ? DateTime.parse(orderData['godkjenttid'])

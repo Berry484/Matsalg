@@ -8,7 +8,6 @@ import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
@@ -66,15 +65,28 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
   }
 
   bool isTextFieldEmpty() {
-    if (widget.konto == 'Brukernavn') {
-      return _model.brukernavnTextController.text.trim().isEmpty;
-    } else if (widget.konto == 'For- og etternavn') {
-      return _model.fornavnTextController.text.trim().isEmpty ||
-          _model.etternavnTextController.text.trim().isEmpty;
-    } else if (widget.konto == 'E-post') {
-      return _model.emailTextController.text.trim().isEmpty;
+    if (widget.konto == 'Brukernavn' &&
+        (_model.brukernavnTextController.text == FFAppState().brukernavn ||
+            _model.brukernavnTextController.text.trim().isEmpty)) {
+      return true;
+    } else if (widget.konto == 'For- og etternavn' &&
+        ((_model.fornavnTextController.text == FFAppState().firstname &&
+                _model.etternavnTextController.text == FFAppState().lastname) ||
+            _model.fornavnTextController.text.trim().isEmpty ||
+            _model.etternavnTextController.text.trim().isEmpty)) {
+      return true;
+    } else if (widget.konto == 'E-post' &&
+        (_model.emailTextController.text.trim().isEmpty ||
+            _model.emailTextController.text == FFAppState().email)) {
+      return true;
+    } else if (widget.konto == 'Bio' &&
+        (_model.bioTextController.text == FFAppState().bio)) {
+      return true;
+    } else if (widget.konto == 'Profilbilde' &&
+        (_model.uploadedLocalFile.bytes?.isEmpty ?? true)) {
+      return true;
     }
-    return false; // Default case if widget.konto doesn't match any expected value
+    return false;
   }
 
   @override
@@ -280,8 +292,8 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           final appState = FFAppState();
                                           appState.updateUI();
                                           Navigator.pop(context);
-                                          toasts.showAccepted(context,
-                                              '${widget.konto} lagret');
+                                          toasts.showAccepted(
+                                              context, 'Lagret');
                                           return;
                                         } else if (response.statusCode == 401) {
                                           _isLoading = false;
@@ -537,31 +549,42 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                       if ((_model.uploadedLocalFile.bytes
                                               ?.isNotEmpty ??
                                           false))
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 5, 0, 0),
-                                          child: FlutterFlowIconButton(
-                                            borderColor: Colors.transparent,
-                                            borderRadius: 100,
-                                            buttonSize: 29,
-                                            fillColor: const Color(0xB3262C2D),
-                                            icon: FaIcon(
-                                              FontAwesomeIcons.times,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              size: 16,
+                                        GestureDetector(
+                                          onTap: () async {
+                                            safeSetState(() {
+                                              _model.isDataUploading = false;
+                                              _model.uploadedLocalFile =
+                                                  FFUploadedFile(
+                                                      bytes: Uint8List.fromList(
+                                                          []));
+                                            });
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 5, 0, 0),
+                                            child: Container(
+                                              width: 29, // Matches buttonSize
+                                              height: 29,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    Colors.black, // Black fill
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                  color: Colors
+                                                      .white, // White outline
+                                                  width:
+                                                      0.8, // Thickness of the outline
+                                                ),
+                                              ),
+                                              child: Center(
+                                                child: FaIcon(
+                                                  FontAwesomeIcons.times,
+                                                  color: Colors
+                                                      .white, // Icon color to stand out on black
+                                                  size: 16,
+                                                ),
+                                              ),
                                             ),
-                                            onPressed: () async {
-                                              safeSetState(() {
-                                                _model.isDataUploading = false;
-                                                _model.uploadedLocalFile =
-                                                    FFUploadedFile(
-                                                        bytes:
-                                                            Uint8List.fromList(
-                                                                []));
-                                              });
-                                            },
                                           ),
                                         ),
                                     ],
@@ -595,7 +618,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   obscureText: false,
                                   onChanged: (_) => EasyDebounce.debounce(
                                     '_model.textController',
-                                    const Duration(milliseconds: 200),
+                                    const Duration(milliseconds: 0),
                                     () => safeSetState(() {}),
                                   ),
                                   decoration: InputDecoration(
@@ -688,7 +711,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                   obscureText: false,
                                   onChanged: (_) => EasyDebounce.debounce(
                                     '_model.textController',
-                                    const Duration(milliseconds: 200),
+                                    const Duration(milliseconds: 0),
                                     () => safeSetState(() {}),
                                   ),
                                   decoration: InputDecoration(
@@ -798,7 +821,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     obscureText: false,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       '_model.textController',
-                                      const Duration(milliseconds: 200),
+                                      const Duration(milliseconds: 0),
                                       () => safeSetState(() {}),
                                     ),
                                     decoration: InputDecoration(
@@ -926,7 +949,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                     obscureText: false,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       '_model.textController',
-                                      const Duration(milliseconds: 200),
+                                      const Duration(milliseconds: 0),
                                       () => safeSetState(() {}),
                                     ),
                                     decoration: InputDecoration(
@@ -1025,7 +1048,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                         focusNode: _model.bioFocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
                           '_model.textController',
-                          const Duration(milliseconds: 200),
+                          const Duration(milliseconds: 0),
                           () => safeSetState(() {}),
                         ),
                         textCapitalization: TextCapitalization.sentences,

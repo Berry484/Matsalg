@@ -2403,7 +2403,7 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
                                                                           13.0),
                                                             ),
                                                             child: Container(
-                                                              height: 80.0,
+                                                              height: 73.0,
                                                               decoration:
                                                                   BoxDecoration(
                                                                 color: FlutterFlowTheme.of(

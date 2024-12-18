@@ -145,7 +145,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                     },
                   ),
                   GoRoute(
-                    path: 'brukerPage', // Full path: /hjem/brukerPage
+                    path: 'brukerPage',
                     name: 'BrukerPage',
                     builder: (context, state) {
                       final params = FFParameters(state);
@@ -335,6 +335,50 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                       );
                     },
                   ),
+                  GoRoute(
+                    path: 'brukerPage1',
+                    name: 'BrukerPage1',
+                    builder: (context, state) {
+                      final params = FFParameters(state);
+                      final bruker =
+                          params.getParam<String>('bruker', ParamType.String);
+                      final uid =
+                          params.getParam<String>('uid', ParamType.String);
+                      final username =
+                          params.getParam<String>('username', ParamType.String);
+                      return BrukerPageWidget(
+                          bruker: bruker, uid: uid, username: username);
+                    },
+                    pageBuilder: (context, state) {
+                      return CustomTransitionPage<void>(
+                        key: state.pageKey,
+                        child: BrukerPageWidget(
+                          bruker: FFParameters(state)
+                              .getParam<String>('bruker', ParamType.String),
+                          uid: FFParameters(state)
+                              .getParam<String>('uid', ParamType.String),
+                          username: FFParameters(state)
+                              .getParam<String>('username', ParamType.String),
+                        ),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const Offset begin =
+                              Offset(1.0, 0.0); // Slide in from right
+                          const Offset end = Offset.zero;
+                          const Curve curve = Curves.easeInOut;
+
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ],
               ),
             ],
@@ -421,6 +465,91 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                               (context, animation, secondaryAnimation, child) {
                             const Offset begin =
                                 Offset(1.0, 0.0); // Slide in from the right
+                            const Offset end = Offset.zero;
+                            const Curve curve = Curves.easeInOut;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      path: 'matDetaljBondegard1',
+                      name: 'MatDetaljBondegard1',
+                      builder: (context, state) {
+                        final params = FFParameters(state);
+                        final liked =
+                            params.getParam<bool>('liked', ParamType.bool);
+                        final matvare = params.getParam<Map<String, dynamic>>(
+                            'matvare', ParamType.JSON);
+                        return MatDetaljBondegardWidget(
+                            matvare: matvare, liked: liked);
+                      },
+                      pageBuilder: (context, state) {
+                        return CustomTransitionPage<void>(
+                          key: state.pageKey, // Maintain page state
+                          child: MatDetaljBondegardWidget(
+                            matvare: FFParameters(state)
+                                .getParam<Map<String, dynamic>>(
+                                    'matvare', ParamType.JSON),
+                            liked: FFParameters(state)
+                                .getParam<bool>('liked', ParamType.bool),
+                          ),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const Offset begin =
+                                Offset(1.0, 0.0); // Slide in from right
+                            const Offset end = Offset.zero;
+                            const Curve curve = Curves.easeInOut;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      path: 'brukerPage3',
+                      name: 'BrukerPage3',
+                      builder: (context, state) {
+                        final params = FFParameters(state);
+                        final bruker =
+                            params.getParam<String>('bruker', ParamType.String);
+                        final uid =
+                            params.getParam<String>('uid', ParamType.String);
+                        final username = params.getParam<String>(
+                            'username', ParamType.String);
+                        return BrukerPageWidget(
+                            bruker: bruker, uid: uid, username: username);
+                      },
+                      pageBuilder: (context, state) {
+                        return CustomTransitionPage<void>(
+                          key: state.pageKey,
+                          child: BrukerPageWidget(
+                            bruker: FFParameters(state)
+                                .getParam<String>('bruker', ParamType.String),
+                            uid: FFParameters(state)
+                                .getParam<String>('uid', ParamType.String),
+                            username: FFParameters(state)
+                                .getParam<String>('username', ParamType.String),
+                          ),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const Offset begin =
+                                Offset(1.0, 0.0); // Slide in from right
                             const Offset end = Offset.zero;
                             const Curve curve = Curves.easeInOut;
 

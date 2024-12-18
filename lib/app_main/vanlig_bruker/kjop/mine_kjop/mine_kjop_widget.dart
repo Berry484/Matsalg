@@ -1126,7 +1126,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
                                                                                   child: Text(
-                                                                                    (alleInfo.kjopte ?? false) ? '${alleInfo.pris} Kr' : '+${alleInfo.pris} Kr',
+                                                                                    (alleInfo.kjopte ?? false) ? '${alleInfo.prisBetalt} Kr' : '+${alleInfo.pris} Kr',
                                                                                     textAlign: TextAlign.start,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
@@ -1164,7 +1164,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                           ),
                                                                                           // The actual text
                                                                                           Text(
-                                                                                            '${alleInfo.pris} Kr',
+                                                                                            (alleInfo.kjopte ?? false) ? '${alleInfo.prisBetalt} Kr' : '${alleInfo.pris} Kr',
                                                                                             textAlign: TextAlign.start,
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                   fontFamily: 'Nunito',
@@ -1847,7 +1847,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Padding(
                                                                               padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
                                                                               child: Text(
-                                                                                (ordreInfo.kjopte ?? false) ? '${ordreInfo.pris} Kr' : '+${ordreInfo.pris} Kr',
+                                                                                (ordreInfo.kjopte ?? false) ? '${ordreInfo.prisBetalt} Kr' : '+${ordreInfo.pris} Kr',
                                                                                 textAlign: TextAlign.start,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Nunito',
@@ -1899,7 +1899,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                       ),
                                                                                       // The actual text
                                                                                       Text(
-                                                                                        '${ordreInfo.pris} Kr',
+                                                                                        (ordreInfo.kjopte ?? false) ? '${ordreInfo.prisBetalt} Kr' : '${ordreInfo.pris} Kr',
                                                                                         textAlign: TextAlign.start,
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                               fontFamily: 'Nunito',
@@ -2619,7 +2619,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Padding(
                                                                               padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 12, 0),
                                                                               child: Text(
-                                                                                (salgInfo.kjopte ?? false) ? '${salgInfo.pris} Kr' : '+${salgInfo.pris} Kr',
+                                                                                (salgInfo.kjopte ?? false) ? '${salgInfo.prisBetalt} Kr' : '+${salgInfo.pris} Kr',
                                                                                 textAlign: TextAlign.start,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Nunito',
@@ -2671,7 +2671,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                       ),
                                                                                       // The actual text
                                                                                       Text(
-                                                                                        '${salgInfo.pris} Kr',
+                                                                                        (salgInfo.kjopte ?? false) ? '${salgInfo.prisBetalt} Kr' : '${salgInfo.pris} Kr',
                                                                                         textAlign: TextAlign.start,
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                               fontFamily: 'Nunito',

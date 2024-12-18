@@ -126,7 +126,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                 onTap: () async {
                                   try {
                                     context.pushNamed(
-                                      'BrukerPage',
+                                      'BrukerPage1',
                                       queryParameters: {
                                         'uid': serializeParam(
                                           ordreInfo.selger,

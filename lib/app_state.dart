@@ -704,6 +704,7 @@ class OrdreInfo {
   final int matId;
   final int antall;
   final int pris;
+  final int prisBetalt;
   final DateTime time;
   final DateTime? godkjenttid;
   final DateTime? updatetime;
@@ -725,6 +726,7 @@ class OrdreInfo {
     required this.matId,
     required this.antall,
     required this.pris,
+    required this.prisBetalt,
     required this.time,
     this.godkjenttid,
     required this.updatetime,
@@ -749,6 +751,7 @@ class OrdreInfo {
       matId: json['matId'] as int,
       antall: json['antall'] as int,
       pris: json['pris'] as int,
+      prisBetalt: json['prisbetalt'] as int,
       time: DateTime.parse(json['time']),
       godkjenttid: json['godkjenttid'] != null
           ? DateTime.parse(json['godkjenttid'])
@@ -776,6 +779,7 @@ class OrdreInfo {
       'matId': matId,
       'antall': antall,
       'pris': pris,
+      'prisbetalt': prisBetalt,
       'time': time.toIso8601String(),
       'godkjenttid': godkjenttid?.toIso8601String(),
       'updatetime': updatetime?.toIso8601String(),

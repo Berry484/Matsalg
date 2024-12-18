@@ -284,7 +284,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                             'Profil');
                                                                         toasts.showAccepted(
                                                                             context,
-                                                                            'Matvare slettet');
+                                                                            'Slettet');
                                                                       }
                                                                       _slettIsLoading =
                                                                           false;
@@ -892,7 +892,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                             Navigator.pop(context);
                                                                             context.pushNamed('Profil');
                                                                             toasts.showAccepted(context,
-                                                                                'Matvare slettet');
+                                                                                'Slettet');
                                                                           }
                                                                           _slettIsLoading =
                                                                               false;

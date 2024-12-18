@@ -30,9 +30,11 @@ class MatDetaljBondegardWidget extends StatefulWidget {
   const MatDetaljBondegardWidget({
     super.key,
     required this.matvare,
+    this.liked,
   });
 
   final dynamic matvare;
+  final dynamic liked;
 
   @override
   State<MatDetaljBondegardWidget> createState() =>
@@ -261,20 +263,36 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  setState(() {});
-                                  context.pushNamed(
-                                    'BrukerPage',
-                                    queryParameters: {
-                                      'uid': serializeParam(
-                                        matvare.uid,
-                                        ParamType.String,
-                                      ),
-                                      'username': serializeParam(
-                                        matvare.username,
-                                        ParamType.String,
-                                      ),
-                                    },
-                                  );
+                                  if (widget.liked == true) {
+                                    print(widget.liked);
+                                    context.pushNamed(
+                                      'BrukerPage3',
+                                      queryParameters: {
+                                        'uid': serializeParam(
+                                          matvare.uid,
+                                          ParamType.String,
+                                        ),
+                                        'username': serializeParam(
+                                          matvare.username,
+                                          ParamType.String,
+                                        ),
+                                      },
+                                    );
+                                  } else {
+                                    context.pushNamed(
+                                      'BrukerPage',
+                                      queryParameters: {
+                                        'uid': serializeParam(
+                                          matvare.uid,
+                                          ParamType.String,
+                                        ),
+                                        'username': serializeParam(
+                                          matvare.username,
+                                          ParamType.String,
+                                        ),
+                                      },
+                                    );
+                                  }
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,

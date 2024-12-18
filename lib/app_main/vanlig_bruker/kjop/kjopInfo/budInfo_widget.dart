@@ -82,8 +82,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
           onWillPop: () async => false, // Disable the back button
           child: Center(
             child: Container(
-              width: 60,
-              height: 60,
+              width: 80,
+              height: 80,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -121,7 +121,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
   @override
   void dispose() {
     _model.maybeDispose();
-
+    _showLoadingDialog();
+    _hideLoadingDialog();
     super.dispose();
   }
 
@@ -151,12 +152,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Divider(
+                  Divider(
                     height: 22,
                     thickness: 4,
-                    indent: 168,
-                    endIndent: 168,
-                    color: Color.fromRGBO(197, 197, 199, 1),
+                    indent: MediaQuery.of(context).size.width * 0.4,
+                    endIndent: MediaQuery.of(context).size.width * 0.4,
+                    color: Colors.black12,
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
@@ -349,7 +350,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 12, 10, 0),
                             child: Text(
-                              '${ordreInfo.pris} Kr',
+                              '${ordreInfo.prisBetalt} Kr',
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -659,9 +660,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                           Navigator.of(context).pop();
                                           _bekreftIsLoading = false;
                                         },
-                                        isDefaultAction: true,
                                         child: const Text(
-                                          "Nei, avbryt",
+                                          "Nei",
                                           style: TextStyle(
                                             color: CupertinoColors.systemBlue,
                                           ),
@@ -669,12 +669,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                       ),
                                       CupertinoDialogAction(
                                         onPressed: () async {
-                                          if (_trekkIsLoading) return;
                                           try {
+                                            if (_trekkIsLoading) return;
                                             _trekkIsLoading = true;
-                                            Navigator.pop(context);
                                             _showLoadingDialog();
-
                                             String? token =
                                                 await firebaseAuthService
                                                     .getToken(context);
@@ -685,11 +683,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                       trekt: true,
                                                       token: token);
                                               if (response.statusCode == 200) {
-                                                _hideLoadingDialog();
+                                                Navigator.of(context).pop();
                                                 Navigator.pop(context);
                                                 toasts.showAccepted(
                                                     context, 'Budet ble trekt');
-                                                return;
+                                                Navigator.pop(context);
                                               } else {
                                                 _hideLoadingDialog();
                                                 Navigator.pop(context);
@@ -707,7 +705,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                           }
                                         },
                                         child: const Text(
-                                          "Ja, bekreft",
+                                          "Ja",
                                           style: TextStyle(color: Colors.red),
                                         ),
                                       ),
@@ -836,11 +834,11 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                           ),
                                                         );
                                                       },
-                                                    ).then(
-                                                        (value) => setState(() {
-                                                              _bekreftIsLoading =
-                                                                  false;
-                                                            }));
+                                                    ).then((value) =>
+                                                        safeSetState(() {
+                                                          _bekreftIsLoading =
+                                                              false;
+                                                        }));
                                                   } else {
                                                     _hideLoadingDialog();
                                                     toasts.showErrorToast(

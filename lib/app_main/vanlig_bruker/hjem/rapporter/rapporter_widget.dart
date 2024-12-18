@@ -18,10 +18,14 @@ class RapporterWidget extends StatefulWidget {
     super.key,
     this.username,
     this.matId,
+    this.chat,
+    this.chatUsername,
   });
 
   final dynamic username;
   final dynamic matId;
+  final dynamic chat;
+  final dynamic chatUsername;
 
   @override
   State<RapporterWidget> createState() => _RapporterWidgetState();
@@ -114,12 +118,16 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    const Divider(
+                                    Divider(
                                       height: 22,
                                       thickness: 4,
-                                      indent: 168,
-                                      endIndent: 168,
-                                      color: Color.fromRGBO(197, 197, 199, 1),
+                                      indent:
+                                          MediaQuery.of(context).size.width *
+                                              0.4,
+                                      endIndent:
+                                          MediaQuery.of(context).size.width *
+                                              0.4,
+                                      color: Colors.black12,
                                     ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -218,7 +226,7 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                     focusNode: _model.bioFocusNode,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       '_model.textController',
-                                      const Duration(milliseconds: 200),
+                                      const Duration(milliseconds: 0),
                                       () => safeSetState(() {}),
                                     ),
                                     textCapitalization:
@@ -332,8 +340,11 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                               await reportUser.reportUser(
                                                   token: token,
                                                   to: widget.username,
-                                                  description: _model
-                                                      .bioTextController.text,
+                                                  description: widget.chat ==
+                                                          true
+                                                      ? 'Chat med ${widget.chatUsername}\nBeskrivelse: ${_model.bioTextController.text}'
+                                                      : _model.bioTextController
+                                                          .text,
                                                   matId: widget.matId);
                                           if (response.statusCode == 200) {
                                             Navigator.pop(context);
@@ -374,14 +385,17 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                     iconPadding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 0.0),
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
+                                    color: _model
+                                            .bioTextController.text.isNotEmpty
+                                        ? FlutterFlowTheme.of(context).alternate
+                                        : FlutterFlowTheme.of(context)
+                                            .unSelected,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleMedium
                                         .override(
                                           fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
-                                              .secondary,
+                                              .primary,
                                           fontSize: 17.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w800,

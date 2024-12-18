@@ -1001,7 +1001,9 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                     // Parse the selected value and calculate price
                                     int antall =
                                         int.parse(_selectedValue.toString());
-                                    int pris = (_selectedValue * matpris +
+                                    int pris =
+                                        (_selectedValue * matpris).toInt();
+                                    int prisBetalt = (_selectedValue * matpris +
                                             kjopsBeskyttelse)
                                         .toInt();
                                     int matId = matvare.matId ?? 0;
@@ -1017,6 +1019,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                               await ApiKjop().kjopMat(
                                             matId: matId,
                                             price: pris,
+                                            prisBetalt: prisBetalt,
                                             antall: antall,
                                             token: token,
                                           );

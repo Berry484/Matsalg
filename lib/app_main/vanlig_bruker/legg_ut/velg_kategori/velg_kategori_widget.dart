@@ -88,12 +88,13 @@ class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            const Divider(
+                            Divider(
                               height: 22,
                               thickness: 4,
-                              indent: 168,
-                              endIndent: 168,
-                              color: Color.fromRGBO(197, 197, 199, 1),
+                              indent: MediaQuery.of(context).size.width * 0.4,
+                              endIndent:
+                                  MediaQuery.of(context).size.width * 0.4,
+                              color: Colors.black12,
                             ),
                             Row(
                               mainAxisSize: MainAxisSize.max,

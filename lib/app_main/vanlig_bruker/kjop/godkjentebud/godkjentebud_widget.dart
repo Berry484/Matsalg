@@ -109,12 +109,12 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Divider(
+                  Divider(
                     height: 22,
                     thickness: 4,
-                    indent: 168,
-                    endIndent: 168,
-                    color: Color.fromRGBO(197, 197, 199, 1),
+                    indent: MediaQuery.of(context).size.width * 0.4,
+                    endIndent: MediaQuery.of(context).size.width * 0.4,
+                    color: Colors.black12,
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
@@ -176,7 +176,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 try {
                   Navigator.pop(context);
                   context.pushNamed(
-                    'BrukerPage',
+                    'BrukerPage1',
                     queryParameters: {
                       'uid': serializeParam(
                         matvare.uid,
@@ -218,7 +218,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         try {
                           Navigator.pop(context);
                           context.pushNamed(
-                            'BrukerPage',
+                            'BrukerPage1',
                             queryParameters: {
                               'uid': serializeParam(
                                 salgInfo.kjopte == true

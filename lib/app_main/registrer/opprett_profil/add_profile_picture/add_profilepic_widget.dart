@@ -6,7 +6,6 @@ import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/myIP.dart';
-import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_widgets.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -363,32 +362,44 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                         if ((_model.uploadedLocalFile.bytes
                                                 ?.isNotEmpty ??
                                             false))
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 5, 0, 0),
-                                            child: FlutterFlowIconButton(
-                                              borderColor: Colors.transparent,
-                                              borderRadius: 100,
-                                              buttonSize: 29,
-                                              fillColor:
-                                                  const Color(0xB3262C2D),
-                                              icon: FaIcon(
-                                                FontAwesomeIcons.times,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                size: 16,
+                                          GestureDetector(
+                                            onTap: () async {
+                                              safeSetState(() {
+                                                _model.isDataUploading = false;
+                                                _model.uploadedLocalFile =
+                                                    FFUploadedFile(
+                                                        bytes:
+                                                            Uint8List.fromList(
+                                                                []));
+                                              });
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 5, 0, 0),
+                                              child: Container(
+                                                width: 29, // Matches buttonSize
+                                                height: 29,
+                                                decoration: BoxDecoration(
+                                                  color: Colors
+                                                      .black, // Black fill
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                    color: Colors
+                                                        .white, // White outline
+                                                    width:
+                                                        0.8, // Thickness of the outline
+                                                  ),
+                                                ),
+                                                child: Center(
+                                                  child: FaIcon(
+                                                    FontAwesomeIcons.times,
+                                                    color: Colors
+                                                        .white, // Icon color to stand out on black
+                                                    size: 16,
+                                                  ),
+                                                ),
                                               ),
-                                              onPressed: () async {
-                                                safeSetState(() {
-                                                  _model.isDataUploading =
-                                                      false;
-                                                  _model.uploadedLocalFile =
-                                                      FFUploadedFile(
-                                                          bytes: Uint8List
-                                                              .fromList([]));
-                                                });
-                                              },
                                             ),
                                           ),
                                       ],

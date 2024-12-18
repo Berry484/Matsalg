@@ -88,10 +88,10 @@ class _SorterWidgetState extends State<SorterWidget> {
         children: [
           Divider(
             height: 22,
-            thickness: 3,
-            indent: 185,
-            endIndent: 185,
-            color: FlutterFlowTheme.of(context).secondaryText,
+            thickness: 4,
+            indent: MediaQuery.of(context).size.width * 0.42,
+            endIndent: MediaQuery.of(context).size.width * 0.42,
+            color: Colors.black12,
           ),
           Stack(
             children: [

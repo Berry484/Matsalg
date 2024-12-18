@@ -137,11 +137,12 @@ class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
                               children: [
                                 Divider(
                                   height: 22,
-                                  thickness: 3,
-                                  indent: 190,
-                                  endIndent: 190,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
+                                  thickness: 4,
+                                  indent:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  endIndent:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  color: Colors.black12,
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(

@@ -20,6 +20,7 @@ abstract class FlutterFlowTheme {
   late Color tertiary;
   late Color price;
   late Color alternate;
+  late Color unSelected;
   late Color primaryText;
   late Color secondaryText;
   late Color primaryBackground;
@@ -120,6 +121,7 @@ class LightModeTheme extends FlutterFlowTheme {
 
   late Color price = const Color(0xFF007AFF);
   late Color alternate = const Color(0xFF007AFF);
+  late Color unSelected = const Color.fromARGB(156, 0, 123, 255);
   // late Color alternate = const Color.fromARGB(255, 0, 112, 110);
 
   late Color primaryText = const Color.fromARGB(255, 8, 8, 8);

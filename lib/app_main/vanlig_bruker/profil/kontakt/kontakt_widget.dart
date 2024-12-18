@@ -110,12 +110,16 @@ class _KontaktWidgetState extends State<KontaktWidget> {
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    const Divider(
+                                    Divider(
                                       height: 22,
                                       thickness: 4,
-                                      indent: 168,
-                                      endIndent: 168,
-                                      color: Color.fromRGBO(197, 197, 199, 1),
+                                      indent:
+                                          MediaQuery.of(context).size.width *
+                                              0.4,
+                                      endIndent:
+                                          MediaQuery.of(context).size.width *
+                                              0.4,
+                                      color: Colors.black12,
                                     ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -303,7 +307,7 @@ class _KontaktWidgetState extends State<KontaktWidget> {
                                       focusNode: _model.bioFocusNode,
                                       onChanged: (_) => EasyDebounce.debounce(
                                         '_model.textController',
-                                        const Duration(milliseconds: 200),
+                                        const Duration(milliseconds: 0),
                                         () => safeSetState(() {}),
                                       ),
                                       textCapitalization:
@@ -462,8 +466,11 @@ class _KontaktWidgetState extends State<KontaktWidget> {
                                     iconPadding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 0.0),
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
+                                    color: _model
+                                            .bioTextController.text.isNotEmpty
+                                        ? FlutterFlowTheme.of(context).alternate
+                                        : FlutterFlowTheme.of(context)
+                                            .unSelected,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleMedium
                                         .override(

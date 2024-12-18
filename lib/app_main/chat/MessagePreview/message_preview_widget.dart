@@ -63,7 +63,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 6, 0, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 3, 0, 0),
       child: Container(
         width: double.infinity,
         height: 75,
@@ -88,23 +88,23 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 12, 0),
                   child: Container(
-                    width: 55,
-                    height: 55,
+                    width: 53,
+                    height: 53,
                     clipBehavior: Clip.antiAlias,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.network(
                       '${ApiConstants.baseUrl}${widget.messageImage}',
-                      width: 55,
-                      height: 55,
+                      width: 53,
+                      height: 53,
                       fit: BoxFit.cover,
                       errorBuilder: (BuildContext context, Object error,
                           StackTrace? stackTrace) {
                         return Image.asset(
                           'assets/images/profile_pic.png',
-                          width: 55,
-                          height: 55,
+                          width: 53,
+                          height: 53,
                           fit: BoxFit.cover,
                         );
                       },
@@ -115,23 +115,23 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 12, 0),
                   child: Container(
-                    width: 55,
-                    height: 55,
+                    width: 53,
+                    height: 53,
                     clipBehavior: Clip.antiAlias,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.asset(
                       'assets/images/profile_pic.png',
-                      width: 55,
-                      height: 55,
+                      width: 53,
+                      height: 53,
                       fit: BoxFit.cover,
                       errorBuilder: (BuildContext context, Object error,
                           StackTrace? stackTrace) {
                         return Image.asset(
                           'assets/images/profile_pic.png',
-                          width: 55,
-                          height: 55,
+                          width: 53,
+                          height: 53,
                           fit: BoxFit.cover,
                         );
                       },
@@ -149,7 +149,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 12, 0),
+                                0, 8, 12, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,11 +199,11 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                         const Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  6, 0, 0, 0),
+                                                  0, 0, 0, 0),
                                           child: Icon(
                                             Icons.chevron_right_rounded,
                                             color: Color(0xFF357BF7),
-                                            size: 25,
+                                            size: 26,
                                           ),
                                         ),
                                       ],

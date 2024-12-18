@@ -114,6 +114,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
         safeSetState(() {
           if (_likesmatvarer != null && _likesmatvarer!.isEmpty) {
             return;
+          } else {
+            FFAppState().liked = false;
           }
           _likesisloading = false;
         });
@@ -303,7 +305,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 20, 0, 0),
+                                    0, 10, 0, 0),
                                 child: SingleChildScrollView(
                                   primary: false,
                                   child: Column(
@@ -340,36 +342,120 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                             MainAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Container(
-                                                            width: 90,
-                                                            height: 90,
-                                                            clipBehavior:
-                                                                Clip.antiAlias,
-                                                            decoration:
-                                                                const BoxDecoration(
-                                                              shape: BoxShape
-                                                                  .circle,
-                                                            ),
-                                                            child:
-                                                                CachedNetworkImage(
-                                                              fadeInDuration:
-                                                                  const Duration(
-                                                                      milliseconds:
-                                                                          0),
-                                                              fadeOutDuration:
-                                                                  const Duration(
-                                                                      milliseconds:
-                                                                          0),
-                                                              imageUrl:
-                                                                  '${ApiConstants.baseUrl}${FFAppState().profilepic}',
-                                                              fit: BoxFit.cover,
-                                                              errorWidget: (context,
-                                                                      error,
-                                                                      stackTrace) =>
-                                                                  Image.asset(
-                                                                'assets/images/profile_pic.png',
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              showCupertinoModalPopup(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                                  return CupertinoActionSheet(
+                                                                    title:
+                                                                        const Text(
+                                                                      'Velg en handling',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            13,
+                                                                        fontWeight:
+                                                                            FontWeight.w400,
+                                                                        color: CupertinoColors
+                                                                            .secondaryLabel,
+                                                                      ),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                    ),
+                                                                    actions: <Widget>[
+                                                                      CupertinoActionSheetAction(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                          context
+                                                                              .pushNamed(
+                                                                            'ProfilRediger',
+                                                                            queryParameters: {
+                                                                              'konto': serializeParam(
+                                                                                'Profilbilde',
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            },
+                                                                          );
+                                                                        },
+                                                                        child:
+                                                                            const Text(
+                                                                          'Oppdater',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                19,
+                                                                            color:
+                                                                                CupertinoColors.systemBlue,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                    cancelButton:
+                                                                        CupertinoActionSheetAction(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.pop(
+                                                                            context); // Close the action sheet
+                                                                      },
+                                                                      isDefaultAction:
+                                                                          true,
+                                                                      child:
+                                                                          const Text(
+                                                                        'Avbryt',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              19,
+                                                                          color:
+                                                                              CupertinoColors.systemBlue,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                              width: 90,
+                                                              height: 90,
+                                                              clipBehavior: Clip
+                                                                  .antiAlias,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                              ),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                fadeInDuration:
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            0),
+                                                                fadeOutDuration:
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            0),
+                                                                imageUrl:
+                                                                    '${ApiConstants.baseUrl}${FFAppState().profilepic}',
                                                                 fit: BoxFit
                                                                     .cover,
+                                                                errorWidget: (context,
+                                                                        error,
+                                                                        stackTrace) =>
+                                                                    Image.asset(
+                                                                  'assets/images/profile_pic.png',
+                                                                  width: 90,
+                                                                  height: 90,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -631,7 +717,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                     child: Padding(
                                                                                       padding: MediaQuery.viewInsetsOf(context),
                                                                                       child: BrukerRatingWidget(
-                                                                                        username: FirebaseAuth.instance.currentUser!.uid,
+                                                                                        uid: FirebaseAuth.instance.currentUser!.uid,
+                                                                                        username: FFAppState().brukernavn,
                                                                                         mine: true,
                                                                                       ),
                                                                                     ),
@@ -1516,7 +1603,8 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                         if ((FFAppState().liked != true &&
                                                 _model.tabBarCurrentIndex ==
                                                     1) &&
-                                            (_likesmatvarer!.isEmpty))
+                                            (_likesmatvarer == null ||
+                                                _likesmatvarer!.isEmpty))
                                           Container(
                                             width: MediaQuery.sizeOf(context)
                                                 .width,
@@ -1704,7 +1792,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                           onTap: () async {
                                                             try {
                                                               context.pushNamed(
-                                                                'MatDetaljBondegard',
+                                                                'MatDetaljBondegard1',
                                                                 queryParameters: {
                                                                   'matvare':
                                                                       serializeParam(
@@ -1712,6 +1800,12 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                         .toJson(), // Convert to JSON before passing
                                                                     ParamType
                                                                         .JSON,
+                                                                  ),
+                                                                  'liked':
+                                                                      serializeParam(
+                                                                    true,
+                                                                    ParamType
+                                                                        .bool,
                                                                   ),
                                                                 },
                                                               );

@@ -767,6 +767,9 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                   _webSocketService.close();
                                                   await FirebaseAuth.instance
                                                       .signOut();
+                                                  toasts.showAccepted(
+                                                      context, 'Logget ut');
+
                                                   context.go('/registrer');
                                                 } on SocketException {
                                                   if (mounted) {

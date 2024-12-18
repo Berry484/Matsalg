@@ -313,11 +313,6 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                       },
                     ),
                   ),
-                // wrapWithModel(
-                //   model: _model.chatNavBarModel,
-                //   updateCallback: () => safeSetState(() {}),
-                //   child: const ChatNavBarWidget(),
-                // ),
               ],
             ),
           ),

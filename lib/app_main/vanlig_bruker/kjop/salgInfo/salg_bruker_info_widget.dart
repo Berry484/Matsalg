@@ -61,8 +61,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
           onWillPop: () async => false, // Disable the back button
           child: Center(
             child: Container(
-              width: 60,
-              height: 60,
+              width: 80,
+              height: 80,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -157,12 +157,12 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Divider(
+                  Divider(
                     height: 22,
                     thickness: 4,
-                    indent: 168,
-                    endIndent: 168,
-                    color: Color.fromRGBO(197, 197, 199, 1),
+                    indent: MediaQuery.of(context).size.width * 0.4,
+                    endIndent: MediaQuery.of(context).size.width * 0.4,
+                    color: Colors.black12,
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 16),
@@ -227,7 +227,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                             try {
                               Navigator.pop(context);
                               context.pushNamed(
-                                'BrukerPage',
+                                'BrukerPage1',
                                 queryParameters: {
                                   'uid': serializeParam(
                                     salgInfo.kjoper,
@@ -643,12 +643,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
 
                                             if (response.statusCode == 200) {
                                               Navigator.of(context).pop();
-                                              _hideLoadingDialog();
                                               Navigator.pop(context);
-
                                               toasts.showAccepted(
                                                   context, 'Budet ble avslått');
-                                              return;
+                                              Navigator.pop(context);
                                             } else {
                                               _hideLoadingDialog();
                                               toasts.showErrorToast(context,
@@ -757,11 +755,9 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                               if (response.statusCode == 200) {
                                                 Navigator.of(context).pop();
                                                 Navigator.pop(context);
-                                                Navigator.pop(context);
-                                                _hideLoadingDialog();
                                                 toasts.showAccepted(context,
                                                     'Budet ble godkjent');
-                                                return;
+                                                Navigator.pop(context);
                                               } else {
                                                 _hideLoadingDialog();
                                                 toasts.showErrorToast(context,

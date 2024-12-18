@@ -151,12 +151,12 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(
+            Divider(
               height: 22,
               thickness: 4,
-              indent: 168,
-              endIndent: 168,
-              color: Color.fromRGBO(197, 197, 199, 1),
+              indent: MediaQuery.of(context).size.width * 0.4,
+              endIndent: MediaQuery.of(context).size.width * 0.4,
+              color: Colors.black12,
             ),
             Stack(
               children: [

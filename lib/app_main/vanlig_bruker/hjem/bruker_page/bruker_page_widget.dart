@@ -373,6 +373,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
           ),
           body: SafeArea(
             top: true,
+            bottom: false,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -941,7 +942,8 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                   child: Padding(
                                                                                     padding: MediaQuery.viewInsetsOf(context),
                                                                                     child: BrukerRatingWidget(
-                                                                                      username: widget.uid,
+                                                                                      uid: widget.uid,
+                                                                                      username: widget.username,
                                                                                       mine: false,
                                                                                     ),
                                                                                   ),

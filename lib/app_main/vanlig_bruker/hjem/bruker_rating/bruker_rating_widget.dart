@@ -21,11 +21,13 @@ export 'bruker_rating_model.dart';
 class BrukerRatingWidget extends StatefulWidget {
   const BrukerRatingWidget({
     super.key,
+    this.uid,
     this.username,
     this.mine,
   });
 
   final dynamic username;
+  final dynamic uid;
   final dynamic mine;
 
   @override
@@ -106,8 +108,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       if (token == null) {
         return;
       } else {
-        if (widget.mine != true && widget.username != null) {
-          _ratings = await ApiRating.listRatings(token, widget.username);
+        if (widget.mine != true && widget.uid != null) {
+          _ratings = await ApiRating.listRatings(token, widget.uid);
         } else {
           _ratings = await ApiRating.listMineRatings(token);
         }
@@ -183,12 +185,13 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Divider(
+                            Divider(
                               height: 22,
                               thickness: 4,
-                              indent: 168,
-                              endIndent: 168,
-                              color: Color.fromRGBO(197, 197, 199, 1),
+                              indent: MediaQuery.of(context).size.width * 0.4,
+                              endIndent:
+                                  MediaQuery.of(context).size.width * 0.4,
+                              color: Colors.black12,
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -198,12 +201,70 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        7, 0, 0, 0),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                      child: Text(
+                                        'Lukk',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color: Colors.transparent,
+                                              fontSize: 16,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center, // Centers the column content
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .center, // Centers the text horizontally
+                                        children: [
+                                          Text(
+                                            'Vurderinger', // First part
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Nunito',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  fontSize: 17,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w800,
+                                                ),
+                                          ),
+                                          Text(
+                                            'for ${widget.username}', // Second part
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Nunito',
+                                                  color: Colors
+                                                      .black38, // Different color for the second text
+                                                  fontSize: 14,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ],
+                                      )),
                                   Align(
                                     alignment: const AlignmentDirectional(0, 0),
                                     child: Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              7, 0, 0, 0),
+                                              0, 0, 7, 0),
                                       child: InkWell(
                                         splashColor: Colors.transparent,
                                         focusColor: Colors.transparent,
@@ -220,40 +281,23 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                 context, 'En feil oppstod');
                                           }
                                         },
-                                        child: Icon(
-                                          CupertinoIcons.xmark,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 25,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 0, 5, 0),
+                                          child: Text(
+                                            'Lukk',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Nunito',
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                    child: Text(
-                                      'Vurderinger',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Nunito',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 18,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                    ),
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 7, 0),
-                                    child: Icon(
-                                      CupertinoIcons.xmark,
-                                      color: Colors.transparent,
-                                      size: 25,
                                     ),
                                   ),
                                 ],

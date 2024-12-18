@@ -1,7 +1,7 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
 import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/MyIP.dart';
@@ -9,6 +9,7 @@ import 'package:mat_salg/api/web_socket.dart';
 import 'package:mat_salg/app_main/chat/message/message_model.dart';
 import 'package:mat_salg/app_main/chat/messageBubble/message_bubbles_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -163,108 +164,257 @@ class _MessageWidgetState extends State<MessageWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(85),
+          preferredSize: const Size.fromHeight(80),
           child: SafeArea(
             child: Column(
               children: [
                 AppBar(
                   backgroundColor: Colors.transparent,
-                  automaticallyImplyLeading: true,
+                  automaticallyImplyLeading: false,
                   scrolledUnderElevation: 0.0,
-                  leading: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () {
-                        try {
-                          if (conversation.messages.isEmpty) {
-                            // Access the global app state (FFAppState)
-                            final appState = FFAppState();
-
-                            // Remove the conversation from the list if it has no messages
-                            appState.conversations.removeWhere(
-                                (conv) => conv.user == conversation.user);
-                            appState.updateUI();
-                          }
-                          FFAppState().chatRoom = '';
-                          Navigator.pop(context);
-                        } on SocketException {
-                          toasts.showErrorToast(
-                              context, 'Ingen internettforbindelse');
-                        } catch (e) {
-                          toasts.showErrorToast(context, 'En feil oppstod');
-                        }
-                      },
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Icon(
-                            Icons.arrow_back_ios,
-                            color: Color(0xFF357BF7),
-                            size: 28,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  leading: null,
                   actions: const [],
                   flexibleSpace: FlexibleSpaceBar(
-                    title: GestureDetector(
-                      onTap: () {},
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Container(
-                            width: 45,
-                            height: 45,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: Image.network(
-                              '${ApiConstants.baseUrl}${conversation.profilePic}',
-                              width: 45,
-                              height: 45,
-                              fit: BoxFit.cover,
-                              errorBuilder: (BuildContext context, Object error,
-                                  StackTrace? stackTrace) {
-                                return Image.asset(
-                                  'assets/images/profile_pic.png',
-                                  width: 45,
-                                  height: 45,
-                                  fit: BoxFit.cover,
-                                );
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 3, 0, 0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                    title: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(14, 5, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          try {
+                            if (conversation.messages.isEmpty) {
+                              final appState = FFAppState();
+
+                              appState.conversations.removeWhere(
+                                  (conv) => conv.user == conversation.user);
+                              appState.updateUI();
+                            }
+                            FFAppState().chatRoom = '';
+                            Navigator.pop(context);
+                          } on SocketException {
+                            toasts.showErrorToast(
+                                context, 'Ingen internettforbindelse');
+                          } catch (e) {
+                            toasts.showErrorToast(context, 'En feil oppstod');
+                          }
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
                               children: [
+                                Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Colors.black,
+                                  size: 28,
+                                ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 0),
-                                  child: Text(
-                                    conversation.username,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          fontSize: 13,
-                                          letterSpacing: 0.0,
+                                      5.0, 0.0, 0.0, 0.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {},
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      10.0, 0.0, 0.0, 0.0),
+                                              child: Container(
+                                                width: 38.0,
+                                                height: 38.0,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Image.network(
+                                                  '${ApiConstants.baseUrl}${conversation.profilePic}',
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (BuildContext
+                                                          context,
+                                                      Object error,
+                                                      StackTrace? stackTrace) {
+                                                    return Image.asset(
+                                                      'assets/images/profile_pic.png',
+                                                      width: 38.0,
+                                                      height: 38.0,
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          8.0, 0.0, 0.0, 0.0),
+                                                  child: Text.rich(
+                                                    TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                          text: conversation
+                                                              .username,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 15.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                        TextSpan(
+                                                          text:
+                                                              '\nSist aktiv i dag',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText, // Grey color
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 8, 0),
+                              child: IconButton(
+                                icon: Icon(
+                                  CupertinoIcons.ellipsis,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 28.0,
+                                ),
+                                onPressed: () {
+                                  showCupertinoModalPopup(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CupertinoActionSheet(
+                                        title: const Text(
+                                          'Velg en handling',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                            color:
+                                                CupertinoColors.secondaryLabel,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        actions: <Widget>[
+                                          CupertinoActionSheetAction(
+                                            onPressed: () async {
+                                              await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                barrierColor:
+                                                    const Color.fromARGB(
+                                                        60, 17, 0, 0),
+                                                useRootNavigator: true,
+                                                context: context,
+                                                builder: (context) {
+                                                  return GestureDetector(
+                                                    onTap: () =>
+                                                        FocusScope.of(context)
+                                                            .unfocus(),
+                                                    child: Padding(
+                                                      padding: MediaQuery
+                                                          .viewInsetsOf(
+                                                              context),
+                                                      child: RapporterWidget(
+                                                        username:
+                                                            conversation.user,
+                                                        chatUsername:
+                                                            conversation
+                                                                .username,
+                                                        chat: true,
+                                                        matId: null,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ).then(
+                                                  (value) => setState(() {}));
+                                              return;
+                                            },
+                                            child: const Text(
+                                              'Rapporter chat',
+                                              style: TextStyle(
+                                                fontSize: 19,
+                                                color: Colors
+                                                    .red, // Red text for 'Slett annonse'
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        cancelButton:
+                                            CupertinoActionSheetAction(
+                                          onPressed: () {
+                                            Navigator.pop(
+                                                context); // Close the action sheet
+                                          },
+                                          isDefaultAction: true,
+                                          child: const Text(
+                                            'Avbryt',
+                                            style: TextStyle(
+                                              fontSize: 19,
+                                              color: CupertinoColors.systemBlue,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     centerTitle: true,
@@ -354,7 +504,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                       focusNode: _model.textFieldFocusNode,
                                       onChanged: (_) => EasyDebounce.debounce(
                                         '_model.textController',
-                                        const Duration(milliseconds: 200),
+                                        const Duration(milliseconds: 0),
                                         () => safeSetState(() {}),
                                       ),
                                       autofocus: false,
@@ -373,24 +523,23 @@ class _MessageWidgetState extends State<MessageWidget> {
                                             .override(
                                               fontFamily: 'Inter',
                                               fontSize: 14.0,
-                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black26,
+                                              fontWeight: FontWeight.w600,
                                               letterSpacing: 0.0,
                                               lineHeight: 1,
                                             ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            width: 1.0,
+                                            color: Colors.black12,
+                                            width: 1.2,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(24),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            width: 1.0,
+                                            color: Colors.black12,
+                                            width: 1.2,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(24),
@@ -440,42 +589,44 @@ class _MessageWidgetState extends State<MessageWidget> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 4, 0),
-                  child: Align(
-                    alignment: Alignment.bottomRight, // Center if only one line
+                if (_model.textController.text.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 4, 0),
+                    child: Align(
+                      alignment:
+                          Alignment.bottomRight, // Center if only one line
 
-                    child: FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 50.0,
-                      borderWidth: 1.0,
-                      buttonSize: 68.0,
-                      onPressed: () {
-                        try {
-                          if (_model.textController!.text.trim().isNotEmpty) {
-                            _webSocketService.sendMessage(
-                                conversation.user,
-                                _model.textController!.text,
-                                conversation.username);
-                            setState(() {
-                              _model.textController!.clear();
-                            });
+                      child: FlutterFlowIconButton(
+                        borderColor: Colors.transparent,
+                        borderRadius: 50.0,
+                        borderWidth: 1.0,
+                        buttonSize: 68.0,
+                        onPressed: () {
+                          try {
+                            if (_model.textController!.text.trim().isNotEmpty) {
+                              _webSocketService.sendMessage(
+                                  conversation.user,
+                                  _model.textController!.text,
+                                  conversation.username);
+                              setState(() {
+                                _model.textController!.clear();
+                              });
+                            }
+                          } on SocketException {
+                            toasts.showErrorToast(
+                                context, 'Ingen internettforbindelse');
+                          } catch (e) {
+                            toasts.showErrorToast(context, 'En feil oppstod');
                           }
-                        } on SocketException {
-                          toasts.showErrorToast(
-                              context, 'Ingen internettforbindelse');
-                        } catch (e) {
-                          toasts.showErrorToast(context, 'En feil oppstod');
-                        }
-                      },
-                      icon: const FaIcon(
-                        FontAwesomeIcons.arrowCircleUp,
-                        color: Color(0xFF357BF7),
-                        size: 30,
+                        },
+                        icon: const FaIcon(
+                          FontAwesomeIcons.arrowCircleUp,
+                          color: Color(0xFF357BF7),
+                          size: 28,
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
