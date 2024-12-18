@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
@@ -32,12 +35,16 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
   bool _messageIsLoading = false;
   bool _isExpanded = false;
   final Toasts toasts = Toasts();
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final ApiCalls apiCalls = ApiCalls();
+  String? poststed;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    getPoststed();
     _model = createModel(context, () => KjopDetaljVentendeModel());
     ordreInfo = widget.ordre;
   }
@@ -47,6 +54,57 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
     _model.dispose();
 
     super.dispose();
+  }
+
+  double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
+    const earthRadius = 6371.0; // Earth's radius in kilometers
+    double dLat = _degreesToRadians(lat2 - lat1);
+    double dLng = _degreesToRadians(lng2 - lng1);
+    double a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(_degreesToRadians(lat1)) *
+            cos(_degreesToRadians(lat2)) *
+            sin(dLng / 2) *
+            sin(dLng / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    return earthRadius * c;
+  }
+
+  double _degreesToRadians(double degrees) {
+    return degrees * pi / 180;
+  }
+
+  Future<void> getPoststed() async {
+    try {
+      String? token = await firebaseAuthService.getToken(context);
+
+      if (token == null) {
+        return;
+      } else {
+        if (ordreInfo.foodDetails.lat == 0 || ordreInfo.foodDetails.lng == 0) {
+          poststed = null;
+        }
+        if ((ordreInfo.foodDetails.lat == null ||
+                ordreInfo.foodDetails.lat == 0) ||
+            (ordreInfo.foodDetails.lng == null ||
+                ordreInfo.foodDetails.lng == 0)) {
+          poststed = null;
+        }
+
+        String? response = await apiCalls.leggutgetKommune(token,
+            ordreInfo.foodDetails.lat ?? 0, ordreInfo.foodDetails.lng ?? 0);
+        safeSetState(() {
+          if (response.isNotEmpty) {
+            String formattedResponse =
+                response[0].toUpperCase() + response.substring(1).toLowerCase();
+            poststed = formattedResponse;
+          }
+        });
+      }
+    } on SocketException {
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      toasts.showErrorToast(context, 'En feil oppstod');
+    }
   }
 
   @override
@@ -63,6 +121,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
             iconTheme:
                 IconThemeData(color: FlutterFlowTheme.of(context).alternate),
             automaticallyImplyLeading: true,
+            scrolledUnderElevation: 0,
             leading: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -181,20 +240,79 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             ),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(8, 0, 0, 13),
-                                          child: Text(
-                                            ordreInfo.selgerUsername ?? '',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  fontSize: 16.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      8.0, 0.0, 0.0, 15.0),
+                                              child: Text.rich(
+                                                TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text: ordreInfo
+                                                              .foodDetails
+                                                              .username ??
+                                                          '',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: 17.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                    ),
+                                                    TextSpan(
+                                                      text: (calculateDistance(
+                                                                  FFAppState()
+                                                                      .brukerLat,
+                                                                  FFAppState()
+                                                                      .brukerLng,
+                                                                  ordreInfo
+                                                                          .foodDetails
+                                                                          .lat ??
+                                                                      0.0,
+                                                                  ordreInfo
+                                                                          .foodDetails
+                                                                          .lng ??
+                                                                      0.0) <
+                                                              1)
+                                                          ? (poststed != null
+                                                              ? '\n${poststed}, 1 Km'
+                                                              : '\n1 Km')
+                                                          : (poststed != null
+                                                              ? '\n${poststed ?? ''}, ${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, ordreInfo.foodDetails.lat ?? 0.0, ordreInfo.foodDetails.lng ?? 0.0).toStringAsFixed(0)}Km'
+                                                              : '\n${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, ordreInfo.foodDetails.lat ?? 0.0, ordreInfo.foodDetails.lng ?? 0.0).toStringAsFixed(0)}Km'),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText, // Grey color
+                                                          ),
+                                                    ),
+                                                  ],
                                                 ),
-                                          ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -696,7 +814,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               .selgerUsername ??
                                                           '',
                                                       user: ordreInfo.selger,
-                                                      lastactive: null,
+                                                      lastactive:
+                                                          ordreInfo.lastactive,
                                                       profilePic: ordreInfo
                                                               .foodDetails
                                                               .profilepic ??
@@ -793,7 +912,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                       'Nunito',
                                                                   color: Colors
                                                                       .white,
-                                                                  fontSize: 16,
+                                                                  fontSize: 15,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
