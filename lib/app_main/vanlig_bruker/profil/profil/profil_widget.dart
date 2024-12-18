@@ -518,7 +518,7 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                         ),
                                                                                   ),
                                                                                   Text(
-                                                                                    'matvarer',
+                                                                                    FFAppState().matvarer.length == 1 ? 'matvare' : 'matvarer',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',

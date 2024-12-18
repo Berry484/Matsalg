@@ -550,7 +550,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                       ),
                                                                                 ),
                                                                                 Text(
-                                                                                  'matvarer',
+                                                                                  _matvarer?.length == 1 ? 'matvare' : 'matvarer',
                                                                                   textAlign: TextAlign.center,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Nunito',
