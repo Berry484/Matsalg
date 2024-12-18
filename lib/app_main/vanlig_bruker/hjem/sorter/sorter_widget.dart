@@ -78,8 +78,8 @@ class _SorterWidgetState extends State<SorterWidget> {
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+          topLeft: Radius.circular(14),
+          topRight: Radius.circular(14),
         ),
       ),
       child: Column(
@@ -132,7 +132,7 @@ class _SorterWidgetState extends State<SorterWidget> {
                       'Lukk',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Nunito',
-                            fontSize: 17,
+                            fontSize: 16,
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.bold,
                           ),

@@ -143,8 +143,8 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
           borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(0),
             bottomRight: Radius.circular(0),
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
           ),
         ),
         child: Column(
@@ -198,7 +198,7 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
                         'Lukk',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Open Sans',
-                              fontSize: 16,
+                              fontSize: 15,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),

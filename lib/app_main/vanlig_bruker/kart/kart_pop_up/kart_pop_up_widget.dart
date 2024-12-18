@@ -59,8 +59,8 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
           borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(0.0),
             bottomRight: Radius.circular(0.0),
-            topLeft: Radius.circular(16.0),
-            topRight: Radius.circular(16.0),
+            topLeft: Radius.circular(14),
+            topRight: Radius.circular(14),
           ),
         ),
         child: Padding(

@@ -165,8 +165,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(0),
                 bottomRight: Radius.circular(0),
-                topLeft: Radius.circular(24),
-                topRight: Radius.circular(24),
+                topLeft: Radius.circular(14),
+                topRight: Radius.circular(14),
               ),
             ),
             child: ClipRRect(

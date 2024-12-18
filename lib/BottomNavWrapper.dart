@@ -24,23 +24,36 @@ class _MainWrapperState extends State<MainWrapper> {
     } else if (location.startsWith('/mineKjop')) {
       return 1;
     } else if (location.startsWith('/chatMain')) {
-      return 3;
+      return 2;
     } else if (location.startsWith('/profil')) {
-      return 4;
+      return 3;
     }
     return _selectedIndex; // Default to current index for unmatched routes
   }
 
-  // Function to change the selected index and navigate to the respective page
   void _onItemTapped(int index) {
     const kTransitionInfoKey = 'transitionInfo';
 
-    // Update the selected index for pages other than the special case
-    if (index != 2) {
-      setState(() {
-        _selectedIndex = index;
-      });
+    if (_selectedIndex == index) {
+      switch (GoRouterState.of(context).uri.toString()) {
+        case '/hjem':
+          return;
+        case '/mineKjop':
+          return;
+        case '/chatMain':
+          return;
+        case '/profil':
+          return;
+      }
+
+      GoRouter.of(context).pop();
+      return; // Exit early, no need to change the selected index or navigate
     }
+
+    // Update the selected index for pages other than the special case
+    setState(() {
+      _selectedIndex = index;
+    });
 
     // Navigate based on the index
     switch (index) {
@@ -205,7 +218,7 @@ class _MainWrapperState extends State<MainWrapper> {
                                 buttonSize: 50.0,
                                 icon: Icon(
                                   CupertinoIcons.chat_bubble,
-                                  color: _selectedIndex == 3
+                                  color: _selectedIndex == 2
                                       ? FlutterFlowTheme.of(context).alternate
                                       : const Color(0xFF262626),
                                   size: 29.0,
@@ -243,7 +256,7 @@ class _MainWrapperState extends State<MainWrapper> {
                             buttonSize: 50.0,
                             icon: Icon(
                               CupertinoIcons.person,
-                              color: _selectedIndex == 4
+                              color: _selectedIndex == 3
                                   ? FlutterFlowTheme.of(context).alternate
                                   : const Color(0xFF262626),
                               size: 29.0,
