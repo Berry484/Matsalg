@@ -313,6 +313,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                           username:
                                               salgInfo.kjoperUsername ?? '',
                                           user: salgInfo.kjoper,
+                                          lastactive: salgInfo.lastactive,
                                           profilePic:
                                               salgInfo.kjoperProfilePic ?? '',
                                           messages: [],

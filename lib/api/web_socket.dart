@@ -262,6 +262,7 @@ class WebSocketService {
           String sender = data['sender'] ?? ''; // The sender of the message
           String content = data['content'] ?? ''; // The content of the message
           String username = data['username'] ?? '';
+          String? lastactive = DateTime.now().toIso8601String();
           String profilePic =
               data['profile_picture'] ?? ''; // The sender of the message
           String time =
@@ -290,6 +291,7 @@ class WebSocketService {
                 user: sender,
                 username: username,
                 profilePic: profilePic,
+                lastactive: lastactive,
                 messages: [newMessage],
               );
             },
@@ -312,7 +314,8 @@ class WebSocketService {
     }
   }
 
-  void sendMessage(String receiver, String content, String username) {
+  void sendMessage(
+      String receiver, String content, String username, String? lastactive) {
     if (!_isConnected) {
       logger.d('WebSocket is not connected. Cannot send message.');
       throw const SocketException('');
@@ -342,6 +345,7 @@ class WebSocketService {
       orElse: () => Conversation(
         username: username,
         user: receiver,
+        lastactive: lastactive,
         profilePic: '',
         messages: [newMessage], // Start the conversation with the new message
       ),

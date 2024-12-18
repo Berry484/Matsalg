@@ -6,10 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/api/web_socket.dart';
+import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/app_main/chat/message/message_model.dart';
 import 'package:mat_salg/app_main/chat/messageBubble/message_bubbles_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -34,7 +36,9 @@ class _MessageWidgetState extends State<MessageWidget> {
   late Conversation conversation;
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   late MessageModel _model;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final ApiCalls apicalls = ApiCalls();
   int _lastMessageCount = 0; // Track the number of messages
   late List<Message> _messageListWithFlags;
   final Toasts toasts = Toasts();
@@ -42,11 +46,12 @@ class _MessageWidgetState extends State<MessageWidget> {
   @override
   void initState() {
     super.initState();
+
     _webSocketService = WebSocketService();
-    // Directly assign the passed conversation to the _conversation variable
     conversation = Conversation.fromJson(widget.conversation);
     _lastMessageCount = conversation.messages.length; // Initialize count
     markRead();
+    getLastActiveTime();
     _model = createModel(context, () => MessageModel());
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -59,6 +64,90 @@ class _MessageWidgetState extends State<MessageWidget> {
     FFAppState().chatAlert.value = false;
     _webSocketService.markAllMessagesAsRead(conversation.user);
     return;
+  }
+
+  Future<void> getLastActiveTime() async {
+    try {
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      } else {
+        final response =
+            await apicalls.getLastActiveTime(token, conversation.user);
+        if (mounted) {
+          if (response?.statusCode == 200) {
+            final String responseBody = response?.body ?? '';
+
+            if (_isValidTimestamp(responseBody)) {
+              // Find the conversation in FFAppState and update the lastactive field
+              FFAppState appState = FFAppState();
+              Conversation? conv = appState.conversations.firstWhere(
+                (conv) => conv.user == conversation.user,
+                orElse: () => throw (Exception()), // If not found, return null
+              );
+
+              safeSetState(() {
+                conversation.updateLastActive(response?.body);
+                // Update the lastactive timestamp for the found conversation
+                conv.updateLastActive(responseBody);
+              });
+            } else {
+              toasts.showErrorToast(context, 'Ugyldig tidspunkt mottatt.');
+            }
+          } else {
+            toasts.showErrorToast(
+                context, 'Feil ved henting av siste aktiv tid.');
+          }
+        }
+      }
+    } on SocketException {
+      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      toasts.showErrorToast(context, 'En feil oppstod');
+    }
+  }
+
+  bool _isValidTimestamp(String body) {
+    try {
+      DateTime.parse(body); // Try to parse it as a valid timestamp
+      return true;
+    } catch (e) {
+      return false; // If it fails, it's not a valid timestamp
+    }
+  }
+
+  String customTimeAgo(DateTime dateTime) {
+    final now = DateTime.now();
+    final difference = now.difference(dateTime);
+
+    if (difference.inHours < 2) {
+      return "Aktiv den siste timen";
+    }
+
+    // If it's today
+    if (difference.inDays == 0) {
+      return "Aktiv i dag";
+    }
+
+    // If it was yesterday
+    if (difference.inDays == 1) {
+      return "Sist aktiv i går";
+    }
+
+    // If it is between 2 days and 1 month
+    if (difference.inDays < 30) {
+      return "Sist aktiv ${difference.inDays} dager siden";
+    }
+
+    // If it is between 1 month and 1 year
+    if (difference.inDays < 365) {
+      final months = (difference.inDays / 30).floor(); // Approximate months
+      return "Sist aktiv $months måneder siden";
+    }
+
+    // If it is over 1 year
+    final years = (difference.inDays / 365).floor(); // Approximate years
+    return "Sist aktiv $years år siden";
   }
 
   List<Message> _computeMessageFlags(List<Message> messages) {
@@ -288,7 +377,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                                         ),
                                                         TextSpan(
                                                           text:
-                                                              '\nSist aktiv i dag',
+                                                              '\n${customTimeAgo(DateTime.parse(conversation.lastactive ?? ''))}',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -607,7 +696,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                               _webSocketService.sendMessage(
                                   conversation.user,
                                   _model.textController!.text,
-                                  conversation.username);
+                                  conversation.username,
+                                  conversation.lastactive);
                               setState(() {
                                 _model.textController!.clear();
                               });

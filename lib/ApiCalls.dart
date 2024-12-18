@@ -106,6 +106,39 @@ class ApiCalls {
     }
   }
 
+  Future<http.Response?> getLastActiveTime(String? token, String uid) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Using the timeout method and sending the username (uid) as a query parameter
+      final response = await http
+          .get(
+            Uri.parse(
+                '$baseUrl/rrh/brukere/seLastActiveTime?username=$uid'), // Update the URL to use the correct endpoint
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
+
+      if (response.statusCode == 200) {
+        // Parse the response body
+        final String lastActiveTime =
+            response.body; // the last active time is expected as a string
+        print('Last Active Time: $lastActiveTime');
+        return response;
+      } else {
+        print('Failed to fetch last active time: ${response.statusCode}');
+        return null;
+      }
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception("An error occurred: $e");
+    }
+  }
+
   Future<String> getKommune(String? token) async {
     try {
       final headers = {
@@ -1325,6 +1358,7 @@ class ApiKjop {
             avvist: orderData['avvist'], // Approval status
             kjopte: orderData['kjopte'],
             rated: orderData['rated'],
+            lastactive: orderData['user']['lastactive'],
             kjoperProfilePic: orderData['user']['profilepic'] as String?,
             kjoperUsername: orderData['user']['username'] as String?,
             selgerUsername:

@@ -12,6 +12,7 @@ class User {
   final bool? bonde;
   final String? gardsnavn;
   final DateTime? time;
+  final String? lastactive;
 
   // New fields for data outside userInfo
   final bool? isFollowing;
@@ -36,6 +37,7 @@ class User {
     this.bonde,
     this.gardsnavn,
     this.time,
+    this.lastactive,
 
     // New fields
     this.getPush,
@@ -74,6 +76,7 @@ class User {
       lng: userInfo['lng'] as double?,
       bonde: userInfo['bonde'] as bool?,
       gardsnavn: userInfo['gardsnavn'] as String?,
+      lastactive: userInfo['lastactive'] as String?,
       time: parsedTime,
 
       // New fields outside userInfo
@@ -110,6 +113,7 @@ class User {
       'lng': lng,
       'bonde': bonde,
       'gardsnavn': gardsnavn,
+      'lastactive': lastactive,
       'time': time?.toIso8601String(),
 
       // New fields outside userInfo
@@ -137,6 +141,7 @@ class User {
         'lng: $lng, '
         'bonde: $bonde, '
         'gardsnavn: $gardsnavn, '
+        'lastactive: $lastactive, '
         'time: $time, '
         'getPush: $getPush, '
         'isFollowing: $isFollowing, '

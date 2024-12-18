@@ -442,6 +442,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                               user:
                                                                   matvare.uid ??
                                                                       '',
+                                                              lastactive: matvare
+                                                                  .lastactive,
                                                               profilePic: matvare
                                                                       .profilepic ??
                                                                   '',
@@ -1169,6 +1171,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                           matvare.username ??
                                                               '',
                                                       user: matvare.uid ?? '',
+                                                      lastactive:
+                                                          matvare.lastactive,
                                                       profilePic:
                                                           matvare.profilepic ??
                                                               '',

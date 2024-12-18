@@ -696,6 +696,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                               .selgerUsername ??
                                                           '',
                                                       user: ordreInfo.selger,
+                                                      lastactive: null,
                                                       profilePic: ordreInfo
                                                               .foodDetails
                                                               .profilepic ??

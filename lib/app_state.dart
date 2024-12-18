@@ -432,18 +432,21 @@ class Conversation {
   final String user;
   final String username;
   final String profilePic;
+  String? lastactive;
   final List<Message> messages;
 
   Conversation({
     required this.user,
     required this.username,
     required this.profilePic,
+    required this.lastactive,
     required this.messages,
   });
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
     return Conversation(
       user: json['user'] as String? ?? "",
+      lastactive: json['lastactive'] as String,
       username: json['username'] as String? ?? "",
       profilePic: json['profile_picture'] as String? ?? "",
       messages: (json['messages'] as List)
@@ -456,9 +459,15 @@ class Conversation {
     return {
       'username': username,
       'user': user,
+      'lastactive': lastactive,
       'profile_picture': profilePic,
       'messages': messages.map((message) => message.toJson()).toList(),
     };
+  }
+
+  void updateLastActive(String? newLastActive) {
+    if (newLastActive == null) return;
+    lastactive = newLastActive;
   }
 }
 
@@ -537,6 +546,7 @@ class Matvarer {
   final DateTime? updatetime; // Add updatetime here
   final bool? liked;
   final bool? wantPush;
+  final String? lastactive;
 
   Matvarer({
     this.matId,
@@ -558,6 +568,7 @@ class Matvarer {
     this.updatetime, // Add updatetime to constructor
     this.liked,
     this.wantPush,
+    this.lastactive,
   });
 
   factory Matvarer.fromJson1(Map<String, dynamic>? json) {
@@ -596,6 +607,7 @@ class Matvarer {
       updatetime: parsedTime, // Parse updatetime if available
       liked: listingJson['liked'] as bool?,
       wantPush: listingJson['wantPush'] as bool?,
+      lastactive: listingJson['lastactive'] as String? ?? "",
     );
   }
 
@@ -627,6 +639,7 @@ class Matvarer {
       kg: listingJson['kg'] as bool?,
       // Getting the username and profilepic from the 'user' field
       username: userJson['username'] as String? ?? "",
+      lastactive: userJson['lastactive'] as String? ?? "",
       uid: listingJson['uid'] as String? ?? "",
       bonde: userJson['bonde'] as bool?,
       antall: listingJson['antall'] as int?,
@@ -660,6 +673,7 @@ class Matvarer {
       'kg': kg,
       'uid': uid,
       'username': username,
+      'lastactive': lastactive,
       'bonde': bonde,
       'antall': antall,
       'profilepic': profilepic,
@@ -686,6 +700,7 @@ class Matvarer {
         'kg: $kg, '
         'uid: $uid, '
         'username: $username, '
+        'lastactive: $lastactive, '
         'bonde: $bonde, '
         'antall: $antall, '
         'profilepic: $profilepic, '
@@ -718,6 +733,7 @@ class OrdreInfo {
   final Matvarer foodDetails;
   final bool? kjopte;
   final bool? rated;
+  final String? lastactive;
 
   OrdreInfo({
     required this.id,
@@ -740,9 +756,11 @@ class OrdreInfo {
     required this.foodDetails,
     required this.kjopte,
     required this.rated,
+    required this.lastactive,
   });
 
   // Convert OrdreInfo from JSON
+
   factory OrdreInfo.fromJson(Map<String, dynamic> json) {
     return OrdreInfo(
       id: json['id'] as int,
@@ -767,6 +785,7 @@ class OrdreInfo {
       foodDetails: Matvarer.fromJson(json['foodDetails']),
       kjopte: json['kjopte'] as bool?,
       rated: json['rated'] as bool?,
+      lastactive: json['lastactive'] as String?,
     );
   }
 
@@ -793,6 +812,7 @@ class OrdreInfo {
       'foodDetails': foodDetails.toJson(),
       'kjopte': kjopte,
       'rated': rated,
+      'lastactive': lastactive,
     };
   }
 }

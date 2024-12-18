@@ -629,6 +629,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 user: salgInfo.kjopte == false
                                     ? salgInfo.kjoper
                                     : salgInfo.selger,
+                                lastactive: salgInfo.kjopte == false
+                                    ? salgInfo.lastactive
+                                    : salgInfo.foodDetails.lastactive,
                                 profilePic: salgInfo.kjopte == false
                                     ? salgInfo.kjoperProfilePic ?? ''
                                     : matvare.profilepic ?? '',

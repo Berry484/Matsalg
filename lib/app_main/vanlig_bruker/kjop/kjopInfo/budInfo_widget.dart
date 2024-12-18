@@ -564,6 +564,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                   final newConversation = Conversation(
                                     username: ordreInfo.selgerUsername ?? '',
                                     user: ordreInfo.selger,
+                                    lastactive:
+                                        ordreInfo.foodDetails.lastactive,
                                     profilePic: matvare.profilepic ?? '',
                                     messages: [],
                                   );
@@ -922,6 +924,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                           username:
                                               ordreInfo.selgerUsername ?? '',
                                           user: ordreInfo.selger,
+                                          lastactive:
+                                              ordreInfo.foodDetails.lastactive,
                                           profilePic: matvare.profilepic ?? '',
                                           messages: [],
                                         );

@@ -436,8 +436,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                               child:
                                                                   Image.asset(
                                                                 'assets/images/none_reviews.png',
-                                                                width: 276,
-                                                                height: 215,
+                                                                width: 200,
+                                                                height: 160,
                                                                 fit: BoxFit
                                                                     .cover,
                                                               ),
@@ -886,8 +886,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                               child:
                                                                   Image.asset(
                                                                 'assets/images/none_reviews.png',
-                                                                width: 276,
-                                                                height: 215,
+                                                                width: 200,
+                                                                height: 160,
                                                                 fit: BoxFit
                                                                     .cover,
                                                               ),
@@ -1335,8 +1335,8 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                                               child:
                                                                   Image.asset(
                                                                 'assets/images/none_reviews.png',
-                                                                width: 276,
-                                                                height: 215,
+                                                                width: 200,
+                                                                height: 160,
                                                                 fit: BoxFit
                                                                     .cover,
                                                               ),

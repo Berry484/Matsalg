@@ -265,6 +265,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                       final newConversation = Conversation(
                                         username: widget.username ?? '',
                                         user: widget.uid ?? '',
+                                        lastactive: bruker?.lastactive,
                                         profilePic: bruker!.profilepic ?? '',
                                         messages: [],
                                       );
