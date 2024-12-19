@@ -121,8 +121,6 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
   @override
   void dispose() {
     _model.maybeDispose();
-    _showLoadingDialog();
-    _hideLoadingDialog();
     super.dispose();
   }
 
@@ -130,7 +128,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: 500,
-      height: 500,
+      height: 560,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary,
         borderRadius: const BorderRadius.only(
@@ -141,7 +139,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 16),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,11 +158,130 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                     color: Colors.black12,
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        GestureDetector(
+                          onTap: () async {
+                            try {
+                              // Prevent multiple submissions while loading
+                              if (_messageIsLoading) return;
+                              _messageIsLoading = true;
+
+                              Conversation existingConversation =
+                                  FFAppState().conversations.firstWhere(
+                                (conv) => conv.user == ordreInfo.selger,
+                                orElse: () {
+                                  // If no conversation is found, create a new one and add it to the list
+                                  final newConversation = Conversation(
+                                    username: ordreInfo.selgerUsername ?? '',
+                                    user: ordreInfo.selger,
+                                    lastactive:
+                                        ordreInfo.foodDetails.lastactive,
+                                    profilePic: matvare.profilepic ?? '',
+                                    messages: [],
+                                  );
+
+                                  // Add the new conversation to the list
+                                  FFAppState()
+                                      .conversations
+                                      .add(newConversation);
+
+                                  // Return the new conversation
+                                  return newConversation;
+                                },
+                              );
+
+                              // Step 3: Serialize the conversation object to JSON
+                              String? serializedConversation = serializeParam(
+                                existingConversation
+                                    .toJson(), // Convert the conversation to JSON
+                                ParamType.JSON,
+                              );
+
+                              // Step 4: Stop loading and navigate to message screen
+                              _messageIsLoading = false;
+                              if (serializedConversation != null) {
+                                // Step 5: Navigate to 'message' screen with the conversation
+                                context.pushNamed(
+                                  'message',
+                                  queryParameters: {
+                                    'conversation':
+                                        serializedConversation, // Pass the serialized conversation
+                                  },
+                                );
+                              }
+                            } on SocketException {
+                              _messageIsLoading = false;
+                              toasts.showErrorToast(
+                                  context, 'Ingen internettforbindelse');
+                            } catch (e) {
+                              _messageIsLoading = false;
+                              toasts.showErrorToast(context, 'En feil oppstod');
+                            }
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    6.0, 0.0, 0.0, 0.0),
+                                child: Container(
+                                  width: 34.0,
+                                  height: 34.0,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Image.network(
+                                    '${ApiConstants.baseUrl}${ordreInfo.foodDetails.profilepic}',
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context,
+                                        Object error, StackTrace? stackTrace) {
+                                      return Image.asset(
+                                        'assets/images/profile_pic.png',
+                                        width: 34.0,
+                                        height: 34.0,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 0.0, 0.0, 0.0),
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: ordreInfo.selgerUsername,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize: 15.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                         Align(
                           alignment: const AlignmentDirectional(0, 0),
                           child: Padding(
@@ -188,16 +305,16 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               },
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 0, 15, 0),
+                                    0, 0, 11, 0),
                                 child: Text(
                                   'Lukk',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
                                         fontFamily: 'Nunito',
-                                        fontSize: 17,
+                                        fontSize: 16,
                                         letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                 ),
                               ),
@@ -234,11 +351,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                     child: InkWell(
                       onTap: () async {
                         try {
-                          Navigator.pop(context);
                           context.pushNamed(
-                            'KjopDetaljVentende',
-                            extra:
-                                ordreInfo, // Pass the object directly as 'extra'
+                            'KjopDetaljVentende1',
+                            extra: {
+                              'mine': false, // Example value
+                              'ordre': ordreInfo, // Example order object
+                            },
                           );
                         } on SocketException {
                           toasts.showErrorToast(
@@ -263,15 +381,15 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                   borderRadius: BorderRadius.circular(13),
                                   child: Image.network(
                                     '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
-                                    width: 64,
-                                    height: 64,
+                                    width: 60,
+                                    height: 60,
                                     fit: BoxFit.cover,
                                     errorBuilder: (BuildContext context,
                                         Object error, StackTrace? stackTrace) {
                                       return Image.asset(
                                         'assets/images/error_image.jpg',
-                                        width: 64,
-                                        height: 64,
+                                        width: 60,
+                                        height: 60,
                                         fit: BoxFit.cover,
                                       );
                                     },
@@ -296,7 +414,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                             .headlineSmall
                                             .override(
                                               fontFamily: 'Nunito',
-                                              fontSize: 17,
+                                              fontSize: 16,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w700,
                                             ),
@@ -358,7 +476,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 19,
+                                    fontSize: 17,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -487,7 +605,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'TID',
+                                  'UTLØPER',
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .titleMedium
@@ -509,9 +627,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                       Text(
                                         ordreInfo.updatetime != null
                                             ? (DateFormat(
-                                                    "HH:mm  d. MMM", "nb_NO")
+                                                    "d. MMM  HH:mm", "nb_NO")
                                                 .format(ordreInfo.updatetime!
-                                                    .toLocal()))
+                                                    .toLocal()
+                                                    .add(Duration(days: 3))))
                                             : "",
                                         textAlign: TextAlign.start,
                                         style: FlutterFlowTheme.of(context)
@@ -777,7 +896,6 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                               Navigator.of(context)
                                                   .pop(); // Close the dialog
                                             },
-                                            isDefaultAction: true,
                                             child: const Text(
                                               "Nei, avbryt",
                                               style: TextStyle(

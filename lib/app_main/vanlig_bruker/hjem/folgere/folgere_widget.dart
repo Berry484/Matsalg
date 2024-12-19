@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/myIP.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -16,12 +17,14 @@ class FolgereWidget extends StatefulWidget {
   const FolgereWidget({
     super.key,
     String? username,
+    this.fromChat,
     String? folger,
   })  : username = username ?? '',
         folger = folger ?? 'Følgere';
 
   final String folger;
   final String username;
+  final dynamic fromChat;
 
   @override
   State<FolgereWidget> createState() => _FolgereWidgetState();
@@ -169,23 +172,49 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed(
-                                'BrukerPage',
-                                queryParameters: {
-                                  'uid': serializeParam(
-                                    brukere.uid,
-                                    ParamType.String,
-                                  ),
-                                  'username': serializeParam(
-                                    brukere.username,
-                                    ParamType.String,
-                                  ),
-                                  'bruker': serializeParam(
-                                    null,
-                                    ParamType.JSON,
-                                  ),
-                                },
-                              );
+                              try {
+                                if (widget.fromChat != true) {
+                                  context.pushNamed(
+                                    'BrukerPage',
+                                    queryParameters: {
+                                      'uid': serializeParam(
+                                        brukere.uid,
+                                        ParamType.String,
+                                      ),
+                                      'username': serializeParam(
+                                        brukere.username,
+                                        ParamType.String,
+                                      ),
+                                      'bruker': serializeParam(
+                                        null,
+                                        ParamType.JSON,
+                                      ),
+                                    },
+                                  );
+                                } else {
+                                  context.pushNamed(
+                                    'BrukerPage2',
+                                    queryParameters: {
+                                      'uid': serializeParam(
+                                        brukere.uid,
+                                        ParamType.String,
+                                      ),
+                                      'username': serializeParam(
+                                        brukere.username,
+                                        ParamType.String,
+                                      ),
+                                      'fromChat': serializeParam(
+                                        true,
+                                        ParamType.bool,
+                                      ),
+                                    },
+                                  );
+                                }
+                              } catch (e) {
+                                toasts.showErrorToast(
+                                    context, 'En uforventet feil oppstod');
+                                logger.d('Error navigating page');
+                              }
                             },
                             child: Material(
                               color: Colors.transparent,

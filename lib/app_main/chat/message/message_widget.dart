@@ -305,7 +305,27 @@ class _MessageWidgetState extends State<MessageWidget> {
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
-                                    onTap: () async {},
+                                    onTap: () async {
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                      context.pushNamed(
+                                        'BrukerPage2',
+                                        queryParameters: {
+                                          'uid': serializeParam(
+                                            conversation.user,
+                                            ParamType.String,
+                                          ),
+                                          'username': serializeParam(
+                                            conversation.username,
+                                            ParamType.String,
+                                          ),
+                                          'fromChat': serializeParam(
+                                            true,
+                                            ParamType.bool,
+                                          ),
+                                        },
+                                      );
+                                    },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:

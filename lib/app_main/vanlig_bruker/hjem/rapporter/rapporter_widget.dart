@@ -186,7 +186,7 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      20, 12, 0, 0),
+                                      20, 10, 0, 0),
                                   child: Text(
                                     widget.matId != null
                                         ? 'Hvorfor ønsker du å rapportere\ndenne annonsen?'
@@ -197,13 +197,14 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                           fontFamily: 'Nunito',
                                           fontSize: 20,
                                           letterSpacing: 0.0,
+                                          lineHeight: 1.1,
                                           fontWeight: FontWeight.w800,
                                         ),
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      20, 25, 20, 0),
+                                      20, 16, 20, 0),
                                   child: Text(
                                     'Skriv så utfyllende som mulig\nslik at vi kan behandle saken raskest mulig',
                                     style: FlutterFlowTheme.of(context)
@@ -220,7 +221,7 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      20, 12, 8, 0),
+                                      20, 12, 20, 0),
                                   child: TextFormField(
                                     controller: _model.bioTextController,
                                     focusNode: _model.bioFocusNode,

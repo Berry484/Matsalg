@@ -659,6 +659,75 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         parentNavigatorKey: _parentKey,
       ),
       GoRoute(
+        path: '/brukerPage2',
+        name: 'BrukerPage2',
+        builder: (context, state) {
+          final params = FFParameters(state);
+
+          final uid = params.getParam<String>('uid', ParamType.String);
+          final username =
+              params.getParam<String>('username', ParamType.String);
+          final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
+
+          return BrukerPageWidget(
+            uid: uid,
+            username: username,
+            fromChat: fromChat,
+          );
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/matDetaljBondegard2',
+        name: 'MatDetaljBondegard2',
+        builder: (context, state) {
+          // Retrieve parameters safely using FFParameters
+          final params = FFParameters(state);
+          final matvare =
+              params.getParam<Map<String, dynamic>>('matvare', ParamType.JSON);
+          final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
+
+          // Directly return the widget with the retrieved parameters
+          return MatDetaljBondegardWidget(matvare: matvare, fromChat: fromChat);
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/kjopDetaljVentende1',
+        name: 'KjopDetaljVentende1',
+        builder: (context, state) {
+          // Extract 'mine' and 'ordre' from state.extra, assuming it's a Map
+          final extraData = state.extra as Map<String, dynamic>;
+
+          final mine = extraData['mine']; // Get 'mine'
+          final ordre = extraData['ordre']; // Get 'ordre'
+
+          return KjopDetaljVentendeWidget(
+            ordre: ordre,
+            mine: mine,
+          );
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/folgere1',
+        name: 'Folgere1',
+        builder: (context, state) {
+          // Retrieve parameters safely using FFParameters
+          final params = FFParameters(state);
+
+          final username =
+              params.getParam<String>('username', ParamType.String);
+          final folger = params.getParam<String>('folger', ParamType.String);
+          final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
+
+          // Wrap the widget with the transition wrapper
+          return FolgereWidget(
+              username: username, folger: folger, fromChat: fromChat);
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
         path: '/legguTMatvare',
         name:
             'LeggUtMatvare', // Ensure this name matches the one used in `pushNamed`

@@ -127,7 +127,7 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
       padding: const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
       child: Container(
         width: double.infinity,
-        height: 540,
+        height: 561,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primary,
           boxShadow: const [

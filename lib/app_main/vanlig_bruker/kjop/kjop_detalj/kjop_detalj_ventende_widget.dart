@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
+import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/kart/kart_pop_up/kart_pop_up_widget.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -20,9 +21,11 @@ class KjopDetaljVentendeWidget extends StatefulWidget {
   const KjopDetaljVentendeWidget({
     super.key,
     this.ordre,
+    this.mine,
   });
 
   final dynamic ordre;
+  final dynamic mine;
 
   @override
   State<KjopDetaljVentendeWidget> createState() =>
@@ -184,19 +187,25 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
                                   try {
-                                    context.pushNamed(
-                                      'BrukerPage1',
-                                      queryParameters: {
-                                        'uid': serializeParam(
-                                          ordreInfo.selger,
-                                          ParamType.String,
-                                        ),
-                                        'username': serializeParam(
-                                          ordreInfo.selgerUsername,
-                                          ParamType.String,
-                                        ),
-                                      },
-                                    );
+                                    if (widget.mine != true) {
+                                      context.pushNamed(
+                                        'BrukerPage2',
+                                        queryParameters: {
+                                          'uid': serializeParam(
+                                            ordreInfo.selger,
+                                            ParamType.String,
+                                          ),
+                                          'username': serializeParam(
+                                            ordreInfo.selgerUsername,
+                                            ParamType.String,
+                                          ),
+                                          'fromChat': serializeParam(
+                                            true,
+                                            ParamType.bool,
+                                          ),
+                                        },
+                                      );
+                                    }
                                   } on SocketException {
                                     toasts.showErrorToast(
                                         context, 'Ingen internettforbindelse');
@@ -316,17 +325,192 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                         ),
                                       ],
                                     ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 8, 0),
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24,
+                                    if (widget.mine != true)
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 8, 0),
+                                        child: IconButton(
+                                          icon: Icon(
+                                            CupertinoIcons.ellipsis,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 28.0,
+                                          ),
+                                          onPressed: () {
+                                            showCupertinoModalPopup(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return CupertinoActionSheet(
+                                                  actions: <Widget>[
+                                                    CupertinoActionSheetAction(
+                                                      onPressed: () async {
+                                                        try {
+                                                          // Prevent multiple submissions while loading
+                                                          if (_messageIsLoading)
+                                                            return;
+                                                          _messageIsLoading =
+                                                              true;
+
+                                                          Conversation
+                                                              existingConversation =
+                                                              FFAppState()
+                                                                  .conversations
+                                                                  .firstWhere(
+                                                            (conv) =>
+                                                                conv.user ==
+                                                                ordreInfo
+                                                                    .foodDetails
+                                                                    .uid,
+                                                            orElse: () {
+                                                              final newConversation =
+                                                                  Conversation(
+                                                                username: ordreInfo
+                                                                        .foodDetails
+                                                                        .username ??
+                                                                    '',
+                                                                user: ordreInfo
+                                                                        .foodDetails
+                                                                        .uid ??
+                                                                    '',
+                                                                lastactive: ordreInfo
+                                                                    .foodDetails
+                                                                    .lastactive,
+                                                                profilePic: ordreInfo
+                                                                        .foodDetails
+                                                                        .profilepic ??
+                                                                    '',
+                                                                messages: [],
+                                                              );
+
+                                                              FFAppState()
+                                                                  .conversations
+                                                                  .add(
+                                                                      newConversation);
+
+                                                              // Return the new conversation
+                                                              return newConversation;
+                                                            },
+                                                          );
+
+                                                          String?
+                                                              serializedConversation =
+                                                              serializeParam(
+                                                            existingConversation
+                                                                .toJson(),
+                                                            ParamType.JSON,
+                                                          );
+
+                                                          _messageIsLoading =
+                                                              false;
+                                                          if (serializedConversation !=
+                                                              null) {
+                                                            Navigator.pop(
+                                                                context);
+                                                            context.pushNamed(
+                                                              'message',
+                                                              queryParameters: {
+                                                                'conversation':
+                                                                    serializedConversation,
+                                                              },
+                                                            );
+                                                          }
+                                                        } on SocketException {
+                                                          _messageIsLoading =
+                                                              false;
+                                                          toasts.showErrorToast(
+                                                              context,
+                                                              'Ingen internettforbindelse');
+                                                        } catch (e) {
+                                                          _messageIsLoading =
+                                                              false;
+                                                          toasts.showErrorToast(
+                                                              context,
+                                                              'En feil oppstod');
+                                                        }
+                                                      },
+                                                      child: const Text(
+                                                        'Send melding',
+                                                        style: TextStyle(
+                                                          fontSize: 19,
+                                                          color: CupertinoColors
+                                                              .systemBlue,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    CupertinoActionSheetAction(
+                                                      onPressed: () async {
+                                                        await showModalBottomSheet(
+                                                          isScrollControlled:
+                                                              true,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          barrierColor:
+                                                              const Color
+                                                                  .fromARGB(
+                                                                  60, 17, 0, 0),
+                                                          useRootNavigator:
+                                                              true,
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return GestureDetector(
+                                                              onTap: () =>
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    RapporterWidget(
+                                                                  username:
+                                                                      ordreInfo
+                                                                          .foodDetails
+                                                                          .uid,
+                                                                  matId: ordreInfo
+                                                                      .foodDetails
+                                                                      .matId,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ).then((value) =>
+                                                            setState(() {}));
+                                                        return;
+                                                      },
+                                                      child: const Text(
+                                                        'Rapporter',
+                                                        style: TextStyle(
+                                                          fontSize: 19,
+                                                          color: Colors
+                                                              .red, // Red text for 'Slett annonse'
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                  cancelButton:
+                                                      CupertinoActionSheetAction(
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                          context); // Close the action sheet
+                                                    },
+                                                    isDefaultAction: true,
+                                                    child: const Text(
+                                                      'Avbryt',
+                                                      style: TextStyle(
+                                                        fontSize: 19,
+                                                        color: CupertinoColors
+                                                            .systemBlue,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
                                       ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -768,169 +952,174 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                               }
                                             },
                                             child: Icon(
-                                              CupertinoIcons.placemark,
+                                              CupertinoIcons.map,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 33,
+                                              size: 32,
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 0, 0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              try {
-                                                // Prevent multiple submissions while loading
-                                                if (_messageIsLoading) return;
-                                                _messageIsLoading = true;
+                                    if (widget.mine != true)
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 0, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                try {
+                                                  // Prevent multiple submissions while loading
+                                                  if (_messageIsLoading) return;
+                                                  _messageIsLoading = true;
 
-                                                Conversation
-                                                    existingConversation =
-                                                    FFAppState()
-                                                        .conversations
-                                                        .firstWhere(
-                                                  (conv) =>
-                                                      conv.user ==
-                                                      ordreInfo.selger,
-                                                  orElse: () {
-                                                    // If no conversation is found, create a new one and add it to the list
-                                                    final newConversation =
-                                                        Conversation(
-                                                      username: ordreInfo
-                                                              .selgerUsername ??
-                                                          '',
-                                                      user: ordreInfo.selger,
-                                                      lastactive:
-                                                          ordreInfo.lastactive,
-                                                      profilePic: ordreInfo
-                                                              .foodDetails
-                                                              .profilepic ??
-                                                          '',
-                                                      messages: [],
-                                                    );
+                                                  Conversation
+                                                      existingConversation =
+                                                      FFAppState()
+                                                          .conversations
+                                                          .firstWhere(
+                                                    (conv) =>
+                                                        conv.user ==
+                                                        ordreInfo.selger,
+                                                    orElse: () {
+                                                      // If no conversation is found, create a new one and add it to the list
+                                                      final newConversation =
+                                                          Conversation(
+                                                        username: ordreInfo
+                                                                .selgerUsername ??
+                                                            '',
+                                                        user: ordreInfo.selger,
+                                                        lastactive: ordreInfo
+                                                            .lastactive,
+                                                        profilePic: ordreInfo
+                                                                .foodDetails
+                                                                .profilepic ??
+                                                            '',
+                                                        messages: [],
+                                                      );
 
-                                                    // Add the new conversation to the list
-                                                    FFAppState()
-                                                        .conversations
-                                                        .add(newConversation);
+                                                      // Add the new conversation to the list
+                                                      FFAppState()
+                                                          .conversations
+                                                          .add(newConversation);
 
-                                                    // Return the new conversation
-                                                    return newConversation;
-                                                  },
-                                                );
-
-                                                // Step 3: Serialize the conversation object to JSON
-                                                String? serializedConversation =
-                                                    serializeParam(
-                                                  existingConversation
-                                                      .toJson(), // Convert the conversation to JSON
-                                                  ParamType.JSON,
-                                                );
-
-                                                // Step 4: Stop loading and navigate to message screen
-                                                _messageIsLoading = false;
-                                                if (serializedConversation !=
-                                                    null) {
-                                                  // Step 5: Navigate to 'message' screen with the conversation
-                                                  context.pushNamed(
-                                                    'message',
-                                                    queryParameters: {
-                                                      'conversation':
-                                                          serializedConversation, // Pass the serialized conversation
+                                                      // Return the new conversation
+                                                      return newConversation;
                                                     },
                                                   );
+
+                                                  // Step 3: Serialize the conversation object to JSON
+                                                  String?
+                                                      serializedConversation =
+                                                      serializeParam(
+                                                    existingConversation
+                                                        .toJson(), // Convert the conversation to JSON
+                                                    ParamType.JSON,
+                                                  );
+
+                                                  // Step 4: Stop loading and navigate to message screen
+                                                  _messageIsLoading = false;
+                                                  if (serializedConversation !=
+                                                      null) {
+                                                    // Step 5: Navigate to 'message' screen with the conversation
+                                                    context.pushNamed(
+                                                      'message',
+                                                      queryParameters: {
+                                                        'conversation':
+                                                            serializedConversation, // Pass the serialized conversation
+                                                      },
+                                                    );
+                                                  }
+                                                } on SocketException {
+                                                  _messageIsLoading = false;
+                                                  toasts.showErrorToast(context,
+                                                      'Ingen internettforbindelse');
+                                                } catch (e) {
+                                                  _messageIsLoading = false;
+                                                  toasts.showErrorToast(context,
+                                                      'En feil oppstod');
                                                 }
-                                              } on SocketException {
-                                                _messageIsLoading = false;
-                                                toasts.showErrorToast(context,
-                                                    'Ingen internettforbindelse');
-                                              } catch (e) {
-                                                _messageIsLoading = false;
-                                                toasts.showErrorToast(
-                                                    context, 'En feil oppstod');
-                                              }
-                                            },
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              elevation: 0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(14),
-                                              ),
-                                              child: SafeArea(
-                                                child: Container(
-                                                  width: 105,
-                                                  height: 40,
-                                                  constraints:
-                                                      const BoxConstraints(
-                                                    maxWidth: 174,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            14),
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            10, 0, 10, 0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Text(
-                                                            'Melding',
-                                                            textAlign: TextAlign
+                                              },
+                                              child: Material(
+                                                color: Colors.transparent,
+                                                elevation: 0,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(14),
+                                                ),
+                                                child: SafeArea(
+                                                  child: Container(
+                                                    width: 105,
+                                                    height: 40,
+                                                    constraints:
+                                                        const BoxConstraints(
+                                                      maxWidth: 174,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              14),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              10, 0, 10, 0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
                                                                 .center,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 15,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w800,
-                                                                ),
+                                                        children: [
+                                                          Expanded(
+                                                            child: Text(
+                                                              'Melding',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        15,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w800,
+                                                                  ),
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -1281,7 +1470,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'TID',
+                                                    'UTLØPER',
                                                     textAlign: TextAlign.start,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -1310,11 +1499,14 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           ordreInfo.updatetime !=
                                                                   null
                                                               ? (DateFormat(
-                                                                      "HH:mm  d. MMM",
+                                                                      "d. MMM  HH:mm",
                                                                       "nb_NO")
                                                                   .format(ordreInfo
                                                                       .updatetime!
-                                                                      .toLocal()))
+                                                                      .toLocal()
+                                                                      .add(Duration(
+                                                                          days:
+                                                                              3))))
                                                               : "",
                                                           textAlign:
                                                               TextAlign.start,

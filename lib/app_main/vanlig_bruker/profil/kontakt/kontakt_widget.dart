@@ -209,7 +209,7 @@ class _KontaktWidgetState extends State<KontaktWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      20, 13, 8, 0),
+                                      20, 13, 20, 0),
                                   child: Column(children: [
                                     TextFormField(
                                       controller: _model.emailTextController,

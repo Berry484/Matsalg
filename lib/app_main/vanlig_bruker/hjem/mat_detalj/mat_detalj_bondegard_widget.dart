@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/mat_detalj/get_updates/get_updates_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
@@ -30,10 +31,12 @@ class MatDetaljBondegardWidget extends StatefulWidget {
   const MatDetaljBondegardWidget({
     super.key,
     required this.matvare,
+    this.fromChat,
     this.liked,
   });
 
   final dynamic matvare;
+  final dynamic fromChat;
   final dynamic liked;
 
   @override
@@ -263,7 +266,8 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  if (widget.liked == true) {
+                                  if (widget.liked == true &&
+                                      widget.fromChat != true) {
                                     context.pushNamed(
                                       'BrukerPage3',
                                       queryParameters: {
@@ -274,6 +278,25 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         'username': serializeParam(
                                           matvare.username,
                                           ParamType.String,
+                                        ),
+                                      },
+                                    );
+                                  }
+                                  if (widget.fromChat == true) {
+                                    context.pushNamed(
+                                      'BrukerPage2',
+                                      queryParameters: {
+                                        'uid': serializeParam(
+                                          matvare.uid,
+                                          ParamType.String,
+                                        ),
+                                        'username': serializeParam(
+                                          matvare.username,
+                                          ParamType.String,
+                                        ),
+                                        'fromChat': serializeParam(
+                                          true,
+                                          ParamType.bool,
                                         ),
                                       },
                                     );
@@ -1137,11 +1160,11 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                   safeSetState(() {}));
                                             },
                                             child: Icon(
-                                              CupertinoIcons.placemark,
+                                              CupertinoIcons.map,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 31,
+                                              size: 30,
                                             ),
                                           ),
                                         ),
@@ -2033,16 +2056,39 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
-                                          context.pushNamed(
-                                            'MatDetaljBondegard',
-                                            queryParameters: {
-                                              'matvare': serializeParam(
-                                                nyematvarer
-                                                    .toJson(), // Convert to JSON before passing
-                                                ParamType.JSON,
-                                              ),
-                                            },
-                                          );
+                                          try {
+                                            if (widget.fromChat != true) {
+                                              context.pushNamed(
+                                                'MatDetaljBondegard',
+                                                queryParameters: {
+                                                  'matvare': serializeParam(
+                                                    nyematvarer
+                                                        .toJson(), // Convert to JSON before passing
+                                                    ParamType.JSON,
+                                                  ),
+                                                },
+                                              );
+                                            } else {
+                                              context.pushNamed(
+                                                'MatDetaljBondegard2',
+                                                queryParameters: {
+                                                  'matvare': serializeParam(
+                                                    nyematvarer
+                                                        .toJson(), // Convert to JSON before passing
+                                                    ParamType.JSON,
+                                                  ),
+                                                  'fromChat': serializeParam(
+                                                    true,
+                                                    ParamType.bool,
+                                                  ),
+                                                },
+                                              );
+                                            }
+                                          } catch (e) {
+                                            toasts.showErrorToast(context,
+                                                'En uforventet feil oppstod');
+                                            logger.d('Error navigating page');
+                                          }
                                         },
                                         child: Material(
                                           color: Colors.transparent,

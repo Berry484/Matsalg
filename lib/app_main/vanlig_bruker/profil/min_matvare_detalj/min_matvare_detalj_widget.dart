@@ -731,7 +731,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(9.0, 0.0, 0.0, 0.0),
+                                              .fromSTEB(10.0, 0.0, 0.0, 0.0),
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -772,11 +772,11 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                   safeSetState(() {}));
                                             },
                                             child: Icon(
-                                              CupertinoIcons.placemark,
+                                              CupertinoIcons.map,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 33,
+                                              size: 32,
                                             ),
                                           ),
                                         ),

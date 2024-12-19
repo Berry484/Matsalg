@@ -7,6 +7,7 @@ import 'package:mat_salg/apiCalls.dart';
 import 'package:mat_salg/User.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/Utils.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/myIP.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_page/folg_bruker/folg_bruker_widget.dart';
 import 'package:mat_salg/app_main/vanlig_bruker/hjem/bruker_rating/bruker_rating_widget.dart';
@@ -24,11 +25,13 @@ import 'bruker_page_model.dart';
 export 'bruker_page_model.dart';
 
 class BrukerPageWidget extends StatefulWidget {
-  const BrukerPageWidget({this.bruker, this.uid, this.username, super.key});
+  const BrukerPageWidget(
+      {this.bruker, this.uid, this.username, this.fromChat, super.key});
 
   final dynamic bruker;
   final String? uid;
   final String? username;
+  final dynamic fromChat;
 
   @override
   State<BrukerPageWidget> createState() => _BrukerPageWidgetState();
@@ -405,8 +408,11 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                       alignment:
                                           const AlignmentDirectional(0, 0),
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 10, 0, 10),
+                                        padding: widget.fromChat != true
+                                            ? const EdgeInsetsDirectional
+                                                .fromSTEB(0, 10, 0, 10)
+                                            : const EdgeInsetsDirectional
+                                                .fromSTEB(0, 0, 0, 0),
                                         child: SafeArea(
                                           child: Container(
                                             width: valueOrDefault<double>(
@@ -589,14 +595,30 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               hoverColor: Colors.transparent,
                                                                               highlightColor: Colors.transparent,
                                                                               onTap: () async {
-                                                                                if ((bruker?.followersCount) != 0) {
-                                                                                  context.pushNamed(
-                                                                                    'Folgere',
-                                                                                    queryParameters: {
-                                                                                      'username': serializeParam(widget.uid, ParamType.String),
-                                                                                      'folger': serializeParam('Følgere', ParamType.String),
-                                                                                    }.withoutNulls,
-                                                                                  );
+                                                                                try {
+                                                                                  if ((bruker?.followersCount) != 0) {
+                                                                                    if (widget.fromChat != true) {
+                                                                                      context.pushNamed(
+                                                                                        'Folgere',
+                                                                                        queryParameters: {
+                                                                                          'username': serializeParam(widget.uid, ParamType.String),
+                                                                                          'folger': serializeParam('Følgere', ParamType.String),
+                                                                                        }.withoutNulls,
+                                                                                      );
+                                                                                    } else {
+                                                                                      context.pushNamed(
+                                                                                        'Folgere1',
+                                                                                        queryParameters: {
+                                                                                          'username': serializeParam(widget.uid, ParamType.String),
+                                                                                          'folger': serializeParam('Følgere', ParamType.String),
+                                                                                          'fromChat': serializeParam(true, ParamType.bool),
+                                                                                        }.withoutNulls,
+                                                                                      );
+                                                                                    }
+                                                                                  }
+                                                                                } catch (e) {
+                                                                                  toasts.showErrorToast(context, 'En uforventet feil oppstod');
+                                                                                  logger.d('Error navigating page');
                                                                                 }
                                                                               },
                                                                               child: Column(
@@ -653,17 +675,36 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                               hoverColor: Colors.transparent,
                                                                               highlightColor: Colors.transparent,
                                                                               onTap: () async {
-                                                                                if (bruker!.followingCount != 0) {
-                                                                                  context.pushNamed(
-                                                                                    'Folgere',
-                                                                                    queryParameters: {
-                                                                                      'username': serializeParam(widget.uid, ParamType.String),
-                                                                                      'folger': serializeParam(
-                                                                                        'Følger',
-                                                                                        ParamType.String,
-                                                                                      ),
-                                                                                    }.withoutNulls,
-                                                                                  );
+                                                                                try {
+                                                                                  if (bruker!.followingCount != 0) {
+                                                                                    if (widget.fromChat != true) {
+                                                                                      context.pushNamed(
+                                                                                        'Folgere',
+                                                                                        queryParameters: {
+                                                                                          'username': serializeParam(widget.uid, ParamType.String),
+                                                                                          'folger': serializeParam(
+                                                                                            'Følger',
+                                                                                            ParamType.String,
+                                                                                          ),
+                                                                                        }.withoutNulls,
+                                                                                      );
+                                                                                    } else {
+                                                                                      context.pushNamed(
+                                                                                        'Folgere1',
+                                                                                        queryParameters: {
+                                                                                          'username': serializeParam(widget.uid, ParamType.String),
+                                                                                          'folger': serializeParam(
+                                                                                            'Følger',
+                                                                                            ParamType.String,
+                                                                                          ),
+                                                                                          'fromChat': serializeParam(true, ParamType.bool),
+                                                                                        }.withoutNulls,
+                                                                                      );
+                                                                                    }
+                                                                                  }
+                                                                                } catch (e) {
+                                                                                  toasts.showErrorToast(context, 'En uforventet feil oppstod');
+                                                                                  logger.d('Error navigating page');
                                                                                 }
                                                                               },
                                                                               child: Column(
@@ -1427,17 +1468,49 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                         highlightColor:
                                                             Colors.transparent,
                                                         onTap: () async {
-                                                          context.pushNamed(
-                                                            'MatDetaljBondegard',
-                                                            queryParameters: {
-                                                              'matvare':
-                                                                  serializeParam(
-                                                                matvarer
-                                                                    .toJson(), // Convert to JSON before passing
-                                                                ParamType.JSON,
-                                                              ),
-                                                            },
-                                                          );
+                                                          try {
+                                                            if (widget
+                                                                    .fromChat !=
+                                                                true) {
+                                                              context.pushNamed(
+                                                                'MatDetaljBondegard',
+                                                                queryParameters: {
+                                                                  'matvare':
+                                                                      serializeParam(
+                                                                    matvarer
+                                                                        .toJson(), // Convert to JSON before passing
+                                                                    ParamType
+                                                                        .JSON,
+                                                                  ),
+                                                                },
+                                                              );
+                                                            } else {
+                                                              context.pushNamed(
+                                                                'MatDetaljBondegard2',
+                                                                queryParameters: {
+                                                                  'matvare':
+                                                                      serializeParam(
+                                                                    matvarer
+                                                                        .toJson(), // Convert to JSON before passing
+                                                                    ParamType
+                                                                        .JSON,
+                                                                  ),
+                                                                  'fromChat':
+                                                                      serializeParam(
+                                                                    true,
+                                                                    ParamType
+                                                                        .bool,
+                                                                  ),
+                                                                },
+                                                              );
+                                                            }
+                                                          } catch (e) {
+                                                            toasts.showErrorToast(
+                                                                context,
+                                                                'En uforventet feil oppstod');
+                                                            logger.d(
+                                                                'Error navigating page');
+                                                          }
                                                         },
                                                         child: Material(
                                                           color: Colors
@@ -1823,16 +1896,39 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
-                                          context.pushNamed(
-                                            'MatDetaljBondegard',
-                                            queryParameters: {
-                                              'matvare': serializeParam(
-                                                matvarer
-                                                    .toJson(), // Convert to JSON before passing
-                                                ParamType.JSON,
-                                              ),
-                                            },
-                                          );
+                                          try {
+                                            if (widget.fromChat != true) {
+                                              context.pushNamed(
+                                                'MatDetaljBondegard',
+                                                queryParameters: {
+                                                  'matvare': serializeParam(
+                                                    matvarer
+                                                        .toJson(), // Convert to JSON before passing
+                                                    ParamType.JSON,
+                                                  ),
+                                                },
+                                              );
+                                            } else {
+                                              context.pushNamed(
+                                                'MatDetaljBondegard2',
+                                                queryParameters: {
+                                                  'matvare': serializeParam(
+                                                    matvarer
+                                                        .toJson(), // Convert to JSON before passing
+                                                    ParamType.JSON,
+                                                  ),
+                                                  'fromChat': serializeParam(
+                                                    true,
+                                                    ParamType.bool,
+                                                  ),
+                                                },
+                                              );
+                                            }
+                                          } catch (e) {
+                                            toasts.showErrorToast(context,
+                                                'En uforventet feil oppstod');
+                                            logger.d('Error navigating page');
+                                          }
                                         },
                                         child: Material(
                                           color: Colors.transparent,

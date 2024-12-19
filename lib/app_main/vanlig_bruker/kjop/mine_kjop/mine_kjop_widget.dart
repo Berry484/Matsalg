@@ -1472,7 +1472,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                              10, 0, 10, 0),
+                                                              0, 0, 0, 0),
                                                       child: InkWell(
                                                         splashColor:
                                                             Colors.transparent,
@@ -1483,55 +1483,119 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                         highlightColor:
                                                             Colors.transparent,
                                                         onTap: () async {
-                                                          if (ordreInfo.hentet != true &&
-                                                              ordreInfo
-                                                                      .avvist !=
-                                                                  true &&
-                                                              ordreInfo.trekt !=
-                                                                  true) {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor:
-                                                                  const Color
-                                                                      .fromARGB(
-                                                                      60,
-                                                                      17,
-                                                                      0,
-                                                                      0),
-                                                              useRootNavigator:
-                                                                  true,
-                                                              useSafeArea: true,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
+                                                          if (ordreInfo
+                                                                  .kjopte ==
+                                                              true) {
+                                                            if (ordreInfo.hentet != true &&
+                                                                ordreInfo
+                                                                        .avvist !=
+                                                                    true &&
+                                                                ordreInfo
+                                                                        .trekt !=
+                                                                    true) {
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                barrierColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                        60,
+                                                                        17,
+                                                                        0,
+                                                                        0),
+                                                                useRootNavigator:
+                                                                    true,
+                                                                useSafeArea:
+                                                                    true,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return GestureDetector(
+                                                                    onTap: () =>
+                                                                        FocusScope.of(context)
+                                                                            .unfocus(),
                                                                     child:
-                                                                        BudInfoWidget(
-                                                                      info: ordreInfo
-                                                                          .foodDetails,
-                                                                      ordre:
-                                                                          ordreInfo,
+                                                                        Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          BudInfoWidget(
+                                                                        info: ordreInfo
+                                                                            .foodDetails,
+                                                                        ordre:
+                                                                            ordreInfo,
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                setState(() {
-                                                                  getAll();
-                                                                }));
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  setState(() {
+                                                                    getAll();
+                                                                  }));
+                                                              return;
+                                                            }
+                                                          }
+                                                          if (ordreInfo
+                                                                  .kjopte ==
+                                                              true) {
+                                                            if (ordreInfo.godkjent != true &&
+                                                                ordreInfo
+                                                                        .trekt !=
+                                                                    true &&
+                                                                ordreInfo
+                                                                        .avvist !=
+                                                                    true) {
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                barrierColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                        60,
+                                                                        17,
+                                                                        0,
+                                                                        0),
+                                                                useRootNavigator:
+                                                                    true,
+                                                                useSafeArea:
+                                                                    true,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return GestureDetector(
+                                                                    onTap: () =>
+                                                                        FocusScope.of(context)
+                                                                            .unfocus(),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          SalgBrukerInfoWidget(
+                                                                        info: ordreInfo
+                                                                            .foodDetails,
+                                                                        ordre:
+                                                                            ordreInfo,
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  setState(() {
+                                                                    getAll();
+                                                                  }));
+                                                              return;
+                                                            }
                                                           }
                                                           if (ordreInfo.hentet == true ||
                                                               ordreInfo.trekt ==
@@ -1586,6 +1650,112 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   getAll();
                                                                 }));
                                                             return;
+                                                          }
+
+                                                          if (ordreInfo
+                                                                  .kjopte !=
+                                                              true) {
+                                                            if (ordreInfo.godkjent != true &&
+                                                                ordreInfo
+                                                                        .trekt !=
+                                                                    true &&
+                                                                ordreInfo
+                                                                        .avvist !=
+                                                                    true) {
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                barrierColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                        60,
+                                                                        17,
+                                                                        0,
+                                                                        0),
+                                                                useRootNavigator:
+                                                                    true,
+                                                                useSafeArea:
+                                                                    true,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return GestureDetector(
+                                                                    onTap: () =>
+                                                                        FocusScope.of(context)
+                                                                            .unfocus(),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          SalgBrukerInfoWidget(
+                                                                        info: ordreInfo
+                                                                            .foodDetails,
+                                                                        ordre:
+                                                                            ordreInfo,
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  setState(() {
+                                                                    getAll();
+                                                                  }));
+                                                            }
+
+                                                            if (ordreInfo
+                                                                    .godkjent ==
+                                                                true) {
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                barrierColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                        60,
+                                                                        17,
+                                                                        0,
+                                                                        0),
+                                                                useRootNavigator:
+                                                                    true,
+                                                                useSafeArea:
+                                                                    true,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return GestureDetector(
+                                                                    onTap: () =>
+                                                                        FocusScope.of(context)
+                                                                            .unfocus(),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          GodkjentebudWidget(
+                                                                        info: ordreInfo
+                                                                            .foodDetails,
+                                                                        ordre:
+                                                                            ordreInfo,
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  setState(() {
+                                                                    getAll();
+                                                                  }));
+                                                            }
                                                           }
                                                         },
                                                         child: Material(
@@ -2231,7 +2401,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                              10, 0, 10, 0),
+                                                              0, 0, 0, 0),
                                                       child: InkWell(
                                                         splashColor:
                                                             Colors.transparent,
@@ -2242,103 +2412,113 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                         highlightColor:
                                                             Colors.transparent,
                                                         onTap: () async {
-                                                          if (salgInfo.godkjent !=
-                                                                  true &&
-                                                              salgInfo.trekt !=
-                                                                  true &&
-                                                              salgInfo.avvist !=
-                                                                  true) {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor:
-                                                                  const Color
-                                                                      .fromARGB(
-                                                                      60,
-                                                                      17,
-                                                                      0,
-                                                                      0),
-                                                              useRootNavigator:
-                                                                  true,
-                                                              useSafeArea: true,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
-                                                                    child:
-                                                                        SalgBrukerInfoWidget(
-                                                                      info: salgInfo
-                                                                          .foodDetails,
-                                                                      ordre:
-                                                                          salgInfo,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                setState(() {
-                                                                  getAll();
-                                                                }));
-                                                          }
-
-                                                          if (salgInfo
-                                                                  .godkjent ==
+                                                          if (salgInfo.kjopte ==
                                                               true) {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor:
-                                                                  const Color
-                                                                      .fromARGB(
-                                                                      60,
-                                                                      17,
-                                                                      0,
-                                                                      0),
-                                                              useRootNavigator:
-                                                                  true,
-                                                              useSafeArea: true,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
+                                                            if (salgInfo.hentet != true &&
+                                                                salgInfo.avvist !=
+                                                                    true &&
+                                                                salgInfo.trekt !=
+                                                                    true) {
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                barrierColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                        60,
+                                                                        17,
+                                                                        0,
+                                                                        0),
+                                                                useRootNavigator:
+                                                                    true,
+                                                                useSafeArea:
+                                                                    true,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return GestureDetector(
+                                                                    onTap: () =>
+                                                                        FocusScope.of(context)
+                                                                            .unfocus(),
                                                                     child:
-                                                                        GodkjentebudWidget(
-                                                                      info: salgInfo
-                                                                          .foodDetails,
-                                                                      ordre:
-                                                                          salgInfo,
+                                                                        Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          BudInfoWidget(
+                                                                        info: salgInfo
+                                                                            .foodDetails,
+                                                                        ordre:
+                                                                            salgInfo,
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                setState(() {
-                                                                  getAll();
-                                                                }));
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  setState(() {
+                                                                    getAll();
+                                                                  }));
+                                                              return;
+                                                            }
+                                                          }
+                                                          if (salgInfo.kjopte ==
+                                                              true) {
+                                                            if (salgInfo.godkjent != true &&
+                                                                salgInfo.trekt !=
+                                                                    true &&
+                                                                salgInfo.avvist !=
+                                                                    true) {
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                barrierColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                        60,
+                                                                        17,
+                                                                        0,
+                                                                        0),
+                                                                useRootNavigator:
+                                                                    true,
+                                                                useSafeArea:
+                                                                    true,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return GestureDetector(
+                                                                    onTap: () =>
+                                                                        FocusScope.of(context)
+                                                                            .unfocus(),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          SalgBrukerInfoWidget(
+                                                                        info: salgInfo
+                                                                            .foodDetails,
+                                                                        ordre:
+                                                                            salgInfo,
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  setState(() {
+                                                                    getAll();
+                                                                  }));
+                                                              return;
+                                                            }
                                                           }
                                                           if (salgInfo.hentet == true ||
                                                               salgInfo.trekt ==
@@ -2391,6 +2571,109 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   getAll();
                                                                 }));
                                                             return;
+                                                          }
+
+                                                          if (salgInfo.kjopte !=
+                                                              true) {
+                                                            if (salgInfo.godkjent != true &&
+                                                                salgInfo.trekt !=
+                                                                    true &&
+                                                                salgInfo.avvist !=
+                                                                    true) {
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                barrierColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                        60,
+                                                                        17,
+                                                                        0,
+                                                                        0),
+                                                                useRootNavigator:
+                                                                    true,
+                                                                useSafeArea:
+                                                                    true,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return GestureDetector(
+                                                                    onTap: () =>
+                                                                        FocusScope.of(context)
+                                                                            .unfocus(),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          SalgBrukerInfoWidget(
+                                                                        info: salgInfo
+                                                                            .foodDetails,
+                                                                        ordre:
+                                                                            salgInfo,
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  setState(() {
+                                                                    getAll();
+                                                                  }));
+                                                            }
+
+                                                            if (salgInfo
+                                                                    .godkjent ==
+                                                                true) {
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                barrierColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                        60,
+                                                                        17,
+                                                                        0,
+                                                                        0),
+                                                                useRootNavigator:
+                                                                    true,
+                                                                useSafeArea:
+                                                                    true,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return GestureDetector(
+                                                                    onTap: () =>
+                                                                        FocusScope.of(context)
+                                                                            .unfocus(),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          GodkjentebudWidget(
+                                                                        info: salgInfo
+                                                                            .foodDetails,
+                                                                        ordre:
+                                                                            salgInfo,
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  setState(() {
+                                                                    getAll();
+                                                                  }));
+                                                            }
                                                           }
                                                         },
                                                         child: Material(
@@ -2620,7 +2903,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             Padding(
                                                                               padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
                                                                               child: Text(
-                                                                                'Kjøpet er fullført',
+                                                                                'Salget er fullført',
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Nunito',
                                                                                       color: FlutterFlowTheme.of(context).secondaryText,
