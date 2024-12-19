@@ -73,14 +73,12 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
               FFAppState().ordreInfo = _alleInfo ?? [];
               _isloading = false;
 
-              _ordreInfo = _alleInfo!
-                  .where((order) => order.kjopte == true && _isActive(order))
-                  .toList();
+              _ordreInfo =
+                  _alleInfo!.where((order) => order.kjopte == true).toList();
               _kjopEmpty = _ordreInfo!.isEmpty;
 
-              _salgInfo = _alleInfo!
-                  .where((order) => order.kjopte == false && _isActive(order))
-                  .toList();
+              _salgInfo =
+                  _alleInfo!.where((order) => order.kjopte == false).toList();
               _salgEmpty = _salgInfo!.isEmpty;
 
               _isloading = false;
@@ -98,13 +96,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
     } catch (e) {
       toasts.showErrorToast(context, 'En feil oppstod');
     }
-  }
-
-// Helper function to determine if the order is active
-  bool _isActive(OrdreInfo order) {
-    return !(order.hentet == true ||
-        order.trekt == true ||
-        order.avvist == true);
   }
 
   Future<void> updateUserStats() async {
@@ -923,14 +914,14 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 borderRadius: BorderRadius.circular(6),
                                                                                 child: Image.network(
                                                                                   '${ApiConstants.baseUrl}${alleInfo.foodDetails.imgUrls![0]}',
-                                                                                  width: 60,
-                                                                                  height: 60,
+                                                                                  width: 56,
+                                                                                  height: 56,
                                                                                   fit: BoxFit.cover,
                                                                                   errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                                                                                     return Image.asset(
                                                                                       'assets/images/error_image.jpg',
-                                                                                      width: 60,
-                                                                                      height: 60,
+                                                                                      width: 56,
+                                                                                      height: 56,
                                                                                       fit: BoxFit.cover,
                                                                                     );
                                                                                   },
@@ -1045,7 +1036,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 Padding(
                                                                                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
                                                                                   child: Text(
-                                                                                    alleInfo.kjopte == true ? 'Venter svar fra selgeren' : 'Vurder kjøperen',
+                                                                                    alleInfo.kjopte == true ? 'Venter svar fra selgeren' : 'Svar på budet',
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -1113,13 +1104,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           if (alleInfo.trekt != true &&
                                                                               alleInfo.avvist != true)
                                                                             Container(
-                                                                              height: 30,
+                                                                              height: 26.5,
                                                                               decoration: BoxDecoration(
-                                                                                color: alleInfo.hentet == true ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).price,
+                                                                                color: alleInfo.hentet == true ? FlutterFlowTheme.of(context).price : FlutterFlowTheme.of(context).alternate,
                                                                                 borderRadius: BorderRadius.circular(13),
-                                                                                border: alleInfo.hentet == true
-                                                                                    ? Border.all(color: const Color.fromARGB(44, 87, 99, 108), width: 1.2) // Add black border
-                                                                                    : null, // No border otherwise
+                                                                                border: null, // No border otherwise
                                                                               ),
                                                                               child: Align(
                                                                                 alignment: const AlignmentDirectional(0, 0),
@@ -1142,7 +1131,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           if (alleInfo.trekt == true ||
                                                                               alleInfo.avvist == true)
                                                                             Container(
-                                                                              height: 30,
+                                                                              height: 26.5,
                                                                               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(13), border: Border.all(color: const Color.fromARGB(44, 87, 99, 108), width: 1.2)),
                                                                               child: Stack(
                                                                                 children: [
@@ -1544,6 +1533,60 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   getAll();
                                                                 }));
                                                           }
+                                                          if (ordreInfo.hentet == true ||
+                                                              ordreInfo.trekt ==
+                                                                  true ||
+                                                              ordreInfo
+                                                                      .avvist ==
+                                                                  true ||
+                                                              ordreInfo
+                                                                      .godkjent ==
+                                                                  true) {
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              barrierColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      60,
+                                                                      17,
+                                                                      0,
+                                                                      0),
+                                                              useRootNavigator:
+                                                                  true,
+                                                              useSafeArea: true,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return GestureDetector(
+                                                                  onTap: () =>
+                                                                      FocusScope.of(
+                                                                              context)
+                                                                          .unfocus(),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        GodkjentebudWidget(
+                                                                      info: ordreInfo
+                                                                          .foodDetails,
+                                                                      ordre:
+                                                                          ordreInfo,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                setState(() {
+                                                                  getAll();
+                                                                }));
+                                                            return;
+                                                          }
                                                         },
                                                         child: Material(
                                                           color: Colors
@@ -1596,14 +1639,14 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             child:
                                                                                 Image.network(
                                                                               '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
-                                                                              width: 60,
-                                                                              height: 60,
+                                                                              width: 56,
+                                                                              height: 56,
                                                                               fit: BoxFit.cover,
                                                                               errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                                                                                 return Image.asset(
                                                                                   'assets/images/error_image.jpg',
-                                                                                  width: 60,
-                                                                                  height: 60,
+                                                                                  width: 56,
+                                                                                  height: 56,
                                                                                   fit: BoxFit.cover,
                                                                                 );
                                                                               },
@@ -1652,26 +1695,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                      if (ordreInfo
-                                                                              .hentet ==
-                                                                          true)
-                                                                        Align(
-                                                                          alignment: const AlignmentDirectional(
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                61,
-                                                                            height:
-                                                                                61,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: const Color.fromARGB(84, 159, 159, 159),
-                                                                              borderRadius: BorderRadius.circular(0),
-                                                                            ),
-                                                                          ),
-                                                                        ),
                                                                     ],
                                                                   ),
                                                                   Expanded(
@@ -1830,12 +1853,12 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               true)
                                                                         Container(
                                                                           height:
-                                                                              30,
+                                                                              26.5,
                                                                           decoration:
                                                                               BoxDecoration(
                                                                             color: ordreInfo.hentet == true
-                                                                                ? FlutterFlowTheme.of(context).primary
-                                                                                : FlutterFlowTheme.of(context).price,
+                                                                                ? FlutterFlowTheme.of(context).price
+                                                                                : FlutterFlowTheme.of(context).alternate,
                                                                             borderRadius:
                                                                                 BorderRadius.circular(13),
                                                                           ),
@@ -1851,7 +1874,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 textAlign: TextAlign.start,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Nunito',
-                                                                                      color: FlutterFlowTheme.of(context).primary,
+                                                                                      color: ordreInfo.hentet == true ? FlutterFlowTheme.of(context).primaryText : FlutterFlowTheme.of(context).primary,
                                                                                       fontSize: 14,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.bold,
@@ -1866,18 +1889,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               true)
                                                                         Container(
                                                                           height:
-                                                                              30,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                const Color(0xAA262C2D),
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(13),
-                                                                            border:
-                                                                                Border.all(
-                                                                              color: const Color(0x0D262C2D),
-                                                                            ),
-                                                                          ),
+                                                                              26.5,
+                                                                          decoration: BoxDecoration(
+                                                                              color: Colors.white,
+                                                                              borderRadius: BorderRadius.circular(13),
+                                                                              border: Border.all(color: Color.fromARGB(44, 87, 99, 108), width: 1.2)),
                                                                           child:
                                                                               Stack(
                                                                             children: [
@@ -1893,8 +1909,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                         left: 0,
                                                                                         right: 0,
                                                                                         child: Container(
-                                                                                          height: 1.2, // Thickness of the line
-                                                                                          color: Colors.white, // Color of the line
+                                                                                          height: 0.8, // Thickness of the line
+                                                                                          color: const Color.fromARGB(192, 0, 0, 0), // Color of the line
                                                                                         ),
                                                                                       ),
                                                                                       // The actual text
@@ -1903,7 +1919,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                         textAlign: TextAlign.start,
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                               fontFamily: 'Nunito',
-                                                                                              color: const Color(0xE0FFFFFF),
+                                                                                              color: FlutterFlowTheme.of(context).primaryText,
                                                                                               fontSize: 14,
                                                                                               letterSpacing: 0.0,
                                                                                               fontWeight: FontWeight.bold,
@@ -2324,6 +2340,58 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                   getAll();
                                                                 }));
                                                           }
+                                                          if (salgInfo.hentet == true ||
+                                                              salgInfo.trekt ==
+                                                                  true ||
+                                                              salgInfo.avvist ==
+                                                                  true ||
+                                                              salgInfo.godkjent ==
+                                                                  true) {
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              barrierColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      60,
+                                                                      17,
+                                                                      0,
+                                                                      0),
+                                                              useRootNavigator:
+                                                                  true,
+                                                              useSafeArea: true,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return GestureDetector(
+                                                                  onTap: () =>
+                                                                      FocusScope.of(
+                                                                              context)
+                                                                          .unfocus(),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        GodkjentebudWidget(
+                                                                      info: salgInfo
+                                                                          .foodDetails,
+                                                                      ordre:
+                                                                          salgInfo,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                setState(() {
+                                                                  getAll();
+                                                                }));
+                                                            return;
+                                                          }
                                                         },
                                                         child: Material(
                                                           color: Colors
@@ -2376,14 +2444,14 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             child:
                                                                                 Image.network(
                                                                               '${ApiConstants.baseUrl}${salgInfo.foodDetails.imgUrls![0]}',
-                                                                              width: 60,
-                                                                              height: 60,
+                                                                              width: 56,
+                                                                              height: 56,
                                                                               fit: BoxFit.cover,
                                                                               errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                                                                                 return Image.asset(
                                                                                   'assets/images/error_image.jpg',
-                                                                                  width: 60,
-                                                                                  height: 60,
+                                                                                  width: 56,
+                                                                                  height: 56,
                                                                                   fit: BoxFit.cover,
                                                                                 );
                                                                               },
@@ -2432,26 +2500,6 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                      if (salgInfo
-                                                                              .hentet ==
-                                                                          true)
-                                                                        Align(
-                                                                          alignment: const AlignmentDirectional(
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                61,
-                                                                            height:
-                                                                                61,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: const Color.fromARGB(91, 135, 135, 135),
-                                                                              borderRadius: BorderRadius.circular(0),
-                                                                            ),
-                                                                          ),
-                                                                        ),
                                                                     ],
                                                                   ),
                                                                   Expanded(
@@ -2526,7 +2574,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                             Padding(
                                                                               padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
                                                                               child: Text(
-                                                                                'Vurder kjøperen',
+                                                                                'Svar på budet',
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Nunito',
                                                                                       color: FlutterFlowTheme.of(context).secondaryText,
@@ -2603,11 +2651,12 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               true)
                                                                         Container(
                                                                           height:
-                                                                              30,
+                                                                              26.5,
                                                                           decoration:
                                                                               BoxDecoration(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).price,
+                                                                            color: salgInfo.hentet == true
+                                                                                ? FlutterFlowTheme.of(context).price
+                                                                                : FlutterFlowTheme.of(context).alternate,
                                                                             borderRadius:
                                                                                 BorderRadius.circular(13),
                                                                           ),
@@ -2623,7 +2672,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                 textAlign: TextAlign.start,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Nunito',
-                                                                                      color: FlutterFlowTheme.of(context).primary,
+                                                                                      color: salgInfo.hentet == true ? FlutterFlowTheme.of(context).primaryText : FlutterFlowTheme.of(context).primary,
                                                                                       fontSize: 14,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.bold,
@@ -2638,18 +2687,11 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                               true)
                                                                         Container(
                                                                           height:
-                                                                              30,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                const Color(0xAA262C2D),
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(13),
-                                                                            border:
-                                                                                Border.all(
-                                                                              color: const Color(0x0D262C2D),
-                                                                            ),
-                                                                          ),
+                                                                              26.5,
+                                                                          decoration: BoxDecoration(
+                                                                              color: Colors.white,
+                                                                              borderRadius: BorderRadius.circular(13),
+                                                                              border: Border.all(color: const Color.fromARGB(44, 87, 99, 108), width: 1.2)),
                                                                           child:
                                                                               Stack(
                                                                             children: [
@@ -2665,8 +2707,8 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                         left: 0,
                                                                                         right: 0,
                                                                                         child: Container(
-                                                                                          height: 1.2, // Thickness of the line
-                                                                                          color: Colors.white, // Color of the line
+                                                                                          height: 0.8, // Thickness of the line
+                                                                                          color: const Color.fromARGB(192, 0, 0, 0), // Color of the line
                                                                                         ),
                                                                                       ),
                                                                                       // The actual text
@@ -2675,7 +2717,7 @@ class _MineKjopWidgetState extends State<MineKjopWidget>
                                                                                         textAlign: TextAlign.start,
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                               fontFamily: 'Nunito',
-                                                                                              color: const Color(0xE0FFFFFF),
+                                                                                              color: FlutterFlowTheme.of(context).primaryText,
                                                                                               fontSize: 14,
                                                                                               letterSpacing: 0.0,
                                                                                               fontWeight: FontWeight.bold,
