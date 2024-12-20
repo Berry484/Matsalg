@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/bottomNavWrapper.dart';
-import 'package:mat_salg/app_main/vanlig_bruker/profil/innstillinger/konto/settings_konto_widget.dart';
+import 'package:mat_salg/pages/vanlig_bruker/profil/innstillinger/konto/settings_konto_widget.dart';
 import 'package:provider/provider.dart';
 
 import '/auth/custom_auth/custom_auth_user_provider.dart';
