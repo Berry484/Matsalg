@@ -1,0 +1,456 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/models/user.dart';
+import 'package:mat_salg/models/user_info_search.dart';
+import 'package:mat_salg/services/food_service.dart';
+import 'package:mat_salg/services/purchase_service.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'dart:async';
+import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/logging.dart';
+
+class UserInfoService {
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final PurchaseService purchaseService = PurchaseService();
+  static const String baseUrl = ApiConstants.baseUrl;
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Creates a user in the postgreSQL backend. NOTE this does NOT create the user in firebase---
+//---------------------------------------------------------------------------------------------------------------
+  Future<http.Response> createUserInPostgres({
+    required String token,
+    required String username,
+    required String? email,
+    required String? phoneNumber,
+    required String firstName,
+    required String lastName,
+    String? bio,
+    LatLng? posisjon,
+  }) async {
+    try {
+      // Base URL for the calls
+      const String baseUrl = ApiConstants.baseUrl;
+
+      // Create the user data as a Map
+      final Map<String, dynamic> userData = {
+        "username": username,
+        "email": email,
+        "firstname": firstName,
+        "lastname": lastName,
+        "phoneNumber": phoneNumber,
+        "lat": posisjon?.latitude.toString(),
+        "lng": posisjon?.longitude.toString(),
+      };
+
+      final String jsonBody = jsonEncode(userData);
+      final uri = Uri.parse('$baseUrl/rrh/brukere/create');
+
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      final response = await http.post(
+        uri,
+        headers: headers,
+        body: jsonBody,
+      );
+
+      return response;
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Retrieves all the information about a sepcific user----------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<http.Response> checkUserInfo(String? token) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Using the timeout method
+
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/brukere/brukerinfo'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
+
+      final decodedBody = utf8.decode(response.bodyBytes);
+      return http.Response(decodedBody, response.statusCode);
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Updates the users information like username, firstname etc in the postgreSQL backend-------
+//---------------------------------------------------------------------------------------------------------------
+  Future<http.Response> updateUserInfo({
+    required String? username,
+    required String? bio,
+    required String? firstname,
+    required String? lastname,
+    required String? email,
+    String? profilepic,
+    String? token,
+  }) async {
+    try {
+      // Create the user info data as a Map
+      final Map<String, dynamic> userInfoData = {
+        "username": username,
+        "firstname": firstname,
+        "lastname": lastname,
+        "email": email,
+        "bio": bio,
+      };
+
+      // Only add profilepic if it's not null
+      if (profilepic != null) {
+        userInfoData["profilepic"] = profilepic;
+      }
+
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userInfoData);
+
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Add Bearer token if present
+      };
+
+      // Send the POST request
+      final response = await http.post(
+        Uri.parse(
+            '$baseUrl/rrh/brukere'), // Endpoint for creating or updating user info
+        headers: headers,
+        body: jsonBody,
+      );
+
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      logger.e('Error updating user information');
+      rethrow;
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Updates the users position in the postgreSQL backend---------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  Future<http.Response> updatePosisjon({
+    String? token,
+  }) async {
+    try {
+      // Create the user info data as a Map
+      final Map<String, dynamic> userInfoData = {
+        "lat": FFAppState().brukerLat,
+        "lng": FFAppState().brukerLng,
+      };
+
+      // Convert the Map to JSON
+      final String jsonBody = jsonEncode(userInfoData);
+
+      // Prepare headers
+      final headers = {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      };
+
+      // Send the POST request
+      final response = await http.post(
+        Uri.parse('$baseUrl/rrh/brukere'),
+        headers: headers,
+        body: jsonBody,
+      );
+
+      return response;
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      logger.e('Error updating user position');
+      rethrow;
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Uploads profile picture to postgreSQL backend----------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  Future<String?> uploadProfilePic({
+    String? token,
+    required Uint8List? fileData, // The file data as nullable Uint8List
+    String fileType = 'jpeg', // Default to 'jpeg'
+    String? username,
+  }) async {
+    try {
+      // Check if fileData is null
+      if (fileData == null) {
+        logger.e('FileData was null');
+        return null;
+      }
+
+      try {
+        var request = http.MultipartRequest(
+          'POST',
+          Uri.parse('$baseUrl/files/rrh/sendbilde'),
+        );
+
+        if (token != null) {
+          request.headers['Authorization'] = 'Bearer $token';
+        }
+
+        // Add file data (Uint8List) to the request
+        request.files.add(
+          http.MultipartFile.fromBytes(
+            'file',
+            fileData,
+            contentType:
+                MediaType('image', fileType), // Use image/jpeg by default
+            filename: 'profilepic.$fileType',
+          ),
+        );
+
+        // Include the username as a part of the request
+        if (username != null) {
+          request.fields['username'] = username;
+          request.fields['profilbilde'] = 'true';
+        }
+
+        // Send the request and wait for the response
+        var response = await request.send();
+
+        // Get the response status code
+        var responseString = await http.Response.fromStream(response);
+
+        // Check if the status code is 200 (success)
+        if (response.statusCode == 200) {
+          final Map<String, dynamic> responseJson =
+              jsonDecode(responseString.body);
+          return responseJson['fileLink']; // Return the file link as a string
+        } else {
+          return null;
+        }
+      } catch (e) {
+        logger.e('FileData was exception');
+        return null;
+      }
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      logger.e('FileData was exception');
+      throw Exception;
+    }
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Updates variables about a user wether he has liked any foods etc so I can display empty widgets----
+//-----------------------------------------------------------------------------------------------------------------------
+  Future<http.Response?> updateUserStats(BuildContext context) async {
+    try {
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        logger.e('No token could be fetched');
+        throw (Exception);
+      } else {
+        final headers = {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        };
+
+        // Using the timeout method
+
+        final response = await http
+            .get(
+              Uri.parse('$baseUrl/rrh/brukere/seBrukerInfo'),
+              headers: headers,
+            )
+            .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
+
+        final jsonResponse = json.decode(response.body);
+
+        FFAppState().liked = jsonResponse['hasLiked'] ?? false;
+        FFAppState().lagtUt = jsonResponse['hasPosted'] ?? false;
+        FFAppState().harKjopt = jsonResponse['hasBought'] ?? false;
+        FFAppState().harSolgt = jsonResponse['hasSold'] ?? false;
+
+        return response;
+      }
+    } on SocketException {
+      logger.e('Socket exception');
+      throw const SocketException('');
+    } catch (e) {
+      logger.e('Somethiid unexpected happend updating user stats');
+      throw Exception;
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Gets the last time a specific user was active----------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<http.Response?> getLastActiveTime(
+      String? token, String uid) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Using the timeout method and sending the username (uid) as a query parameter
+      final response = await http
+          .get(
+            Uri.parse(
+                '$baseUrl/rrh/brukere/seLastActiveTime?username=$uid'), // Update the URL to use the correct endpoint
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
+
+      if (response.statusCode == 200) {
+        // Parse the response body
+        final String lastActiveTime =
+            response.body; // the last active time is expected as a string
+        logger.d('Last Active Time: $lastActiveTime');
+        return response;
+      } else {
+        logger.d('Failed to fetch last active time: ${response.statusCode}');
+        return null;
+      }
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception("An error occurred: $e");
+    }
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Updates variables in the app state that stores the currents users food items and orders------------
+//-----------------------------------------------------------------------------------------------------------------------
+  Future<void> getAll(BuildContext context) async {
+    try {
+      final appState = FFAppState();
+      appState.matvarer.clear();
+      appState.ordreInfo.clear();
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      } else {
+        List<OrdreInfo>? alleInfo = await PurchaseService.getAll(token);
+        List<Matvarer>? fetchedMatvarer =
+            await ApiFoodService.getMyFoods(token);
+
+        if (alleInfo != null && alleInfo.isNotEmpty) {
+          FFAppState().ordreInfo = alleInfo;
+        }
+        if (fetchedMatvarer != null && fetchedMatvarer.isNotEmpty) {
+          FFAppState().matvarer = fetchedMatvarer;
+        }
+      }
+    } on SocketException {
+      logger.e(
+          'An socketException occured while updating stats about users items');
+    } catch (e) {
+      logger.e('An error occured while updating stats about users items');
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Gets the User Info from a specific user using the uid--------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<List<User>?> checkUser(String? token, String? uid) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Make the API request
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/brukere/brukerinfo?username=$uid'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
+      // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        // Decode the response body
+        final dynamic jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
+
+        // If the response is not a list, wrap it in a list before passing to fromSnapshot
+        if (jsonResponse is Map<String, dynamic>) {
+          return User.usersFromSnapshot(
+              [jsonResponse]); // Wrap single object in a list
+        } else if (jsonResponse is List) {
+          return User.usersFromSnapshot(
+              jsonResponse); // If it's already a list, pass it directly
+        }
+      } else {
+        // Handle unsuccessful response
+        return null;
+      }
+      return null;
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Searches for users by a string query and returns a list of up to 20 matches----------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<List<UserInfoSearch>?> searchUsers(
+      String? token, String? query) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      if (query != null && query.isNotEmpty) {
+        // Make the API request with a timeout of 5 seconds
+        final response = await http
+            .get(
+              Uri.parse('$baseUrl/rrh/brukere/search?query=$query'),
+              headers: headers,
+            )
+            .timeout(const Duration(seconds: 5));
+        if (response.statusCode == 200) {
+          List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+          List<UserInfoSearch> profiler = data.map((userData) {
+            return UserInfoSearch(
+              uid: userData['uid'] ?? '',
+              username: userData['username'] ?? '',
+              firstname: userData['firstname'] ?? '',
+              lastname: userData['lastname'] ?? '',
+              profilepic: userData['profilepic'] ?? '',
+            );
+          }).toList();
+          return profiler;
+        }
+      } else {
+        return null;
+      }
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+    return null;
+  }
+
+//
+}

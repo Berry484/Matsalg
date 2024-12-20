@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/MyIP.dart';
-import 'package:mat_salg/api/web_socket.dart';
-import 'package:mat_salg/apiCalls.dart';
+import 'package:mat_salg/services/user_service.dart';
+import 'package:mat_salg/services/web_socket.dart';
 import 'package:mat_salg/pages/chat/message/message_model.dart';
 import 'package:mat_salg/pages/chat/messageBubble/message_bubbles_widget.dart';
-import 'package:mat_salg/pages/vanlig_bruker/Utils.dart';
-import 'package:mat_salg/pages/vanlig_bruker/hjem/rapporter/rapporter_widget.dart';
+import 'package:mat_salg/pages/app_pages/Utils.dart';
+import 'package:mat_salg/pages/app_pages/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -32,16 +32,15 @@ class MessageWidget extends StatefulWidget {
 }
 
 class _MessageWidgetState extends State<MessageWidget> {
-  late WebSocketService _webSocketService;
-  late Conversation conversation;
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  late MessageModel _model;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  final ApiCalls apicalls = ApiCalls();
-  int _lastMessageCount = 0; // Track the number of messages
-  late List<Message> _messageListWithFlags;
   final Toasts toasts = Toasts();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  late MessageModel _model;
+  late List<Message> _messageListWithFlags;
+  late Conversation conversation;
+  late WebSocketService _webSocketService;
+  int _lastMessageCount = 0;
 
   @override
   void initState() {
@@ -49,7 +48,7 @@ class _MessageWidgetState extends State<MessageWidget> {
 
     _webSocketService = WebSocketService();
     conversation = Conversation.fromJson(widget.conversation);
-    _lastMessageCount = conversation.messages.length; // Initialize count
+    _lastMessageCount = conversation.messages.length;
     markRead();
     getLastActiveTime();
     _model = createModel(context, () => MessageModel());
@@ -73,7 +72,7 @@ class _MessageWidgetState extends State<MessageWidget> {
         return;
       } else {
         final response =
-            await apicalls.getLastActiveTime(token, conversation.user);
+            await UserInfoService.getLastActiveTime(token, conversation.user);
         if (mounted) {
           if (response?.statusCode == 200) {
             final String responseBody = response?.body ?? '';
