@@ -1,7 +1,7 @@
 // import 'index.dart'; // Imports other custom widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'flutter_flow/flutter_flow_util.dart';
 
 // import 'package:flutter_map/plugin_api.dart';
 

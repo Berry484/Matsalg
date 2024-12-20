@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/pages/app_pages/Utils.dart';
+import 'package:mat_salg/helper_components/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/push_notification_service.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import '../../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'get_updates_model.dart';
 export 'get_updates_model.dart';

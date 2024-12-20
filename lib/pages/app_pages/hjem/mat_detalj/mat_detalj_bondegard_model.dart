@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'mat_detalj_bondegard_widget.dart' show MatDetaljBondegardWidget;
 import 'package:flutter/material.dart';
 

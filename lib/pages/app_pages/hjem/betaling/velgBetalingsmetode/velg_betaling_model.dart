@@ -1,5 +1,5 @@
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
+import '../../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import '../../../../../helper_components/flutter_flow/form_field_controller.dart';
 import 'velg_betaling_widget.dart' show VelgBetalingWidget;
 import 'package:flutter/material.dart';
 

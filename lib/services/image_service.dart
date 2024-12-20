@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'dart:async'; // Import this to use Future and TimeoutException
-import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mat_salg/logging.dart';
 

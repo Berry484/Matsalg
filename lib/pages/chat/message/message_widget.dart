@@ -1,20 +1,18 @@
-// ignore_for_file: invalid_use_of_visible_for_testing_member
-
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/user_service.dart';
 import 'package:mat_salg/services/web_socket.dart';
 import 'package:mat_salg/pages/chat/message/message_model.dart';
 import 'package:mat_salg/pages/chat/messageBubble/message_bubbles_widget.dart';
-import 'package:mat_salg/pages/app_pages/Utils.dart';
+import 'package:mat_salg/helper_components/toasts.dart';
 import 'package:mat_salg/pages/app_pages/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_icon_button.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';

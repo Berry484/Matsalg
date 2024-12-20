@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:mat_salg/MyIP.dart';
 import 'package:mat_salg/models/user.dart';
 import 'package:mat_salg/models/user_info_search.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/purchase_service.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'dart:async';
-import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:mat_salg/logging.dart';
 
 class UserInfoService {

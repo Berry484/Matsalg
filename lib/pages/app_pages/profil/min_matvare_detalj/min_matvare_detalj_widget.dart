@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mat_salg/pages/app_pages/Utils.dart';
+import 'package:mat_salg/helper_components/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/food_service.dart';
 import '../../kart/kart_pop_up/kart_pop_up_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';

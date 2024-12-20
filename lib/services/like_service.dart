@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'dart:async';
-import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 
 class ApiLike {
   static const String baseUrl = ApiConstants.baseUrl;

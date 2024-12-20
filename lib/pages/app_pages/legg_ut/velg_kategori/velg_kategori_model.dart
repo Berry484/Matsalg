@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'velg_kategori_widget.dart' show VelgKategoriWidget;
 import 'package:flutter/material.dart';
 

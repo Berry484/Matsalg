@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
 import 'velg_kategori_model.dart';

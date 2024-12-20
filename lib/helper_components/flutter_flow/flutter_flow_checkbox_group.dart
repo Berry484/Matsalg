@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '/flutter_flow/form_field_controller.dart'; // Import your FormFieldController
+import 'form_field_controller.dart'; // Import your FormFieldController
 
 class FlutterFlowCheckboxGroup extends StatefulWidget {
   const FlutterFlowCheckboxGroup({

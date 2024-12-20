@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'opprett_profil_widget.dart' show OpprettProfilWidget;
 import 'package:flutter/material.dart';
 

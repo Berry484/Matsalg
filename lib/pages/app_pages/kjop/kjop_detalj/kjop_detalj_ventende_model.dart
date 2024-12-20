@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'kjop_detalj_ventende_widget.dart' show KjopDetaljVentendeWidget;
 import 'package:flutter/material.dart';
 

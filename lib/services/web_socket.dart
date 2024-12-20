@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:mat_salg/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 
 import 'dart:async';
 

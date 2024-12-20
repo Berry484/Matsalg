@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'add_profilepic_widget.dart' show AddProfilePicWidget;
 import 'package:flutter/material.dart';
 

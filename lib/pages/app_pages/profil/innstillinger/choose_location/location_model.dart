@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'location_widget.dart' show VelgPosisjonWidget;
 import 'package:flutter/material.dart';
 

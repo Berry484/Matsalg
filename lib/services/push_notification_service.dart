@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'dart:async';
 
 class PushNotificationService {

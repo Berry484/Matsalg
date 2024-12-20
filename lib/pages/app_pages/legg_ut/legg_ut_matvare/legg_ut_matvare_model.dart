@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'legg_ut_matvare_widget.dart' show LeggUtMatvareWidget;
 import 'package:flutter/material.dart';
 

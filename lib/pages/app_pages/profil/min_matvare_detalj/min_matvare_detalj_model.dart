@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'min_matvare_detalj_widget.dart' show MinMatvareDetaljWidget;
 import 'package:flutter/material.dart';
 

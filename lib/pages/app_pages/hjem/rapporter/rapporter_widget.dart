@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:mat_salg/pages/app_pages/Utils.dart';
+import 'package:mat_salg/helper_components/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/contact_us.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

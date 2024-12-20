@@ -6,9 +6,9 @@ import 'package:mat_salg/pages/register/velg_o_t_p/velg_o_t_p_widget.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/services/check_taken_service.dart';
 
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'velg_t_l_f_model.dart';

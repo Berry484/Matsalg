@@ -1,8 +1,8 @@
-import 'package:mat_salg/MyIP.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/logging.dart';
 
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'message_preview_model.dart';
 export 'message_preview_model.dart';

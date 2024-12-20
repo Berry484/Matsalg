@@ -1,5 +1,5 @@
-import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/form_field_controller.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'sorter_widget.dart' show SorterWidget;
 import 'package:flutter/material.dart';
 

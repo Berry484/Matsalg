@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/pages/app_pages/Utils.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/helper_components/toasts.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'kart_pop_up_model.dart';

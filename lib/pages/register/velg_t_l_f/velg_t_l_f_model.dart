@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'velg_t_l_f_widget.dart' show VelgTLFWidget;
 import 'package:flutter/material.dart';
 

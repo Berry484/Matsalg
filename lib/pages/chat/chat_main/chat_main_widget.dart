@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mat_salg/pages/chat/MessagePreview/message_preview_widget.dart';
 import 'package:mat_salg/pages/chat/chat_main/chat_main_model.dart';
-import 'package:mat_salg/flutter_flow/flutter_flow_theme.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
 import 'package:shimmer/shimmer.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 export 'chat_main_model.dart';
 
 class ChatMainWidget extends StatefulWidget {

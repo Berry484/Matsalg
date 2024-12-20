@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 
 import '../logginn/logginn_widget.dart';
 import '../velg_t_l_f/velg_t_l_f_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
 import 'velg_ny_model.dart';

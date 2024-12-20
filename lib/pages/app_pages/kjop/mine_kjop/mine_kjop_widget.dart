@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/pages/app_pages/Utils.dart';
+import 'package:mat_salg/helper_components/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/kjop/godkjentebud/godkjentebud_widget.dart';
 import 'package:mat_salg/pages/app_pages/kjop/kjopInfo/budInfo_widget.dart';
 import 'package:mat_salg/services/purchase_service.dart';
@@ -11,8 +11,8 @@ import 'package:mat_salg/services/user_service.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../salgInfo/salg_bruker_info_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'mine_kjop_model.dart';

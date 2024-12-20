@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'message_bubbles_widget.dart' show MessageBubblesWidget;
 import 'package:flutter/material.dart';
 

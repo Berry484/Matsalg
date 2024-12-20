@@ -2,12 +2,12 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
-import 'package:mat_salg/pages/app_pages/Utils.dart';
-import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/kjop/give_rating/give_rating_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'godkjentebud_model.dart';
 export 'godkjentebud_model.dart';

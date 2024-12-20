@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'profil_rediger_widget.dart' show ProfilRedigerWidget;
 import 'package:flutter/material.dart';
 

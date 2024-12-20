@@ -1,24 +1,21 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mat_salg/pages/app_pages/Utils.dart';
+import 'package:mat_salg/helper_components/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/myIP.dart';
+import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/legg_ut/velg_kategori/velg_kategori_widget.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/image_service.dart';
 import 'package:mat_salg/services/kommune_service.dart';
-
 import '../velg_pos/velg_pos_widget.dart';
-
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_icon_button.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
+import '../../../../helper_components/flutter_flow/upload_data.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
