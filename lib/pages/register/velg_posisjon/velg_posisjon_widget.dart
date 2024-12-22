@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/user_service.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -42,7 +42,6 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
   LatLng? selectedLocation; // State variable to store selected location
   final UserInfoService userInfoService = UserInfoService();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
 
   @override
   void initState() {
@@ -96,10 +95,10 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                       },
                     );
                   } on SocketException {
-                    toasts.showErrorToast(
+                    Toasts.showErrorToast(
                         context, 'Ingen internettforbindelse');
                   } catch (e) {
-                    toasts.showErrorToast(context, 'En feil oppstod');
+                    Toasts.showErrorToast(context, 'En feil oppstod');
                   }
                 },
                 child: Icon(
@@ -247,7 +246,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
 
                                       // Hvis plassering er null, vis en feil og avslutt
                                       if (location == const LatLng(0.0, 0.0)) {
-                                        toasts.showErrorToast(context,
+                                        Toasts.showErrorToast(context,
                                             'Stedtjenester er deaktivert i innstillinger');
                                         return;
                                       }
@@ -281,7 +280,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
 
                                       // If location was not retrieved, exit
                                       if (location == const LatLng(0.0, 0.0)) {
-                                        toasts.showErrorToast(context,
+                                        Toasts.showErrorToast(context,
                                             'posisjonstjenester er skrudd av i innstillinger');
                                         return;
                                       }
@@ -316,10 +315,10 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         context.goNamed('Hjem');
                                       }
                                     } on SocketException {
-                                      toasts.showErrorToast(context,
+                                      Toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } catch (e) {
-                                      toasts.showErrorToast(
+                                      Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     }
                                   },
@@ -409,10 +408,10 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         }.withoutNulls,
                                       );
                                     } on SocketException {
-                                      toasts.showErrorToast(context,
+                                      Toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } catch (e) {
-                                      toasts.showErrorToast(
+                                      Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     }
                                   },

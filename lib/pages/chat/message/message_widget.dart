@@ -7,7 +7,7 @@ import 'package:mat_salg/services/user_service.dart';
 import 'package:mat_salg/services/web_socket.dart';
 import 'package:mat_salg/pages/chat/message/message_model.dart';
 import 'package:mat_salg/pages/chat/messageBubble/message_bubbles_widget.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/pages/app_pages/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_icon_button.dart';
@@ -32,7 +32,6 @@ class MessageWidget extends StatefulWidget {
 class _MessageWidgetState extends State<MessageWidget> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late MessageModel _model;
   late List<Message> _messageListWithFlags;
@@ -89,18 +88,18 @@ class _MessageWidgetState extends State<MessageWidget> {
                 conv.updateLastActive(responseBody);
               });
             } else {
-              toasts.showErrorToast(context, 'Ugyldig tidspunkt mottatt.');
+              Toasts.showErrorToast(context, 'Ugyldig tidspunkt mottatt.');
             }
           } else {
-            toasts.showErrorToast(
+            Toasts.showErrorToast(
                 context, 'Feil ved henting av siste aktiv tid.');
           }
         }
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -277,10 +276,10 @@ class _MessageWidgetState extends State<MessageWidget> {
                             FFAppState().chatRoom = '';
                             Navigator.pop(context);
                           } on SocketException {
-                            toasts.showErrorToast(
+                            Toasts.showErrorToast(
                                 context, 'Ingen internettforbindelse');
                           } catch (e) {
-                            toasts.showErrorToast(context, 'En feil oppstod');
+                            Toasts.showErrorToast(context, 'En feil oppstod');
                           }
                         },
                         child: Row(
@@ -720,10 +719,10 @@ class _MessageWidgetState extends State<MessageWidget> {
                               });
                             }
                           } on SocketException {
-                            toasts.showErrorToast(
+                            Toasts.showErrorToast(
                                 context, 'Ingen internettforbindelse');
                           } catch (e) {
-                            toasts.showErrorToast(context, 'En feil oppstod');
+                            Toasts.showErrorToast(context, 'En feil oppstod');
                           }
                         },
                         icon: const FaIcon(

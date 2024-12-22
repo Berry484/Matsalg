@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dart';
@@ -30,7 +30,6 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiMultiplePics apiMultiplePics = ApiMultiplePics();
   final UserInfoService userInfoService = UserInfoService();
-  final Toasts toasts = Toasts();
   late ProfilRedigerModel _model;
 
   bool _isloading = false;
@@ -234,10 +233,10 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                           }
                                         }
                                       } on SocketException {
-                                        toasts.showErrorToast(context,
+                                        Toasts.showErrorToast(context,
                                             'Ingen internettforbindelse');
                                       } catch (e) {
-                                        toasts.showErrorToast(
+                                        Toasts.showErrorToast(
                                             context, 'En feil oppstod');
                                       }
                                     },

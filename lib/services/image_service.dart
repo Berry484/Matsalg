@@ -7,7 +7,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:mat_salg/logging.dart';
 
 class ApiMultiplePics {
-  static const String baseUrl = ApiConstants.baseUrl; // Your base URL
+  static const String baseUrl = ApiConstants.baseUrl;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Uploads multiple pictures at the same time to the backend using a multipart request--------
@@ -62,7 +62,8 @@ class ApiMultiplePics {
         }).toList();
         return fileLinks;
       } else {
-        logger.e('Error getting the filelinks or something else');
+        logger.e(
+            'Error getting the filelinks or something else: ${response.statusCode}');
         return null;
       }
     } on SocketException {
@@ -71,4 +72,6 @@ class ApiMultiplePics {
       throw Exception;
     }
   }
+
+//
 }

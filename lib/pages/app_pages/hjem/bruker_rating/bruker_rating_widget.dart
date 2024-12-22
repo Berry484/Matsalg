@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/models/user.dart';
 import 'package:mat_salg/models/user_info_rating.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/rating_service.dart';
@@ -48,7 +48,6 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
   bool ingenRatings = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
 
   @override
   void initState() {
@@ -95,11 +94,11 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       }
     } on SocketException {
       _ratingisLoading = true;
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _ratingisLoading = true;
 
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -136,10 +135,10 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
       }
     } on SocketException {
       _ratingisLoading = true;
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _ratingisLoading = true;
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -275,10 +274,10 @@ class _BrukerRatingWidgetState extends State<BrukerRatingWidget>
                                           try {
                                             Navigator.pop(context);
                                           } on SocketException {
-                                            toasts.showErrorToast(context,
+                                            Toasts.showErrorToast(context,
                                                 'Ingen internettforbindelse');
                                           } catch (e) {
-                                            toasts.showErrorToast(
+                                            Toasts.showErrorToast(
                                                 context, 'En feil oppstod');
                                           }
                                         },

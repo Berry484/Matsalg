@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/loading_indicator.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/purchase_service.dart';
@@ -28,13 +29,12 @@ class SalgBrukerInfoWidget extends StatefulWidget {
 }
 
 class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   late SalgBrukerInfoModel _model;
   late Matvarer matvare;
   late OrdreInfo salgInfo;
   bool godkjennIsLoading = false;
-  bool _messageIsLoading = false;
-  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
+  bool messageIsLoading = false;
 
   @override
   void setState(VoidCallback callback) {
@@ -48,52 +48,6 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
     _model = createModel(context, () => SalgBrukerInfoModel());
     matvare = widget.info;
     salgInfo = widget.ordre;
-  }
-
-  // Function to show the loading dialog
-  void _showLoadingDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Colors.black26,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async => false, // Disable the back button
-          child: Center(
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoActivityIndicator(
-                    radius: 12,
-                    color: FlutterFlowTheme.of(context).alternate,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    ).then((_) {
-      // Clean up state when dialog is dismissed
-      safeSetState(() {
-        godkjennIsLoading = false;
-        _messageIsLoading = false;
-      });
-    });
-  }
-
-  // Function to close the loading dialog
-  void _hideLoadingDialog() {
-    if (godkjennIsLoading || _messageIsLoading) {
-      Navigator.of(context).pop(); // Close the dialog
-    }
   }
 
 // Haversine formula to calculate distance between two lat/lng points
@@ -174,8 +128,8 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                           onTap: () async {
                             try {
                               // Prevent multiple submissions while loading
-                              if (_messageIsLoading) return;
-                              _messageIsLoading = true;
+                              if (messageIsLoading) return;
+                              messageIsLoading = true;
 
                               Conversation existingConversation =
                                   FFAppState().conversations.firstWhere(
@@ -208,7 +162,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               );
 
                               // Step 4: Stop loading and navigate to message screen
-                              _messageIsLoading = false;
+                              messageIsLoading = false;
                               if (serializedConversation != null) {
                                 // Step 5: Navigate to 'message' screen with the conversation
                                 context.pushNamed(
@@ -220,12 +174,12 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 );
                               }
                             } on SocketException {
-                              _messageIsLoading = false;
-                              toasts.showErrorToast(
+                              messageIsLoading = false;
+                              Toasts.showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
-                              _messageIsLoading = false;
-                              toasts.showErrorToast(context, 'En feil oppstod');
+                              messageIsLoading = false;
+                              Toasts.showErrorToast(context, 'En feil oppstod');
                             }
                           },
                           child: Row(
@@ -302,10 +256,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 try {
                                   Navigator.pop(context);
                                 } on SocketException {
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'En feil oppstod');
                                 }
                               },
@@ -349,15 +303,15 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                       },
                     );
                   } on SocketException {
-                    toasts.showErrorToast(
+                    Toasts.showErrorToast(
                         context, 'Ingen internettforbindelse');
                   } catch (e) {
-                    toasts.showErrorToast(context, 'En feil oppstod');
+                    Toasts.showErrorToast(context, 'En feil oppstod');
                   }
                 } on SocketException {
-                  toasts.showErrorToast(context, 'Ingen internettforbindelse');
+                  Toasts.showErrorToast(context, 'Ingen internettforbindelse');
                 } catch (e) {
-                  toasts.showErrorToast(context, 'En feil oppstod');
+                  Toasts.showErrorToast(context, 'En feil oppstod');
                 }
               },
               child: Material(
@@ -725,7 +679,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                           if (godkjennIsLoading) return;
 
                                           godkjennIsLoading = true;
-                                          _showLoadingDialog();
+                                          showLoadingDialog(context);
                                           String? token =
                                               await firebaseAuthService
                                                   .getToken(context);
@@ -740,23 +694,36 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                             if (response.statusCode == 200) {
                                               Navigator.of(context).pop();
                                               Navigator.pop(context);
-                                              toasts.showAccepted(
+                                              Toasts.showAccepted(
                                                   context, 'Budet ble avslått');
                                               Navigator.pop(context);
                                             } else {
-                                              _hideLoadingDialog();
-                                              toasts.showErrorToast(context,
+                                              if (godkjennIsLoading ||
+                                                  messageIsLoading) {
+                                                Navigator.of(context).pop();
+                                              }
+                                              Toasts.showErrorToast(context,
                                                   'En uforventet feil oppstod');
                                               return;
                                             }
                                           }
                                         } on SocketException {
-                                          _hideLoadingDialog();
-                                          toasts.showErrorToast(context,
+                                          if (godkjennIsLoading ||
+                                              messageIsLoading) {
+                                            godkjennIsLoading = false;
+                                            messageIsLoading = false;
+                                            Navigator.of(context).pop();
+                                          }
+                                          Toasts.showErrorToast(context,
                                               'Ingen internettforbindelse');
                                         } catch (e) {
-                                          _hideLoadingDialog();
-                                          toasts.showErrorToast(
+                                          if (godkjennIsLoading ||
+                                              messageIsLoading) {
+                                            godkjennIsLoading = false;
+
+                                            Navigator.of(context).pop();
+                                          }
+                                          Toasts.showErrorToast(
                                               context, 'En feil oppstod');
                                         }
                                       },
@@ -770,10 +737,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                               },
                             );
                           } on SocketException {
-                            toasts.showErrorToast(
+                            Toasts.showErrorToast(
                                 context, 'Ingen internettforbindelse');
                           } catch (e) {
-                            toasts.showErrorToast(context, 'En feil oppstod');
+                            Toasts.showErrorToast(context, 'En feil oppstod');
                           }
                         },
                         text: 'Avslå',
@@ -837,7 +804,7 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                             if (godkjennIsLoading) return;
 
                                             godkjennIsLoading = true;
-                                            _showLoadingDialog();
+                                            showLoadingDialog(context);
                                             String? token =
                                                 await firebaseAuthService
                                                     .getToken(context);
@@ -850,23 +817,35 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                               if (response.statusCode == 200) {
                                                 Navigator.of(context).pop();
                                                 Navigator.pop(context);
-                                                toasts.showAccepted(context,
+                                                Toasts.showAccepted(context,
                                                     'Budet ble godkjent');
                                                 Navigator.pop(context);
                                               } else {
-                                                _hideLoadingDialog();
-                                                toasts.showErrorToast(context,
+                                                if (messageIsLoading) {
+                                                  godkjennIsLoading = false;
+                                                  messageIsLoading = false;
+                                                  Navigator.of(context).pop();
+                                                }
+                                                Toasts.showErrorToast(context,
                                                     'En uforventet feil oppstod');
                                                 return;
                                               }
                                             }
                                           } on SocketException {
-                                            _hideLoadingDialog();
-                                            toasts.showErrorToast(context,
+                                            if (messageIsLoading) {
+                                              godkjennIsLoading = false;
+                                              messageIsLoading = false;
+                                              Navigator.of(context).pop();
+                                            }
+                                            Toasts.showErrorToast(context,
                                                 'Ingen internettforbindelse');
                                           } catch (e) {
-                                            _hideLoadingDialog();
-                                            toasts.showErrorToast(
+                                            if (messageIsLoading) {
+                                              godkjennIsLoading = false;
+                                              messageIsLoading = false;
+                                              Navigator.of(context).pop();
+                                            }
+                                            Toasts.showErrorToast(
                                                 context, 'En feil oppstod');
                                           }
                                         },
@@ -880,10 +859,10 @@ class _SalgBrukerInfoWidgetState extends State<SalgBrukerInfoWidget> {
                                 },
                               );
                             } on SocketException {
-                              toasts.showErrorToast(
+                              Toasts.showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
-                              toasts.showErrorToast(context, 'En feil oppstod');
+                              Toasts.showErrorToast(context, 'En feil oppstod');
                             }
                           },
                           text: 'Godkjenn',

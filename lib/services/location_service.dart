@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'dart:async';
 
-class KommuneService {
+class LocationService {
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   static const String baseUrl = ApiConstants.baseUrl;
 
 //---------------------------------------------------------------------------------------------------------------
@@ -27,7 +29,6 @@ class KommuneService {
           .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
 
       if (response.statusCode == 200) {
-        // Parse the JSON response
         final jsonResponse = json.decode(response.body);
 
         // Extract the first "adresser" element and get the "kommunenavn"
@@ -42,4 +43,6 @@ class KommuneService {
       throw Exception;
     }
   }
+
+//
 }

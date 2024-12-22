@@ -9,8 +9,8 @@ export 'pages/app_pages/profil/profil_rediger/profil_rediger_widget.dart'
     show ProfilRedigerWidget;
 export 'pages/register/opprett_profil/add_profile_picture/add_profilepic_widget.dart'
     show AddProfilePicWidget;
-export 'pages/app_pages/legg_ut/legg_ut_matvare/legg_ut_matvare_widget.dart'
-    show LeggUtMatvareWidget;
+export 'pages/app_pages/legg_ut/publish_food/publish_page.dart'
+    show PublishPage;
 export 'pages/app_pages/legg_ut/bruker_lagt_ut_info/bruker_lagt_ut_info_widget.dart'
     show BrukerLagtUtInfoWidget;
 export 'pages/chat/chat_main/chat_main_widget.dart' show ChatMainWidget;

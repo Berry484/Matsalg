@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/contact_us.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -36,7 +36,6 @@ class _RapporterWidgetState extends State<RapporterWidget> {
   ContactUs contactUs = ContactUs();
   bool _loading = false;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
 
   @override
   void setState(VoidCallback callback) {
@@ -350,7 +349,7 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                           if (response.statusCode == 200) {
                                             Navigator.pop(context);
                                             Navigator.pop(context);
-                                            toasts.showAccepted(
+                                            Toasts.showAccepted(
                                                 context, 'Rapport sendt');
                                           } else {
                                             _loading = false;
@@ -362,17 +361,17 @@ class _RapporterWidgetState extends State<RapporterWidget> {
                                     } on SocketException {
                                       _loading = false;
 
-                                      toasts.showErrorToast(context,
+                                      Toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } on Error {
                                       _loading = false;
 
-                                      toasts.showErrorToast(
+                                      Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     } catch (e) {
                                       _loading = false;
 
-                                      toasts.showErrorToast(
+                                      Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     }
                                   },

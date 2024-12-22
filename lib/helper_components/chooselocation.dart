@@ -7,6 +7,9 @@ import 'package:latlong2/latlong.dart' as ChooselocationLatLng;
 // Add any missing imports if necessary
 import 'dart:math' as math;
 
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Lets the user choose a new location either for them self or in general-----------------------------
+//-----------------------------------------------------------------------------------------------------------------------
 class Chooselocation extends StatefulWidget {
   const Chooselocation({
     super.key,
@@ -147,61 +150,3 @@ class _ChooselocationState extends State<Chooselocation> {
     return meters / metersPerPixel;
   }
 }
-
-// class OverlayPainter extends CustomPainter {
-//   final ChooselocationLatLng.LatLng center;
-//   final double zoom;
-//   final double circleRadius;
-
-//   OverlayPainter({
-//     required this.center,
-//     required this.zoom,
-//     required this.circleRadius,
-//   });
-
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     final Paint overlayPaint = Paint()
-//       ..color = Colors.black.withOpacity(0.5) // Dark semi-transparent overlay
-//       ..style = PaintingStyle.fill;
-
-//     // Create a path that represents the entire screen area
-//     Path screenPath = Path();
-//     screenPath.addRect(Rect.fromLTWH(0, 0, size.width, size.height));
-
-//     // Create a path for the circle that will remain clear
-//     Path circlePath = Path();
-//     circlePath.addOval(Rect.fromCircle(
-//       center: Offset(size.width / 2, size.height / 2),
-//       radius: circleRadius,
-//     ));
-
-//     // Subtract the circle from the screen to leave it clear
-//     Path overlayPath = Path.combine(
-//       PathOperation.difference,
-//       screenPath,
-//       circlePath,
-//     );
-
-//     // Draw the overlay, excluding the circle
-//     canvas.drawPath(overlayPath, overlayPaint);
-
-//     // Optionally, draw a border around the circle (if needed)
-//     final Paint borderPaint = Paint()
-//       ..color = Colors.transparent
-//       ..style = PaintingStyle.stroke
-//       ..strokeWidth = 2;
-
-//     // Draw the border around the transparent circle
-//     canvas.drawCircle(
-//       Offset(size.width / 2, size.height / 2),
-//       circleRadius,
-//       borderPaint,
-//     );
-//   }
-
-//   @override
-//   bool shouldRepaint(CustomPainter oldDelegate) {
-//     return true; // Repaint every time to update the zoom and center
-//   }
-// }

@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/models/user_info_search.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/logging.dart';
@@ -43,7 +43,7 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
   Timer? _debounce;
   final ScrollController _scrollController = ScrollController();
   final _firebaseMessaging = FirebaseMessaging.instance;
-  final Toasts toasts = Toasts();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
@@ -176,9 +176,9 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
         }
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -204,9 +204,9 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
         }
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -233,9 +233,9 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
         }
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -279,9 +279,9 @@ class _HjemWidgetState extends State<HjemWidget> with TickerProviderStateMixin {
         }
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 

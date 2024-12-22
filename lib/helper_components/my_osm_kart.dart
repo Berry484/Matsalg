@@ -1,13 +1,12 @@
-// import 'index.dart'; // Imports other custom widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'flutter_flow/flutter_flow_util.dart';
-
-// import 'package:flutter_map/plugin_api.dart';
-
 import 'package:latlong2/latlong.dart' as MyOsmKartLatLng;
 import 'dart:math' as math;
 
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Shows a map that displays a circle with the general user location----------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
 class MyOsmKart extends StatefulWidget {
   const MyOsmKart({
     super.key,

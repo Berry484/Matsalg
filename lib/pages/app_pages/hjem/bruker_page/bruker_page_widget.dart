@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/models/user.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/my_ip.dart';
@@ -53,7 +53,6 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
   bool _isExpanded = false;
   bool _messageIsLoading = false;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -112,9 +111,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         });
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -147,9 +146,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         _checkUser();
       });
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -164,9 +163,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         _checkUser();
       });
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -188,9 +187,9 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
         });
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -302,12 +301,12 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                 } on SocketException {
                                   _messageIsLoading = false;
 
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
                                   _messageIsLoading = false;
 
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'En feil oppstod');
                                 }
                               },
@@ -618,7 +617,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                     }
                                                                                   }
                                                                                 } catch (e) {
-                                                                                  toasts.showErrorToast(context, 'En uforventet feil oppstod');
+                                                                                  Toasts.showErrorToast(context, 'En uforventet feil oppstod');
                                                                                   logger.d('Error navigating page');
                                                                                 }
                                                                               },
@@ -704,7 +703,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                                                     }
                                                                                   }
                                                                                 } catch (e) {
-                                                                                  toasts.showErrorToast(context, 'En uforventet feil oppstod');
+                                                                                  Toasts.showErrorToast(context, 'En uforventet feil oppstod');
                                                                                   logger.d('Error navigating page');
                                                                                 }
                                                                               },
@@ -1506,7 +1505,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                                               );
                                                             }
                                                           } catch (e) {
-                                                            toasts.showErrorToast(
+                                                            Toasts.showErrorToast(
                                                                 context,
                                                                 'En uforventet feil oppstod');
                                                             logger.d(
@@ -1926,7 +1925,7 @@ class _BrukerPageWidgetState extends State<BrukerPageWidget>
                                               );
                                             }
                                           } catch (e) {
-                                            toasts.showErrorToast(context,
+                                            Toasts.showErrorToast(context,
                                                 'En uforventet feil oppstod');
                                             logger.d('Error navigating page');
                                           }

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/contact_us.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -20,7 +20,6 @@ class KontaktWidget extends StatefulWidget {
 }
 
 class _KontaktWidgetState extends State<KontaktWidget> {
-  final Toasts toasts = Toasts();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ContactUs contactUs = ContactUs();
   late RapporterModel _model;
@@ -432,7 +431,7 @@ class _KontaktWidgetState extends State<KontaktWidget> {
                                                       .text);
                                           if (response.statusCode == 200) {
                                             Navigator.pop(context);
-                                            toasts.showAccepted(
+                                            Toasts.showAccepted(
                                                 context, 'Melding sendt');
                                           } else {
                                             _loading = false;
@@ -443,15 +442,15 @@ class _KontaktWidgetState extends State<KontaktWidget> {
                                       }
                                     } on SocketException {
                                       _loading = false;
-                                      toasts.showErrorToast(context,
+                                      Toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } on Error {
                                       _loading = false;
-                                      toasts.showErrorToast(
+                                      Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     } catch (e) {
                                       _loading = false;
-                                      toasts.showErrorToast(
+                                      Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     }
                                   },

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/food_service.dart';
@@ -30,7 +30,6 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiFoodService apiFoodService = ApiFoodService();
-  final Toasts toasts = Toasts();
   late MinMatvareDetaljModel _model;
   late Matvarer matvare;
   bool _slettIsLoading = false;
@@ -280,7 +279,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                             context);
                                                                         context.pushNamed(
                                                                             'Profil');
-                                                                        toasts.showAccepted(
+                                                                        Toasts.showAccepted(
                                                                             context,
                                                                             'Slettet');
                                                                       }
@@ -290,13 +289,13 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                   } on SocketException {
                                                                     _slettIsLoading =
                                                                         false;
-                                                                    toasts.showErrorToast(
+                                                                    Toasts.showErrorToast(
                                                                         context,
                                                                         'Ingen internettforbindelse');
                                                                   } catch (e) {
                                                                     _slettIsLoading =
                                                                         false;
-                                                                    toasts.showErrorToast(
+                                                                    Toasts.showErrorToast(
                                                                         context,
                                                                         'En feil oppstod');
                                                                   }
@@ -889,7 +888,7 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                             setState(() {});
                                                                             Navigator.pop(context);
                                                                             context.pushNamed('Profil');
-                                                                            toasts.showAccepted(context,
+                                                                            Toasts.showAccepted(context,
                                                                                 'Slettet');
                                                                           }
                                                                           _slettIsLoading =
@@ -898,13 +897,13 @@ class _MinMatvareDetaljWidgetState extends State<MinMatvareDetaljWidget> {
                                                                       } on SocketException {
                                                                         _slettIsLoading =
                                                                             false;
-                                                                        toasts.showErrorToast(
+                                                                        Toasts.showErrorToast(
                                                                             context,
                                                                             'Ingen internettforbindelse');
                                                                       } catch (e) {
                                                                         _slettIsLoading =
                                                                             false;
-                                                                        toasts.showErrorToast(
+                                                                        Toasts.showErrorToast(
                                                                             context,
                                                                             'En feil oppstod');
                                                                       }

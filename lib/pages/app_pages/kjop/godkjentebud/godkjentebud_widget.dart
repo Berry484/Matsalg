@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/kjop/give_rating/give_rating_widget.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -30,7 +30,6 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
   late GodkjentebudModel _model;
   late Matvarer matvare;
   late OrdreInfo salgInfo;
-  final Toasts toasts = Toasts();
   bool _bekreftIsLoading = false;
   bool _messageIsLoading = false;
 
@@ -185,11 +184,11 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                               }
                             } on SocketException {
                               _messageIsLoading = false;
-                              toasts.showErrorToast(
+                              Toasts.showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
                               _messageIsLoading = false;
-                              toasts.showErrorToast(context, 'En feil oppstod');
+                              Toasts.showErrorToast(context, 'En feil oppstod');
                             }
                           },
                           child: Row(
@@ -268,10 +267,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 try {
                                   Navigator.pop(context);
                                 } on SocketException {
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'En feil oppstod');
                                 }
                               },
@@ -315,15 +314,15 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       },
                     );
                   } on SocketException {
-                    toasts.showErrorToast(
+                    Toasts.showErrorToast(
                         context, 'Ingen internettforbindelse');
                   } catch (e) {
-                    toasts.showErrorToast(context, 'En feil oppstod');
+                    Toasts.showErrorToast(context, 'En feil oppstod');
                   }
                 } on SocketException {
-                  toasts.showErrorToast(context, 'Ingen internettforbindelse');
+                  Toasts.showErrorToast(context, 'Ingen internettforbindelse');
                 } catch (e) {
-                  toasts.showErrorToast(context, 'En feil oppstod');
+                  Toasts.showErrorToast(context, 'En feil oppstod');
                 }
               },
               child: Material(
@@ -739,10 +738,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 }));
                             return;
                           } on SocketException {
-                            toasts.showErrorToast(
+                            Toasts.showErrorToast(
                                 context, 'Ingen internettforbindelse');
                           } catch (e) {
-                            toasts.showErrorToast(context, 'En feil oppstod');
+                            Toasts.showErrorToast(context, 'En feil oppstod');
                           }
                         },
                         text: 'Vurder kjøperen',
@@ -852,12 +851,12 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                         } on SocketException {
                           _messageIsLoading = false;
 
-                          toasts.showErrorToast(
+                          Toasts.showErrorToast(
                               context, 'Ingen internettforbindelse');
                         } catch (e) {
                           _messageIsLoading = false;
 
-                          toasts.showErrorToast(context, 'En feil oppstod');
+                          Toasts.showErrorToast(context, 'En feil oppstod');
                         }
                       },
                       text: 'Melding',

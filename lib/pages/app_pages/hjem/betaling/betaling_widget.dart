@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/hjem/betaling/velgBetalingsmetode/velg_betaling_widget.dart';
@@ -64,7 +64,6 @@ class _BetalingWidgetState extends State<BetalingWidget> {
 
   late Matvarer matvare;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -848,7 +847,7 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                   }
                                 });
                               } catch (e) {
-                                toasts.showErrorToast(
+                                Toasts.showErrorToast(
                                     context, 'En feil oppstod');
                               }
                             },
@@ -1040,12 +1039,12 @@ class _BetalingWidgetState extends State<BetalingWidget> {
                                 } on SocketException {
                                   _isLoading = false;
 
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
                                   _isLoading = false;
 
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'En feil oppstod');
                                 }
                               },

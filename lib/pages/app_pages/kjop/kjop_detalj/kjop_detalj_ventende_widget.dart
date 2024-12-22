@@ -2,11 +2,11 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/my_ip.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/pages/app_pages/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/pages/app_pages/kart/kart_pop_up/kart_pop_up_widget.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/services/kommune_service.dart';
+import 'package:mat_salg/services/location_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
@@ -32,8 +32,7 @@ class KjopDetaljVentendeWidget extends StatefulWidget {
 
 class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final KommuneService kommuneService = KommuneService();
-  final Toasts toasts = Toasts();
+  final LocationService locationService = LocationService();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   late KjopDetaljVentendeModel _model;
   late OrdreInfo ordreInfo;
@@ -91,7 +90,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
           poststed = null;
         }
 
-        String? response = await kommuneService.getKommune(token,
+        String? response = await locationService.getKommune(token,
             ordreInfo.foodDetails.lat ?? 0, ordreInfo.foodDetails.lng ?? 0);
         safeSetState(() {
           if (response.isNotEmpty) {
@@ -102,9 +101,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
         });
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -132,9 +131,9 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                 try {
                   context.safePop();
                 } on SocketException {
-                  toasts.showErrorToast(context, 'Ingen internettforbindelse');
+                  Toasts.showErrorToast(context, 'Ingen internettforbindelse');
                 } catch (e) {
-                  toasts.showErrorToast(context, 'En feil oppstod');
+                  Toasts.showErrorToast(context, 'En feil oppstod');
                 }
               },
               child: Icon(
@@ -205,10 +204,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       );
                                     }
                                   } on SocketException {
-                                    toasts.showErrorToast(
+                                    Toasts.showErrorToast(
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
-                                    toasts.showErrorToast(
+                                    Toasts.showErrorToast(
                                         context, 'En feil oppstod');
                                   }
                                 },
@@ -415,13 +414,13 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         } on SocketException {
                                                           _messageIsLoading =
                                                               false;
-                                                          toasts.showErrorToast(
+                                                          Toasts.showErrorToast(
                                                               context,
                                                               'Ingen internettforbindelse');
                                                         } catch (e) {
                                                           _messageIsLoading =
                                                               false;
-                                                          toasts.showErrorToast(
+                                                          Toasts.showErrorToast(
                                                               context,
                                                               'En feil oppstod');
                                                         }
@@ -836,11 +835,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                             );
                                                             safeSetState(() {});
                                                           } on SocketException {
-                                                            toasts.showErrorToast(
+                                                            Toasts.showErrorToast(
                                                                 context,
                                                                 'Ingen internettforbindelse');
                                                           } catch (e) {
-                                                            toasts.showErrorToast(
+                                                            Toasts.showErrorToast(
                                                                 context,
                                                                 'En feil oppstod');
                                                           }
@@ -942,10 +941,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 ).then((value) =>
                                                     safeSetState(() {}));
                                               } on SocketException {
-                                                toasts.showErrorToast(context,
+                                                Toasts.showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
-                                                toasts.showErrorToast(
+                                                Toasts.showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
                                             },
@@ -1040,11 +1039,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                   }
                                                 } on SocketException {
                                                   _messageIsLoading = false;
-                                                  toasts.showErrorToast(context,
+                                                  Toasts.showErrorToast(context,
                                                       'Ingen internettforbindelse');
                                                 } catch (e) {
                                                   _messageIsLoading = false;
-                                                  toasts.showErrorToast(context,
+                                                  Toasts.showErrorToast(context,
                                                       'En feil oppstod');
                                                 }
                                               },

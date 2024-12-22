@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/hjem/bruker_rating/bruker_rating_widget.dart';
@@ -32,7 +32,6 @@ class ProfilWidget extends StatefulWidget {
 class _ProfilWidgetState extends State<ProfilWidget>
     with TickerProviderStateMixin {
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late ProfilModel _model;
   Map<String, dynamic>? userInfo;
@@ -98,9 +97,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
         }
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -121,9 +120,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
         });
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -167,9 +166,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
         }
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -233,10 +232,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                         try {
                                           context.pushNamed('innstillinger');
                                         } on SocketException {
-                                          toasts.showErrorToast(context,
+                                          Toasts.showErrorToast(context,
                                               'Ingen internettforbindelse');
                                         } catch (e) {
-                                          toasts.showErrorToast(
+                                          Toasts.showErrorToast(
                                               context, 'En feil oppstod');
                                         }
                                       },
@@ -565,9 +564,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                       );
                                                                                     }
                                                                                   } on SocketException {
-                                                                                    toasts.showErrorToast(context, 'Ingen internettforbindelse');
+                                                                                    Toasts.showErrorToast(context, 'Ingen internettforbindelse');
                                                                                   } catch (e) {
-                                                                                    toasts.showErrorToast(context, 'En feil oppstod');
+                                                                                    Toasts.showErrorToast(context, 'En feil oppstod');
                                                                                   }
                                                                                 },
                                                                                 child: Column(
@@ -633,9 +632,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                                       );
                                                                                     }
                                                                                   } on SocketException {
-                                                                                    toasts.showErrorToast(context, 'Ingen internettforbindelse');
+                                                                                    Toasts.showErrorToast(context, 'Ingen internettforbindelse');
                                                                                   } catch (e) {
-                                                                                    toasts.showErrorToast(context, 'En feil oppstod');
+                                                                                    Toasts.showErrorToast(context, 'En feil oppstod');
                                                                                   }
                                                                                 },
                                                                                 child: Column(
@@ -727,9 +726,9 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                               ).then((value) => setState(() {}));
                                                                               return;
                                                                             } on SocketException {
-                                                                              toasts.showErrorToast(context, 'Ingen internettforbindelse');
+                                                                              Toasts.showErrorToast(context, 'Ingen internettforbindelse');
                                                                             } catch (e) {
-                                                                              toasts.showErrorToast(context, 'En feil oppstod');
+                                                                              Toasts.showErrorToast(context, 'En feil oppstod');
                                                                             }
                                                                           },
                                                                           child:
@@ -1223,10 +1222,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                 getAllLikes();
                                                 fetchData();
                                               } on SocketException {
-                                                toasts.showErrorToast(context,
+                                                Toasts.showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
-                                                toasts.showErrorToast(
+                                                Toasts.showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
                                             },
@@ -1338,11 +1337,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                   },
                                                                 );
                                                               } on SocketException {
-                                                                toasts.showErrorToast(
+                                                                Toasts.showErrorToast(
                                                                     context,
                                                                     'Ingen internettforbindelse');
                                                               } catch (e) {
-                                                                toasts.showErrorToast(
+                                                                Toasts.showErrorToast(
                                                                     context,
                                                                     'En feil oppstod');
                                                               }
@@ -1655,10 +1654,10 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                 try {
                                                   getAllLikes();
                                                 } on SocketException {
-                                                  toasts.showErrorToast(context,
+                                                  Toasts.showErrorToast(context,
                                                       'Ingen internettforbindelse');
                                                 } catch (e) {
-                                                  toasts.showErrorToast(context,
+                                                  Toasts.showErrorToast(context,
                                                       'En feil oppstod');
                                                 }
                                               },
@@ -1777,11 +1776,11 @@ class _ProfilWidgetState extends State<ProfilWidget>
                                                                 },
                                                               );
                                                             } on SocketException {
-                                                              toasts.showErrorToast(
+                                                              Toasts.showErrorToast(
                                                                   context,
                                                                   'Ingen internettforbindelse');
                                                             } catch (e) {
-                                                              toasts.showErrorToast(
+                                                              Toasts.showErrorToast(
                                                                   context,
                                                                   'En feil oppstod');
                                                             }

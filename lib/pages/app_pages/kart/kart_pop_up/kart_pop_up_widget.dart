@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/index.dart' as custom_widgets;
@@ -26,7 +26,6 @@ class KartPopUpWidget extends StatefulWidget {
 
 class _KartPopUpWidgetState extends State<KartPopUpWidget> {
   late KartPopUpModel _model;
-  final Toasts toasts = Toasts();
 
   @override
   void setState(VoidCallback callback) {
@@ -103,10 +102,10 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
                                   try {
                                     Navigator.pop(context);
                                   } on SocketException {
-                                    toasts.showErrorToast(
+                                    Toasts.showErrorToast(
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
-                                    toasts.showErrorToast(
+                                    Toasts.showErrorToast(
                                         context, 'En feil oppstod');
                                   }
                                 },

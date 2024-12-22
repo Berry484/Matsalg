@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/loading_indicator.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/kjop/give_rating/give_rating_widget.dart';
@@ -32,10 +33,9 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
   late BudInfoModel _model;
   late Matvarer matvare;
   late OrdreInfo ordreInfo;
-  final Toasts toasts = Toasts();
-  bool _trekkIsLoading = false;
-  bool _bekreftIsLoading = false;
-  bool _messageIsLoading = false;
+  bool trekkIsLoading = false;
+  bool bekreftIsLoading = false;
+  bool messageIsLoading = false;
 
   @override
   void setState(VoidCallback callback) {
@@ -67,53 +67,6 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
 
   double _degreesToRadians(double degrees) {
     return degrees * pi / 180;
-  }
-
-  // Function to show the loading dialog
-  void _showLoadingDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Colors.black26,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async => false, // Disable the back button
-          child: Center(
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoActivityIndicator(
-                    radius: 12,
-                    color: FlutterFlowTheme.of(context).alternate,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    ).then((_) {
-      // Clean up state when dialog is dismissed
-      safeSetState(() {
-        _bekreftIsLoading = false;
-        _trekkIsLoading = false;
-        _messageIsLoading = false;
-      });
-    });
-  }
-
-  // Function to close the loading dialog
-  void _hideLoadingDialog() {
-    if (_bekreftIsLoading || _trekkIsLoading || _messageIsLoading) {
-      Navigator.of(context).pop(); // Close the dialog
-    }
   }
 
   @override
@@ -165,8 +118,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           onTap: () async {
                             try {
                               // Prevent multiple submissions while loading
-                              if (_messageIsLoading) return;
-                              _messageIsLoading = true;
+                              if (messageIsLoading) return;
+                              messageIsLoading = true;
 
                               Conversation existingConversation =
                                   FFAppState().conversations.firstWhere(
@@ -200,7 +153,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               );
 
                               // Step 4: Stop loading and navigate to message screen
-                              _messageIsLoading = false;
+                              messageIsLoading = false;
                               if (serializedConversation != null) {
                                 // Step 5: Navigate to 'message' screen with the conversation
                                 context.pushNamed(
@@ -212,12 +165,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 );
                               }
                             } on SocketException {
-                              _messageIsLoading = false;
-                              toasts.showErrorToast(
+                              messageIsLoading = false;
+                              Toasts.showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
-                              _messageIsLoading = false;
-                              toasts.showErrorToast(context, 'En feil oppstod');
+                              messageIsLoading = false;
+                              Toasts.showErrorToast(context, 'En feil oppstod');
                             }
                           },
                           child: Row(
@@ -294,10 +247,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 try {
                                   Navigator.pop(context);
                                 } on SocketException {
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'En feil oppstod');
                                 }
                               },
@@ -357,10 +310,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                             },
                           );
                         } on SocketException {
-                          toasts.showErrorToast(
+                          Toasts.showErrorToast(
                               context, 'Ingen internettforbindelse');
                         } catch (e) {
-                          toasts.showErrorToast(context, 'En feil oppstod');
+                          Toasts.showErrorToast(context, 'En feil oppstod');
                         }
                       },
                       child: Row(
@@ -670,8 +623,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                           onPressed: () async {
                             try {
                               // Prevent multiple submissions while loading
-                              if (_messageIsLoading) return;
-                              _messageIsLoading = true;
+                              if (messageIsLoading) return;
+                              messageIsLoading = true;
 
                               Conversation existingConversation =
                                   FFAppState().conversations.firstWhere(
@@ -705,7 +658,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                               );
 
                               // Step 4: Stop loading and navigate to message screen
-                              _messageIsLoading = false;
+                              messageIsLoading = false;
                               if (serializedConversation != null) {
                                 // Step 5: Navigate to 'message' screen with the conversation
                                 context.pushNamed(
@@ -717,12 +670,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 );
                               }
                             } on SocketException {
-                              _messageIsLoading = false;
-                              toasts.showErrorToast(
+                              messageIsLoading = false;
+                              Toasts.showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
-                              _messageIsLoading = false;
-                              toasts.showErrorToast(context, 'En feil oppstod');
+                              messageIsLoading = false;
+                              Toasts.showErrorToast(context, 'En feil oppstod');
                             }
                           },
                           text: 'Melding',
@@ -772,12 +725,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     actions: [
                                       CupertinoDialogAction(
                                         onPressed: () {
-                                          if (_bekreftIsLoading) {
+                                          if (bekreftIsLoading) {
                                             return;
                                           }
-                                          _bekreftIsLoading = true;
+                                          bekreftIsLoading = true;
                                           Navigator.of(context).pop();
-                                          _bekreftIsLoading = false;
+                                          bekreftIsLoading = false;
                                         },
                                         child: const Text(
                                           "Nei",
@@ -789,9 +742,9 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                       CupertinoDialogAction(
                                         onPressed: () async {
                                           try {
-                                            if (_trekkIsLoading) return;
-                                            _trekkIsLoading = true;
-                                            _showLoadingDialog();
+                                            if (trekkIsLoading) return;
+                                            trekkIsLoading = true;
+                                            showLoadingDialog(context);
                                             String? token =
                                                 await firebaseAuthService
                                                     .getToken(context);
@@ -804,21 +757,37 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                               if (response.statusCode == 200) {
                                                 Navigator.of(context).pop();
                                                 Navigator.pop(context);
-                                                toasts.showAccepted(
+                                                Toasts.showAccepted(
                                                     context, 'Budet ble trekt');
                                                 Navigator.pop(context);
                                               } else {
-                                                _hideLoadingDialog();
+                                                if (bekreftIsLoading ||
+                                                    trekkIsLoading ||
+                                                    messageIsLoading) {
+                                                  bekreftIsLoading = false;
+                                                  trekkIsLoading = false;
+                                                  messageIsLoading = false;
+                                                  Navigator.of(context)
+                                                      .pop(); // Close the dialog
+                                                }
                                                 Navigator.pop(context);
-                                                toasts.showErrorToast(context,
+                                                Toasts.showErrorToast(context,
                                                     'En uforventet feil oppstod');
                                                 return;
                                               }
                                             }
                                           } catch (e) {
-                                            _hideLoadingDialog();
+                                            if (bekreftIsLoading ||
+                                                trekkIsLoading ||
+                                                messageIsLoading) {
+                                              bekreftIsLoading = false;
+                                              trekkIsLoading = false;
+                                              messageIsLoading = false;
+                                              Navigator.of(context)
+                                                  .pop(); // Close the dialog
+                                            }
                                             Navigator.pop(context);
-                                            toasts.showErrorToast(context,
+                                            Toasts.showErrorToast(context,
                                                 'En uforventet feil oppstod');
                                             return;
                                           }
@@ -833,10 +802,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 },
                               );
                             } on SocketException {
-                              toasts.showErrorToast(
+                              Toasts.showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
-                              toasts.showErrorToast(context, 'En feil oppstod');
+                              Toasts.showErrorToast(context, 'En feil oppstod');
                             }
                           },
                           text: 'Trekk bud',
@@ -904,10 +873,10 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                           CupertinoDialogAction(
                                             onPressed: () async {
                                               try {
-                                                if (_bekreftIsLoading) return;
+                                                if (bekreftIsLoading) return;
 
-                                                _bekreftIsLoading = true;
-                                                _showLoadingDialog();
+                                                bekreftIsLoading = true;
+                                                showLoadingDialog(context);
                                                 String? token =
                                                     await firebaseAuthService
                                                         .getToken(context);
@@ -920,9 +889,17 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                               token: token);
                                                   if (response.statusCode ==
                                                       200) {
-                                                    toasts.showAccepted(context,
+                                                    Toasts.showAccepted(context,
                                                         'Handelen er fullført');
-                                                    _hideLoadingDialog();
+                                                    if (bekreftIsLoading ||
+                                                        trekkIsLoading ||
+                                                        messageIsLoading) {
+                                                      bekreftIsLoading = false;
+                                                      trekkIsLoading = false;
+                                                      messageIsLoading = false;
+                                                      Navigator.of(context)
+                                                          .pop(); // Close the dialog
+                                                    }
                                                     Navigator.pop(context);
                                                     await showModalBottomSheet(
                                                       isScrollControlled: true,
@@ -955,24 +932,48 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                       },
                                                     ).then((value) =>
                                                         safeSetState(() {
-                                                          _bekreftIsLoading =
+                                                          bekreftIsLoading =
                                                               false;
                                                         }));
                                                   } else {
-                                                    _hideLoadingDialog();
-                                                    toasts.showErrorToast(
+                                                    if (bekreftIsLoading ||
+                                                        trekkIsLoading ||
+                                                        messageIsLoading) {
+                                                      bekreftIsLoading = false;
+                                                      trekkIsLoading = false;
+                                                      messageIsLoading = false;
+                                                      Navigator.of(context)
+                                                          .pop(); // Close the dialog
+                                                    }
+                                                    Toasts.showErrorToast(
                                                         context,
                                                         'En uforventet feil oppstod');
                                                   }
                                                 }
                                               } on SocketException {
-                                                _hideLoadingDialog();
-                                                toasts.showErrorToast(context,
+                                                if (bekreftIsLoading ||
+                                                    trekkIsLoading ||
+                                                    messageIsLoading) {
+                                                  bekreftIsLoading = false;
+                                                  trekkIsLoading = false;
+                                                  messageIsLoading = false;
+                                                  Navigator.of(context)
+                                                      .pop(); // Close the dialog
+                                                }
+                                                Toasts.showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
-                                                _hideLoadingDialog();
+                                                if (bekreftIsLoading ||
+                                                    trekkIsLoading ||
+                                                    messageIsLoading) {
+                                                  bekreftIsLoading = false;
+                                                  trekkIsLoading = false;
+                                                  messageIsLoading = false;
+                                                  Navigator.of(context)
+                                                      .pop(); // Close the dialog
+                                                }
                                                 Navigator.pop(context);
-                                                toasts.showErrorToast(
+                                                Toasts.showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
                                             },
@@ -1029,8 +1030,8 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                 onPressed: () async {
                                   try {
                                     // Prevent multiple submissions while loading
-                                    if (_messageIsLoading) return;
-                                    _messageIsLoading = true;
+                                    if (messageIsLoading) return;
+                                    messageIsLoading = true;
 
                                     Conversation existingConversation =
                                         FFAppState().conversations.firstWhere(
@@ -1066,7 +1067,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                     );
 
                                     // Step 4: Stop loading and navigate to message screen
-                                    _messageIsLoading = false;
+                                    messageIsLoading = false;
                                     if (serializedConversation != null) {
                                       // Step 5: Navigate to 'message' screen with the conversation
                                       context.pushNamed(
@@ -1078,12 +1079,12 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                       );
                                     }
                                   } on SocketException {
-                                    _messageIsLoading = false;
-                                    toasts.showErrorToast(
+                                    messageIsLoading = false;
+                                    Toasts.showErrorToast(
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
-                                    _messageIsLoading = false;
-                                    toasts.showErrorToast(
+                                    messageIsLoading = false;
+                                    Toasts.showErrorToast(
                                         context, 'En feil oppstod');
                                   }
                                 },

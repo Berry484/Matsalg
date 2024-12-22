@@ -6,9 +6,12 @@ import 'package:mat_salg/logging.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class FirebaseAuthService {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Sings in using Google------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
   Future<UserCredential?> loginWithGoogle() async {
     try {
       final googleUser = await GoogleSignIn().signIn();
@@ -25,7 +28,9 @@ class FirebaseAuthService {
     return null;
   }
 
-  // Apple Sign-In
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Sings in using Apple-------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
   Future<UserCredential?> signInWithApple() async {
     try {
       // 1. Request Apple credentials
@@ -49,6 +54,9 @@ class FirebaseAuthService {
     }
   }
 
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Creates a user in firebase using Email and Password------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
   Future<User?> signUpWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -64,6 +72,9 @@ class FirebaseAuthService {
     }
   }
 
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Sings in using Email and Password------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
   Future<User?> signInWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -79,6 +90,9 @@ class FirebaseAuthService {
     }
   }
 
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Gets the token from firebase. It also auto renews or loggs out if its invalid----------------------
+//-----------------------------------------------------------------------------------------------------------------------
   Future<String?> getToken(BuildContext? context) async {
     try {
       final user = _firebaseAuth.currentUser;
@@ -109,4 +123,6 @@ class FirebaseAuthService {
       return null;
     }
   }
+
+//
 }

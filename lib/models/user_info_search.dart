@@ -1,3 +1,6 @@
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Hold basic information about a user used when searching for users on the main page---------
+//---------------------------------------------------------------------------------------------------------------
 class UserInfoSearch {
   final String uid;
   final String username;

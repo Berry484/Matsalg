@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/user_service.dart';
 import '../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -30,7 +30,6 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final UserInfoService userInfoService = UserInfoService();
-  final Toasts toasts = Toasts();
   LatLng? currentUserLocationValue;
   LatLng? selectedLocation; // State variable to store selected location
   bool bonde = false;
@@ -143,10 +142,10 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                       try {
                                         Navigator.pop(context);
                                       } on SocketException {
-                                        toasts.showErrorToast(context,
+                                        Toasts.showErrorToast(context,
                                             'Ingen internettforbindelse');
                                       } catch (e) {
-                                        toasts.showErrorToast(
+                                        Toasts.showErrorToast(
                                             context, 'En feil oppstod');
                                       }
                                     },
@@ -292,7 +291,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                             // Hvis plassering er null, vis en feil og avslutt
                                             if (location ==
                                                 const LatLng(0.0, 0.0)) {
-                                              toasts.showErrorToast(context,
+                                              Toasts.showErrorToast(context,
                                                   'Stedtjenester er deaktivert i innstillinger');
                                               return;
                                             }
@@ -329,7 +328,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                             // If location was not retrieved, exit
                                             if (location ==
                                                 const LatLng(0.0, 0.0)) {
-                                              toasts.showErrorToast(context,
+                                              Toasts.showErrorToast(context,
                                                   'posisjonstjenester er skrudd av i innstillinger');
                                               return;
                                             } else {
@@ -337,10 +336,10 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                               Navigator.pop(context);
                                             }
                                           } on SocketException {
-                                            toasts.showErrorToast(context,
+                                            Toasts.showErrorToast(context,
                                                 'Ingen internettforbindelse');
                                           } catch (e) {
-                                            toasts.showErrorToast(
+                                            Toasts.showErrorToast(
                                                 context, 'En feil oppstod');
                                           }
                                         },
@@ -413,10 +412,10 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                             HapticFeedback.mediumImpact();
                                             Navigator.pop(context);
                                           } on SocketException {
-                                            toasts.showErrorToast(context,
+                                            Toasts.showErrorToast(context,
                                                 'Ingen internettforbindelse');
                                           } catch (e) {
-                                            toasts.showErrorToast(
+                                            Toasts.showErrorToast(
                                                 context, 'En feil oppstod');
                                           }
                                         },

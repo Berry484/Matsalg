@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/hjem/sorter/sorter_widget.dart';
@@ -44,7 +44,6 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiFoodService apiFoodService = ApiFoodService();
   final ScrollController _scrollController = ScrollController();
-  final Toasts toasts = Toasts();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -132,9 +131,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         }
       });
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -169,9 +168,9 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
         }
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 

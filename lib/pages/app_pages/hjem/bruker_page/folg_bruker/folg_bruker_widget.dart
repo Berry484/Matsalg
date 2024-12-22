@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/push_notification_service.dart';
 
@@ -27,7 +27,7 @@ class FolgBrukerWidget extends StatefulWidget {
 class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
   late FolgBrukerModel _model;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
+
   bool _isLoading = false;
 
   @override
@@ -73,11 +73,11 @@ class _FolgBrukerWidgetState extends State<FolgBrukerWidget> {
     } on SocketException {
       _isLoading = false;
 
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _isLoading = false;
 
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 

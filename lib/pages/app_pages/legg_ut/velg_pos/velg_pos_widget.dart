@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
@@ -28,8 +28,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
   late VelgPosModel _model;
 
   LatLng? currentUserLocationValue;
-  LatLng? selectedLocation; // State variable to store selected location
-  final Toasts toasts = Toasts();
+  LatLng? selectedLocation;
 
   @override
   void setState(VoidCallback callback) {
@@ -118,10 +117,10 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                           widget.currentLocation ??
                                               const LatLng(0, 0));
                                     } on SocketException {
-                                      toasts.showErrorToast(context,
+                                      Toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } catch (e) {
-                                      toasts.showErrorToast(
+                                      Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     }
                                   },
@@ -293,15 +292,15 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
 
                                         if (location ==
                                             const LatLng(0.0, 0.0)) {
-                                          toasts.showErrorToast(context,
+                                          Toasts.showErrorToast(context,
                                               'Stedtjenester er deaktivert i innstillinger');
                                           return;
                                         }
                                       } on SocketException {
-                                        toasts.showErrorToast(context,
+                                        Toasts.showErrorToast(context,
                                             'Ingen internettforbindelse');
                                       } catch (e) {
-                                        toasts.showErrorToast(
+                                        Toasts.showErrorToast(
                                             context, 'En feil oppstod');
                                       }
                                     },

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/rating_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -33,7 +33,6 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
   late GiveRatingModel _model;
   bool _messageIsLoading = false;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
 
   @override
   void setState(VoidCallback callback) {
@@ -327,12 +326,12 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
                             } on SocketException {
                               _messageIsLoading = false;
 
-                              toasts.showErrorToast(
+                              Toasts.showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
                               _messageIsLoading = false;
 
-                              toasts.showErrorToast(context, 'En feil oppstod');
+                              Toasts.showErrorToast(context, 'En feil oppstod');
                             }
                           },
                           text: 'Send',

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/check_taken_service.dart';
@@ -31,7 +31,6 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
   final ApiMultiplePics apiMultiplePics = ApiMultiplePics();
   final UserInfoService userInfoService = UserInfoService();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final Toasts toasts = Toasts();
   late ProfilRedigerModel _model;
   bool _isLoading = false;
 
@@ -290,7 +289,7 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                           final appState = FFAppState();
                                           appState.updateUI();
                                           Navigator.pop(context);
-                                          toasts.showAccepted(
+                                          Toasts.showAccepted(
                                               context, 'Lagret');
                                           return;
                                         } else if (response.statusCode == 401) {
@@ -302,24 +301,24 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                         if (decodedResponse['username'] ==
                                             'username_change_too_soon') {
                                           _isLoading = false;
-                                          toasts.showErrorToast(context,
+                                          Toasts.showErrorToast(context,
                                               'Du må vente før du kan endre brukernavnet igjen');
                                           context.safePop();
                                         }
                                         if (response.statusCode == 500) {
                                           _isLoading = false;
-                                          toasts.showErrorToast(context,
+                                          Toasts.showErrorToast(context,
                                               'Brukernavnet er allerede brukt av en annen bruker');
                                         }
                                       }
                                       _isLoading = false;
                                     } on SocketException {
                                       _isLoading = false;
-                                      toasts.showErrorToast(context,
+                                      Toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } catch (e) {
                                       _isLoading = false;
-                                      toasts.showErrorToast(
+                                      Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     }
                                   },
@@ -425,10 +424,10 @@ class _ProfilRedigerWidgetState extends State<ProfilRedigerWidget> {
                                         }
                                       }
                                     } on SocketException {
-                                      toasts.showErrorToast(context,
+                                      Toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } catch (e) {
-                                      toasts.showErrorToast(
+                                      Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     }
                                   },

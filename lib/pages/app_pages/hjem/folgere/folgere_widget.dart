@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:mat_salg/models/user_info.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/my_ip.dart';
@@ -36,7 +36,6 @@ class _FolgereWidgetState extends State<FolgereWidget> {
   bool _isloading = true;
   List<UserInfo>? _brukere;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final Toasts toasts = Toasts();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -68,9 +67,9 @@ class _FolgereWidgetState extends State<FolgereWidget> {
         });
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -211,7 +210,7 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                   );
                                 }
                               } catch (e) {
-                                toasts.showErrorToast(
+                                Toasts.showErrorToast(
                                     context, 'En uforventet feil oppstod');
                                 logger.d('Error navigating page');
                               }
@@ -339,10 +338,10 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                 FollowService.unfolgBruker(
                                                     token, brukere.uid);
                                               } on SocketException {
-                                                toasts.showErrorToast(context,
+                                                Toasts.showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
-                                                toasts.showErrorToast(
+                                                Toasts.showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
                                             },
@@ -396,10 +395,10 @@ class _FolgereWidgetState extends State<FolgereWidget> {
                                                 FollowService.folgbruker(
                                                     token, brukere.uid);
                                               } on SocketException {
-                                                toasts.showErrorToast(context,
+                                                Toasts.showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
-                                                toasts.showErrorToast(
+                                                Toasts.showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
                                             },

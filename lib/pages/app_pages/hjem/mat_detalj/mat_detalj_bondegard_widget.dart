@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/my_ip.dart';
@@ -13,7 +13,7 @@ import 'package:mat_salg/pages/app_pages/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_animations.dart';
 import 'package:mat_salg/pages/app_pages/kart/kart_pop_up/kart_pop_up_widget.dart';
 import 'package:mat_salg/services/food_service.dart';
-import 'package:mat_salg/services/kommune_service.dart';
+import 'package:mat_salg/services/location_service.dart';
 import 'package:mat_salg/services/like_service.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -47,7 +47,7 @@ class MatDetaljBondegardWidget extends StatefulWidget {
 }
 
 class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
-  final KommuneService kommuneService = KommuneService();
+  final LocationService locationService = LocationService();
   late MatDetaljBondegardModel _model;
   List<Matvarer>? _nyematvarer;
   bool _isloading = true;
@@ -60,7 +60,6 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
   bool _isAnimating = false;
   bool _isExpanded = false;
   String? poststed;
-  final Toasts toasts = Toasts();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -135,9 +134,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         });
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -173,7 +172,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
             (matvare.lng == null || matvare.lng == 0)) {
           poststed = null;
         }
-        String? response = await kommuneService.getKommune(
+        String? response = await locationService.getKommune(
             token, matvare.lat ?? 0, matvare.lng ?? 0);
         safeSetState(() {
           if (response.isNotEmpty) {
@@ -184,9 +183,9 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
         });
       }
     } on SocketException {
-      toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      toasts.showErrorToast(context, 'En feil oppstod');
+      Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
 
@@ -508,13 +507,13 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                       } on SocketException {
                                                         _messageIsLoading =
                                                             false;
-                                                        toasts.showErrorToast(
+                                                        Toasts.showErrorToast(
                                                             context,
                                                             'Ingen internettforbindelse');
                                                       } catch (e) {
                                                         _messageIsLoading =
                                                             false;
-                                                        toasts.showErrorToast(
+                                                        Toasts.showErrorToast(
                                                             context,
                                                             'En feil oppstod');
                                                       }
@@ -655,10 +654,10 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                                 token, matvare.matId);
                                           }
                                         } on SocketException {
-                                          toasts.showErrorToast(context,
+                                          Toasts.showErrorToast(context,
                                               'Ingen internettforbindelse');
                                         } catch (e) {
-                                          toasts.showErrorToast(
+                                          Toasts.showErrorToast(
                                               context, 'En feil oppstod');
                                         }
                                       },
@@ -1248,12 +1247,12 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               } on SocketException {
                                                 _messageIsLoading = false;
 
-                                                toasts.showErrorToast(context,
+                                                Toasts.showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
                                                 _messageIsLoading = false;
 
-                                                toasts.showErrorToast(
+                                                Toasts.showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
                                             },
@@ -2086,7 +2085,7 @@ class _MatDetaljBondegardWidgetState extends State<MatDetaljBondegardWidget> {
                                               );
                                             }
                                           } catch (e) {
-                                            toasts.showErrorToast(context,
+                                            Toasts.showErrorToast(context,
                                                 'En uforventet feil oppstod');
                                             logger.d('Error navigating page');
                                           }

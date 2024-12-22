@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:mat_salg/services/web_socket.dart';
-import 'package:mat_salg/helper_components/toasts.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/pages/app_pages/profil/innstillinger/choose_location/location_widget.dart';
 import 'package:mat_salg/pages/app_pages/profil/kontakt/kontakt_widget.dart';
 
@@ -25,7 +24,6 @@ class InnstillingerWidget extends StatefulWidget {
 class _InnstillingerWidgetState extends State<InnstillingerWidget> {
   late WebSocketService _webSocketService; // Declare WebSocketService
   late InnstillingerModel _model;
-  final Toasts toasts = Toasts();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -118,10 +116,10 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                 try {
                                   context.pushNamed('Konto');
                                 } on SocketException {
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
-                                  toasts.showErrorToast(
+                                  Toasts.showErrorToast(
                                       context, 'En feil oppstod');
                                 }
                               },
@@ -513,7 +511,7 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        toasts.showErrorToast(
+                                        Toasts.showErrorToast(
                                             context, 'message');
                                       },
                                       child: Row(
@@ -767,19 +765,19 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                                   _webSocketService.close();
                                                   await FirebaseAuth.instance
                                                       .signOut();
-                                                  toasts.showAccepted(
+                                                  Toasts.showAccepted(
                                                       context, 'Logget ut');
 
                                                   context.go('/registrer');
                                                 } on SocketException {
                                                   if (mounted) {
-                                                    toasts.showErrorToast(
+                                                    Toasts.showErrorToast(
                                                         context,
                                                         'Ingen internettforbindelse');
                                                   }
                                                 } catch (e) {
                                                   if (mounted) {
-                                                    toasts.showErrorToast(
+                                                    Toasts.showErrorToast(
                                                         context,
                                                         'En feil oppstod');
                                                   }
@@ -797,10 +795,10 @@ class _InnstillingerWidgetState extends State<InnstillingerWidget> {
                                       },
                                     );
                                   } on SocketException {
-                                    toasts.showErrorToast(
+                                    Toasts.showErrorToast(
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
-                                    toasts.showErrorToast(
+                                    Toasts.showErrorToast(
                                         context, 'En feil oppstod');
                                   }
                                 },

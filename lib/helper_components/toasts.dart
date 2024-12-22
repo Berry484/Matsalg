@@ -5,7 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
 
 class Toasts {
-  void showErrorToast(BuildContext context, String message) {
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Shows a basic error toast at the top of the page. this is used to tell the user an error occured---
+//-----------------------------------------------------------------------------------------------------------------------
+  static void showErrorToast(BuildContext context, String message) {
     HapticFeedback.lightImpact();
     final overlay = Overlay.of(context);
     late OverlayEntry overlayEntry;
@@ -75,7 +78,10 @@ class Toasts {
     });
   }
 
-  void showAccepted(BuildContext context, String message) {
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Shows a basic toast that tells the user the action worked------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
+  static void showAccepted(BuildContext context, String message) {
     HapticFeedback.lightImpact();
     final overlay = Overlay.of(context);
     late OverlayEntry overlayEntry;
@@ -144,4 +150,6 @@ class Toasts {
       }
     });
   }
+
+//
 }

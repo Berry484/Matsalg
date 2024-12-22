@@ -748,7 +748,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                 child: child,
               );
             },
-            child: LeggUtMatvareWidget(
+            child: PublishPage(
               rediger: rediger,
               matinfo: matinfo,
             ),
