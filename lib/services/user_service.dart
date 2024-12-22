@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/models/user.dart';
 import 'package:mat_salg/models/user_info_search.dart';
 import 'package:mat_salg/my_ip.dart';
@@ -450,6 +451,58 @@ class UserInfoService {
       throw Exception;
     }
     return null;
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Updates information about the user in app states-------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  Future<void> fetchData(BuildContext context) async {
+    try {
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      } else {
+        final response = await UserInfoService.checkUserInfo(token);
+        if (response.statusCode == 200) {
+          final decodedResponse = jsonDecode(response.body);
+          final userInfo = decodedResponse['userInfo'] ?? {};
+          LatLng? location = await getCurrentUserLocation(
+              defaultLocation: const LatLng(0.0, 0.0));
+          if (location != const LatLng(0.0, 0.0)) {
+            FFAppState().brukerLat = location.latitude;
+            FFAppState().brukerLng = location.longitude;
+          } else {
+            FFAppState().brukerLat = userInfo['lat'] ?? 59.9138688;
+            FFAppState().brukerLng = userInfo['lng'] ?? 10.7522454;
+          }
+
+          FFAppState().brukernavn = userInfo['username'] ?? '';
+          FFAppState().email = userInfo['email'] ?? '';
+          FFAppState().firstname = userInfo['firstname'] ?? '';
+          FFAppState().lastname = userInfo['lastname'] ?? '';
+          FFAppState().bio = userInfo['bio'] ?? '';
+          FFAppState().profilepic = userInfo['profilepic'] ?? '';
+          FFAppState().followersCount = decodedResponse['followersCount'] ?? 0;
+          FFAppState().followingCount = decodedResponse['followingCount'] ?? 0;
+          FFAppState().ratingTotalCount =
+              decodedResponse['ratingTotalCount'] ?? 0;
+          FFAppState().ratingAverageValue =
+              decodedResponse['ratingAverageValue'] ?? 5.0;
+        }
+        if (response.statusCode == 401) {
+          FFAppState().login = false;
+          if (!context.mounted) return;
+          context.goNamed('registrer');
+          return;
+        }
+      }
+    } on SocketException {
+      if (!context.mounted) return;
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      if (!context.mounted) return;
+      Toasts.showErrorToast(context, 'En feil oppstod');
+    }
   }
 
 //

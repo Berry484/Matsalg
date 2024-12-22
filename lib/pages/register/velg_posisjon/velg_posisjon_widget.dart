@@ -8,7 +8,7 @@ import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../../helper_components/index.dart' as custom_widgets;
+import '../../../helper_components/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'velg_posisjon_model.dart';
 export 'velg_posisjon_model.dart';

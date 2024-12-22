@@ -7,7 +7,7 @@ import 'package:mat_salg/helper_components/Toasts.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
-import '../../../../helper_components/index.dart' as custom_widgets;
+import '../../../../helper_components/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'location_model.dart';
 export 'location_model.dart';
@@ -18,36 +18,36 @@ class LocationPage extends StatefulWidget {
     this.currentLocation,
   });
 
-  final dynamic currentLocation;
+  final LatLng? currentLocation;
 
   @override
   State<LocationPage> createState() => _VelgPosWidgetState();
 }
 
 class _VelgPosWidgetState extends State<LocationPage> {
-  late LocationModel model;
+  late LocationModel _model;
 
   @override
   void setState(VoidCallback callback) {
     super.setState(callback);
-    model.onUpdate();
+    _model.onUpdate();
   }
 
   @override
   void initState() {
     super.initState();
-    model = createModel(context, () => LocationModel());
+    _model = createModel(context, () => LocationModel());
 
-    model.textController ??= TextEditingController();
-    model.textFieldFocusNode ??= FocusNode();
-    model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
-    model.selectedLocation =
+    _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
+    _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
+    _model.selectedLocation =
         widget.currentLocation ?? LatLng(59.913868, 10.752245);
   }
 
   @override
   void dispose() {
-    model.maybeDispose();
+    _model.maybeDispose();
 
     super.dispose();
   }
@@ -195,7 +195,7 @@ class _VelgPosWidgetState extends State<LocationPage> {
                                           11.386219119466823),
                                   onLocationChanged: (newLocation) {
                                     setState(() {
-                                      model.selectedLocation = newLocation;
+                                      _model.selectedLocation = newLocation;
                                     });
                                   },
                                 ),
@@ -281,7 +281,7 @@ class _VelgPosWidgetState extends State<LocationPage> {
                                             defaultLocation:
                                                 const LatLng(0.0, 0.0));
 
-                                        model.selectedLocation = location;
+                                        _model.selectedLocation = location;
                                         if (location !=
                                             const LatLng(0.0, 0.0)) {
                                           if (!context.mounted) return;
@@ -351,17 +351,17 @@ class _VelgPosWidgetState extends State<LocationPage> {
                                       // Unfocus the text field to ensure the keyboard is dismissed
                                       FocusScope.of(context).unfocus();
                                       LatLng? location;
-                                      if (model.currentUserLocationValue !=
+                                      if (_model.currentUserLocationValue !=
                                           null) {
-                                        model.selectedLocation = location;
+                                        _model.selectedLocation = location;
                                       }
-                                      if (model.selectedLocation != null) {
-                                        location = model.selectedLocation;
+                                      if (_model.selectedLocation != null) {
+                                        location = _model.selectedLocation;
                                       }
                                       // Return the selected position when the button is pressed
-                                      if (model.selectedLocation != null) {
+                                      if (_model.selectedLocation != null) {
                                         Navigator.pop(
-                                            context, model.selectedLocation);
+                                            context, _model.selectedLocation);
                                       }
                                     },
                                     text: 'Velg posisjon',

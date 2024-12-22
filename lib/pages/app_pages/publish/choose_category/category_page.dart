@@ -17,23 +17,23 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _VelgKategoriWidgetState extends State<CategoryPage> {
-  late CategoryModel model;
+  late CategoryModel _model;
 
   @override
   void setState(VoidCallback callback) {
     super.setState(callback);
-    model.onUpdate();
+    _model.onUpdate();
   }
 
   @override
   void initState() {
     super.initState();
-    model = createModel(context, () => CategoryModel());
+    _model = createModel(context, () => CategoryModel());
   }
 
   @override
   void dispose() {
-    model.maybeDispose();
+    _model.maybeDispose();
 
     super.dispose();
   }

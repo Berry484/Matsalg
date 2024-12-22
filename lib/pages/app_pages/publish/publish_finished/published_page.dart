@@ -23,12 +23,12 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
   final UserInfoService userInfoService = UserInfoService();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = <String, AnimationInfo>{};
-  late PublishedModel model;
+  late PublishedModel _model;
 
   @override
   void initState() {
     super.initState();
-    model = createModel(context, () => PublishedModel());
+    _model = createModel(context, () => PublishedModel());
 
     animationsMap.addAll({
       'textOnPageLoadAnimation': AnimationInfo(
@@ -60,7 +60,7 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
 
   @override
   void dispose() {
-    model.dispose();
+    _model.dispose();
 
     super.dispose();
   }

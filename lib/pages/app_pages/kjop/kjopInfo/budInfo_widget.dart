@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
-import 'package:mat_salg/helper_components/loading_indicator.dart';
+import 'package:mat_salg/helper_components/widgets/loading_indicator.dart';
 import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
