@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/loading_indicator.dart';
@@ -274,15 +273,6 @@ class PublishActions {
           if (response.statusCode == 200) {
             model.oppdaterLoading = false;
             navigate('BrukerLagtUtInfo', false);
-            // context.pushNamed(
-            //   'BrukerLagtUtInfo',
-            //   extra: <String, dynamic>{
-            //     kTransitionInfoKey: const TransitionInfo(
-            //       hasTransition: true,
-            //       transitionType: PageTransitionType.rightToLeft,
-            //     ),
-            //   },
-            // );
           }
           if (response.statusCode == 401 ||
               response.statusCode == 404 ||
@@ -333,7 +323,7 @@ class PublishActions {
         if (token == null) {
           return;
         }
-
+        if (!context.mounted) return;
         bool confirmAction = await showCupertinoDialog<bool>(
               context: context,
               builder: (BuildContext context) {
@@ -379,7 +369,7 @@ class PublishActions {
             id: model.matvare.matId,
             solgt: true,
           );
-          Navigator.pop(context);
+          if (context.mounted) Navigator.pop(context);
           navigate('Profil', false);
           showToast('Markert utsolgt', false);
         }

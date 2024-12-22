@@ -26,6 +26,7 @@ class PublishServices {
     location =
         await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
     if (location != const LatLng(0.0, 0.0)) {
+      if (!context.mounted) return;
       String? token = await firebaseAuthService.getToken(context);
 
       if (token == null) {
@@ -74,9 +75,11 @@ class PublishServices {
       }
     } on SocketException {
       logger.e('Socket error in GetKommune');
+      if (!context.mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       logger.e('Exception error in GetKommune');
+      if (!context.mounted) return;
       Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }

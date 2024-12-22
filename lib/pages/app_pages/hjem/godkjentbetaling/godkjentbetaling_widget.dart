@@ -74,8 +74,13 @@ class _GodkjentbetalingWidgetState extends State<GodkjentbetalingWidget>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: WillPopScope(
-        onWillPop: () async => false,
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) {
+            return;
+          }
+        },
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).secondary,

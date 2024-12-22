@@ -10,8 +10,13 @@ void showLoadingDialog(BuildContext context) {
     barrierDismissible: false,
     barrierColor: Colors.black26,
     builder: (BuildContext context) {
-      return WillPopScope(
-        onWillPop: () async => false, // Disable the back button
+      return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) {
+            return;
+          }
+        },
         child: Center(
           child: Container(
             width: 80,

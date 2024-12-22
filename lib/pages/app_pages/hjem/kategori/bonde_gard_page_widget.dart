@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
@@ -259,8 +258,13 @@ class _BondeGardPageWidgetState extends State<BondeGardPageWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: WillPopScope(
-        onWillPop: () async => false,
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) {
+            return;
+          }
+        },
         child: Scaffold(
           key: scaffoldKey,
           resizeToAvoidBottomInset: false,

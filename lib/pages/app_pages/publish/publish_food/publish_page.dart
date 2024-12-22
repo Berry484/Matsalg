@@ -6,9 +6,9 @@ import 'package:mat_salg/helper_components/dialog_utils.dart';
 import 'package:mat_salg/helper_components/dividers.dart';
 import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/my_ip.dart';
-import 'package:mat_salg/pages/app_pages/legg_ut/publish_food/publish_actions.dart';
-import 'package:mat_salg/pages/app_pages/legg_ut/publish_food/publish_services.dart';
-import 'package:mat_salg/pages/app_pages/legg_ut/velg_kategori/velg_kategori_widget.dart';
+import 'package:mat_salg/pages/app_pages/publish/publish_food/publish_actions.dart';
+import 'package:mat_salg/pages/app_pages/publish/publish_food/publish_services.dart';
+import 'package:mat_salg/pages/app_pages/publish/velg_kategori/velg_kategori_widget.dart';
 import 'package:mat_salg/logging.dart';
 import '../velg_pos/velg_pos_widget.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_icon_button.dart';
@@ -125,8 +125,13 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: WillPopScope(
-        onWillPop: () async => false,
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) {
+            return;
+          }
+        },
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -555,7 +560,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                   const Center(
                                                                 child: FaIcon(
                                                                   FontAwesomeIcons
-                                                                      .times,
+                                                                      .xmark,
                                                                   color: Colors
                                                                       .white,
                                                                   size: 16,
@@ -816,8 +821,10 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                   }
                                                 });
                                               } catch (e) {
-                                                Toasts.showErrorToast(
-                                                    context, 'En feil oppstod');
+                                                if (context.mounted) {
+                                                  Toasts.showErrorToast(context,
+                                                      'En feil oppstod');
+                                                }
                                               }
                                             },
                                             child: Padding(
@@ -1625,7 +1632,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                   message:
                                                                       Column(
                                                                     children: [
-                                                                      Container(
+                                                                      SizedBox(
                                                                         height:
                                                                             200, // Set a fixed height for the picker
                                                                         child:
@@ -1847,13 +1854,17 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                           }
                                                         });
                                                       } on SocketException {
-                                                        Toasts.showErrorToast(
-                                                            context,
-                                                            'Ingen internettforbindelse');
+                                                        if (context.mounted) {
+                                                          Toasts.showErrorToast(
+                                                              context,
+                                                              'Ingen internettforbindelse');
+                                                        }
                                                       } catch (e) {
-                                                        Toasts.showErrorToast(
-                                                            context,
-                                                            'En feil oppstod');
+                                                        if (context.mounted) {
+                                                          Toasts.showErrorToast(
+                                                              context,
+                                                              'En feil oppstod');
+                                                        }
                                                       }
                                                     },
                                                     child: Container(

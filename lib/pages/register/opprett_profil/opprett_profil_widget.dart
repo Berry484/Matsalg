@@ -143,8 +143,13 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: WillPopScope(
-        onWillPop: () async => false,
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) {
+            return;
+          }
+        },
         child: Scaffold(
           key: scaffoldKey,
           // resizeToAvoidBottomInset: false,
