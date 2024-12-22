@@ -8,9 +8,9 @@ import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/publish/publish_food/publish_actions.dart';
 import 'package:mat_salg/pages/app_pages/publish/publish_food/publish_services.dart';
-import 'package:mat_salg/pages/app_pages/publish/velg_kategori/velg_kategori_widget.dart';
+import 'package:mat_salg/pages/app_pages/publish/choose_category/category_page.dart';
 import 'package:mat_salg/logging.dart';
-import '../velg_pos/velg_pos_widget.dart';
+import '../choose_location/location_page.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_icon_button.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -804,10 +804,9 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                         padding: MediaQuery
                                                             .viewInsetsOf(
                                                                 context),
-                                                        child:
-                                                            VelgKategoriWidget(
-                                                                kategori: model
-                                                                    .kategori),
+                                                        child: CategoryPage(
+                                                            kategori:
+                                                                model.kategori),
                                                       ),
                                                     );
                                                   },
@@ -1817,7 +1816,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                     .viewInsetsOf(
                                                                         context),
                                                                 child:
-                                                                    VelgPosWidget(
+                                                                    LocationPage(
                                                                   currentLocation:
                                                                       model
                                                                           .currentselectedLatLng,

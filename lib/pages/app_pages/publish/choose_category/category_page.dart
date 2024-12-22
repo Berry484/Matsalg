@@ -5,35 +5,35 @@ import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
-import 'velg_kategori_model.dart';
-export 'velg_kategori_model.dart';
+import 'category_model.dart';
+export 'category_model.dart';
 
-class VelgKategoriWidget extends StatefulWidget {
-  const VelgKategoriWidget({super.key, this.kategori});
+class CategoryPage extends StatefulWidget {
+  const CategoryPage({super.key, this.kategori});
   final dynamic kategori;
 
   @override
-  State<VelgKategoriWidget> createState() => _VelgKategoriWidgetState();
+  State<CategoryPage> createState() => _VelgKategoriWidgetState();
 }
 
-class _VelgKategoriWidgetState extends State<VelgKategoriWidget> {
-  late VelgKategoriModel _model;
+class _VelgKategoriWidgetState extends State<CategoryPage> {
+  late CategoryModel model;
 
   @override
   void setState(VoidCallback callback) {
     super.setState(callback);
-    _model.onUpdate();
+    model.onUpdate();
   }
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => VelgKategoriModel());
+    model = createModel(context, () => CategoryModel());
   }
 
   @override
   void dispose() {
-    _model.maybeDispose();
+    model.maybeDispose();
 
     super.dispose();
   }

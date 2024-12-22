@@ -11,8 +11,8 @@ export 'pages/register/opprett_profil/add_profile_picture/add_profilepic_widget.
     show AddProfilePicWidget;
 export 'pages/app_pages/publish/publish_food/publish_page.dart'
     show PublishPage;
-export 'pages/app_pages/publish/bruker_lagt_ut_info/bruker_lagt_ut_info_widget.dart'
-    show BrukerLagtUtInfoWidget;
+export 'pages/app_pages/publish/publish_finished/published_page.dart'
+    show PublishedPage;
 export 'pages/chat/chat_main/chat_main_widget.dart' show ChatMainWidget;
 export 'pages/app_pages/hjem/hjem/hjem_widget.dart' show HjemWidget;
 export 'pages/app_pages/profil/min_matvare_detalj/min_matvare_detalj_widget.dart'

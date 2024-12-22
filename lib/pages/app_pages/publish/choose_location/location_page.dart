@@ -9,11 +9,11 @@ import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import '../../../../helper_components/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
-import 'velg_pos_model.dart';
-export 'velg_pos_model.dart';
+import 'location_model.dart';
+export 'location_model.dart';
 
-class VelgPosWidget extends StatefulWidget {
-  const VelgPosWidget({
+class LocationPage extends StatefulWidget {
+  const LocationPage({
     super.key,
     this.currentLocation,
   });
@@ -21,35 +21,33 @@ class VelgPosWidget extends StatefulWidget {
   final dynamic currentLocation;
 
   @override
-  State<VelgPosWidget> createState() => _VelgPosWidgetState();
+  State<LocationPage> createState() => _VelgPosWidgetState();
 }
 
-class _VelgPosWidgetState extends State<VelgPosWidget> {
-  late VelgPosModel _model;
-
-  LatLng? currentUserLocationValue;
-  LatLng? selectedLocation;
+class _VelgPosWidgetState extends State<LocationPage> {
+  late LocationModel model;
 
   @override
   void setState(VoidCallback callback) {
     super.setState(callback);
-    _model.onUpdate();
+    model.onUpdate();
   }
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => VelgPosModel());
+    model = createModel(context, () => LocationModel());
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
-    _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
-    selectedLocation = widget.currentLocation ?? LatLng(59.913868, 10.752245);
+    model.textController ??= TextEditingController();
+    model.textFieldFocusNode ??= FocusNode();
+    model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
+    model.selectedLocation =
+        widget.currentLocation ?? LatLng(59.913868, 10.752245);
   }
 
   @override
   void dispose() {
-    _model.maybeDispose();
+    model.maybeDispose();
 
     super.dispose();
   }
@@ -197,7 +195,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                           11.386219119466823),
                                   onLocationChanged: (newLocation) {
                                     setState(() {
-                                      selectedLocation = newLocation;
+                                      model.selectedLocation = newLocation;
                                     });
                                   },
                                 ),
@@ -248,6 +246,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                             permission ==
                                                 LocationPermission
                                                     .unableToDetermine) {
+                                          if (!context.mounted) return;
                                           showDialog(
                                             context: context,
                                             builder: (BuildContext context) {
@@ -260,7 +259,7 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                                   CupertinoDialogAction(
                                                     onPressed: () async {
                                                       Navigator.of(context)
-                                                          .pop(); // Lukk dialogen
+                                                          .pop();
                                                       // Åpne innstillinger for appen
                                                       await Geolocator
                                                           .openLocationSettings();
@@ -275,16 +274,17 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                               );
                                             },
                                           );
-                                          return; // Avslutt logikken i onPressed hvis tillatelsen er nektet
+                                          return;
                                         }
 
                                         location = await getCurrentUserLocation(
                                             defaultLocation:
                                                 const LatLng(0.0, 0.0));
 
-                                        selectedLocation = location;
+                                        model.selectedLocation = location;
                                         if (location !=
                                             const LatLng(0.0, 0.0)) {
+                                          if (!context.mounted) return;
                                           HapticFeedback.heavyImpact();
                                           FocusScope.of(context).unfocus();
                                           Navigator.pop(context, location);
@@ -292,14 +292,17 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
 
                                         if (location ==
                                             const LatLng(0.0, 0.0)) {
+                                          if (!context.mounted) return;
                                           Toasts.showErrorToast(context,
                                               'Stedtjenester er deaktivert i innstillinger');
                                           return;
                                         }
                                       } on SocketException {
+                                        if (!context.mounted) return;
                                         Toasts.showErrorToast(context,
                                             'Ingen internettforbindelse');
                                       } catch (e) {
+                                        if (!context.mounted) return;
                                         Toasts.showErrorToast(
                                             context, 'En feil oppstod');
                                       }
@@ -339,64 +342,6 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                     ),
                                   ),
                                 ),
-                                // Padding(
-                                //   padding: const EdgeInsetsDirectional.fromSTEB(
-                                //       0.0, 30.0, 0.0, 30.0),
-                                //   child: GestureDetector(
-                                //     onTap: () async {
-                                //       try {
-                                //         LatLng? location;
-
-                                //         location = await getCurrentUserLocation(
-                                //             defaultLocation:
-                                //                 const LatLng(0.0, 0.0));
-
-                                //         selectedLocation = location;
-                                //         if (location !=
-                                //             const LatLng(0.0, 0.0)) {
-                                //           HapticFeedback.heavyImpact();
-                                //           FocusScope.of(context).unfocus();
-                                //           Navigator.pop(context, location);
-                                //         }
-                                //       } on SocketException {
-                                //               HapticFeedback.lightImpact();
-                                //             'Ingen internettforbindelse');
-                                //       } catch (e) {
-                                //               HapticFeedback.lightImpact();
-                                //             context, 'En feil oppstod');
-                                //       }
-                                //     },
-                                //     child: Row(
-                                //       mainAxisSize: MainAxisSize.min,
-                                //       mainAxisAlignment:
-                                //           MainAxisAlignment.center,
-                                //       crossAxisAlignment:
-                                //           CrossAxisAlignment.end,
-                                //       children: [
-                                //         FaIcon(
-                                //           FontAwesomeIcons.locationArrow,
-                                //           color: FlutterFlowTheme.of(context)
-                                //               .alternate,
-                                //           size: 19.0,
-                                //         ),
-                                //         const SizedBox(width: 8.0),
-                                //         Text(
-                                //           'Bruk min nåværende posisjon',
-                                //           style: FlutterFlowTheme.of(context)
-                                //               .bodyMedium
-                                //               .override(
-                                //                 fontFamily: 'Open Sans',
-                                //                 color:
-                                //                     FlutterFlowTheme.of(context)
-                                //                         .alternate,
-                                //                 fontSize: 17.0,
-                                //                 fontWeight: FontWeight.bold,
-                                //               ),
-                                //         ),
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       20.0, 0.0, 20.0, 55.0),
@@ -406,16 +351,17 @@ class _VelgPosWidgetState extends State<VelgPosWidget> {
                                       // Unfocus the text field to ensure the keyboard is dismissed
                                       FocusScope.of(context).unfocus();
                                       LatLng? location;
-                                      if (currentUserLocationValue != null) {
-                                        selectedLocation = location;
+                                      if (model.currentUserLocationValue !=
+                                          null) {
+                                        model.selectedLocation = location;
                                       }
-                                      if (selectedLocation != null) {
-                                        location = selectedLocation;
+                                      if (model.selectedLocation != null) {
+                                        location = model.selectedLocation;
                                       }
                                       // Return the selected position when the button is pressed
-                                      if (selectedLocation != null) {
+                                      if (model.selectedLocation != null) {
                                         Navigator.pop(
-                                            context, selectedLocation);
+                                            context, model.selectedLocation);
                                       }
                                     },
                                     text: 'Velg posisjon',

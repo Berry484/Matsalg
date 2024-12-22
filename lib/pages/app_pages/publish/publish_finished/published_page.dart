@@ -1,44 +1,34 @@
-import 'dart:io';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/services/food_service.dart';
-import 'package:mat_salg/services/purchase_service.dart';
+import 'package:mat_salg/services/user_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_animations.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
-import 'bruker_lagt_ut_info_model.dart';
-export 'bruker_lagt_ut_info_model.dart';
+import 'published_model.dart';
+export 'published_model.dart';
 
-class BrukerLagtUtInfoWidget extends StatefulWidget {
-  const BrukerLagtUtInfoWidget({super.key});
+class PublishedPage extends StatefulWidget {
+  const PublishedPage({super.key});
 
   @override
-  State<BrukerLagtUtInfoWidget> createState() => _BrukerLagtUtInfoWidgetState();
+  State<PublishedPage> createState() => _BrukerLagtUtInfoWidgetState();
 }
 
-class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
+class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
     with TickerProviderStateMixin {
-  late BrukerLagtUtInfoModel _model;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-
+  final UserInfoService userInfoService = UserInfoService();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
   final animationsMap = <String, AnimationInfo>{};
+  late PublishedModel model;
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BrukerLagtUtInfoModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      HapticFeedback.heavyImpact();
-    });
+    model = createModel(context, () => PublishedModel());
 
     animationsMap.addAll({
       'textOnPageLoadAnimation': AnimationInfo(
@@ -68,38 +58,9 @@ class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
     });
   }
 
-  Future<void> getAll() async {
-    try {
-      final appState = FFAppState();
-      appState.matvarer.clear();
-      appState.ordreInfo.clear();
-      String? token = await firebaseAuthService.getToken(context);
-      if (token == null) {
-        return;
-      } else {
-        List<OrdreInfo>? _alleInfo = await PurchaseService.getAll(token);
-        List<Matvarer>? fetchedMatvarer =
-            await ApiFoodService.getMyFoods(token);
-
-        setState(() {
-          if (_alleInfo != null && _alleInfo.isNotEmpty) {
-            FFAppState().ordreInfo = _alleInfo;
-          }
-          if (fetchedMatvarer != null && fetchedMatvarer.isNotEmpty) {
-            FFAppState().matvarer = fetchedMatvarer;
-          }
-        });
-      }
-    } on SocketException {
-      HapticFeedback.lightImpact();
-    } catch (e) {
-      HapticFeedback.lightImpact();
-    }
-  }
-
   @override
   void dispose() {
-    _model.dispose();
+    model.dispose();
 
     super.dispose();
   }
@@ -166,7 +127,7 @@ class _BrukerLagtUtInfoWidgetState extends State<BrukerLagtUtInfoWidget>
                         20.0, 16.0, 20.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        getAll();
+                        userInfoService.getAll(context);
                         context.goNamed('Hjem');
                       },
                       text: 'Ferdig',
