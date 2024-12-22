@@ -5,7 +5,7 @@ import 'package:mat_salg/helper_components/widgets/loading_indicator.dart';
 import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
-import 'package:mat_salg/pages/app_pages/kjop/give_rating/give_rating_widget.dart';
+import 'package:mat_salg/pages/app_pages/orders/give_rating/rating_page.dart';
 import 'package:mat_salg/services/purchase_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -922,7 +922,7 @@ class _BudInfoWidgetState extends State<BudInfoWidget> {
                                                             padding: MediaQuery
                                                                 .viewInsetsOf(
                                                                     context),
-                                                            child: GiveRatingWidget(
+                                                            child: RatingPage(
                                                                 kjop: true,
                                                                 username:
                                                                     ordreInfo

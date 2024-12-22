@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'dart:math';
-
-import 'package:flutter/services.dart';
 import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/my_ip.dart';
-import 'package:mat_salg/pages/app_pages/kjop/give_rating/give_rating_widget.dart';
+import 'package:mat_salg/pages/app_pages/orders/give_rating/rating_page.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
@@ -725,7 +723,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                   onTap: () => FocusScope.of(context).unfocus(),
                                   child: Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
-                                    child: GiveRatingWidget(
+                                    child: RatingPage(
                                       kjop: false,
                                       username: salgInfo.kjoper,
                                       salgInfoId: salgInfo.id,

@@ -1,20 +1,16 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/services/rating_service.dart';
+import 'package:mat_salg/pages/app_pages/orders/give_rating/rating_services.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'give_rating_model.dart';
-export 'give_rating_model.dart';
+import 'rating_model.dart';
+export 'rating_model.dart';
 
-class GiveRatingWidget extends StatefulWidget {
-  const GiveRatingWidget({
+class RatingPage extends StatefulWidget {
+  const RatingPage({
     super.key,
     this.kjop,
     this.username,
@@ -26,13 +22,13 @@ class GiveRatingWidget extends StatefulWidget {
   final dynamic salgInfoId;
 
   @override
-  State<GiveRatingWidget> createState() => _GiveRatingWidgetState();
+  State<RatingPage> createState() => _GiveRatingWidgetState();
 }
 
-class _GiveRatingWidgetState extends State<GiveRatingWidget> {
-  late GiveRatingModel _model;
-  bool _messageIsLoading = false;
+class _GiveRatingWidgetState extends State<RatingPage> {
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  late RatingModel _model;
+  late RatingServices ratingServices;
 
   @override
   void setState(VoidCallback callback) {
@@ -43,73 +39,8 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => GiveRatingModel());
-  }
-
-  void showAccepted(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 56.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    CupertinoIcons.checkmark_alt_circle_fill,
-                    color: FlutterFlowTheme.of(context).alternate,
-                    size: 35.0,
-                  ),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
+    _model = createModel(context, () => RatingModel());
+    ratingServices = RatingServices(model: _model);
   }
 
   @override
@@ -248,22 +179,19 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
                             ],
                           )),
                       RatingBar.builder(
-                        onRatingUpdate: (newValue) => safeSetState(() =>
-                            _model.ratingBarValue =
-                                newValue), // _model.ratingBarValue is num
+                        onRatingUpdate: (newValue) => safeSetState(
+                            () => _model.ratingBarValue = newValue),
                         itemBuilder: (context, index) {
-                          // Check if this index should be filled or not
                           return Icon(
                             index < _model.ratingBarValue!.toInt()
-                                ? CupertinoIcons.star_fill // Filled icon
-                                : CupertinoIcons.star, // Unfilled icon
+                                ? CupertinoIcons.star_fill
+                                : CupertinoIcons.star,
                             color: const Color(0xFFF65E55),
                           );
                         },
                         unratedColor: const Color(0xFFE1E1E8),
                         direction: Axis.horizontal,
-                        initialRating: _model.ratingBarValue ??=
-                            5, // Assign default value if null
+                        initialRating: _model.ratingBarValue ??= 5,
                         itemCount: 5,
                         minRating: 1,
                         maxRating: 5,
@@ -275,64 +203,11 @@ class _GiveRatingWidgetState extends State<GiveRatingWidget> {
                             40, 80, 40, 45),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            try {
-                              if (_messageIsLoading) return;
-                              _messageIsLoading = true;
-                              String? token =
-                                  await firebaseAuthService.getToken(context);
-                              // Early return if token is null
-                              if (token == null) {
-                                _messageIsLoading = false;
-                                return;
-                              }
-                              int rating = _model.ratingBarValue?.round() ?? 5;
-                              try {
-                                if (widget.salgInfoId != null) {
-                                  final response =
-                                      await RatingService.giveRating(
-                                          id: widget.salgInfoId, token: token);
-                                  if (response.statusCode == 200) {
-                                    await RatingService.giRating(token,
-                                        widget.username, rating, widget.kjop);
-
-                                    if (mounted) {
-                                      HapticFeedback.mediumImpact();
-                                      showAccepted(context, 'Vurdering sendt');
-                                      _messageIsLoading = false;
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
-                                      context.goNamed('MineKjop');
-                                    }
-                                  }
-                                } else {
-                                  await RatingService.giRating(token,
-                                      widget.username, rating, widget.kjop);
-
-                                  if (mounted) {
-                                    _messageIsLoading = false;
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                    context.goNamed('MineKjop');
-                                  }
-                                }
-                              } catch (e) {
-                                if (mounted) {
-                                  _messageIsLoading = false;
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                  context.goNamed('MineKjop');
-                                }
-                              }
-                            } on SocketException {
-                              _messageIsLoading = false;
-
-                              Toasts.showErrorToast(
-                                  context, 'Ingen internettforbindelse');
-                            } catch (e) {
-                              _messageIsLoading = false;
-
-                              Toasts.showErrorToast(context, 'En feil oppstod');
-                            }
+                            await ratingServices.giveRating(
+                                context,
+                                widget.kjop,
+                                widget.username,
+                                widget.salgInfoId);
                           },
                           text: 'Send',
                           options: FFButtonOptions(

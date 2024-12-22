@@ -1,0 +1,77 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'package:mat_salg/helper_components/Toasts.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/pages/app_pages/orders/give_rating/rating_page.dart';
+import 'package:mat_salg/services/rating_service.dart';
+import 'package:mat_salg/services/user_service.dart';
+
+class RatingServices {
+  final RatingModel model;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final UserInfoService userInfoService = UserInfoService();
+
+  RatingServices({required this.model});
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Gets the current user location if available------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  Future<void> giveRating(
+      BuildContext context, bool kjop, String username, int? salgInfoId) async {
+    try {
+      if (model.messageIsLoading) return;
+      model.messageIsLoading = true;
+      String? token = await firebaseAuthService.getToken(context);
+      // Early return if token is null
+      if (token == null) {
+        model.messageIsLoading = false;
+        return;
+      }
+      int rating = model.ratingBarValue?.round() ?? 5;
+      try {
+        if (salgInfoId != null) {
+          final response =
+              await RatingService.giveRating(id: salgInfoId, token: token);
+          if (response.statusCode == 200) {
+            await RatingService.giRating(token, username, rating, kjop);
+
+            if (!context.mounted) return;
+            HapticFeedback.mediumImpact();
+            Toasts.showAccepted(context, 'Vurdering sendt');
+            model.messageIsLoading = false;
+            Navigator.pop(context);
+            Navigator.pop(context);
+            context.goNamed('MineKjop');
+          }
+        } else {
+          await RatingService.giRating(token, username, rating, kjop);
+
+          if (!context.mounted) return;
+          model.messageIsLoading = false;
+          Navigator.pop(context);
+          Navigator.pop(context);
+          context.goNamed('MineKjop');
+        }
+      } catch (e) {
+        if (!context.mounted) return;
+        model.messageIsLoading = false;
+        Navigator.pop(context);
+        Navigator.pop(context);
+        context.goNamed('MineKjop');
+      }
+    } on SocketException {
+      model.messageIsLoading = false;
+      if (!context.mounted) return;
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      model.messageIsLoading = false;
+      if (!context.mounted) return;
+      Toasts.showErrorToast(context, 'En feil oppstod');
+    }
+  }
+
+//
+}
