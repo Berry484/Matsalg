@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
-import 'package:mat_salg/pages/app_pages/hjem/betaling/choose_payment_method/choose_payment_widget.dart';
+import 'package:mat_salg/pages/app_pages/hjem/payment/choose_payment_method/choose_payment_widget.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/services/purchase_service.dart';

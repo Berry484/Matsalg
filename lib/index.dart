@@ -30,7 +30,7 @@ export 'pages/register/opprett_profil/opprett_profil_widget.dart'
     show OpprettProfilWidget;
 export 'pages/app_pages/orders/order_product_details/product_page.dart'
     show KjopDetaljVentendeWidget;
-export 'pages/app_pages/hjem/betaling/payment_page_widget.dart'
+export 'pages/app_pages/hjem/payment/payment_page_widget.dart'
     show PaymentPageWidget;
 export 'pages/app_pages/profile/settings/settings_page.dart' show SettingsPage;
 

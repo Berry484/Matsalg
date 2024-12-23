@@ -19,7 +19,7 @@ import 'package:mat_salg/services/location_service.dart';
 import 'package:mat_salg/services/like_service.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../betaling/info/info_widget.dart';
+import '../payment/info/info_widget.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_toggle_icon.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
