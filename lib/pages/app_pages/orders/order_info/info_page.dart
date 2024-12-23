@@ -1,17 +1,19 @@
 import 'dart:io';
-import 'dart:math';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/orders/give_rating/rating_page.dart';
+import 'package:mat_salg/pages/app_pages/orders/order_info/info_services.dart';
+import 'package:mat_salg/services/user_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'godkjentebud_model.dart';
-export 'godkjentebud_model.dart';
+import 'info_model.dart';
+export 'info_model.dart';
 
-class GodkjentebudWidget extends StatefulWidget {
-  const GodkjentebudWidget({
+class InfoPage extends StatefulWidget {
+  const InfoPage({
     super.key,
     this.info,
     this.ordre,
@@ -21,15 +23,16 @@ class GodkjentebudWidget extends StatefulWidget {
   final dynamic ordre;
 
   @override
-  State<GodkjentebudWidget> createState() => _GodkjentebudWidgetState();
+  State<InfoPage> createState() => _GodkjentebudWidgetState();
 }
 
-class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
-  late GodkjentebudModel _model;
+class _GodkjentebudWidgetState extends State<InfoPage> {
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final UserInfoService userInfoService = UserInfoService();
+  late InfoModel _model;
   late Matvarer matvare;
-  late OrdreInfo salgInfo;
-  bool _bekreftIsLoading = false;
-  bool _messageIsLoading = false;
+  late OrdreInfo ordreInfo;
+  late InfoServices infoServices;
 
   @override
   void setState(VoidCallback callback) {
@@ -40,27 +43,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => GodkjentebudModel());
+    _model = createModel(context, () => InfoModel());
     matvare = widget.info;
-    salgInfo = widget.ordre;
-  }
-
-// Haversine formula to calculate distance between two lat/lng points
-  double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
-    const earthRadius = 6371.0; // Earth's radius in kilometers
-    double dLat = _degreesToRadians(lat2 - lat1);
-    double dLng = _degreesToRadians(lng2 - lng1);
-    double a = sin(dLat / 2) * sin(dLat / 2) +
-        cos(_degreesToRadians(lat1)) *
-            cos(_degreesToRadians(lat2)) *
-            sin(dLng / 2) *
-            sin(dLng / 2);
-    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    return earthRadius * c;
-  }
-
-  double _degreesToRadians(double degrees) {
-    return degrees * pi / 180;
+    ordreInfo = widget.ordre;
+    infoServices = InfoServices(model: _model, ordreInfo: ordreInfo);
   }
 
   @override
@@ -121,73 +107,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       children: [
                         GestureDetector(
                           onTap: () async {
-                            try {
-                              // Prevent multiple submissions while loading
-                              if (_messageIsLoading) return;
-                              _messageIsLoading = true;
-
-                              Conversation existingConversation =
-                                  FFAppState().conversations.firstWhere(
-                                (conv) =>
-                                    conv.user ==
-                                    (salgInfo.kjopte == true
-                                        ? salgInfo.selger
-                                        : salgInfo.kjoper),
-                                orElse: () {
-                                  // If no conversation is found, create a new one and add it to the list
-                                  final newConversation = Conversation(
-                                    username: (salgInfo.kjopte == true
-                                        ? salgInfo.selgerUsername ?? ''
-                                        : salgInfo.kjoperUsername ?? ''),
-                                    user: salgInfo.kjopte == true
-                                        ? salgInfo.selger
-                                        : salgInfo.kjoper,
-                                    lastactive: salgInfo.kjopte == true
-                                        ? salgInfo.foodDetails.lastactive
-                                        : salgInfo.lastactive,
-                                    profilePic: salgInfo.kjopte == true
-                                        ? salgInfo.foodDetails.profilepic ?? ''
-                                        : salgInfo.kjoperProfilePic ?? '',
-                                    messages: [],
-                                  );
-
-                                  // Add the new conversation to the list
-                                  FFAppState()
-                                      .conversations
-                                      .add(newConversation);
-
-                                  // Return the new conversation
-                                  return newConversation;
-                                },
-                              );
-
-                              // Step 3: Serialize the conversation object to JSON
-                              String? serializedConversation = serializeParam(
-                                existingConversation
-                                    .toJson(), // Convert the conversation to JSON
-                                ParamType.JSON,
-                              );
-
-                              // Step 4: Stop loading and navigate to message screen
-                              _messageIsLoading = false;
-                              if (serializedConversation != null) {
-                                // Step 5: Navigate to 'message' screen with the conversation
-                                context.pushNamed(
-                                  'message',
-                                  queryParameters: {
-                                    'conversation':
-                                        serializedConversation, // Pass the serialized conversation
-                                  },
-                                );
-                              }
-                            } on SocketException {
-                              _messageIsLoading = false;
-                              Toasts.showErrorToast(
-                                  context, 'Ingen internettforbindelse');
-                            } catch (e) {
-                              _messageIsLoading = false;
-                              Toasts.showErrorToast(context, 'En feil oppstod');
-                            }
+                            await infoServices.enterConversation(context);
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -203,7 +123,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                     shape: BoxShape.circle,
                                   ),
                                   child: Image.network(
-                                    '${ApiConstants.baseUrl}${(salgInfo.kjopte == true ? salgInfo.foodDetails.profilepic : salgInfo.kjoperProfilePic)}',
+                                    '${ApiConstants.baseUrl}${(ordreInfo.kjopte == true ? ordreInfo.foodDetails.profilepic : ordreInfo.kjoperProfilePic)}',
                                     fit: BoxFit.cover,
                                     errorBuilder: (BuildContext context,
                                         Object error, StackTrace? stackTrace) {
@@ -230,9 +150,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                       TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: salgInfo.kjopte == true
-                                                ? salgInfo.selgerUsername
-                                                : salgInfo.kjoperUsername,
+                                            text: ordreInfo.kjopte == true
+                                                ? ordreInfo.selgerUsername
+                                                : ordreInfo.kjoperUsername,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -307,8 +227,8 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                     context.pushNamed(
                       'KjopDetaljVentende1',
                       extra: {
-                        'mine': salgInfo.kjopte == true ? false : true,
-                        'ordre': salgInfo, // Example order object
+                        'mine': ordreInfo.kjopte == true ? false : true,
+                        'ordre': ordreInfo, // Example order object
                       },
                     );
                   } on SocketException {
@@ -330,7 +250,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                   borderRadius: BorderRadius.circular(13),
                 ),
                 child: Container(
-                  height: 85,
+                  height: 86,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primary,
                     borderRadius: BorderRadius.circular(13),
@@ -356,7 +276,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(13),
                                   child: Image.network(
-                                    '${ApiConstants.baseUrl}${salgInfo.foodDetails.imgUrls![0]}',
+                                    '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
@@ -396,93 +316,25 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                             ),
                                       ),
                                     ),
-                                    if (salgInfo.godkjent != true &&
-                                        salgInfo.hentet != true &&
-                                        salgInfo.trekt == true)
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 0, 6),
-                                        child: Text(
-                                          salgInfo.kjopte == true
-                                              ? 'Du trakk budet'
-                                              : 'Kjøperen trakk budet',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Nunito',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 14,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 0),
+                                      child: Text(
+                                        infoServices.getStatusText(),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              fontSize: 14,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                       ),
-                                    if (salgInfo.hentet ?? false)
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 0, 6),
-                                        child: Text(
-                                          salgInfo.kjopte == true
-                                              ? 'Kjøpet er fullført'
-                                              : 'Salget er fullført',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Nunito',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 14,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ),
-                                    if (salgInfo.godkjent != true &&
-                                        salgInfo.hentet != true &&
-                                        salgInfo.trekt != true)
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 0, 6),
-                                        child: Text(
-                                          'Svar på budet',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Nunito',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 14,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ),
-                                    if (salgInfo.godkjent == true &&
-                                        salgInfo.hentet != true &&
-                                        salgInfo.trekt != true)
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 0, 4),
-                                        child: Text(
-                                          'Budet er godkjent, kontakt \n${salgInfo.kjopte == true ? salgInfo.selgerUsername ?? '' : salgInfo.kjoperUsername ?? ''}',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Nunito',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 14,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                                lineHeight: 1.2,
-                                              ),
-                                        ),
-                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -496,7 +348,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 8, 10, 0),
                                 child: Text(
-                                  '${salgInfo.kjopte == true ? salgInfo.prisBetalt : salgInfo.pris} Kr',
+                                  '${ordreInfo.kjopte == true ? ordreInfo.prisBetalt : ordreInfo.pris} Kr',
                                   textAlign: TextAlign.end,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -604,7 +456,7 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 0),
                                   child: Text(
-                                    '${salgInfo.antall.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
+                                    '${ordreInfo.antall.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
                                     textAlign: TextAlign.start,
                                     style: FlutterFlowTheme.of(context)
                                         .titleMedium
@@ -655,10 +507,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        salgInfo.updatetime != null
+                                        ordreInfo.updatetime != null
                                             ? (DateFormat(
                                                     "d. MMM  HH:mm", "nb_NO")
-                                                .format(salgInfo.updatetime!
+                                                .format(ordreInfo.updatetime!
                                                     .toLocal()
                                                     .add(Duration(days: 3))))
                                             : "",
@@ -687,9 +539,9 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                 ],
               ),
             ),
-            if (salgInfo.rated != true &&
-                salgInfo.kjopte != true &&
-                salgInfo.hentet == true)
+            if (ordreInfo.rated != true &&
+                ordreInfo.kjopte != true &&
+                ordreInfo.hentet == true)
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -708,10 +560,10 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                       child: FFButtonWidget(
                         onPressed: () async {
                           try {
-                            if (_bekreftIsLoading) {
+                            if (_model.loading) {
                               return;
                             }
-                            _bekreftIsLoading = true;
+                            _model.loading = true;
                             await showModalBottomSheet(
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
@@ -725,20 +577,22 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                                     padding: MediaQuery.viewInsetsOf(context),
                                     child: RatingPage(
                                       kjop: false,
-                                      username: salgInfo.kjoper,
-                                      salgInfoId: salgInfo.id,
+                                      username: ordreInfo.kjoper,
+                                      salgInfoId: ordreInfo.id,
                                     ),
                                   ),
                                 );
                               },
                             ).then((value) => setState(() {
-                                  _bekreftIsLoading = false;
+                                  _model.loading = false;
                                 }));
                             return;
                           } on SocketException {
+                            if (!context.mounted) return;
                             Toasts.showErrorToast(
                                 context, 'Ingen internettforbindelse');
                           } catch (e) {
+                            if (!context.mounted) return;
                             Toasts.showErrorToast(context, 'En feil oppstod');
                           }
                         },
@@ -772,119 +626,232 @@ class _GodkjentebudWidgetState extends State<GodkjentebudWidget> {
                   ),
                 ],
               ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: 10,
-                  height: 10,
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                  ),
-                ),
-                Align(
-                  alignment: const AlignmentDirectional(0, 0),
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 35),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        try {
-                          // Prevent multiple submissions while loading
-                          if (_messageIsLoading) return;
-                          _messageIsLoading = true;
-
-                          Conversation existingConversation =
-                              FFAppState().conversations.firstWhere(
-                            (conv) =>
-                                conv.user ==
-                                (salgInfo.kjopte == false
-                                    ? salgInfo.kjoper
-                                    : salgInfo.selger),
-                            orElse: () {
-                              // If no conversation is found, create a new one and add it to the list
-                              final newConversation = Conversation(
-                                username: salgInfo.kjopte == false
-                                    ? salgInfo.kjoperUsername ?? ''
-                                    : salgInfo.selgerUsername ?? '',
-                                user: salgInfo.kjopte == false
-                                    ? salgInfo.kjoper
-                                    : salgInfo.selger,
-                                lastactive: salgInfo.kjopte == false
-                                    ? salgInfo.lastactive
-                                    : salgInfo.foodDetails.lastactive,
-                                profilePic: salgInfo.kjopte == false
-                                    ? salgInfo.kjoperProfilePic ?? ''
-                                    : matvare.profilepic ?? '',
-                                messages: [],
-                              );
-
-                              // Add the new conversation to the list
-                              FFAppState().conversations.add(newConversation);
-
-                              // Return the new conversation
-                              return newConversation;
-                            },
-                          );
-
-                          // Step 3: Serialize the conversation object to JSON
-                          String? serializedConversation = serializeParam(
-                            existingConversation
-                                .toJson(), // Convert the conversation to JSON
-                            ParamType.JSON,
-                          );
-
-                          // Step 4: Stop loading and navigate to message screen
-                          _messageIsLoading = false;
-                          if (serializedConversation != null) {
-                            // Step 5: Navigate to 'message' screen with the conversation
-                            context.pushNamed(
-                              'message',
-                              queryParameters: {
-                                'conversation':
-                                    serializedConversation, // Pass the serialized conversation
-                              },
-                            );
-                          }
-                        } on SocketException {
-                          _messageIsLoading = false;
-
-                          Toasts.showErrorToast(
-                              context, 'Ingen internettforbindelse');
-                        } catch (e) {
-                          _messageIsLoading = false;
-
-                          Toasts.showErrorToast(context, 'En feil oppstod');
-                        }
-                      },
-                      text: 'Melding',
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 47,
+            Padding(
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 35),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  if (ordreInfo.godkjent == true &&
+                      ordreInfo.hentet != true &&
+                      ordreInfo.kjopte == true &&
+                      ordreInfo.avvist != true &&
+                      ordreInfo.trekt != true)
+                    Align(
+                      alignment: const AlignmentDirectional(0, 0),
+                      child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(11, 0, 0, 0),
-                        iconPadding:
                             const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        color: FlutterFlowTheme.of(context).alternate,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            infoServices.confirmReceived(context);
+                          },
+                          text: 'Bekreft mottatt',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 47,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                11, 0, 0, 0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  fontSize: 16,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                            elevation: 0,
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              width: 0.7,
+                            ),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  Container(
+                    width: 10,
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  if (ordreInfo.kjopte != true
+                      ? (ordreInfo.godkjent == true ||
+                          ordreInfo.godkjent == false ||
+                          ordreInfo.trekt == true ||
+                          ordreInfo.avvist == true)
+                      : true)
+                    Align(
+                      alignment: const AlignmentDirectional(0, 0),
+                      child: Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            await infoServices.enterConversation(context);
+                          },
+                          text: 'Melding',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 47,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                11, 0, 0, 0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 0),
+                            color: FlutterFlowTheme.of(context).alternate,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
                                   fontFamily: 'Nunito',
                                   color: FlutterFlowTheme.of(context).primary,
                                   fontSize: 17,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
-                        elevation: 0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
+                            elevation: 0,
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
-                  ),
-                ),
-              ],
+                  if (ordreInfo.godkjent != true &&
+                      ordreInfo.hentet != true &&
+                      ordreInfo.kjopte == true &&
+                      ordreInfo.avvist != true &&
+                      ordreInfo.trekt != true)
+                    Align(
+                      alignment: const AlignmentDirectional(0, 0),
+                      child: Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            await infoServices.cancelBid(context);
+                          },
+                          text: 'Trekk bud',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 47,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                11, 0, 0, 0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  color: FlutterFlowTheme.of(context).error,
+                                  fontSize: 16,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                            elevation: 0,
+                            borderSide: const BorderSide(
+                              color: Color(0x5957636C),
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  if (ordreInfo.godkjent != true &&
+                      ordreInfo.hentet != true &&
+                      ordreInfo.kjopte != true &&
+                      ordreInfo.avvist != true &&
+                      ordreInfo.trekt != true)
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              await infoServices.declineBid(context);
+                            },
+                            text: 'Avslå',
+                            options: FFButtonOptions(
+                              width: 155,
+                              height: 47,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
+                              color: Colors.white,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Nunito',
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    fontSize: 16,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                              elevation: 0,
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).alternate,
+                                width: 0.6,
+                              ),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                          ),
+                        ),
+                        Builder(
+                          builder: (context) => Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                5, 0, 0, 0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                await infoServices.acceptBid(context);
+                              },
+                              text: 'Godkjenn',
+                              options: FFButtonOptions(
+                                width: 155,
+                                height: 47,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 0, 0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 0),
+                                color: FlutterFlowTheme.of(context).alternate,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Nunito',
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      fontSize: 16,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                elevation: 0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
             ),
           ],
         ),

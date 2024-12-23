@@ -47,7 +47,7 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
   TextEditingController? antallStkTextController;
 
 //---------------------------------------------------------------------------------------------------------------
-//--------------------FocusNodes and controller for the text fields----------------------------------------------
+//--------------------Functions for the controllers etc----------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   String? Function(BuildContext, String?)? produktNavnTextControllerValidator;
   String? Function(BuildContext, String?)?

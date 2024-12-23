@@ -1,19 +1,19 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/cupertino.dart';
+import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/helper_components/Toasts.dart';
 import 'package:mat_salg/pages/app_pages/hjem/rapporter/rapporter_widget.dart';
 import 'package:mat_salg/pages/app_pages/kart/kart_pop_up/kart_pop_up_widget.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/services/location_service.dart';
+import 'package:mat_salg/pages/app_pages/orders/order_product_details/product_services.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
-import 'kjop_detalj_ventende_model.dart';
-export 'kjop_detalj_ventende_model.dart';
+import 'product_model.dart';
+export 'product_model.dart';
 
 class KjopDetaljVentendeWidget extends StatefulWidget {
   const KjopDetaljVentendeWidget({
@@ -32,79 +32,25 @@ class KjopDetaljVentendeWidget extends StatefulWidget {
 
 class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final LocationService locationService = LocationService();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  late KjopDetaljVentendeModel _model;
+  late ProductModel _model;
   late OrdreInfo ordreInfo;
-
-  bool _messageIsLoading = false;
-  bool _isExpanded = false;
-  String? poststed;
+  late ProductServices productServices;
 
   @override
   void initState() {
     super.initState();
-    getPoststed();
-    _model = createModel(context, () => KjopDetaljVentendeModel());
+
+    _model = createModel(context, () => ProductModel());
     ordreInfo = widget.ordre;
+    productServices = ProductServices(model: _model, ordreInfo: ordreInfo);
+    productServices.getPoststed(context);
   }
 
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
-  }
-
-  double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
-    const earthRadius = 6371.0; // Earth's radius in kilometers
-    double dLat = _degreesToRadians(lat2 - lat1);
-    double dLng = _degreesToRadians(lng2 - lng1);
-    double a = sin(dLat / 2) * sin(dLat / 2) +
-        cos(_degreesToRadians(lat1)) *
-            cos(_degreesToRadians(lat2)) *
-            sin(dLng / 2) *
-            sin(dLng / 2);
-    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    return earthRadius * c;
-  }
-
-  double _degreesToRadians(double degrees) {
-    return degrees * pi / 180;
-  }
-
-  Future<void> getPoststed() async {
-    try {
-      String? token = await firebaseAuthService.getToken(context);
-
-      if (token == null) {
-        return;
-      } else {
-        if (ordreInfo.foodDetails.lat == 0 || ordreInfo.foodDetails.lng == 0) {
-          poststed = null;
-        }
-        if ((ordreInfo.foodDetails.lat == null ||
-                ordreInfo.foodDetails.lat == 0) ||
-            (ordreInfo.foodDetails.lng == null ||
-                ordreInfo.foodDetails.lng == 0)) {
-          poststed = null;
-        }
-
-        String? response = await locationService.getKommune(token,
-            ordreInfo.foodDetails.lat ?? 0, ordreInfo.foodDetails.lng ?? 0);
-        safeSetState(() {
-          if (response.isNotEmpty) {
-            String formattedResponse =
-                response[0].toUpperCase() + response.substring(1).toLowerCase();
-            poststed = formattedResponse;
-          }
-        });
-      }
-    } on SocketException {
-      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      Toasts.showErrorToast(context, 'En feil oppstod');
-    }
   }
 
   @override
@@ -284,7 +230,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           ),
                                                     ),
                                                     TextSpan(
-                                                      text: (calculateDistance(
+                                                      text: (CalculateDistance.calculateDistance(
                                                                   FFAppState()
                                                                       .brukerLat,
                                                                   FFAppState()
@@ -298,12 +244,14 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                           .lng ??
                                                                       0.0) <
                                                               1)
-                                                          ? (poststed != null
-                                                              ? '\n${poststed}, 1 Km'
+                                                          ? (_model.poststed !=
+                                                                  null
+                                                              ? '\n${_model.poststed}, 1 Km'
                                                               : '\n1 Km')
-                                                          : (poststed != null
-                                                              ? '\n${poststed ?? ''}, ${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, ordreInfo.foodDetails.lat ?? 0.0, ordreInfo.foodDetails.lng ?? 0.0).toStringAsFixed(0)}Km'
-                                                              : '\n${calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, ordreInfo.foodDetails.lat ?? 0.0, ordreInfo.foodDetails.lng ?? 0.0).toStringAsFixed(0)}Km'),
+                                                          : (_model.poststed !=
+                                                                  null
+                                                              ? '\n${_model.poststed ?? ''}, ${CalculateDistance.calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, ordreInfo.foodDetails.lat ?? 0.0, ordreInfo.foodDetails.lng ?? 0.0).toStringAsFixed(0)}Km'
+                                                              : '\n${CalculateDistance.calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, ordreInfo.foodDetails.lat ?? 0.0, ordreInfo.foodDetails.lng ?? 0.0).toStringAsFixed(0)}Km'),
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
@@ -346,89 +294,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                   actions: <Widget>[
                                                     CupertinoActionSheetAction(
                                                       onPressed: () async {
-                                                        try {
-                                                          // Prevent multiple submissions while loading
-                                                          if (_messageIsLoading)
-                                                            return;
-                                                          _messageIsLoading =
-                                                              true;
-
-                                                          Conversation
-                                                              existingConversation =
-                                                              FFAppState()
-                                                                  .conversations
-                                                                  .firstWhere(
-                                                            (conv) =>
-                                                                conv.user ==
-                                                                ordreInfo
-                                                                    .foodDetails
-                                                                    .uid,
-                                                            orElse: () {
-                                                              final newConversation =
-                                                                  Conversation(
-                                                                username: ordreInfo
-                                                                        .foodDetails
-                                                                        .username ??
-                                                                    '',
-                                                                user: ordreInfo
-                                                                        .foodDetails
-                                                                        .uid ??
-                                                                    '',
-                                                                lastactive: ordreInfo
-                                                                    .foodDetails
-                                                                    .lastactive,
-                                                                profilePic: ordreInfo
-                                                                        .foodDetails
-                                                                        .profilepic ??
-                                                                    '',
-                                                                messages: [],
-                                                              );
-
-                                                              FFAppState()
-                                                                  .conversations
-                                                                  .add(
-                                                                      newConversation);
-
-                                                              // Return the new conversation
-                                                              return newConversation;
-                                                            },
-                                                          );
-
-                                                          String?
-                                                              serializedConversation =
-                                                              serializeParam(
-                                                            existingConversation
-                                                                .toJson(),
-                                                            ParamType.JSON,
-                                                          );
-
-                                                          _messageIsLoading =
-                                                              false;
-                                                          if (serializedConversation !=
-                                                              null) {
-                                                            Navigator.pop(
+                                                        Navigator.pop(context);
+                                                        await productServices
+                                                            .enterConversation(
                                                                 context);
-                                                            context.pushNamed(
-                                                              'message',
-                                                              queryParameters: {
-                                                                'conversation':
-                                                                    serializedConversation,
-                                                              },
-                                                            );
-                                                          }
-                                                        } on SocketException {
-                                                          _messageIsLoading =
-                                                              false;
-                                                          Toasts.showErrorToast(
-                                                              context,
-                                                              'Ingen internettforbindelse');
-                                                        } catch (e) {
-                                                          _messageIsLoading =
-                                                              false;
-                                                          Toasts.showErrorToast(
-                                                              context,
-                                                              'En feil oppstod');
-                                                        }
                                                       },
                                                       child: const Text(
                                                         'Send melding',
@@ -530,12 +399,12 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onDoubleTap: () async {},
-                                      child: Container(
+                                      child: SizedBox(
                                         width: double.infinity,
                                         height: 485,
                                         child: Stack(
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               width: double.infinity,
                                               height: 485,
                                               child: Stack(
@@ -553,7 +422,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                       scrollDirection:
                                                           Axis.horizontal,
                                                       children: [
-                                                        Container(
+                                                        SizedBox(
                                                           width:
                                                               double.infinity,
                                                           height: 485,
@@ -603,7 +472,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                 .imgUrls!
                                                                 .length >
                                                             1)
-                                                          Container(
+                                                          SizedBox(
                                                             width:
                                                                 double.infinity,
                                                             height: 485,
@@ -654,7 +523,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                 .imgUrls!
                                                                 .length >
                                                             2)
-                                                          Container(
+                                                          SizedBox(
                                                             width:
                                                                 double.infinity,
                                                             height: 485,
@@ -705,7 +574,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                 .imgUrls!
                                                                 .length >
                                                             3)
-                                                          Container(
+                                                          SizedBox(
                                                             height: 485,
                                                             child: Stack(
                                                               children: [
@@ -754,7 +623,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                                 .imgUrls!
                                                                 .length >
                                                             4)
-                                                          Container(
+                                                          SizedBox(
                                                             width:
                                                                 double.infinity,
                                                             height: 485,
@@ -840,10 +709,18 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                             );
                                                             safeSetState(() {});
                                                           } on SocketException {
+                                                            if (!context
+                                                                .mounted) {
+                                                              return;
+                                                            }
                                                             Toasts.showErrorToast(
                                                                 context,
                                                                 'Ingen internettforbindelse');
                                                           } catch (e) {
+                                                            if (!context
+                                                                .mounted) {
+                                                              return;
+                                                            }
                                                             Toasts.showErrorToast(
                                                                 context,
                                                                 'En feil oppstod');
@@ -946,9 +823,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 ).then((value) =>
                                                     safeSetState(() {}));
                                               } on SocketException {
+                                                if (!context.mounted) return;
                                                 Toasts.showErrorToast(context,
                                                     'Ingen internettforbindelse');
                                               } catch (e) {
+                                                if (!context.mounted) return;
                                                 Toasts.showErrorToast(
                                                     context, 'En feil oppstod');
                                               }
@@ -980,77 +859,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                try {
-                                                  // Prevent multiple submissions while loading
-                                                  if (_messageIsLoading) return;
-                                                  _messageIsLoading = true;
-
-                                                  Conversation
-                                                      existingConversation =
-                                                      FFAppState()
-                                                          .conversations
-                                                          .firstWhere(
-                                                    (conv) =>
-                                                        conv.user ==
-                                                        ordreInfo.selger,
-                                                    orElse: () {
-                                                      // If no conversation is found, create a new one and add it to the list
-                                                      final newConversation =
-                                                          Conversation(
-                                                        username: ordreInfo
-                                                                .selgerUsername ??
-                                                            '',
-                                                        user: ordreInfo.selger,
-                                                        lastactive: ordreInfo
-                                                            .lastactive,
-                                                        profilePic: ordreInfo
-                                                                .foodDetails
-                                                                .profilepic ??
-                                                            '',
-                                                        messages: [],
-                                                      );
-
-                                                      // Add the new conversation to the list
-                                                      FFAppState()
-                                                          .conversations
-                                                          .add(newConversation);
-
-                                                      // Return the new conversation
-                                                      return newConversation;
-                                                    },
-                                                  );
-
-                                                  // Step 3: Serialize the conversation object to JSON
-                                                  String?
-                                                      serializedConversation =
-                                                      serializeParam(
-                                                    existingConversation
-                                                        .toJson(), // Convert the conversation to JSON
-                                                    ParamType.JSON,
-                                                  );
-
-                                                  // Step 4: Stop loading and navigate to message screen
-                                                  _messageIsLoading = false;
-                                                  if (serializedConversation !=
-                                                      null) {
-                                                    // Step 5: Navigate to 'message' screen with the conversation
-                                                    context.pushNamed(
-                                                      'message',
-                                                      queryParameters: {
-                                                        'conversation':
-                                                            serializedConversation, // Pass the serialized conversation
-                                                      },
-                                                    );
-                                                  }
-                                                } on SocketException {
-                                                  _messageIsLoading = false;
-                                                  Toasts.showErrorToast(context,
-                                                      'Ingen internettforbindelse');
-                                                } catch (e) {
-                                                  _messageIsLoading = false;
-                                                  Toasts.showErrorToast(context,
-                                                      'En feil oppstod');
-                                                }
+                                                await productServices
+                                                    .enterConversation(context);
                                               },
                                               child: Material(
                                                 color: Colors.transparent,
@@ -1237,7 +1047,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Container(
+                                          SizedBox(
                                             width:
                                                 332.0, // Width constraint to enable wrapping
                                             child: Text.rich(
@@ -1258,7 +1068,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         ),
                                                   ),
                                                   TextSpan(
-                                                    text: _isExpanded
+                                                    text: _model.isExpanded
                                                         ? ordreInfo.foodDetails
                                                             .description // Full text if expanded
                                                         : (ordreInfo
@@ -1290,10 +1100,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 ],
                                               ),
                                               textAlign: TextAlign.start,
-                                              softWrap:
-                                                  true, // Enable text wrapping
-                                              overflow: TextOverflow
-                                                  .visible, // Visible overflow when expanded
+                                              softWrap: true,
+                                              overflow: TextOverflow.visible,
                                             ),
                                           ),
                                         ],
@@ -1313,17 +1121,17 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                       GestureDetector(
                                         onTap: () {
                                           setState(() {
-                                            _isExpanded =
-                                                !_isExpanded; // Toggle expand/collapse
+                                            _model.isExpanded =
+                                                !_model.isExpanded;
                                           });
                                         },
                                         child: Padding(
                                           padding:
                                               const EdgeInsets.only(top: 4.0),
                                           child: Text(
-                                            _isExpanded
+                                            _model.isExpanded
                                                 ? 'Se mindre'
-                                                : 'Se mer', // Dynamic toggle text
+                                                : 'Se mer',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall
                                                 .override(

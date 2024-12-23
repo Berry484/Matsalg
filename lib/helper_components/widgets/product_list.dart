@@ -5,6 +5,9 @@ import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
 import 'package:mat_salg/my_ip.dart';
 
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Displays a product that is used in the product lists-----------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
 class ProductList extends StatelessWidget {
   final Matvarer matvare;
   final VoidCallback onTap;

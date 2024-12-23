@@ -287,14 +287,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                   final params = FFParameters(state);
                   final kjopt =
                       params.getParam<bool>('kjopt', ParamType.bool) ?? false;
-                  return MineKjopWidget(kjopt: kjopt);
+                  return OrdersPage(kjopt: kjopt);
                 },
                 pageBuilder: (context, state) {
                   final params = FFParameters(state);
                   final kjopt =
                       params.getParam<bool>('kjopt', ParamType.bool) ?? false;
-                  return MaterialPage<void>(
-                      child: MineKjopWidget(kjopt: kjopt));
+                  return MaterialPage<void>(child: OrdersPage(kjopt: kjopt));
                 },
                 routes: [
                   GoRoute(

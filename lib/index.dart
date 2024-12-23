@@ -1,7 +1,6 @@
 // Export pages
 export 'pages/register/registrer/registrer_widget.dart' show RegistrerWidget;
-export 'pages/app_pages/orders/mine_kjop/mine_kjop_widget.dart'
-    show MineKjopWidget;
+export 'pages/app_pages/orders/my_orders/orders_page.dart' show OrdersPage;
 export 'pages/app_pages/hjem/godkjentbetaling/godkjentbetaling_widget.dart'
     show GodkjentbetalingWidget;
 export 'pages/app_pages/profile/profile/profile_page.dart' show ProfilePage;
@@ -30,7 +29,7 @@ export 'pages/app_pages/hjem/bruker_rating/bruker_rating_widget.dart'
     show BrukerRatingWidget;
 export 'pages/register/opprett_profil/opprett_profil_widget.dart'
     show OpprettProfilWidget;
-export 'pages/app_pages/orders/kjop_detalj/kjop_detalj_ventende_widget.dart'
+export 'pages/app_pages/orders/order_product_details/product_page.dart'
     show KjopDetaljVentendeWidget;
 export 'pages/app_pages/hjem/betaling/betaling_widget.dart' show BetalingWidget;
 export 'pages/app_pages/profile/settings/settings_page.dart' show SettingsPage;
