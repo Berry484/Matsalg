@@ -235,41 +235,17 @@ class FFAppState extends ChangeNotifier {
     prefs.setString('ff_kommune', value);
   }
 
-  bool _startet = false;
-  bool get startet => _startet;
-  set startet(bool value) {
-    _startet = value;
-  }
+  bool startet = false;
 
-  bool _lagtUt = false;
-  bool get lagtUt => _lagtUt;
-  set lagtUt(bool value) {
-    _lagtUt = value;
-  }
+  bool lagtUt = false;
 
-  bool _liked = false;
-  bool get liked => _liked;
-  set liked(bool value) {
-    _liked = value;
-  }
+  bool liked = false;
 
-  bool _harKjopt = false;
-  bool get harKjopt => _harKjopt;
-  set harKjopt(bool value) {
-    _harKjopt = value;
-  }
+  bool harKjopt = false;
 
-  bool _harSolgt = false;
-  bool get harSolgt => _harSolgt;
-  set harSolgt(bool value) {
-    _harSolgt = value;
-  }
+  bool harSolgt = false;
 
-  LatLng? _brukersted = const LatLng(59.9138688, 10.7522454);
-  LatLng? get brukersted => _brukersted;
-  set brukersted(LatLng? value) {
-    _brukersted = value;
-  }
+  LatLng? brukersted = const LatLng(59.9138688, 10.7522454);
 
   double _brukerLat = 59.9138688;
   double get brukerLat => _brukerLat;
@@ -349,46 +325,22 @@ class FFAppState extends ChangeNotifier {
   }
 
   // List of liked foods
-  List<int> _likedFoods = [];
-  List<int> get likedFoods => _likedFoods;
-  set likedFoods(List<int> value) {
-    _likedFoods = value;
-  }
+  List<int> likedFoods = [];
 
   // List of unliked foods
-  List<int> _unlikedFoods = [];
-  List<int> get unlikedFoods => _unlikedFoods;
-  set unlikedFoods(List<int> value) {
-    _unlikedFoods = value;
-  }
+  List<int> unlikedFoods = [];
 
   // List of liked foods
-  List<String> _wantPush = [];
-  List<String> get wantPush => _wantPush;
-  set wantPush(List<String> value) {
-    _wantPush = value;
-  }
+  List<String> wantPush = [];
 
   // List of unliked foods
-  List<String> _noPush = [];
-  List<String> get noPush => _noPush;
-  set noPush(List<String> value) {
-    _noPush = value;
-  }
+  List<String> noPush = [];
 
   // List of liked foods
-  List<int> _wantPushFoodDetails = [];
-  List<int> get wantPushFoodDetails => _wantPushFoodDetails;
-  set wantPushFoodDetails(List<int> value) {
-    _wantPushFoodDetails = value;
-  }
+  List<int> wantPushFoodDetails = [];
 
   // List of unliked foods
-  List<int> _noPushFoodDetails = [];
-  List<int> get noPushFoodDetails => _noPushFoodDetails;
-  set noPushFoodDetails(List<int> value) {
-    _noPushFoodDetails = value;
-  }
+  List<int> noPushFoodDetails = [];
 
   String _profilepic = "";
   String get profilepic => _profilepic;

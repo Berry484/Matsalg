@@ -77,6 +77,7 @@ class EditServices {
           return;
         }
       }
+      if (!context.mounted) return;
       String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
         return;

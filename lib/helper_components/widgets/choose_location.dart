@@ -3,9 +3,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart' as ChooselocationLatLng;
-// Add any missing imports if necessary
-import 'dart:math' as math;
+import 'package:latlong2/latlong.dart' as choose_location;
 
 //-----------------------------------------------------------------------------------------------------------------------
 //--------------------Lets the user choose a new location either for them self or in general-----------------------------
@@ -36,20 +34,19 @@ class _ChooselocationState extends State<Chooselocation> {
   double zoomLevel = 9; // Initial zoom level
 
   // Store the current center of the map
-  ChooselocationLatLng.LatLng? currentCenter;
+  choose_location.LatLng? currentCenter;
 
   @override
   void initState() {
     super.initState();
     // Initialize the current center with provided center coordinates
-    currentCenter = ChooselocationLatLng.LatLng(
+    currentCenter = choose_location.LatLng(
       widget.center.latitude,
       widget.center.longitude,
     );
     mapController.mapEventStream.listen((event) {
       setState(() {
-        zoomLevel =
-            mapController.zoom; // Update the zoom level from the controller
+        zoomLevel = mapController.camera.zoom;
       });
     });
     // Force initial rendering of the circle
@@ -65,10 +62,10 @@ class _ChooselocationState extends State<Chooselocation> {
           FlutterMap(
             mapController: mapController,
             options: MapOptions(
-              center: currentCenter,
-              interactiveFlags:
-                  InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-              zoom: zoomLevel,
+              initialCenter: currentCenter!,
+              interactionOptions: InteractionOptions(
+                  flags: InteractiveFlag.pinchZoom | InteractiveFlag.drag),
+              initialZoom: zoomLevel,
               minZoom: 5,
               maxZoom: 18,
               onPositionChanged: (position, hasGesture) {
@@ -98,7 +95,7 @@ class _ChooselocationState extends State<Chooselocation> {
                   width: 100.0,
                   height: 100.0,
                   point: currentCenter ??
-                      ChooselocationLatLng.LatLng(
+                      choose_location.LatLng(
                           widget.center.latitude, widget.center.longitude),
                   child: Icon(
                     Icons.location_pin,
@@ -119,34 +116,8 @@ class _ChooselocationState extends State<Chooselocation> {
               ),
             ],
           ),
-          // // Dark overlay with transparent circle
-          // IgnorePointer(
-          //   ignoring: true, // This allows touch events to pass through
-          //   child: CustomPaint(
-          //     size: Size(double.infinity, double.infinity),
-          //     painter: OverlayPainter(
-          //       center: currentCenter ??
-          //           ChooselocationLatLng.LatLng(
-          //               widget.center.latitude, widget.center.longitude),
-          //       zoom: zoomLevel,
-          //       circleRadius: _calculateCircleRadius(),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
-  }
-
-  // Calculate the pixel size of the circle based on the zoom level
-  double _calculateCircleRadius() {
-    return _metersToPixels(baseRadiusMeters, zoomLevel) / 2;
-  }
-
-  // Convert meters to pixels based on zoom level
-  double _metersToPixels(double meters, double zoom) {
-    const double metersPerPixelAtZoomLevel0 = 156543.03392804097;
-    double metersPerPixel = metersPerPixelAtZoomLevel0 / math.pow(2, zoom);
-    return meters / metersPerPixel;
   }
 }

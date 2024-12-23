@@ -51,8 +51,10 @@ class ProductServices {
         appState.updateUI();
       }
     } on SocketException {
+      if (!context.mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      if (!context.mounted) return;
       Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }

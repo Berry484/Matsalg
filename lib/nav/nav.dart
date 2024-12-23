@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mat_salg/bottomNavWrapper.dart';
+import 'package:mat_salg/nav_bar.dart';
 import 'package:mat_salg/pages/app_pages/profile/settings/account/account_page.dart';
 import 'package:provider/provider.dart';
 

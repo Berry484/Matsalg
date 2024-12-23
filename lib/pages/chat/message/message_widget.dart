@@ -97,8 +97,10 @@ class _MessageWidgetState extends State<MessageWidget> {
         }
       }
     } on SocketException {
+      if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      if (!mounted) return;
       Toasts.showErrorToast(context, 'En feil oppstod');
     }
   }
@@ -726,7 +728,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                           }
                         },
                         icon: const FaIcon(
-                          FontAwesomeIcons.arrowCircleUp,
+                          FontAwesomeIcons.circleArrowUp,
                           color: Color(0xFF357BF7),
                           size: 28,
                         ),

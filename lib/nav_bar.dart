@@ -6,15 +6,15 @@ import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart'
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 
 class MainWrapper extends StatefulWidget {
-  const MainWrapper({Key? key, required this.child}) : super(key: key);
+  const MainWrapper({super.key, required this.child});
 
   final StatefulNavigationShell child;
 
   @override
-  _MainWrapperState createState() => _MainWrapperState();
+  MainWrapperState createState() => MainWrapperState();
 }
 
-class _MainWrapperState extends State<MainWrapper> {
+class MainWrapperState extends State<MainWrapper> {
   int _selectedIndex = 0;
 
   // Function to map route to the correct index

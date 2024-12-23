@@ -269,7 +269,7 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                   if (_isloading) return;
                                   _isloading = true;
                                   await firebaseAuthService.signInWithApple();
-
+                                  if (!context.mounted) return;
                                   String? token = await firebaseAuthService
                                       .getToken(context);
                                   logger.d(token);
@@ -302,9 +302,11 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                       _isloading = false;
                                       _webSocketService = WebSocketService();
                                       _webSocketService.connect(retrying: true);
+                                      if (!context.mounted) return;
                                       userInfoService.getAll(context);
                                       sendToken();
                                       _isloading = false;
+                                      if (!context.mounted) return;
                                       context.go('/hjem');
                                       FFAppState().login = true;
                                       return;
@@ -317,6 +319,7 @@ class _RegistrerWidgetState extends State<RegisterWidget>
 
                                       if (location != const LatLng(0.0, 0.0)) {
                                         _isloading = false;
+                                        if (!context.mounted) return;
                                         context.goNamed(
                                           'opprettProfil',
                                           queryParameters: {
@@ -332,6 +335,7 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                         );
                                       } else {
                                         _isloading = false;
+                                        if (!context.mounted) return;
                                         context.goNamed(
                                           'VelgPosisjon',
                                           queryParameters: {
@@ -359,11 +363,13 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                 } on SocketException {
                                   HapticFeedback.lightImpact();
                                   _isloading = false;
+                                  if (!context.mounted) return;
                                   feilInnlogging(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
                                   HapticFeedback.lightImpact();
                                   _isloading = false;
+                                  if (!context.mounted) return;
                                   feilInnlogging(
                                       context, 'Verifisering mislyktes');
                                 }
@@ -409,7 +415,7 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                 if (_isloading) return;
                                 _isloading = true;
                                 await firebaseAuthService.loginWithGoogle();
-
+                                if (!context.mounted) return;
                                 String? token =
                                     await firebaseAuthService.getToken(context);
 
@@ -441,9 +447,11 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                     _isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
+                                    if (!context.mounted) return;
                                     userInfoService.getAll(context);
                                     sendToken();
                                     _isloading = false;
+                                    if (!context.mounted) return;
                                     context.go('/hjem');
                                     FFAppState().login = true;
                                     return;
@@ -456,6 +464,7 @@ class _RegistrerWidgetState extends State<RegisterWidget>
 
                                     if (location != const LatLng(0.0, 0.0)) {
                                       _isloading = false;
+                                      if (!context.mounted) return;
                                       context.goNamed(
                                         'opprettProfil',
                                         queryParameters: {
@@ -471,6 +480,7 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                       );
                                     } else {
                                       _isloading = false;
+                                      if (!context.mounted) return;
                                       context.goNamed(
                                         'VelgPosisjon',
                                         queryParameters: {
@@ -498,11 +508,13 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                               } on SocketException {
                                 HapticFeedback.lightImpact();
                                 _isloading = false;
+                                if (!context.mounted) return;
                                 feilInnlogging(
                                     context, 'Ingen internettforbindelse');
                               } catch (e) {
                                 HapticFeedback.lightImpact();
                                 _isloading = false;
+                                if (!context.mounted) return;
                                 feilInnlogging(
                                     context, 'Verifisering mislyktes');
                               }

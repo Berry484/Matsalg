@@ -279,6 +279,10 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                             id: matvare.matId);
                                                                         setState(
                                                                             () {});
+                                                                        if (!context
+                                                                            .mounted) {
+                                                                          return;
+                                                                        }
                                                                         Navigator.pop(
                                                                             context);
                                                                         context.pushNamed(
@@ -891,6 +895,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                                 token: token,
                                                                                 id: matvare.matId);
                                                                             setState(() {});
+                                                                            if (!context.mounted) {
+                                                                              return;
+                                                                            }
                                                                             Navigator.pop(context);
                                                                             context.pushNamed('Profil');
                                                                             Toasts.showAccepted(context,
@@ -902,10 +909,18 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                       } on SocketException {
                                                                         _model.slettIsLoading =
                                                                             false;
+                                                                        if (!context
+                                                                            .mounted) {
+                                                                          return;
+                                                                        }
                                                                         Toasts.showErrorToast(
                                                                             context,
                                                                             'Ingen internettforbindelse');
                                                                       } catch (e) {
+                                                                        if (!context
+                                                                            .mounted) {
+                                                                          return;
+                                                                        }
                                                                         _model.slettIsLoading =
                                                                             false;
                                                                         Toasts.showErrorToast(
@@ -1139,7 +1154,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Container(
+                                          SizedBox(
                                             width:
                                                 332.0, // Width constraint to enable wrapping
                                             child: Text.rich(

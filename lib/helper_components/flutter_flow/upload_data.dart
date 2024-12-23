@@ -1,10 +1,7 @@
 import 'dart:async';
-
-//import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:video_player/video_player.dart';
@@ -58,24 +55,6 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
   bool includeDimensions = false,
   bool includeBlurHash = false,
 }) async {
-  createUploadMediaListTile(String label, MediaSource mediaSource) => ListTile(
-        title: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.getFont(
-            pickerFontFamily,
-            color: textColor,
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-        tileColor: backgroundColor,
-        dense: false,
-        onTap: () => Navigator.pop(
-          context,
-          mediaSource,
-        ),
-      );
   final mediaSource = await showCupertinoModalPopup<MediaSource>(
     context: context,
     builder: (context) {
@@ -267,57 +246,6 @@ bool validateFileFormat(String filePath, BuildContext context) {
     ));
   return false;
 }
-
-// Future<SelectedFile?> selectFile({
-//   String? storageFolderPath,
-//   List<String>? allowedExtensions,
-// }) =>
-//     selectFiles(
-//       storageFolderPath: storageFolderPath,
-//       allowedExtensions: allowedExtensions,
-//       multiFile: false,
-//     ).then((value) => value?.first);
-//
-// Future<List<SelectedFile>?> selectFiles({
-//   String? storageFolderPath,
-//   List<String>? allowedExtensions,
-//   bool multiFile = false,
-// }) async {
-//   final pickedFiles = await FilePicker.platform.pickFiles(
-//     type: allowedExtensions != null ? FileType.custom : FileType.any,
-//     allowedExtensions: allowedExtensions,
-//     withData: true,
-//     allowMultiple: multiFile,
-//   );
-//   if (pickedFiles == null || pickedFiles.files.isEmpty) {
-//     return null;
-//   }
-//   if (multiFile) {
-//     return Future.wait(pickedFiles.files.asMap().entries.map((e) async {
-//       final index = e.key;
-//       final file = e.value;
-//       final storagePath =
-//           _getStoragePath(storageFolderPath, file.name, false, index);
-//       return SelectedFile(
-//         storagePath: storagePath,
-//         filePath: isWeb ? null : file.path,
-//         bytes: file.bytes!,
-//       );
-//     }));
-//   }
-//   final file = pickedFiles.files.first;
-//   if (file.bytes == null) {
-//     return null;
-//   }
-//   final storagePath = _getStoragePath(storageFolderPath, file.name, false);
-//   return [
-//     SelectedFile(
-//       storagePath: storagePath,
-//       filePath: isWeb ? null : file.path,
-//       bytes: file.bytes!,
-//     )
-//   ];
-// }
 
 List<SelectedFile> selectedFilesFromUploadedFiles(
   List<FFUploadedFile> uploadedFiles, {

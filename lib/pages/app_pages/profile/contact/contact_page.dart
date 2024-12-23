@@ -69,7 +69,7 @@ class _KontaktWidgetState extends State<ContactPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: 100,
                 child: Stack(
                   alignment: const AlignmentDirectional(0, 1),
@@ -429,7 +429,9 @@ class _KontaktWidgetState extends State<ContactPage> {
                                                       .emailTextController
                                                       .text);
                                           if (response.statusCode == 200) {
+                                            if (!context.mounted) return;
                                             Navigator.pop(context);
+                                            if (!context.mounted) return;
                                             Toasts.showAccepted(
                                                 context, 'Melding sendt');
                                           } else {
@@ -441,14 +443,17 @@ class _KontaktWidgetState extends State<ContactPage> {
                                       }
                                     } on SocketException {
                                       _model.loading = false;
+                                      if (!context.mounted) return;
                                       Toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } on Error {
                                       _model.loading = false;
+                                      if (!context.mounted) return;
                                       Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     } catch (e) {
                                       _model.loading = false;
+                                      if (!context.mounted) return;
                                       Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     }

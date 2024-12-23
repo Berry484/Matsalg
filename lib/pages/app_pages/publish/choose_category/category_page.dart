@@ -58,7 +58,7 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: 100,
                 child: Stack(
                   alignment: const AlignmentDirectional(0, 1),

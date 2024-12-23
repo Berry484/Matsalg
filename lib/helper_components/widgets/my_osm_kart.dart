@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import 'package:latlong2/latlong.dart' as MyOsmKartLatLng;
+import 'package:latlong2/latlong.dart' as osm_map;
 import 'dart:math' as math;
 
 //-----------------------------------------------------------------------------------------------------------------------
@@ -33,8 +33,8 @@ class _MyOsmKartState extends State<MyOsmKart> {
     super.initState();
     mapController.mapEventStream.listen((event) {
       setState(() {
-        zoomLevel =
-            mapController.zoom; // Update the zoom level from the controller
+        zoomLevel = mapController
+            .camera.zoom; // Update the zoom level from the controller
       });
     });
   }
@@ -44,10 +44,11 @@ class _MyOsmKartState extends State<MyOsmKart> {
     return FlutterMap(
       mapController: mapController,
       options: MapOptions(
-        center: MyOsmKartLatLng.LatLng(
-            widget.center.latitude, widget.center.longitude),
-        interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-        zoom: zoomLevel,
+        initialCenter:
+            osm_map.LatLng(widget.center.latitude, widget.center.longitude),
+        interactionOptions: InteractionOptions(
+            flags: InteractiveFlag.pinchZoom | InteractiveFlag.drag),
+        initialZoom: zoomLevel,
         minZoom: 5.5,
         maxZoom: 18,
       ),
@@ -60,8 +61,8 @@ class _MyOsmKartState extends State<MyOsmKart> {
           Marker(
             width: _calculateCircleSize(),
             height: _calculateCircleSize(),
-            point: MyOsmKartLatLng.LatLng(
-                widget.center.latitude, widget.center.longitude),
+            point:
+                osm_map.LatLng(widget.center.latitude, widget.center.longitude),
             child: CustomPaint(
               size: Size(
                 _calculateCircleSize(),
