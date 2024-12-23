@@ -108,6 +108,7 @@ class FirebaseAuthService {
 
       if (idToken == null || idToken.isEmpty) {
         if (context != null) {
+          if (!context.mounted) return null;
           context.go('/registrer');
         }
         FFAppState().login = false;
@@ -117,6 +118,7 @@ class FirebaseAuthService {
       return idToken;
     } catch (e) {
       if (context != null) {
+        if (!context.mounted) return null;
         context.go('/registrer');
       }
       FFAppState().login = false;

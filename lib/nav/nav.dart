@@ -97,10 +97,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                 path: '/hjem',
                 name: 'Hjem',
                 builder: (context, state) {
-                  return const HjemWidget();
+                  return const HomeWidget();
                 },
                 pageBuilder: (context, state) {
-                  return const NoTransitionPage(child: HjemWidget());
+                  return const NoTransitionPage(child: HomeWidget());
                 },
                 routes: [
                   GoRoute(
@@ -110,12 +110,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                       final params = FFParameters(state);
                       final matvare = params.getParam<Map<String, dynamic>>(
                           'matvare', ParamType.JSON);
-                      return MatDetaljBondegardWidget(matvare: matvare);
+                      return DetailsWidget(matvare: matvare);
                     },
                     pageBuilder: (context, state) {
                       return CustomTransitionPage<void>(
                         key: state.pageKey, // Maintain page state
-                        child: MatDetaljBondegardWidget(
+                        child: DetailsWidget(
                           matvare: FFParameters(state)
                               .getParam<Map<String, dynamic>>(
                                   'matvare', ParamType.JSON),
@@ -150,13 +150,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                           params.getParam<String>('uid', ParamType.String);
                       final username =
                           params.getParam<String>('username', ParamType.String);
-                      return BrukerPageWidget(
+                      return UserWidget(
                           bruker: bruker, uid: uid, username: username);
                     },
                     pageBuilder: (context, state) {
                       return CustomTransitionPage<void>(
                         key: state.pageKey,
-                        child: BrukerPageWidget(
+                        child: UserWidget(
                           bruker: FFParameters(state)
                               .getParam<String>('bruker', ParamType.String),
                           uid: FFParameters(state)
@@ -196,13 +196,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                       final folger =
                           params.getParam<String>('folger', ParamType.String);
 
-                      // Return the FolgereWidget with the retrieved parameters
-                      return FolgereWidget(username: username, folger: folger);
+                      // Return the FollowersWidget with the retrieved parameters
+                      return FollowersWidget(
+                          username: username, folger: folger);
                     },
                     pageBuilder: (context, state) {
                       return CustomTransitionPage<void>(
                         key: state.pageKey, // Maintain the page state
-                        child: FolgereWidget(
+                        child: FollowersWidget(
                           username: FFParameters(state)
                               .getParam<String>('username', ParamType.String),
                           folger: FFParameters(state)
@@ -241,13 +242,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                           params.getParam<String>('query', ParamType.String);
 
                       // Return the widget with the parameters
-                      return BondeGardPageWidget(
-                          kategori: kategori, query: query);
+                      return CategoryWidget(kategori: kategori, query: query);
                     },
                     pageBuilder: (context, state) {
                       return CustomTransitionPage<void>(
                         key: state.pageKey, // Maintain page state
-                        child: BondeGardPageWidget(
+                        child: CategoryWidget(
                           kategori: FFParameters(state)
                               .getParam<String>('kategori', ParamType.String),
                           query: FFParameters(state)
@@ -340,13 +340,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                           params.getParam<String>('uid', ParamType.String);
                       final username =
                           params.getParam<String>('username', ParamType.String);
-                      return BrukerPageWidget(
+                      return UserWidget(
                           bruker: bruker, uid: uid, username: username);
                     },
                     pageBuilder: (context, state) {
                       return CustomTransitionPage<void>(
                         key: state.pageKey,
-                        child: BrukerPageWidget(
+                        child: UserWidget(
                           bruker: FFParameters(state)
                               .getParam<String>('bruker', ParamType.String),
                           uid: FFParameters(state)
@@ -483,13 +483,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                             params.getParam<bool>('liked', ParamType.bool);
                         final matvare = params.getParam<Map<String, dynamic>>(
                             'matvare', ParamType.JSON);
-                        return MatDetaljBondegardWidget(
-                            matvare: matvare, liked: liked);
+                        return DetailsWidget(matvare: matvare, liked: liked);
                       },
                       pageBuilder: (context, state) {
                         return CustomTransitionPage<void>(
                           key: state.pageKey, // Maintain page state
-                          child: MatDetaljBondegardWidget(
+                          child: DetailsWidget(
                             matvare: FFParameters(state)
                                 .getParam<Map<String, dynamic>>(
                                     'matvare', ParamType.JSON),
@@ -526,13 +525,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                             params.getParam<String>('uid', ParamType.String);
                         final username = params.getParam<String>(
                             'username', ParamType.String);
-                        return BrukerPageWidget(
+                        return UserWidget(
                             bruker: bruker, uid: uid, username: username);
                       },
                       pageBuilder: (context, state) {
                         return CustomTransitionPage<void>(
                           key: state.pageKey,
-                          child: BrukerPageWidget(
+                          child: UserWidget(
                             bruker: FFParameters(state)
                                 .getParam<String>('bruker', ParamType.String),
                             uid: FFParameters(state)
@@ -628,8 +627,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         path: '/godkjentbetaling',
         name: 'Godkjentbetaling',
         builder: (context, state) {
-          // Directly return the GodkjentbetalingWidget as there are no parameters
-          return const GodkjentbetalingWidget();
+          // Directly return the BoughtWidget as there are no parameters
+          return const BoughtWidget();
         },
         parentNavigatorKey: _parentKey,
       ),
@@ -662,7 +661,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               params.getParam<String>('username', ParamType.String);
           final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
 
-          return BrukerPageWidget(
+          return UserWidget(
             uid: uid,
             username: username,
             fromChat: fromChat,
@@ -681,7 +680,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
           final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
 
           // Directly return the widget with the retrieved parameters
-          return MatDetaljBondegardWidget(matvare: matvare, fromChat: fromChat);
+          return DetailsWidget(matvare: matvare, fromChat: fromChat);
         },
         parentNavigatorKey: _parentKey,
       ),
@@ -715,7 +714,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
           final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
 
           // Wrap the widget with the transition wrapper
-          return FolgereWidget(
+          return FollowersWidget(
               username: username, folger: folger, fromChat: fromChat);
         },
         parentNavigatorKey: _parentKey,
@@ -777,8 +776,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               params.getParam<String>('username', ParamType.String);
           final mine = params.getParam<bool>('mine', ParamType.bool);
 
-          // Return the BrukerRatingWidget with the retrieved parameters
-          return BrukerRatingWidget(
+          // Return the RatingsWidget with the retrieved parameters
+          return RatingsWidget(
             username: username,
             mine: mine,
           );
@@ -818,7 +817,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
           final params = FFParameters(state);
           final matinfo =
               params.getParam<Map<String, dynamic>>('matinfo', ParamType.JSON);
-          return BetalingWidget(matinfo: matinfo);
+          return PaymentPageWidget(matinfo: matinfo);
         },
         parentNavigatorKey: _parentKey,
       ),

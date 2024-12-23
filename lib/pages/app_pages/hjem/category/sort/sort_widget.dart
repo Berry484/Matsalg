@@ -1,0 +1,194 @@
+import '../../../../../helper_components/flutter_flow/flutter_flow_checkbox_group.dart';
+import '../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import '../../../../../helper_components/flutter_flow/form_field_controller.dart';
+import 'package:flutter/material.dart';
+
+import 'sort_model.dart';
+export 'sort_model.dart';
+
+class SortWidget extends StatefulWidget {
+  const SortWidget({
+    super.key,
+    this.sorterVerdi,
+  });
+  final dynamic sorterVerdi;
+
+  @override
+  State<SortWidget> createState() => _SorterWidgetState();
+}
+
+class _SorterWidgetState extends State<SortWidget> {
+  late SortModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => SortModel());
+    if (widget.sorterVerdi == 1) {
+      _model.checkboxGroupValueController =
+          FormFieldController<List<String>>(['Mest relevant']);
+    } else if (widget.sorterVerdi == 2) {
+      _model.checkboxGroupValueController =
+          FormFieldController<List<String>>(['Pris: lav til høy']);
+    } else if (widget.sorterVerdi == 3) {
+      _model.checkboxGroupValueController =
+          FormFieldController<List<String>>(['Pris: høy til lav']);
+    } else if (widget.sorterVerdi == 4) {
+      _model.checkboxGroupValueController =
+          FormFieldController<List<String>>(['Avstand: nærmest meg']);
+    } else {
+      _model.checkboxGroupValueController =
+          FormFieldController<List<String>>([]);
+    }
+  }
+
+  @override
+  void dispose() {
+    _model.maybeDispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 380,
+      decoration: BoxDecoration(
+        color: FlutterFlowTheme.of(context).primary,
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 4,
+            color: Color(0x25090F13),
+            offset: Offset(
+              0.0,
+              2,
+            ),
+          )
+        ],
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(0),
+          topLeft: Radius.circular(14),
+          topRight: Radius.circular(14),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Divider(
+            height: 22,
+            thickness: 4,
+            indent: MediaQuery.of(context).size.width * 0.42,
+            endIndent: MediaQuery.of(context).size.width * 0.42,
+            color: Colors.black12,
+          ),
+          Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Sorter etter',
+                      textAlign: TextAlign.start,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Nunito',
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            fontSize: 18,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: const AlignmentDirectional(1, -1),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 6, 17, 15),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'Lukk',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Nunito',
+                            fontSize: 16,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(17, 20, 0, 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FlutterFlowCheckboxGroup(
+                  options: const [
+                    'Mest relevant',
+                    'Pris: lav til høy',
+                    'Pris: høy til lav',
+                    'Avstand: nærmest meg',
+                  ],
+                  onChanged: (val) {
+                    // Use post-frame callback to update state after the build is done
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      setState(() {
+                        _model.checkboxGroupValues = val;
+                      });
+                    });
+                  },
+                  controller: _model.checkboxGroupValueController ??=
+                      FormFieldController<List<String>>([]),
+                  activeColor: FlutterFlowTheme.of(context).alternate,
+                  checkColor: FlutterFlowTheme.of(context).primary,
+                  checkboxBorderColor:
+                      FlutterFlowTheme.of(context).secondaryText,
+                  textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Nunito',
+                        fontSize: 17,
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                  unselectedTextStyle:
+                      FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Nunito',
+                            fontSize: 17,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                  itemPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                  checkboxBorderRadius: BorderRadius.circular(24),
+                  initialized: _model.checkboxGroupValues != null,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

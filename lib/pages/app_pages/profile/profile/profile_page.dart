@@ -7,7 +7,7 @@ import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
 import 'package:mat_salg/my_ip.dart';
-import 'package:mat_salg/pages/app_pages/hjem/bruker_rating/bruker_rating_widget.dart';
+import 'package:mat_salg/pages/app_pages/hjem/user_ratings/ratings_widget.dart';
 import 'package:mat_salg/pages/app_pages/profile/profile/profile_services.dart';
 import 'package:mat_salg/services/user_service.dart';
 import 'package:shimmer/shimmer.dart';
@@ -593,7 +593,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                                                     onTap: () => FocusScope.of(context).unfocus(),
                                                                                     child: Padding(
                                                                                       padding: MediaQuery.viewInsetsOf(context),
-                                                                                      child: BrukerRatingWidget(
+                                                                                      child: RatingsWidget(
                                                                                         uid: FirebaseAuth.instance.currentUser!.uid,
                                                                                         username: FFAppState().brukernavn,
                                                                                         mine: true,

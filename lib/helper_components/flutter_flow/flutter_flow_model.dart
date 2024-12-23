@@ -148,13 +148,13 @@ class FlutterFlowDynamicModels<T extends FlutterFlowModel> {
 
 T? _getDefaultValue<T>() {
   switch (T) {
-    case int:
+    case const (int):
       return 0 as T;
-    case double:
+    case const (double):
       return 0.0 as T;
-    case String:
+    case const (String):
       return '' as T;
-    case bool:
+    case const (bool):
       return false as T;
     default:
       return null as T;

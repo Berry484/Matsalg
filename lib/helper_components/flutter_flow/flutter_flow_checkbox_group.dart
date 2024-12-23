@@ -4,7 +4,7 @@ import 'form_field_controller.dart'; // Import your FormFieldController
 
 class FlutterFlowCheckboxGroup extends StatefulWidget {
   const FlutterFlowCheckboxGroup({
-    Key? key,
+    super.key,
     required this.options,
     required this.onChanged,
     required this.controller, // Add controller from your imported file
@@ -16,7 +16,7 @@ class FlutterFlowCheckboxGroup extends StatefulWidget {
     this.unselectedTextStyle,
     this.itemPadding,
     this.initialized = false,
-  }) : super(key: key);
+  });
 
   final List<String> options;
   final void Function(List<String>) onChanged; // Keep it as a List<String>
@@ -32,11 +32,11 @@ class FlutterFlowCheckboxGroup extends StatefulWidget {
   final bool initialized;
 
   @override
-  _FlutterFlowCheckboxGroupState createState() =>
-      _FlutterFlowCheckboxGroupState();
+  FlutterFlowCheckboxGroupState createState() =>
+      FlutterFlowCheckboxGroupState();
 }
 
-class _FlutterFlowCheckboxGroupState extends State<FlutterFlowCheckboxGroup> {
+class FlutterFlowCheckboxGroupState extends State<FlutterFlowCheckboxGroup> {
   late List<String> selectedValues; // Keep this as List<String>
 
   @override
@@ -85,7 +85,7 @@ class _FlutterFlowCheckboxGroupState extends State<FlutterFlowCheckboxGroup> {
                   borderRadius:
                       widget.checkboxBorderRadius ?? BorderRadius.circular(4),
                 ),
-                side: MaterialStateBorderSide.resolveWith(
+                side: WidgetStateBorderSide.resolveWith(
                   (states) => BorderSide(
                     color: widget.checkboxBorderColor ?? Colors.grey,
                     width: 1.5,
