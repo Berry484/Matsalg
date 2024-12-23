@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:mat_salg/helper_components/Toasts.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/models/user.dart';
 import 'package:mat_salg/models/user_info_search.dart';
 import 'package:mat_salg/my_ip.dart';

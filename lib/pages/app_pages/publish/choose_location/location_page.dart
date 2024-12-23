@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:mat_salg/helper_components/Toasts.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';

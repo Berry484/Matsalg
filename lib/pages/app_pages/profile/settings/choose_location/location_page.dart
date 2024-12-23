@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/helper_components/Toasts.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/user_service.dart';
 import '../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';

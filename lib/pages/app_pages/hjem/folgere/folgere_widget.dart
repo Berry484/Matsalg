@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:mat_salg/models/user_info.dart';
-import 'package:mat_salg/helper_components/Toasts.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/my_ip.dart';

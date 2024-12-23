@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mat_salg/helper_components/widgets/dialog_utils.dart';
 import 'package:mat_salg/helper_components/widgets/dividers.dart';
-import 'package:mat_salg/helper_components/Toasts.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/publish/publish_product/publish_services.dart';
 import 'package:mat_salg/pages/app_pages/publish/choose_category/category_page.dart';

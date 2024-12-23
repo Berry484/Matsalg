@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mat_salg/helper_components/Toasts.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/hjem/sorter/sorter_widget.dart';

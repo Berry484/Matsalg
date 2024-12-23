@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/models/user.dart';
 import 'package:mat_salg/models/user_info_rating.dart';
-import 'package:mat_salg/helper_components/Toasts.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/rating_service.dart';

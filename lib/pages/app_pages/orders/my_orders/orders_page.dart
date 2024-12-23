@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/helper_components/Toasts.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/helper_components/widgets/order_list.dart';
 import 'package:mat_salg/pages/app_pages/orders/my_orders/orders_services.dart';
 import 'package:mat_salg/pages/app_pages/orders/order_info/info_page.dart';
