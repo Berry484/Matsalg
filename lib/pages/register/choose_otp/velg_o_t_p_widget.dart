@@ -289,6 +289,7 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                         safeSetState(() {
                                           _isloading = false;
                                         });
+                                        if (!context.mounted) return;
                                         context.goNamed(
                                           'opprettProfil',
                                           queryParameters: {
@@ -306,6 +307,7 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                         safeSetState(() {
                                           _isloading = false;
                                         });
+                                        if (!context.mounted) return;
                                         context.goNamed(
                                           'VelgPosisjon',
                                           queryParameters: {

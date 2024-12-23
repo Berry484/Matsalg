@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/pages/register/logginn/logginn_widget.dart';
-import 'package:mat_salg/pages/register/velg_o_t_p/velg_o_t_p_widget.dart';
+import 'package:mat_salg/pages/register/choose_otp/velg_o_t_p_widget.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/services/check_taken_service.dart';
 
@@ -457,6 +457,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                           _isloading = false;
                                         });
                                         HapticFeedback.mediumImpact();
+                                        if (!context.mounted) return;
                                         errorToast(context,
                                             'En bruker med dette nummeret finnes allerede');
                                         if (mounted) {
@@ -519,7 +520,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                               forceResendingToken) {
                                             logger.d("sent code");
                                             logger.d(
-                                                "The code is: ${verificationId}");
+                                                "The code is: $verificationId");
 
                                             FFAppState().storeTimestamp();
                                             if (mounted) {
@@ -567,6 +568,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                       safeSetState(() {
                                         _isloading = false;
                                       });
+                                      if (!context.mounted) return;
                                       showCupertinoDialog(
                                         context: context,
                                         builder: (BuildContext context) {

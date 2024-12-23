@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/services/user_service.dart';
 import 'package:mat_salg/services/web_socket.dart';
-import 'package:mat_salg/pages/register/velg_ny/velg_ny_widget.dart';
+import 'package:mat_salg/pages/register/choose_create_or_login/velg_ny_widget.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/my_ip.dart';
@@ -16,25 +16,25 @@ import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'registrer_model.dart';
+import 'register_model.dart';
 import 'package:http/http.dart' as http;
-export 'registrer_model.dart';
+export 'register_model.dart';
 
-class RegistrerWidget extends StatefulWidget {
-  const RegistrerWidget({super.key});
+class RegisterWidget extends StatefulWidget {
+  const RegisterWidget({super.key});
 
   @override
-  State<RegistrerWidget> createState() => _RegistrerWidgetState();
+  State<RegisterWidget> createState() => _RegistrerWidgetState();
 }
 
-class _RegistrerWidgetState extends State<RegistrerWidget>
+class _RegistrerWidgetState extends State<RegisterWidget>
     with TickerProviderStateMixin {
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final _firebaseMessaging = FirebaseMessaging.instance;
-  final UserInfoService userInfoService = UserInfoService();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late RegistrerModel _model;
-  late WebSocketService _webSocketService; // Declare WebSocketService
+  final UserInfoService userInfoService = UserInfoService();
+  late RegisterModel _model;
+  late WebSocketService _webSocketService;
   static const String baseUrl = ApiConstants.baseUrl;
 
   bool _isloading = false;
@@ -42,7 +42,7 @@ class _RegistrerWidgetState extends State<RegistrerWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => RegistrerModel());
+    _model = createModel(context, () => RegisterModel());
   }
 
   void feilInnlogging(BuildContext context, String message) {

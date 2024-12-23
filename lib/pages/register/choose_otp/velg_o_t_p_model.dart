@@ -1,56 +1,38 @@
 import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
-import 'logginn_widget.dart' show LogginnWidget;
+import 'velg_o_t_p_widget.dart' show VelgOTPWidget;
 import 'package:flutter/material.dart';
 
-class LogginnModel extends FlutterFlowModel<LogginnWidget> {
+class VelgOTPModel extends FlutterFlowModel<VelgOTPWidget> {
   final formKey = GlobalKey<FormState>();
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Variables used througout-------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  late bool passordVisibility;
-  bool isloading = false;
-  String? errorMessage;
+/*
 
+
+
+*/
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes, Controllers and validators-----------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  FocusNode? telefonnummerFocusNode;
-  FocusNode? passordFocusNode;
-  FocusNode? landskodeFocusNode;
+  FocusNode? emailFocusNode;
 
-  TextEditingController? telefonnummerTextController;
-  TextEditingController? passordTextController;
-  TextEditingController? landskodeTextController;
+  TextEditingController? emailTextController;
 
 //---------------------------------------------------------------------------------------------------------------
-//--------------------FocusNodes and controller for the text fields----------------------------------------------
+//--------------------Validators---------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  String? Function(BuildContext, String?)? telefonnummerTextControllerValidator;
-  String? Function(BuildContext, String?)? passordTextControllerValidator;
-  String? Function(BuildContext, String?)? landskodeTextControllerValidator;
-
-  String? _telefonnummerTextControllerValidator(
-      BuildContext context, String? val) {
-    return null; // No validation errors.
-  }
+  String? Function(BuildContext, String?)? emailTextControllerValidator;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Initstate and dispose----------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   @override
-  void initState(BuildContext context) {
-    telefonnummerTextControllerValidator =
-        _telefonnummerTextControllerValidator;
-    passordVisibility = false;
-  }
+  void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    telefonnummerFocusNode?.dispose();
-    telefonnummerTextController?.dispose();
-    landskodeFocusNode?.dispose();
-    landskodeTextController?.dispose();
-    passordFocusNode?.dispose();
-    passordTextController?.dispose();
+    emailFocusNode?.dispose();
+    emailTextController?.dispose();
   }
 }

@@ -214,6 +214,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                           permission ==
                                               LocationPermission
                                                   .unableToDetermine) {
+                                        if (!context.mounted) return;
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -251,6 +252,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
 
                                       // Hvis plassering er null, vis en feil og avslutt
                                       if (location == const LatLng(0.0, 0.0)) {
+                                        if (!context.mounted) return;
                                         Toasts.showErrorToast(context,
                                             'Stedtjenester er deaktivert i innstillinger');
                                         return;
@@ -272,6 +274,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                             location!.latitude;
                                         FFAppState().brukerLng =
                                             location.longitude;
+                                        if (!context.mounted) return;
                                         String? token =
                                             await firebaseAuthService
                                                 .getToken(context);
@@ -285,11 +288,13 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
 
                                       // If location was not retrieved, exit
                                       if (location == const LatLng(0.0, 0.0)) {
+                                        if (!context.mounted) return;
                                         Toasts.showErrorToast(context,
                                             'posisjonstjenester er skrudd av i innstillinger');
                                         return;
                                       }
                                       if (widget.endrepos == false) {
+                                        if (!context.mounted) return;
                                         context.pushNamed(
                                           'OpprettProfil',
                                           queryParameters: {
@@ -317,9 +322,11 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                         );
                                       } else {
                                         HapticFeedback.mediumImpact();
+                                        if (!context.mounted) return;
                                         context.goNamed('Hjem');
                                       }
                                     } on SocketException {
+                                      if (!context.mounted) return;
                                       Toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } catch (e) {
@@ -387,6 +394,7 @@ class _VelgPosisjonWidgetState extends State<VelgPosisjonWidget> {
                                               token: token);
                                         }
                                       }
+                                      if (!context.mounted) return;
                                       context.pushNamed(
                                         'opprettProfil',
                                         queryParameters: {

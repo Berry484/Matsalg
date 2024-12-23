@@ -238,9 +238,11 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                           }
                                         }
                                       } on SocketException {
+                                        if (!context.mounted) return;
                                         Toasts.showErrorToast(context,
                                             'Ingen internettforbindelse');
                                       } catch (e) {
+                                        if (!context.mounted) return;
                                         Toasts.showErrorToast(
                                             context, 'En feil oppstod');
                                       }
@@ -397,7 +399,7 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                                 ),
                                                 child: Center(
                                                   child: FaIcon(
-                                                    FontAwesomeIcons.times,
+                                                    FontAwesomeIcons.xmark,
                                                     color: Colors
                                                         .white, // Icon color to stand out on black
                                                     size: 16,
@@ -463,6 +465,7 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                 String? token =
                                     await firebaseAuthService.getToken(context);
                                 if (token == null) {
+                                  if (!context.mounted) return;
                                   FFAppState().login = false;
                                   context.goNamed('registrer');
                                   return;
@@ -521,11 +524,13 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
 
                                     _isloading = false;
                                     setState(() {});
+                                    if (!context.mounted) return;
                                     context.goNamed('Hjem');
                                     return;
                                   } else if (response.statusCode == 401) {
                                     _isloading = false;
                                     FFAppState().login = false;
+                                    if (!context.mounted) return;
                                     context.goNamed('registrer');
                                     return;
                                   }
@@ -533,6 +538,7 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                 _isloading = false;
                               } catch (e) {
                                 _isloading = false;
+                                if (!context.mounted) return;
                                 showCupertinoDialog(
                                   context: context,
                                   builder: (BuildContext context) {

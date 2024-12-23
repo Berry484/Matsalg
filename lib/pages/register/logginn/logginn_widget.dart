@@ -34,13 +34,10 @@ class _LogginnWidgetState extends State<LogginnWidget> {
   late LogginnModel _model;
   late WebSocketService _webSocketService;
   final UserInfoService userInfoService = UserInfoService();
-  static const String baseUrl = ApiConstants.baseUrl;
   final _firebaseMessaging = FirebaseMessaging.instance;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-
-  bool _isloading = false;
-  String? _errorMessage;
+  static const String baseUrl = ApiConstants.baseUrl;
 
   @override
   void setState(VoidCallback callback) {
@@ -436,7 +433,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     filled: true,
                                     fillColor:
                                         FlutterFlowTheme.of(context).secondary,
-                                    errorText: _errorMessage,
+                                    errorText: _model.errorMessage,
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -459,7 +456,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                       .asValidator(context),
                                   onChanged: (phone) {
                                     setState(() {
-                                      _errorMessage = null;
+                                      _model.errorMessage = null;
                                     });
                                   },
                                 ),
@@ -476,7 +473,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                             textInputAction: TextInputAction.go,
                             obscureText: !_model.passordVisibility,
                             onFieldSubmitted: (_) async {
-                              if (_isloading) {
+                              if (_model.isloading) {
                                 return; // Prevent multiple presses while loading
                               }
 
@@ -486,7 +483,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 return; // If the form is invalid, return early
                               }
 
-                              _isloading = true;
+                              _model.isloading = true;
 
                               try {
                                 // Await the sign-in operation to ensure it's completed before proceeding
@@ -497,14 +494,15 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 );
 
                                 if (response == null) {
-                                  _isloading = false;
+                                  _model.isloading = false;
                                   HapticFeedback.mediumImpact();
+                                  if (!context.mounted) return;
                                   feilInnlogging(
                                       context, 'Feil innlogging eller passord');
                                   return;
                                 }
 
-                                final user = await _firebaseAuth.currentUser;
+                                final user = _firebaseAuth.currentUser;
 
                                 if (user == null) {
                                   return;
@@ -535,20 +533,23 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     } catch (e) {
                                       logger.d("errror $e");
                                     }
-                                    _isloading = false;
+                                    _model.isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
+                                    if (!context.mounted) return;
                                     userInfoService.getAll(context);
                                     sendToken();
+                                    if (!context.mounted) return;
                                     context.go('/hjem');
                                     FFAppState().login = true;
                                     return;
                                   }
 
-                                  _isloading = false;
+                                  _model.isloading = false;
                                   return;
                                 } else {
-                                  _isloading = false;
+                                  _model.isloading = false;
+                                  if (!context.mounted) return;
                                   showCupertinoDialog(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -570,12 +571,13 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                       );
                                     },
                                   );
-                                  _isloading = false;
+                                  _model.isloading = false;
                                   _model.passordTextController!.clear();
                                   return;
                                 }
                               } catch (e) {
-                                _isloading = false;
+                                _model.isloading = false;
+                                if (!context.mounted) return;
                                 showCupertinoDialog(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -680,7 +682,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                               0, 25, 0, 15),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              if (_isloading) {
+                              if (_model.isloading) {
                                 return; // Prevent multiple presses while loading
                               }
 
@@ -690,7 +692,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 return; // If the form is invalid, return early
                               }
 
-                              _isloading = true;
+                              _model.isloading = true;
 
                               try {
                                 final response = await firebaseAuthService
@@ -700,15 +702,16 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 );
 
                                 if (response == null) {
-                                  _isloading = false;
+                                  _model.isloading = false;
                                   HapticFeedback.mediumImpact();
+                                  if (!context.mounted) return;
                                   feilInnlogging(
                                       context, 'Feil innlogging eller passord');
                                   return;
                                 }
 
                                 // After sign-in, check the current user
-                                final user = await _firebaseAuth.currentUser;
+                                final user = _firebaseAuth.currentUser;
 
                                 if (user == null) {
                                   return;
@@ -739,20 +742,23 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     } catch (e) {
                                       logger.d("errror $e");
                                     }
-                                    _isloading = false;
+                                    _model.isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
+                                    if (!context.mounted) return;
                                     userInfoService.getAll(context);
                                     sendToken();
+                                    if (!context.mounted) return;
                                     context.go('/hjem');
                                     FFAppState().login = true;
                                     return;
                                   }
 
-                                  _isloading = false;
+                                  _model.isloading = false;
                                   return;
                                 } else {
-                                  _isloading = false;
+                                  _model.isloading = false;
+                                  if (!context.mounted) return;
                                   showCupertinoDialog(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -774,12 +780,13 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                       );
                                     },
                                   );
-                                  _isloading = false;
+                                  _model.isloading = false;
                                   _model.passordTextController!.clear();
                                   return;
                                 }
                               } catch (e) {
-                                _isloading = false;
+                                _model.isloading = false;
+                                if (!context.mounted) return;
                                 showCupertinoDialog(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -804,7 +811,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 );
                               }
                             },
-                            text: _isloading
+                            text: _model.isloading
                                 ? '' // Change button text to "Loading..." when loading
                                 : 'Logg inn', // Normal text when not loading
                             options: FFButtonOptions(
@@ -831,7 +838,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                               ),
                               borderRadius: BorderRadius.circular(14),
                             ),
-                            icon: _isloading
+                            icon: _model.isloading
                                 ? CircularProgressIndicator(
                                     color: FlutterFlowTheme.of(context).primary,
                                   )

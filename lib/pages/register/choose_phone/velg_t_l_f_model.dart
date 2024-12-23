@@ -1,33 +1,31 @@
 import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
-import 'logginn_widget.dart' show LogginnWidget;
+import 'velg_t_l_f_widget.dart' show VelgTLFWidget;
 import 'package:flutter/material.dart';
 
-class LogginnModel extends FlutterFlowModel<LogginnWidget> {
+class VelgTLFModel extends FlutterFlowModel<VelgTLFWidget> {
   final formKey = GlobalKey<FormState>();
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Variables used througout-------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  late bool passordVisibility;
-  bool isloading = false;
-  String? errorMessage;
+/*
 
+
+
+*/
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes, Controllers and validators-----------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  FocusNode? telefonnummerFocusNode;
-  FocusNode? passordFocusNode;
   FocusNode? landskodeFocusNode;
+  FocusNode? telefonnummerFocusNode;
 
-  TextEditingController? telefonnummerTextController;
-  TextEditingController? passordTextController;
   TextEditingController? landskodeTextController;
+  TextEditingController? telefonnummerTextController;
 
 //---------------------------------------------------------------------------------------------------------------
-//--------------------FocusNodes and controller for the text fields----------------------------------------------
+//--------------------Validators---------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  String? Function(BuildContext, String?)? telefonnummerTextControllerValidator;
-  String? Function(BuildContext, String?)? passordTextControllerValidator;
   String? Function(BuildContext, String?)? landskodeTextControllerValidator;
+  String? Function(BuildContext, String?)? telefonnummerTextControllerValidator;
 
   String? _telefonnummerTextControllerValidator(
       BuildContext context, String? val) {
@@ -41,16 +39,14 @@ class LogginnModel extends FlutterFlowModel<LogginnWidget> {
   void initState(BuildContext context) {
     telefonnummerTextControllerValidator =
         _telefonnummerTextControllerValidator;
-    passordVisibility = false;
   }
 
   @override
   void dispose() {
-    telefonnummerFocusNode?.dispose();
-    telefonnummerTextController?.dispose();
     landskodeFocusNode?.dispose();
     landskodeTextController?.dispose();
-    passordFocusNode?.dispose();
-    passordTextController?.dispose();
+
+    telefonnummerFocusNode?.dispose();
+    telefonnummerTextController?.dispose();
   }
 }

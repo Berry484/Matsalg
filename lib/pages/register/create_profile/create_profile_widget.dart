@@ -11,8 +11,8 @@ import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'opprett_profil_model.dart';
-export 'opprett_profil_model.dart';
+import 'create_profile_model.dart';
+export 'create_profile_model.dart';
 
 class OpprettProfilWidget extends StatefulWidget {
   const OpprettProfilWidget({
@@ -1003,6 +1003,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
 
                                 if (token == null) {
                                   _isloading = false;
+                                  if (!context.mounted) return;
                                   errorToast(context,
                                       'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                                 }
@@ -1036,12 +1037,14 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     _isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
+                                    if (!context.mounted) return;
                                     context.goNamed('AddProfilepic');
                                   }
 
                                   if (response.statusCode != 200 &&
                                       response.statusCode != 201) {
                                     _isloading = false;
+                                    if (!context.mounted) return;
                                     errorToast(context,
                                         'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                                     return;
@@ -1050,6 +1053,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                 _isloading = false;
                               } catch (e) {
                                 _isloading = false;
+                                if (!context.mounted) return;
                                 errorToast(context,
                                     'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                               }
@@ -1144,11 +1148,12 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     });
                                   }
                                 }
-
+                                if (!context.mounted) return;
                                 String? token =
                                     await firebaseAuthService.getToken(context);
                                 if (token == null) {
                                   _isloading = false;
+                                  if (!context.mounted) return;
                                   errorToast(context,
                                       'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                                 }
@@ -1181,12 +1186,14 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     _isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
+                                    if (!context.mounted) return;
                                     context.goNamed('AddProfilepic');
                                   }
 
                                   if (response.statusCode != 200 &&
                                       response.statusCode != 201) {
                                     _isloading = false;
+                                    if (!context.mounted) return;
                                     errorToast(context,
                                         'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                                     return;
@@ -1195,6 +1202,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                 _isloading = false;
                               } catch (e) {
                                 _isloading = false;
+                                if (!context.mounted) return;
                                 errorToast(context,
                                     'Noe gikk galt, vennligst prøv på nytt.\nHvis problemet vedvarer ta kontakt');
                               }

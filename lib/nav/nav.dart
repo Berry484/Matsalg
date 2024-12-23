@@ -81,7 +81,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
     debugLogDiagnostics: true,
     refreshListenable: appStateNotifier, // Listen for changes in app state
     errorBuilder: (context, state) {
-      return const RegistrerWidget();
+      return const RegisterWidget();
     },
     routes: [
       StatefulShellRoute.indexedStack(
@@ -824,7 +824,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
       GoRoute(
         path: '/registrer',
         name: 'registrer',
-        builder: (context, state) => const RegistrerWidget(),
+        builder: (context, state) => const RegisterWidget(),
         parentNavigatorKey: _parentKey,
       ),
       GoRoute(
