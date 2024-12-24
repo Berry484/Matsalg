@@ -74,12 +74,20 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
       return 'Ugyldig etternavn';
     }
 
+    if (!RegExp(kTextValidatorNormalnameRegex).hasMatch(val)) {
+      return 'Etternavnet er ugyldig';
+    }
+
     return null;
   }
 
   String? _fornavnTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Ugyldig fornavn';
+    }
+
+    if (!RegExp(kTextValidatorNormalnameRegex).hasMatch(val)) {
+      return 'Etternavnet er ugyldig';
     }
 
     return null;

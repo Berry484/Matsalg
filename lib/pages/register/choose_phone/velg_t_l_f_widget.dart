@@ -482,6 +482,25 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                         return;
                                       }
 
+                                      /*Use this to test the creating profile experience
+                                      if (!context.mounted) return;
+                                      context.goNamed(
+                                        'opprettProfil',
+                                        queryParameters: {
+                                          'phone': serializeParam(
+                                            _model.telefonnummerTextController
+                                                .text,
+                                            ParamType.String,
+                                          ),
+                                          'posisjon': serializeParam(
+                                            LatLng(0.0, 0.0),
+                                            ParamType.LatLng,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                      return;
+                                      */
+
                                       bool canRequest =
                                           await FFAppState().canRequestCode();
                                       if (canRequest) {
