@@ -61,9 +61,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
     _model.passordFocusNode ??= FocusNode();
 
     _webSocketService = WebSocketService();
-
-    FFAppState().brukerLat = 59.9138688;
-    FFAppState().brukerLng = 10.7522454;
   }
 
   @override

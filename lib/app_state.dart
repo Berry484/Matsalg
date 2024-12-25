@@ -349,7 +349,7 @@ class FFAppState extends ChangeNotifier {
     prefs.setString('ff_profilepic', value);
   }
 
-  bool _termsService = false;
+  bool _termsService = true;
   bool get termsService => _termsService;
   set termsService(bool value) {
     _termsService = value;

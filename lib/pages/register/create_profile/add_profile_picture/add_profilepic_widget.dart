@@ -41,6 +41,9 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
     super.initState();
     _model = createModel(context, () => ProfilRedigerModel());
     FFAppState().profilepic = '';
+    FFAppState().termsService = false;
+    FFAppState().brukerLat = 59.9138688;
+    FFAppState().brukerLng = 10.7522454;
   }
 
   @override

@@ -95,7 +95,7 @@ class _RequestLocationWidgetState extends State<RequestTermsWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              fontSize: 23,
+                                              fontSize: 24,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w800,
                                             ),
