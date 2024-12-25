@@ -1,11 +1,14 @@
 import 'dart:io';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/dialog_utils.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/profile/settings/account/profile_edit/edit_services.dart';
+import 'package:mat_salg/pages/app_pages/profile/settings/account/re_authenticate/re_authenticate_widget.dart';
 import 'package:mat_salg/services/image_service.dart';
 import 'package:mat_salg/services/user_service.dart';
 import '../../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -31,6 +34,7 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late EditModel _model;
   late EditServices editServices;
+  bool hasPressed = false;
 
   @override
   void initState() {
@@ -52,6 +56,12 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
 
     _model.bioTextController ??= TextEditingController();
     _model.bioFocusNode ??= FocusNode();
+
+    _model.passwordChangeController ??= TextEditingController();
+    _model.passwordChangeNode ??= FocusNode();
+
+    _model.passwordChangeConfirmController ??= TextEditingController();
+    _model.passwordChangeConfirmNode ??= FocusNode();
 
     _model.brukernavnTextController.text = FFAppState().brukernavn;
     _model.emailTextController.text = FFAppState().email;
@@ -141,23 +151,25 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
                                     0, 0, 0, 0),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    await editServices.saveAccountUpdates(
-                                        context,
-                                        (title, content) =>
-                                            DialogUtils.showSimpleDialog(
-                                                context: context,
-                                                title: title,
-                                                content: content,
-                                                buttonText: 'Ok'),
-                                        (message, error) => error
-                                            ? Toasts.showErrorToast(
-                                                context, message)
-                                            : Toasts.showAccepted(
-                                                context, message),
-                                        (path, pop) => pop
-                                            ? Navigator.of(context).pop()
-                                            : context.pushNamed(path));
-                                    safeSetState(() {});
+                                    if (widget.konto != 'Endre passord') {
+                                      await editServices.saveAccountUpdates(
+                                          context,
+                                          (title, content) =>
+                                              DialogUtils.showSimpleDialog(
+                                                  context: context,
+                                                  title: title,
+                                                  content: content,
+                                                  buttonText: 'Ok'),
+                                          (message, error) => error
+                                              ? Toasts.showErrorToast(
+                                                  context, message)
+                                              : Toasts.showAccepted(
+                                                  context, message),
+                                          (path, pop) => pop
+                                              ? Navigator.of(context).pop()
+                                              : context.pushNamed(path));
+                                      safeSetState(() {});
+                                    }
                                   },
                                   child: Text(
                                     'Lagre',
@@ -165,11 +177,13 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Nunito',
-                                          color: editServices.isTextFieldEmpty()
-                                              ? FlutterFlowTheme.of(context)
-                                                  .secondaryText
-                                              : FlutterFlowTheme.of(context)
-                                                  .alternate,
+                                          color: widget.konto == 'Endre passord'
+                                              ? Colors.transparent
+                                              : (editServices.isTextFieldEmpty()
+                                                  ? FlutterFlowTheme.of(context)
+                                                      .secondaryText
+                                                  : FlutterFlowTheme.of(context)
+                                                      .alternate),
                                           fontSize: 17,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
@@ -963,6 +977,350 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
                             return newValue;
                           }),
                         ],
+                      ),
+                    ),
+                  if (widget.konto == 'Endre passord')
+                    Form(
+                      key: _model.formKey,
+                      autovalidateMode: AutovalidateMode.disabled,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            16, 20, 16, 16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 16, 0, 0),
+                                    child: TextFormField(
+                                      controller:
+                                          _model.passwordChangeController,
+                                      focusNode: _model.passwordChangeNode,
+                                      textInputAction: TextInputAction.done,
+                                      enableSuggestions: false,
+                                      autocorrect: false,
+                                      autovalidateMode: hasPressed
+                                          ? AutovalidateMode.onUserInteraction
+                                          : AutovalidateMode.disabled,
+                                      autofillHints: null,
+                                      keyboardType: TextInputType.text,
+                                      obscureText: !_model.passordVisibility,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.textController',
+                                        const Duration(milliseconds: 0),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      decoration: InputDecoration(
+                                        labelText: 'Nytt passord',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color: const Color.fromRGBO(
+                                                  113, 113, 113, 1.0),
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondary,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        suffixIcon: InkWell(
+                                          onTap: () => safeSetState(
+                                            () => _model.passordVisibility =
+                                                !_model.passordVisibility,
+                                          ),
+                                          focusNode:
+                                              FocusNode(skipTraversal: true),
+                                          child: Icon(
+                                            _model.passordVisibility
+                                                ? Icons.visibility_outlined
+                                                : Icons.visibility_off_outlined,
+                                            color: const Color(0xFF757575),
+                                            size: 22,
+                                          ),
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Nunito',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 15,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      textAlign: TextAlign.start,
+                                      validator: _model
+                                          .passwordChangeControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 16, 0, 0),
+                                    child: TextFormField(
+                                      controller: _model
+                                          .passwordChangeConfirmController,
+                                      focusNode:
+                                          _model.passwordChangeConfirmNode,
+                                      textInputAction: TextInputAction.done,
+                                      enableSuggestions: false,
+                                      autocorrect: false,
+                                      autofillHints: null,
+                                      autovalidateMode: hasPressed
+                                          ? AutovalidateMode.onUserInteraction
+                                          : AutovalidateMode.disabled,
+                                      keyboardType: TextInputType.text,
+                                      obscureText:
+                                          !_model.passordConfirmVisibility,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.textController',
+                                        const Duration(milliseconds: 0),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      decoration: InputDecoration(
+                                        labelText: 'Bekreft passord',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color: const Color.fromRGBO(
+                                                  113, 113, 113, 1.0),
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondary,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        suffixIcon: InkWell(
+                                          onTap: () => safeSetState(
+                                            () => _model
+                                                    .passordConfirmVisibility =
+                                                !_model
+                                                    .passordConfirmVisibility,
+                                          ),
+                                          focusNode:
+                                              FocusNode(skipTraversal: true),
+                                          child: Icon(
+                                            _model.passordConfirmVisibility
+                                                ? Icons.visibility_outlined
+                                                : Icons.visibility_off_outlined,
+                                            color: const Color(0xFF757575),
+                                            size: 22,
+                                          ),
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Nunito',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 15,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      textAlign: TextAlign.start,
+                                      validator: _model
+                                          .passwordChangeControllerConfirmValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0, 0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 20, 0, 0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    if (!editServices.isPasswordGood()) return;
+                                    hasPressed = true;
+                                    if (_model.formKey.currentState == null ||
+                                        !_model.formKey.currentState!
+                                            .validate()) {
+                                      return;
+                                    }
+                                    _model.newPassword =
+                                        _model.passwordChangeController.text;
+                                    if (_model.newPassword != null) {
+                                      bool success = await firebaseAuthService
+                                          .updatePassword(
+                                              _model.newPassword ?? '');
+                                      if (success) {
+                                        if (!context.mounted) return;
+                                        Toasts.showAccepted(
+                                            context, 'Passord endret');
+                                        Navigator.of(context).pop();
+                                      } else {
+                                        logger.d(
+                                            "Did not work to change password");
+                                        if (!context.mounted) return;
+                                        FocusScope.of(context)
+                                            .requestFocus(FocusNode());
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          barrierColor: const Color.fromARGB(
+                                              60, 17, 0, 0),
+                                          useRootNavigator: true,
+                                          context: context,
+                                          builder: (context) {
+                                            return GestureDetector(
+                                              onTap: () =>
+                                                  FocusScope.of(context)
+                                                      .unfocus(),
+                                              child: Padding(
+                                                padding:
+                                                    MediaQuery.viewInsetsOf(
+                                                        context),
+                                                child: ReAuthenticateWidget(
+                                                  newPassword:
+                                                      _model.newPassword,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) => setState(() {}));
+                                        return;
+                                      }
+                                    }
+                                  },
+                                  text: 'Oppdater',
+                                  options: FFButtonOptions(
+                                    width: double.infinity,
+                                    height: 50.0,
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                    iconPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                    color: editServices.isPasswordGood()
+                                        ? FlutterFlowTheme.of(context).alternate
+                                        : FlutterFlowTheme.of(context)
+                                            .unSelected,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondary,
+                                          fontSize: 15.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                    elevation: 0.0,
+                                    borderSide: const BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(14.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                 ]),

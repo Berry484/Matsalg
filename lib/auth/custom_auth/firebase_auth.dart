@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -123,6 +124,57 @@ class FirebaseAuthService {
       }
       FFAppState().login = false;
       return null;
+    }
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------Updates users password in firebase-----------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
+  Future<bool> updatePassword(String password) async {
+    try {
+      await _auth.currentUser!.updatePassword(password);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+        logger.d('Error: ${e.message}');
+      } else {
+        logger.d('Error: ${e.message}');
+      }
+      return false;
+    } catch (e) {
+      logger.e('Unexpected error: $e');
+      return false;
+    }
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------ReAuthenticate-----------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
+  Future<bool> reAuthenticate(BuildContext context, String password) async {
+    try {
+      // Get the current user's email
+      final String email = _auth.currentUser!.email!;
+
+      // Create credentials using the user's email and the provided password
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: password);
+
+      // Reauthenticate the user with the credentials
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+      return true; // Reauthentication succeeded
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-credential' || e.code == 'wrong-password') {
+        if (!context.mounted) return false;
+        Toasts.showErrorToast(context, 'Feil innlogging eller passord');
+      } else {
+        if (!context.mounted) return false;
+        Toasts.showErrorToast(context, 'En uforventet feil oppstod');
+        logger.d('Error: ${e.message}');
+      }
+      return false; // Reauthentication failed
+    } catch (e) {
+      logger.e('Unexpected error: $e');
+      return false; // Catch-all failure
     }
   }
 

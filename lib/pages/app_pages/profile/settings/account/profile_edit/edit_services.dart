@@ -19,7 +19,7 @@ class EditServices {
 
   EditServices({required this.model, required this.konto});
 //---------------------------------------------------------------------------------------------------------------
-//--------------------Gets the current user location if available------------------------------------------------
+//--------------------Checks the if the textfield is empty-------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   bool isTextFieldEmpty() {
     if (konto == 'Brukernavn' &&
@@ -47,7 +47,7 @@ class EditServices {
   }
 
 //---------------------------------------------------------------------------------------------------------------
-//--------------------Gets the current user location if available------------------------------------------------
+//--------------------Save account updates-----------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   Future<void> saveAccountUpdates(
     BuildContext context,
@@ -162,6 +162,19 @@ class EditServices {
       model.isLoading = false;
       showToast('En feil oppstod', false);
     }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Checks if the update password button should be blue or unselected--------------------------
+//---------------------------------------------------------------------------------------------------------------
+  bool isPasswordGood() {
+    if (model.passwordChangeController.text.length >= 7 &&
+        model.passwordChangeConfirmController.text.length >= 7 &&
+        (model.passwordChangeController.text ==
+            model.passwordChangeConfirmController.text)) {
+      return true;
+    }
+    return false;
   }
 
 //

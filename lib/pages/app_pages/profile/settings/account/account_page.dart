@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -14,6 +15,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class _SettingsKontoWidgetState extends State<AccountPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   late AccountModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -29,6 +31,14 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
     _model.dispose();
 
     super.dispose();
+  }
+
+  bool isValidGmailEmail(String? email) {
+    if (email == null) {
+      return false;
+    }
+    final regex = RegExp(r'^\d{8}@gmail\.com$');
+    return regex.hasMatch(email);
   }
 
   @override
@@ -653,98 +663,113 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
                               ),
                             ),
                           ),
-                          const Divider(
-                            thickness: 1.2,
-                            indent: 0,
-                            endIndent: 0,
-                            color: Color(0xE5EAEAEA),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 8, 0, 8),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).primary,
+                          if (_auth.currentUser?.email != null &&
+                              isValidGmailEmail(_auth.currentUser?.email))
+                            const Divider(
+                              thickness: 1.2,
+                              indent: 0,
+                              endIndent: 0,
+                              color: Color(0xE5EAEAEA),
+                            ),
+                          if (_auth.currentUser?.email != null &&
+                              isValidGmailEmail(_auth.currentUser?.email))
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 8, 0, 8),
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(14),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                    width: 0,
-                                  ),
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {},
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.padlock,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 28,
-                                          ),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Endre passord',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 16,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    borderRadius: BorderRadius.circular(14),
+                                    shape: BoxShape.rectangle,
+                                    border: Border.all(
+                                      color: Colors.transparent,
+                                      width: 0,
+                                    ),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            'ProfilRediger',
+                                            queryParameters: {
+                                              'konto': serializeParam(
+                                                'Endre passord',
+                                                ParamType.String,
+                                              ),
+                                            },
+                                          );
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.padlock,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 28,
+                                            ),
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          12, 0, 0, 0),
+                                                  child: Text(
+                                                    'Endre passord',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 16,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const Expanded(
+                                              child: Align(
+                                                alignment: AlignmentDirectional(
+                                                    0.9, 0),
+                                                child: Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  color: Color(0xA0262C2D),
+                                                  size: 22,
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                          const Expanded(
-                                            child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(0.9, 0),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Color(0xA0262C2D),
-                                                size: 22,
-                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
                           const Divider(
                             thickness: 1.2,
                             indent: 0,

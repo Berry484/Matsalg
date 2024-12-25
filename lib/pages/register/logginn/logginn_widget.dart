@@ -679,7 +679,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 25, 0, 15),
+                              0, 25, 0, 20),
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (_model.isloading) {
