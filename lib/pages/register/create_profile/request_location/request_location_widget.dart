@@ -127,18 +127,18 @@ class _RequestLocationWidgetState extends State<RequestLocationWidget> {
                               ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: 185,
+                              width: 320,
+                              height: 320,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   ClipRRect(
-                                    borderRadius: BorderRadius.circular(19),
+                                    borderRadius: BorderRadius.circular(60),
                                     child: SizedBox(
-                                      width: 145,
-                                      height: 180,
+                                      width: 320,
+                                      height: 320,
                                       child: Image.asset(
-                                        'assets/images/MatSalg_transp_2.png',
+                                        'assets/images/MatSalg_Location.png',
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -188,9 +188,7 @@ class _RequestLocationWidgetState extends State<RequestLocationWidget> {
                                         actions: [
                                           CupertinoDialogAction(
                                             onPressed: () async {
-                                              Navigator.of(context)
-                                                  .pop(); // Lukk dialogen
-                                              // Åpne innstillinger for appen
+                                              Navigator.of(context).pop();
                                               await Geolocator
                                                   .openLocationSettings();
                                             },

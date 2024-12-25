@@ -126,17 +126,17 @@ class _RequestLocationWidgetState extends State<RequestTermsWidget> {
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
-                              height: 185,
+                              height: 210,
                               child: ListView(
                                 padding:
                                     const EdgeInsets.fromLTRB(12, 0, 12, 0),
                                 scrollDirection: Axis.horizontal,
                                 children: [
                                   ClipRRect(
-                                    borderRadius: BorderRadius.circular(19),
+                                    borderRadius: BorderRadius.circular(24),
                                     child: SizedBox(
-                                      width: 145,
-                                      height: 180,
+                                      width: 170,
+                                      height: 205,
                                       child: Image.asset(
                                         'assets/images/MatSalg_transp_2.png',
                                         fit: BoxFit.cover,
@@ -145,10 +145,10 @@ class _RequestLocationWidgetState extends State<RequestTermsWidget> {
                                   ),
                                   const SizedBox(width: 15),
                                   ClipRRect(
-                                    borderRadius: BorderRadius.circular(19),
+                                    borderRadius: BorderRadius.circular(24),
                                     child: SizedBox(
-                                      width: 145,
-                                      height: 180,
+                                      width: 170,
+                                      height: 205,
                                       child: Image.asset(
                                         'assets/images/MatSalg_transp_3.png',
                                         fit: BoxFit.cover,
@@ -157,10 +157,10 @@ class _RequestLocationWidgetState extends State<RequestTermsWidget> {
                                   ),
                                   const SizedBox(width: 15),
                                   ClipRRect(
-                                    borderRadius: BorderRadius.circular(19),
+                                    borderRadius: BorderRadius.circular(24),
                                     child: SizedBox(
-                                      width: 145,
-                                      height: 180,
+                                      width: 170,
+                                      height: 205,
                                       child: Image.asset(
                                         'assets/images/MatSalg_transp_4.png',
                                         fit: BoxFit.cover,

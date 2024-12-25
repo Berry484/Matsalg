@@ -96,6 +96,7 @@ class FirebaseApi {
   Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
+    await _firebaseMessaging.getAPNSToken();
     logger.d('Token: $fCMToken');
     await sendToken(fCMToken);
 
@@ -157,7 +158,7 @@ class FirebaseApi {
         );
 
         logger.d('Response: ${response.statusCode} ${response.body}');
-        return response; // Return the response
+        return response;
       }
     } on SocketException catch (e) {
       logger.d('SocketException: ${e.message}');

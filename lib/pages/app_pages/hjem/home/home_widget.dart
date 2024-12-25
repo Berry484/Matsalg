@@ -7,6 +7,7 @@ import 'package:mat_salg/helper_components/widgets/product_list.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
+import 'package:mat_salg/services/firebase_service.dart';
 import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/user_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -40,7 +41,6 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {
           _model.searching = true;
         }));
-
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -51,6 +51,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           }
         }));
 
+    FirebaseApi().initNotifications();
     fetchData();
     getAllFoods();
     getFolgerFoods();
