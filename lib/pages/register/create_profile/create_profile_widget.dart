@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/services/check_taken_service.dart';
@@ -18,11 +17,9 @@ class OpprettProfilWidget extends StatefulWidget {
   const OpprettProfilWidget({
     super.key,
     required this.phone,
-    required this.posisjon,
   });
 
   final String? phone;
-  final LatLng posisjon;
 
   @override
   State<OpprettProfilWidget> createState() => _OpprettProfilWidgetState();
@@ -64,6 +61,9 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
     _model.passordFocusNode ??= FocusNode();
 
     _webSocketService = WebSocketService();
+
+    FFAppState().brukerLat = 59.9138688;
+    FFAppState().brukerLng = 10.7522454;
   }
 
   @override
@@ -1018,7 +1018,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     firstName: firstName,
                                     lastName: lastName,
                                     phoneNumber: '0',
-                                    posisjon: widget.posisjon,
                                   );
                                   logger.d(
                                       '${response.body} + ${response.statusCode}');
@@ -1029,10 +1028,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     FFAppState().firstname = firstName;
                                     FFAppState().lastname = lastName;
                                     FFAppState().email = email;
-                                    FFAppState().brukerLat =
-                                        widget.posisjon.latitude;
-                                    FFAppState().brukerLng =
-                                        widget.posisjon.longitude;
                                     FFAppState().login = true;
                                     _isloading = false;
                                     _webSocketService = WebSocketService();
@@ -1167,7 +1162,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     firstName: firstName,
                                     lastName: lastName,
                                     phoneNumber: widget.phone,
-                                    posisjon: widget.posisjon,
                                   );
                                   logger.d(
                                       '${response.body} + ${response.statusCode}');
@@ -1178,10 +1172,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     FFAppState().firstname = firstName;
                                     FFAppState().lastname = lastName;
                                     FFAppState().email = email;
-                                    FFAppState().brukerLat =
-                                        widget.posisjon.latitude;
-                                    FFAppState().brukerLng =
-                                        widget.posisjon.longitude;
                                     FFAppState().login = true;
                                     _isloading = false;
                                     _webSocketService = WebSocketService();

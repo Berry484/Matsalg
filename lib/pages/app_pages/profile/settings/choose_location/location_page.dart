@@ -16,7 +16,10 @@ export 'location_model.dart';
 class LocationPage extends StatefulWidget {
   const LocationPage({
     super.key,
+    this.where,
   });
+
+  final String? where;
 
   @override
   State<LocationPage> createState() => _VelgPosisjonWidgetState();
@@ -171,9 +174,7 @@ class _VelgPosisjonWidgetState extends State<LocationPage> {
                             Align(
                               alignment: const AlignmentDirectional(0.0, -1.2),
                               child: Container(
-                                padding: const EdgeInsets.only(
-                                    bottom:
-                                        160.0), // Adjust the padding as needed
+                                padding: const EdgeInsets.only(bottom: 160.0),
                                 width: 500.0,
                                 height: MediaQuery.sizeOf(context).height + 160,
                                 decoration: BoxDecoration(
@@ -189,8 +190,14 @@ class _VelgPosisjonWidgetState extends State<LocationPage> {
                                     child: custom_widgets.Chooselocation(
                                       width: 500.0,
                                       height: double.infinity,
-                                      center: LatLng(FFAppState().brukerLat,
-                                          FFAppState().brukerLng),
+                                      zoom: 5,
+                                      center: LatLng(
+                                          FFAppState().brukerLat == 0
+                                              ? 59.9138688
+                                              : FFAppState().brukerLat,
+                                          FFAppState().brukerLng == 0
+                                              ? 10.7522454
+                                              : FFAppState().brukerLng),
                                       matsted: LatLng(FFAppState().brukerLat,
                                           FFAppState().brukerLng),
                                       onLocationChanged: (newLocation) {
@@ -239,7 +246,7 @@ class _VelgPosisjonWidgetState extends State<LocationPage> {
                                             // Check location permission status before attempting to get the location
                                             LocationPermission permission =
                                                 await Geolocator
-                                                    .checkPermission();
+                                                    .requestPermission();
 
                                             if (permission ==
                                                     LocationPermission.denied ||
@@ -263,8 +270,7 @@ class _VelgPosisjonWidgetState extends State<LocationPage> {
                                                       CupertinoDialogAction(
                                                         onPressed: () async {
                                                           Navigator.of(context)
-                                                              .pop(); // Lukk dialogen
-                                                          // Åpne innstillinger for appen
+                                                              .pop();
                                                           await Geolocator
                                                               .openLocationSettings();
                                                         },
@@ -337,7 +343,11 @@ class _VelgPosisjonWidgetState extends State<LocationPage> {
                                               return;
                                             } else {
                                               HapticFeedback.mediumImpact();
-                                              Navigator.pop(context);
+                                              if (widget.where == 'velg') {
+                                                context.goNamed('Hjem');
+                                              } else {
+                                                Navigator.pop(context);
+                                              }
                                             }
                                           } on SocketException {
                                             Toasts.showErrorToast(context,
@@ -419,7 +429,11 @@ class _VelgPosisjonWidgetState extends State<LocationPage> {
                                             }
                                             if (!context.mounted) return;
                                             HapticFeedback.mediumImpact();
-                                            Navigator.pop(context);
+                                            if (widget.where == 'velg') {
+                                              context.goNamed('Hjem');
+                                            } else {
+                                              Navigator.pop(context);
+                                            }
                                           } on SocketException {
                                             Toasts.showErrorToast(context,
                                                 'Ingen internettforbindelse');

@@ -76,10 +76,12 @@ final _mineKjopNavigatorKey =
 
 GoRouter createRouter(AppStateNotifier appStateNotifier) {
   return GoRouter(
-    initialLocation: FFAppState().login ? '/hjem' : '/registrer',
-    navigatorKey: _parentKey, // Root navigator key
+    initialLocation: FFAppState().login && FFAppState().termsService != true
+        ? '/requestTerms'
+        : (FFAppState().login ? '/hjem' : '/registrer'),
+    navigatorKey: _parentKey,
     debugLogDiagnostics: true,
-    refreshListenable: appStateNotifier, // Listen for changes in app state
+    refreshListenable: appStateNotifier,
     errorBuilder: (context, state) {
       return const RegisterWidget();
     },
@@ -832,13 +834,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         name: 'opprettProfil',
         builder: (context, state) {
           final params = FFParameters(state);
-
-          // You can use `params.getParam` to safely get parameters.
           final phone = params.getParam<String>('phone', ParamType.String)!;
-          final posisjon =
-              params.getParam<LatLng>('posisjon', ParamType.LatLng)!;
 
-          return OpprettProfilWidget(phone: phone, posisjon: posisjon);
+          return OpprettProfilWidget(phone: phone);
         },
         parentNavigatorKey: _parentKey,
       ),
@@ -846,6 +844,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         path: '/addProfilepic',
         name: 'AddProfilepic',
         builder: (context, state) => const AddProfilePicWidget(),
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/requestLocation',
+        name: 'RequestLocation',
+        builder: (context, state) => const RequestLocationWidget(),
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/requestTerms',
+        name: 'RequestTerms',
+        builder: (context, state) => const RequestTermsWidget(),
         parentNavigatorKey: _parentKey,
       ),
     ],

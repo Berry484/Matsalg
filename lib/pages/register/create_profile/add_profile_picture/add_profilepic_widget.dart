@@ -87,7 +87,7 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          context.goNamed('Hjem');
+                          context.goNamed('RequestTerms');
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -502,13 +502,13 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                     bio: null,
                                     profilepic:
                                         filelink, // Null if no file was uploaded
+                                    termsService: null,
                                   );
                                   if (response.statusCode == 200) {
                                     final decodedBody =
                                         utf8.decode(response.bodyBytes);
                                     final decodedResponse =
                                         jsonDecode(decodedBody);
-                                    // Update local app state with server response
                                     FFAppState().brukernavn =
                                         decodedResponse['username'] ?? '';
                                     FFAppState().email =
@@ -521,11 +521,12 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                         decodedResponse['bio'] ?? '';
                                     FFAppState().profilepic =
                                         decodedResponse['profilepic'] ?? '';
-
                                     _isloading = false;
                                     setState(() {});
                                     if (!context.mounted) return;
-                                    context.goNamed('Hjem');
+                                    FFAppState().brukerLat = 59.9138688;
+                                    FFAppState().brukerLng = 10.7522454;
+                                    context.goNamed('RequestTerms');
                                     return;
                                   } else if (response.statusCode == 401) {
                                     _isloading = false;

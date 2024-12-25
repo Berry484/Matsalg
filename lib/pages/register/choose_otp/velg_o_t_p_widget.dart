@@ -280,52 +280,20 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                         return;
                                       }
 
-                                      LatLng? location;
-                                      location = await getCurrentUserLocation(
-                                          defaultLocation:
-                                              const LatLng(0.0, 0.0));
+                                      safeSetState(() {
+                                        _isloading = false;
+                                      });
+                                      if (!context.mounted) return;
+                                      context.goNamed(
+                                        'opprettProfil',
+                                        queryParameters: {
+                                          'phone': serializeParam(
+                                            widget.phone,
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                      );
 
-                                      if (location != const LatLng(0.0, 0.0)) {
-                                        safeSetState(() {
-                                          _isloading = false;
-                                        });
-                                        if (!context.mounted) return;
-                                        context.goNamed(
-                                          'opprettProfil',
-                                          queryParameters: {
-                                            'phone': serializeParam(
-                                              widget.phone,
-                                              ParamType.String,
-                                            ),
-                                            'posisjon': serializeParam(
-                                              location,
-                                              ParamType.LatLng,
-                                            ),
-                                          }.withoutNulls,
-                                        );
-                                      } else {
-                                        safeSetState(() {
-                                          _isloading = false;
-                                        });
-                                        if (!context.mounted) return;
-                                        context.goNamed(
-                                          'VelgPosisjon',
-                                          queryParameters: {
-                                            'bonde': serializeParam(
-                                              false,
-                                              ParamType.bool,
-                                            ),
-                                            'endrepos': serializeParam(
-                                              false,
-                                              ParamType.bool,
-                                            ),
-                                            'phone': serializeParam(
-                                              widget.phone,
-                                              ParamType.String,
-                                            ),
-                                          }.withoutNulls,
-                                        );
-                                      }
                                       safeSetState(() {
                                         _isloading = false;
                                       });

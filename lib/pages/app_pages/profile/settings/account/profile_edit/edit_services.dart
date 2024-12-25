@@ -117,6 +117,7 @@ class EditServices {
           email: email,
           bio: bio,
           profilepic: filelink,
+          termsService: null,
         );
         final decodedBody = utf8.decode(response.bodyBytes);
         final decodedResponse = jsonDecode(decodedBody);
@@ -127,6 +128,7 @@ class EditServices {
           FFAppState().lastname = decodedResponse['lastname'] ?? '';
           FFAppState().bio = decodedResponse['bio'] ?? '';
           FFAppState().profilepic = decodedResponse['profilepic'] ?? '';
+          FFAppState().termsService = decodedResponse['termsService'] ?? false;
 
           model.isLoading = false;
           final appState = FFAppState();

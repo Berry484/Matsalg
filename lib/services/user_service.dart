@@ -105,6 +105,7 @@ class UserInfoService {
     required String? firstname,
     required String? lastname,
     required String? email,
+    required bool? termsService,
     String? profilepic,
     String? token,
   }) async {
@@ -116,6 +117,7 @@ class UserInfoService {
         "lastname": lastname,
         "email": email,
         "bio": bio,
+        "termsService": termsService
       };
 
       // Only add profilepic if it's not null
@@ -156,7 +158,6 @@ class UserInfoService {
     String? token,
   }) async {
     try {
-      // Create the user info data as a Map
       final Map<String, dynamic> userInfoData = {
         "lat": FFAppState().brukerLat,
         "lng": FFAppState().brukerLng,
@@ -286,6 +287,7 @@ class UserInfoService {
         FFAppState().lagtUt = jsonResponse['hasPosted'] ?? false;
         FFAppState().harKjopt = jsonResponse['hasBought'] ?? false;
         FFAppState().harSolgt = jsonResponse['hasSold'] ?? false;
+        FFAppState().termsService = jsonResponse['hasAcceptedTerms'] ?? false;
 
         return response;
       }

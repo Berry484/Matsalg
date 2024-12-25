@@ -13,11 +13,13 @@ class Chooselocation extends StatefulWidget {
     super.key,
     this.width,
     this.height,
+    this.zoom,
     required this.center,
     required this.matsted,
     this.onLocationChanged, // Add this line
   });
 
+  final double? zoom;
   final double? width;
   final double? height;
   final LatLng center; // From your FlutterFlow LatLng
@@ -30,7 +32,7 @@ class Chooselocation extends StatefulWidget {
 
 class _ChooselocationState extends State<Chooselocation> {
   MapController mapController = MapController();
-  double baseRadiusMeters = 345000; // Base radius in meters (represents 1 km)
+  double baseRadiusMeters = 345000; // Base radius in meters (represents 1 km
   double zoomLevel = 9; // Initial zoom level
 
   // Store the current center of the map
@@ -39,7 +41,7 @@ class _ChooselocationState extends State<Chooselocation> {
   @override
   void initState() {
     super.initState();
-    // Initialize the current center with provided center coordinates
+    widget.zoom != null ? zoomLevel = widget.zoom! : zoomLevel = 9;
     currentCenter = choose_location.LatLng(
       widget.center.latitude,
       widget.center.longitude,
