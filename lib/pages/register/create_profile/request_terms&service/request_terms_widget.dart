@@ -7,6 +7,7 @@ import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/services/user_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'request_terms_model.dart';
 export 'request_terms_model.dart';
 
@@ -178,31 +179,58 @@ class _RequestLocationWidgetState extends State<RequestTermsWidget> {
                   ),
                   Column(
                     children: [
-                      Text(
-                        'Brukervilkår',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Nunito',
-                              color: FlutterFlowTheme.of(context).alternate,
-                              fontSize: 15,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w700,
-                            ),
+                      SizedBox(
+                        height: 35,
+                        width: 150,
+                        child: TextButton(
+                          onPressed: () async {
+                            var url =
+                                Uri.https('matsalg.no', '/terms-of-service');
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            }
+                          },
+                          child: Text(
+                            'Brukervilkår',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  fontSize: 15,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 36,
+                        width: 150,
+                        child: TextButton(
+                          onPressed: () async {
+                            var url =
+                                Uri.https('matsalg.no', '/privacy-policy');
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            }
+                          },
+                          child: Text(
+                            'Personvernregler',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  fontSize: 15,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ),
+                        ),
                       ),
                       const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        'Personvernregler',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Nunito',
-                              color: FlutterFlowTheme.of(context).alternate,
-                              fontSize: 15,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                      ),
-                      const SizedBox(
-                        height: 16,
+                        height: 12,
                       ),
                       Align(
                         alignment: const AlignmentDirectional(0, 0),

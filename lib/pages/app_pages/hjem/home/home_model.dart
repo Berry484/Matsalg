@@ -15,6 +15,7 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
   List<Matvarer>? folgerMatvarer;
   List<UserInfoSearch>? profiler;
   bool isloading = true;
+  bool noWifi = false;
   bool folgermatLoading = true;
   bool profilisloading = false;
   bool searching = false;

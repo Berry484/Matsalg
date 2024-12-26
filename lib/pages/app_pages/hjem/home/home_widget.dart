@@ -175,6 +175,10 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
         }
       }
     } on SocketException {
+      setState(() {
+        _model.noWifi = true;
+        _model.isloading = false;
+      });
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
