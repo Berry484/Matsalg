@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/services/check_taken_service.dart';
 import 'package:mat_salg/services/user_service.dart';
@@ -41,9 +40,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   @override
   void initState() {
     super.initState();
-    if (widget.phone != '0') {
-      FirebaseAuth.instance.signOut();
-    }
     _model = createModel(context, () => OpprettProfilModel());
     _model.brukernavnTextController ??= TextEditingController();
     _model.brukernavnFocusNode ??= FocusNode();
@@ -1071,7 +1067,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
 
                               try {
                                 _isloading = true;
-                                FirebaseAuth.instance.signOut();
                                 await CheckTakenService.checkEmailTaken(
                                         _model.emailTextController.text)
                                     .then((response1) {
@@ -1099,7 +1094,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                 //Make user in firebase
                                 try {
                                   final response = await firebaseAuthService
-                                      .signUpWithEmailAndPassword(
+                                      .linkEmailAndPasswordToPhoneUser(
                                           '${widget.phone}@gmail.com',
                                           password);
                                   if (response == null) {

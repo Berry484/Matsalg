@@ -787,32 +787,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         parentNavigatorKey: _parentKey,
       ),
       GoRoute(
-        path: '/velgPosisjon',
-        name: 'VelgPosisjon',
-        builder: (context, state) {
-          // Use FFParameters to retrieve the parameters safely
-          final params = FFParameters(state);
-
-          // Retrieve the parameters using getParam with the appropriate ParamType
-          final bonde = params.getParam<bool>('bonde', ParamType.bool);
-          final endrepos = params.getParam<bool>('endrepos', ParamType.bool);
-          final email = params.getParam<String>('email', ParamType.String);
-          final password =
-              params.getParam<String>('password', ParamType.String);
-          final phone = params.getParam<String>('phone', ParamType.String);
-
-          // Return the VelgPosisjonWidget with the retrieved parameters
-          return VelgPosisjonWidget(
-            bonde: bonde,
-            endrepos: endrepos,
-            email: email,
-            password: password,
-            phone: phone,
-          );
-        },
-        parentNavigatorKey: _parentKey,
-      ),
-      GoRoute(
         path: '/betaling',
         name: 'Betaling',
         builder: (context, state) {

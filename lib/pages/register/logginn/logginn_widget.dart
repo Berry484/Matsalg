@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
+import 'package:mat_salg/pages/register/logginn/forgot_password/forgot_password_widget.dart';
 import 'package:mat_salg/services/user_service.dart';
 import 'package:mat_salg/services/web_socket.dart';
 import 'package:mat_salg/logging.dart';
@@ -842,19 +843,42 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 ? CircularProgressIndicator(
                                     color: FlutterFlowTheme.of(context).primary,
                                   )
-                                : null, // If not loading, no icon is shown
+                                : null,
                           ),
                         ),
-                        Text(
-                          'Har du glemt passordet?',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Nunito',
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
+                        GestureDetector(
+                          onTap: () async {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              barrierColor: const Color.fromARGB(60, 17, 0, 0),
+                              useRootNavigator: true,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () => FocusScope.of(context).unfocus(),
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: ForgotPasswordWidget(),
                                   ),
+                                );
+                              },
+                            ).then((value) => setState(() {}));
+                            return;
+                          },
+                          child: Text(
+                            'Har du glemt passordet?',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  fontSize: 16,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
                         ),
                       ],
                     ),

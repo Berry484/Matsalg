@@ -23,8 +23,6 @@ export 'pages/app_pages/profile/my_product_details/product_page.dart'
 export 'pages/app_pages/hjem/product_details/details_widget.dart'
     show DetailsWidget;
 export 'pages/app_pages/hjem/category/category_widget.dart' show CategoryWidget;
-export 'pages/register/choose_location/velg_posisjon_widget.dart'
-    show VelgPosisjonWidget;
 export 'pages/app_pages/hjem/user_page/user_widget.dart' show UserWidget;
 export 'pages/app_pages/hjem/list_followers/followers_widget.dart'
     show FollowersWidget;

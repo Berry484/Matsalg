@@ -58,18 +58,37 @@ class FirebaseAuthService {
 //-----------------------------------------------------------------------------------------------------------------------
 //--------------------Creates a user in firebase using Email and Password------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------
-  Future<User?> signUpWithEmailAndPassword(
+  Future<User?> linkEmailAndPasswordToPhoneUser(
       String email, String password) async {
     try {
-      UserCredential credential = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      return credential.user;
+      User? currentUser = _auth.currentUser;
+
+      if (currentUser == null) {
+        throw Exception('No user is currently logged in');
+      }
+
+      AuthCredential emailCredential = EmailAuthProvider.credential(
+        email: email,
+        password: password,
+      );
+      UserCredential linkedCredential =
+          await currentUser.linkWithCredential(emailCredential);
+
+      return linkedCredential.user;
     } on FirebaseAuthException catch (e) {
+      if (e.code == 'credential-already-in-use') {
+        throw (Exception('email-taken'));
+      }
       if (e.code == 'email-already-in-use') {
         throw (Exception('email-taken'));
-      } else {
+      }
+      {
+        logger.d("FirebaseAuthException: ${e.message}");
         return null;
       }
+    } catch (e) {
+      logger.d("Unexpected error with linking credential: $e");
+      return null;
     }
   }
 

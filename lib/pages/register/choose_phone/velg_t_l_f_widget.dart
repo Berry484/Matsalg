@@ -483,7 +483,6 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                       }
 
                                       /*Use this to test the creating profile experience
-                                      */
                                       if (!context.mounted) return;
                                       context.goNamed(
                                         'opprettProfil',
@@ -500,6 +499,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                         }.withoutNulls,
                                       );
                                       return;
+                                      */
 
                                       bool canRequest =
                                           await FFAppState().canRequestCode();

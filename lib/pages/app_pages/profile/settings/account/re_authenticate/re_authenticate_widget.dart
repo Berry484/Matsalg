@@ -104,11 +104,14 @@ class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
                                   children: [
                                     Divider(
                                       height: 22,
-                                      thickness: 3,
-                                      indent: 200,
-                                      endIndent: 200,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
+                                      thickness: 4,
+                                      indent:
+                                          MediaQuery.of(context).size.width *
+                                              0.4,
+                                      endIndent:
+                                          MediaQuery.of(context).size.width *
+                                              0.4,
+                                      color: Colors.black12,
                                     ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
