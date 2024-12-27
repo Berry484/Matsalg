@@ -2003,7 +2003,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
-                                                                              15.0,
+                                                                              16.0,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
@@ -2112,7 +2112,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).primaryText,
                                                                             fontSize:
-                                                                                15.0,
+                                                                                16.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
