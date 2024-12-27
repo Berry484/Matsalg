@@ -312,49 +312,17 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                       return;
                                     }
                                     if (response.statusCode == 404) {
-                                      LatLng? location;
-                                      location = await getCurrentUserLocation(
-                                          defaultLocation:
-                                              const LatLng(0.0, 0.0));
-
-                                      if (location != const LatLng(0.0, 0.0)) {
-                                        _isloading = false;
-                                        if (!context.mounted) return;
-                                        context.goNamed(
-                                          'opprettProfil',
-                                          queryParameters: {
-                                            'phone': serializeParam(
-                                              '0',
-                                              ParamType.String,
-                                            ),
-                                            'posisjon': serializeParam(
-                                              location,
-                                              ParamType.LatLng,
-                                            ),
-                                          }.withoutNulls,
-                                        );
-                                      } else {
-                                        _isloading = false;
-                                        if (!context.mounted) return;
-                                        context.goNamed(
-                                          'VelgPosisjon',
-                                          queryParameters: {
-                                            'bonde': serializeParam(
-                                              false,
-                                              ParamType.bool,
-                                            ),
-                                            'endrepos': serializeParam(
-                                              false,
-                                              ParamType.bool,
-                                            ),
-                                            'phone': serializeParam(
-                                              '0',
-                                              ParamType.String,
-                                            ),
-                                          }.withoutNulls,
-                                        );
-                                      }
                                       _isloading = false;
+                                      if (!context.mounted) return;
+                                      context.goNamed(
+                                        'opprettProfil',
+                                        queryParameters: {
+                                          'phone': serializeParam(
+                                            '0',
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                      );
                                     }
                                   } else {
                                     _isloading = false;
@@ -457,49 +425,17 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                     return;
                                   }
                                   if (response.statusCode == 404) {
-                                    LatLng? location;
-                                    location = await getCurrentUserLocation(
-                                        defaultLocation:
-                                            const LatLng(0.0, 0.0));
-
-                                    if (location != const LatLng(0.0, 0.0)) {
-                                      _isloading = false;
-                                      if (!context.mounted) return;
-                                      context.goNamed(
-                                        'opprettProfil',
-                                        queryParameters: {
-                                          'phone': serializeParam(
-                                            '0',
-                                            ParamType.String,
-                                          ),
-                                          'posisjon': serializeParam(
-                                            location,
-                                            ParamType.LatLng,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    } else {
-                                      _isloading = false;
-                                      if (!context.mounted) return;
-                                      context.goNamed(
-                                        'VelgPosisjon',
-                                        queryParameters: {
-                                          'bonde': serializeParam(
-                                            false,
-                                            ParamType.bool,
-                                          ),
-                                          'endrepos': serializeParam(
-                                            false,
-                                            ParamType.bool,
-                                          ),
-                                          'phone': serializeParam(
-                                            '0',
-                                            ParamType.String,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    }
                                     _isloading = false;
+                                    if (!context.mounted) return;
+                                    context.goNamed(
+                                      'opprettProfil',
+                                      queryParameters: {
+                                        'phone': serializeParam(
+                                          '0',
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
                                   }
                                 } else {
                                   _isloading = false;

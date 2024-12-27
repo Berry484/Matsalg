@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/loading_indicator.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/pages/app_pages/profile/settings/account/re_authenticate/re_authenticate_widget.dart';
 import 'package:mat_salg/services/user_service.dart';
+import 'package:mat_salg/services/web_socket.dart';
 
 import '../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -22,7 +25,9 @@ class AccountPage extends StatefulWidget {
 
 class _SettingsKontoWidgetState extends State<AccountPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final UserInfoService userInfoService = UserInfoService();
+  late WebSocketService webSocketService;
   late AccountModel _model;
   bool loading = false;
 
@@ -31,6 +36,7 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
   @override
   void initState() {
     super.initState();
+    webSocketService = WebSocketService();
     _model = createModel(context, () => AccountModel());
   }
 
@@ -39,14 +45,6 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
     _model.dispose();
 
     super.dispose();
-  }
-
-  bool isValidGmailEmail(String? email) {
-    if (email == null) {
-      return false;
-    }
-    final regex = RegExp(r'^\d{8}@gmail\.com$');
-    return regex.hasMatch(email);
   }
 
   @override
@@ -671,16 +669,16 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
                               ),
                             ),
                           ),
-                          if (_auth.currentUser?.email != null &&
-                              isValidGmailEmail(_auth.currentUser?.email))
+                          if (_auth.currentUser!.providerData[0].providerId ==
+                              'phone')
                             const Divider(
                               thickness: 1.2,
                               indent: 0,
                               endIndent: 0,
                               color: Color(0xE5EAEAEA),
                             ),
-                          if (_auth.currentUser?.email != null &&
-                              isValidGmailEmail(_auth.currentUser?.email))
+                          if (_auth.currentUser!.providerData[0].providerId ==
+                              'phone')
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 8, 0, 8),
@@ -905,52 +903,219 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
                                                                 .clear();
                                                             return;
                                                           }
-                                                          setState(() {
-                                                            loading = false;
-                                                            Navigator.pop(
-                                                                context);
-                                                          });
-                                                          await showModalBottomSheet(
-                                                            isScrollControlled:
-                                                                true,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            barrierColor:
-                                                                const Color
-                                                                    .fromARGB(
-                                                                    60,
-                                                                    17,
-                                                                    0,
-                                                                    0),
-                                                            useRootNavigator:
-                                                                true,
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return GestureDetector(
-                                                                onTap: () =>
-                                                                    FocusScope.of(
-                                                                            context)
-                                                                        .unfocus(),
-                                                                child: Padding(
-                                                                  padding: MediaQuery
-                                                                      .viewInsetsOf(
-                                                                          context),
+                                                          if (_auth
+                                                                  .currentUser!
+                                                                  .providerData[
+                                                                      0]
+                                                                  .providerId ==
+                                                              'google.com') {
+                                                            bool success =
+                                                                await firebaseAuthService
+                                                                    .reauthenticateWithGoogle(
+                                                                        context);
+                                                            if (success) {
+                                                              if (!context
+                                                                  .mounted) {
+                                                                return;
+                                                              }
+                                                              final response =
+                                                                  await userInfoService
+                                                                      .deleteUser(
+                                                                          context,
+                                                                          username);
+                                                              if (response!
+                                                                      .statusCode ==
+                                                                  200) {
+                                                                final appState =
+                                                                    FFAppState();
+                                                                FFAppState()
+                                                                        .login =
+                                                                    false;
+                                                                FFAppState()
+                                                                        .startet =
+                                                                    false;
+                                                                appState
+                                                                    .conversations
+                                                                    .clear();
+                                                                appState
+                                                                    .matvarer
+                                                                    .clear();
+                                                                appState
+                                                                    .ordreInfo
+                                                                    .clear();
+                                                                webSocketService
+                                                                    .close();
+                                                                await _auth
+                                                                    .currentUser
+                                                                    ?.delete();
+                                                                if (!context
+                                                                    .mounted) {
+                                                                  return;
+                                                                }
+                                                                Toasts.showAccepted(
+                                                                    context,
+                                                                    'Bruker slettet');
+                                                                logger.d(
+                                                                    'successs');
+                                                                await _auth
+                                                                    .signOut();
+                                                                if (!context
+                                                                    .mounted) {
+                                                                  return;
+                                                                }
+
+                                                                loading = false;
+                                                                context.go(
+                                                                    '/registrer');
+                                                              }
+                                                            } else {
+                                                              if (!context
+                                                                  .mounted) {
+                                                                return;
+                                                              }
+                                                              setState(() {
+                                                                loading = false;
+                                                                Navigator.pop(
+                                                                    context);
+                                                              });
+                                                              loading = false;
+                                                            }
+                                                          }
+                                                          if (_auth
+                                                                  .currentUser!
+                                                                  .providerData[
+                                                                      0]
+                                                                  .providerId ==
+                                                              'apple.com') {
+                                                            if (!context
+                                                                .mounted) {
+                                                              return;
+                                                            }
+                                                            bool success =
+                                                                await firebaseAuthService
+                                                                    .reauthenticateWithApple(
+                                                                        context);
+                                                            if (success) {
+                                                              if (!context
+                                                                  .mounted) {
+                                                                return;
+                                                              }
+                                                              final response =
+                                                                  await userInfoService
+                                                                      .deleteUser(
+                                                                          context,
+                                                                          username);
+                                                              if (response!
+                                                                      .statusCode ==
+                                                                  200) {
+                                                                final appState =
+                                                                    FFAppState();
+                                                                FFAppState()
+                                                                        .login =
+                                                                    false;
+                                                                FFAppState()
+                                                                        .startet =
+                                                                    false;
+                                                                appState
+                                                                    .conversations
+                                                                    .clear();
+                                                                appState
+                                                                    .matvarer
+                                                                    .clear();
+                                                                appState
+                                                                    .ordreInfo
+                                                                    .clear();
+                                                                webSocketService
+                                                                    .close();
+                                                                await _auth
+                                                                    .currentUser
+                                                                    ?.delete();
+                                                                if (!context
+                                                                    .mounted) {
+                                                                  return;
+                                                                }
+                                                                Toasts.showAccepted(
+                                                                    context,
+                                                                    'Bruker slettet');
+                                                                logger.d(
+                                                                    'successs');
+                                                                await _auth
+                                                                    .signOut();
+                                                                if (!context
+                                                                    .mounted) {
+                                                                  return;
+                                                                }
+
+                                                                loading = false;
+                                                                context.go(
+                                                                    '/registrer');
+                                                              }
+                                                            } else {
+                                                              if (!context
+                                                                  .mounted) {
+                                                                return;
+                                                              }
+                                                              setState(() {
+                                                                loading = false;
+                                                                Navigator.pop(
+                                                                    context);
+                                                              });
+                                                              loading = false;
+                                                            }
+                                                          } else {
+                                                            setState(() {
+                                                              loading = false;
+                                                              Navigator.pop(
+                                                                  context);
+                                                            });
+                                                            if (!context
+                                                                .mounted) {
+                                                              return;
+                                                            }
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              barrierColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      60,
+                                                                      17,
+                                                                      0,
+                                                                      0),
+                                                              useRootNavigator:
+                                                                  true,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return GestureDetector(
+                                                                  onTap: () =>
+                                                                      FocusScope.of(
+                                                                              context)
+                                                                          .unfocus(),
                                                                   child:
-                                                                      ReAuthenticateWidget(
-                                                                    delete:
-                                                                        true,
-                                                                    username:
-                                                                        username,
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        ReAuthenticateWidget(
+                                                                      delete:
+                                                                          true,
+                                                                      username:
+                                                                          username,
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          );
-                                                          return;
+                                                                );
+                                                              },
+                                                            );
+                                                            return;
+                                                          }
                                                         },
                                                         child: Text(
-                                                          'Ja, slett @${FFAppState().brukernavn}',
+                                                          'Ja, slett\n@${FFAppState().brukernavn}',
                                                           style: TextStyle(
                                                             fontSize: 16,
                                                             fontWeight:

@@ -167,7 +167,7 @@ class FirebaseAuthService {
   }
 
 //-----------------------------------------------------------------------------------------------------------------------
-//--------------------ReAuthenticate-----------------------------------------------------------------
+//--------------------ReAuthenticate-------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------
   Future<bool> reAuthenticate(BuildContext context, String password) async {
     try {
@@ -194,6 +194,104 @@ class FirebaseAuthService {
     } catch (e) {
       logger.e('Unexpected error: $e');
       return false; // Catch-all failure
+    }
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------ReAuthenticate with google-------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
+  Future<bool> reauthenticateWithGoogle(BuildContext context) async {
+    try {
+      GoogleSignIn googleSignIn = GoogleSignIn();
+      GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser != null) {
+        GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+        AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        await FirebaseAuth.instance.currentUser!
+            .reauthenticateWithCredential(credential);
+
+        logger.d('Reauthenticated with Google');
+        return true;
+      } else {
+        logger.d('Google sign-in canceled.');
+        return false;
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-credential' || e.code == 'wrong-password') {
+        if (!context.mounted) return false;
+        Toasts.showErrorToast(context, 'Feil innlogging eller passord');
+        return false;
+      }
+      if (e.code == 'user-mismatch') {
+        if (!context.mounted) return false;
+        Toasts.showErrorToast(
+            context, 'Du er ikke logget inn med denne brukeren.');
+        return false;
+      } else {
+        if (!context.mounted) return false;
+        Toasts.showErrorToast(context, 'En uforventet feil oppstod');
+        logger.d('Error: ${e.message}');
+        return false;
+      }
+    } catch (e) {
+      logger.d('Error during Google reauthentication: $e');
+      return false;
+    }
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------
+//--------------------ReAuthenticate with apple--------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
+  Future<bool> reauthenticateWithApple(BuildContext context) async {
+    try {
+      // Start the Apple sign-in process
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName
+        ],
+      );
+
+      // Create the OAuth credential for Apple
+      final oauthCredential = OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode,
+      );
+
+      // Reauthenticate the user with Firebase
+      await FirebaseAuth.instance.currentUser!
+          .reauthenticateWithCredential(oauthCredential);
+
+      logger.d('Reauthenticated with Apple');
+      return true;
+    } on FirebaseAuthException catch (e) {
+      // Handle FirebaseAuth-specific exceptions
+      if (e.code == 'invalid-credential' || e.code == 'wrong-password') {
+        if (!context.mounted) return false;
+        Toasts.showErrorToast(context, 'Feil legitimasjon eller passord');
+        return false;
+      }
+      if (e.code == 'user-mismatch') {
+        if (!context.mounted) return false;
+        Toasts.showErrorToast(
+            context, 'Du er ikke logget inn med denne brukeren.');
+        return false;
+      } else {
+        if (!context.mounted) return false;
+        Toasts.showErrorToast(context, 'En uforventet feil oppstod');
+        logger.d('Error: ${e.message}');
+        return false;
+      }
+    } catch (e) {
+      // Handle generic errors
+      logger.d('Error during Apple reauthentication: $e');
+      return false;
     }
   }
 

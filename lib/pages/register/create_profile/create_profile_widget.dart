@@ -59,8 +59,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
     _model.passordFocusNode ??= FocusNode();
 
     _webSocketService = WebSocketService();
-
-    if (widget.phone == '0') {
+    if (_auth.currentUser!.providerData[0].providerId == 'google.com') {
       _model.emailTextController.text = _auth.currentUser?.email ?? '';
     }
   }

@@ -27,9 +27,9 @@ class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final UserInfoService userInfoService = UserInfoService();
+  late WebSocketService webSocketService;
   late ReAuthenticateModel _model;
   bool isLoading = false;
-  late WebSocketService webSocketService;
 
   @override
   void setState(VoidCallback callback) {
@@ -343,13 +343,11 @@ class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
                                     20, 0, 20, 35),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    if (isLoading) return;
-
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-
                                     try {
+                                      if (isLoading) return;
+                                      setState(() {
+                                        isLoading = true;
+                                      });
                                       if (widget.delete == true) {
                                         bool success = await firebaseAuthService
                                             .reAuthenticate(
@@ -429,7 +427,9 @@ class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
                                       }
                                     }
                                   },
-                                  text: 'Lagre',
+                                  text: widget.delete ?? false
+                                      ? 'slett'
+                                      : 'Lagre',
                                   options: FFButtonOptions(
                                     width: double.infinity,
                                     height: 50,
