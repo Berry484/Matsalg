@@ -1,23 +1,27 @@
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
+import 'package:mat_salg/logging.dart';
 import 're_authenticate_model.dart';
 export 're_authenticate_model.dart';
 
 class ReAuthenticateWidget extends StatefulWidget {
-  const ReAuthenticateWidget({super.key, this.newPassword});
+  const ReAuthenticateWidget({super.key, this.newPassword, this.delete});
 
   final String? newPassword;
+  final bool? delete;
 
   @override
   State<ReAuthenticateWidget> createState() => _ReAuthenticateWidgetState();
 }
 
 class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   late ReAuthenticateModel _model;
   bool isLoading = false;
@@ -341,34 +345,56 @@ class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
                                     });
 
                                     try {
-                                      bool success = await firebaseAuthService
-                                          .reAuthenticate(
-                                              context,
-                                              _model.passwordChangeController
-                                                  .text);
-
-                                      if (success) {
-                                        success = await firebaseAuthService
-                                            .updatePassword(
-                                                widget.newPassword ?? '');
-
+                                      if (widget.delete == true) {
+                                        bool success = await firebaseAuthService
+                                            .reAuthenticate(
+                                                context,
+                                                _model.passwordChangeController
+                                                    .text);
                                         if (success) {
+                                          await _auth.currentUser?.delete();
                                           if (!context.mounted) return;
-
                                           Toasts.showAccepted(
-                                              context, 'Passord endret');
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pop();
+                                              context, 'Bruker slettet');
+                                          logger.d('successs');
+                                          if (!context.mounted) {
+                                            return;
+                                          }
+                                          context.go('/registrer');
                                         } else {
                                           if (!context.mounted) return;
-
-                                          Toasts.showErrorToast(context,
-                                              'En uforventet feil oppstod');
                                           isLoading = false;
                                         }
                                       } else {
-                                        if (!context.mounted) return;
-                                        isLoading = false;
+                                        bool success = await firebaseAuthService
+                                            .reAuthenticate(
+                                                context,
+                                                _model.passwordChangeController
+                                                    .text);
+
+                                        if (success) {
+                                          success = await firebaseAuthService
+                                              .updatePassword(
+                                                  widget.newPassword ?? '');
+
+                                          if (success) {
+                                            if (!context.mounted) return;
+
+                                            Toasts.showAccepted(
+                                                context, 'Passord endret');
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                          } else {
+                                            if (!context.mounted) return;
+
+                                            Toasts.showErrorToast(context,
+                                                'En uforventet feil oppstod');
+                                            isLoading = false;
+                                          }
+                                        } else {
+                                          if (!context.mounted) return;
+                                          isLoading = false;
+                                        }
                                       }
                                     } catch (e) {
                                       if (!context.mounted) return;

@@ -507,5 +507,36 @@ class UserInfoService {
     }
   }
 
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Deletes the current user and returns the response object-----------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  Future<http.Response?> deleteUser(
+      BuildContext context, String username) async {
+    try {
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        throw Exception('No token available');
+      }
+
+      // The backend API endpoint for deleting the user
+      final response = await http.delete(
+        Uri.parse('$baseUrl/rrh/brukere/delete?username=$username'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      ).timeout(const Duration(seconds: 5));
+
+      return response;
+    } on SocketException {
+      if (!context.mounted) return null;
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      if (!context.mounted) return null;
+      Toasts.showErrorToast(context, 'En feil oppstod');
+    }
+    return null;
+  }
+
 //
 }

@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mat_salg/helper_components/widgets/loading_indicator.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
+import 'package:mat_salg/pages/app_pages/profile/settings/account/re_authenticate/re_authenticate_widget.dart';
+import 'package:mat_salg/services/user_service.dart';
 
 import '../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -16,7 +22,9 @@ class AccountPage extends StatefulWidget {
 
 class _SettingsKontoWidgetState extends State<AccountPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final UserInfoService userInfoService = UserInfoService();
   late AccountModel _model;
+  bool loading = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -804,7 +812,192 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
-                                      onTap: () async {},
+                                      onTap: () async {
+                                        try {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              TextEditingController
+                                                  usernameController =
+                                                  TextEditingController();
+
+                                              return AlertDialog(
+                                                title: Text('Slett bruker'),
+                                                content: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Skriv inn brukernavnet ditt for å bekrefte at du sletter brukeren.',
+                                                    ),
+                                                    SizedBox(height: 10),
+                                                    TextField(
+                                                      controller:
+                                                          usernameController,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText: 'Brukernavn',
+                                                        border:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(14),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                actions: <Widget>[
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Text(
+                                                          'Avbryt',
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color:
+                                                                CupertinoColors
+                                                                    .activeBlue,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () async {
+                                                          if (loading) return;
+                                                          loading = true;
+                                                          showLoadingDialog(
+                                                              context);
+                                                          String username =
+                                                              usernameController
+                                                                  .text
+                                                                  .trim();
+
+                                                          if (username
+                                                                  .isEmpty ||
+                                                              username !=
+                                                                  FFAppState()
+                                                                      .brukernavn) {
+                                                            if (context
+                                                                .mounted) {
+                                                              Toasts.showErrorToast(
+                                                                  context,
+                                                                  'Brukernavn matcher ikke');
+                                                            }
+                                                            loading = false;
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                            usernameController
+                                                                .clear();
+                                                            return;
+                                                          }
+                                                          final response =
+                                                              await userInfoService
+                                                                  .deleteUser(
+                                                                      context,
+                                                                      username);
+                                                          if (response!
+                                                                  .statusCode ==
+                                                              200) {
+                                                            if (!context
+                                                                .mounted) {
+                                                              loading = false;
+                                                              return;
+                                                            }
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              barrierColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      60,
+                                                                      17,
+                                                                      0,
+                                                                      0),
+                                                              useRootNavigator:
+                                                                  true,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return GestureDetector(
+                                                                  onTap: () =>
+                                                                      FocusScope.of(
+                                                                              context)
+                                                                          .unfocus(),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        ReAuthenticateWidget(
+                                                                      delete:
+                                                                          true,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                setState(
+                                                                    () {}));
+                                                            return;
+                                                          } else {
+                                                            if (!context
+                                                                .mounted) {
+                                                              return;
+                                                            }
+                                                            loading = false;
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          }
+                                                        },
+                                                        child: Text(
+                                                          'Ja, slett @${FFAppState().brukernavn}',
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color:
+                                                                CupertinoColors
+                                                                    .systemRed,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        } on SocketException {
+                                          loading = false;
+                                          if (!context.mounted) return;
+                                          Navigator.of(context).pop();
+                                          Toasts.showErrorToast(context,
+                                              'Ingen internettforbindelse');
+                                        } catch (e) {
+                                          loading = false;
+                                          if (!context.mounted) return;
+                                          Navigator.of(context).pop();
+                                          Toasts.showErrorToast(
+                                              context, 'En feil oppstod');
+                                        }
+                                      },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
