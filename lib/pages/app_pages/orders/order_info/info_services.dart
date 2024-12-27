@@ -75,6 +75,7 @@ class InfoServices {
                 : ordreInfo.kjoperUsername ?? ''),
             user:
                 ordreInfo.kjopte == true ? ordreInfo.selger : ordreInfo.kjoper,
+            deleted: false,
             lastactive: ordreInfo.kjopte == true
                 ? ordreInfo.foodDetails.lastactive
                 : ordreInfo.lastactive,

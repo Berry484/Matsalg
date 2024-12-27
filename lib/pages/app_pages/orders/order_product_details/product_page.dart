@@ -135,6 +135,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
                                   try {
+                                    if (ordreInfo.deleted) return;
                                     if (widget.mine != true) {
                                       context.pushNamed(
                                         'BrukerPage2',
@@ -213,10 +214,12 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: ordreInfo
-                                                              .foodDetails
-                                                              .username ??
-                                                          '',
+                                                      text: ordreInfo.deleted
+                                                          ? 'deleted_user'
+                                                          : ordreInfo
+                                                                  .foodDetails
+                                                                  .username ??
+                                                              '',
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
@@ -230,28 +233,30 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           ),
                                                     ),
                                                     TextSpan(
-                                                      text: (CalculateDistance.calculateDistance(
-                                                                  FFAppState()
-                                                                      .brukerLat,
-                                                                  FFAppState()
-                                                                      .brukerLng,
-                                                                  ordreInfo
-                                                                          .foodDetails
-                                                                          .lat ??
-                                                                      0.0,
-                                                                  ordreInfo
-                                                                          .foodDetails
-                                                                          .lng ??
-                                                                      0.0) <
-                                                              1)
-                                                          ? (_model.poststed !=
-                                                                  null
-                                                              ? '\n${_model.poststed}, 1 Km'
-                                                              : '\n1 Km')
-                                                          : (_model.poststed !=
-                                                                  null
-                                                              ? '\n${_model.poststed ?? ''}, ${CalculateDistance.calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, ordreInfo.foodDetails.lat ?? 0.0, ordreInfo.foodDetails.lng ?? 0.0).toStringAsFixed(0)}Km'
-                                                              : '\n${CalculateDistance.calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, ordreInfo.foodDetails.lat ?? 0.0, ordreInfo.foodDetails.lng ?? 0.0).toStringAsFixed(0)}Km'),
+                                                      text: ordreInfo.deleted
+                                                          ? ''
+                                                          : (CalculateDistance.calculateDistance(
+                                                                      FFAppState()
+                                                                          .brukerLat,
+                                                                      FFAppState()
+                                                                          .brukerLng,
+                                                                      ordreInfo
+                                                                              .foodDetails
+                                                                              .lat ??
+                                                                          0.0,
+                                                                      ordreInfo
+                                                                              .foodDetails
+                                                                              .lng ??
+                                                                          0.0) <
+                                                                  1)
+                                                              ? (_model.poststed !=
+                                                                      null
+                                                                  ? '\n${_model.poststed}, 1 Km'
+                                                                  : '\n1 Km')
+                                                              : (_model.poststed !=
+                                                                      null
+                                                                  ? '\n${_model.poststed ?? ''}, ${CalculateDistance.calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, ordreInfo.foodDetails.lat ?? 0.0, ordreInfo.foodDetails.lng ?? 0.0).toStringAsFixed(0)}Km'
+                                                                  : '\n${CalculateDistance.calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, ordreInfo.foodDetails.lat ?? 0.0, ordreInfo.foodDetails.lng ?? 0.0).toStringAsFixed(0)}Km'),
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium

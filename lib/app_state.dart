@@ -384,6 +384,7 @@ class Conversation {
   final String user;
   final String username;
   final String profilePic;
+  final bool deleted;
   String? lastactive;
   final List<Message> messages;
 
@@ -392,6 +393,7 @@ class Conversation {
     required this.username,
     required this.profilePic,
     required this.lastactive,
+    required this.deleted,
     required this.messages,
   });
 
@@ -401,6 +403,7 @@ class Conversation {
       lastactive: json['lastactive'] as String,
       username: json['username'] as String? ?? "",
       profilePic: json['profile_picture'] as String? ?? "",
+      deleted: json['deleted'] as bool? ?? false,
       messages: (json['messages'] as List)
           .map((messageJson) => Message.fromJson(messageJson))
           .toList(),
@@ -412,6 +415,7 @@ class Conversation {
       'username': username,
       'user': user,
       'lastactive': lastactive,
+      'deleted': deleted,
       'profile_picture': profilePic,
       'messages': messages.map((message) => message.toJson()).toList(),
     };
@@ -686,6 +690,7 @@ class OrdreInfo {
   final bool? kjopte;
   final bool? rated;
   final String? lastactive;
+  final bool deleted;
 
   OrdreInfo({
     required this.id,
@@ -709,6 +714,7 @@ class OrdreInfo {
     required this.kjopte,
     required this.rated,
     required this.lastactive,
+    required this.deleted,
   });
 
   // Convert OrdreInfo from JSON
@@ -734,6 +740,7 @@ class OrdreInfo {
       kjoperProfilePic: json['kjoperProfilePic'] as String?,
       kjoperUsername: json['kjoperUsername'] as String?,
       selgerUsername: json['selgerUsername'] as String?,
+      deleted: json['deleted'] as bool? ?? false,
       foodDetails: Matvarer.fromJson(json['foodDetails']),
       kjopte: json['kjopte'] as bool?,
       rated: json['rated'] as bool?,
@@ -761,6 +768,7 @@ class OrdreInfo {
       'kjoperProfilePic': kjoperProfilePic,
       'kjoperUsername': kjoperUsername,
       'selgerUsername': selgerUsername,
+      'deleted': deleted,
       'foodDetails': foodDetails.toJson(),
       'kjopte': kjopte,
       'rated': rated,

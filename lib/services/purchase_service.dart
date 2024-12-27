@@ -111,6 +111,7 @@ class PurchaseService {
             godkjent: orderData['godkjent'], // Approval status
             trekt: orderData['trekt'], // Approval status
             avvist: orderData['avvist'], // Approval status
+            deleted: orderData['deleted'] as bool? ?? false,
             kjopte: orderData['kjopte'],
             rated: orderData['rated'],
             lastactive: orderData['user']['lastactive'],

@@ -150,9 +150,11 @@ class _GodkjentebudWidgetState extends State<InfoPage> {
                                       TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: ordreInfo.kjopte == true
-                                                ? ordreInfo.selgerUsername
-                                                : ordreInfo.kjoperUsername,
+                                            text: ordreInfo.deleted
+                                                ? 'deleted_user'
+                                                : ordreInfo.kjopte == true
+                                                    ? ordreInfo.selgerUsername
+                                                    : ordreInfo.kjoperUsername,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(

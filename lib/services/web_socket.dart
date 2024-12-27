@@ -291,6 +291,7 @@ class WebSocketService {
                 user: sender,
                 username: username,
                 profilePic: profilePic,
+                deleted: false,
                 lastactive: lastactive,
                 messages: [newMessage],
               );
@@ -346,6 +347,7 @@ class WebSocketService {
         username: username,
         user: receiver,
         lastactive: lastactive,
+        deleted: false,
         profilePic: '',
         messages: [newMessage], // Start the conversation with the new message
       ),

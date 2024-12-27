@@ -281,10 +281,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                               'message',
                               queryParameters: {
                                 'conversation': serializeParam(
-                                  conversation
-                                      .toJson(), // Pass the conversation in JSON format
-                                  ParamType.JSON,
-                                ),
+                                    conversation.toJson(), ParamType.JSON),
                               },
                             ).then((_) => setState(() {}));
                           },
@@ -292,8 +289,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                             model: _model.messagePreviewModel,
                             updateCallback: () => safeSetState(() {}),
                             child: MessagePreviewWidget(
-                              messageTitle: conversation
-                                  .username, // Use the user's name from the conversation
+                              messageTitle: conversation.deleted
+                                  ? 'deleted_user'
+                                  : conversation.username,
                               messageContent: conversation.messages.isNotEmpty
                                   ? conversation.messages.first
                                       .content // Last message content

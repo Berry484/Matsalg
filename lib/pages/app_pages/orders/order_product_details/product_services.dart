@@ -77,6 +77,7 @@ class ProductServices {
           final newConversation = Conversation(
             username: ordreInfo.foodDetails.username ?? '',
             user: ordreInfo.foodDetails.uid ?? '',
+            deleted: false,
             lastactive: ordreInfo.foodDetails.lastactive,
             profilePic: ordreInfo.foodDetails.profilepic ?? '',
             messages: [],

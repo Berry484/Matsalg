@@ -70,8 +70,7 @@ class Toasts {
 
     overlay.insert(overlayEntry);
 
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       if (overlayEntry.mounted) {
         overlayEntry.remove();
       }

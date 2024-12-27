@@ -54,12 +54,89 @@ class _MessageWidgetState extends State<MessageWidget> {
     _messageListWithFlags = _computeMessageFlags(conversation.messages);
     FFAppState().addListener(_onAppStateChanged);
     FFAppState().chatRoom = conversation.user;
+    isDeleted();
   }
 
   void markRead() {
     FFAppState().chatAlert.value = false;
     _webSocketService.markAllMessagesAsRead(conversation.user);
     return;
+  }
+
+  Future<void> isDeleted() async {
+    // Ensure conversation is not null and conversation.deleted is not null
+    if (conversation.deleted == true) {
+      HapticFeedback.lightImpact();
+
+      // Schedule the overlay insertion after the current frame
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final overlay = Overlay.of(context);
+        late OverlayEntry overlayEntry;
+
+        overlayEntry = OverlayEntry(
+          builder: (context) => Positioned(
+            top: 55.0,
+            left: 16.0,
+            right: 16.0,
+            child: Material(
+              color: Colors.transparent,
+              child: Dismissible(
+                key: UniqueKey(),
+                direction: DismissDirection.up, // Allow dismissing upwards
+                onDismissed: (_) =>
+                    overlayEntry.remove(), // Remove overlay on dismiss
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 14.0, horizontal: 20.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(14.0),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color.fromARGB(70, 0, 0, 0),
+                        blurRadius: 1.0,
+                        offset: Offset(0, 0.5),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(height: 30),
+                      const Icon(
+                        FontAwesomeIcons.solidCircleXmark,
+                        color: Colors.black,
+                        size: 30.0,
+                      ),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: Text(
+                          'fant ikke brukeren', // "Could not find user"
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+
+        overlay.insert(overlayEntry);
+
+        Future.delayed(const Duration(seconds: 2), () {
+          if (overlayEntry.mounted) {
+            overlayEntry.remove();
+          }
+        });
+      });
+    }
   }
 
   Future<void> getLastActiveTime() async {
@@ -75,7 +152,6 @@ class _MessageWidgetState extends State<MessageWidget> {
             final String responseBody = response?.body ?? '';
 
             if (_isValidTimestamp(responseBody)) {
-              // Find the conversation in FFAppState and update the lastactive field
               FFAppState appState = FFAppState();
               Conversation? conv = appState.conversations.firstWhere(
                 (conv) => conv.user == conversation.user,
@@ -295,136 +371,142 @@ class _MessageWidgetState extends State<MessageWidget> {
                                   color: Colors.black,
                                   size: 28,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5.0, 0.0, 0.0, 0.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                      context.pushNamed(
-                                        'BrukerPage2',
-                                        queryParameters: {
-                                          'uid': serializeParam(
-                                            conversation.user,
-                                            ParamType.String,
-                                          ),
-                                          'username': serializeParam(
-                                            conversation.username,
-                                            ParamType.String,
-                                          ),
-                                          'fromChat': serializeParam(
-                                            true,
-                                            ParamType.bool,
-                                          ),
-                                        },
-                                      );
-                                    },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      10.0, 0.0, 0.0, 0.0),
-                                              child: Container(
-                                                width: 38.0,
-                                                height: 38.0,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: Image.network(
-                                                  '${ApiConstants.baseUrl}${conversation.profilePic}',
-                                                  fit: BoxFit.cover,
-                                                  errorBuilder: (BuildContext
-                                                          context,
-                                                      Object error,
-                                                      StackTrace? stackTrace) {
-                                                    return Image.asset(
-                                                      'assets/images/profile_pic.png',
-                                                      width: 38.0,
-                                                      height: 38.0,
-                                                      fit: BoxFit.cover,
-                                                    );
-                                                  },
-                                                ),
-                                              ),
+                                if (conversation.deleted == false)
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            5.0, 0.0, 0.0, 0.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        FocusScope.of(context)
+                                            .requestFocus(FocusNode());
+                                        context.pushNamed(
+                                          'BrukerPage2',
+                                          queryParameters: {
+                                            'uid': serializeParam(
+                                              conversation.user,
+                                              ParamType.String,
                                             ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          8.0, 0.0, 0.0, 0.0),
-                                                  child: Text.rich(
-                                                    TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                          text: conversation
-                                                              .username,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: 15.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                        ),
-                                                        TextSpan(
-                                                          text:
-                                                              '\n${customTimeAgo(DateTime.parse(conversation.lastactive ?? ''))}',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: 13.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText, // Grey color
-                                                              ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                            'username': serializeParam(
+                                              conversation.username,
+                                              ParamType.String,
+                                            ),
+                                            'fromChat': serializeParam(
+                                              true,
+                                              ParamType.bool,
+                                            ),
+                                          },
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        10.0, 0.0, 0.0, 0.0),
+                                                child: Container(
+                                                  width: 38.0,
+                                                  height: 38.0,
+                                                  clipBehavior: Clip.antiAlias,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Image.network(
+                                                    '${ApiConstants.baseUrl}${conversation.profilePic}',
+                                                    fit: BoxFit.cover,
+                                                    errorBuilder:
+                                                        (BuildContext context,
+                                                            Object error,
+                                                            StackTrace?
+                                                                stackTrace) {
+                                                      return Image.asset(
+                                                        'assets/images/profile_pic.png',
+                                                        width: 38.0,
+                                                        height: 38.0,
+                                                        fit: BoxFit.cover,
+                                                      );
+                                                    },
                                                   ),
                                                 ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                              ),
+                                              Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            8.0, 0.0, 0.0, 0.0),
+                                                    child: Text.rich(
+                                                      TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text: conversation
+                                                                .username,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          ),
+                                                          TextSpan(
+                                                            text:
+                                                                '\n${customTimeAgo(DateTime.parse(conversation.lastactive ?? ''))}',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize:
+                                                                      13.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText, // Grey color
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
                               ],
                             ),
                             Padding(

@@ -164,10 +164,15 @@ class OrderList extends StatelessWidget {
                                       children: [
                                         Flexible(
                                           child: Text(
-                                            ordreInfo.kjopte == true
-                                                ? ordreInfo.selgerUsername ?? ''
-                                                : ordreInfo.kjoperUsername ??
-                                                    '',
+                                            ordreInfo.deleted
+                                                ? 'deleted_user'
+                                                : ordreInfo.kjopte == true
+                                                    ? ordreInfo
+                                                            .selgerUsername ??
+                                                        ''
+                                                    : ordreInfo
+                                                            .kjoperUsername ??
+                                                        '',
                                             softWrap: true,
                                             overflow: TextOverflow.visible,
                                             style: FlutterFlowTheme.of(context)

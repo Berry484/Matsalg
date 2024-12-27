@@ -103,6 +103,7 @@ class DetailsServices {
           final newConversation = Conversation(
             username: matvare.username ?? '',
             user: matvare.uid ?? '',
+            deleted: false,
             lastactive: matvare.lastactive,
             profilePic: matvare.profilepic ?? '',
             messages: [],
