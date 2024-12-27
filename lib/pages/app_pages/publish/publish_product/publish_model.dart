@@ -21,6 +21,8 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
   String? kommune;
   String? kategori;
   String? velgkategori;
+  bool accuratePosition = false;
+  String selectedLocationOption = 'approximate';
   LatLng? selectedLatLng;
   LatLng? currentselectedLatLng =
       LatLng(FFAppState().brukerLat, FFAppState().brukerLng);

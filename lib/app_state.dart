@@ -502,6 +502,7 @@ class Matvarer {
   final DateTime? updatetime; // Add updatetime here
   final bool? liked;
   final bool? wantPush;
+  final bool? accuratePosition;
   final String? lastactive;
 
   Matvarer({
@@ -524,6 +525,7 @@ class Matvarer {
     this.updatetime, // Add updatetime to constructor
     this.liked,
     this.wantPush,
+    this.accuratePosition,
     this.lastactive,
   });
 
@@ -560,7 +562,8 @@ class Matvarer {
       antall: listingJson['antall'] as int?,
       profilepic: listingJson['profilepic'] as String? ?? "",
       kjopt: listingJson['kjopt'] as bool?,
-      updatetime: parsedTime, // Parse updatetime if available
+      accuratePosition: listingJson['accuratePosition'] as bool? ?? false,
+      updatetime: parsedTime,
       liked: listingJson['liked'] as bool?,
       wantPush: listingJson['wantPush'] as bool?,
       lastactive: listingJson['lastactive'] as String? ?? "",
@@ -601,6 +604,7 @@ class Matvarer {
       antall: listingJson['antall'] as int?,
       profilepic: userJson['profilepic'] as String? ?? "",
       kjopt: listingJson['kjopt'] as bool?,
+      accuratePosition: listingJson['accuratePosition'] as bool? ?? false,
       updatetime: parsedTime,
       liked: listingJson['liked'] as bool?,
       wantPush: listingJson['wantPush'] as bool?,
@@ -634,6 +638,7 @@ class Matvarer {
       'antall': antall,
       'profilepic': profilepic,
       'kjopt': kjopt,
+      'accuratePosition': accuratePosition,
       'updatetime': updatetime
           ?.toIso8601String(), // Convert DateTime to ISO string for JSON
       'liked': liked,
@@ -661,6 +666,7 @@ class Matvarer {
         'antall: $antall, '
         'profilepic: $profilepic, '
         'kjopt: $kjopt, '
+        'accuratePosition: $accuratePosition, '
         'updatetime: $updatetime, '
         'liked: $liked, '
         'wantPush: $wantPush'

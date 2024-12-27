@@ -14,7 +14,7 @@ import 'package:mat_salg/pages/app_pages/hjem/product_details/details_services.d
 import 'package:mat_salg/pages/app_pages/hjem/product_details/get_updates/get_updates_widget.dart';
 import 'package:mat_salg/pages/app_pages/hjem/report/report_widget.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_animations.dart';
-import 'package:mat_salg/pages/app_pages/kart/kart_pop_up/kart_pop_up_widget.dart';
+import 'package:mat_salg/pages/map/kart_pop_up_widget.dart';
 import 'package:mat_salg/services/location_service.dart';
 import 'package:mat_salg/services/like_service.dart';
 import 'package:shimmer/shimmer.dart';
@@ -1008,6 +1008,8 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                       child: KartPopUpWidget(
                                                         startLat: startLat,
                                                         startLng: startLng,
+                                                        accuratePosition: matvare
+                                                            .accuratePosition,
                                                       ),
                                                     ),
                                                   );

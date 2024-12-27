@@ -366,6 +366,7 @@ class PublishServices {
           kategorier: model.kategori,
           posisjon: model.selectedLatLng,
           antall: model.selectedValue,
+          accuratePosition: model.accuratePosition,
           betaling: null,
           kg: kg,
           kjopt: kjopt,
@@ -497,6 +498,7 @@ class PublishServices {
             posisjon: model.selectedLatLng,
             antall: model.selectedValue,
             betaling: null,
+            accuratePosition: model.accuratePosition,
             kg: kg,
           );
 

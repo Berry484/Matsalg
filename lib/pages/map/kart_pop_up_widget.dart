@@ -1,10 +1,7 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
-import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
-import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
-import '../../../../helper_components/widgets/index.dart' as custom_widgets;
+import '../../helper_components/flutter_flow/flutter_flow_theme.dart';
+import '../../helper_components/flutter_flow/flutter_flow_util.dart';
+import '../../helper_components/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'kart_pop_up_model.dart';
 export 'kart_pop_up_model.dart';
@@ -14,10 +11,12 @@ class KartPopUpWidget extends StatefulWidget {
     super.key,
     this.startLat,
     this.startLng,
+    this.accuratePosition,
   });
 
   final dynamic startLat;
   final dynamic startLng;
+  final bool? accuratePosition;
 
   @override
   State<KartPopUpWidget> createState() => _KartPopUpWidgetState();
@@ -91,28 +90,21 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
                             alignment: const AlignmentDirectional(0, 0),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  7, 0, 0, 0),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  try {
-                                    Navigator.pop(context);
-                                  } on SocketException {
-                                    Toasts.showErrorToast(
-                                        context, 'Ingen internettforbindelse');
-                                  } catch (e) {
-                                    Toasts.showErrorToast(
-                                        context, 'En feil oppstod');
-                                  }
-                                },
-                                child: Icon(
-                                  CupertinoIcons.xmark,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 25,
+                                  0, 0, 0, 0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    7, 0, 0, 0),
+                                child: Text(
+                                  'Lukk',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        fontSize: 17,
+                                        color: Colors.transparent,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
                               ),
                             ),
@@ -134,12 +126,40 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
                                   ),
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
-                            child: Icon(
-                              CupertinoIcons.xmark,
-                              color: Colors.transparent,
-                              size: 25,
+                          Align(
+                            alignment: const AlignmentDirectional(0, 0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  try {
+                                    Navigator.pop(context);
+                                  } catch (e) {
+                                    Toasts.showErrorToast(
+                                        context, 'En feil oppstod');
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 7, 0),
+                                  child: Text(
+                                    'Lukk',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          fontSize: 17,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -162,6 +182,7 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
                       width: 500.0,
                       height: 450.0,
                       center: LatLng(widget.startLat, widget.startLng),
+                      accuratePosition: widget.accuratePosition ?? false,
                     ),
                   ),
                 ),

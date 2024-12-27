@@ -4,7 +4,7 @@ import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/pages/app_pages/hjem/report/report_widget.dart';
-import 'package:mat_salg/pages/app_pages/kart/kart_pop_up/kart_pop_up_widget.dart';
+import 'package:mat_salg/pages/map/kart_pop_up_widget.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/pages/app_pages/orders/order_product_details/product_services.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -827,6 +827,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                         child: KartPopUpWidget(
                                                           startLat: startLat,
                                                           startLng: startLng,
+                                                          accuratePosition:
+                                                              ordreInfo
+                                                                  .foodDetails
+                                                                  .accuratePosition,
                                                         ),
                                                       ),
                                                     );

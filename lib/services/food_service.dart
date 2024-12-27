@@ -22,9 +22,9 @@ class ApiFoodService {
     required bool? betaling,
     required bool kg,
     required int? antall,
+    required bool accuratePosition,
   }) async {
     try {
-      // Create the user info data as a Map
       final Map<String, dynamic> userInfoData = {
         "name": name,
         "imgUrl": imgUrl,
@@ -37,6 +37,7 @@ class ApiFoodService {
         "antall": antall,
         "kjopt": false,
         "slettet": false,
+        "accuratePosition": accuratePosition,
         "kg": kg,
       };
       // Convert the Map to JSON
@@ -77,6 +78,7 @@ class ApiFoodService {
     LatLng? posisjon,
     bool? betaling,
     bool? kg,
+    bool? accuratePosition,
     int? antall,
     bool? kjopt,
   }) async {
@@ -92,6 +94,7 @@ class ApiFoodService {
         "betaling": betaling,
         "antall": antall,
         "kjopt": kjopt,
+        "accuratePosition": accuratePosition,
         "slettet": false,
         "kg": kg,
       };

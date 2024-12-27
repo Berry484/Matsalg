@@ -88,6 +88,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
       _model.kategori = _model.matvare.kategorier!.first;
       _model.produktBeskrivelseTextController.text =
           _model.matvare.description ?? '';
+      _model.accuratePosition = _model.matvare.accuratePosition ?? false;
       _model.produktPrisSTKTextController.text =
           _model.matvare.price.toString();
 
@@ -110,6 +111,12 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
       }
     } else {
       _model.matvare = Matvarer.fromJson1({'imgUrl': []});
+    }
+    if (_model.accuratePosition == false) {
+      _model.selectedLocationOption = 'approximate';
+    }
+    if (_model.accuratePosition == true) {
+      _model.selectedLocationOption = 'exact';
     }
   }
 
@@ -209,7 +216,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                   ),
                 ),
                 Text(
-                  widget.rediger == true ? 'Rediger' : 'Ny _model.matvare',
+                  widget.rediger == true ? 'Rediger' : 'Ny annonse',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Nunito',
                         color: FlutterFlowTheme.of(context).primaryText,
@@ -1755,33 +1762,6 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                               Align(
                                                 alignment:
                                                     const AlignmentDirectional(
-                                                        -1.0, 0.0),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          20.0, 0.0, 0.0, 10.0),
-                                                  child: Text(
-                                                    'Andre vil ikke kunne se din nøyaktige posisjon.',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 15.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
                                                         -1, 0),
                                                 child: Padding(
                                                   padding:
@@ -1956,6 +1936,230 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                     ),
                                                   ),
                                                 ),
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        _model.selectedLocationOption =
+                                                            'approximate';
+                                                        _model.accuratePosition =
+                                                            false;
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 0,
+                                                              horizontal: 0),
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              16, 20, 16, 23),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(14),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Row(children: [
+                                                            Radio(
+                                                              value:
+                                                                  'approximate',
+                                                              activeColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                              groupValue: _model
+                                                                  .selectedLocationOption,
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState(() {
+                                                                  _model.selectedLocationOption =
+                                                                      value!;
+                                                                });
+                                                              },
+                                                            ),
+                                                            SizedBox(width: 10),
+                                                            RichText(
+                                                              text: TextSpan(
+                                                                children: [
+                                                                  TextSpan(
+                                                                    text:
+                                                                        'Generell beliggenhet', // First part of the text
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Nunito',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontSize:
+                                                                              15.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w700,
+                                                                        ),
+                                                                  ),
+                                                                  TextSpan(
+                                                                    text:
+                                                                        '\nKjøpere vil bare se varens\nomtrentlige posisjon', // Additional text
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Nunito',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryText,
+                                                                          fontSize:
+                                                                              13.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w400,
+                                                                        ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ]),
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                            child: Image.asset(
+                                                              'assets/images/ApproximatePosition.png',
+                                                              width: 75.0,
+                                                              height: 75.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        _model.selectedLocationOption =
+                                                            'exact';
+                                                        _model.accuratePosition =
+                                                            true;
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 0,
+                                                              horizontal: 0),
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              16, 0, 16, 10),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Radio(
+                                                                value: 'exact',
+                                                                activeColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .alternate,
+                                                                groupValue: _model
+                                                                    .selectedLocationOption,
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(() {
+                                                                    _model.selectedLocationOption =
+                                                                        value!;
+                                                                  });
+                                                                },
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 10),
+                                                              RichText(
+                                                                text: TextSpan(
+                                                                  children: [
+                                                                    TextSpan(
+                                                                      text:
+                                                                          'Nøyaktig beliggenhet',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Nunito',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryText,
+                                                                            fontSize:
+                                                                                15.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                          ),
+                                                                    ),
+                                                                    TextSpan(
+                                                                      text:
+                                                                          '\nKjøpere vil se varens\nnøyaktige posisjon', // Additional text
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Nunito',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryText,
+                                                                            fontSize:
+                                                                                13.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                          ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                            child: Image.asset(
+                                                              'assets/images/AccuratePosition.png',
+                                                              width: 75.0,
+                                                              height: 75.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),

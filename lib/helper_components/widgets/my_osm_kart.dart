@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'package:latlong2/latlong.dart' as osm_map;
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
 import 'dart:math' as math;
 
-//-----------------------------------------------------------------------------------------------------------------------
-//--------------------Shows a map that displays a circle with the general user location----------------------------------
-//-----------------------------------------------------------------------------------------------------------------------
+import 'package:mat_salg/helper_components/flutter_flow/lat_lng.dart';
+
 class MyOsmKart extends StatefulWidget {
   const MyOsmKart({
     super.key,
     this.width,
     this.height,
     required this.center,
+    required this.accuratePosition,
   });
 
   final double? width;
   final double? height;
   final LatLng center;
+  final bool accuratePosition;
 
   @override
   State<MyOsmKart> createState() => _MyOsmKartState();
@@ -25,7 +26,7 @@ class MyOsmKart extends StatefulWidget {
 
 class _MyOsmKartState extends State<MyOsmKart> {
   MapController mapController = MapController();
-  double baseRadiusMeters = 2500; // Base radius in meters (represents 1 km)
+  double baseRadiusMeters = 2500; // Base radius in meters
   double zoomLevel = 12.5; // Initial zoom level
 
   @override
@@ -33,8 +34,7 @@ class _MyOsmKartState extends State<MyOsmKart> {
     super.initState();
     mapController.mapEventStream.listen((event) {
       setState(() {
-        zoomLevel = mapController
-            .camera.zoom; // Update the zoom level from the controller
+        zoomLevel = mapController.camera.zoom; // Update the zoom level
       });
     });
   }
@@ -59,19 +59,25 @@ class _MyOsmKartState extends State<MyOsmKart> {
         ),
         MarkerLayer(markers: [
           Marker(
-            width: _calculateCircleSize(),
-            height: _calculateCircleSize(),
+            width: widget.accuratePosition ? 40 : _calculateCircleSize(),
+            height: widget.accuratePosition ? 40 : _calculateCircleSize(),
             point:
                 osm_map.LatLng(widget.center.latitude, widget.center.longitude),
-            child: CustomPaint(
-              size: Size(
-                _calculateCircleSize(),
-                _calculateCircleSize(),
-              ),
-              painter: CirclePainter(
-                radius: _calculateCircleRadius(),
-              ),
-            ),
+            child: widget.accuratePosition
+                ? Icon(
+                    Icons.location_on,
+                    color: FlutterFlowTheme.of(context).alternate,
+                    size: 44,
+                  )
+                : CustomPaint(
+                    size: Size(
+                      _calculateCircleSize(),
+                      _calculateCircleSize(),
+                    ),
+                    painter: CirclePainter(
+                      radius: _calculateCircleRadius(),
+                    ),
+                  ),
           ),
         ]),
         Align(
