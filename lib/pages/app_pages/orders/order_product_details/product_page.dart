@@ -214,7 +214,10 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                 TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: ordreInfo.deleted
+                                                      text: ordreInfo.deleted &&
+                                                              ordreInfo
+                                                                      .kjopte ==
+                                                                  true
                                                           ? 'deleted_user'
                                                           : ordreInfo
                                                                   .foodDetails
@@ -233,8 +236,11 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                                           ),
                                                     ),
                                                     TextSpan(
-                                                      text: ordreInfo.deleted
-                                                          ? ''
+                                                      text: ordreInfo.deleted &&
+                                                              ordreInfo
+                                                                      .kjopte ==
+                                                                  true
+                                                          ? 'deleted_user'
                                                           : (CalculateDistance.calculateDistance(
                                                                       FFAppState()
                                                                           .brukerLat,

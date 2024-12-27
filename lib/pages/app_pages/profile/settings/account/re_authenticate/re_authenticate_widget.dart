@@ -7,14 +7,17 @@ import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dar
 import 'package:flutter/material.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/logging.dart';
+import 'package:mat_salg/services/user_service.dart';
+import 'package:mat_salg/services/web_socket.dart';
 import 're_authenticate_model.dart';
 export 're_authenticate_model.dart';
 
 class ReAuthenticateWidget extends StatefulWidget {
-  const ReAuthenticateWidget({super.key, this.newPassword, this.delete});
-
+  const ReAuthenticateWidget(
+      {super.key, this.newPassword, this.username, this.delete});
   final String? newPassword;
   final bool? delete;
+  final String? username;
 
   @override
   State<ReAuthenticateWidget> createState() => _ReAuthenticateWidgetState();
@@ -23,8 +26,10 @@ class ReAuthenticateWidget extends StatefulWidget {
 class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final UserInfoService userInfoService = UserInfoService();
   late ReAuthenticateModel _model;
   bool isLoading = false;
+  late WebSocketService webSocketService;
 
   @override
   void setState(VoidCallback callback) {
@@ -36,7 +41,7 @@ class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ReAuthenticateModel());
-
+    webSocketService = WebSocketService();
     _model.passwordChangeController ??= TextEditingController();
     _model.passwordChangeNode ??= FocusNode();
   }
@@ -352,15 +357,29 @@ class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
                                                 _model.passwordChangeController
                                                     .text);
                                         if (success) {
-                                          await _auth.currentUser?.delete();
                                           if (!context.mounted) return;
-                                          Toasts.showAccepted(
-                                              context, 'Bruker slettet');
-                                          logger.d('successs');
-                                          if (!context.mounted) {
-                                            return;
+                                          final response =
+                                              await userInfoService.deleteUser(
+                                                  context,
+                                                  widget.username ?? '');
+                                          if (response!.statusCode == 200) {
+                                            final appState = FFAppState();
+                                            FFAppState().login = false;
+                                            FFAppState().startet = false;
+                                            appState.conversations.clear();
+                                            appState.matvarer.clear();
+                                            appState.ordreInfo.clear();
+                                            webSocketService.close();
+                                            await _auth.currentUser?.delete();
+                                            if (!context.mounted) return;
+                                            Toasts.showAccepted(
+                                                context, 'Bruker slettet');
+                                            logger.d('successs');
+                                            await _auth.signOut();
+                                            if (!context.mounted) return;
+                                            isLoading = false;
+                                            context.go('/registrer');
                                           }
-                                          context.go('/registrer');
                                         } else {
                                           if (!context.mounted) return;
                                           isLoading = false;
@@ -399,6 +418,7 @@ class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
                                     } catch (e) {
                                       if (!context.mounted) return;
                                       isLoading = false;
+                                      logger.d(e);
                                       Toasts.showErrorToast(context,
                                           'En uforventet feil oppstod');
                                     } finally {

@@ -823,6 +823,9 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
 
                                               return AlertDialog(
                                                 title: Text('Slett bruker'),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
                                                 content: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -902,69 +905,49 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
                                                                 .clear();
                                                             return;
                                                           }
-                                                          final response =
-                                                              await userInfoService
-                                                                  .deleteUser(
-                                                                      context,
-                                                                      username);
-                                                          if (response!
-                                                                  .statusCode ==
-                                                              200) {
-                                                            if (!context
-                                                                .mounted) {
-                                                              loading = false;
-                                                              return;
-                                                            }
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor:
-                                                                  const Color
-                                                                      .fromARGB(
-                                                                      60,
-                                                                      17,
-                                                                      0,
-                                                                      0),
-                                                              useRootNavigator:
-                                                                  true,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
-                                                                    child:
-                                                                        ReAuthenticateWidget(
-                                                                      delete:
-                                                                          true,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                setState(
-                                                                    () {}));
-                                                            return;
-                                                          } else {
-                                                            if (!context
-                                                                .mounted) {
-                                                              return;
-                                                            }
+                                                          setState(() {
                                                             loading = false;
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          }
+                                                            Navigator.pop(
+                                                                context);
+                                                          });
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            barrierColor:
+                                                                const Color
+                                                                    .fromARGB(
+                                                                    60,
+                                                                    17,
+                                                                    0,
+                                                                    0),
+                                                            useRootNavigator:
+                                                                true,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return GestureDetector(
+                                                                onTap: () =>
+                                                                    FocusScope.of(
+                                                                            context)
+                                                                        .unfocus(),
+                                                                child: Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
+                                                                  child:
+                                                                      ReAuthenticateWidget(
+                                                                    delete:
+                                                                        true,
+                                                                    username:
+                                                                        username,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                          return;
                                                         },
                                                         child: Text(
                                                           'Ja, slett @${FFAppState().brukernavn}',

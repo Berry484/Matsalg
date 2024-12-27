@@ -9,6 +9,7 @@ import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dar
 import 'package:flutter/material.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/logging.dart';
+import 'package:mat_salg/services/check_taken_service.dart';
 import 'forgot_password_model.dart';
 export 'forgot_password_model.dart';
 
@@ -533,63 +534,83 @@ class _ReAuthenticateWidgetState extends State<ForgotPasswordWidget> {
                                     });
                                     return;
                                   }
+                                  final response =
+                                      await CheckTakenService.checkPhoneTaken(
+                                          _model.telefonnummerTextController
+                                              .text);
 
-                                  bool canRequest =
-                                      await FFAppState().canRequestCode();
-                                  if (canRequest) {
-                                    await FirebaseAuth.instance
-                                        .verifyPhoneNumber(
-                                      phoneNumber:
-                                          '+47${_model.telefonnummerTextController.text}',
-                                      verificationCompleted:
-                                          (phoneAuthCredential) {},
-                                      verificationFailed: (error) {
-                                        logger.d(error.toString());
-                                        logger.d(
-                                            "Verification Failed: ${error.toString()}");
-                                        logger.d("Error Code: ${error.code}");
-                                        logger.d(
-                                            "Error Message: ${error.message}");
-                                        if (error.code == 'too-many-requests') {
-                                          if (mounted) {}
-                                          safeSetState(() {
-                                            _model.isloading = false;
-                                            _model.errorMessage =
-                                                "For mange forsøk";
-                                          });
-                                        } else {
-                                          safeSetState(() {
-                                            _model.isloading = false;
-                                            HapticFeedback.mediumImpact();
-                                            Toasts.showErrorToast(context,
-                                                'En feil oppstod. Ta kontakt \nhvis problemet vedvarer');
-                                          });
-                                        }
-                                      },
-                                      codeSent: (verificationId,
-                                          forceResendingToken) {
-                                        logger.d("sent code");
-                                        logger
-                                            .d("The code is: $verificationId");
-                                        _model.verificationId = verificationId;
-                                        safeSetState(() {
-                                          _model.isloading = false;
-                                          _model.otpCodeSent = true;
-                                        });
-                                        FFAppState().storeTimestamp();
-                                      },
-                                      codeAutoRetrievalTimeout:
-                                          (verificationId) {
-                                        logger.d("Auto Retireval timeout");
-                                      },
-                                    );
-                                  } else {
+                                  if (response.statusCode == 200) {
                                     safeSetState(() {
                                       _model.isloading = false;
-                                      HapticFeedback.mediumImpact();
-                                      Toasts.showErrorToast(context,
-                                          'Vent minst 2 minutter før \ndu ber om ny kode');
                                     });
+                                    HapticFeedback.mediumImpact();
+                                    if (!context.mounted) return;
+                                    Toasts.showErrorToast(context,
+                                        'Det finnes ingen brukere med dette telefonnummeret');
+                                    if (mounted) {
+                                      Navigator.pop(context);
+                                      return;
+                                    }
+                                  } else {
+                                    bool canRequest =
+                                        await FFAppState().canRequestCode();
+                                    if (canRequest) {
+                                      await FirebaseAuth.instance
+                                          .verifyPhoneNumber(
+                                        phoneNumber:
+                                            '+47${_model.telefonnummerTextController.text}',
+                                        verificationCompleted:
+                                            (phoneAuthCredential) {},
+                                        verificationFailed: (error) {
+                                          logger.d(error.toString());
+                                          logger.d(
+                                              "Verification Failed: ${error.toString()}");
+                                          logger.d("Error Code: ${error.code}");
+                                          logger.d(
+                                              "Error Message: ${error.message}");
+                                          if (error.code ==
+                                              'too-many-requests') {
+                                            if (mounted) {}
+                                            safeSetState(() {
+                                              _model.isloading = false;
+                                              _model.errorMessage =
+                                                  "For mange forsøk";
+                                            });
+                                          } else {
+                                            safeSetState(() {
+                                              _model.isloading = false;
+                                              HapticFeedback.mediumImpact();
+                                              Toasts.showErrorToast(context,
+                                                  'En feil oppstod. Ta kontakt \nhvis problemet vedvarer');
+                                            });
+                                          }
+                                        },
+                                        codeSent: (verificationId,
+                                            forceResendingToken) {
+                                          logger.d("sent code");
+                                          logger.d(
+                                              "The code is: $verificationId");
+                                          _model.verificationId =
+                                              verificationId;
+                                          safeSetState(() {
+                                            _model.isloading = false;
+                                            _model.otpCodeSent = true;
+                                          });
+                                          FFAppState().storeTimestamp();
+                                        },
+                                        codeAutoRetrievalTimeout:
+                                            (verificationId) {
+                                          logger.d("Auto Retireval timeout");
+                                        },
+                                      );
+                                    } else {
+                                      safeSetState(() {
+                                        _model.isloading = false;
+                                        HapticFeedback.mediumImpact();
+                                        Toasts.showErrorToast(context,
+                                            'Vent minst 2 minutter før \ndu ber om ny kode');
+                                      });
+                                    }
                                   }
                                 } catch (e) {
                                   safeSetState(() {

@@ -457,14 +457,16 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                               if (_model.searching == true)
                                 GestureDetector(
                                   onTap: () async {
-                                    _model.textController!.clear();
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    setState(() {
+                                      _model.textController!.clear();
+                                    });
                                     setState(() {
                                       _model.searching = false;
                                       _model.profiler = null;
                                       _model.profilisloading = false;
                                     });
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(

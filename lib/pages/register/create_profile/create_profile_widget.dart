@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/services/check_taken_service.dart';
 import 'package:mat_salg/services/user_service.dart';
@@ -27,6 +28,7 @@ class OpprettProfilWidget extends StatefulWidget {
 class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
   late OpprettProfilModel _model;
   late WebSocketService _webSocketService;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final UserInfoService userInfoService = UserInfoService();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -57,6 +59,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
     _model.passordFocusNode ??= FocusNode();
 
     _webSocketService = WebSocketService();
+
+    if (widget.phone == '0') {
+      _model.emailTextController.text = _auth.currentUser?.email ?? '';
+    }
   }
 
   @override
@@ -950,23 +956,21 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                             const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 5),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            if (_isloading == true) {
-                              return;
-                            }
-
-                            //Lag bruker med apple, google, facebook
+                            if (_isloading) return;
+                            _isloading = true;
                             if (widget.phone == '0') {
                               try {
                                 if (_model.formKey.currentState == null ||
                                     !_model.formKey.currentState!.validate()) {
+                                  _isloading = false;
                                   return;
                                 }
 
                                 if (_errorMessage != null ||
                                     _emailTatt != null) {
+                                  _isloading = false;
                                   return;
                                 }
-                                _isloading = true;
                                 String? token =
                                     await firebaseAuthService.getToken(context);
                                 logger.d(token);
@@ -983,6 +987,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                       _emailTatt = null;
                                     }
                                   });
+                                  _isloading = false;
                                   return;
                                 });
                                 String username =
@@ -1022,10 +1027,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     FFAppState().lastname = lastName;
                                     FFAppState().email = email;
                                     FFAppState().login = true;
-                                    _isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;
+                                    _isloading = false;
                                     context.goNamed('AddProfilepic');
                                   }
 
@@ -1058,10 +1063,12 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                             if (widget.phone != null) {
                               if (_model.formKey.currentState == null ||
                                   !_model.formKey.currentState!.validate()) {
+                                _isloading = false;
                                 return;
                               }
 
                               if (_errorMessage != null || _emailTatt != null) {
+                                _isloading = false;
                                 return;
                               }
 
@@ -1078,6 +1085,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                       _emailTatt = null;
                                     }
                                   });
+                                  _isloading = false;
                                   return;
                                 });
                                 String username =
@@ -1165,10 +1173,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     FFAppState().lastname = lastName;
                                     FFAppState().email = email;
                                     FFAppState().login = true;
-                                    _isloading = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;
+                                    _isloading = false;
                                     context.goNamed('AddProfilepic');
                                   }
 
