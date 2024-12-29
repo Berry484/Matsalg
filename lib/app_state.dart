@@ -535,38 +535,33 @@ class Matvarer {
       parsedTime = DateTime.tryParse(json?['updatetime']);
     }
 
-    // Extract the 'listing' data (if it exists)
-    Map<String, dynamic> listingJson = json?['listing'] ?? json;
-
     return Matvarer(
-      matId: listingJson['matId'] as int?,
-      name:
-          listingJson['name'] as String? ?? "", // Default empty string if null
-      imgUrls: (listingJson['imgUrl'] != null && listingJson['imgUrl'] is List)
-          ? List<String>.from(listingJson['imgUrl']?.whereType<String>() ?? [])
+      matId: json?['matId'] as int?,
+      name: json?['name'] as String? ?? "", // Default empty string if null
+      imgUrls: (json?['imgUrl'] != null && json?['imgUrl'] is List)
+          ? List<String>.from(json?['imgUrl']?.whereType<String>() ?? [])
           : [],
-      description: listingJson['description'] as String? ?? "",
-      price: listingJson['price'] as int?,
-      kategorier: (listingJson['kategorier'] != null &&
-              listingJson['kategorier'] is List)
-          ? List<String>.from(listingJson['kategorier'])
+      description: json?['description'] as String? ?? "",
+      price: json?['price'] as int?,
+      kategorier: (json?['kategorier'] != null && json?['kategorier'] is List)
+          ? List<String>.from(json?['kategorier'])
           : null,
-      lat: listingJson['lat'] as double?,
-      lng: listingJson['lng'] as double?,
-      betaling: listingJson['betaling'] as bool?,
-      kg: listingJson['kg'] as bool?,
+      lat: json?['lat'] as double?,
+      lng: json?['lng'] as double?,
+      betaling: json?['betaling'] as bool?,
+      kg: json?['kg'] as bool?,
       // Getting the username and profilepic from the 'user' field inside 'listing'
-      username: listingJson['username'] as String? ?? "",
-      uid: listingJson['uid'] as String? ?? "",
-      bonde: listingJson['bonde'] as bool?,
-      antall: listingJson['antall'] as int?,
-      profilepic: listingJson['profilepic'] as String? ?? "",
-      kjopt: listingJson['kjopt'] as bool?,
-      accuratePosition: listingJson['accuratePosition'] as bool? ?? false,
+      username: json?['username'] as String? ?? "",
+      uid: json?['uid'] as String? ?? "",
+      bonde: json?['bonde'] as bool?,
+      antall: json?['antall'] as int?,
+      profilepic: json?['profilepic'] as String? ?? "",
+      kjopt: json?['kjopt'] as bool?,
+      accuratePosition: json?['accuratePosition'] as bool? ?? false,
       updatetime: parsedTime,
-      liked: listingJson['liked'] as bool?,
-      wantPush: listingJson['wantPush'] as bool?,
-      lastactive: listingJson['lastactive'] as String? ?? "",
+      liked: json?['liked'] as bool?,
+      wantPush: json?['wantPush'] as bool?,
+      lastactive: json?['lastactive'] as String? ?? "",
     );
   }
 
@@ -576,38 +571,34 @@ class Matvarer {
       parsedTime = DateTime.tryParse(json?['updatetime']);
     }
 
-    // Extract listing data (assuming the main object is stored in 'listing' or as root)
-    Map<String, dynamic> listingJson = json?['listing'] ?? json;
-
-    Map<String, dynamic> userJson = listingJson['user'] ?? {};
+    Map<String, dynamic> userJson = json?['user'] ?? {};
     return Matvarer(
-      matId: listingJson['matId'] as int?,
-      name: listingJson['name'] as String? ?? "",
-      imgUrls: (listingJson['imgUrl'] != null && listingJson['imgUrl'] is List)
-          ? List<String>.from(listingJson['imgUrl']?.whereType<String>() ?? [])
+      matId: json?['matId'] as int?,
+      name: json?['name'] as String? ?? "",
+      imgUrls: (json?['imgUrl'] != null && json?['imgUrl'] is List)
+          ? List<String>.from(json?['imgUrl']?.whereType<String>() ?? [])
           : [],
-      description: listingJson['description'] as String? ?? "",
-      price: listingJson['price'] as int?,
-      kategorier: (listingJson['kategorier'] != null &&
-              listingJson['kategorier'] is List)
-          ? List<String>.from(listingJson['kategorier'])
+      description: json?['description'] as String? ?? "",
+      price: json?['price'] as int?,
+      kategorier: (json?['kategorier'] != null && json?['kategorier'] is List)
+          ? List<String>.from(json?['kategorier'])
           : null,
-      lat: listingJson['lat'] as double?,
-      lng: listingJson['lng'] as double?,
-      betaling: listingJson['betaling'] as bool?,
-      kg: listingJson['kg'] as bool?,
+      lat: json?['lat'] as double?,
+      lng: json?['lng'] as double?,
+      betaling: json?['betaling'] as bool?,
+      kg: json?['kg'] as bool?,
       // Getting the username and profilepic from the 'user' field
       username: userJson['username'] as String? ?? "",
       lastactive: userJson['lastactive'] as String? ?? "",
-      uid: listingJson['uid'] as String? ?? "",
+      uid: json?['uid'] as String? ?? "",
       bonde: userJson['bonde'] as bool?,
-      antall: listingJson['antall'] as int?,
+      antall: json?['antall'] as int?,
       profilepic: userJson['profilepic'] as String? ?? "",
-      kjopt: listingJson['kjopt'] as bool?,
-      accuratePosition: listingJson['accuratePosition'] as bool? ?? false,
+      kjopt: json?['kjopt'] as bool?,
+      accuratePosition: json?['accuratePosition'] as bool? ?? false,
       updatetime: parsedTime,
-      liked: listingJson['liked'] as bool?,
-      wantPush: listingJson['wantPush'] as bool?,
+      liked: json?['liked'] as bool?,
+      wantPush: json?['wantPush'] as bool?,
     );
   }
 

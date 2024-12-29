@@ -219,15 +219,10 @@ class ApiFoodService {
 
       // Check if the response is successful (status code 200)
       if (response.statusCode == 200) {
-        // Decode the JSON response
-
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
-        // Convert the JSON into a list of Matvarer objects
-
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {
-        // Handle unsuccessful response
         return null;
       }
     } on SocketException {
