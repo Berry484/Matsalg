@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
+import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
@@ -13,7 +14,6 @@ import 'package:mat_salg/services/user_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'home_model.dart';
@@ -28,9 +28,10 @@ class HomeWidget extends StatefulWidget {
 
 class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
   late HomeModel _model;
-  final ScrollController _scrollController = ScrollController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final ScrollController _scrollController1 = ScrollController();
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -50,22 +51,11 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
             getFolgerFoods();
           }
         }));
-
     FirebaseApi().initNotifications();
     fetchData();
-    getAllFoods();
+    getAllFoods(true);
     getFolgerFoods();
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _scrollController.addListener(_onScroll);
-      safeSetState(() {});
-    });
-  }
-
-  void _onScroll() {
-    FocusScope.of(context).requestFocus(FocusNode());
-    if (mounted) {
-      setState(() {});
-    }
+    _scrollController1.addListener(_scrollListener);
   }
 
   Widget buildProfileOutline(BuildContext context, int opacity, Color baseColor,
@@ -153,7 +143,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> getAllFoods() async {
+  Future<void> getAllFoods(bool refresh) async {
     try {
       String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
@@ -163,7 +153,21 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
             FFAppState().brukerLng == 10.7522454) {
           await fetchData();
         }
-        _model.matvarer = await ApiFoodService.getAllFoods(token);
+        if (refresh == true) {
+          _model.matvarer = await ApiFoodService.getAllFoods(token, 0);
+        } else {
+          List<Matvarer>? nyeMatvarer =
+              await ApiFoodService.getAllFoods(token, _model.page);
+
+          _model.matvarer ??= [];
+
+          if (nyeMatvarer != null && nyeMatvarer.isNotEmpty) {
+            _model.matvarer?.addAll(nyeMatvarer);
+          } else {
+            _model.end = true;
+          }
+        }
+
         if (mounted) {
           setState(() {
             if (_model.matvarer != null && _model.matvarer!.isEmpty) {
@@ -268,9 +272,22 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     }
   }
 
+  void _scrollListener() async {
+    if (_scrollController1.position.pixels >=
+        _scrollController1.position.maxScrollExtent) {
+      if (_isLoading || _model.end) return;
+      _isLoading = true;
+      _model.page += 1;
+      await getAllFoods(false);
+      _isLoading = false;
+    }
+  }
+
   @override
   void dispose() {
     _model.dispose();
+    _scrollController1.removeListener(_scrollListener);
+    _scrollController1.dispose();
 
     super.dispose();
   }
@@ -523,10 +540,13 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         FlutterFlowTheme.of(context).alternate,
                                     onRefresh: () async {
                                       HapticFeedback.lightImpact();
+                                      _model.page = 0;
+                                      _model.end = false;
                                       fetchData();
-                                      getAllFoods();
+                                      getAllFoods(true);
                                     },
                                     child: SingleChildScrollView(
+                                      controller: _scrollController1,
                                       physics:
                                           const AlwaysScrollableScrollPhysics(),
                                       primary: false,
@@ -1105,7 +1125,9 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 .fromSTEB(5.0, 13.0, 5.0, 0.0),
                                             child: RefreshIndicator(
                                               onRefresh: () async {
-                                                await getAllFoods();
+                                                _model.page = 0;
+                                                _model.end = false;
+                                                await getAllFoods(true);
                                                 setState(() {});
                                               },
                                               child: GridView.builder(
@@ -1126,84 +1148,45 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 scrollDirection: Axis.vertical,
                                                 itemCount: _model.isloading
                                                     ? 1
-                                                    : _model.matvarer?.length ??
-                                                        0,
+                                                    : _model.end
+                                                        ? _model.matvarer
+                                                                ?.length ??
+                                                            0
+                                                        : (_model.matvarer
+                                                                    ?.length ??
+                                                                0) +
+                                                            1,
                                                 itemBuilder: (context, index) {
                                                   if (_model.isloading) {
-                                                    return Shimmer.fromColors(
-                                                      baseColor:
-                                                          Colors.grey[300]!,
-                                                      highlightColor:
-                                                          Colors.grey[100]!,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Container(
-                                                            margin:
-                                                                const EdgeInsets
-                                                                    .all(5.0),
-                                                            width: 200.0,
-                                                            height: 230.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  127,
-                                                                  255,
-                                                                  255,
-                                                                  255),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16.0), // Rounded corners
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 8.0),
-                                                          Container(
-                                                            width: 200,
-                                                            height: 15,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  127,
-                                                                  255,
-                                                                  255,
-                                                                  255),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10.0),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
+                                                    return ShimmerLoadingWidget();
                                                   }
-                                                  final matvare =
-                                                      _model.matvarer![index];
-
-                                                  return ProductList(
-                                                    matvare: matvare,
-                                                    onTap: () async {
-                                                      FocusScope.of(context)
-                                                          .requestFocus(
-                                                              FocusNode());
-                                                      context.pushNamed(
-                                                        'MatDetaljBondegard',
-                                                        queryParameters: {
-                                                          'matvare':
-                                                              serializeParam(
-                                                            matvare.toJson(),
-                                                            ParamType.JSON,
-                                                          ),
-                                                        },
-                                                      );
-                                                    },
-                                                  );
+                                                  if (index <
+                                                      (_model.matvarer
+                                                              ?.length ??
+                                                          0)) {
+                                                    final matvare =
+                                                        _model.matvarer![index];
+                                                    return ProductList(
+                                                      matvare: matvare,
+                                                      onTap: () async {
+                                                        FocusScope.of(context)
+                                                            .requestFocus(
+                                                                FocusNode());
+                                                        context.pushNamed(
+                                                          'MatDetaljBondegard',
+                                                          queryParameters: {
+                                                            'matvare':
+                                                                serializeParam(
+                                                              matvare.toJson(),
+                                                              ParamType.JSON,
+                                                            ),
+                                                          },
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    return ShimmerLoadingWidget();
+                                                  }
                                                 },
                                               ),
                                             ),

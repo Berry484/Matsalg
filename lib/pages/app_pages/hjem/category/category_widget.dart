@@ -150,7 +150,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
           });
           return;
         } else {
-          _model.allmatvarer = await ApiFoodService.getAllFoods(token);
+          _model.allmatvarer = await ApiFoodService.getAllFoods(token, 0);
 
           _runFilter(widget.query);
 

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
+import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/logging.dart';
@@ -15,10 +16,9 @@ import 'package:mat_salg/pages/app_pages/hjem/product_details/get_updates/get_up
 import 'package:mat_salg/pages/app_pages/hjem/report/report_widget.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_animations.dart';
 import 'package:mat_salg/pages/map/kart_pop_up_widget.dart';
+import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/location_service.dart';
 import 'package:mat_salg/services/like_service.dart';
-import 'package:shimmer/shimmer.dart';
-
 import '../payment/info/info_widget.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_toggle_icon.dart';
@@ -53,6 +53,8 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
   late DetailsModel _model;
   late Matvarer matvare;
   late DetailsServices detailsServices;
+  final ScrollController _scrollController1 = ScrollController();
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -61,7 +63,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
     matvare = Matvarer.fromJson1(widget.matvare);
     detailsServices = DetailsServices(model: _model, matvare: matvare);
     getPoststed();
-    getAllFoods();
+    getSimilarFoods(true);
     if (FFAppState().likedFoods.contains(matvare.matId)) {
       _model.liker = true;
     } else {
@@ -85,6 +87,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
         ],
       ),
     });
+    _scrollController1.addListener(_scrollListener);
   }
 
   Future<void> getPoststed() async {
@@ -93,10 +96,54 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
     return;
   }
 
-  Future<void> getAllFoods() async {
-    await detailsServices.getAllFoods(context);
-    safeSetState(() {});
-    return;
+  Future<void> getSimilarFoods(bool refresh) async {
+    try {
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      } else {
+        if (refresh == true) {
+          _model.nyematvarer = await ApiFoodService.getSimilarFoods(
+              token, 0, matvare.kategorier!.first, matvare.matId ?? 0);
+        } else {
+          List<Matvarer>? nyeMatvarer =
+              await ApiFoodService.getAllFoods(token, _model.page);
+
+          _model.nyematvarer ??= [];
+
+          if (nyeMatvarer != null && nyeMatvarer.isNotEmpty) {
+            _model.nyematvarer?.addAll(nyeMatvarer);
+          } else {
+            _model.end = true;
+          }
+        }
+        setState(() {
+          if (_model.nyematvarer != null && _model.nyematvarer!.isNotEmpty) {
+            _model.isloading = false;
+            return;
+          } else {
+            _model.isloading = true;
+          }
+        });
+      }
+    } on SocketException {
+      if (!mounted) return;
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      if (!mounted) return;
+      Toasts.showErrorToast(context, 'En feil oppstod');
+    }
+  }
+
+  void _scrollListener() async {
+    if (_scrollController1.position.pixels >=
+        _scrollController1.position.maxScrollExtent) {
+      if (_isLoading || _model.end) return;
+      _isLoading = true;
+      _model.page += 1;
+      await getSimilarFoods(false);
+      _isLoading = false;
+    }
   }
 
   void _triggerHeartAnimation() {
@@ -120,7 +167,8 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
   @override
   void dispose() {
     _model.dispose();
-
+    _scrollController1.removeListener(_scrollListener);
+    _scrollController1.dispose();
     super.dispose();
   }
 
@@ -183,6 +231,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
               children: [
                 Expanded(
                   child: SingleChildScrollView(
+                    controller: _scrollController1,
                     primary: false,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -1745,7 +1794,9 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                               5.0, 0.0, 5.0, 0.0),
                           child: RefreshIndicator(
                             onRefresh: () async {
-                              await detailsServices.getAllFoods(context);
+                              _model.page = 0;
+                              _model.end = false;
+                              await getSimilarFoods(true);
                             },
                             child: GridView.builder(
                               padding: const EdgeInsets.fromLTRB(
@@ -1764,80 +1815,57 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                               scrollDirection: Axis.vertical,
                               itemCount: _model.isloading
                                   ? 1
-                                  : _model.nyematvarer?.length ?? 1,
+                                  : _model.end
+                                      ? _model.nyematvarer?.length ?? 1
+                                      : (_model.nyematvarer?.length ?? 1) + 1,
                               itemBuilder: (context, index) {
                                 if (_model.isloading) {
-                                  return Shimmer.fromColors(
-                                    baseColor: Colors.grey[300]!,
-                                    highlightColor: Colors.grey[100]!,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: const EdgeInsets.all(5.0),
-                                          width: 200.0,
-                                          height: 230.0,
-                                          decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                127, 255, 255, 255),
-                                            borderRadius: BorderRadius.circular(
-                                                16.0), // Rounded corners
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        Container(
-                                          width: 200,
-                                          height: 15,
-                                          decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                127, 255, 255, 255),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
+                                  ShimmerLoadingWidget();
                                 }
-                                final nyematvarer = _model.nyematvarer![index];
 
-                                return ProductList(
-                                  matvare: nyematvarer,
-                                  onTap: () async {
-                                    try {
-                                      if (widget.fromChat != true) {
-                                        context.pushNamed(
-                                          'MatDetaljBondegard',
-                                          queryParameters: {
-                                            'matvare': serializeParam(
-                                              nyematvarer.toJson(),
-                                              ParamType.JSON,
-                                            ),
-                                          },
-                                        );
-                                      } else {
-                                        context.pushNamed(
-                                          'MatDetaljBondegard2',
-                                          queryParameters: {
-                                            'matvare': serializeParam(
-                                              nyematvarer.toJson(),
-                                              ParamType.JSON,
-                                            ),
-                                            'fromChat': serializeParam(
-                                              true,
-                                              ParamType.bool,
-                                            ),
-                                          },
-                                        );
+                                if (index < (_model.nyematvarer?.length ?? 0)) {
+                                  final nyematvarer =
+                                      _model.nyematvarer![index];
+
+                                  return ProductList(
+                                    matvare: nyematvarer,
+                                    onTap: () async {
+                                      try {
+                                        if (widget.fromChat != true) {
+                                          context.pushNamed(
+                                            'MatDetaljBondegard',
+                                            queryParameters: {
+                                              'matvare': serializeParam(
+                                                nyematvarer.toJson(),
+                                                ParamType.JSON,
+                                              ),
+                                            },
+                                          );
+                                        } else {
+                                          context.pushNamed(
+                                            'MatDetaljBondegard2',
+                                            queryParameters: {
+                                              'matvare': serializeParam(
+                                                nyematvarer.toJson(),
+                                                ParamType.JSON,
+                                              ),
+                                              'fromChat': serializeParam(
+                                                true,
+                                                ParamType.bool,
+                                              ),
+                                            },
+                                          );
+                                        }
+                                      } catch (e) {
+                                        Toasts.showErrorToast(context,
+                                            'En uforventet feil oppstod');
+                                        logger.d('Error navigating page');
                                       }
-                                    } catch (e) {
-                                      Toasts.showErrorToast(context,
-                                          'En uforventet feil oppstod');
-                                      logger.d('Error navigating page');
-                                    }
-                                  },
-                                );
+                                    },
+                                  );
+                                } else {
+                                  return ShimmerLoadingWidget();
+                                }
                               },
                             ),
                           ),

@@ -8,6 +8,8 @@ class DetailsModel extends FlutterFlowModel<DetailsWidget> {
 //---------------------------------------------------------------------------------------------------------------
   String? poststed;
   List<Matvarer>? nyematvarer;
+  int page = 0;
+  bool end = false;
   bool? liker = false;
   bool folges = false;
   bool? brukerFolger = false;

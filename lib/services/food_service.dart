@@ -201,7 +201,7 @@ class ApiFoodService {
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Gets all food listings from the backend----------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  static Future<List<Matvarer>?> getAllFoods(String? token) async {
+  static Future<List<Matvarer>?> getAllFoods(String? token, int page) async {
     try {
       final headers = {
         'Content-Type': 'application/json',
@@ -212,12 +212,46 @@ class ApiFoodService {
       final response = await http
           .get(
             Uri.parse(
-                '$baseUrl/rrh/send/matvarer?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
+                '$baseUrl/rrh/send/matvarer?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=5&page=$page'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
 
       // Check if the response is successful (status code 200)
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonResponse =
+            jsonDecode(utf8.decode(response.bodyBytes));
+        return Matvarer.matvarerFromSnapShot(jsonResponse);
+      } else {
+        return null;
+      }
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Gets all food listings from the backend----------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<List<Matvarer>?> getSimilarFoods(
+      String? token, int page, String keyword, int matId) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Make the API request and parse the response
+      final response = await http
+          .get(
+            Uri.parse(
+                '$baseUrl/rrh/send/matvarer/similar-products?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=5&page=$page&keyword=$keyword&matId=$matId'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5));
+
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
@@ -319,7 +353,7 @@ class ApiFoodService {
       final response = await http
           .get(
             Uri.parse(
-                '$baseUrl/rrh/send/matvarer/filter?kategorier=$kategorier&userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
+                '$baseUrl/rrh/send/matvarer/filter?keyword=$kategorier&userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds

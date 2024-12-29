@@ -59,33 +59,6 @@ class DetailsServices {
   }
 
 //---------------------------------------------------------------------------------------------------------------
-//--------------------Gets all the product suggestions for this product listing----------------------------------
-//---------------------------------------------------------------------------------------------------------------
-  Future<void> getAllFoods(BuildContext context) async {
-    try {
-      String? token = await firebaseAuthService.getToken(context);
-      if (token == null) {
-        return;
-      } else {
-        model.nyematvarer = await ApiFoodService.getAllFoods(token);
-
-        if (model.nyematvarer != null && model.nyematvarer!.isNotEmpty) {
-          model.isloading = false;
-          return;
-        } else {
-          model.isloading = true;
-        }
-      }
-    } on SocketException {
-      if (!context.mounted) return;
-      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      if (!context.mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-//---------------------------------------------------------------------------------------------------------------
 //--------------------Enters a conversation with a user----------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   Future<void> enterConversation(
