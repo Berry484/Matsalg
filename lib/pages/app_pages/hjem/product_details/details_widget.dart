@@ -106,8 +106,11 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
           _model.nyematvarer = await ApiFoodService.getSimilarFoods(
               token, 0, matvare.kategorier!.first, matvare.matId ?? 0);
         } else {
-          List<Matvarer>? nyeMatvarer =
-              await ApiFoodService.getAllFoods(token, _model.page);
+          List<Matvarer>? nyeMatvarer = await ApiFoodService.getSimilarFoods(
+              token,
+              _model.page,
+              matvare.kategorier!.first,
+              matvare.matId ?? 0);
 
           _model.nyematvarer ??= [];
 

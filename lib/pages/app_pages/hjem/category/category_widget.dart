@@ -6,6 +6,7 @@ import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'package:mat_salg/pages/app_pages/hjem/category/filter/filter_widget.dart';
 import 'package:mat_salg/pages/app_pages/hjem/category/sort/sort_widget.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:mat_salg/services/food_service.dart';
@@ -36,10 +37,16 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
   final ApiFoodService apiFoodService = ApiFoodService();
   final ScrollController _scrollController = ScrollController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  late FilterOptions filterOptions;
+  late FilterOptions localFilterOptions;
 
   @override
   void initState() {
     super.initState();
+    filterOptions = FilterOptions(
+        distance: null,
+        priceRange: RangeValues(0, 1000),
+        selectedCategories: [widget.kategori ?? '']);
     _model = createModel(context, () => CategoryModel());
     getCategoryFood();
     _scrollController.addListener(_onScroll);
@@ -223,6 +230,23 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
     );
   }
 
+  int checkFilter() {
+    int filterCount = 0;
+
+    if (filterOptions.distance != null) {
+      filterCount += 1;
+    }
+    if (filterOptions.priceRange.start != 0 ||
+        filterOptions.priceRange.end != 1000) {
+      filterCount += 1;
+    }
+    if (filterOptions.selectedCategories.isNotEmpty) {
+      filterCount += filterOptions.selectedCategories.length;
+    }
+
+    return filterCount;
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -251,119 +275,202 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-              child: GestureDetector(
-                onTap: () async {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                  final selectedValue =
-                      await showModalBottomSheet<List<String>>(
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    useRootNavigator: true,
-                    barrierColor: const Color.fromARGB(25, 0, 0, 0),
-                    context: context,
-                    builder: (context) {
-                      return GestureDetector(
-                        onTap: () => FocusScope.of(context).unfocus(),
-                        child: Padding(
-                          padding: MediaQuery.viewInsetsOf(context),
-                          child: SortWidget(
-                            sorterVerdi: _model.sorterVerdi,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                  if (selectedValue != null && selectedValue.isNotEmpty) {
-                    final String selectedOption = selectedValue.first;
-
-                    safeSetState(() {
-                      List<Matvarer> sortedList =
-                          List.from(_model.matvarer ?? []);
-
-                      if (selectedOption == 'Pris: lav til høy') {
-                        _model.sorterVerdi = 2;
-                        sortedList.sort((a, b) {
-                          return (a.price ?? double.infinity)
-                              .compareTo(b.price ?? double.infinity);
-                        });
-                      } else if (selectedOption == 'Pris: høy til lav') {
-                        _model.sorterVerdi = 3;
-                        sortedList.sort((a, b) {
-                          return (b.price ?? double.negativeInfinity)
-                              .compareTo(a.price ?? double.negativeInfinity);
-                        });
-                      } else if (selectedOption == 'Avstand: nærmest meg') {
-                        _model.sorterVerdi = 4;
-                        double brukerLat = FFAppState().brukerLat;
-                        double brukerLng = FFAppState().brukerLng;
-
-                        sortedList.sort((a, b) {
-                          double distanceA =
-                              CalculateDistance.calculateDistance(brukerLat,
-                                  brukerLng, a.lat ?? 0.0, a.lng ?? 0.0);
-                          double distanceB =
-                              CalculateDistance.calculateDistance(brukerLat,
-                                  brukerLng, b.lat ?? 0.0, b.lng ?? 0.0);
-
-                          return distanceA.compareTo(distanceB);
-                        });
-                      } else {
-                        _model.sorterVerdi = 1;
-                        _runFilter(_model.textController.text);
-                        return;
-                      }
-                      _model.matvarer = sortedList;
-                      setState(() {});
-                    });
-                  }
-                },
-                child: Material(
-                  color: Colors.transparent,
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: Container(
-                      width: 125,
+              child: Material(
+                color: Colors.transparent,
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      width: 130,
                       height: 52,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).primary,
                         borderRadius: BorderRadius.circular(24),
                       ),
-                      child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 3, 0),
-                              child: Icon(
-                                CupertinoIcons.arrow_up_arrow_down,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 22,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () async {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                final selectedValue =
+                                    await showModalBottomSheet<List<String>>(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  useRootNavigator: true,
+                                  barrierColor:
+                                      const Color.fromARGB(25, 0, 0, 0),
+                                  context: context,
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () =>
+                                          FocusScope.of(context).unfocus(),
+                                      child: Padding(
+                                        padding:
+                                            MediaQuery.viewInsetsOf(context),
+                                        child: SortWidget(
+                                          sorterVerdi: _model.sorterVerdi,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                                if (selectedValue != null &&
+                                    selectedValue.isNotEmpty) {
+                                  final String selectedOption =
+                                      selectedValue.first;
+
+                                  safeSetState(() {
+                                    List<Matvarer> sortedList =
+                                        List.from(_model.matvarer ?? []);
+
+                                    if (selectedOption == 'Pris: lav til høy') {
+                                      _model.sorterVerdi = 2;
+                                      sortedList.sort((a, b) {
+                                        return (a.price ?? double.infinity)
+                                            .compareTo(
+                                                b.price ?? double.infinity);
+                                      });
+                                    } else if (selectedOption ==
+                                        'Pris: høy til lav') {
+                                      _model.sorterVerdi = 3;
+                                      sortedList.sort((a, b) {
+                                        return (b.price ??
+                                                double.negativeInfinity)
+                                            .compareTo(a.price ??
+                                                double.negativeInfinity);
+                                      });
+                                    } else if (selectedOption ==
+                                        'Avstand: nærmest meg') {
+                                      _model.sorterVerdi = 4;
+                                      double brukerLat = FFAppState().brukerLat;
+                                      double brukerLng = FFAppState().brukerLng;
+
+                                      sortedList.sort((a, b) {
+                                        double distanceA =
+                                            CalculateDistance.calculateDistance(
+                                                brukerLat,
+                                                brukerLng,
+                                                a.lat ?? 0.0,
+                                                a.lng ?? 0.0);
+                                        double distanceB =
+                                            CalculateDistance.calculateDistance(
+                                                brukerLat,
+                                                brukerLng,
+                                                b.lat ?? 0.0,
+                                                b.lng ?? 0.0);
+
+                                        return distanceA.compareTo(distanceB);
+                                      });
+                                    } else {
+                                      _model.sorterVerdi = 1;
+                                      _runFilter(_model.textController.text);
+                                      return;
+                                    }
+                                    _model.matvarer = sortedList;
+                                    setState(() {});
+                                  });
+                                }
+                              },
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(24),
+                                bottomLeft: Radius.circular(24),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  CupertinoIcons.arrow_up_arrow_down,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 22,
+                                ),
                               ),
                             ),
-                            const VerticalDivider(
-                              thickness: 1,
-                              indent: 15,
-                              endIndent: 15,
-                              color: Color(0x2657636C),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  3, 0, 0, 0),
-                              child: Icon(
-                                Ionicons.options_outline,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 24,
+                          ),
+                          const VerticalDivider(
+                            thickness: 1,
+                            indent: 15,
+                            endIndent: 15,
+                            color: Color(0x2657636C),
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () async {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+
+                                final localFilterOptions =
+                                    await showModalBottomSheet<FilterOptions>(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  useRootNavigator: true,
+                                  barrierColor:
+                                      const Color.fromARGB(25, 0, 0, 0),
+                                  context: context,
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () =>
+                                          FocusScope.of(context).unfocus(),
+                                      child: Padding(
+                                        padding:
+                                            MediaQuery.viewInsetsOf(context),
+                                        child: FilterWidget(
+                                          filterOptions: filterOptions,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                                if (localFilterOptions != null) {
+                                  filterOptions = localFilterOptions;
+                                }
+                              },
+                              borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(24),
+                                bottomRight: Radius.circular(24),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Ionicons.options_outline,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 24,
+                                ),
                               ),
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (checkFilter() != 0)
+                      Positioned(
+                        top: -5,
+                        right: -5,
+                        child: Container(
+                          width: 20,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${checkFilter()}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
                         ),
-                      )),
+                      ),
+                  ],
                 ),
               ),
             ),

@@ -1,45 +1,35 @@
-import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
-import 'category_widget.dart' show CategoryWidget;
+import '../../../../../helper_components/flutter_flow/form_field_controller.dart';
+import '../../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import 'filter_widget.dart' show FilterWidget;
 import 'package:flutter/material.dart';
 
-class FilterOptions {
-  int? distance;
-  RangeValues priceRange;
-  List<String> selectedCategories;
-
-  FilterOptions({
-    this.distance,
-    required this.priceRange,
-    required this.selectedCategories,
-  });
-
-  FilterOptions.copy(FilterOptions original)
-      : distance = original.distance,
-        priceRange = original.priceRange,
-        selectedCategories = List.from(original.selectedCategories);
-}
-
-class CategoryModel extends FlutterFlowModel<CategoryWidget> {
+class FilterModel extends FlutterFlowModel<FilterWidget> {
+  final NumberFormat formatter = NumberFormat('#,###', 'fr_FR');
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Variables used througout-------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  List<Matvarer>? matvarer;
-  List<Matvarer>? allmatvarer;
-  bool isloading = true;
-  bool empty = false;
-  int sorterVerdi = 1;
+  bool previousCategoryState = false;
+  bool category = false;
+  List<String> categories = [
+    'Kjøtt',
+    'Grønt',
+    'Meieri',
+    'Bakverk',
+    'Sjømat',
+  ];
 
 //---------------------------------------------------------------------------------------------------------------
-//--------------------FocusNodes, Controllers and validators-----------------------------------------------------
+//--------------------FocusNodes, Controllers and validators for the text fields---------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  FocusNode? textFieldFocusNode;
+  FormFieldController<List<String>>? checkboxGroupValueController;
 
-  TextEditingController? textController;
+  List<String>? get checkboxGroupValues => checkboxGroupValueController?.value;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes and controller for the text fields----------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  String? Function(BuildContext, String?)? textControllerValidator;
+  set checkboxGroupValues(List<String>? v) =>
+      checkboxGroupValueController?.value = v;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Initstate and dispose----------------------------------------------------------------------
@@ -48,8 +38,5 @@ class CategoryModel extends FlutterFlowModel<CategoryWidget> {
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    textFieldFocusNode?.dispose();
-    textController?.dispose();
-  }
+  void dispose() {}
 }
