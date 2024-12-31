@@ -72,6 +72,7 @@ class _SorterWidgetState extends State<FilterWidget> {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
       child: Container(
+        height: 699,
         width: double.infinity,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primary,
@@ -183,39 +184,40 @@ class _SorterWidgetState extends State<FilterWidget> {
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 8),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
+                          Material(
+                            color: Colors.transparent,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context).primary,
                                 borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  borderRadius: BorderRadius.circular(14),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                    width: 0,
-                                  ),
+                                shape: BoxShape.rectangle,
+                                border: Border.all(
+                                  color: Colors.transparent,
+                                  width: 0,
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        safeSetState(() {
-                                          _model.category = true;
-                                        });
-                                      },
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      safeSetState(() {
+                                        _model.category = true;
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 20, 0, 8),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -337,8 +339,8 @@ class _SorterWidgetState extends State<FilterWidget> {
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
