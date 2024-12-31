@@ -153,7 +153,6 @@ class _SorterWidgetState extends State<FilterWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      HapticFeedback.selectionClick();
                                       safeSetState(() {
                                         _isEmpty();
                                         localFilterOptions.selectedCategories =
@@ -984,8 +983,6 @@ class _SorterWidgetState extends State<FilterWidget> {
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  HapticFeedback
-                                                      .selectionClick();
                                                   safeSetState(() {
                                                     _isEmpty();
                                                     localFilterOptions
