@@ -70,7 +70,7 @@ class _SorterWidgetState extends State<FilterWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
       child: Container(
         height: 699,
         width: double.infinity,
