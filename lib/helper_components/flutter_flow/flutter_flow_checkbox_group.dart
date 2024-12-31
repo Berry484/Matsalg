@@ -61,7 +61,7 @@ class FlutterFlowCheckboxGroupState extends State<FlutterFlowCheckboxGroup> {
     widget
         .onChanged(selectedValues); // Call the onChanged callback with the list
 
-    HapticFeedback.mediumImpact();
+    HapticFeedback.selectionClick();
     Navigator.pop(context, selectedValues);
   }
 
