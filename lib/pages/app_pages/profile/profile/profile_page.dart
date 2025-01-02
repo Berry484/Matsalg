@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
@@ -31,9 +32,11 @@ class _ProfilWidgetState extends State<ProfilePage>
     with TickerProviderStateMixin {
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final UserInfoService userInfoService = UserInfoService();
+  final ScrollController _scrollController1 = ScrollController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late ProfileModel _model;
   late ProfileServices profileServices;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -47,12 +50,25 @@ class _ProfilWidgetState extends State<ProfilePage>
       length: 2,
       initialIndex: 0,
     )..addListener(() => safeSetState(() {}));
+    _scrollController1.addListener(_scrollListener);
+  }
+
+  void _scrollListener() async {
+    if (_scrollController1.position.pixels >=
+        _scrollController1.position.maxScrollExtent) {
+      if (_isLoading || _model.end) return;
+      _isLoading = true;
+      _model.page += 1;
+      await profileServices.getMyFoods(context);
+      safeSetState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
@@ -172,6 +188,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                       HapticFeedback.lightImpact();
                     },
                     child: SingleChildScrollView(
+                      controller: _scrollController1,
                       primary: false,
                       physics: AlwaysScrollableScrollPhysics(),
                       child: Column(
@@ -1135,87 +1152,60 @@ class _ProfilWidgetState extends State<ProfilePage>
                                               scrollDirection: Axis.vertical,
                                               itemCount: _model.isloading
                                                   ? 1
-                                                  : FFAppState()
-                                                      .matvarer
-                                                      .length,
+                                                  : _model.end
+                                                      ? FFAppState()
+                                                          .matvarer
+                                                          .length
+                                                      : (FFAppState()
+                                                              .matvarer
+                                                              .length) +
+                                                          1,
                                               itemBuilder: (context, index) {
                                                 if (_model.isloading) {
-                                                  return Shimmer.fromColors(
-                                                    baseColor:
-                                                        Colors.grey[300]!,
-                                                    highlightColor:
-                                                        Colors.grey[100]!,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(5.0),
-                                                          width: 200.0,
-                                                          height: 230.0,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: const Color
-                                                                .fromARGB(127,
-                                                                255, 255, 255),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        16.0),
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 8.0),
-                                                        Container(
-                                                          width: 200,
-                                                          height: 15,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: const Color
-                                                                .fromARGB(127,
-                                                                255, 255, 255),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
+                                                  return ShimmerLoadingWidget();
                                                 }
-
-                                                final matvare = FFAppState()
-                                                    .matvarer
-                                                    .toList()[index];
-                                                return ProductList(
-                                                  matvare: matvare,
-                                                  onTap: () async {
-                                                    try {
-                                                      context.pushNamed(
-                                                        'MinMatvareDetalj',
-                                                        queryParameters: {
-                                                          'matvare':
-                                                              serializeParam(
-                                                            matvare.toJson(),
-                                                            ParamType.JSON,
-                                                          ),
-                                                        },
-                                                      );
-                                                    } on SocketException {
-                                                      Toasts.showErrorToast(
-                                                          context,
-                                                          'Ingen internettforbindelse');
-                                                    } catch (e) {
-                                                      Toasts.showErrorToast(
-                                                          context,
-                                                          'En feil oppstod');
-                                                    }
-                                                  },
-                                                );
+                                                if (index <
+                                                    (FFAppState()
+                                                        .matvarer
+                                                        .length)) {
+                                                  final matvare = FFAppState()
+                                                      .matvarer
+                                                      .toList()[index];
+                                                  return ProductList(
+                                                    matvare: matvare,
+                                                    onTap: () async {
+                                                      try {
+                                                        context.pushNamed(
+                                                          'MinMatvareDetalj',
+                                                          queryParameters: {
+                                                            'matvare':
+                                                                serializeParam(
+                                                              matvare.toJson(),
+                                                              ParamType.JSON,
+                                                            ),
+                                                          },
+                                                        );
+                                                      } on SocketException {
+                                                        Toasts.showErrorToast(
+                                                            context,
+                                                            'Ingen internettforbindelse');
+                                                      } catch (e) {
+                                                        Toasts.showErrorToast(
+                                                            context,
+                                                            'En feil oppstod');
+                                                      }
+                                                    },
+                                                  );
+                                                } else {
+                                                  if (FFAppState()
+                                                          .matvarer
+                                                          .length <
+                                                      44) {
+                                                    return Container();
+                                                  } else {
+                                                    return ShimmerLoadingWidget();
+                                                  }
+                                                }
                                               },
                                             ),
                                           ),

@@ -153,7 +153,7 @@ class ApiFoodService {
         headers: headers,
         body: jsonBody,
       );
-      getMyFoods(token);
+      getMyFoods(token, 0);
       return response; // Return the response
     } on SocketException {
       throw const SocketException('');
@@ -212,7 +212,7 @@ class ApiFoodService {
       final response = await http
           .get(
             Uri.parse(
-                '$baseUrl/rrh/send/matvarer?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=5&page=$page'),
+                '$baseUrl/rrh/send/matvarer?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -247,7 +247,7 @@ class ApiFoodService {
       final response = await http
           .get(
             Uri.parse(
-                '$baseUrl/rrh/send/matvarer/similar-products?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=5&page=$page&keyword=$keyword&matId=$matId'),
+                '$baseUrl/rrh/send/matvarer/similar-products?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page&keyword=$keyword&matId=$matId'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5));
@@ -269,7 +269,7 @@ class ApiFoodService {
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Gets my OWN food listings from the backend-------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  static Future<List<Matvarer>?> getMyFoods(String? token) async {
+  static Future<List<Matvarer>?> getMyFoods(String? token, int page) async {
     try {
       final headers = {
         'Content-Type': 'application/json',
@@ -280,7 +280,7 @@ class ApiFoodService {
       final response = await http
           .get(
             Uri.parse(
-                '$baseUrl/rrh/send/matvarer/mine?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
+                '$baseUrl/rrh/send/matvarer/mine?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -308,7 +308,7 @@ class ApiFoodService {
 //--------------------Gets food listings from a SPECIFIC user by using the uid-----------------------------------
 //---------------------------------------------------------------------------------------------------------------
   static Future<List<Matvarer>?> getUserFood(
-      String? token, String? username) async {
+      String? token, String? username, int page) async {
     try {
       final headers = {
         'Content-Type': 'application/json',
@@ -318,7 +318,8 @@ class ApiFoodService {
       // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse('$baseUrl/rrh/send/matvarer/mine?uid=$username'),
+            Uri.parse(
+                '$baseUrl/rrh/send/matvarer/mine?uid=$username&size=44&page=$page'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
@@ -343,28 +344,92 @@ class ApiFoodService {
 //--------------------Gets food items from a category------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   static Future<List<Matvarer>?> getCategoryFood(
-      String? token, String? kategorier) async {
+      String? token,
+      int page,
+      bool sortByPriceAsc,
+      bool sortByPriceDesc,
+      bool sortByDistance,
+      int minPrice,
+      int maxPrice,
+      int? maxDistance,
+      List<String> categories) async {
     try {
       final headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
 
+      // Default categories if empty
+      if (categories.isEmpty) {
+        categories = ['kjøtt', 'grønt', 'meieri', 'bakverk', 'sjømat'];
+      }
+
+      // Handle maxPrice default
+      if (maxPrice == 1000) {
+        maxPrice = 100000;
+      }
+      maxDistance ??= 100000;
+
+      String categoriesParam = categories.join(',');
+
       final response = await http
           .get(
             Uri.parse(
-                '$baseUrl/rrh/send/matvarer/filter?keyword=$kategorier&userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
+                '$baseUrl/rrh/send/matvarer/filter?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page&sortByPriceAsc=$sortByPriceAsc&sortByPriceDesc=$sortByPriceDesc&sortByDistance=$sortByDistance&minPrice=$minPrice&maxPrice=$maxPrice&maxDistance=$maxDistance&categories=$categoriesParam'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
-      // Check if the response is successful (status code 200)
+          .timeout(const Duration(seconds: 5));
+
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
-        // Convert the JSON into a list of Matvarer objects
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {
-        // Handle unsuccessful response
+        return null;
+      }
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Gets food items from a category count------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<String?> getCategoryFoodCount(String? token, int minPrice,
+      int maxPrice, int? maxDistance, List<String> categories) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Default categories if empty
+      if (categories.isEmpty) {
+        categories = ['kjøtt', 'grønt', 'meieri', 'bakverk', 'sjømat'];
+      }
+
+      // Handle maxPrice default
+      if (maxPrice == 1000) {
+        maxPrice = 100000;
+      }
+      maxDistance ??= 100000;
+
+      String categoriesParam = categories.join(',');
+
+      final response = await http
+          .get(
+            Uri.parse(
+                '$baseUrl/rrh/send/matvarer/filter_count?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&minPrice=$minPrice&maxPrice=$maxPrice&maxDistance=$maxDistance&categories=$categoriesParam'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5));
+
+      if (response.statusCode == 200) {
+        String? count = response.body;
+        return count;
+      } else {
         return null;
       }
     } on SocketException {

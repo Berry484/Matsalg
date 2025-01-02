@@ -351,7 +351,7 @@ class UserInfoService {
       } else {
         List<OrdreInfo>? alleInfo = await PurchaseService.getAll(token);
         List<Matvarer>? fetchedMatvarer =
-            await ApiFoodService.getMyFoods(token);
+            await ApiFoodService.getMyFoods(token, 0);
 
         if (alleInfo != null && alleInfo.isNotEmpty) {
           FFAppState().ordreInfo = alleInfo;

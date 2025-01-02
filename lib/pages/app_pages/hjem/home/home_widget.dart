@@ -1185,7 +1185,13 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                       },
                                                     );
                                                   } else {
-                                                    return ShimmerLoadingWidget();
+                                                    if (_model
+                                                            .matvarer!.length <
+                                                        44) {
+                                                      return Container();
+                                                    } else {
+                                                      return ShimmerLoadingWidget();
+                                                    }
                                                   }
                                                 },
                                               ),

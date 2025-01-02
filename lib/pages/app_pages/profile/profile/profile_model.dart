@@ -9,10 +9,12 @@ class ProfileModel extends FlutterFlowModel<ProfilePage> {
   Map<String, dynamic>? userInfo;
   List<Matvarer>? likesmatvarer;
   bool isloading = false;
+  bool end = false;
   bool likesisloading = true;
   bool isExpanded = false;
   int get tabBarCurrentIndex =>
       tabBarController != null ? tabBarController!.index : 0;
+  int page = 0;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes, Controllers and validators for the text fields---------------------------------

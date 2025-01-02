@@ -8,7 +8,9 @@ class FilterModel extends FlutterFlowModel<FilterWidget> {
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Variables used througout-------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
+  String? resultCount;
   bool previousCategoryState = false;
+  bool isLoading = false;
   bool category = false;
   List<String> categories = [
     'Kjøtt',

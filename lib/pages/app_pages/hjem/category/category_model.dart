@@ -27,7 +27,12 @@ class CategoryModel extends FlutterFlowModel<CategoryWidget> {
   List<Matvarer>? allmatvarer;
   bool isloading = true;
   bool empty = false;
+  bool sortByPriceAsc = false;
+  bool sortByPriceDesc = false;
+  bool sortByDistance = false;
+  bool end = false;
   int sorterVerdi = 1;
+  int page = 0;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes, Controllers and validators-----------------------------------------------------

@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mat_salg/pages/app_pages/hjem/category/category_model.dart';
+import 'package:mat_salg/services/food_service.dart';
 import '../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +22,8 @@ class FilterWidget extends StatefulWidget {
 }
 
 class _SorterWidgetState extends State<FilterWidget> {
+  Timer? _debounce;
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   late FilterOptions filterOptions;
   late FilterOptions localFilterOptions;
   late FilterModel _model;
@@ -36,6 +42,7 @@ class _SorterWidgetState extends State<FilterWidget> {
     _model = createModel(context, () => FilterModel());
     localFilterOptions = FilterOptions.copy(widget.filterOptions);
     previousPriceRange = localFilterOptions.priceRange;
+    resultCount();
   }
 
   bool _isEmpty() {
@@ -60,10 +67,30 @@ class _SorterWidgetState extends State<FilterWidget> {
     });
   }
 
+  Future<void> resultCount() async {
+    _model.isLoading = true;
+    String? token = await firebaseAuthService.getToken(context);
+    if (token == null) {
+      return;
+    } else {
+      String? results = await ApiFoodService.getCategoryFoodCount(
+          token,
+          localFilterOptions.priceRange.start.toInt(),
+          localFilterOptions.priceRange.end.toInt(),
+          localFilterOptions.distance,
+          localFilterOptions.selectedCategories);
+      setState(() {
+        _model.resultCount = results;
+      });
+      _model.isLoading = false;
+      return;
+    }
+  }
+
   @override
   void dispose() {
     _model.maybeDispose();
-
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -434,6 +461,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
                                         HapticFeedback.selectionClick();
+                                        resultCount();
                                         safeSetState(() {
                                           localFilterOptions.distance = null;
                                         });
@@ -490,6 +518,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
                                         HapticFeedback.selectionClick();
+                                        resultCount();
                                         safeSetState(() {
                                           localFilterOptions.distance = 50;
                                         });
@@ -546,6 +575,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
                                         HapticFeedback.selectionClick();
+                                        resultCount();
                                         safeSetState(() {
                                           localFilterOptions.distance = 30;
                                         });
@@ -602,6 +632,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
                                         HapticFeedback.selectionClick();
+                                        resultCount();
                                         safeSetState(() {
                                           localFilterOptions.distance = 10;
                                         });
@@ -658,6 +689,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
                                         HapticFeedback.selectionClick();
+                                        resultCount();
                                         safeSetState(() {
                                           localFilterOptions.distance = 5;
                                         });
@@ -810,8 +842,19 @@ class _SorterWidgetState extends State<FilterWidget> {
                                   localFilterOptions.priceRange =
                                       RangeValues(start, end);
                                 });
-                                previousPriceRange =
-                                    localFilterOptions.priceRange;
+                                if (_debounce?.isActive ?? false) {
+                                  _debounce!.cancel();
+                                }
+                                _debounce =
+                                    Timer(const Duration(milliseconds: 50), () {
+                                  if (localFilterOptions.priceRange ==
+                                      RangeValues(start, end)) {
+                                    safeSetState(() {
+                                      _model.isLoading = true;
+                                    });
+                                    resultCount();
+                                  }
+                                });
                               }
                             },
                           ),
@@ -928,6 +971,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
                                               safeSetState(() {
+                                                resultCount();
                                                 _model.category = false;
                                               });
                                             },
@@ -1116,16 +1160,39 @@ class _SorterWidgetState extends State<FilterWidget> {
                       onPressed: () async {
                         if (_model.category) {
                           safeSetState(() {
+                            _model.isLoading = true;
+                          });
+
+                          // Trigger the result count function
+                          await resultCount();
+
+                          safeSetState(() {
+                            _model.isLoading = false; //
                             _model.category = false;
                           });
                         } else {
                           Navigator.pop(context, localFilterOptions);
                         }
                       },
-                      text: 'Ferdig',
+                      text: _model.isLoading
+                          ? ''
+                          : _model.category
+                              ? 'Bruk'
+                              : (_model.resultCount != null)
+                                  ? _model.resultCount == '1'
+                                      ? 'Vis 1 resultat'
+                                      : 'Vis ${_model.resultCount} resultater'
+                                  : 'Vis 0 resultater',
+                      icon: _model.isLoading
+                          ? CupertinoActivityIndicator(
+                              radius: 10.5,
+                              color: FlutterFlowTheme.of(context).primary,
+                            )
+                          : null,
                       options: FFButtonOptions(
                         width: double.infinity,
                         height: 50.0,
+                        iconColor: FlutterFlowTheme.of(context).primary,
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 0.0, 0.0),
                         iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -1135,7 +1202,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                             FlutterFlowTheme.of(context).titleMedium.override(
                                   fontFamily: 'Nunito',
                                   color: FlutterFlowTheme.of(context).secondary,
-                                  fontSize: 17.0,
+                                  fontSize: 16.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w700,
                                 ),

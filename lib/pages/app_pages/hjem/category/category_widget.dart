@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
+import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/pages/app_pages/hjem/category/filter/filter_widget.dart';
@@ -35,10 +37,11 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
   late CategoryModel _model;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiFoodService apiFoodService = ApiFoodService();
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController1 = ScrollController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late FilterOptions filterOptions;
   late FilterOptions localFilterOptions;
+  bool _moreIsLoading = false;
 
   @override
   void initState() {
@@ -48,103 +51,61 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
         priceRange: RangeValues(0, 1000),
         selectedCategories: [widget.kategori ?? '']);
     _model = createModel(context, () => CategoryModel());
-    getCategoryFood();
-    _scrollController.addListener(_onScroll);
-
+    getCategoryFood(true, false);
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     if (widget.query != null && widget.query.isNotEmpty) {
       _model.textController.text = widget.query;
     }
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
+
+    _scrollController1.addListener(_scrollListener);
   }
 
-  void _onScroll() {
-    FocusScope.of(context).requestFocus(FocusNode());
-    setState(() {});
-  }
-
-  void _runFilter(String enteredKeyword) {
+  Future<void> getCategoryFood(bool refresh, bool nextPage) async {
     try {
-      if (enteredKeyword.isEmpty) {
-        _model.matvarer = List.from(_model.allmatvarer as Iterable);
-      } else {
-        // If a keyword is entered, filter the _allmatvarer list
-        List<Matvarer> filteredResults = _model.allmatvarer!.where((matvare) {
-          // Check if the name contains the entered keyword
-          return matvare.name!
-              .toLowerCase()
-              .contains(enteredKeyword.toLowerCase());
-        }).toList();
-
-        // Now sort the filtered results based on match quality
-        filteredResults.sort((a, b) {
-          String keyword = enteredKeyword.toLowerCase();
-
-          // Check for exact matches (case-insensitive)
-          bool aExactMatch = a.name!.toLowerCase() == keyword;
-          bool bExactMatch = b.name!.toLowerCase() == keyword;
-
-          if (aExactMatch && !bExactMatch) return -1;
-          if (bExactMatch && !aExactMatch) return 1;
-
-          // Check if the keyword is at the start of the name
-          bool aStartsWith = a.name!.toLowerCase().startsWith(keyword);
-          bool bStartsWith = b.name!.toLowerCase().startsWith(keyword);
-
-          if (aStartsWith && !bStartsWith) return -1;
-          if (bStartsWith && !aStartsWith) return 1;
-
-          // Otherwise, fall back to regular string comparison for alphabetical order
-          return a.name!.toLowerCase().compareTo(b.name!.toLowerCase());
-        });
-
-        _model.matvarer = filteredResults;
+      if (nextPage == false) {
+        _model.isloading = true;
       }
-
-      // Apply sorting based on the selected sorterVerdi
-      if (_model.sorterVerdi == 2) {
-        // Sort low to high
-        _model.matvarer!.sort((a, b) {
-          return (a.price ?? double.infinity)
-              .compareTo(b.price ?? double.infinity);
-        });
-      } else if (_model.sorterVerdi == 3) {
-        // Sort high to low
-        _model.matvarer!.sort((a, b) {
-          return (b.price ?? double.negativeInfinity)
-              .compareTo(a.price ?? double.negativeInfinity);
-        });
-      }
-      setState(() {
-        if (widget.kategori == 'Søk') {
-          if (_model.matvarer != null && _model.matvarer!.isNotEmpty) {
-            _model.isloading = false;
-            _model.empty = false;
-            return;
-          } else {
-            _model.empty = true;
-            _model.isloading = false;
-          }
-        }
-      });
-    } on SocketException {
-      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      Toasts.showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-  Future<void> getCategoryFood() async {
-    try {
       String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
+        _model.isloading = false;
         return;
       } else {
         if (widget.kategori != 'Søk') {
-          _model.allmatvarer =
-              await ApiFoodService.getCategoryFood(token, widget.kategori);
-          _model.matvarer = _model.allmatvarer;
+          if (refresh == true) {
+            _model.end = false;
+            _model.page = 0;
+            _model.matvarer = await ApiFoodService.getCategoryFood(
+                token,
+                0,
+                _model.sortByPriceAsc,
+                _model.sortByPriceDesc,
+                _model.sortByDistance,
+                filterOptions.priceRange.start.toInt(),
+                filterOptions.priceRange.end.toInt(),
+                filterOptions.distance,
+                filterOptions.selectedCategories);
+          } else {
+            List<Matvarer>? nyeMatvarer = await ApiFoodService.getCategoryFood(
+                token,
+                _model.page,
+                _model.sortByPriceAsc,
+                _model.sortByPriceDesc,
+                _model.sortByDistance,
+                filterOptions.priceRange.start.toInt(),
+                filterOptions.priceRange.end.toInt(),
+                filterOptions.distance,
+                filterOptions.selectedCategories);
+
+            _model.matvarer ??= [];
+
+            if (nyeMatvarer != null && nyeMatvarer.isNotEmpty) {
+              _model.matvarer?.addAll(nyeMatvarer);
+            } else {
+              _model.end = true;
+            }
+          }
           setState(() {
             if (_model.matvarer != null && _model.matvarer!.isNotEmpty) {
               _model.isloading = false;
@@ -158,17 +119,18 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
           return;
         } else {
           _model.allmatvarer = await ApiFoodService.getAllFoods(token, 0);
-
-          _runFilter(widget.query);
-
-          setState(() {});
+          setState(() {
+            _model.isloading = false;
+          });
           return;
         }
       }
     } on SocketException {
+      _model.isloading = false;
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      _model.isloading = false;
       if (!mounted) return;
       Toasts.showErrorToast(context, 'En feil oppstod');
     }
@@ -245,6 +207,17 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
     }
 
     return filterCount;
+  }
+
+  void _scrollListener() async {
+    if (_scrollController1.position.pixels >=
+        _scrollController1.position.maxScrollExtent) {
+      if (_moreIsLoading || _model.end) return;
+      _moreIsLoading = true;
+      _model.page += 1;
+      await getCategoryFood(false, true);
+      _moreIsLoading = false;
+    }
   }
 
   @override
@@ -327,53 +300,34 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                       selectedValue.first;
 
                                   safeSetState(() {
-                                    List<Matvarer> sortedList =
-                                        List.from(_model.matvarer ?? []);
-
                                     if (selectedOption == 'Pris: lav til høy') {
                                       _model.sorterVerdi = 2;
-                                      sortedList.sort((a, b) {
-                                        return (a.price ?? double.infinity)
-                                            .compareTo(
-                                                b.price ?? double.infinity);
-                                      });
+                                      _model.sortByPriceAsc = true;
+                                      _model.sortByPriceDesc = false;
+                                      _model.sortByDistance = false;
+                                      getCategoryFood(true, false);
                                     } else if (selectedOption ==
                                         'Pris: høy til lav') {
                                       _model.sorterVerdi = 3;
-                                      sortedList.sort((a, b) {
-                                        return (b.price ??
-                                                double.negativeInfinity)
-                                            .compareTo(a.price ??
-                                                double.negativeInfinity);
-                                      });
+                                      _model.sortByPriceAsc = false;
+                                      _model.sortByPriceDesc = true;
+                                      _model.sortByDistance = false;
+                                      getCategoryFood(true, false);
                                     } else if (selectedOption ==
                                         'Avstand: nærmest meg') {
                                       _model.sorterVerdi = 4;
-                                      double brukerLat = FFAppState().brukerLat;
-                                      double brukerLng = FFAppState().brukerLng;
-
-                                      sortedList.sort((a, b) {
-                                        double distanceA =
-                                            CalculateDistance.calculateDistance(
-                                                brukerLat,
-                                                brukerLng,
-                                                a.lat ?? 0.0,
-                                                a.lng ?? 0.0);
-                                        double distanceB =
-                                            CalculateDistance.calculateDistance(
-                                                brukerLat,
-                                                brukerLng,
-                                                b.lat ?? 0.0,
-                                                b.lng ?? 0.0);
-
-                                        return distanceA.compareTo(distanceB);
-                                      });
+                                      _model.sortByPriceAsc = false;
+                                      _model.sortByPriceDesc = false;
+                                      _model.sortByDistance = true;
+                                      getCategoryFood(true, false);
                                     } else {
                                       _model.sorterVerdi = 1;
-                                      _runFilter(_model.textController.text);
+                                      _model.sortByPriceAsc = false;
+                                      _model.sortByPriceDesc = false;
+                                      _model.sortByDistance = false;
+                                      getCategoryFood(true, false);
                                       return;
                                     }
-                                    _model.matvarer = sortedList;
                                     setState(() {});
                                   });
                                 }
@@ -428,6 +382,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                 );
                                 if (localFilterOptions != null) {
                                   filterOptions = localFilterOptions;
+                                  getCategoryFood(true, false);
                                 }
                               },
                               borderRadius: const BorderRadius.only(
@@ -505,7 +460,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                       controller: _model.textController,
                       focusNode: _model.textFieldFocusNode,
                       autofocus: false,
-                      onChanged: (value) => _runFilter(value),
+                      onChanged: (value) => getCategoryFood(true, false),
                       placeholder: widget.kategori?.toLowerCase() != 'søk'
                           ? 'Søk innen ${widget.kategori}'
                           : 'Søk',
@@ -531,7 +486,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                       onSuffixTap: () {
                         _model.textController!.clear();
                         setState(() {
-                          _runFilter('');
+                          getCategoryFood(true, false);
                         });
                       },
                       padding: const EdgeInsets.symmetric(
@@ -562,195 +517,197 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                     }
                     return false;
                   },
-                  child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    primary: false,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Stack(
-                          alignment: const AlignmentDirectional(0, -1),
-                          children: [
-                            if ((_model.matvarer == null ||
-                                    _model.matvarer!.isEmpty) &&
-                                _model.isloading == false)
-                              SizedBox(
-                                width: MediaQuery.sizeOf(context).width,
-                                height: MediaQuery.sizeOf(context).height - 150,
-                                child: Align(
-                                  alignment: const AlignmentDirectional(0, -1),
-                                  child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 0, 110),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: Image.asset(
-                                              'assets/images/Usability_testing-pana.png',
-                                              width: 290,
-                                              height: 250,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 20, 0, 0),
-                                            child: Text(
-                                              'Her var det tomt',
-                                              textAlign: TextAlign.center,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .headlineSmall
-                                                  .override(
-                                                    fontFamily: 'Nunito',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontSize: 23,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                              ),
-                            if (_model.empty != true)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 20, 0, 0),
-                                child: SingleChildScrollView(
-                                  primary: false,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Stack(
-                                        alignment:
-                                            const AlignmentDirectional(0, 0.9),
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5, 0, 5, 0),
-                                            child: RefreshIndicator(
-                                              onRefresh: () async {
-                                                await getCategoryFood();
-                                              },
-                                              child: GridView.builder(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  63.0,
-                                                ),
-                                                gridDelegate:
-                                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  childAspectRatio: 0.68,
-                                                ),
-                                                primary: false,
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount: _model.isloading
-                                                    ? 1
-                                                    : _model.matvarer?.length ??
-                                                        0,
-                                                itemBuilder: (context, index) {
-                                                  if (_model.isloading) {
-                                                    return Shimmer.fromColors(
-                                                      baseColor:
-                                                          Colors.grey[300]!,
-                                                      highlightColor:
-                                                          Colors.grey[100]!,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Container(
-                                                            margin:
-                                                                const EdgeInsets
-                                                                    .all(5.0),
-                                                            width: 200.0,
-                                                            height: 230.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  127,
-                                                                  255,
-                                                                  255,
-                                                                  255),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16.0),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 8.0),
-                                                          Container(
-                                                            width: 200,
-                                                            height: 15,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  127,
-                                                                  255,
-                                                                  255,
-                                                                  255),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10.0),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  }
-                                                  final matvare =
-                                                      _model.matvarer![index];
-                                                  return ProductList(
-                                                    matvare: matvare,
-                                                    onTap: () async {
-                                                      FocusScope.of(context)
-                                                          .requestFocus(
-                                                              FocusNode());
-                                                      context.pushNamed(
-                                                        'MatDetaljBondegard',
-                                                        queryParameters: {
-                                                          'matvare':
-                                                              serializeParam(
-                                                            matvare.toJson(),
-                                                            ParamType.JSON,
-                                                          ),
-                                                        },
-                                                      );
-                                                    },
-                                                  );
-                                                },
+                  child: RefreshIndicator.adaptive(
+                    color: FlutterFlowTheme.of(context).alternate,
+                    onRefresh: () async {
+                      HapticFeedback.lightImpact();
+                      getCategoryFood(true, false);
+                    },
+                    child: SingleChildScrollView(
+                      controller: _scrollController1,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      primary: false,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Stack(
+                            alignment: const AlignmentDirectional(0, -1),
+                            children: [
+                              if ((_model.matvarer == null ||
+                                      _model.matvarer!.isEmpty) &&
+                                  _model.isloading == false)
+                                SizedBox(
+                                  width: MediaQuery.sizeOf(context).width,
+                                  height:
+                                      MediaQuery.sizeOf(context).height - 150,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(0, -1),
+                                    child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 0, 110),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Image.asset(
+                                                'assets/images/Usability_testing-pana.png',
+                                                width: 290,
+                                                height: 250,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 20, 0, 0),
+                                              child: Text(
+                                                'Her var det tomt',
+                                                textAlign: TextAlign.center,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineSmall
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 23,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                ),
+                              if (_model.isloading)
+                                SizedBox(
+                                  width: MediaQuery.sizeOf(context).width,
+                                  height:
+                                      MediaQuery.sizeOf(context).height - 150,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(0, -1),
+                                    child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 0, 110),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0.0, 0.0),
+                                              child: Lottie.asset(
+                                                'assets/lottie_animations/loading.json',
+                                                width: 200.0,
+                                                height: 180.0,
+                                                fit: BoxFit.cover,
+                                                repeat: true,
+                                                animate: true,
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                ),
+                              if (_model.empty != true &&
+                                  _model.isloading == false)
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 20, 0, 0),
+                                  child: Stack(
+                                    alignment:
+                                        const AlignmentDirectional(0, 0.9),
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 0),
+                                        child: RefreshIndicator(
+                                          onRefresh: () async {
+                                            await getCategoryFood(true, false);
+                                          },
+                                          child: GridView.builder(
+                                            padding: const EdgeInsets.fromLTRB(
+                                              0,
+                                              0,
+                                              0,
+                                              63.0,
+                                            ),
+                                            gridDelegate:
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              childAspectRatio: 0.68,
+                                            ),
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: _model.isloading
+                                                ? 1
+                                                : _model.end
+                                                    ? _model.matvarer?.length ??
+                                                        0
+                                                    : (_model.matvarer
+                                                                ?.length ??
+                                                            0) +
+                                                        1,
+                                            itemBuilder: (context, index) {
+                                              if (_model.isloading) {
+                                                return ShimmerLoadingWidget();
+                                              }
+
+                                              if (index <
+                                                  (_model.matvarer?.length ??
+                                                      0)) {
+                                                final matvare =
+                                                    _model.matvarer![index];
+                                                return ProductList(
+                                                  matvare: matvare,
+                                                  onTap: () async {
+                                                    FocusScope.of(context)
+                                                        .requestFocus(
+                                                            FocusNode());
+                                                    context.pushNamed(
+                                                      'MatDetaljBondegard',
+                                                      queryParameters: {
+                                                        'matvare':
+                                                            serializeParam(
+                                                          matvare.toJson(),
+                                                          ParamType.JSON,
+                                                        ),
+                                                      },
+                                                    );
+                                                  },
+                                                );
+                                              } else {
+                                                if (_model.matvarer!.length <
+                                                    44) {
+                                                  return Container();
+                                                } else {
+                                                  return ShimmerLoadingWidget();
+                                                }
+                                              }
+                                            },
                                           ),
-                                        ],
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-                          ],
-                        ),
-                      ].addToEnd(const SizedBox(height: 100)),
+                            ],
+                          ),
+                        ].addToEnd(const SizedBox(height: 100)),
+                      ),
                     ),
                   ),
                 ),

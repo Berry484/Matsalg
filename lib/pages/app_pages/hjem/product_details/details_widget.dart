@@ -201,7 +201,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.safePop();
+                Navigator.pop(context);
               },
               child: Icon(
                 Icons.arrow_back_ios,
@@ -1867,7 +1867,11 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                     },
                                   );
                                 } else {
-                                  return ShimmerLoadingWidget();
+                                  if (_model.nyematvarer!.length < 44) {
+                                    return Container();
+                                  } else {
+                                    return ShimmerLoadingWidget();
+                                  }
                                 }
                               },
                             ),
