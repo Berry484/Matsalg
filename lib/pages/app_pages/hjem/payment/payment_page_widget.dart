@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -155,22 +156,33 @@ class _BetalingWidgetState extends State<PaymentPageWidget> {
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(6),
-                                                child: Image.network(
-                                                  '${ApiConstants.baseUrl}${matvare.imgUrls![0].toString()}',
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      '${ApiConstants.baseUrl}${matvare.imgUrls![0].toString()}',
                                                   width: 64,
                                                   height: 64,
                                                   fit: BoxFit.cover,
-                                                  errorBuilder: (BuildContext
-                                                          context,
-                                                      Object error,
-                                                      StackTrace? stackTrace) {
-                                                    return Image.asset(
-                                                      'assets/images/error_image.jpg', // Path to your local error image
-                                                      height: 64,
+                                                  imageBuilder:
+                                                      (context, imageProvider) {
+                                                    return Container(
                                                       width: 64,
-                                                      fit: BoxFit.cover,
+                                                      height: 64,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
                                                     );
                                                   },
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Image.asset(
+                                                    'assets/images/error_image.jpg',
+                                                    width: 64,
+                                                    height: 64,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
                                               ),
                                             ),

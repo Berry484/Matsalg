@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -423,21 +424,34 @@ class _MessageWidgetState extends State<MessageWidget> {
                                                       const BoxDecoration(
                                                     shape: BoxShape.circle,
                                                   ),
-                                                  child: Image.network(
-                                                    '${ApiConstants.baseUrl}${conversation.profilePic}',
+                                                  child: CachedNetworkImage(
+                                                    imageUrl:
+                                                        '${ApiConstants.baseUrl}${conversation.profilePic}',
                                                     fit: BoxFit.cover,
-                                                    errorBuilder:
-                                                        (BuildContext context,
-                                                            Object error,
-                                                            StackTrace?
-                                                                stackTrace) {
-                                                      return Image.asset(
-                                                        'assets/images/profile_pic.png',
+                                                    imageBuilder: (context,
+                                                        imageProvider) {
+                                                      return Container(
                                                         width: 38.0,
                                                         height: 38.0,
-                                                        fit: BoxFit.cover,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            image:
+                                                                imageProvider,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
                                                       );
                                                     },
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Image.asset(
+                                                      'assets/images/profile_pic.png',
+                                                      width: 38.0,
+                                                      height: 38.0,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                 ),
                                               ),

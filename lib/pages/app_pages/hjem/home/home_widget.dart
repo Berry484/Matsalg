@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
@@ -1970,19 +1971,29 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                             child:
                                                                                 ClipRRect(
                                                                               borderRadius: BorderRadius.circular(100.0),
-                                                                              child: Image.network(
-                                                                                '${ApiConstants.baseUrl}${profil.profilepic}',
+                                                                              child: CachedNetworkImage(
+                                                                                imageUrl: '${ApiConstants.baseUrl}${profil.profilepic}',
                                                                                 width: 45.0,
                                                                                 height: 45.0,
                                                                                 fit: BoxFit.cover,
-                                                                                errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                                  return Image.asset(
-                                                                                    'assets/images/profile_pic.png',
+                                                                                imageBuilder: (context, imageProvider) {
+                                                                                  return Container(
                                                                                     width: 45.0,
                                                                                     height: 45.0,
-                                                                                    fit: BoxFit.cover,
+                                                                                    decoration: BoxDecoration(
+                                                                                      image: DecorationImage(
+                                                                                        image: imageProvider,
+                                                                                        fit: BoxFit.cover,
+                                                                                      ),
+                                                                                    ),
                                                                                   );
                                                                                 },
+                                                                                errorWidget: (context, url, error) => Image.asset(
+                                                                                  'assets/images/profile_pic.png',
+                                                                                  width: 45.0,
+                                                                                  height: 45.0,
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),

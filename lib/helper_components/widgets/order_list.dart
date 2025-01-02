@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
@@ -90,24 +91,33 @@ class OrderList extends StatelessWidget {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 1, 1, 1),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(6),
-                                    child: Image.network(
-                                      '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
-                                      width: 56,
-                                      height: 56,
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (BuildContext context,
-                                          Object error,
-                                          StackTrace? stackTrace) {
-                                        return Image.asset(
+                                      borderRadius: BorderRadius.circular(6),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
+                                        width: 56,
+                                        height: 56,
+                                        fit: BoxFit.cover,
+                                        imageBuilder: (context, imageProvider) {
+                                          return Container(
+                                            width: 56,
+                                            height: 56,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        errorWidget: (context, url, error) =>
+                                            Image.asset(
                                           'assets/images/error_image.jpg',
                                           width: 56,
                                           height: 56,
                                           fit: BoxFit.cover,
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                        ),
+                                      )),
                                 ),
                               ),
                               Positioned(
@@ -122,25 +132,33 @@ class OrderList extends StatelessWidget {
                                         color: Colors.white, width: 0.5),
                                   ),
                                   child: ClipOval(
-                                    child: Image.network(
-                                      ordreInfo.kjopte == true
-                                          ? '${ApiConstants.baseUrl}${ordreInfo.foodDetails.profilepic}'
-                                          : '${ApiConstants.baseUrl}${ordreInfo.kjoperProfilePic}',
+                                      child: CachedNetworkImage(
+                                    imageUrl: ordreInfo.kjopte == true
+                                        ? '${ApiConstants.baseUrl}${ordreInfo.foodDetails.profilepic}'
+                                        : '${ApiConstants.baseUrl}${ordreInfo.kjoperProfilePic}',
+                                    width: 25,
+                                    height: 25,
+                                    fit: BoxFit.cover,
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        width: 25,
+                                        height: 25,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      'assets/images/profile_pic.png',
                                       width: 25,
                                       height: 25,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (BuildContext context,
-                                          Object error,
-                                          StackTrace? stackTrace) {
-                                        return Image.asset(
-                                          'assets/images/profile_pic.png',
-                                          width: 25,
-                                          height: 25,
-                                          fit: BoxFit.cover,
-                                        );
-                                      },
                                     ),
-                                  ),
+                                  )),
                                 ),
                               ),
                             ],

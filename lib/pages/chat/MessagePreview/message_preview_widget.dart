@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/logging.dart';
 
@@ -88,28 +89,37 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 12, 0),
                   child: Container(
-                    width: 53,
-                    height: 53,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Image.network(
-                      '${ApiConstants.baseUrl}${widget.messageImage}',
                       width: 53,
                       height: 53,
-                      fit: BoxFit.cover,
-                      errorBuilder: (BuildContext context, Object error,
-                          StackTrace? stackTrace) {
-                        return Image.asset(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            '${ApiConstants.baseUrl}${widget.messageImage}',
+                        width: 53,
+                        height: 53,
+                        fit: BoxFit.cover,
+                        imageBuilder: (context, imageProvider) {
+                          return Container(
+                            width: 53,
+                            height: 53,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        },
+                        errorWidget: (context, url, error) => Image.asset(
                           'assets/images/profile_pic.png',
                           width: 53,
                           height: 53,
                           fit: BoxFit.cover,
-                        );
-                      },
-                    ),
-                  ),
+                        ),
+                      )),
                 ),
               if (widget.messageImage == null || widget.messageImage!.isEmpty)
                 Padding(

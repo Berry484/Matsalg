@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dart';
@@ -302,14 +303,28 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
                                                 decoration: const BoxDecoration(
                                                   shape: BoxShape.circle,
                                                 ),
-                                                child: Image.network(
-                                                  '${ApiConstants.baseUrl}${FFAppState().profilepic}',
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      '${ApiConstants.baseUrl}${FFAppState().profilepic}',
                                                   fit: BoxFit.cover,
                                                   width: 135,
                                                   height: 135,
-                                                  errorBuilder: (context, error,
-                                                          stackTrace) =>
-                                                      Image.asset(
+                                                  imageBuilder:
+                                                      (context, imageProvider) {
+                                                    return Container(
+                                                      width: 135,
+                                                      height: 135,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Image.asset(
                                                     'assets/images/profile_pic.png',
                                                     width: 135,
                                                     height: 135,

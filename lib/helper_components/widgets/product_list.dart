@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
@@ -56,23 +57,31 @@ class ProductList extends StatelessWidget {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(3, 0, 0, 0),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(17),
-                          child: Image.network(
-                            '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
-                            width: 200,
-                            height: 229,
-                            fit: BoxFit.cover,
-                            errorBuilder: (BuildContext context, Object error,
-                                StackTrace? stackTrace) {
-                              return Image.asset(
-                                'assets/images/error_image.jpg', // Path to your local error image
+                            borderRadius: BorderRadius.circular(17),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
+                              imageBuilder: (context, imageProvider) {
+                                return Container(
+                                  width: 200,
+                                  height: 229,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              },
+                              fadeInDuration: Duration(milliseconds: 300),
+                              errorWidget: (context, url, error) => SizedBox(
                                 width: 200,
                                 height: 229,
-                                fit: BoxFit.cover,
-                              );
-                            },
-                          ),
-                        ),
+                                child: Center(
+                                  child: Icon(Icons.error, color: Colors.white),
+                                ),
+                              ),
+                            )),
                       ),
                     ),
                     Padding(

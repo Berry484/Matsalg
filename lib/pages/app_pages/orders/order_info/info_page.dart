@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/my_ip.dart';
@@ -122,18 +123,29 @@ class _GodkjentebudWidgetState extends State<InfoPage> {
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                   ),
-                                  child: Image.network(
-                                    '${ApiConstants.baseUrl}${(ordreInfo.kjopte == true ? ordreInfo.foodDetails.profilepic : ordreInfo.kjoperProfilePic)}',
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        '${ApiConstants.baseUrl}${ordreInfo.kjopte == true ? ordreInfo.foodDetails.profilepic : ordreInfo.kjoperProfilePic}',
                                     fit: BoxFit.cover,
-                                    errorBuilder: (BuildContext context,
-                                        Object error, StackTrace? stackTrace) {
-                                      return Image.asset(
-                                        'assets/images/profile_pic.png',
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
                                         width: 34.0,
                                         height: 34.0,
-                                        fit: BoxFit.cover,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       );
                                     },
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      'assets/images/profile_pic.png',
+                                      width: 34.0,
+                                      height: 34.0,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -277,20 +289,31 @@ class _GodkjentebudWidgetState extends State<InfoPage> {
                                     4, 3, 1, 1),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(13),
-                                  child: Image.network(
-                                    '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
-                                    errorBuilder: (BuildContext context,
-                                        Object error, StackTrace? stackTrace) {
-                                      return Image.asset(
-                                        'assets/images/error_image.jpg',
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
                                         width: 60,
                                         height: 60,
-                                        fit: BoxFit.cover,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       );
                                     },
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      'assets/images/error_image.jpg',
+                                      width: 60,
+                                      height: 60,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),

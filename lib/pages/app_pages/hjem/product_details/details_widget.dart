@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -319,20 +320,31 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                             decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
-                                            child: Image.network(
-                                              '${ApiConstants.baseUrl}${matvare.profilepic}',
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  '${ApiConstants.baseUrl}${matvare.profilepic}',
                                               fit: BoxFit.cover,
-                                              errorBuilder:
-                                                  (BuildContext context,
-                                                      Object error,
-                                                      StackTrace? stackTrace) {
-                                                return Image.asset(
-                                                  'assets/images/profile_pic.png',
+                                              imageBuilder:
+                                                  (context, imageProvider) {
+                                                return Container(
                                                   width: 44.0,
                                                   height: 44.0,
-                                                  fit: BoxFit.cover,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 );
                                               },
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Image.asset(
+                                                'assets/images/profile_pic.png',
+                                                width: 44.0,
+                                                height: 44.0,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),

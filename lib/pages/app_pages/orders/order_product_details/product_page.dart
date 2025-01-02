@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
 import 'package:mat_salg/my_ip.dart';
@@ -181,20 +182,31 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                             decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
-                                            child: Image.network(
-                                              '${ApiConstants.baseUrl}${ordreInfo.foodDetails.profilepic}',
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  '${ApiConstants.baseUrl}${ordreInfo.foodDetails.profilepic}',
                                               fit: BoxFit.cover,
-                                              errorBuilder:
-                                                  (BuildContext context,
-                                                      Object error,
-                                                      StackTrace? stackTrace) {
-                                                return Image.asset(
-                                                  'assets/images/profile_pic.png',
+                                              imageBuilder:
+                                                  (context, imageProvider) {
+                                                return Container(
                                                   width: 44.0,
                                                   height: 44.0,
-                                                  fit: BoxFit.cover,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 );
                                               },
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Image.asset(
+                                                'assets/images/profile_pic.png',
+                                                width: 44.0,
+                                                height: 44.0,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),

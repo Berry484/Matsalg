@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
@@ -258,22 +259,33 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         100.0),
-                                                child: Image.network(
-                                                  '${ApiConstants.baseUrl}${brukere.profilepic}',
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      '${ApiConstants.baseUrl}${brukere.profilepic}',
                                                   width: 50.0,
                                                   height: 50.0,
                                                   fit: BoxFit.cover,
-                                                  errorBuilder: (BuildContext
-                                                          context,
-                                                      Object error,
-                                                      StackTrace? stackTrace) {
-                                                    return Image.asset(
-                                                      'assets/images/profile_pic.png',
+                                                  imageBuilder:
+                                                      (context, imageProvider) {
+                                                    return Container(
                                                       width: 50.0,
                                                       height: 50.0,
-                                                      fit: BoxFit.cover,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
                                                     );
                                                   },
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Image.asset(
+                                                    'assets/images/profile_pic.png',
+                                                    width: 50.0,
+                                                    height: 50.0,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
                                               ),
                                             ),

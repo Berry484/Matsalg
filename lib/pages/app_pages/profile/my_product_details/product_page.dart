@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
@@ -142,20 +143,31 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                             decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
-                                            child: Image.network(
-                                              '${ApiConstants.baseUrl}${matvare.profilepic}',
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  '${ApiConstants.baseUrl}${matvare.profilepic}',
                                               fit: BoxFit.cover,
-                                              errorBuilder:
-                                                  (BuildContext context,
-                                                      Object error,
-                                                      StackTrace? stackTrace) {
-                                                return Image.asset(
-                                                  'assets/images/profile_pic.png',
+                                              imageBuilder:
+                                                  (context, imageProvider) {
+                                                return Container(
                                                   width: 44.0,
                                                   height: 44.0,
-                                                  fit: BoxFit.cover,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 );
                                               },
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Image.asset(
+                                                'assets/images/profile_pic.png',
+                                                width: 44.0,
+                                                height: 44.0,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -405,8 +417,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                     .circular(
                                                                         0.0),
                                                             child:
-                                                                Image.network(
-                                                              '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
+                                                                CachedNetworkImage(
+                                                              imageUrl:
+                                                                  '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                               width: double
                                                                   .infinity,
                                                               height: 485,
@@ -414,20 +427,33 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                               alignment:
                                                                   const Alignment(
                                                                       0.0, 0.0),
-                                                              errorBuilder:
-                                                                  (BuildContext
-                                                                          context,
-                                                                      Object
-                                                                          error,
-                                                                      StackTrace?
-                                                                          stackTrace) {
-                                                                return Image
-                                                                    .asset(
-                                                                  'assets/images/error_image.jpg', // Path to your local error image
-                                                                  fit: BoxFit
-                                                                      .cover,
+                                                              imageBuilder:
+                                                                  (context,
+                                                                      imageProvider) {
+                                                                return Container(
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: 485,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    image:
+                                                                        DecorationImage(
+                                                                      image:
+                                                                          imageProvider,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
+                                                                  ),
                                                                 );
                                                               },
+                                                              errorWidget: (context,
+                                                                      url,
+                                                                      error) =>
+                                                                  Image.asset(
+                                                                'assets/images/error_image.jpg',
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -447,8 +473,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                       .circular(
                                                                           0.0),
                                                               child:
-                                                                  Image.network(
-                                                                '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
+                                                                  CachedNetworkImage(
+                                                                imageUrl:
+                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
                                                                 width: double
                                                                     .infinity,
                                                                 height: 485,
@@ -458,19 +485,33 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                     const Alignment(
                                                                         0.0,
                                                                         0.0),
-                                                                errorBuilder: (BuildContext
-                                                                        context,
-                                                                    Object
-                                                                        error,
-                                                                    StackTrace?
-                                                                        stackTrace) {
-                                                                  return Image
-                                                                      .asset(
-                                                                    'assets/images/error_image.jpg', // Path to your local error image
-                                                                    fit: BoxFit
-                                                                        .cover,
+                                                                imageBuilder:
+                                                                    (context,
+                                                                        imageProvider) {
+                                                                  return Container(
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height: 485,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      image:
+                                                                          DecorationImage(
+                                                                        image:
+                                                                            imageProvider,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      ),
+                                                                    ),
                                                                   );
                                                                 },
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                  'assets/images/error_image.jpg',
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
@@ -490,8 +531,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                       .circular(
                                                                           0.0),
                                                               child:
-                                                                  Image.network(
-                                                                '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
+                                                                  CachedNetworkImage(
+                                                                imageUrl:
+                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
                                                                 width: double
                                                                     .infinity,
                                                                 height: 485,
@@ -501,19 +543,33 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                     const Alignment(
                                                                         0.0,
                                                                         0.0),
-                                                                errorBuilder: (BuildContext
-                                                                        context,
-                                                                    Object
-                                                                        error,
-                                                                    StackTrace?
-                                                                        stackTrace) {
-                                                                  return Image
-                                                                      .asset(
-                                                                    'assets/images/error_image.jpg', // Path to your local error image
-                                                                    fit: BoxFit
-                                                                        .cover,
+                                                                imageBuilder:
+                                                                    (context,
+                                                                        imageProvider) {
+                                                                  return Container(
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height: 485,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      image:
+                                                                          DecorationImage(
+                                                                        image:
+                                                                            imageProvider,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      ),
+                                                                    ),
                                                                   );
                                                                 },
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                  'assets/images/error_image.jpg',
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
@@ -532,8 +588,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                       .circular(
                                                                           0.0),
                                                               child:
-                                                                  Image.network(
-                                                                '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
+                                                                  CachedNetworkImage(
+                                                                imageUrl:
+                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
                                                                 width: double
                                                                     .infinity,
                                                                 height: 485,
@@ -543,19 +600,33 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                     const Alignment(
                                                                         0.0,
                                                                         0.0),
-                                                                errorBuilder: (BuildContext
-                                                                        context,
-                                                                    Object
-                                                                        error,
-                                                                    StackTrace?
-                                                                        stackTrace) {
-                                                                  return Image
-                                                                      .asset(
-                                                                    'assets/images/error_image.jpg', // Path to your local error image
-                                                                    fit: BoxFit
-                                                                        .cover,
+                                                                imageBuilder:
+                                                                    (context,
+                                                                        imageProvider) {
+                                                                  return Container(
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height: 485,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      image:
+                                                                          DecorationImage(
+                                                                        image:
+                                                                            imageProvider,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      ),
+                                                                    ),
                                                                   );
                                                                 },
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                  'assets/images/error_image.jpg',
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
@@ -575,8 +646,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                       .circular(
                                                                           0.0),
                                                               child:
-                                                                  Image.network(
-                                                                '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
+                                                                  CachedNetworkImage(
+                                                                imageUrl:
+                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
                                                                 width: double
                                                                     .infinity,
                                                                 height: 485,
@@ -586,19 +658,33 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                     const Alignment(
                                                                         0.0,
                                                                         0.0),
-                                                                errorBuilder: (BuildContext
-                                                                        context,
-                                                                    Object
-                                                                        error,
-                                                                    StackTrace?
-                                                                        stackTrace) {
-                                                                  return Image
-                                                                      .asset(
-                                                                    'assets/images/error_image.jpg', // Path to your local error image
-                                                                    fit: BoxFit
-                                                                        .cover,
+                                                                imageBuilder:
+                                                                    (context,
+                                                                        imageProvider) {
+                                                                  return Container(
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height: 485,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      image:
+                                                                          DecorationImage(
+                                                                        image:
+                                                                            imageProvider,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      ),
+                                                                    ),
                                                                   );
                                                                 },
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                  'assets/images/error_image.jpg',
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
