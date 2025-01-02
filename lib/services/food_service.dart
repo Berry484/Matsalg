@@ -352,7 +352,8 @@ class ApiFoodService {
       int minPrice,
       int maxPrice,
       int? maxDistance,
-      List<String> categories) async {
+      List<String> categories,
+      String searchQuery) async {
     try {
       final headers = {
         'Content-Type': 'application/json',
@@ -375,7 +376,7 @@ class ApiFoodService {
       final response = await http
           .get(
             Uri.parse(
-                '$baseUrl/rrh/send/matvarer/filter?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page&sortByPriceAsc=$sortByPriceAsc&sortByPriceDesc=$sortByPriceDesc&sortByDistance=$sortByDistance&minPrice=$minPrice&maxPrice=$maxPrice&maxDistance=$maxDistance&categories=$categoriesParam'),
+                '$baseUrl/rrh/send/matvarer/filter?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page&sortByPriceAsc=$sortByPriceAsc&sortByPriceDesc=$sortByPriceDesc&sortByDistance=$sortByDistance&minPrice=$minPrice&maxPrice=$maxPrice&maxDistance=$maxDistance&categories=$categoriesParam&searchQuery=$searchQuery'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5));

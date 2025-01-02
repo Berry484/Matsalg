@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
@@ -85,7 +86,8 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                 filterOptions.priceRange.start.toInt(),
                 filterOptions.priceRange.end.toInt(),
                 filterOptions.distance,
-                filterOptions.selectedCategories);
+                filterOptions.selectedCategories,
+                _model.textController.text);
           } else {
             List<Matvarer>? nyeMatvarer = await ApiFoodService.getCategoryFood(
                 token,
@@ -96,7 +98,8 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                 filterOptions.priceRange.start.toInt(),
                 filterOptions.priceRange.end.toInt(),
                 filterOptions.distance,
-                filterOptions.selectedCategories);
+                filterOptions.selectedCategories,
+                _model.textController.text);
 
             _model.matvarer ??= [];
 
@@ -118,9 +121,54 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
           });
           return;
         } else {
-          _model.allmatvarer = await ApiFoodService.getAllFoods(token, 0);
+          if (ListEquality()
+              .equals(filterOptions.selectedCategories, ['Søk'])) {
+            filterOptions.selectedCategories = [];
+          }
+          if (refresh == true) {
+            _model.end = false;
+            _model.page = 0;
+            _model.matvarer = await ApiFoodService.getCategoryFood(
+                token,
+                0,
+                _model.sortByPriceAsc,
+                _model.sortByPriceDesc,
+                _model.sortByDistance,
+                filterOptions.priceRange.start.toInt(),
+                filterOptions.priceRange.end.toInt(),
+                filterOptions.distance,
+                filterOptions.selectedCategories,
+                _model.textController.text);
+          } else {
+            List<Matvarer>? nyeMatvarer = await ApiFoodService.getCategoryFood(
+                token,
+                _model.page,
+                _model.sortByPriceAsc,
+                _model.sortByPriceDesc,
+                _model.sortByDistance,
+                filterOptions.priceRange.start.toInt(),
+                filterOptions.priceRange.end.toInt(),
+                filterOptions.distance,
+                filterOptions.selectedCategories,
+                _model.textController.text);
+
+            _model.matvarer ??= [];
+
+            if (nyeMatvarer != null && nyeMatvarer.isNotEmpty) {
+              _model.matvarer?.addAll(nyeMatvarer);
+            } else {
+              _model.end = true;
+            }
+          }
           setState(() {
-            _model.isloading = false;
+            if (_model.matvarer != null && _model.matvarer!.isNotEmpty) {
+              _model.isloading = false;
+              _model.empty = false;
+              return;
+            } else {
+              _model.empty = true;
+              _model.isloading = false;
+            }
           });
           return;
         }
