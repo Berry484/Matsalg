@@ -412,7 +412,7 @@ class PublishServices {
     BuildContext context,
     Function(String title, String content) showDialogCallback,
     Function(String message, bool error) showToast,
-    Function(String path, bool pop) navigate,
+    Function(String path, bool pop, String? imgPath) navigate,
   ) async {
     try {
       if (model.formKey.currentState == null ||
@@ -429,7 +429,6 @@ class PublishServices {
           'Velg minst 1 kategori.',
         );
         model.oppdaterLoading = false;
-        navigate('', true);
         return;
       }
 
@@ -439,7 +438,6 @@ class PublishServices {
           'Velg en pris på matvaren',
         );
         model.oppdaterLoading = false;
-        navigate('', true);
         return;
       }
 
@@ -449,9 +447,22 @@ class PublishServices {
           'Mangler posisjon',
         );
         model.oppdaterLoading = false;
-        navigate('', true);
         return;
       }
+      final nonPlaceholderImages = model.unselectedImages
+          .where((image) => image.path != 'ImagePlaceHolder.jpg')
+          .toList();
+
+      if (nonPlaceholderImages.isEmpty) {
+        await showDialogCallback(
+          'Bilde mangler',
+          'Last opp minst 1 bilde',
+        );
+        model.oppdaterLoading = false;
+        return;
+      }
+
+      final selectedImage = nonPlaceholderImages.first;
 
       model.oppdaterLoading = true;
       final token = await firebaseAuthService.getToken(context);
@@ -504,14 +515,14 @@ class PublishServices {
 
           if (response.statusCode == 200) {
             model.oppdaterLoading = false;
-            navigate('BrukerLagtUtInfo', false);
+            navigate('BrukerLagtUtInfo', false, selectedImage.path);
           }
           if (response.statusCode == 401 ||
               response.statusCode == 404 ||
               response.statusCode == 500) {
             model.oppdaterLoading = false;
             FFAppState().login = false;
-            navigate('registrer', false);
+            navigate('registrer', false, null);
             return;
           }
         } else {
@@ -523,13 +534,13 @@ class PublishServices {
       model.leggUtLoading = false;
     } on SocketException {
       if (model.leggUtLoading) {
-        navigate('', true);
+        navigate('', true, null);
       }
       model.oppdaterLoading = false;
       showToast('Ingen internettforbindelse', true);
     } catch (e) {
       if (model.oppdaterLoading) {
-        navigate('', true);
+        navigate('', true, null);
       }
       model.oppdaterLoading = false;
       showToast('En feil oppstod', true);

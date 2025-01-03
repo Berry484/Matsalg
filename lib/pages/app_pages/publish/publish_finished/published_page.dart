@@ -1,17 +1,17 @@
+import 'dart:io';
+
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/user_service.dart';
-import '../../../../helper_components/flutter_flow/flutter_flow_animations.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:lottie/lottie.dart';
 import 'published_model.dart';
 export 'published_model.dart';
 
 class PublishedPage extends StatefulWidget {
-  const PublishedPage({super.key});
+  const PublishedPage({super.key, this.picture});
+  final String? picture;
 
   @override
   State<PublishedPage> createState() => _BrukerLagtUtInfoWidgetState();
@@ -22,40 +22,12 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final UserInfoService userInfoService = UserInfoService();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final animationsMap = <String, AnimationInfo>{};
   late PublishedModel _model;
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => PublishedModel());
-
-    animationsMap.addAll({
-      'textOnPageLoadAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 360.0.ms,
-            duration: 410.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-        ],
-      ),
-      'buttonOnPageLoadAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          MoveEffect(
-            curve: Curves.easeInOut,
-            delay: 90.0.ms,
-            duration: 600.0.ms,
-            begin: const Offset(0.0, 1000.0),
-            end: const Offset(0.0, 0.0),
-          ),
-        ],
-      ),
-    });
   }
 
   @override
@@ -78,57 +50,86 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
         },
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           body: SafeArea(
             top: true,
             child: Padding(
               padding:
-                  const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 30.0),
+                  const EdgeInsetsDirectional.fromSTEB(25.0, 8.0, 25.0, 0.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: Stack(
+                    child: Column(
                       children: [
                         Align(
                           alignment: const AlignmentDirectional(0.0, 0.0),
-                          child: Lottie.asset(
-                            'assets/lottie_animations/Animation_-_1706448459770.json',
-                            width: 286.0,
-                            height: 267.0,
-                            fit: BoxFit.cover,
-                            repeat: false,
-                            animate: true,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(14.0),
+                            child: Image.file(
+                              File(widget.picture ??
+                                  'assets/images/MatSalg_transp_3.png'),
+                              width: double.infinity,
+                              height: 390,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                        Align(
-                          alignment: const AlignmentDirectional(-0.06, 0.47),
-                          child: Text(
-                            'Matvare publisert',
-                            textAlign: TextAlign.center,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Nunito',
-                                  fontSize: 24.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ).animateOnPageLoad(
-                              animationsMap['textOnPageLoadAnimation']!),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                          child: Align(
+                            alignment: const AlignmentDirectional(0, 0),
+                            child: Text(
+                              'Og sånn, der var varen din ute!',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Nunito',
+                                    fontSize: 23.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                          child: Align(
+                            alignment: const AlignmentDirectional(-1, 0),
+                            child: Text(
+                              'Varen vil bli synlig for kjøpere i appen om noen få minutter',
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Nunito',
+                                    fontSize: 17.0,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        20.0, 16.0, 20.0, 0.0),
+                        0.0, 16.0, 0.0, 10.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        userInfoService.getAll(context);
-                        context.goNamed('Hjem');
+                        if (FFAppState().lagtUt) {
+                          userInfoService.getAll(context);
+                          context.goNamed('Hjem');
+                        } else {
+                          userInfoService.getAll(context);
+                          context.goNamed('HowItWorksWidget');
+                        }
                       },
                       text: 'Ferdig',
                       options: FFButtonOptions(
@@ -143,7 +144,7 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Nunito',
                                   color: FlutterFlowTheme.of(context).primary,
-                                  fontSize: 22.0,
+                                  fontSize: 18.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -154,8 +155,7 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
                         ),
                         borderRadius: BorderRadius.circular(14.0),
                       ),
-                    ).animateOnPageLoad(
-                        animationsMap['buttonOnPageLoadAnimation']!),
+                    ),
                   ),
                 ],
               ),

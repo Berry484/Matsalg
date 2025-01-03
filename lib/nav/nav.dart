@@ -645,10 +645,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         parentNavigatorKey: _parentKey,
       ),
       GoRoute(
+        path: '/howItWorksWidget',
+        name: 'HowItWorksWidget',
+        builder: (context, state) {
+          return const HowItWorksWidget();
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
         path: '/brukerLagtUtInfo',
         name: 'BrukerLagtUtInfo',
         builder: (context, state) {
-          return const PublishedPage();
+          final params = FFParameters(state);
+          final picture = params.getParam<String>('picture', ParamType.String);
+          return PublishedPage(
+            picture: picture,
+          );
         },
         parentNavigatorKey: _parentKey,
       ),

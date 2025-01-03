@@ -7,7 +7,6 @@ import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/profile/profile/profile_page.dart';
-import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/like_service.dart';
 import 'package:mat_salg/services/user_service.dart';
 
@@ -46,32 +45,6 @@ class ProfileServices {
   }
 
 //---------------------------------------------------------------------------------------------------------------
-//--------------------Refreshes variables about the user and his products----------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-  Future<void> refreshPage(BuildContext context) async {
-    try {
-      model.isloading = true;
-      String? token = await firebaseAuthService.getToken(context);
-      if (token == null) {
-        model.isloading = false;
-        return;
-      } else {
-        if (!context.mounted) return;
-        ApiFoodService.getMyFoods(token, 0);
-        getAllLikes(context, token);
-        userInfoService.fetchData(context);
-        model.isloading = false;
-      }
-    } on SocketException {
-      model.isloading = false;
-      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
-    } catch (e) {
-      model.isloading = false;
-      Toasts.showErrorToast(context, 'En feil oppstod');
-    }
-  }
-
-//---------------------------------------------------------------------------------------------------------------
 //--------------------Gets my OWN food listings from the backend-------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   Future<List<Matvarer>?> getMyFoods(BuildContext context) async {
@@ -84,20 +57,18 @@ class ProfileServices {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         };
-
         final response = await http
             .get(
               Uri.parse(
                   '$baseUrl/rrh/send/matvarer/mine?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=${model.page}'),
               headers: headers,
             )
-            .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+            .timeout(const Duration(seconds: 5));
 
         // Check if the response is successful (status code 200)
         if (response.statusCode == 200) {
           final List<dynamic> jsonResponse =
               jsonDecode(utf8.decode(response.bodyBytes));
-
           List<Matvarer>? nyeMatvarer =
               Matvarer.matvarerFromSnapShot(jsonResponse);
           if (nyeMatvarer.isNotEmpty) {
@@ -107,7 +78,6 @@ class ProfileServices {
           }
           return Matvarer.matvarerFromSnapShot(jsonResponse);
         } else {
-          // Handle unsuccessful response
           return null;
         }
       }

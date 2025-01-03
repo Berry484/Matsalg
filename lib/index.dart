@@ -16,6 +16,8 @@ export 'pages/app_pages/publish/publish_product/publish_page.dart'
     show PublishPage;
 export 'pages/app_pages/publish/publish_finished/published_page.dart'
     show PublishedPage;
+export 'pages/app_pages/publish/publish_finished/how_it_works/how_it_works_widget.dart'
+    show HowItWorksWidget;
 export 'pages/chat/chat_main/chat_main_widget.dart' show ChatMainWidget;
 export 'pages/app_pages/hjem/home/home_widget.dart' show HomeWidget;
 export 'pages/app_pages/profile/my_product_details/product_page.dart'

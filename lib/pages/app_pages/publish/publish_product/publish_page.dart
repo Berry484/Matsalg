@@ -177,8 +177,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                   ),
                                   CupertinoDialogAction(
                                     onPressed: () {
-                                      Navigator.of(context)
-                                          .pop(); // Just close the dialog
+                                      Navigator.of(context).pop();
                                     },
                                     child: const Text(
                                       'Fortsett å redigere',
@@ -193,7 +192,6 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                         } else {
                           context.safePop();
                         }
-                        // context.safePop();
                       } on SocketException {
                         Toasts.showErrorToast(
                             context, 'Ingen internettforbindelse');
@@ -304,8 +302,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                   text: TextSpan(
                                                     children: [
                                                       TextSpan(
-                                                        text:
-                                                            'Legg til bilder', // First part of the text
+                                                        text: 'Legg til bilder',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -411,8 +408,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                   proxyDecorator: (child, index,
                                                       animation) {
                                                     return Transform.scale(
-                                                      scale:
-                                                          1.0, // Keep the scale of the item as is
+                                                      scale: 1.0,
                                                       child: child,
                                                     );
                                                   },
@@ -2365,10 +2361,10 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                         25.0, 40.0, 25.0, 30.0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
-                                                    await publishServices.uploadFood(
-                                                        context,
-                                                        (title, content) =>
-                                                            DialogUtils
+                                                    await publishServices
+                                                        .uploadFood(
+                                                            context,
+                                                            (title, content) => DialogUtils
                                                                 .showSimpleDialog(
                                                                     context:
                                                                         context,
@@ -2378,18 +2374,35 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                         content,
                                                                     buttonText:
                                                                         'Ok'),
-                                                        (message, error) => error
-                                                            ? Toasts.showErrorToast(
-                                                                context, message)
-                                                            : Toasts.showAccepted(
-                                                                context,
-                                                                message),
-                                                        (path, pop) => pop
-                                                            ? Navigator.of(
-                                                                    context)
-                                                                .pop()
-                                                            : context.pushNamed(
-                                                                path));
+                                                            (message, error) => error
+                                                                ? Toasts
+                                                                    .showErrorToast(
+                                                                        context,
+                                                                        message)
+                                                                : Toasts
+                                                                    .showAccepted(
+                                                                        context,
+                                                                        message),
+                                                            (path, pop,
+                                                                    imgPath) =>
+                                                                pop
+                                                                    ? Navigator.of(
+                                                                            context)
+                                                                        .pop()
+                                                                    : path ==
+                                                                            'BrukerLagtUtInfo'
+                                                                        ? context
+                                                                            .pushNamed(
+                                                                            'BrukerLagtUtInfo',
+                                                                            queryParameters: {
+                                                                              'picture': serializeParam(
+                                                                                imgPath,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            },
+                                                                          )
+                                                                        : context
+                                                                            .pushNamed(path));
                                                     safeSetState(() {});
                                                   },
                                                   text: 'Publiser',

@@ -10,6 +10,7 @@ import 'package:mat_salg/helper_components/widgets/product_list.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/hjem/user_ratings/ratings_widget.dart';
 import 'package:mat_salg/pages/app_pages/profile/profile/profile_services.dart';
+import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/user_service.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -44,13 +45,40 @@ class _ProfilWidgetState extends State<ProfilePage>
     _model = createModel(context, () => ProfileModel());
     profileServices = ProfileServices(model: _model);
 
-    profileServices.refreshPage(context);
+    refreshPage();
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
       initialIndex: 0,
     )..addListener(() => safeSetState(() {}));
     _scrollController1.addListener(_scrollListener);
+  }
+
+  Future<void> refreshPage() async {
+    try {
+      _model.isloading = true;
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        _model.isloading = false;
+        return;
+      } else {
+        if (!mounted) return;
+        ApiFoodService.getMyFoods(token, 0);
+        profileServices.getAllLikes(context, token);
+        userInfoService.fetchData(context);
+        await userInfoService.updateUserStats(context);
+        _model.isloading = false;
+        safeSetState(() {});
+      }
+    } on SocketException {
+      _model.isloading = false;
+      if (!mounted) return;
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      _model.isloading = false;
+      if (!mounted) return;
+      Toasts.showErrorToast(context, 'En feil oppstod');
+    }
   }
 
   void _scrollListener() async {
@@ -184,7 +212,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                   child: RefreshIndicator.adaptive(
                     color: FlutterFlowTheme.of(context).alternate,
                     onRefresh: () async {
-                      profileServices.refreshPage(context);
+                      refreshPage();
                       HapticFeedback.lightImpact();
                     },
                     child: SingleChildScrollView(
@@ -1121,8 +1149,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                           child: RefreshIndicator(
                                             onRefresh: () async {
                                               try {
-                                                profileServices
-                                                    .refreshPage(context);
+                                                refreshPage();
                                                 safeSetState(() {});
                                               } on SocketException {
                                                 if (!context.mounted) return;
@@ -1269,8 +1296,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                             child: RefreshIndicator(
                                               onRefresh: () async {
                                                 try {
-                                                  profileServices
-                                                      .refreshPage(context);
+                                                  refreshPage();
                                                   safeSetState(() {});
                                                 } on SocketException {
                                                   Toasts.showErrorToast(context,

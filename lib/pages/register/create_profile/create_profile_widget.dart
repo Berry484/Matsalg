@@ -926,7 +926,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // First rectangle
                           Container(
                             width: 30,
                             height: 5.5,
@@ -936,7 +935,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                             ),
                           ),
                           const SizedBox(width: 10), // Space between rectangles
-                          // Second rectangle
                           Container(
                             width: 30,
                             height: 5.5,
