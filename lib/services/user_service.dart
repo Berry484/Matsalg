@@ -490,6 +490,8 @@ class UserInfoService {
               decodedResponse['ratingTotalCount'] ?? 0;
           FFAppState().ratingAverageValue =
               decodedResponse['ratingAverageValue'] ?? 5.0;
+          if (!context.mounted) return;
+          updateUserStats(context);
         }
         if (response.statusCode == 401) {
           FFAppState().login = false;

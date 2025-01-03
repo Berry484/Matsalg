@@ -99,6 +99,7 @@ class _FolgereWidgetState extends State<FollowersWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme: IconThemeData(
                 color: FlutterFlowTheme.of(context).secondaryText),
+            scrolledUnderElevation: 0,
             automaticallyImplyLeading: true,
             leading: InkWell(
               splashColor: Colors.transparent,

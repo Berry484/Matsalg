@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mat_salg/pages/app_pages/profile/settings/terms&service/terms_widget.dart';
 import 'package:mat_salg/services/web_socket.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/pages/app_pages/profile/settings/choose_location/location_page.dart';
@@ -515,8 +516,28 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        Toasts.showErrorToast(
-                                            context, 'message');
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          barrierColor: const Color.fromARGB(
+                                              60, 17, 0, 0),
+                                          useRootNavigator: true,
+                                          context: context,
+                                          builder: (context) {
+                                            return GestureDetector(
+                                              onTap: () =>
+                                                  FocusScope.of(context)
+                                                      .unfocus(),
+                                              child: Padding(
+                                                padding:
+                                                    MediaQuery.viewInsetsOf(
+                                                        context),
+                                                child: const TermsWidget(),
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) => setState(() {}));
+                                        return;
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
