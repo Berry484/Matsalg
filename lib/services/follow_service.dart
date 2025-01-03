@@ -91,10 +91,9 @@ class FollowService {
           );
         }).toList();
 
-        return folgere; // Return populated UserInfo list
+        return folgere;
       } else {
-        // Handle any other response codes appropriately
-        return null; // Or throw an error
+        return null;
       }
     } on SocketException {
       throw const SocketException('');

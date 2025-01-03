@@ -1026,6 +1026,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     FFAppState().lastname = lastName;
                                     FFAppState().email = email;
                                     FFAppState().login = true;
+                                    FFAppState().lagtUt = false;
+                                    FFAppState().liked = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;
@@ -1172,6 +1174,8 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                     FFAppState().lastname = lastName;
                                     FFAppState().email = email;
                                     FFAppState().login = true;
+                                    FFAppState().lagtUt = false;
+                                    FFAppState().liked = false;
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;

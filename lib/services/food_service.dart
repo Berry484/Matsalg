@@ -443,7 +443,7 @@ class ApiFoodService {
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Gets food items from the users I am following----------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  static Future<List<Matvarer>?> getFolgerFood(String? token) async {
+  static Future<List<Matvarer>?> getFolgerFood(String? token, int page) async {
     try {
       final headers = {
         'Content-Type': 'application/json',
@@ -453,8 +453,7 @@ class ApiFoodService {
       // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse(
-                '$baseUrl/rrh/send/matvarer/folger?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}'),
+            Uri.parse('$baseUrl/rrh/send/matvarer/folger?size=44&page=$page'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds

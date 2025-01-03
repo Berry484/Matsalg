@@ -1831,17 +1831,16 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                               itemCount: _model.isloading
                                   ? 1
                                   : _model.end
-                                      ? _model.nyematvarer?.length ?? 1
-                                      : (_model.nyematvarer?.length ?? 1) + 1,
+                                      ? _model.nyematvarer?.length ?? 0
+                                      : (_model.nyematvarer?.length ?? 0) + 1,
                               itemBuilder: (context, index) {
                                 if (_model.isloading) {
-                                  ShimmerLoadingWidget();
+                                  return ShimmerLoadingWidget();
                                 }
 
                                 if (index < (_model.nyematvarer?.length ?? 0)) {
                                   final nyematvarer =
                                       _model.nyematvarer![index];
-
                                   return ProductList(
                                     matvare: nyematvarer,
                                     onTap: () async {

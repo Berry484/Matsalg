@@ -6,7 +6,7 @@ class UserInfo {
   final String uid;
   final String firstname;
   final String lastname;
-  final String profilepic;
+  final String? profilepic;
   bool following;
 
   UserInfo({

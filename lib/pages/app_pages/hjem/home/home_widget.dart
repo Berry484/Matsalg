@@ -31,8 +31,10 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
   late HomeModel _model;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final ScrollController _scrollController = ScrollController();
   final ScrollController _scrollController1 = ScrollController();
   bool _isLoading = false;
+  bool _isFollowerLoading = false;
 
   @override
   void initState() {
@@ -49,14 +51,15 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
       initialIndex: 0,
     )..addListener(() => safeSetState(() {
           if (_model.tabBarCurrentIndex == 1) {
-            getFolgerFoods();
+            getFolgerFoods(true);
           }
         }));
     FirebaseApi().initNotifications();
     fetchData();
     getAllFoods(true);
-    getFolgerFoods();
-    _scrollController1.addListener(_scrollListener);
+    getFolgerFoods(true);
+    _scrollController1.addListener(_scrollListener1);
+    _scrollController.addListener(_scrollListener);
   }
 
   Widget buildProfileOutline(BuildContext context, int opacity, Color baseColor,
@@ -155,6 +158,8 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           await fetchData();
         }
         if (refresh == true) {
+          _model.followerEnd = false;
+          _model.followerPage = 0;
           _model.matvarer = await ApiFoodService.getAllFoods(token, 0);
         } else {
           List<Matvarer>? nyeMatvarer =
@@ -192,7 +197,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> getFolgerFoods() async {
+  Future<void> getFolgerFoods(bool refresh) async {
     try {
       String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
@@ -202,7 +207,21 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
             FFAppState().brukerLng == 10.7522454) {
           await fetchData();
         }
-        _model.folgerMatvarer = await ApiFoodService.getFolgerFood(token);
+        if (refresh == true) {
+          _model.folgerMatvarer =
+              await ApiFoodService.getFolgerFood(token, _model.followerPage);
+        } else {
+          List<Matvarer>? nyeFollowerMatvarer =
+              await ApiFoodService.getFolgerFood(token, _model.page);
+
+          _model.folgerMatvarer ??= [];
+
+          if (nyeFollowerMatvarer != null && nyeFollowerMatvarer.isNotEmpty) {
+            _model.folgerMatvarer?.addAll(nyeFollowerMatvarer);
+          } else {
+            _model.end = true;
+          }
+        }
         if (mounted) {
           setState(() {
             if (_model.folgerMatvarer != null &&
@@ -273,7 +292,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     }
   }
 
-  void _scrollListener() async {
+  void _scrollListener1() async {
     if (_scrollController1.position.pixels >=
         _scrollController1.position.maxScrollExtent) {
       if (_isLoading || _model.end) return;
@@ -284,11 +303,24 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     }
   }
 
+  void _scrollListener() async {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent) {
+      if (_isFollowerLoading || _model.followerEnd) return;
+      _isFollowerLoading = true;
+      _model.followerPage += 1;
+      await getFolgerFoods(false);
+      _isFollowerLoading = false;
+    }
+  }
+
   @override
   void dispose() {
     _model.dispose();
     _scrollController1.removeListener(_scrollListener);
     _scrollController1.dispose();
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
 
     super.dispose();
   }
@@ -1211,9 +1243,10 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         FlutterFlowTheme.of(context).alternate,
                                     onRefresh: () async {
                                       HapticFeedback.lightImpact();
-                                      getFolgerFoods();
+                                      getFolgerFoods(true);
                                     },
                                     child: SingleChildScrollView(
+                                      controller: _scrollController,
                                       physics:
                                           const AlwaysScrollableScrollPhysics(),
                                       primary: false,
@@ -1419,7 +1452,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 .fromSTEB(5.0, 13.0, 5.0, 0.0),
                                             child: RefreshIndicator(
                                               onRefresh: () async {
-                                                await getFolgerFoods();
+                                                await getFolgerFoods(true);
                                                 setState(() {});
                                               },
                                               child: GridView.builder(
@@ -1440,85 +1473,54 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 scrollDirection: Axis.vertical,
                                                 itemCount: _model.isloading
                                                     ? 1
-                                                    : _model.folgerMatvarer
-                                                            ?.length ??
-                                                        0,
+                                                    : _model.followerEnd
+                                                        ? _model.folgerMatvarer
+                                                                ?.length ??
+                                                            0
+                                                        : (_model.folgerMatvarer
+                                                                    ?.length ??
+                                                                0) +
+                                                            1,
                                                 itemBuilder: (context, index) {
                                                   if (_model.folgermatLoading) {
-                                                    return Shimmer.fromColors(
-                                                      baseColor:
-                                                          Colors.grey[300]!,
-                                                      highlightColor:
-                                                          Colors.grey[100]!,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Container(
-                                                            margin:
-                                                                const EdgeInsets
-                                                                    .all(5.0),
-                                                            width: 200.0,
-                                                            height: 230.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  127,
-                                                                  255,
-                                                                  255,
-                                                                  255),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16.0), // Rounded corners
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 8.0),
-                                                          Container(
-                                                            width: 200,
-                                                            height: 15,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  127,
-                                                                  255,
-                                                                  255,
-                                                                  255),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10.0),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
+                                                    return ShimmerLoadingWidget();
                                                   }
-                                                  final folgerMat = _model
-                                                      .folgerMatvarer![index];
 
-                                                  return ProductList(
-                                                    matvare: folgerMat,
-                                                    onTap: () async {
-                                                      FocusScope.of(context)
-                                                          .requestFocus(
-                                                              FocusNode());
-                                                      context.pushNamed(
-                                                        'MatDetaljBondegard',
-                                                        queryParameters: {
-                                                          'matvare':
-                                                              serializeParam(
-                                                            folgerMat.toJson(),
-                                                            ParamType.JSON,
-                                                          ),
-                                                        },
-                                                      );
-                                                    },
-                                                  );
+                                                  if (index <
+                                                      (_model.folgerMatvarer
+                                                              ?.length ??
+                                                          0)) {
+                                                    final folgerMat = _model
+                                                        .folgerMatvarer![index];
+
+                                                    return ProductList(
+                                                      matvare: folgerMat,
+                                                      onTap: () async {
+                                                        FocusScope.of(context)
+                                                            .requestFocus(
+                                                                FocusNode());
+                                                        context.pushNamed(
+                                                          'MatDetaljBondegard',
+                                                          queryParameters: {
+                                                            'matvare':
+                                                                serializeParam(
+                                                              folgerMat
+                                                                  .toJson(),
+                                                              ParamType.JSON,
+                                                            ),
+                                                          },
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    if (_model.folgerMatvarer!
+                                                            .length <
+                                                        44) {
+                                                      return Container();
+                                                    } else {
+                                                      return ShimmerLoadingWidget();
+                                                    }
+                                                  }
                                                 },
                                               ),
                                             ),
