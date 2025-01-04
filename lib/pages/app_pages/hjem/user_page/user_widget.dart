@@ -193,7 +193,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
   void _scrollListener() async {
     if (_scrollController1.position.pixels >=
         _scrollController1.position.maxScrollExtent) {
-      if (_isLoading || _model.end) return;
+      if (_isLoading || _model.end || _model.empty) return;
       _isLoading = true;
       _model.page += 1;
       await getUserFood(false);
@@ -1349,7 +1349,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                           ),
                                         ],
                                       ),
-                                    if (_model.isLoading != true &&
+                                    if (_model.matisLoading != true &&
                                         _model.empty == true)
                                       SizedBox(
                                         width: MediaQuery.sizeOf(context).width,
@@ -1358,8 +1358,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                 550,
                                         child: Center(
                                           child: Column(
-                                            mainAxisSize: MainAxisSize
-                                                .min, // Use min to fit content
+                                            mainAxisSize: MainAxisSize.min,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             crossAxisAlignment:
