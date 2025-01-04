@@ -260,7 +260,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
   void _scrollListener() async {
     if (_scrollController1.position.pixels >=
         _scrollController1.position.maxScrollExtent) {
-      if (_moreIsLoading || _model.end) return;
+      if (_moreIsLoading || _model.end || _model.matvarer!.length < 44) return;
       _moreIsLoading = true;
       _model.page += 1;
       await getCategoryFood(false, true);

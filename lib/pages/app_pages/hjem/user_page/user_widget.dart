@@ -161,7 +161,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
               await ApiFoodService.getUserFood(token, widget.uid, _model.page);
         } else {
           List<Matvarer>? nyeMatvarer =
-              await ApiFoodService.getAllFoods(token, _model.page);
+              await ApiFoodService.getUserFood(token, widget.uid, _model.page);
 
           _model.matvarer ??= [];
 
@@ -193,7 +193,10 @@ class _BrukerPageWidgetState extends State<UserWidget>
   void _scrollListener() async {
     if (_scrollController1.position.pixels >=
         _scrollController1.position.maxScrollExtent) {
-      if (_isLoading || _model.end || _model.empty) return;
+      if (_isLoading ||
+          _model.end ||
+          _model.empty ||
+          _model.matvarer!.length < 44) return;
       _isLoading = true;
       _model.page += 1;
       await getUserFood(false);

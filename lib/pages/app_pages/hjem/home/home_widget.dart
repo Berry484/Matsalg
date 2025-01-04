@@ -295,7 +295,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
   void _scrollListener1() async {
     if (_scrollController1.position.pixels >=
         _scrollController1.position.maxScrollExtent) {
-      if (_isLoading || _model.end) return;
+      if (_isLoading || _model.end || _model.matvarer!.length < 44) return;
       _isLoading = true;
       _model.page += 1;
       await getAllFoods(false);
@@ -306,7 +306,9 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
   void _scrollListener() async {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent) {
-      if (_isFollowerLoading || _model.followerEnd) return;
+      if (_isFollowerLoading ||
+          _model.followerEnd ||
+          _model.folgerMatvarer!.length < 44) return;
       _isFollowerLoading = true;
       _model.followerPage += 1;
       await getFolgerFoods(false);

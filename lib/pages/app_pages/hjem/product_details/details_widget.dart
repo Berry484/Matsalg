@@ -142,7 +142,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
   void _scrollListener() async {
     if (_scrollController1.position.pixels >=
         _scrollController1.position.maxScrollExtent) {
-      if (_isLoading || _model.end) return;
+      if (_isLoading || _model.end || _model.nyematvarer!.length < 44) return;
       _isLoading = true;
       _model.page += 1;
       await getSimilarFoods(false);
