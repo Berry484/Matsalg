@@ -1428,14 +1428,13 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                   : _model.end
                                                       ? _model.matvarer
                                                               ?.length ??
-                                                          1
+                                                          0
                                                       : (_model.matvarer
                                                                   ?.length ??
-                                                              1) +
+                                                              0) +
                                                           1,
                                               itemBuilder: (context, index) {
-                                                if (_model.matisLoading ||
-                                                    _model.empty) {
+                                                if (_model.matisLoading) {
                                                   return ShimmerLoadingWidget();
                                                 }
                                                 if (index <

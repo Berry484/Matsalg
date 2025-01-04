@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
@@ -180,6 +181,8 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                             highlightColor: Colors.transparent,
                             onTap: () async {
                               try {
+                                if (FirebaseAuth.instance.currentUser!.uid ==
+                                    brukere.uid) return;
                                 if (widget.fromChat != true) {
                                   context.pushNamed(
                                     'BrukerPage',
@@ -341,7 +344,10 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                                             ),
                                           ],
                                         ),
-                                        if (brukere.following == true)
+                                        if (brukere.following == true &&
+                                            FirebaseAuth.instance.currentUser!
+                                                    .uid !=
+                                                brukere.uid)
                                           FFButtonWidget(
                                             onPressed: () async {
                                               try {
@@ -400,7 +406,10 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                                                   BorderRadius.circular(8),
                                             ),
                                           ),
-                                        if (brukere.following != true)
+                                        if (brukere.following != true &&
+                                            FirebaseAuth.instance.currentUser!
+                                                    .uid !=
+                                                brukere.uid)
                                           FFButtonWidget(
                                             onPressed: () async {
                                               try {
