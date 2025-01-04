@@ -49,7 +49,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
     super.initState();
     filterOptions = FilterOptions(
         distance: null,
-        priceRange: RangeValues(0, 1000),
+        priceRange: RangeValues(0, 800),
         selectedCategories: [widget.kategori ?? '']);
     _model = createModel(context, () => CategoryModel());
     getCategoryFood(true, false);
@@ -247,7 +247,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
       filterCount += 1;
     }
     if (filterOptions.priceRange.start != 0 ||
-        filterOptions.priceRange.end != 1000) {
+        filterOptions.priceRange.end != 800) {
       filterCount += 1;
     }
     if (filterOptions.selectedCategories.isNotEmpty) {
@@ -690,7 +690,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                               0,
                                               0,
                                               0,
-                                              63.0,
+                                              0,
                                             ),
                                             gridDelegate:
                                                 const SliverGridDelegateWithFixedCrossAxisCount(
@@ -754,7 +754,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                 ),
                             ],
                           ),
-                        ].addToEnd(const SizedBox(height: 100)),
+                        ],
                       ),
                     ),
                   ),

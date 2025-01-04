@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
+import 'package:mat_salg/helper_components/widgets/product_list.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/models/user.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
@@ -19,7 +19,6 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -1354,51 +1353,55 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                       ),
                                     if (_model.matisLoading != true &&
                                         _model.empty == true)
-                                      SizedBox(
-                                        width: MediaQuery.sizeOf(context).width,
-                                        height:
-                                            MediaQuery.sizeOf(context).height -
-                                                550,
-                                        child: Center(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                CupertinoIcons
-                                                    .camera_on_rectangle,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                size: 56,
-                                              ),
-                                              const SizedBox(height: 16),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Ingen annonser ennå',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyLarge
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          fontSize: 19,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                  ),
-                                                ],
-                                              )
-                                            ],
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(0, 65, 0, 0),
+                                        child: SizedBox(
+                                          width:
+                                              MediaQuery.sizeOf(context).width,
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  CupertinoIcons
+                                                      .camera_on_rectangle,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                  size: 56,
+                                                ),
+                                                const SizedBox(height: 16),
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Ingen annonser ennå',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: 19,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -1406,7 +1409,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                       if (_model.tabBarCurrentIndex == 0)
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5, 0, 5, 70),
+                                              .fromSTEB(5, 0, 5, 0),
                                           child: RefreshIndicator(
                                             onRefresh: () async {},
                                             child: GridView.builder(
@@ -1415,7 +1418,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                 0,
                                                 0,
                                                 0,
-                                                70,
+                                                0,
                                               ),
                                               gridDelegate:
                                                   const SliverGridDelegateWithFixedCrossAxisCount(
@@ -1444,325 +1447,52 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                         0)) {
                                                   final matvarer =
                                                       _model.matvarer![index];
-
-                                                  return Stack(
-                                                    children: [
-                                                      Align(
-                                                        alignment:
-                                                            const AlignmentDirectional(
-                                                                0, -1),
-                                                        child: InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            try {
-                                                              if (widget
-                                                                      .fromChat !=
-                                                                  true) {
-                                                                context
-                                                                    .pushNamed(
-                                                                  'MatDetaljBondegard',
-                                                                  queryParameters: {
-                                                                    'matvare':
-                                                                        serializeParam(
-                                                                      matvarer
-                                                                          .toJson(), // Convert to JSON before passing
-                                                                      ParamType
-                                                                          .JSON,
-                                                                    ),
-                                                                  },
-                                                                );
-                                                              } else {
-                                                                context
-                                                                    .pushNamed(
-                                                                  'MatDetaljBondegard2',
-                                                                  queryParameters: {
-                                                                    'matvare':
-                                                                        serializeParam(
-                                                                      matvarer
-                                                                          .toJson(), // Convert to JSON before passing
-                                                                      ParamType
-                                                                          .JSON,
-                                                                    ),
-                                                                    'fromChat':
-                                                                        serializeParam(
-                                                                      true,
-                                                                      ParamType
-                                                                          .bool,
-                                                                    ),
-                                                                  },
-                                                                );
-                                                              }
-                                                            } catch (e) {
-                                                              Toasts.showErrorToast(
-                                                                  context,
-                                                                  'En uforventet feil oppstod');
-                                                              logger.d(
-                                                                  'Error navigating page');
-                                                            }
-                                                          },
-                                                          child: Material(
-                                                            color: Colors
-                                                                .transparent,
-                                                            elevation: 0,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16),
-                                                            ),
-                                                            child: Container(
-                                                              width: 235,
-                                                              height: 290,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            16),
-                                                                border:
-                                                                    Border.all(
-                                                                  color: Colors
-                                                                      .transparent,
+                                                  return ProductList(
+                                                      matvare: matvarer,
+                                                      onTap: () async {
+                                                        try {
+                                                          if (widget.fromChat !=
+                                                              true) {
+                                                            context.pushNamed(
+                                                              'MatDetaljBondegard',
+                                                              queryParameters: {
+                                                                'matvare':
+                                                                    serializeParam(
+                                                                  matvarer
+                                                                      .toJson(), // Convert to JSON before passing
+                                                                  ParamType
+                                                                      .JSON,
                                                                 ),
-                                                              ),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .min,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Align(
-                                                                    alignment:
-                                                                        const AlignmentDirectional(
-                                                                            0,
-                                                                            0),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          3,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                      child:
-                                                                          ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(17),
-                                                                        child: Image
-                                                                            .network(
-                                                                          '${ApiConstants.baseUrl}${matvarer.imgUrls![0]}',
-                                                                          width:
-                                                                              200,
-                                                                          height:
-                                                                              229,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                          errorBuilder: (BuildContext context,
-                                                                              Object error,
-                                                                              StackTrace? stackTrace) {
-                                                                            return Image.asset(
-                                                                              'assets/images/error_image.jpg',
-                                                                              width: 200,
-                                                                              height: 229,
-                                                                              fit: BoxFit.cover,
-                                                                            );
-                                                                          },
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            5,
-                                                                            0,
-                                                                            5,
-                                                                            0),
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      children: [
-                                                                        Align(
-                                                                          alignment: const AlignmentDirectional(
-                                                                              -1,
-                                                                              0),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                7,
-                                                                                0,
-                                                                                0,
-                                                                                0),
-                                                                            child:
-                                                                                AutoSizeText(
-                                                                              matvarer.name ?? '',
-                                                                              textAlign: TextAlign.start,
-                                                                              minFontSize: 11,
-                                                                              style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    fontSize: 14,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            4),
-                                                                    child: Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .min,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .end,
-                                                                      children: [
-                                                                        Flexible(
-                                                                          child:
-                                                                              Align(
-                                                                            alignment:
-                                                                                const AlignmentDirectional(0, 0),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                                                                              child: Row(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                crossAxisAlignment: CrossAxisAlignment.end,
-                                                                                children: [
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                                                                    child: Row(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      children: [
-                                                                                        Padding(
-                                                                                          padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
-                                                                                          child: Text(
-                                                                                            '${matvarer.price} Kr',
-                                                                                            textAlign: TextAlign.end,
-                                                                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Nunito',
-                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 14,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                ),
-                                                                                          ),
-                                                                                        ),
-                                                                                        if (matvarer.kg == true)
-                                                                                          Text(
-                                                                                            '/kg',
-                                                                                            textAlign: TextAlign.end,
-                                                                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                                                                                  fontFamily: 'Nunito',
-                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  fontSize: 14,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                ),
-                                                                                          ),
-                                                                                      ],
-                                                                                    ),
-                                                                                  ),
-                                                                                  Row(
-                                                                                    mainAxisSize: MainAxisSize.max,
-                                                                                    children: [
-                                                                                      Padding(
-                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
-                                                                                        child: Text(
-                                                                                          (CalculateDistance.calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvarer.lat ?? 0.0, matvarer.lng ?? 0.0) < 1) ? '<1 Km' : '${CalculateDistance.calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvarer.lat ?? 0.0, matvarer.lng ?? 0.0).toStringAsFixed(0)} Km',
-                                                                                          textAlign: TextAlign.start,
-                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                fontFamily: 'Nunito',
-                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                fontSize: 14,
-                                                                                                letterSpacing: 0.0,
-                                                                                                fontWeight: FontWeight.bold,
-                                                                                              ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      if (matvarer.kjopt ==
-                                                          true)
-                                                        Positioned(
-                                                          top:
-                                                              15, // Slight offset from the top edge
-                                                          right:
-                                                              -29, // Fine-tune the positioning (shift it to the right edge)
-                                                          child:
-                                                              Transform.rotate(
-                                                            angle:
-                                                                0.600, // 45-degree angle (approx.)
-                                                            child: Container(
-                                                              width:
-                                                                  140, // Adjusted width to avoid overflow after rotation
-                                                              height: 23,
-                                                              color: Colors
-                                                                  .redAccent,
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: const Text(
-                                                                'Utsolgt',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      14, // Font size adjusted to fit the banner
+                                                              },
+                                                            );
+                                                          } else {
+                                                            context.pushNamed(
+                                                              'MatDetaljBondegard2',
+                                                              queryParameters: {
+                                                                'matvare':
+                                                                    serializeParam(
+                                                                  matvarer
+                                                                      .toJson(), // Convert to JSON before passing
+                                                                  ParamType
+                                                                      .JSON,
                                                                 ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                    ],
-                                                  );
+                                                                'fromChat':
+                                                                    serializeParam(
+                                                                  true,
+                                                                  ParamType
+                                                                      .bool,
+                                                                ),
+                                                              },
+                                                            );
+                                                          }
+                                                        } catch (e) {
+                                                          Toasts.showErrorToast(
+                                                              context,
+                                                              'En uforventet feil oppstod');
+                                                          logger.d(
+                                                              'Error navigating page');
+                                                        }
+                                                      });
                                                 } else {
                                                   if (_model.matvarer!.length <
                                                       44) {

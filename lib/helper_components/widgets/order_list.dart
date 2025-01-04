@@ -93,6 +93,7 @@ class OrderList extends StatelessWidget {
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(6),
                                       child: CachedNetworkImage(
+                                        fadeInDuration: Duration.zero,
                                         imageUrl:
                                             '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
                                         width: 56,
@@ -133,6 +134,7 @@ class OrderList extends StatelessWidget {
                                   ),
                                   child: ClipOval(
                                       child: CachedNetworkImage(
+                                    fadeInDuration: Duration.zero,
                                     imageUrl: ordreInfo.kjopte == true
                                         ? '${ApiConstants.baseUrl}${ordreInfo.foodDetails.profilepic}'
                                         : '${ApiConstants.baseUrl}${ordreInfo.kjoperProfilePic}',

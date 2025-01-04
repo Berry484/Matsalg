@@ -624,9 +624,13 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                     BorderRadius
                                                                         .circular(
                                                                             0.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
+                                                                child:
+                                                                    CachedNetworkImage(
+                                                                  fadeInDuration:
+                                                                      Duration
+                                                                          .zero,
+                                                                  imageUrl:
+                                                                      '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                                   width: double
                                                                       .infinity,
                                                                   height: 485,
@@ -636,23 +640,35 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                       const Alignment(
                                                                           0.0,
                                                                           0.0),
-                                                                  errorBuilder: (BuildContext
-                                                                          context,
-                                                                      Object
-                                                                          error,
-                                                                      StackTrace?
-                                                                          stackTrace) {
-                                                                    return Image
-                                                                        .asset(
-                                                                      'assets/images/error_image.jpg',
+                                                                  imageBuilder:
+                                                                      (context,
+                                                                          imageProvider) {
+                                                                    return Container(
                                                                       width: double
                                                                           .infinity,
                                                                       height:
-                                                                          485.0,
-                                                                      fit: BoxFit
-                                                                          .cover,
+                                                                          485,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        image:
+                                                                            DecorationImage(
+                                                                          image:
+                                                                              imageProvider,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      ),
                                                                     );
                                                                   },
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Image
+                                                                          .asset(
+                                                                    'assets/images/error_image.jpg',
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ],
@@ -672,36 +688,51 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                       BorderRadius
                                                                           .circular(
                                                                               0.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
+                                                                  child:
+                                                                      CachedNetworkImage(
+                                                                    fadeInDuration:
+                                                                        Duration
+                                                                            .zero,
+                                                                    imageUrl:
+                                                                        '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
                                                                     width: double
                                                                         .infinity,
-                                                                    height:
-                                                                        485.0,
+                                                                    height: 485,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
                                                                         const Alignment(
                                                                             0.0,
                                                                             0.0),
-                                                                    errorBuilder: (BuildContext
-                                                                            context,
-                                                                        Object
-                                                                            error,
-                                                                        StackTrace?
-                                                                            stackTrace) {
-                                                                      return Image
-                                                                          .asset(
-                                                                        'assets/images/error_image.jpg',
+                                                                    imageBuilder:
+                                                                        (context,
+                                                                            imageProvider) {
+                                                                      return Container(
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            485.0,
-                                                                        fit: BoxFit
-                                                                            .cover,
+                                                                            485,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          image:
+                                                                              DecorationImage(
+                                                                            image:
+                                                                                imageProvider,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          ),
+                                                                        ),
                                                                       );
                                                                     },
+                                                                    errorWidget: (context,
+                                                                            url,
+                                                                            error) =>
+                                                                        Image
+                                                                            .asset(
+                                                                      'assets/images/error_image.jpg',
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],
@@ -721,36 +752,51 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                       BorderRadius
                                                                           .circular(
                                                                               0.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
+                                                                  child:
+                                                                      CachedNetworkImage(
+                                                                    fadeInDuration:
+                                                                        Duration
+                                                                            .zero,
+                                                                    imageUrl:
+                                                                        '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
                                                                     width: double
                                                                         .infinity,
-                                                                    height:
-                                                                        485.0,
+                                                                    height: 485,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
                                                                         const Alignment(
                                                                             0.0,
                                                                             0.0),
-                                                                    errorBuilder: (BuildContext
-                                                                            context,
-                                                                        Object
-                                                                            error,
-                                                                        StackTrace?
-                                                                            stackTrace) {
-                                                                      return Image
-                                                                          .asset(
-                                                                        'assets/images/error_image.jpg',
+                                                                    imageBuilder:
+                                                                        (context,
+                                                                            imageProvider) {
+                                                                      return Container(
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            485.0,
-                                                                        fit: BoxFit
-                                                                            .cover,
+                                                                            485,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          image:
+                                                                              DecorationImage(
+                                                                            image:
+                                                                                imageProvider,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          ),
+                                                                        ),
                                                                       );
                                                                     },
+                                                                    errorWidget: (context,
+                                                                            url,
+                                                                            error) =>
+                                                                        Image
+                                                                            .asset(
+                                                                      'assets/images/error_image.jpg',
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],
@@ -768,36 +814,51 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                       BorderRadius
                                                                           .circular(
                                                                               0.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
+                                                                  child:
+                                                                      CachedNetworkImage(
+                                                                    fadeInDuration:
+                                                                        Duration
+                                                                            .zero,
+                                                                    imageUrl:
+                                                                        '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
                                                                     width: double
                                                                         .infinity,
-                                                                    height:
-                                                                        485.0,
+                                                                    height: 485,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
                                                                         const Alignment(
                                                                             0.0,
                                                                             0.0),
-                                                                    errorBuilder: (BuildContext
-                                                                            context,
-                                                                        Object
-                                                                            error,
-                                                                        StackTrace?
-                                                                            stackTrace) {
-                                                                      return Image
-                                                                          .asset(
-                                                                        'assets/images/error_image.jpg',
+                                                                    imageBuilder:
+                                                                        (context,
+                                                                            imageProvider) {
+                                                                      return Container(
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            485.0,
-                                                                        fit: BoxFit
-                                                                            .cover,
+                                                                            485,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          image:
+                                                                              DecorationImage(
+                                                                            image:
+                                                                                imageProvider,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          ),
+                                                                        ),
                                                                       );
                                                                     },
+                                                                    errorWidget: (context,
+                                                                            url,
+                                                                            error) =>
+                                                                        Image
+                                                                            .asset(
+                                                                      'assets/images/error_image.jpg',
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],
@@ -817,36 +878,51 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                       BorderRadius
                                                                           .circular(
                                                                               0.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
+                                                                  child:
+                                                                      CachedNetworkImage(
+                                                                    fadeInDuration:
+                                                                        Duration
+                                                                            .zero,
+                                                                    imageUrl:
+                                                                        '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
                                                                     width: double
                                                                         .infinity,
-                                                                    height:
-                                                                        485.0,
+                                                                    height: 485,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     alignment:
                                                                         const Alignment(
                                                                             0.0,
                                                                             0.0),
-                                                                    errorBuilder: (BuildContext
-                                                                            context,
-                                                                        Object
-                                                                            error,
-                                                                        StackTrace?
-                                                                            stackTrace) {
-                                                                      return Image
-                                                                          .asset(
-                                                                        'assets/images/error_image.jpg',
+                                                                    imageBuilder:
+                                                                        (context,
+                                                                            imageProvider) {
+                                                                      return Container(
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            485.0,
-                                                                        fit: BoxFit
-                                                                            .cover,
+                                                                            485,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          image:
+                                                                              DecorationImage(
+                                                                            image:
+                                                                                imageProvider,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          ),
+                                                                        ),
                                                                       );
                                                                     },
+                                                                    errorWidget: (context,
+                                                                            url,
+                                                                            error) =>
+                                                                        Image
+                                                                            .asset(
+                                                                      'assets/images/error_image.jpg',
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],

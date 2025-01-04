@@ -48,7 +48,7 @@ class _SorterWidgetState extends State<FilterWidget> {
   bool _isEmpty() {
     if (localFilterOptions.distance == null &&
         (localFilterOptions.priceRange.start == 0 &&
-            localFilterOptions.priceRange.end == 1000) &&
+            localFilterOptions.priceRange.end == 800) &&
         localFilterOptions.selectedCategories.isEmpty) {
       return true;
     }
@@ -182,12 +182,13 @@ class _SorterWidgetState extends State<FilterWidget> {
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
                                       safeSetState(() {
+                                        resultCount();
                                         _isEmpty();
                                         localFilterOptions.selectedCategories =
                                             [];
                                         localFilterOptions.distance = null;
                                         localFilterOptions.priceRange =
-                                            RangeValues(0, 1000);
+                                            RangeValues(0, 800);
                                       });
                                     },
                                     child: Text(
@@ -819,20 +820,20 @@ class _SorterWidgetState extends State<FilterWidget> {
                           RangeSlider(
                             values: localFilterOptions.priceRange,
                             min: 0,
-                            max: 1000,
+                            max: 800,
                             activeColor: FlutterFlowTheme.of(context).alternate,
                             inactiveColor: Colors.black12,
                             divisions: 100,
                             onChanged: (RangeValues values) {
                               double start = values.start;
                               double end = values.end;
-                              if (start < 1000) {
-                                start = (start / 25).roundToDouble() * 25;
+                              if (start < 800) {
+                                start = (start / 10).roundToDouble() * 10;
                               }
-                              if (end < 1000) {
-                                end = (end / 25).roundToDouble() * 25;
+                              if (end < 800) {
+                                end = (end / 10).roundToDouble() * 10;
                               }
-                              if (end - start >= 25) {
+                              if (end - start >= 10) {
                                 if (start !=
                                         localFilterOptions.priceRange.start ||
                                     end != localFilterOptions.priceRange.end) {
@@ -884,7 +885,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                                         TextSpan(
                                           text: localFilterOptions
                                                       .priceRange.end ==
-                                                  1000
+                                                  800
                                               ? 'Max: ' // Regular text for "Max:"
                                               : "Max: ${_model.formatter.format(localFilterOptions.priceRange.end.toInt())} Kr", // Regular formatted number
                                           style: FlutterFlowTheme.of(context)
@@ -900,7 +901,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                                               ),
                                         ),
                                         if (localFilterOptions.priceRange.end ==
-                                            1000) // Apply larger font only for infinity symbol
+                                            800) // Apply larger font only for infinity symbol
                                           TextSpan(
                                             text: '∞',
                                             style: FlutterFlowTheme.of(context)
@@ -1030,6 +1031,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                                                     Colors.transparent,
                                                 onTap: () async {
                                                   safeSetState(() {
+                                                    resultCount();
                                                     _isEmpty();
                                                     localFilterOptions
                                                         .selectedCategories = [];
@@ -1037,7 +1039,7 @@ class _SorterWidgetState extends State<FilterWidget> {
                                                         .distance = null;
                                                     localFilterOptions
                                                             .priceRange =
-                                                        RangeValues(0, 1000);
+                                                        RangeValues(0, 800);
                                                   });
                                                 },
                                                 child: Text(

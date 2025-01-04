@@ -366,7 +366,7 @@ class ApiFoodService {
       }
 
       // Handle maxPrice default
-      if (maxPrice == 1000) {
+      if (maxPrice == 800) {
         maxPrice = 100000;
       }
       maxDistance ??= 100000;
@@ -412,7 +412,7 @@ class ApiFoodService {
       }
 
       // Handle maxPrice default
-      if (maxPrice == 1000) {
+      if (maxPrice == 800) {
         maxPrice = 100000;
       }
       maxDistance ??= 100000;

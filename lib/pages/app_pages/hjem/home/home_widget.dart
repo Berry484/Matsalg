@@ -466,7 +466,6 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     onSubmitted: (value) {
                                       if (_model
                                           .textController.text.isNotEmpty) {
-                                        // When the search button is pressed
                                         FocusScope.of(context)
                                             .requestFocus(FocusNode());
                                         context.pushNamed(
@@ -1307,8 +1306,6 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             SizedBox(
                                               width: MediaQuery.sizeOf(context)
                                                   .width,
-                                              height: MediaQuery.sizeOf(context)
-                                                  .height,
                                               child: Align(
                                                 alignment:
                                                     const AlignmentDirectional(
