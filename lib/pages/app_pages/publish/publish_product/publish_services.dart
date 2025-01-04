@@ -137,7 +137,6 @@ class PublishServices {
 //---------------------------------------------------------------------------------------------------------------
   Future<void> selectImages(BuildContext context) async {
     try {
-      // Show the Cupertino Action Sheet for choosing Camera or Gallery
       final String? choice = await showCupertinoModalPopup<String>(
         context: context,
         builder: (BuildContext context) {
@@ -201,9 +200,9 @@ class PublishServices {
       if (choice == 'camera') {
         pickedImage = await picker.pickImage(
           source: ImageSource.camera,
-          imageQuality: 80,
-          maxWidth: 1200.00,
-          maxHeight: 1200.00,
+          imageQuality: 75,
+          maxWidth: 750.00,
+          maxHeight: 1000.00,
         );
         if (pickedImage != null) {
           pickedImages = [pickedImage];
@@ -211,17 +210,17 @@ class PublishServices {
       } else if (choice == 'gallery') {
         if (placeholderCount >= 2) {
           pickedImages = await picker.pickMultiImage(
-            imageQuality: 80,
             limit: placeholderCount,
-            maxWidth: 1200.00,
-            maxHeight: 1200.00,
+            imageQuality: 75,
+            maxWidth: 750.00,
+            maxHeight: 1000.00,
           );
         } else {
           pickedImage = await picker.pickImage(
             source: ImageSource.gallery,
-            imageQuality: 80,
-            maxWidth: 1200.00,
-            maxHeight: 1200.00,
+            imageQuality: 75,
+            maxWidth: 750.00,
+            maxHeight: 1000.00,
           );
 
           if (pickedImage != null) {

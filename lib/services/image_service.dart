@@ -49,7 +49,6 @@ class ApiMultiplePics {
         } else {}
       }
 
-      // Send the request and wait for the response
       var response = await request.send();
 
       var responseString = await http.Response.fromStream(response);

@@ -49,6 +49,7 @@ dependencies:
   go_router: ^14.6.2
   google_fonts: ^6.2.1
   image_picker: ^1.1.2
+  image: ^4.3.0
   json_path: ^0.7.4
   latlong2: ^0.9.1
   lottie: ^3.2.0
