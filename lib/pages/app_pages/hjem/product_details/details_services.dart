@@ -94,7 +94,6 @@ class DetailsServices {
 
       model.messageIsLoading = false;
       if (serializedConversation != null) {
-        Navigator.pop(context);
         context.pushNamed(
           'message',
           queryParameters: {

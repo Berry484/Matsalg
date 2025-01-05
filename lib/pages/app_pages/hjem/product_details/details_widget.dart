@@ -439,6 +439,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                 actions: <Widget>[
                                                   CupertinoActionSheetAction(
                                                     onPressed: () async {
+                                                      Navigator.pop(context);
                                                       await detailsServices
                                                           .enterConversation(
                                                               context);
