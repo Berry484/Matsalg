@@ -112,13 +112,29 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                               children: [
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(14),
-                                      child: Image.network(
-                                        'https://picsum.photos/seed/820/600',
-                                        width: double.infinity,
-                                        height: 420,
+                                      child: Image.asset(
+                                        'assets/images/posted_product.png',
+                                        width: 290,
+                                        height: 400,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(14),
+                                      child: Image.asset(
+                                        'assets/images/bid.png',
+                                        width: 290,
+                                        height: 400,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -140,28 +156,18 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                                 ),
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(14),
-                                      child: Image.network(
-                                        'https://picsum.photos/seed/820/600',
-                                        width: double.infinity,
-                                        height: 420,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(14),
-                                      child: Image.network(
-                                        'https://picsum.photos/seed/820/600',
-                                        width: double.infinity,
-                                        height: 420,
-                                        fit: BoxFit.cover,
+                                      child: Opacity(
+                                        opacity: 0.95,
+                                        child: Image.asset(
+                                          'assets/images/money.png',
+                                          width: 310,
+                                          height: 220,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                   ],
