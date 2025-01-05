@@ -449,24 +449,18 @@ class ApiFoodService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
-      // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse('$baseUrl/rrh/send/matvarer/folger?size=44&page=$page'),
+            Uri.parse(
+                '$baseUrl/rrh/send/matvarer/following-foods?size=44&page=$page'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
-      // Check if the response is successful (status code 200)
+          .timeout(const Duration(seconds: 5));
       if (response.statusCode == 200) {
-        // Decode the JSON response
-
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
-        // Convert the JSON into a list of Matvarer objects
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {
-        // Handle unsuccessful response
         return null;
       }
     } on SocketException {
