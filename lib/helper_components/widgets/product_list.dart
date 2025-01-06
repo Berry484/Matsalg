@@ -74,9 +74,14 @@ class ProductList extends StatelessWidget {
                                 );
                               },
                               fadeInDuration: Duration(milliseconds: 300),
-                              errorWidget: (context, url, error) => SizedBox(
+                              placeholder: (context, url) => Container(
+                                  width: 200,
+                                  height: 229,
+                                  color: Colors.grey[50]),
+                              errorWidget: (context, url, error) => Container(
                                 width: 200,
                                 height: 229,
+                                color: Colors.grey,
                                 child: Center(
                                   child: Icon(Icons.error, color: Colors.white),
                                 ),

@@ -120,9 +120,9 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color tertiary = const Color(0xFFF5F5F5);
 
   late Color price = const Color.fromARGB(255, 192, 231, 192);
-  late Color alternate = const Color(0xFF007AFF);
-  late Color unSelected = const Color.fromARGB(156, 0, 123, 255);
-  // late Color alternate = const Color.fromARGB(255, 0, 112, 110);
+  //late Color alternate = const Color(0xFF007AFF);
+  late Color alternate = const Color.fromARGB(255, 0, 112, 110);
+  late Color unSelected = const Color.fromARGB(182, 0, 112, 110);
 
   late Color primaryText = const Color.fromARGB(255, 8, 8, 8);
   late Color secondaryText = const Color(0xAD57636C);

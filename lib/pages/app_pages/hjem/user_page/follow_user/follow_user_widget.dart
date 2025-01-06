@@ -239,7 +239,7 @@ class _FolgBrukerWidgetState extends State<FollowUserWidget> {
                                       Switch.adaptive(
                                         value: _model.switchValue!,
                                         onChanged: (newValue) async {
-                                          HapticFeedback.lightImpact();
+                                          HapticFeedback.selectionClick();
                                           safeSetState(() =>
                                               _model.switchValue = newValue);
                                           if (newValue == false) {

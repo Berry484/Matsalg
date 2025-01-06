@@ -125,7 +125,7 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                               0.6, // Max width of 60% of the screen width
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE9E9EB),
+                          color: Colors.grey[100],
                           borderRadius: BorderRadius.circular(18),
                         ),
                         child: Padding(
@@ -150,6 +150,7 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                           child: Image.asset(
                             'assets/images/messageTail.png',
                             width: 8,
+                            color: Colors.grey[100],
                             height: 8,
                             fit: BoxFit.cover,
                           ),

@@ -285,7 +285,7 @@ class _VelgPosWidgetState extends State<LocationPage> {
                                         if (location !=
                                             const LatLng(0.0, 0.0)) {
                                           if (!context.mounted) return;
-                                          HapticFeedback.heavyImpact();
+                                          HapticFeedback.selectionClick();
                                           FocusScope.of(context).unfocus();
                                           Navigator.pop(context, location);
                                         }
@@ -347,8 +347,8 @@ class _VelgPosWidgetState extends State<LocationPage> {
                                       20.0, 0.0, 20.0, 55.0),
                                   child: FFButtonWidget(
                                     onPressed: () {
-                                      HapticFeedback.heavyImpact();
-                                      // Unfocus the text field to ensure the keyboard is dismissed
+                                      HapticFeedback.selectionClick();
+
                                       FocusScope.of(context).unfocus();
                                       LatLng? location;
                                       if (_model.currentUserLocationValue !=

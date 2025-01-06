@@ -145,7 +145,7 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                   child: RefreshIndicator.adaptive(
                     color: FlutterFlowTheme.of(context).alternate,
                     onRefresh: () async {
-                      HapticFeedback.lightImpact();
+                      HapticFeedback.selectionClick();
                       listFolgere();
                     },
                     child: ListView.builder(
@@ -351,7 +351,7 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                                           FFButtonWidget(
                                             onPressed: () async {
                                               try {
-                                                HapticFeedback.lightImpact();
+                                                HapticFeedback.selectionClick();
                                                 brukere.following = false;
                                                 safeSetState(() {});
                                                 String? token =
@@ -413,7 +413,7 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                                           FFButtonWidget(
                                             onPressed: () async {
                                               try {
-                                                HapticFeedback.mediumImpact();
+                                                HapticFeedback.selectionClick();
                                                 brukere.following = true;
                                                 safeSetState(() {});
                                                 String? token =

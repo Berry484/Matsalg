@@ -496,7 +496,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
 
                                 if (response == null) {
                                   _model.isloading = false;
-                                  HapticFeedback.mediumImpact();
+                                  HapticFeedback.selectionClick();
                                   if (!context.mounted) return;
                                   feilInnlogging(
                                       context, 'Feil innlogging eller passord');
@@ -704,7 +704,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
 
                                 if (response == null) {
                                   _model.isloading = false;
-                                  HapticFeedback.mediumImpact();
+                                  HapticFeedback.selectionClick();
                                   if (!context.mounted) return;
                                   feilInnlogging(
                                       context, 'Feil innlogging eller passord');

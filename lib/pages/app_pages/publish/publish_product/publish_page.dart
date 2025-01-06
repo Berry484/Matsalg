@@ -1656,7 +1656,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
 
                                                                               _model.antallStkTextController.text = _model.selectedValue.toStringAsFixed(0);
 
-                                                                              HapticFeedback.lightImpact();
+                                                                              HapticFeedback.selectionClick();
                                                                             });
                                                                           },
                                                                           children: getPickerValues()
@@ -2428,7 +2428,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondary,
-                                                          fontSize: 17.0,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w800,

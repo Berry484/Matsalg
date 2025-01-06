@@ -342,7 +342,7 @@ class _VelgPosisjonWidgetState extends State<LocationPage> {
                                                   'posisjonstjenester er skrudd av i innstillinger');
                                               return;
                                             } else {
-                                              HapticFeedback.mediumImpact();
+                                              HapticFeedback.selectionClick();
                                               if (widget.where == 'velg') {
                                                 context.goNamed('Hjem');
                                               } else {
@@ -428,7 +428,7 @@ class _VelgPosisjonWidgetState extends State<LocationPage> {
                                               }
                                             }
                                             if (!context.mounted) return;
-                                            HapticFeedback.mediumImpact();
+                                            HapticFeedback.selectionClick();
                                             if (widget.where == 'velg') {
                                               context.goNamed('Hjem');
                                             } else {

@@ -543,7 +543,7 @@ class _ReAuthenticateWidgetState extends State<ForgotPasswordWidget> {
                                     safeSetState(() {
                                       _model.isloading = false;
                                     });
-                                    HapticFeedback.mediumImpact();
+                                    HapticFeedback.selectionClick();
                                     if (!context.mounted) return;
                                     Toasts.showErrorToast(context,
                                         'Det finnes ingen brukere med dette telefonnummeret');
@@ -579,7 +579,7 @@ class _ReAuthenticateWidgetState extends State<ForgotPasswordWidget> {
                                           } else {
                                             safeSetState(() {
                                               _model.isloading = false;
-                                              HapticFeedback.mediumImpact();
+                                              HapticFeedback.selectionClick();
                                               Toasts.showErrorToast(context,
                                                   'En feil oppstod. Ta kontakt \nhvis problemet vedvarer');
                                             });
@@ -606,7 +606,7 @@ class _ReAuthenticateWidgetState extends State<ForgotPasswordWidget> {
                                     } else {
                                       safeSetState(() {
                                         _model.isloading = false;
-                                        HapticFeedback.mediumImpact();
+                                        HapticFeedback.selectionClick();
                                         Toasts.showErrorToast(context,
                                             'Vent minst 2 minutter før \ndu ber om ny kode');
                                       });

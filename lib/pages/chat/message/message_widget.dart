@@ -67,7 +67,7 @@ class _MessageWidgetState extends State<MessageWidget> {
   Future<void> isDeleted() async {
     // Ensure conversation is not null and conversation.deleted is not null
     if (conversation.deleted == true) {
-      HapticFeedback.lightImpact();
+      HapticFeedback.selectionClick();
 
       // Schedule the overlay insertion after the current frame
       WidgetsBinding.instance.addPostFrameCallback((_) {

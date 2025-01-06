@@ -403,7 +403,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                   child: RefreshIndicator.adaptive(
                     color: FlutterFlowTheme.of(context).alternate,
                     onRefresh: () async {
-                      HapticFeedback.lightImpact();
+                      HapticFeedback.selectionClick();
                       _checkUser();
                       getUserFood(true);
                     },
@@ -886,7 +886,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                           _model.folgerLoading =
                                                                               true;
                                                                           HapticFeedback
-                                                                              .mediumImpact();
+                                                                              .selectionClick();
                                                                           _model.folger =
                                                                               true;
                                                                           safeSetState(

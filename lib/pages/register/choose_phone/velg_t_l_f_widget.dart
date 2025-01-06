@@ -456,7 +456,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                         safeSetState(() {
                                           _isloading = false;
                                         });
-                                        HapticFeedback.mediumImpact();
+                                        HapticFeedback.selectionClick();
                                         if (!context.mounted) return;
                                         errorToast(context,
                                             'En bruker med dette nummeret finnes allerede');
@@ -510,7 +510,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                             } else {
                                               safeSetState(() {
                                                 _isloading = false;
-                                                HapticFeedback.mediumImpact();
+                                                HapticFeedback.selectionClick();
                                                 errorToast(context,
                                                     'En feil oppstod. Ta kontakt \nhvis problemet vedvarer');
                                               });
@@ -559,7 +559,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                       } else {
                                         safeSetState(() {
                                           _isloading = false;
-                                          HapticFeedback.mediumImpact();
+                                          HapticFeedback.selectionClick();
                                           errorToast(context,
                                               'Vent minst 2 minutter før \ndu ber om ny kode');
                                         });

@@ -380,12 +380,12 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                 children: [
                                   TabBar(
                                     isScrollable: true,
-                                    indicator: const UnderlineTabIndicator(
+                                    indicator: UnderlineTabIndicator(
                                       borderSide: BorderSide(
                                         width:
                                             2.5, // Thickness of the indicator
-                                        color: Colors
-                                            .blue, // Color of the indicator
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
                                       ),
                                       insets:
                                           EdgeInsets.symmetric(horizontal: 15),
@@ -393,7 +393,8 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     indicatorPadding: EdgeInsets.zero,
                                     labelPadding: const EdgeInsets.symmetric(
                                         horizontal: 20),
-                                    labelColor: Colors.blue,
+                                    labelColor:
+                                        FlutterFlowTheme.of(context).alternate,
                                     dividerColor: Colors.transparent,
                                     unselectedLabelColor:
                                         Colors.black.withOpacity(0.5),
@@ -404,8 +405,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     tabAlignment: TabAlignment.center,
                                     tabs: const [
                                       SizedBox(
-                                        height:
-                                            30.0, // Set an explicit height for tighter control
+                                        height: 30.0,
                                         child: Center(
                                           child: Text('For deg'),
                                         ),
@@ -573,7 +573,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     color:
                                         FlutterFlowTheme.of(context).alternate,
                                     onRefresh: () async {
-                                      HapticFeedback.lightImpact();
+                                      HapticFeedback.selectionClick();
                                       _model.page = 0;
                                       _model.end = false;
                                       fetchData();
@@ -1243,7 +1243,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     color:
                                         FlutterFlowTheme.of(context).alternate,
                                     onRefresh: () async {
-                                      HapticFeedback.lightImpact();
+                                      HapticFeedback.selectionClick();
                                       getFolgerFoods(true);
                                     },
                                     child: SingleChildScrollView(

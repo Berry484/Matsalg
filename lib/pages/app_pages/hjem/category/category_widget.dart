@@ -568,7 +568,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                   child: RefreshIndicator.adaptive(
                     color: FlutterFlowTheme.of(context).alternate,
                     onRefresh: () async {
-                      HapticFeedback.lightImpact();
+                      HapticFeedback.selectionClick();
                       getCategoryFood(true, false);
                     },
                     child: SingleChildScrollView(

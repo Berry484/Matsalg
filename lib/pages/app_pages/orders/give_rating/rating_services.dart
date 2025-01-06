@@ -39,7 +39,7 @@ class RatingServices {
             await RatingService.giRating(token, username, rating, kjop);
 
             if (!context.mounted) return;
-            HapticFeedback.mediumImpact();
+            HapticFeedback.selectionClick();
             Toasts.showAccepted(context, 'Vurdering sendt');
             model.messageIsLoading = false;
             Navigator.pop(context);

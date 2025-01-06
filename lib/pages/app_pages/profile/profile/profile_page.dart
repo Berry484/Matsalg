@@ -213,7 +213,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                     color: FlutterFlowTheme.of(context).alternate,
                     onRefresh: () async {
                       refreshPage();
-                      HapticFeedback.lightImpact();
+                      HapticFeedback.selectionClick();
                     },
                     child: SingleChildScrollView(
                       controller: _scrollController1,

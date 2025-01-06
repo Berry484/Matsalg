@@ -345,7 +345,7 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                               text: 'Fortsett med apple',
                               icon: const FaIcon(
                                 FontAwesomeIcons.apple,
-                                size: 20,
+                                size: 19,
                               ),
                               options: FFButtonOptions(
                                 width: double.infinity,
@@ -355,13 +355,14 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                 iconPadding:
                                     const EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 0),
-                                color: FlutterFlowTheme.of(context).primary,
+                                color: Colors.white,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
                                       fontFamily: 'Nunito',
-                                      color: Colors.black,
                                       fontSize: 17,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -458,7 +459,7 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                             text: 'Fortsett med google',
                             icon: const FaIcon(
                               FontAwesomeIcons.google,
-                              size: 20,
+                              size: 19,
                             ),
                             options: FFButtonOptions(
                               width: double.infinity,

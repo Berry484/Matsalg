@@ -203,7 +203,8 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  HapticFeedback.lightImpact();
+                                                  HapticFeedback
+                                                      .selectionClick();
                                                   Navigator.pop(
                                                       context, 'kjøtt');
                                                 },
@@ -287,7 +288,8 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  HapticFeedback.lightImpact();
+                                                  HapticFeedback
+                                                      .selectionClick();
                                                   Navigator.pop(
                                                       context, 'grønt');
                                                 },
@@ -370,7 +372,8 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  HapticFeedback.lightImpact();
+                                                  HapticFeedback
+                                                      .selectionClick();
                                                   Navigator.pop(
                                                       context, 'meieri');
                                                 },
@@ -467,7 +470,7 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                HapticFeedback.lightImpact();
+                                                HapticFeedback.selectionClick();
                                                 Navigator.pop(
                                                     context, 'bakverk');
                                               },
@@ -544,7 +547,7 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                HapticFeedback.lightImpact();
+                                                HapticFeedback.selectionClick();
                                                 Navigator.pop(
                                                     context, 'sjømat');
                                               },
@@ -621,7 +624,7 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                HapticFeedback.lightImpact();
+                                                HapticFeedback.selectionClick();
                                                 Navigator.pop(context, 'annet');
                                               },
                                               child: Container(

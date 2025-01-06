@@ -510,9 +510,8 @@ class _BetalingWidgetState extends State<PaymentPageWidget> {
                                                                             0.05 +
                                                                         2)
                                                                     .round();
-                                                            // Trigger light haptic feedback on each tick/value change
                                                             HapticFeedback
-                                                                .lightImpact();
+                                                                .selectionClick();
                                                           });
                                                         },
                                                         children:

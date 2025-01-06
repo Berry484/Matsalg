@@ -252,7 +252,7 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
                                             onRefresh: () async {
-                                              HapticFeedback.lightImpact();
+                                              HapticFeedback.selectionClick();
                                               ordersServices.getAll(context);
                                             },
                                             child: ListView.builder(
@@ -595,7 +595,7 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
                                             onRefresh: () async {
-                                              HapticFeedback.lightImpact();
+                                              HapticFeedback.selectionClick();
                                               ordersServices.getAll(context);
                                             },
                                             child: ListView.builder(
@@ -937,7 +937,7 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                             color: FlutterFlowTheme.of(context)
                                                 .alternate,
                                             onRefresh: () async {
-                                              HapticFeedback.lightImpact();
+                                              HapticFeedback.selectionClick();
                                               ordersServices.getAll(context);
                                             },
                                             child: ListView.builder(
