@@ -181,19 +181,46 @@ class MainWrapperState extends State<MainWrapper> {
                             ),
                             onPressed: () => _onItemTapped(0),
                           ),
-                          FlutterFlowIconButton(
-                            borderColor: Colors.transparent,
-                            borderRadius: 30.0,
-                            borderWidth: 1.0,
-                            buttonSize: 50.0,
-                            icon: Icon(
-                              Ionicons.bag_check_outline,
-                              color: _selectedIndex == 1
-                                  ? FlutterFlowTheme.of(context).alternate
-                                  : const Color(0xFF262626),
-                              size: 30.0,
-                            ),
-                            onPressed: () => _onItemTapped(1),
+                          Stack(
+                            clipBehavior:
+                                Clip.none, // Ensures the red dot isn't clipped
+                            children: [
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30.0,
+                                borderWidth: 1.0,
+                                buttonSize: 50.0,
+                                icon: Icon(
+                                  Ionicons.bag_check_outline,
+                                  color: _selectedIndex == 1
+                                      ? FlutterFlowTheme.of(context).alternate
+                                      : const Color(0xFF262626),
+                                  size: 30.0,
+                                ),
+                                onPressed: () => _onItemTapped(1),
+                              ),
+                              ValueListenableBuilder<bool>(
+                                valueListenable: FFAppState().orderAlert,
+                                builder: (context, orderAlert, _) {
+                                  if (!orderAlert) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  return Positioned(
+                                    top: 9,
+                                    right: 7,
+                                    child: Container(
+                                      width: 8.0,
+                                      height: 8.0,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
                           FlutterFlowIconButton(
                             borderColor: Colors.transparent,

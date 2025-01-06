@@ -113,6 +113,8 @@ class PurchaseService {
             avvist: orderData['avvist'], // Approval status
             deleted: orderData['deleted'] as bool? ?? false,
             kjopte: orderData['kjopte'],
+            buyerAlert: orderData['buyerAlert'] as bool? ?? false,
+            sellerAlert: orderData['sellerAlert'] as bool? ?? false,
             rated: orderData['rated'],
             lastactive: orderData['user']['lastactive'],
             kjoperProfilePic: orderData['user']['profilepic'] as String?,
@@ -123,6 +125,16 @@ class PurchaseService {
             foodDetails: foodDetails,
           );
         }).toList();
+
+        bool matchesLogic = kjopOrders.any((info) =>
+            (info.kjopte == true && info.buyerAlert == true) ||
+            (info.kjopte != true && info.sellerAlert == true));
+
+        if (matchesLogic) {
+          FFAppState().orderAlert.value = true;
+        } else {
+          FFAppState().orderAlert.value = false;
+        }
 
         return kjopOrders; // Return populated OrdreInfo list
       } else {

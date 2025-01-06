@@ -357,6 +357,7 @@ class FFAppState extends ChangeNotifier {
   }
 
   final ValueNotifier<bool> chatAlert = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> orderAlert = ValueNotifier<bool>(false);
 
   String _chatRoom = '';
   String get chatRoom => _chatRoom;
@@ -686,6 +687,8 @@ class OrdreInfo {
   final Matvarer foodDetails;
   final bool? kjopte;
   final bool? rated;
+  final bool? buyerAlert;
+  final bool? sellerAlert;
   final String? lastactive;
   final bool deleted;
 
@@ -710,6 +713,8 @@ class OrdreInfo {
     required this.foodDetails,
     required this.kjopte,
     required this.rated,
+    required this.buyerAlert,
+    required this.sellerAlert,
     required this.lastactive,
     required this.deleted,
   });
@@ -738,6 +743,8 @@ class OrdreInfo {
       kjoperUsername: json['kjoperUsername'] as String?,
       selgerUsername: json['selgerUsername'] as String?,
       deleted: json['deleted'] as bool? ?? false,
+      buyerAlert: json['buyerAlert'] as bool? ?? false,
+      sellerAlert: json['sellerAlert'] as bool? ?? false,
       foodDetails: Matvarer.fromJson(json['foodDetails']),
       kjopte: json['kjopte'] as bool?,
       rated: json['rated'] as bool?,
@@ -765,6 +772,8 @@ class OrdreInfo {
       'kjoperProfilePic': kjoperProfilePic,
       'kjoperUsername': kjoperUsername,
       'selgerUsername': selgerUsername,
+      'buyerAlert': buyerAlert,
+      'sellerAlert': sellerAlert,
       'deleted': deleted,
       'foodDetails': foodDetails.toJson(),
       'kjopte': kjopte,

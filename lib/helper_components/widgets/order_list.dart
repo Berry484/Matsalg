@@ -82,6 +82,21 @@ class OrderList extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
+                          if ((ordreInfo.kjopte == true &&
+                                  ordreInfo.buyerAlert == true) ||
+                              (ordreInfo.kjopte != true &&
+                                  ordreInfo.sellerAlert == true))
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              child: Container(
+                                width: 10,
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF357BF7),
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            ),
                           Stack(
                             children: [
                               Align(

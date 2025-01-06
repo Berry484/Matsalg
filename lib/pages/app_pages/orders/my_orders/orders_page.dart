@@ -170,7 +170,7 @@ class _MineKjopWidgetState extends State<OrdersPage>
                             alignment: const AlignmentDirectional(0, 0),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15, 5, 20, 15),
+                                  13, 5, 13, 15),
                               child: Column(
                                 children: [
                                   Align(
