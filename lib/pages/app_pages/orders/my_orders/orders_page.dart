@@ -530,6 +530,24 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                   ordreInfo: alleInfo,
                                                   onTap: () async {
                                                     try {
+                                                      if (alleInfo.kjopte ==
+                                                              true &&
+                                                          alleInfo.buyerAlert ==
+                                                              true) {
+                                                        setState(() {
+                                                          alleInfo.buyerAlert =
+                                                              false;
+                                                        });
+                                                      }
+                                                      if (alleInfo.kjopte !=
+                                                              true &&
+                                                          alleInfo.sellerAlert ==
+                                                              true) {
+                                                        setState(() {
+                                                          alleInfo.sellerAlert =
+                                                              false;
+                                                        });
+                                                      }
                                                       await showModalBottomSheet(
                                                         isScrollControlled:
                                                             true,
@@ -871,6 +889,27 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                   ordreInfo: ordreInfo,
                                                   onTap: () async {
                                                     try {
+                                                      if (ordreInfo.kjopte ==
+                                                              true &&
+                                                          ordreInfo
+                                                                  .buyerAlert ==
+                                                              true) {
+                                                        setState(() {
+                                                          ordreInfo.buyerAlert =
+                                                              false;
+                                                        });
+                                                      }
+                                                      if (ordreInfo.kjopte !=
+                                                              true &&
+                                                          ordreInfo
+                                                                  .sellerAlert ==
+                                                              true) {
+                                                        setState(() {
+                                                          ordreInfo
+                                                                  .sellerAlert =
+                                                              false;
+                                                        });
+                                                      }
                                                       await showModalBottomSheet(
                                                         isScrollControlled:
                                                             true,
@@ -1212,6 +1251,24 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                   ordreInfo: salgInfo,
                                                   onTap: () async {
                                                     try {
+                                                      if (salgInfo.kjopte ==
+                                                              true &&
+                                                          salgInfo.buyerAlert ==
+                                                              true) {
+                                                        setState(() {
+                                                          salgInfo.buyerAlert =
+                                                              false;
+                                                        });
+                                                      }
+                                                      if (salgInfo.kjopte !=
+                                                              true &&
+                                                          salgInfo.sellerAlert ==
+                                                              true) {
+                                                        setState(() {
+                                                          salgInfo.sellerAlert =
+                                                              false;
+                                                        });
+                                                      }
                                                       await showModalBottomSheet(
                                                         isScrollControlled:
                                                             true,

@@ -68,6 +68,7 @@ class _InfoWidgetState extends State<InfoWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 30),
@@ -238,7 +239,7 @@ class _InfoWidgetState extends State<InfoWidget> {
               alignment: const AlignmentDirectional(0.0, 0.0),
               child: Padding(
                 padding:
-                    const EdgeInsetsDirectional.fromSTEB(15.0, 12.0, 15.0, 0.0),
+                    const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 25.0),
                 child: FFButtonWidget(
                   onPressed: () async {
                     Navigator.pop(context);

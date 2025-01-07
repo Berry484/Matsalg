@@ -121,7 +121,7 @@ class LightModeTheme extends FlutterFlowTheme {
 
   late Color price = const Color.fromARGB(255, 192, 231, 192);
   //late Color alternate = const Color(0xFF007AFF);
-  late Color alternate = const Color.fromARGB(255, 0, 112, 110);
+  late Color alternate = const Color.fromARGB(255, 13, 104, 103);
   late Color unSelected = const Color.fromARGB(182, 0, 112, 110);
 
   late Color primaryText = const Color.fromARGB(255, 8, 8, 8);

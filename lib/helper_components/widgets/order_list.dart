@@ -38,8 +38,8 @@ class OrderList extends StatelessWidget {
     }
     if (ordreInfo.godkjent == true && ordreInfo.hentet != true) {
       return ordreInfo.kjopte == true
-          ? 'Budet er godkjent,\nkontakt selgeren'
-          : 'Budet er godkjent,\nkontakt kjøperen';
+          ? 'Budet er godkjent, kontakt selgeren'
+          : 'Budet er godkjent, kontakt kjøperen';
     }
     if (ordreInfo.hentet == true) {
       return ordreInfo.kjopte == true
@@ -89,8 +89,8 @@ class OrderList extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
                               child: Container(
-                                width: 10,
-                                height: 10,
+                                width: 8,
+                                height: 8,
                                 decoration: const BoxDecoration(
                                   color: Color(0xFF357BF7),
                                   shape: BoxShape.circle,
@@ -192,7 +192,7 @@ class OrderList extends StatelessWidget {
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
+                                            0, 0, 0, 0),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,

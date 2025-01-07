@@ -417,11 +417,13 @@ class WebSocketService {
     // Iterate over all messages and mark those from 'me == false' as read
     for (var message in conversation.messages) {
       if (!message.me && !message.read) {
-        message.read = true; // Mark the message as read
-        updated =
-            true; // Set flag to indicate we've updated at least one message
+        message.read = true;
+        updated = true;
       }
     }
+    bool hasUnreadMessages = appState.conversations.any((conversation) =>
+        conversation.messages.any((message) => !message.me && !message.read));
+    appState.chatAlert.value = hasUnreadMessages;
     if (updated) {
       _sendMarkAsReadRequest(sender);
     } else {}

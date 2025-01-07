@@ -32,6 +32,7 @@ class PurchaseService {
         "pris": price,
         "prisbetalt": prisBetalt,
         "antall": antall,
+        "sellerAlert": true
       };
 
       // Convert the Map to JSON
@@ -184,6 +185,7 @@ class PurchaseService {
       final Map<String, dynamic> userData = {
         "id": id,
         "godkjent": godkjent,
+        "buyerAlert": true
       };
 
       // Convert the Map to JSON
@@ -230,6 +232,7 @@ class PurchaseService {
         "id": id,
         "avvist": avvist,
         "godkjent": godkjent,
+        "buyerAlert": true
       };
 
       // Convert the Map to JSON
@@ -259,6 +262,48 @@ class PurchaseService {
   }
 
 //---------------------------------------------------------------------------------------------------------------
+//--------------------Tells the server that the user REJECTS the offer-------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<http.Response> markRead({
+    required int id,
+    required bool? buyerAlert,
+    required bool? sellerAlert,
+    required String token,
+  }) async {
+    try {
+      // Base URL for the API
+      const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
+
+      // Create the user data as a Map
+      final Map<String, dynamic> userData = {
+        "id": id,
+        "buyerAlert": buyerAlert,
+        "sellerAlert": sellerAlert,
+      };
+
+      final String jsonBody = jsonEncode(userData);
+
+      final uri = Uri.parse('$baseUrl/ordre/update');
+
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      final response = await http.post(
+        uri, // Use the updated URI with query parameters
+        headers: headers,
+        body: jsonBody,
+      );
+      return response; // Return the response
+    } on SocketException {
+      throw const SocketException('');
+    } catch (e) {
+      throw Exception;
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------------------
 //--------------------Tells the server that the user regrets the offer and cancels it----------------------------
 //---------------------------------------------------------------------------------------------------------------
   static Future<http.Response> trekk({
@@ -274,6 +319,7 @@ class PurchaseService {
       final Map<String, dynamic> userData = {
         "id": id,
         "trekt": trekt,
+        "sellerAlert": true
       };
 
       // Convert the Map to JSON
@@ -285,7 +331,7 @@ class PurchaseService {
       // Prepare headers
       final headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token', // Add Bearer token if present
+        'Authorization': 'Bearer $token',
       };
 
       // Send the POST request
@@ -318,6 +364,7 @@ class PurchaseService {
       final Map<String, dynamic> userData = {
         "id": id,
         "hentet": hentet,
+        "sellerAlert": true
       };
 
       // Convert the Map to JSON

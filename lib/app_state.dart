@@ -687,8 +687,8 @@ class OrdreInfo {
   final Matvarer foodDetails;
   final bool? kjopte;
   final bool? rated;
-  final bool? buyerAlert;
-  final bool? sellerAlert;
+  bool? buyerAlert;
+  bool? sellerAlert;
   final String? lastactive;
   final bool deleted;
 

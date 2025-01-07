@@ -5,6 +5,7 @@ import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/orders/give_rating/rating_page.dart';
 import 'package:mat_salg/pages/app_pages/orders/order_info/info_services.dart';
+import 'package:mat_salg/services/purchase_service.dart';
 import 'package:mat_salg/services/user_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -48,6 +49,28 @@ class _GodkjentebudWidgetState extends State<InfoPage> {
     matvare = widget.info;
     ordreInfo = widget.ordre;
     infoServices = InfoServices(model: _model, ordreInfo: ordreInfo);
+    markRead();
+  }
+
+  void markRead() async {
+    String? token = await firebaseAuthService.getToken(context);
+    if (token == null) {
+      return;
+    } else {
+      if (ordreInfo.kjopte == true) {
+        PurchaseService.markRead(
+            id: ordreInfo.id,
+            buyerAlert: false,
+            sellerAlert: null,
+            token: token);
+      } else {
+        PurchaseService.markRead(
+            id: ordreInfo.id,
+            buyerAlert: null,
+            sellerAlert: false,
+            token: token);
+      }
+    }
   }
 
   @override
