@@ -138,6 +138,62 @@ class _BrukerRatingWidgetState extends State<RatingsWidget>
     }
   }
 
+  Widget buildProfileOutline(BuildContext context, int opacity, Color baseColor,
+      Color highlightColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Row(
+        children: [
+          Shimmer.fromColors(
+            baseColor: baseColor,
+            highlightColor: highlightColor,
+            child: Container(
+              width: 65.0,
+              height: 65.0,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(opacity, 255, 255, 255),
+                borderRadius: BorderRadius.circular(100.0),
+              ),
+            ),
+          ),
+          const SizedBox(width: 16.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Shimmer.fromColors(
+                  baseColor: baseColor,
+                  highlightColor: highlightColor,
+                  child: Container(
+                    width: 75.0,
+                    height: 13.0,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(opacity, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8.0),
+                Shimmer.fromColors(
+                  baseColor: baseColor,
+                  highlightColor: highlightColor,
+                  child: Container(
+                    width: 200,
+                    height: 13.0,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(opacity, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -408,74 +464,143 @@ class _BrukerRatingWidgetState extends State<RatingsWidget>
                                                 height:
                                                     MediaQuery.sizeOf(context)
                                                             .height -
-                                                        315,
+                                                        350,
                                                 child: Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          0, 0),
+                                                  alignment: Alignment.center,
                                                   child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 0, 0, 110),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    0, 0, 0, 0),
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                              child:
-                                                                  Image.asset(
-                                                                'assets/images/none_reviews.png',
-                                                                width: 200,
-                                                                height: 160,
-                                                                fit: BoxFit
-                                                                    .cover,
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 40, 0, 0),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0, 1),
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              // First Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                100,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            0.3), // Reduce opacity
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            0.3), // Reduce opacity
                                                               ),
-                                                            ),
+
+                                                              // Second Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                80,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                              ),
+
+                                                              // Third Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                50,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                              ),
+
+                                                              // Fourth Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                38,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                              ),
+
+                                                              const SizedBox(
+                                                                  height: 8.0),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                                child: Text(
+                                                                  'Ingen vurderinger ennå',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .headlineSmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                        fontSize:
+                                                                            22,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w800,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(0,
-                                                                    16, 0, 0),
-                                                            child: Text(
-                                                              'Ingen vurderinger fra kjøpere',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .headlineSmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                    fontSize:
-                                                                        20,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
                                               );
                                             }
@@ -860,74 +985,143 @@ class _BrukerRatingWidgetState extends State<RatingsWidget>
                                                 height:
                                                     MediaQuery.sizeOf(context)
                                                             .height -
-                                                        315,
+                                                        350,
                                                 child: Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          0, 0),
+                                                  alignment: Alignment.center,
                                                   child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 0, 0, 110),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    0, 0, 0, 0),
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                              child:
-                                                                  Image.asset(
-                                                                'assets/images/none_reviews.png',
-                                                                width: 200,
-                                                                height: 160,
-                                                                fit: BoxFit
-                                                                    .cover,
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 40, 0, 0),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0, 1),
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              // First Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                100,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            0.3), // Reduce opacity
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            0.3), // Reduce opacity
                                                               ),
-                                                            ),
+
+                                                              // Second Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                80,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                              ),
+
+                                                              // Third Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                50,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                              ),
+
+                                                              // Fourth Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                38,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                              ),
+
+                                                              const SizedBox(
+                                                                  height: 8.0),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                                child: Text(
+                                                                  'Ingen vurderinger fra kjøpere',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .headlineSmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                        fontSize:
+                                                                            22,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w800,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(0,
-                                                                    16, 0, 0),
-                                                            child: Text(
-                                                              'Ingen vurderinger fra kjøpere',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .headlineSmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                    fontSize:
-                                                                        20,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
                                               );
                                             }
@@ -1310,74 +1504,143 @@ class _BrukerRatingWidgetState extends State<RatingsWidget>
                                                 height:
                                                     MediaQuery.sizeOf(context)
                                                             .height -
-                                                        315,
+                                                        350,
                                                 child: Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          0, 0),
+                                                  alignment: Alignment.center,
                                                   child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 0, 0, 110),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    0, 0, 0, 0),
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                              child:
-                                                                  Image.asset(
-                                                                'assets/images/none_reviews.png',
-                                                                width: 200,
-                                                                height: 160,
-                                                                fit: BoxFit
-                                                                    .cover,
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 40, 0, 0),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0, 1),
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              // First Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                100,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            0.3), // Reduce opacity
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            0.3), // Reduce opacity
                                                               ),
-                                                            ),
+
+                                                              // Second Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                80,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                              ),
+
+                                                              // Third Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                50,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                              ),
+
+                                                              // Fourth Profile Outline
+                                                              buildProfileOutline(
+                                                                context,
+                                                                38,
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                                Colors.grey[300]
+                                                                        ?.withOpacity(
+                                                                            1) ??
+                                                                    Colors.grey
+                                                                        .withOpacity(
+                                                                            1),
+                                                              ),
+
+                                                              const SizedBox(
+                                                                  height: 8.0),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                                child: Text(
+                                                                  'Ingen vurderinger fra selgere',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .headlineSmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                        fontSize:
+                                                                            22,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w800,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(0,
-                                                                    16, 0, 0),
-                                                            child: Text(
-                                                              'Ingen vurderinger fra selgere',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .headlineSmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                    fontSize:
-                                                                        20,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
                                               );
                                             }
