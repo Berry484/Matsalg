@@ -530,6 +530,12 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                   ordreInfo: alleInfo,
                                                   onTap: () async {
                                                     try {
+                                                      bool buyerAlert =
+                                                          alleInfo.buyerAlert ??
+                                                              false;
+                                                      bool sellerAlert =
+                                                          alleInfo.buyerAlert ??
+                                                              false;
                                                       if (alleInfo.kjopte ==
                                                               true &&
                                                           alleInfo.buyerAlert ==
@@ -574,6 +580,10 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                                 info: alleInfo
                                                                     .foodDetails,
                                                                 ordre: alleInfo,
+                                                                buyerAlert:
+                                                                    buyerAlert,
+                                                                sellerAlert:
+                                                                    sellerAlert,
                                                               ),
                                                             ),
                                                           );
@@ -889,6 +899,14 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                   ordreInfo: ordreInfo,
                                                   onTap: () async {
                                                     try {
+                                                      bool buyerAlert =
+                                                          ordreInfo
+                                                                  .buyerAlert ??
+                                                              false;
+                                                      bool sellerAlert =
+                                                          ordreInfo
+                                                                  .buyerAlert ??
+                                                              false;
                                                       if (ordreInfo.kjopte ==
                                                               true &&
                                                           ordreInfo
@@ -937,6 +955,10 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                                     .foodDetails,
                                                                 ordre:
                                                                     ordreInfo,
+                                                                buyerAlert:
+                                                                    buyerAlert,
+                                                                sellerAlert:
+                                                                    sellerAlert,
                                                               ),
                                                             ),
                                                           );
@@ -1251,6 +1273,12 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                   ordreInfo: salgInfo,
                                                   onTap: () async {
                                                     try {
+                                                      bool buyerAlert =
+                                                          salgInfo.buyerAlert ??
+                                                              false;
+                                                      bool sellerAlert =
+                                                          salgInfo.buyerAlert ??
+                                                              false;
                                                       if (salgInfo.kjopte ==
                                                               true &&
                                                           salgInfo.buyerAlert ==
@@ -1295,6 +1323,10 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                                 info: salgInfo
                                                                     .foodDetails,
                                                                 ordre: salgInfo,
+                                                                buyerAlert:
+                                                                    buyerAlert,
+                                                                sellerAlert:
+                                                                    sellerAlert,
                                                               ),
                                                             ),
                                                           );

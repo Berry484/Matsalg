@@ -15,14 +15,17 @@ import 'info_model.dart';
 export 'info_model.dart';
 
 class InfoPage extends StatefulWidget {
-  const InfoPage({
-    super.key,
-    this.info,
-    this.ordre,
-  });
+  const InfoPage(
+      {super.key,
+      this.info,
+      this.ordre,
+      required this.buyerAlert,
+      required this.sellerAlert});
 
   final dynamic info;
   final dynamic ordre;
+  final bool buyerAlert;
+  final bool sellerAlert;
 
   @override
   State<InfoPage> createState() => _GodkjentebudWidgetState();
@@ -57,13 +60,14 @@ class _GodkjentebudWidgetState extends State<InfoPage> {
     if (token == null) {
       return;
     } else {
-      if (ordreInfo.kjopte == true) {
+      if (ordreInfo.kjopte == true && widget.buyerAlert == true) {
         PurchaseService.markRead(
             id: ordreInfo.id,
             buyerAlert: false,
             sellerAlert: null,
             token: token);
-      } else {
+      }
+      if (ordreInfo.kjopte != true && widget.sellerAlert == true) {
         PurchaseService.markRead(
             id: ordreInfo.id,
             buyerAlert: null,
