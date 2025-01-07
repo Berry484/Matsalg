@@ -130,10 +130,8 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 0),
                               child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
+                                splashFactory: InkRipple.splashFactory,
+                                splashColor: Colors.grey[100],
                                 onTap: () async {
                                   try {
                                     if (ordreInfo.deleted) return;

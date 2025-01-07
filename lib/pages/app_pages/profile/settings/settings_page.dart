@@ -110,74 +110,59 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 12),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                try {
-                                  context.pushNamed('Konto');
-                                } on SocketException {
-                                  Toasts.showErrorToast(
-                                      context, 'Ingen internettforbindelse');
-                                } catch (e) {
-                                  Toasts.showErrorToast(
-                                      context, 'En feil oppstod');
-                                }
-                              },
-                              child: Material(
-                                color: Colors.transparent,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
+                          InkWell(
+                            splashFactory: InkRipple.splashFactory,
+                            splashColor: Colors.grey[100],
+                            onTap: () async {
+                              try {
+                                context.pushNamed('Konto');
+                              } on SocketException {
+                                Toasts.showErrorToast(
+                                    context, 'Ingen internettforbindelse');
+                              } catch (e) {
+                                Toasts.showErrorToast(
+                                    context, 'En feil oppstod');
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 20, 0, 12),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(14),
-                                ),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    borderRadius: BorderRadius.circular(14),
-                                    shape: BoxShape.rectangle,
-                                    border: Border.all(
-                                      color: Colors.transparent,
-                                      width: 0,
-                                    ),
+                                  shape: BoxShape.rectangle,
+                                  border: Border.all(
+                                    color: Colors.transparent,
+                                    width: 0,
                                   ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        child: Row(
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.person,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 30,
+                                        ),
+                                        Column(
                                           mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Icon(
-                                              CupertinoIcons.person,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              size: 30,
-                                            ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          12, 0, 0, 0),
-                                                  child: Text(
-                                                    'Konto',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Konto',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
                                                         .labelLarge
                                                         .override(
                                                           fontFamily: 'Nunito',
@@ -189,17 +174,16 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          12, 0, 0, 0),
-                                                  child: Text(
-                                                    'Rediger profilen din',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Rediger profilen din',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
                                                         .labelLarge
                                                         .override(
                                                           fontFamily: 'Nunito',
@@ -210,136 +194,22 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const Expanded(
-                                              child: Align(
-                                                alignment: AlignmentDirectional(
-                                                    0.9, 0),
-                                                child: Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  color: Color(0xA0262C2D),
-                                                  size: 22,
-                                                ),
                                               ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Divider(
-                            thickness: 1.2,
-                            indent: 15,
-                            endIndent: 15,
-                            color: Color(0xE5EAEAEA),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 12),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  borderRadius: BorderRadius.circular(14),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                    width: 0,
-                                  ),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {},
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.creditcard,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 30,
-                                          ),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Betalinger',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 16,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Utbetalinger, kort og salg',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color: const Color(
-                                                            0x9F57636C),
-                                                        fontSize: 15,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Expanded(
-                                            child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(0.9, 0),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Color(0xA0262C2D),
-                                                size: 22,
-                                              ),
+                                        const Expanded(
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(0.9, 0),
+                                            child: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Color(0xA0262C2D),
+                                              size: 22,
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -352,132 +222,100 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                             endIndent: 15,
                             color: Color(0xE5EAEAEA),
                           ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 12),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
+                          InkWell(
+                            splashFactory: InkRipple.splashFactory,
+                            splashColor: Colors.grey[100],
+                            onTap: () async {},
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  borderRadius: BorderRadius.circular(14),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                    width: 0,
-                                  ),
+                                shape: BoxShape.rectangle,
+                                border: Border.all(
+                                  color: Colors.transparent,
+                                  width: 0,
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor: Colors.transparent,
-                                          barrierColor: const Color.fromARGB(
-                                              60, 17, 0, 0),
-                                          useRootNavigator: true,
-                                          context: context,
-                                          builder: (context) {
-                                            return GestureDetector(
-                                              onTap: () =>
-                                                  FocusScope.of(context)
-                                                      .unfocus(),
-                                              child: Padding(
-                                                padding:
-                                                    MediaQuery.viewInsetsOf(
-                                                        context),
-                                                child: const LocationPage(),
-                                              ),
-                                            );
-                                          },
-                                        ).then((value) => setState(() {}));
-                                        return;
-                                      },
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.placemark,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 30,
-                                          ),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Endre lokasjon',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 16,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Sett ny lokasjon',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color: const Color(
-                                                            0x9F57636C),
-                                                        fontSize: 15,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Expanded(
-                                            child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(0.9, 0),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Color(0xA0262C2D),
-                                                size: 22,
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 0, 12),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.creditcard,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 30,
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Betalinger',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 16,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                               ),
                                             ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Utbetalinger, kort og salg',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: const Color(
+                                                              0x9F57636C),
+                                                          fontSize: 15,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Expanded(
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(0.9, 0),
+                                            child: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Color(0xA0262C2D),
+                                              size: 22,
+                                            ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -487,133 +325,120 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                             endIndent: 15,
                             color: Color(0xE5EAEAEA),
                           ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 12),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
+                          InkWell(
+                            splashFactory: InkRipple.splashFactory,
+                            splashColor: Colors.grey[100],
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                barrierColor:
+                                    const Color.fromARGB(60, 17, 0, 0),
+                                useRootNavigator: true,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () =>
+                                        FocusScope.of(context).unfocus(),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: const LocationPage(),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => setState(() {}));
+                              return;
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  borderRadius: BorderRadius.circular(14),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                    width: 0,
-                                  ),
+                                shape: BoxShape.rectangle,
+                                border: Border.all(
+                                  color: Colors.transparent,
+                                  width: 0,
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor: Colors.transparent,
-                                          barrierColor: const Color.fromARGB(
-                                              60, 17, 0, 0),
-                                          useRootNavigator: true,
-                                          context: context,
-                                          builder: (context) {
-                                            return GestureDetector(
-                                              onTap: () =>
-                                                  FocusScope.of(context)
-                                                      .unfocus(),
-                                              child: Padding(
-                                                padding:
-                                                    MediaQuery.viewInsetsOf(
-                                                        context),
-                                                child: const TermsWidget(),
-                                              ),
-                                            );
-                                          },
-                                        ).then((value) => setState(() {}));
-                                        return;
-                                      },
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons
-                                                .exclamationmark_shield,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 30,
-                                          ),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Personvern og vilkår',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 16,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Våre vilkår og betingelser',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color: const Color(
-                                                            0x9F57636C),
-                                                        fontSize: 15,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Expanded(
-                                            child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(0.9, 0),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Color(0xA0262C2D),
-                                                size: 22,
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 0, 12),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.placemark,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 30,
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Endre lokasjon',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 16,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                               ),
                                             ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Sett ny lokasjon',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: const Color(
+                                                              0x9F57636C),
+                                                          fontSize: 15,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Expanded(
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(0.9, 0),
+                                            child: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Color(0xA0262C2D),
+                                              size: 22,
+                                            ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -623,132 +448,243 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                             endIndent: 15,
                             color: Color(0xE5EAEAEA),
                           ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 12),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
+                          InkWell(
+                            splashFactory: InkRipple.splashFactory,
+                            splashColor: Colors.grey[100],
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                barrierColor:
+                                    const Color.fromARGB(60, 17, 0, 0),
+                                useRootNavigator: true,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () =>
+                                        FocusScope.of(context).unfocus(),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: const TermsWidget(),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => setState(() {}));
+                              return;
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  borderRadius: BorderRadius.circular(14),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                    width: 0,
-                                  ),
+                                shape: BoxShape.rectangle,
+                                border: Border.all(
+                                  color: Colors.transparent,
+                                  width: 0,
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor: Colors.transparent,
-                                          barrierColor: const Color.fromARGB(
-                                              60, 17, 0, 0),
-                                          useRootNavigator: true,
-                                          context: context,
-                                          builder: (context) {
-                                            return GestureDetector(
-                                              onTap: () =>
-                                                  FocusScope.of(context)
-                                                      .unfocus(),
-                                              child: Padding(
-                                                padding:
-                                                    MediaQuery.viewInsetsOf(
-                                                        context),
-                                                child: const ContactPage(),
-                                              ),
-                                            );
-                                          },
-                                        ).then((value) => setState(() {}));
-                                        return;
-                                      },
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.chat_bubble_2,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 30,
-                                          ),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Support',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 16,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 0, 0, 0),
-                                                child: Text(
-                                                  'Få hjelp eller send tilbakemeldinger',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color: const Color(
-                                                            0x9F57636C),
-                                                        fontSize: 15,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Expanded(
-                                            child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(0.9, 0),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Color(0xA0262C2D),
-                                                size: 22,
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 0, 12),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.exclamationmark_shield,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 30,
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Personvern og vilkår',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 16,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                               ),
                                             ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Våre vilkår og betingelser',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: const Color(
+                                                              0x9F57636C),
+                                                          fontSize: 15,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Expanded(
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(0.9, 0),
+                                            child: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Color(0xA0262C2D),
+                                              size: 22,
+                                            ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 1.2,
+                            indent: 15,
+                            endIndent: 15,
+                            color: Color(0xE5EAEAEA),
+                          ),
+                          InkWell(
+                            splashFactory: InkRipple.splashFactory,
+                            splashColor: Colors.grey[100],
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                barrierColor:
+                                    const Color.fromARGB(60, 17, 0, 0),
+                                useRootNavigator: true,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () =>
+                                        FocusScope.of(context).unfocus(),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: const ContactPage(),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => setState(() {}));
+                              return;
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(14),
+                                shape: BoxShape.rectangle,
+                                border: Border.all(
+                                  color: Colors.transparent,
+                                  width: 0,
                                 ),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 0, 12),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.chat_bubble_2,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 30,
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Support',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 16,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Få hjelp eller send tilbakemeldinger',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: const Color(
+                                                              0x9F57636C),
+                                                          fontSize: 15,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Expanded(
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(0.9, 0),
+                                            child: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Color(0xA0262C2D),
+                                              size: 22,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

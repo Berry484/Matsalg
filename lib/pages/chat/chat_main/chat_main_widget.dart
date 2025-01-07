@@ -272,10 +272,8 @@ class _ChatMainWidgetState extends State<ChatMainWidget> {
                         }
 
                         return InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
+                          splashFactory: InkRipple.splashFactory,
+                          splashColor: Colors.grey[100],
                           onTap: () {
                             context.pushNamed(
                               'message',
