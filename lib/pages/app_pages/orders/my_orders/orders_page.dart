@@ -534,7 +534,7 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                           alleInfo.buyerAlert ??
                                                               false;
                                                       bool sellerAlert =
-                                                          alleInfo.buyerAlert ??
+                                                          alleInfo.sellerAlert ??
                                                               false;
                                                       if (alleInfo.kjopte ==
                                                               true &&
@@ -905,7 +905,7 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                               false;
                                                       bool sellerAlert =
                                                           ordreInfo
-                                                                  .buyerAlert ??
+                                                                  .sellerAlert ??
                                                               false;
                                                       if (ordreInfo.kjopte ==
                                                               true &&
@@ -1277,7 +1277,7 @@ class _MineKjopWidgetState extends State<OrdersPage>
                                                           salgInfo.buyerAlert ??
                                                               false;
                                                       bool sellerAlert =
-                                                          salgInfo.buyerAlert ??
+                                                          salgInfo.sellerAlert ??
                                                               false;
                                                       if (salgInfo.kjopte ==
                                                               true &&

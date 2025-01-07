@@ -60,6 +60,20 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
     builder: (context) {
       return CupertinoActionSheet(
         actions: <Widget>[
+          if (!kIsWeb) ...[
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context, MediaSource.camera);
+              },
+              child: const Text(
+                'Kamera',
+                style: TextStyle(
+                  fontSize: 19,
+                  color: CupertinoColors.systemBlue,
+                ),
+              ),
+            ),
+          ],
           if (allowPhoto && allowVideo) ...[
             CupertinoActionSheetAction(
               onPressed: () {
@@ -105,20 +119,6 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               },
               child: const Text(
                 'Bildebibliotek',
-                style: TextStyle(
-                  fontSize: 19,
-                  color: CupertinoColors.systemBlue,
-                ),
-              ),
-            ),
-          ],
-          if (!kIsWeb) ...[
-            CupertinoActionSheetAction(
-              onPressed: () {
-                Navigator.pop(context, MediaSource.camera);
-              },
-              child: const Text(
-                'Kamera',
                 style: TextStyle(
                   fontSize: 19,
                   color: CupertinoColors.systemBlue,

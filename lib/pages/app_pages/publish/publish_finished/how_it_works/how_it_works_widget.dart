@@ -88,7 +88,7 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
           body: SafeArea(
             top: true,
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,14 +142,16 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                                 ),
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     ClipRRect(
-                                      borderRadius: BorderRadius.circular(14),
-                                      child: Image.network(
-                                        'https://picsum.photos/seed/820/600',
-                                        width: double.infinity,
-                                        height: 420,
-                                        fit: BoxFit.cover,
+                                      borderRadius: BorderRadius.circular(0),
+                                      child: Image.asset(
+                                        'assets/images/chat.png',
+                                        width: 330,
+                                        height: 360,
+                                        fit: BoxFit.fitWidth,
                                       ),
                                     ),
                                   ],
@@ -178,7 +180,7 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(13, 0, 13, 0),
                         child: Align(
                           alignment: const AlignmentDirectional(0, 0),
                           child: Text(
@@ -196,7 +198,7 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        padding: EdgeInsets.fromLTRB(13, 10, 13, 0),
                         child: Align(
                           alignment: const AlignmentDirectional(0, 0),
                           child: Text(
