@@ -271,6 +271,8 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                                     shape: BoxShape.circle,
                                                   ),
                                                   child: CachedNetworkImage(
+                                                    fadeInDuration:
+                                                        Duration.zero,
                                                     imageUrl:
                                                         '${ApiConstants.baseUrl}${FFAppState().profilepic}',
                                                     fit: BoxFit.cover,

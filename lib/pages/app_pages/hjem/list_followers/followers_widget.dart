@@ -264,6 +264,7 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                                                     BorderRadius.circular(
                                                         100.0),
                                                 child: CachedNetworkImage(
+                                                  fadeInDuration: Duration.zero,
                                                   imageUrl:
                                                       '${ApiConstants.baseUrl}${brukere.profilepic}',
                                                   width: 50.0,

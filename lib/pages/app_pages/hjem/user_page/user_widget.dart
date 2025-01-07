@@ -490,9 +490,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                           child:
                                                               CachedNetworkImage(
                                                             fadeInDuration:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        0),
+                                                                Duration.zero,
                                                             fadeOutDuration:
                                                                 const Duration(
                                                                     milliseconds:
@@ -1683,6 +1681,8 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                           BorderRadius.circular(
                                                               6),
                                                       child: CachedNetworkImage(
+                                                        fadeInDuration:
+                                                            Duration.zero,
                                                         imageUrl:
                                                             '${ApiConstants.baseUrl}${matvarer.imgUrls![0].toString()}',
                                                         width: 64,

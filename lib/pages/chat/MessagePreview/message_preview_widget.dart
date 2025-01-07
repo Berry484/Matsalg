@@ -96,6 +96,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                         shape: BoxShape.circle,
                       ),
                       child: CachedNetworkImage(
+                        fadeInDuration: Duration.zero,
                         imageUrl:
                             '${ApiConstants.baseUrl}${widget.messageImage}',
                         width: 53,

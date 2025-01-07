@@ -144,6 +144,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: CachedNetworkImage(
+                                              fadeInDuration: Duration.zero,
                                               imageUrl:
                                                   '${ApiConstants.baseUrl}${matvare.profilepic}',
                                               fit: BoxFit.cover,

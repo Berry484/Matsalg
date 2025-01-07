@@ -157,6 +157,7 @@ class _BetalingWidgetState extends State<PaymentPageWidget> {
                                                 borderRadius:
                                                     BorderRadius.circular(6),
                                                 child: CachedNetworkImage(
+                                                  fadeInDuration: Duration.zero,
                                                   imageUrl:
                                                       '${ApiConstants.baseUrl}${matvare.imgUrls![0].toString()}',
                                                   width: 64,

@@ -357,9 +357,8 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                               child:
                                                                   CachedNetworkImage(
                                                                 fadeInDuration:
-                                                                    const Duration(
-                                                                        milliseconds:
-                                                                            0),
+                                                                    Duration
+                                                                        .zero,
                                                                 fadeOutDuration:
                                                                     const Duration(
                                                                         milliseconds:

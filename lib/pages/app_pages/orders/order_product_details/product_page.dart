@@ -183,6 +183,7 @@ class _KjopDetaljVentendeWidgetState extends State<KjopDetaljVentendeWidget> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: CachedNetworkImage(
+                                              fadeInDuration: Duration.zero,
                                               imageUrl:
                                                   '${ApiConstants.baseUrl}${ordreInfo.foodDetails.profilepic}',
                                               fit: BoxFit.cover,

@@ -604,9 +604,9 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                               child: Image.asset(
-                                                'assets/images/Usability_testing-pana.png',
-                                                width: 290,
-                                                height: 250,
+                                                'assets/images/no-results.png',
+                                                width: 180,
+                                                height: 180,
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -615,7 +615,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                                   const EdgeInsetsDirectional
                                                       .fromSTEB(0, 20, 0, 0),
                                               child: Text(
-                                                'Her var det tomt',
+                                                'Ingen treff',
                                                 textAlign: TextAlign.center,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -625,7 +625,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 23,
+                                                          fontSize: 22,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w700,

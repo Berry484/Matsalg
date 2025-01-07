@@ -151,6 +151,7 @@ class _GodkjentebudWidgetState extends State<InfoPage> {
                                     shape: BoxShape.circle,
                                   ),
                                   child: CachedNetworkImage(
+                                    fadeInDuration: Duration.zero,
                                     imageUrl:
                                         '${ApiConstants.baseUrl}${ordreInfo.kjopte == true ? ordreInfo.foodDetails.profilepic : ordreInfo.kjoperProfilePic}',
                                     fit: BoxFit.cover,
@@ -317,6 +318,7 @@ class _GodkjentebudWidgetState extends State<InfoPage> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(13),
                                   child: CachedNetworkImage(
+                                    fadeInDuration: Duration.zero,
                                     imageUrl:
                                         '${ApiConstants.baseUrl}${ordreInfo.foodDetails.imgUrls![0]}',
                                     width: 60,

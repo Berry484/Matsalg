@@ -424,6 +424,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                                                     shape: BoxShape.circle,
                                                   ),
                                                   child: CachedNetworkImage(
+                                                    fadeInDuration:
+                                                        Duration.zero,
                                                     imageUrl:
                                                         '${ApiConstants.baseUrl}${conversation.profilePic}',
                                                     fit: BoxFit.cover,

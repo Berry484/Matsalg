@@ -321,6 +321,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: CachedNetworkImage(
+                                              fadeInDuration: Duration.zero,
                                               imageUrl:
                                                   '${ApiConstants.baseUrl}${matvare.profilepic}',
                                               fit: BoxFit.cover,
