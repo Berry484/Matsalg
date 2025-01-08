@@ -366,7 +366,6 @@ class _ReAuthenticateWidgetState extends State<ReAuthenticateWidget> {
                                             FFAppState().startet = false;
                                             appState.conversations.clear();
                                             appState.matvarer.clear();
-                                            appState.ordreInfo.clear();
                                             webSocketService.close();
                                             await _auth.currentUser?.delete();
                                             if (!context.mounted) return;

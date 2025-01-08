@@ -1099,7 +1099,7 @@ class _ReAuthenticateWidgetState extends State<ForgotPasswordWidget> {
                                               Toasts.showAccepted(
                                                   context, 'Passord endret');
                                               try {
-                                                context.goNamed('Hjem');
+                                                context.goNamed('Explore');
                                               } catch (e) {
                                                 Navigator.of(context).pop();
                                               }

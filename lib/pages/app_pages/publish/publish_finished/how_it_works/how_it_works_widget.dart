@@ -2,7 +2,6 @@ import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart'
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:provider/provider.dart';
 
 import 'how_it_works_model.dart';
@@ -39,14 +38,12 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
       return 'Gratulerer! Du har lagt ut din første annonse.';
     }
     if (_model.pageViewCurrentIndex == 1) {
-      return 'Kjøpere kan sende bud med kjøpsknappen';
+      return 'Kjøpere kan sende meldinger direkte i appen';
     }
     if (_model.pageViewCurrentIndex == 2) {
       return 'Bruk chatten til å avtale overlevering av varen.';
     }
-    if (_model.pageViewCurrentIndex == 3) {
-      return 'Gjør deg klar for å motta utbetalinger.';
-    }
+
     return '';
   }
 
@@ -55,14 +52,12 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
       return 'Oppdag hvor enkelt det er å kjøpe og selge lokalt gjennom MatSalg.no-appen';
     }
     if (_model.pageViewCurrentIndex == 1) {
-      return 'Godta eller avslå budet direkte i appen';
+      return 'Interesserte kjøpere kan sende meldinger direkte i appen.';
     }
     if (_model.pageViewCurrentIndex == 2) {
       return 'Bruk chatten til å bli enige om tid og sted for overlevering av varen.';
     }
-    if (_model.pageViewCurrentIndex == 3) {
-      return 'For å få betalt, må vi vite hvor pengene skal sendes. Følg instruksjonene for å gjøre kontoen din klar til å motta utbetalinger.';
-    }
+
     return '';
   }
 
@@ -127,21 +122,6 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                                 ),
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(14),
-                                      child: Image.asset(
-                                        'assets/images/bid.png',
-                                        width: 290,
-                                        height: 400,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -158,18 +138,16 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                                 ),
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     ClipRRect(
-                                      borderRadius: BorderRadius.circular(14),
-                                      child: Opacity(
-                                        opacity: 0.95,
-                                        child: Image.asset(
-                                          'assets/images/money.png',
-                                          width: 310,
-                                          height: 220,
-                                          fit: BoxFit.cover,
-                                        ),
+                                      borderRadius: BorderRadius.circular(0),
+                                      child: Image.asset(
+                                        'assets/images/chat.png',
+                                        width: 330,
+                                        height: 360,
+                                        fit: BoxFit.fitWidth,
                                       ),
                                     ),
                                   ],
@@ -225,7 +203,7 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(4, (index) {
+                        children: List.generate(3, (index) {
                           return Row(
                             children: [
                               Container(
@@ -239,7 +217,7 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                                   shape: BoxShape.circle,
                                 ),
                               ),
-                              if (index < 3) const SizedBox(width: 10),
+                              if (index < 2) const SizedBox(width: 10),
                             ],
                           );
                         }),
@@ -250,20 +228,19 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                       FFButtonWidget(
                         showLoadingIndicator: false,
                         onPressed: () async {
-                          if (_model.pageViewCurrentIndex == 3) {
-                            Toasts.showAccepted(context, 'Dette kommer senere');
-                            context.goNamed('Hjem');
+                          if (_model.pageViewCurrentIndex == 2) {
+                            context.goNamed('Explore');
                           }
                           await _model.pageViewController?.nextPage(
                             duration: Duration(milliseconds: 300),
                             curve: Curves.ease,
                           );
                         },
-                        text: _model.pageViewCurrentIndex == 3
-                            ? 'Legg til utbetalingskonto'
+                        text: _model.pageViewCurrentIndex == 2
+                            ? 'Takk for beskjed'
                             : 'Neste',
                         options: FFButtonOptions(
-                          width: _model.pageViewCurrentIndex == 3 ? 250 : 115,
+                          width: _model.pageViewCurrentIndex == 2 ? 250 : 115,
                           height: 50,
                           padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                           iconPadding:
@@ -284,26 +261,6 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                       if (_model.pageViewCurrentIndex == 3)
                         const SizedBox(
                           height: 8,
-                        ),
-                      if (_model.pageViewCurrentIndex == 3)
-                        TextButton(
-                          onPressed: () {
-                            context.goNamed('Hjem');
-                          },
-                          child: Text(
-                            'Konfigurer senere',
-                            textAlign: TextAlign.center,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Nunito',
-                                  fontSize: 17.0,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
                         ),
                     ],
                   ),

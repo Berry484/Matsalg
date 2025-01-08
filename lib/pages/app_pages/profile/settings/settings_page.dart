@@ -722,7 +722,6 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                                                   appState.conversations
                                                       .clear();
                                                   appState.matvarer.clear();
-                                                  appState.ordreInfo.clear();
                                                   webSocketService.close();
                                                   await FirebaseAuth.instance
                                                       .signOut();

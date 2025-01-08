@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:mat_salg/services/purchase_service.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/logging.dart';
@@ -21,7 +20,6 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final PurchaseService purchaseService = PurchaseService();
   static const String baseUrl = ApiConstants.baseUrl;
   final appState = FFAppState();
 
@@ -72,7 +70,6 @@ class FirebaseApi {
 
       // Register the top-level background message handler
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-      purchaseService.getAllOrders();
       if (Platform.isAndroid) {
         if (notification == null) return;
         _localNotifications.show(

@@ -16,12 +16,13 @@ class MainWrapper extends StatefulWidget {
 
 class MainWrapperState extends State<MainWrapper> {
   int _selectedIndex = 0;
+  int get currentIndex => _selectedIndex;
 
   // Function to map route to the correct index
   int _getIndexForRoute(String location) {
-    if (location.startsWith('/hjem')) {
+    if (location.startsWith('/home')) {
       return 0;
-    } else if (location.startsWith('/mineKjop')) {
+    } else if (location.startsWith('/explore')) {
       return 1;
     } else if (location.startsWith('/chatMain')) {
       return 2;
@@ -33,12 +34,11 @@ class MainWrapperState extends State<MainWrapper> {
 
   void _onItemTapped(int index) {
     const kTransitionInfoKey = 'transitionInfo';
-
     if (_selectedIndex == index) {
       switch (GoRouterState.of(context).uri.toString()) {
-        case '/hjem':
+        case '/home':
           return;
-        case '/mineKjop':
+        case '/explore':
           return;
         case '/chatMain':
           return;
@@ -181,46 +181,19 @@ class MainWrapperState extends State<MainWrapper> {
                             ),
                             onPressed: () => _onItemTapped(0),
                           ),
-                          Stack(
-                            clipBehavior:
-                                Clip.none, // Ensures the red dot isn't clipped
-                            children: [
-                              FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30.0,
-                                borderWidth: 1.0,
-                                buttonSize: 50.0,
-                                icon: Icon(
-                                  Ionicons.bag_check_outline,
-                                  color: _selectedIndex == 1
-                                      ? FlutterFlowTheme.of(context).alternate
-                                      : const Color(0xFF262626),
-                                  size: 30.0,
-                                ),
-                                onPressed: () => _onItemTapped(1),
-                              ),
-                              ValueListenableBuilder<bool>(
-                                valueListenable: FFAppState().orderAlert,
-                                builder: (context, orderAlert, _) {
-                                  if (!orderAlert) {
-                                    return const SizedBox.shrink();
-                                  }
-                                  return Positioned(
-                                    top: 9,
-                                    right: 7,
-                                    child: Container(
-                                      width: 8.0,
-                                      height: 8.0,
-                                      decoration: BoxDecoration(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
+                          FlutterFlowIconButton(
+                            borderColor: Colors.transparent,
+                            borderRadius: 30.0,
+                            borderWidth: 1.0,
+                            buttonSize: 50.0,
+                            icon: Icon(
+                              CupertinoIcons.search,
+                              color: _selectedIndex == 1
+                                  ? FlutterFlowTheme.of(context).alternate
+                                  : const Color(0xFF262626),
+                              size: 30.0,
+                            ),
+                            onPressed: () => _onItemTapped(1),
                           ),
                           FlutterFlowIconButton(
                             borderColor: Colors.transparent,

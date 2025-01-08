@@ -8,7 +8,6 @@ import 'package:mat_salg/models/user.dart';
 import 'package:mat_salg/models/user_info_search.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/food_service.dart';
-import 'package:mat_salg/services/purchase_service.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
@@ -16,7 +15,6 @@ import 'package:mat_salg/logging.dart';
 
 class UserInfoService {
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final PurchaseService purchaseService = PurchaseService();
   static const String baseUrl = ApiConstants.baseUrl;
 
 //---------------------------------------------------------------------------------------------------------------
@@ -285,8 +283,6 @@ class UserInfoService {
 
         FFAppState().liked = jsonResponse['hasLiked'] ?? false;
         FFAppState().lagtUt = jsonResponse['hasPosted'] ?? false;
-        FFAppState().harKjopt = jsonResponse['hasBought'] ?? false;
-        FFAppState().harSolgt = jsonResponse['hasSold'] ?? false;
         FFAppState().termsService = jsonResponse['hasAcceptedTerms'] ?? false;
 
         return response;
@@ -344,18 +340,12 @@ class UserInfoService {
     try {
       final appState = FFAppState();
       appState.matvarer.clear();
-      appState.ordreInfo.clear();
       String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
         return;
       } else {
-        List<OrdreInfo>? alleInfo = await PurchaseService.getAll(token);
         List<Matvarer>? fetchedMatvarer =
             await ApiFoodService.getMyFoods(token, 0);
-
-        if (alleInfo != null && alleInfo.isNotEmpty) {
-          FFAppState().ordreInfo = alleInfo;
-        }
         if (fetchedMatvarer != null && fetchedMatvarer.isNotEmpty) {
           FFAppState().matvarer = fetchedMatvarer;
         }

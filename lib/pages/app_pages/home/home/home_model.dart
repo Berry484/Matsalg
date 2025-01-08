@@ -1,27 +1,45 @@
-import 'package:mat_salg/pages/chat/MessagePreview/message_preview_model.dart';
-import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
-import 'chat_main_widget.dart' show ChatMainWidget;
+import 'dart:async';
+
+import 'package:mat_salg/helper_components/flutter_flow/form_field_controller.dart';
+import 'package:mat_salg/models/user_info_search.dart';
+
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import 'home_page.dart' show HomePage;
 import 'package:flutter/material.dart';
 
-class ChatMainModel extends FlutterFlowModel<ChatMainWidget> {
-  late MessagePreviewModel messagePreviewModel;
+class HomeModel extends FlutterFlowModel<HomePage> {
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Variables used througout-------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  bool isloading = false;
-  bool isKjopLoading = true;
-  bool salgisLoading = true;
-  bool kjopEmpty = false;
-  bool salgEmpty = false;
+  List<Matvarer>? matvarer;
+  List<Matvarer>? folgerMatvarer;
+  List<UserInfoSearch>? profiler;
+  int page = 0;
+  int followerPage = 0;
+  bool end = false;
+  bool followerEnd = false;
+  bool isloading = true;
+  bool noWifi = false;
+  bool folgermatLoading = true;
+  bool profilisloading = false;
+  Timer? debounce;
+  String? dropDownValue;
+  LatLng? currentUserLocationValue;
+  Map<String, dynamic>? userInfo;
 
 //---------------------------------------------------------------------------------------------------------------
-//--------------------FocusNodes, Controllers and validators for the text fields---------------------------------
+//--------------------FocusNodes, Controllers and validators-----------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
+  FocusNode? textFieldFocusNode;
+
   TabController? tabBarController;
+  TextEditingController? textController;
+  FormFieldController<String>? dropDownValueController;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes and controller for the text fields----------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
+  String? Function(BuildContext, String?)? textControllerValidator;
   int get tabBarCurrentIndex =>
       tabBarController != null ? tabBarController!.index : 0;
 
@@ -29,10 +47,12 @@ class ChatMainModel extends FlutterFlowModel<ChatMainWidget> {
 //--------------------Initstate and dispose----------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   @override
-  void initState(BuildContext context) {
-    messagePreviewModel = createModel(context, () => MessagePreviewModel());
-  }
+  void initState(BuildContext context) {}
 
   @override
-  void dispose() {}
+  void dispose() {
+    textFieldFocusNode?.dispose();
+    textController?.dispose();
+    tabBarController?.dispose();
+  }
 }

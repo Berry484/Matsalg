@@ -940,9 +940,6 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
                                                                 appState
                                                                     .matvarer
                                                                     .clear();
-                                                                appState
-                                                                    .ordreInfo
-                                                                    .clear();
                                                                 webSocketService
                                                                     .close();
                                                                 await _auth
@@ -1021,9 +1018,6 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
                                                                     .clear();
                                                                 appState
                                                                     .matvarer
-                                                                    .clear();
-                                                                appState
-                                                                    .ordreInfo
                                                                     .clear();
                                                                 webSocketService
                                                                     .close();

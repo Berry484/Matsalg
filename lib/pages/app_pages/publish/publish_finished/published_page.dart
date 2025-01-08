@@ -125,7 +125,7 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
                       onPressed: () async {
                         if (FFAppState().lagtUt) {
                           userInfoService.getAll(context);
-                          context.goNamed('Hjem');
+                          context.goNamed('Explore');
                         } else {
                           userInfoService.getAll(context);
                           context.goNamed('HowItWorksWidget');

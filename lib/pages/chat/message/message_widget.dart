@@ -9,7 +9,7 @@ import 'package:mat_salg/services/web_socket.dart';
 import 'package:mat_salg/pages/chat/message/message_model.dart';
 import 'package:mat_salg/pages/chat/messageBubble/message_bubbles_widget.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
-import 'package:mat_salg/pages/app_pages/hjem/report/report_widget.dart';
+import 'package:mat_salg/pages/app_pages/home/report/report_widget.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_icon_button.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';

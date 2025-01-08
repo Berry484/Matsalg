@@ -79,51 +79,6 @@ class FFAppState extends ChangeNotifier {
     // Initialize conversations list from shared preferences
     await _safeInitAsync(_initializeConversations);
     await _safeInitAsync(_initializeMatvarer);
-    await _safeInitAsync(_initializeOrdreInfo);
-  }
-
-  // OrdreInfo List
-  List<OrdreInfo> _ordreInfo = [];
-  List<OrdreInfo> get ordreInfo => _ordreInfo;
-  set ordreInfo(List<OrdreInfo> value) {
-    _ordreInfo = value;
-    _saveOrdreInfoToPrefs();
-    notifyListeners();
-  }
-
-  // Add OrdreInfo to list
-  void addOrdreInfo(OrdreInfo ordre) {
-    _ordreInfo.add(ordre);
-    _saveOrdreInfoToPrefs();
-    notifyListeners();
-  }
-
-  // Remove OrdreInfo from list
-  void removeOrdreInfo(OrdreInfo ordre) {
-    _ordreInfo.remove(ordre);
-    _saveOrdreInfoToPrefs();
-    notifyListeners();
-  }
-
-  // Save OrdreInfo list to SharedPreferences
-  void _saveOrdreInfoToPrefs() {
-    String ordreInfoJson =
-        json.encode(_ordreInfo.map((e) => e.toJson()).toList());
-    prefs.setString('ff_ordre_info', ordreInfoJson);
-    notifyListeners();
-  }
-
-  // Initialize OrdreInfo from SharedPreferences
-  Future<void> _initializeOrdreInfo() async {
-    String? ordreInfoJson = prefs.getString('ff_ordre_info');
-    if (ordreInfoJson != null) {
-      List<dynamic> ordreInfoList = json.decode(ordreInfoJson);
-      _ordreInfo =
-          ordreInfoList.map((ordre) => OrdreInfo.fromJson(ordre)).toList();
-      notifyListeners();
-    } else {
-      _ordreInfo = [];
-    }
   }
 
   Future<void> _initializeMatvarer() async {
@@ -240,10 +195,6 @@ class FFAppState extends ChangeNotifier {
   bool lagtUt = false;
 
   bool liked = false;
-
-  bool harKjopt = false;
-
-  bool harSolgt = false;
 
   LatLng? brukersted = const LatLng(59.9138688, 10.7522454);
 
@@ -663,122 +614,5 @@ class Matvarer {
         'liked: $liked, '
         'wantPush: $wantPush'
         '}';
-  }
-}
-
-class OrdreInfo {
-  final int id;
-  final String kjoper;
-  final String selger;
-  final int matId;
-  final int antall;
-  final int pris;
-  final int prisBetalt;
-  final DateTime time;
-  final DateTime? godkjenttid;
-  final DateTime? updatetime;
-  final bool? hentet;
-  final bool? godkjent;
-  final bool? trekt;
-  final bool? avvist;
-  final String? kjoperProfilePic;
-  final String? kjoperUsername;
-  final String? selgerUsername;
-  final Matvarer foodDetails;
-  final bool? kjopte;
-  final bool? rated;
-  bool? buyerAlert;
-  bool? sellerAlert;
-  final String? lastactive;
-  final bool deleted;
-
-  OrdreInfo({
-    required this.id,
-    required this.kjoper,
-    required this.selger,
-    required this.matId,
-    required this.antall,
-    required this.pris,
-    required this.prisBetalt,
-    required this.time,
-    this.godkjenttid,
-    required this.updatetime,
-    required this.hentet,
-    required this.godkjent,
-    required this.trekt,
-    required this.avvist,
-    required this.kjoperProfilePic,
-    required this.kjoperUsername,
-    required this.selgerUsername,
-    required this.foodDetails,
-    required this.kjopte,
-    required this.rated,
-    required this.buyerAlert,
-    required this.sellerAlert,
-    required this.lastactive,
-    required this.deleted,
-  });
-
-  // Convert OrdreInfo from JSON
-
-  factory OrdreInfo.fromJson(Map<String, dynamic> json) {
-    return OrdreInfo(
-      id: json['id'] as int,
-      kjoper: json['kjoper'] as String,
-      selger: json['selger'] as String,
-      matId: json['matId'] as int,
-      antall: json['antall'] as int,
-      pris: json['pris'] as int,
-      prisBetalt: json['prisbetalt'] as int,
-      time: DateTime.parse(json['time']),
-      godkjenttid: json['godkjenttid'] != null
-          ? DateTime.parse(json['godkjenttid'])
-          : null,
-      updatetime: DateTime.parse(json['updatetime']),
-      hentet: json['hentet'] as bool?,
-      godkjent: json['godkjent'] as bool?,
-      trekt: json['trekt'] as bool?,
-      avvist: json['avvist'] as bool?,
-      kjoperProfilePic: json['kjoperProfilePic'] as String?,
-      kjoperUsername: json['kjoperUsername'] as String?,
-      selgerUsername: json['selgerUsername'] as String?,
-      deleted: json['deleted'] as bool? ?? false,
-      buyerAlert: json['buyerAlert'] as bool? ?? false,
-      sellerAlert: json['sellerAlert'] as bool? ?? false,
-      foodDetails: Matvarer.fromJson(json['foodDetails']),
-      kjopte: json['kjopte'] as bool?,
-      rated: json['rated'] as bool?,
-      lastactive: json['lastactive'] as String?,
-    );
-  }
-
-  // Convert OrdreInfo to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'kjoper': kjoper,
-      'selger': selger,
-      'matId': matId,
-      'antall': antall,
-      'pris': pris,
-      'prisbetalt': prisBetalt,
-      'time': time.toIso8601String(),
-      'godkjenttid': godkjenttid?.toIso8601String(),
-      'updatetime': updatetime?.toIso8601String(),
-      'hentet': hentet,
-      'godkjent': godkjent,
-      'trekt': trekt,
-      'avvist': avvist,
-      'kjoperProfilePic': kjoperProfilePic,
-      'kjoperUsername': kjoperUsername,
-      'selgerUsername': selgerUsername,
-      'buyerAlert': buyerAlert,
-      'sellerAlert': sellerAlert,
-      'deleted': deleted,
-      'foodDetails': foodDetails.toJson(),
-      'kjopte': kjopte,
-      'rated': rated,
-      'lastactive': lastactive,
-    };
   }
 }

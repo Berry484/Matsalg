@@ -291,7 +291,7 @@ class _RequestLocationWidgetState extends State<RequestTermsWidget> {
                                         FFAppState().brukerLng == 10.7522454) {
                                       context.goNamed('RequestLocation');
                                     } else {
-                                      context.goNamed('Hjem');
+                                      context.goNamed('Explore');
                                     }
                                     return;
                                   } else if (response.statusCode == 401) {

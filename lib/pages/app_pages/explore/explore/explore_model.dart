@@ -1,38 +1,51 @@
-import 'package:mat_salg/pages/chat/MessagePreview/message_preview_model.dart';
-import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
-import 'chat_main_widget.dart' show ChatMainWidget;
+import 'dart:async';
+
+import 'package:mat_salg/models/user_info_search.dart';
+
+import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import '../../../../helper_components/flutter_flow/form_field_controller.dart';
+import 'explore_widget.dart' show ExploreWidget;
 import 'package:flutter/material.dart';
 
-class ChatMainModel extends FlutterFlowModel<ChatMainWidget> {
-  late MessagePreviewModel messagePreviewModel;
+class ExploreModel extends FlutterFlowModel<ExploreWidget> {
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Variables used througout-------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  bool isloading = false;
-  bool isKjopLoading = true;
-  bool salgisLoading = true;
-  bool kjopEmpty = false;
-  bool salgEmpty = false;
+  List<Matvarer>? matvarer;
+  List<UserInfoSearch>? profiler;
+  int page = 0;
+  bool end = false;
+  bool isloading = true;
+  bool noWifi = false;
+  bool profilisloading = false;
+  bool searching = false;
+  Timer? debounce;
+  String? dropDownValue;
+  LatLng? currentUserLocationValue;
+  Map<String, dynamic>? userInfo;
 
 //---------------------------------------------------------------------------------------------------------------
-//--------------------FocusNodes, Controllers and validators for the text fields---------------------------------
+//--------------------FocusNodes, Controllers and validators-----------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  TabController? tabBarController;
+  FocusNode? textFieldFocusNode;
+
+  TextEditingController? textController;
+  FormFieldController<String>? dropDownValueController;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes and controller for the text fields----------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  int get tabBarCurrentIndex =>
-      tabBarController != null ? tabBarController!.index : 0;
+  String? Function(BuildContext, String?)? textControllerValidator;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Initstate and dispose----------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   @override
-  void initState(BuildContext context) {
-    messagePreviewModel = createModel(context, () => MessagePreviewModel());
-  }
+  void initState(BuildContext context) {}
 
   @override
-  void dispose() {}
+  void dispose() {
+    textFieldFocusNode?.dispose();
+    textController?.dispose();
+  }
 }

@@ -70,7 +70,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
         height: 75,
         decoration: const BoxDecoration(),
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,7 +87,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
               if (widget.messageImage != null &&
                   widget.messageImage!.isNotEmpty)
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 12, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                   child: Container(
                       width: 53,
                       height: 53,

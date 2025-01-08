@@ -344,7 +344,7 @@ class _VelgPosisjonWidgetState extends State<LocationPage> {
                                             } else {
                                               HapticFeedback.selectionClick();
                                               if (widget.where == 'velg') {
-                                                context.goNamed('Hjem');
+                                                context.goNamed('Explore');
                                               } else {
                                                 Navigator.pop(context);
                                               }
@@ -430,7 +430,7 @@ class _VelgPosisjonWidgetState extends State<LocationPage> {
                                             if (!context.mounted) return;
                                             HapticFeedback.selectionClick();
                                             if (widget.where == 'velg') {
-                                              context.goNamed('Hjem');
+                                              context.goNamed('Explore');
                                             } else {
                                               Navigator.pop(context);
                                             }
