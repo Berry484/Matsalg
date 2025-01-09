@@ -1,5 +1,6 @@
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/firebase_service.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,62 @@ class _HjemWidgetState extends State<NotificationsWidget>
     super.dispose();
   }
 
+  Widget buildProfileOutline(BuildContext context, int opacity, Color baseColor,
+      Color highlightColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Row(
+        children: [
+          Shimmer.fromColors(
+            baseColor: baseColor,
+            highlightColor: highlightColor,
+            child: Container(
+              width: 65.0,
+              height: 65.0,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(opacity, 255, 255, 255),
+                borderRadius: BorderRadius.circular(14.0),
+              ),
+            ),
+          ),
+          const SizedBox(width: 16.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Shimmer.fromColors(
+                  baseColor: baseColor,
+                  highlightColor: highlightColor,
+                  child: Container(
+                    width: 75.0,
+                    height: 13.0,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(opacity, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8.0),
+                Shimmer.fromColors(
+                  baseColor: baseColor,
+                  highlightColor: highlightColor,
+                  child: Container(
+                    width: 200,
+                    height: 13.0,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(opacity, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
@@ -62,22 +119,136 @@ class _HjemWidgetState extends State<NotificationsWidget>
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Nunito',
                       color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 20,
+                      fontSize: 18,
                       letterSpacing: 0.0,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                     ),
               ),
             ),
             centerTitle: true,
             elevation: 0,
             scrolledUnderElevation: 0,
+            bottom: PreferredSize(
+                preferredSize: Size.fromHeight(1),
+                child: Container(
+                  color: Color.fromARGB(109, 87, 99, 108),
+                  child: Container(
+                    height: 0.3,
+                  ),
+                )),
           ),
           body: SafeArea(
             top: true,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [],
+              children: [
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width,
+                  height: MediaQuery.sizeOf(context).height - 350,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: const AlignmentDirectional(0, 1),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                // First Profile Outline
+                                buildProfileOutline(
+                                  context,
+                                  100,
+                                  Colors.grey[300]?.withOpacity(1) ??
+                                      Colors.grey
+                                          .withOpacity(0.3), // Reduce opacity
+                                  Colors.grey[300]?.withOpacity(1) ??
+                                      Colors.grey
+                                          .withOpacity(0.3), // Reduce opacity
+                                ),
+
+                                // Second Profile Outline
+                                buildProfileOutline(
+                                  context,
+                                  80,
+                                  Colors.grey[300]?.withOpacity(1) ??
+                                      Colors.grey.withOpacity(1),
+                                  Colors.grey[300]?.withOpacity(1) ??
+                                      Colors.grey.withOpacity(1),
+                                ),
+
+                                // Third Profile Outline
+                                buildProfileOutline(
+                                  context,
+                                  50,
+                                  Colors.grey[300]?.withOpacity(1) ??
+                                      Colors.grey.withOpacity(1),
+                                  Colors.grey[300]?.withOpacity(1) ??
+                                      Colors.grey.withOpacity(1),
+                                ),
+
+                                // Fourth Profile Outline
+                                buildProfileOutline(
+                                  context,
+                                  38,
+                                  Colors.grey[300]?.withOpacity(1) ??
+                                      Colors.grey.withOpacity(1),
+                                  Colors.grey[300]?.withOpacity(1) ??
+                                      Colors.grey.withOpacity(1),
+                                ),
+
+                                const SizedBox(height: 8.0),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 0),
+                                  child: Text(
+                                    'Velkommen til varslinger',
+                                    textAlign: TextAlign.center,
+                                    style: FlutterFlowTheme.of(context)
+                                        .headlineSmall
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 22,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      16, 0, 16, 0),
+                                  child: Text(
+                                    'Her vil du få beskjed når vi har nytt for deg, eller når noe du ønsker blir tilgjengelig.',
+                                    textAlign: TextAlign.center,
+                                    style: FlutterFlowTheme.of(context)
+                                        .headlineSmall
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 16,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

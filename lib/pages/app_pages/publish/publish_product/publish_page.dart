@@ -217,7 +217,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Nunito',
                         color: FlutterFlowTheme.of(context).primaryText,
-                        fontSize: 17,
+                        fontSize: 18,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.w800,
                       ),

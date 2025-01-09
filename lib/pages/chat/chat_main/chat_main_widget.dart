@@ -131,9 +131,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Nunito',
                       color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 20,
+                      fontSize: 18,
                       letterSpacing: 0.0,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                     ),
               ),
             ),
