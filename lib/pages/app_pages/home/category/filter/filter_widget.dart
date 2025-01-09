@@ -1201,10 +1201,10 @@ class _SorterWidgetState extends State<FilterWidget> {
                             0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).alternate,
                         textStyle:
-                            FlutterFlowTheme.of(context).titleMedium.override(
+                            FlutterFlowTheme.of(context).bodyMedium.override(
                                   fontFamily: 'Nunito',
-                                  color: FlutterFlowTheme.of(context).secondary,
-                                  fontSize: 16.0,
+                                  color: Colors.white,
+                                  fontSize: 15,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w700,
                                 ),

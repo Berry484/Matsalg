@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 class PublishModel extends FlutterFlowModel<PublishPage> {
   final formKey = GlobalKey<FormState>();
   late Matvarer matvare;
+  GlobalKey titleKey = GlobalKey();
+  GlobalKey imageKey = GlobalKey();
+  GlobalKey topKey = GlobalKey();
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Variables used througout-------------------------------------------------------------------
@@ -21,8 +24,11 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
   String? kommune;
   String? kategori;
   String? velgkategori;
-  bool accuratePosition = false;
+  String? errorCategory;
+  String? errorLocation;
+  String? errorImage;
   String selectedLocationOption = 'approximate';
+  bool accuratePosition = false;
   LatLng? selectedLatLng;
   LatLng? currentselectedLatLng =
       LatLng(FFAppState().brukerLat, FFAppState().brukerLng);
@@ -34,6 +40,9 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
     XFile('ImagePlaceHolder.jpg'),
   ];
   List<XFile> selectedImages = [];
+
+  bool beskrivelseValid = false;
+  bool priceValid = false;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes, Controllers and validators for the text fields---------------------------------
@@ -76,22 +85,28 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
   String? _produktBeskrivelseTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
+      beskrivelseValid = false;
       return 'Felt må fylles ut';
     }
     if (val.toLowerCase() == 'null') {
+      beskrivelseValid = false;
       return 'Felt kan ikke være null';
     }
+    beskrivelseValid = true;
     return null;
   }
 
   String? _produktPrisSTKTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
+      priceValid = false;
       return 'Felt må fylles ut';
     }
     if (val.toLowerCase() == 'null') {
+      priceValid = false;
       return 'Felt kan ikke være null';
     }
+    priceValid = true;
     return null;
   }
 

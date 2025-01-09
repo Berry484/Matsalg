@@ -529,6 +529,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                 color: const Color(0x8F101213),
                                 fontSize: 16.0,
                                 letterSpacing: 0.0,
+                                fontWeight: FontWeight.w600,
                               ),
                       backgroundColor: const Color.fromARGB(255, 238, 238, 238),
                       prefixInsets:

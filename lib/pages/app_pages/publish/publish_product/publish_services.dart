@@ -240,6 +240,7 @@ class PublishServices {
           if (selectedIndex >= pickedImages.length) break;
         }
         model.selectedImages.addAll(pickedImages.sublist(selectedIndex));
+        model.errorImage = null;
       } else {
         logger.d('No image was selected');
       }
@@ -258,31 +259,80 @@ class PublishServices {
     Function(String path, bool pop) navigate,
   ) async {
     try {
+      final nonPlaceholderImages = model.unselectedImages
+          .where((image) => image.path != 'ImagePlaceHolder.jpg')
+          .toList();
+
       if (model.formKey.currentState == null ||
           !model.formKey.currentState!.validate()) {
+        bool canScroll = true;
+        model.errorLocation = null;
+        model.errorCategory = null;
+
+        if (nonPlaceholderImages.isEmpty) {
+          model.errorImage = 'Vennligst legg til minst et bilde';
+          if (model.topKey.currentContext != null) {
+            Scrollable.ensureVisible(model.topKey.currentContext!,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            canScroll = false;
+          }
+        }
+
+        if (model.kategori == null) {
+          model.errorCategory = 'Felt må fylles ut';
+          if (model.imageKey.currentContext != null && canScroll) {
+            Scrollable.ensureVisible(model.imageKey.currentContext!,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            canScroll = false;
+          }
+        }
+        if (model.selectedLatLng == null) {
+          model.errorLocation = 'Vennligst velg en posisjon';
+        }
+
+        if (model.beskrivelseValid != true && canScroll) {
+          if (model.titleKey.currentContext != null) {
+            Scrollable.ensureVisible(model.titleKey.currentContext!,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            canScroll = false;
+          }
+        }
+
+        if (model.priceValid != true && canScroll) {
+          if (model.titleKey.currentContext != null) {
+            Scrollable.ensureVisible(model.titleKey.currentContext!,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            canScroll = false;
+          }
+        }
+
         return;
       }
-      if (model.leggUtLoading == true) {
+      if (model.oppdaterLoading) {
         return;
       }
 
-      if (model.produktPrisSTKTextController.text.isEmpty) {
-        await showDialogCallback(
-          'Velg pris',
-          'Velg en pris på matvaren',
-        );
-        model.leggUtLoading = false;
-        navigate('', true);
+      model.errorLocation = null;
+      model.errorCategory = null;
+
+      if (model.kategori == null) {
+        model.errorCategory = 'Felt må fylles ut';
+        if (model.imageKey.currentContext != null) {
+          Scrollable.ensureVisible(model.imageKey.currentContext!,
+              duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+        }
+        if (model.selectedLatLng == null) {
+          model.errorLocation = 'Vennligst velg en posisjon';
+          model.oppdaterLoading = false;
+          return;
+        }
+        model.oppdaterLoading = false;
         return;
       }
 
       if (model.selectedLatLng == null) {
-        await showDialogCallback(
-          'Velg posisjon',
-          'Mangler posisjon',
-        );
-        model.leggUtLoading = false;
-        navigate('', true);
+        model.errorLocation = 'Vennligst velg en posisjon';
+        model.oppdaterLoading = false;
         return;
       }
 
@@ -414,49 +464,79 @@ class PublishServices {
     Function(String path, bool pop, String? imgPath) navigate,
   ) async {
     try {
+      final nonPlaceholderImages = model.unselectedImages
+          .where((image) => image.path != 'ImagePlaceHolder.jpg')
+          .toList();
+
       if (model.formKey.currentState == null ||
           !model.formKey.currentState!.validate()) {
+        bool canScroll = true;
+        model.errorLocation = null;
+        model.errorCategory = null;
+
+        if (nonPlaceholderImages.isEmpty) {
+          model.errorImage = 'Vennligst legg til minst et bilde';
+          if (model.topKey.currentContext != null) {
+            Scrollable.ensureVisible(model.topKey.currentContext!,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            canScroll = false;
+          }
+        }
+
+        if (model.kategori == null) {
+          model.errorCategory = 'Felt må fylles ut';
+          if (model.imageKey.currentContext != null && canScroll) {
+            Scrollable.ensureVisible(model.imageKey.currentContext!,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            canScroll = false;
+          }
+        }
+        if (model.selectedLatLng == null) {
+          model.errorLocation = 'Vennligst velg en posisjon';
+        }
+
+        if (model.beskrivelseValid != true && canScroll) {
+          if (model.titleKey.currentContext != null) {
+            Scrollable.ensureVisible(model.titleKey.currentContext!,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            canScroll = false;
+          }
+        }
+
+        if (model.priceValid != true && canScroll) {
+          if (model.titleKey.currentContext != null) {
+            Scrollable.ensureVisible(model.titleKey.currentContext!,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            canScroll = false;
+          }
+        }
+
         return;
       }
       if (model.oppdaterLoading) {
         return;
       }
 
-      if (model.kategori == null) {
-        await showDialogCallback(
-          'Mangler kategori',
-          'Velg minst 1 kategori.',
-        );
-        model.oppdaterLoading = false;
-        return;
-      }
+      model.errorLocation = null;
+      model.errorCategory = null;
 
-      if (model.produktPrisSTKTextController.text.isEmpty) {
-        await showDialogCallback(
-          'Velg pris',
-          'Velg en pris på matvaren',
-        );
+      if (model.kategori == null) {
+        model.errorCategory = 'Felt må fylles ut';
+        if (model.imageKey.currentContext != null) {
+          Scrollable.ensureVisible(model.imageKey.currentContext!,
+              duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+        }
+        if (model.selectedLatLng == null) {
+          model.errorLocation = 'Vennligst velg en posisjon';
+          model.oppdaterLoading = false;
+          return;
+        }
         model.oppdaterLoading = false;
         return;
       }
 
       if (model.selectedLatLng == null) {
-        await showDialogCallback(
-          'Velg posisjon',
-          'Mangler posisjon',
-        );
-        model.oppdaterLoading = false;
-        return;
-      }
-      final nonPlaceholderImages = model.unselectedImages
-          .where((image) => image.path != 'ImagePlaceHolder.jpg')
-          .toList();
-
-      if (nonPlaceholderImages.isEmpty) {
-        await showDialogCallback(
-          'Bilde mangler',
-          'Last opp minst 1 bilde',
-        );
+        model.errorLocation = 'Vennligst velg en posisjon';
         model.oppdaterLoading = false;
         return;
       }

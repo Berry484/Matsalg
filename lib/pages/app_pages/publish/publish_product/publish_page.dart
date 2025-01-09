@@ -280,6 +280,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                           children: [
                             SingleChildScrollView(
                               child: Column(
+                                key: _model.topKey,
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Form(
@@ -346,6 +347,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                 )),
                                           ),
                                           SizedBox(
+                                            key: _model.imageKey,
                                             height: 150,
                                             width: double.infinity,
                                             child: ListView(
@@ -580,63 +582,88 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                     .where((image) =>
                                                         image.path ==
                                                         'ImagePlaceHolder.jpg')
-                                                    .map(
-                                                        (placeholder) =>
-                                                            Container(
-                                                              margin:
-                                                                  const EdgeInsets
-                                                                      .fromLTRB(
-                                                                      6,
-                                                                      8,
-                                                                      6,
-                                                                      0),
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  FlutterFlowIconButton(
-                                                                    borderColor:
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .secondary,
-                                                                    borderRadius:
-                                                                        15.0,
-                                                                    buttonSize:
-                                                                        86.0,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondary,
-                                                                    icon: Icon(
-                                                                      CupertinoIcons
-                                                                          .camera,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      size:
-                                                                          25.0,
-                                                                    ),
-                                                                    onPressed:
-                                                                        () async {
-                                                                      try {
-                                                                        FocusScope.of(context)
-                                                                            .requestFocus(FocusNode());
-                                                                        await publishServices
-                                                                            .selectImages(context);
+                                                    .map((placeholder) {
+                                                  int index = _model
+                                                      .unselectedImages
+                                                      .indexOf(
+                                                          placeholder); // Get the index
+                                                  return Container(
+                                                    margin: const EdgeInsets
+                                                        .fromLTRB(6, 8, 6, 0),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        FlutterFlowIconButton(
+                                                          borderColor: index ==
+                                                                      0 &&
+                                                                  _model.errorImage !=
+                                                                      null
+                                                              ? Colors.red
+                                                              : FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondary,
+                                                          borderRadius: 15.0,
+                                                          borderWidth: 1,
+                                                          buttonSize: 86.0,
+                                                          fillColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .secondary,
+                                                          icon: Icon(
+                                                            CupertinoIcons
+                                                                .camera,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            size: 25.0,
+                                                          ),
+                                                          onPressed: () async {
+                                                            try {
+                                                              FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      FocusNode());
+                                                              await publishServices
+                                                                  .selectImages(
+                                                                      context);
 
-                                                                        safeSetState(
-                                                                            () {});
-                                                                      } catch (e) {
-                                                                        logger.e(
-                                                                            'Error occurred');
-                                                                      }
-                                                                    },
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            )),
+                                                              safeSetState(
+                                                                  () {});
+                                                            } catch (e) {
+                                                              logger.e(
+                                                                  'Error occurred');
+                                                            }
+                                                          },
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }),
                                               ],
                                             ),
                                           ),
+                                          if (_model.errorImage != null)
+                                            Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      -1.0, 0.0),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        20.0, 0.0, 0.0, 5.0),
+                                                child: Text(
+                                                  textAlign: TextAlign.left,
+                                                  _model.errorImage ?? '',
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 13.0,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                           Dividers.simpleDivider(),
                                           Align(
                                             alignment:
@@ -666,6 +693,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                             ),
                                           ),
                                           Padding(
+                                            key: _model.titleKey,
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(
                                                 20.0, 0.0, 20.0, 16.0),
@@ -817,6 +845,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
 
                                                 setState(() {
                                                   if (velgkategori != null) {
+                                                    _model.errorCategory = null;
                                                     _model.kategori =
                                                         velgkategori;
                                                     _model.isFocused = true;
@@ -836,6 +865,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                               child: Stack(
                                                 clipBehavior: Clip.none,
                                                 children: [
+                                                  // Custom container with optional red border and error state
                                                   Container(
                                                     width: MediaQuery.sizeOf(
                                                             context)
@@ -847,10 +877,13 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                   context)
                                                               .secondary,
                                                       border: Border.all(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondary,
+                                                        color: _model
+                                                                    .errorCategory ==
+                                                                null
+                                                            ? FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondary
+                                                            : Colors.red,
                                                         width: 1,
                                                       ),
                                                       borderRadius:
@@ -883,7 +916,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
-                                                                  .override(
+                                                                  .copyWith(
                                                                     fontFamily:
                                                                         'Nunito',
                                                                     color: _model.kategori !=
@@ -898,8 +931,6 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                             1.0),
                                                                     fontSize:
                                                                         16.0,
-                                                                    letterSpacing:
-                                                                        0.0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w700,
@@ -918,6 +949,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                       ],
                                                     ),
                                                   ),
+                                                  // Positioned label on focus or if category is selected
                                                   if (_model.isFocused ||
                                                       _model.kategori != null)
                                                     Positioned(
@@ -938,7 +970,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodySmall
-                                                              .override(
+                                                              .copyWith(
                                                                 fontFamily:
                                                                     'Nunito',
                                                                 fontSize: 13.0,
@@ -952,6 +984,21 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                     113,
                                                                     1.0),
                                                               ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  // Error message under the container
+                                                  if (_model.errorCategory !=
+                                                      null)
+                                                    Positioned(
+                                                      bottom: -16,
+                                                      left: 18,
+                                                      child: Text(
+                                                        _model.errorCategory ??
+                                                            '',
+                                                        style: TextStyle(
+                                                          color: Colors.red,
+                                                          fontSize: 12.0,
                                                         ),
                                                       ),
                                                     ),
@@ -1818,8 +1865,9 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                               _model.currentselectedLatLng =
                                                                   _model
                                                                       .selectedLatLng;
+                                                              _model.errorLocation =
+                                                                  null;
                                                             });
-                                                            safeSetState(() {});
                                                           }
                                                         });
                                                       } on SocketException {
@@ -1836,93 +1884,115 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                         }
                                                       }
                                                     },
-                                                    child: Container(
-                                                      width: MediaQuery.sizeOf(
-                                                              context)
-                                                          .width,
-                                                      height: 57,
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                    child: Stack(
+                                                      clipBehavior: Clip.none,
+                                                      children: [
+                                                        Container(
+                                                          width:
+                                                              MediaQuery.sizeOf(
+                                                                      context)
+                                                                  .width,
+                                                          height: 57,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .secondary,
-                                                        border: Border.all(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondary,
-                                                          width: 1,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                12, 0, 12, 0),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
+                                                            border: Border.all(
+                                                              color: _model
+                                                                          .errorLocation ==
+                                                                      null
+                                                                  ? FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondary
+                                                                  : Colors.red,
+                                                              width: 1,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                    12,
+                                                                    0,
+                                                                    12,
+                                                                    0),
+                                                            child: Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
-                                                                      .start,
+                                                                      .spaceBetween,
                                                               children: [
-                                                                Icon(
-                                                                  CupertinoIcons
-                                                                      .placemark,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  size: 25,
-                                                                ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Icon(
+                                                                      CupertinoIcons
+                                                                          .placemark,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      size: 25,
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsetsDirectional
                                                                           .fromSTEB(
                                                                           15,
                                                                           0,
                                                                           0,
                                                                           0),
-                                                                  child: Text(
-                                                                    _model.kommune !=
-                                                                            null
-                                                                        ? '${_model.kommune}'
-                                                                        : 'Velg posisjon',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Nunito',
-                                                                          color: _model.kommune != null
-                                                                              ? FlutterFlowTheme.of(context).primaryText
-                                                                              : const Color.fromRGBO(113, 113, 113, 1.0),
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w700,
-                                                                        ),
-                                                                  ),
+                                                                      child:
+                                                                          Text(
+                                                                        _model.kommune !=
+                                                                                null
+                                                                            ? '${_model.kommune}'
+                                                                            : 'Velg posisjon',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .copyWith(
+                                                                              fontFamily: 'Nunito',
+                                                                              color: _model.kommune != null ? FlutterFlowTheme.of(context).primaryText : const Color.fromRGBO(113, 113, 113, 1.0),
+                                                                              fontSize: 17.0,
+                                                                              fontWeight: FontWeight.w700,
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Icon(
+                                                                  CupertinoIcons
+                                                                      .chevron_forward,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  size: 22,
                                                                 ),
                                                               ],
                                                             ),
-                                                            Icon(
-                                                              CupertinoIcons
-                                                                  .chevron_forward,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 22,
-                                                            ),
-                                                          ],
+                                                          ),
                                                         ),
-                                                      ),
+                                                        if (_model
+                                                                .errorLocation !=
+                                                            null)
+                                                          Positioned(
+                                                            bottom: -16,
+                                                            left: 18,
+                                                            child: Text(
+                                                              _model.errorLocation ??
+                                                                  '',
+                                                              style: TextStyle(
+                                                                color:
+                                                                    Colors.red,
+                                                                fontSize: 12.0,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ),

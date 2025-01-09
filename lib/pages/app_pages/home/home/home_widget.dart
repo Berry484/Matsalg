@@ -489,6 +489,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               color: Colors.black45,
                                               fontSize: 16.0,
                                               letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
                                             ),
                                     prefixIcon: Icon(
                                       CupertinoIcons.search,
