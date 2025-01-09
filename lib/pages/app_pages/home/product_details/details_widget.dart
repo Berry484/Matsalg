@@ -1270,19 +1270,19 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .titleSmall
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
-                                                                        'Open Sans',
+                                                                        'Nunito',
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
-                                                                        15,
+                                                                        16,
                                                                     letterSpacing:
                                                                         0.0,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w600,
+                                                                            .w700,
                                                                   ),
                                                             ),
                                                           ),

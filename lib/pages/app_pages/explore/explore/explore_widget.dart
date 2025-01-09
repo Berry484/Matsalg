@@ -306,7 +306,7 @@ class _HjemWidgetState extends State<ExploreWidget>
                             children: [
                               Expanded(
                                 child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 5000),
+                                  duration: Duration(milliseconds: 200),
                                   curve: Curves.easeInOut,
                                   width: _width,
                                   child: Container(
@@ -471,7 +471,7 @@ class _HjemWidgetState extends State<ExploreWidget>
             elevation: 0.0,
           ),
           body: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 270),
+            duration: const Duration(milliseconds: 200),
             transitionBuilder: (Widget child, Animation<double> animation) {
               return FadeTransition(
                 opacity: animation,
